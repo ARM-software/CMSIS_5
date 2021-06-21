@@ -1,7 +1,7 @@
 /**
 \mainpage Firmware for CoreSight Debug Access Port
 
-<b>CMSIS-DAP</b> is a specification and a implementation of a <b>Firmware</b> that supports access to the CoreSight <b>Debug Access Port</b> (DAP).\n\n
+<b>CMSIS-DAP</b> is a <b>Protocol</b> specification and a implementation of a <b>Firmware</b> that supports access to the CoreSight <b>Debug Access Port</b> (DAP).\n\n
 
 The various Arm Cortex processors provide <a href="http://www.arm.com/products/system-ip/coresight/index.php" target="_blank">
 <b>CoreSight Debug and Trace</b></a>. CMSIS-DAP supports target Devices that contain one or more Cortex processors. 

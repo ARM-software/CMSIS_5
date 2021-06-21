@@ -227,8 +227,8 @@ The <b>DAP_Info Command</b> provides configuration information about the Debug U
 \endcode
 
 - \b ID: Request Identifier to obtain information in the Response:
-  - \b 0x01 = Get the <b>Vendor ID</b> (string).
-  - \b 0x02 = Get the <b>Product ID</b> (string).
+  - \b 0x01 = Get the <b>Vendor Name</b> (string).
+  - \b 0x02 = Get the <b>Product Name</b> (string).
   - \b 0x03 = Get the <b>Serial Number</b> (string).
   - \b 0x04 = Get the <b>CMSIS-DAP Protocol Version</b> (string).
   - \b 0x05 = Get the <b>Target Device Vendor</b> (string).
@@ -262,22 +262,33 @@ The <b>DAP_Info Command</b> provides configuration information about the Debug U
 An unrecognized ID returns no value (indicated by Len = 0).
 
 \note
-The ID for <b>Vendor ID</b>, <b>Product ID</b>, and <b>Serial Number</b> may return no string (indicated by Len = 0).
-In this case the USB Device Information is used to obtain Vendor, Product, and Serial Number. The <b>Vendor ID</b> and <b>Product ID</b> are the vendor and product names, not the USB VID and PID.
+The ID for <b>Vendor Name</b>, <b>Product Name</b>, and <b>Serial Number</b> may return no string (indicated by Len = 0).
+In this case the USB Device Information is used to obtain Vendor Name, Product Name, and Serial Number.
 
 \note
 The value of <b>CMSIS-DAP Protocol Version</b> must be one of the versions from the \ref dap_revisionHistory "CMSIS-DAP revision history", such as "2.1.0".
 
 \note
-<b>Target Device Vendor</b>, <b>Target Device Name</b>, <b>Target Board Vendor</b> and <b>Target Board Name</b> are only available on On-Board Debug Units with known
-Target. Refer to \ref TARGET_FIXED for more information. If the Target is not known
-no string is returned (indicated by Len = 0).
+<b>Target Device Vendor</b>, <b>Target Device Name</b>, <b>Target Board Vendor</b> and <b>Target Board Name</b>
+are only available on On-Board Debug Units with known Target. Refer to \ref TARGET_FIXED for more information.
+Strings should match the listed attribute values from the corresponding CMSIS Board Support Pack.
+If the Target is not known no string is returned (indicated by Len = 0).
 
 \note
-<b>Target Device Vendor</b> should match the <tt>Dvendor</tt> attribute value from the corresponding CMSIS Device Family Pack, taken from the <a href="../../Pack/html/pdsc_family_pg.html#DeviceVendorEnum">Device Vendor</a> table, and must include the the colon and vendor code suffix.
+<b>Target Device Vendor</b> should match the <a href="../../Pack/html/pdsc_boards_pg.html#element_board_mountedDevice">Dvendor</a>
+attribute value (excluding the colon and vendor code suffix when present) of the <tt>mountedDevice</tt>.
 
 \note
-<b>Target Device Name</b> should match the <tt>Dname</tt> or <tt>Dvariant</tt> attribute value from the corresponding CMSIS Device Family Pack. Only alphabetical characters, decimal digits, '-' and '_' are allowed.
+<b>Target Device Name</b> should match the <a href="../../Pack/html/pdsc_boards_pg.html#element_board_mountedDevice">Dname</a>
+attribute value of the <tt>mountedDevice</tt>.
+
+\note
+<b>Target Board Vendor</b> should match the <a href="../../Pack/html/pdsc_boards_pg.html#element_board">vendor</a>
+attribute value (excluding the colon and vendor code suffix when present).
+
+\note
+<b>Target Board Name</b> should match the <a href="../../Pack/html/pdsc_boards_pg.html#element_board">name</a>
+attribute value.
 
 \note
 <b>Product Firmware Version</b> may return no string (indicated by Len = 0).

@@ -163,7 +163,7 @@ extern const char TargetBoardVendor  [];
 extern const char TargetBoardName    [];
 #endif
 
-/** Get Vendor ID string.
+/** Get Vendor Name string.
 \param str Pointer to buffer to store the string (max 60 characters).
 \return String length (including terminating NULL character) or 0 (no string).
 */
@@ -172,7 +172,7 @@ __STATIC_INLINE uint8_t DAP_GetVendorString (char *str) {
   return (0U);
 }
 
-/** Get Product ID string.
+/** Get Product Name string.
 \param str Pointer to buffer to store the string (max 60 characters).
 \return String length (including terminating NULL character) or 0 (no string).
 */
