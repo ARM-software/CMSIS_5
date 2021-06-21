@@ -22,7 +22,7 @@ The <b>core_&lt;cpu&gt;.h</b> defines the core peripherals and provides helper f
 
 Header File      | Processor
 :----------------|:------------------------------
-core_ca.h        | generics for all supportet Cortex-A processors
+core_ca.h        | generics for all supported Cortex-A processors
 
 \section device_examples Device Examples
 
@@ -140,7 +140,7 @@ The file exists for each supported toolchain and is the only tool-chain specific
 An Arm Compiler specific startup file for an Armv7-A processor like Cortex-A9 is shown below.
 The files for other compiler vendors differ slightly in the syntax, but not in the overall structure.
 
-\verbinclude "Source\ARM\startup_Device.c"
+\verbinclude "Source/ARM/startup_Device.c"
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -160,14 +160,14 @@ In case of additional features the function prototypes need to be added to the s
 
 The \ref system_Device_sec for the Cortex-M3 is shown below.
 
-\verbinclude "Source\system_Device.c"
+\verbinclude "Source/system_Device.c"
 
 \section system_Device_h_sec system_Device.h Template File
 
 The system_<device>.h header file contains prototypes to access the public functions in the system_<device>.c file.
 The \ref system_Device_h_sec is shown below.
 
-\verbinclude "Include\system_Device.h"
+\verbinclude "Include/system_Device.h"
 
 */
 
@@ -320,7 +320,7 @@ The silicon vendor needs to extend the Device.h template file with the CMSIS fea
 In addition the \ref device_h_pg may contain functions to access device-specific peripherals.
 The \ref system_Device_h_sec which is provided as part of the CMSIS specification is shown below.
 
-\verbinclude "Include\Device.h"
+\verbinclude "Include/Device.h"
 
 */
 
@@ -328,7 +328,7 @@ The \ref system_Device_h_sec which is provided as part of the CMSIS specificatio
 /**
 \page mem_h_pg Memory Configuration Files mem_<device>.h
 
-\verbinclude "Include\mem_Device.h"
+\verbinclude "Include/mem_Device.h"
 
 */
 
@@ -336,7 +336,7 @@ The \ref system_Device_h_sec which is provided as part of the CMSIS specificatio
 /**
 \page mmu_c_pg Memory Management Unit Files mmu_<device>.c
 
-\verbinclude "Source\mmu_Device.c"
+\verbinclude "Source/mmu_Device.c"
 
 */
 
