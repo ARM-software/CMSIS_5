@@ -12,7 +12,7 @@
       Active development ...
       CMSIS-DSP: 1.10.0 (see revision history for details)
       CMSIS-NN: 3.1.0 (see revision history for details)
-       - Support for int16 convolution
+       - Support for int16 convolution and fully connected for reference implementation
        - Support for DSP extension optimization for int16 convolution
     </release>
     <release version="5.8.0" date="2021-06-24">
@@ -2851,6 +2851,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_nn_mult_q7.c"/>
         <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_q7_to_q15_reordered_no_shift.c"/>
         <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_nn_vec_mat_mult_t_s8.c"/>
+        <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_nn_vec_mat_mult_t_s16.c"/>
         <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_nn_vec_mat_mult_t_svdf_s8.c"/>
         <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_q7_to_q15_with_offset.c"/>
         <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_nn_accumulate_q7_to_q15.c"/>
@@ -2866,6 +2867,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_nn_mult_q15.c"/>
         <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_nn_mat_mul_core_1x_s8.c"/>
         <file category="source" name="CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_s8.c"/>
+        <file category="source" name="CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_s16.c"/>
         <file category="source" name="CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_q15_opt.c"/>
         <file category="source" name="CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_q7.c"/>
         <file category="source" name="CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_mat_q7_vec_q15_opt.c"/>
