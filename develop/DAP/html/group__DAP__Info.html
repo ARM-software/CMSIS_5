@@ -120,13 +120,13 @@ $(document).ready(function(){initNavTree('group__DAP__Info.html','');});
 <p><b>DAP_Info Command:</b> </p>
 <div class="fragment"><div class="line">| BYTE | BYTE |</div>
 <div class="line">&gt; 0x00 | ID   |</div>
-<div class="line">|******|******| </div>
+<div class="line">|******|******|</div>
 </div><!-- fragment --><ul>
 <li><b>ID:</b> Request Identifier to obtain information in the Response:<ul>
 <li><b>0x01</b> = Get the <b>Vendor ID</b> (string).</li>
 <li><b>0x02</b> = Get the <b>Product ID</b> (string).</li>
 <li><b>0x03</b> = Get the <b>Serial Number</b> (string).</li>
-<li><b>0x04</b> = Get the <b>CMSIS-DAP Firmware Version</b> (string).</li>
+<li><b>0x04</b> = Get the <b>CMSIS-DAP Protocol Version</b> (string).</li>
 <li><b>0x05</b> = Get the <b>Target Device Vendor</b> (string).</li>
 <li><b>0x06</b> = Get the <b>Target Device Name</b> (string).</li>
 <li><b>0x07</b> = Get the <b>Target Board Vendor</b> (string).</li>
@@ -149,16 +149,24 @@ $(document).ready(function(){initNavTree('group__DAP__Info.html','');});
 </div><!-- fragment --><ul>
 <li><b>Len:</b> Info length in bytes.</li>
 <li><b>Info:</b> <ul>
-<li>a <b>string</b> encoded in US ASCII. Len is the string length including the \x00 terminator. Len = 0 indicates no information.</li>
+<li>a <b>string</b> encoded in US ASCII. Len is the string length including the \x00 terminator. Len = 0 indicates no information, and is distinct from an empty string indicated by Len = 1.</li>
 <li>a <b>BYTE</b> value (indicated with Len = 1).</li>
 <li>a <b>SHORT</b> value (indicated with Len = 2).</li>
 <li>a <b>WORD</b> value (indicated with Len = 4).</li>
 </ul>
 </li>
 </ul>
-<dl class="section note"><dt>Note</dt><dd>The ID for <b>Vendor ID</b>, <b>Product ID</b>, and <b>Serial Number</b> may return no string (indicated by Len = 0). In this case the USB Device Information is used to obtain Vendor, Product, and Serial Number.</dd>
+<dl class="section note"><dt>Note</dt><dd>An unrecognized ID returns no value (indicated by Len = 0).</dd>
+<dd>
+The ID for <b>Vendor ID</b>, <b>Product ID</b>, and <b>Serial Number</b> may return no string (indicated by Len = 0). In this case the USB Device Information is used to obtain Vendor, Product, and Serial Number. The <b>Vendor ID</b> and <b>Product ID</b> are the vendor and product names, not the USB VID and PID.</dd>
+<dd>
+The value of <b>CMSIS-DAP Protocol Version</b> must be one of the versions from the <a class="el" href="dap_revisionHistory.html">CMSIS-DAP revision history</a>, such as "2.1.0".</dd>
 <dd>
 <b>Target Device Vendor</b>, <b>Target Device Name</b>, <b>Target Board Vendor</b> and <b>Target Board Name</b> are only available on On-Board Debug Units with known Target. Refer to <a class="el" href="group__DAP__Config__Debug__gr.html#gac87f11eeee8f1df63035585b8d824737">TARGET_FIXED</a> for more information. If the Target is not known no string is returned (indicated by Len = 0).</dd>
+<dd>
+<b>Target Device Vendor</b> should match the <code>Dvendor</code> attribute value from the corresponding CMSIS Device Family Pack, taken from the <a href="../../Pack/html/pdsc_family_pg.html#DeviceVendorEnum">Device Vendor</a> table, and must include the the colon and vendor code suffix.</dd>
+<dd>
+<b>Target Device Name</b> should match the <code>Dname</code> or <code>Dvariant</code> attribute value from the corresponding CMSIS Device Family Pack. Only alphabetical characters, decimal digits, '-' and '_' are allowed.</dd>
 <dd>
 <b>Product Firmware Version</b> may return no string (indicated by Len = 0).</dd></dl>
 <hr/>

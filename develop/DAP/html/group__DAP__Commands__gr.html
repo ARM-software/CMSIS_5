@@ -192,7 +192,7 @@ Content</h2></td></tr>
 <p><b>Examples:</b> </p>
 <div class="fragment"><div class="line">| BYTE | SHORT *| WORD ***|</div>
 <div class="line">&gt; 0x99 | RecLen | Data    |</div>
-<div class="line">|******|********|+++++++++| </div>
+<div class="line">|******|********|+++++++++|</div>
 </div><!-- fragment --><p>The Command with the Command-ID <em>0x99</em> is sent from the host computer to the Debug Unit. The value of <em>RecLen</em> indicates the number of WORDS that follow with <em>Data</em>. <em>Data</em> is repeated several times depending on the value of <em>RecLen</em>.</p>
 <p>Depending on the Command the Debug Unit may send a <b>Response</b>. </p>
 <div class="fragment"><div class="line">| BYTE ***| WORD***********|</div>
