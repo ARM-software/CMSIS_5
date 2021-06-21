@@ -21,8 +21,8 @@
  * Title:        arm_nnsupportfunctions.h
  * Description:  Public header file of support functions for CMSIS NN Library
  *
- * $Date:        12 August 2021
- * $Revision:    V.5.8.0
+ * $Date:        13. Aug 2021
+ * $Revision:    V.5.9.0
  *
  * Target Processor:  Cortex-M CPUs
  * -------------------------------------------------------------------- */
@@ -404,6 +404,34 @@ arm_status arm_nn_vec_mat_mult_t_s8(const q7_t *lhs,
                                     const int32_t rhs_rows,
                                     const int32_t activation_min,
                                     const int32_t activation_max);
+
+/**
+ * @brief s16 Vector by Matrix (transposed) multiplication
+ *
+ * @param[in]      lhs             Input left-hand side vector
+ * @param[in]      rhs             Input right-hand side matrix (transposed)
+ * @param[in]      bias            Input bias
+ * @param[out]     dst             Output vector
+ * @param[in]      dst_multiplier  Output multiplier
+ * @param[in]      dst_shift       Output shift
+ * @param[in]      rhs_cols        Number of columns in the right-hand side input matrix
+ * @param[in]      rhs_rows        Number of rows in the right-hand side input matrix
+ * @param[in]      activation_min  Minimum value to clamp the output to. Range: int16
+ * @param[in]      activation_max  Maximum value to clamp the output to. Range: int16
+ *
+ * @return         The function returns <code>ARM_MATH_SUCCESS</code>
+ *
+ */
+arm_status arm_nn_vec_mat_mult_t_s16(const q15_t *lhs,
+                                     const q7_t *rhs,
+                                     const q63_t *bias,
+                                     q15_t *dst,
+                                     const int32_t dst_multiplier,
+                                     const int32_t dst_shift,
+                                     const int32_t rhs_cols,
+                                     const int32_t rhs_rows,
+                                     const int32_t activation_min,
+                                     const int32_t activation_max);
 
 /**
  * @brief s8 Vector by Matrix (transposed) multiplication with s16 output

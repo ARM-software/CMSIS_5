@@ -21,8 +21,8 @@
  * Title:        arm_nn_vec_mat_mult_t_s8
  * Description:  s8 vector by matrix (transposed) multiplication
  *
- * $Date:        02. May 2021
- * $Revision:    V.2.5.0
+ * $Date:        3. August 2021
+ * $Revision:    V.2.5.1
  *
  * Target Processor:  Cortex-M
  *
@@ -361,7 +361,7 @@ arm_status arm_nn_vec_mat_mult_t_s8(const q7_t *lhs,
 
         for (int32_t rhs_cols_idx = 0; rhs_cols_idx < rhs_cols; ++rhs_cols_idx)
         {
-            q31_t rhs_value0 = (int8_t)rhs_ptr[0] + rhs_offset;
+            q31_t rhs_value0 = (int8_t)rhs_ptr[0];
             q31_t lhs_value = (int8_t)lhs_ptr[0] + lhs_offset;
 
             res00 += lhs_value * rhs_value0;
