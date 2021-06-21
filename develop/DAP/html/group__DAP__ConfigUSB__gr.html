@@ -185,7 +185,61 @@ Adapt CMSIS-DAP to the WinUSB class</div></div>
 <br/>
  If no Internet connection is available or you want device to show with different name under Device Manager you should provide an .inf file and sign it to generate .cat files. More information is available from Microsoft under the topic <a href="https://technet.microsoft.com/en-us/library/dd919238(v=ws.10).aspx" target="_blank">Steps for Signing a Device Driver Package</a>. <br/>
 <br/>
-The following CMSIS_DAP_v2.inf file should be provided for an Windows 7 host PC.<pre class="fragment"></pre> </div>
+The following CMSIS_DAP_v2.inf file should be provided for an Windows 7 host PC.<pre class="fragment">[Version]
+Signature = "$Windows NT$"
+Class     = USBDevice
+ClassGUID = {88BAE032-5A81-49f0-BC3D-A4FF138216D6}
+Provider  = %ManufacturerName%
+DriverVer = 04/13/2016, 1.0.0.0
+CatalogFile.nt      = CMSIS_DAP_v2_x86.cat
+CatalogFile.ntx86   = CMSIS_DAP_v2_x86.cat
+CatalogFile.ntamd64 = CMSIS_DAP_v2_amd64.cat
+
+; ========== Manufacturer/Models sections ===========
+
+[Manufacturer]
+%ManufacturerName% = Devices, NTx86, NTamd64
+
+[Devices.NTx86]
+%DeviceName% = USB_Install, USB\VID_c251&amp;PID_f000
+
+[Devices.NTamd64]
+%DeviceName% = USB_Install, USB\VID_c251&amp;PID_f000
+
+; ========== Class definition ===========
+
+[ClassInstall32]
+AddReg = ClassInstall_AddReg
+
+[ClassInstall_AddReg]
+HKR,,,,%ClassName%
+HKR,,NoInstallClass,,1
+HKR,,IconPath,0x10000,"%%SystemRoot%%\System32\setupapi.dll,-20"
+HKR,,LowerLogoVersion,,5.2
+
+; =================== Installation ===================
+
+[USB_Install]
+Include = winusb.inf
+Needs   = WINUSB.NT
+
+[USB_Install.Services]
+Include = winusb.inf
+Needs   = WINUSB.NT.Services
+
+[USB_Install.HW]
+AddReg  = Dev_AddReg
+
+[Dev_AddReg]
+HKR,,DeviceInterfaceGUIDs,0x10000,"{CDB3B5AD-293B-4663-AA36-1AAE46463776}"
+
+; =================== Strings ===================
+
+[Strings]
+ClassName        = "Universal Serial Bus devices"
+ManufacturerName = "KEIL - Tools By ARM"
+DeviceName       = "CMSIS-DAP v2" 
+</pre> </div>
 
 <h3><a class="anchor" id="USB_CDC"></a>Communication Device Class</h3><div class="textblock">CMSIS-DAP V2 supports also UART Communication Port optionally routed to USB COM Port which is implemented through USB Communication Device Class (CDC).<br/>
 <br/>

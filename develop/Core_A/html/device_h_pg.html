@@ -216,7 +216,255 @@ Device Peripheral Access Layer</h1>
 <h1><a class="anchor" id="device_h_sec"></a>
 Device.h Template File</h1>
 <p>The silicon vendor needs to extend the Device.h template file with the CMSIS features described above. In addition the <a class="el" href="device_h_pg.html">Device Header File &lt;device.h&gt;</a> may contain functions to access device-specific peripherals. The <a class="el" href="system_c_pg.html#system_Device_h_sec">system_Device.h Template File</a> which is provided as part of the CMSIS specification is shown below.</p>
-<pre class="fragment"></pre> </div></div><!-- contents -->
+<pre class="fragment">/**************************************************************************//**
+ * @file     &lt;Device&gt;.h
+ * @brief    CMSIS Cortex-A Core Peripheral Access Layer Header File
+ * @version  V1.01
+ * @date     23. June 2020
+ ******************************************************************************/
+/*
+ * Copyright (c) 2009-2020 Arm Limited. All rights reserved.
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ *
+ * Licensed under the Apache License, Version 2.0 (the License); you may
+ * not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an AS IS BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#ifndef &lt;Device&gt;_H      /* ToDo: replace '&lt;Device&gt;' with your device name */
+#define &lt;Device&gt;_H
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/* ToDo: replace '&lt;Vendor&gt;' with vendor name; add your doxyGen comment   */
+/** @addtogroup &lt;Vendor&gt;
+  * @{
+  */
+
+
+/* ToDo: replace '&lt;Device&gt;' with device name; add your doxyGen comment   */
+/** @addtogroup &lt;Device&gt;
+  * @{
+  */
+
+
+/** @addtogroup Configuration_of_CMSIS
+  * @{
+  */
+
+
+/* =========================================================================================================================== */
+/* ================                                Interrupt Number Definition                                ================ */
+/* =========================================================================================================================== */
+
+typedef enum IRQn
+{
+/* =======================================  ARM Cortex-A Specific Interrupt Numbers  ========================================= */
+
+  /* Software Generated Interrupts */
+  SGI0_IRQn                          =  0,      /*!&lt; Software Generated Interrupt  0                                           */
+  SGI1_IRQn                          =  1,      /*!&lt; Software Generated Interrupt  1                                           */
+  SGI2_IRQn                          =  2,      /*!&lt; Software Generated Interrupt  2                                           */
+  SGI3_IRQn                          =  3,      /*!&lt; Software Generated Interrupt  3                                           */
+  SGI4_IRQn                          =  4,      /*!&lt; Software Generated Interrupt  4                                           */
+  SGI5_IRQn                          =  5,      /*!&lt; Software Generated Interrupt  5                                           */
+  SGI6_IRQn                          =  6,      /*!&lt; Software Generated Interrupt  6                                           */
+  SGI7_IRQn                          =  7,      /*!&lt; Software Generated Interrupt  7                                           */
+  SGI8_IRQn                          =  8,      /*!&lt; Software Generated Interrupt  8                                           */
+  SGI9_IRQn                          =  9,      /*!&lt; Software Generated Interrupt  9                                           */
+  SGI10_IRQn                         = 10,      /*!&lt; Software Generated Interrupt 10                                           */
+  SGI11_IRQn                         = 11,      /*!&lt; Software Generated Interrupt 11                                           */
+  SGI12_IRQn                         = 12,      /*!&lt; Software Generated Interrupt 12                                           */
+  SGI13_IRQn                         = 13,      /*!&lt; Software Generated Interrupt 13                                           */
+  SGI14_IRQn                         = 14,      /*!&lt; Software Generated Interrupt 14                                           */
+  SGI15_IRQn                         = 15,      /*!&lt; Software Generated Interrupt 15                                           */
+  
+  /* Private Peripheral Interrupts */
+  VirtualMaintenanceInterrupt_IRQn   = 25,      /*!&lt; Virtual Maintenance Interrupt                                             */
+  HypervisorTimer_IRQn               = 26,      /*!&lt; Hypervisor Timer Interrupt                                                */
+  VirtualTimer_IRQn                  = 27,      /*!&lt; Virtual Timer Interrupt                                                   */ 
+  Legacy_nFIQ_IRQn                   = 28,      /*!&lt; Legacy nFIQ Interrupt                                                     */
+  SecurePhyTimer_IRQn                = 29,      /*!&lt; Secure Physical Timer Interrupt                                           */
+  NonSecurePhyTimer_IRQn             = 30,      /*!&lt; Non-Secure Physical Timer Interrupt                                       */
+  Legacy_nIRQ_IRQn                   = 31,      /*!&lt; Legacy nIRQ Interrupt                                                     */ 
+
+ /* Shared Peripheral Interrupts */
+ /* ToDo: add here your device specific external interrupt numbers */
+  &lt;DeviceInterrupt&gt;_IRQn    = 0,                /*!&lt; Device Interrupt                                                          */
+  
+} IRQn_Type;
+
+
+/* =========================================================================================================================== */
+/* ================                           Processor and Core Peripheral Section                           ================ */
+/* =========================================================================================================================== */
+
+/* ===========================  Configuration of the Arm Cortex-A Processor and Core Peripherals  ============================ */
+/* ToDo: set the defines according your Device */
+/* ToDo: define the correct core revision              
+         5U if your device is a CORTEX-A5 device
+         7U if your device is a CORTEX-A7 device
+         9U if your device is a CORTEX-A9 device */
+#define __CORTEX_A                    #U      /*!&lt; Cortex-A# Core                              */
+#define __CA_REV                 0x0000U      /*!&lt; Core revision r0p0                          */
+/* ToDo: define the correct core features for the &lt;Device&gt; */
+#define __FPU_PRESENT                 1U      /*!&lt; Set to 1 if FPU is present                  */
+#define __GIC_PRESENT                 1U      /*!&lt; Set to 1 if GIC is present                  */
+#define __TIM_PRESENT                 1U      /*!&lt; Set to 1 if TIM is present                  */
+#define __L2C_PRESENT                 1U      /*!&lt; Set to 1 if L2C is present                  */
+
+/** @} */ /* End of group Configuration_of_CMSIS */
+
+/* ToDo: include the correct core_ca#.h file
+         core_ca5.h if your device is a CORTEX-A5 device
+         core_ca7.h if your device is a CORTEX-A7 device
+         core_ca9.h if your device is a CORTEX-A9 device */
+#include &lt;core_ca#.h&gt;                         /*!&lt; Arm Cortex-A# processor and core peripherals */
+/* ToDo: include your system_&lt;Device&gt;.h file
+         replace '&lt;Device&gt;' with your device name */
+#include "system_&lt;Device&gt;.h"                  /*!&lt; &lt;Device&gt; System */
+
+
+/* ========================================  Start of section using anonymous unions  ======================================== */
+#if   defined (__CC_ARM)
+  #pragma push
+  #pragma anon_unions
+#elif defined (__ICCARM__)
+  #pragma language=extended
+#elif defined(__ARMCC_VERSION) &amp;&amp; (__ARMCC_VERSION &gt;= 6010050)
+  #pragma clang diagnostic push
+  #pragma clang diagnostic ignored "-Wc11-extensions"
+  #pragma clang diagnostic ignored "-Wreserved-id-macro"
+#elif defined (__GNUC__)
+  /* anonymous unions are enabled by default */
+#elif defined (__TMS470__)
+  /* anonymous unions are enabled by default */
+#elif defined (__TASKING__)
+  #pragma warning 586
+#elif defined (__CSMC__)
+  /* anonymous unions are enabled by default */
+#else
+  #warning Not supported compiler type
+#endif
+
+
+/* =========================================================================================================================== */
+/* ================                            Device Specific Peripheral Section                             ================ */
+/* =========================================================================================================================== */
+
+
+/** @addtogroup Device_Peripheral_peripherals
+  * @{
+  */
+
+/* ToDo: add here your device specific peripheral access structure typedefs
+         following is an example for a timer */
+
+/* =========================================================================================================================== */
+/* ================                                            TMR                                            ================ */
+/* =========================================================================================================================== */
+
+
+/**
+  * @brief Timer (TMR)
+  */
+
+typedef struct
+{                                               /*!&lt; (@ 0x40000000) TIM Structure                                              */
+  __IOM uint32_t   TimerLoad;                   /*!&lt; (@ 0x00000004) Timer Load                                                 */
+  __IM  uint32_t   TimerValue;                  /*!&lt; (@ 0x00000008) Timer Counter Current Value                                */
+  __IOM uint32_t   TimerControl;                /*!&lt; (@ 0x0000000C) Timer Control                                              */
+  __OM  uint32_t   TimerIntClr;                 /*!&lt; (@ 0x00000010) Timer Interrupt Clear                                      */
+  __IM  uint32_t   TimerRIS;                    /*!&lt; (@ 0x00000014) Timer Raw Interrupt Status                                 */
+  __IM  uint32_t   TimerMIS;                    /*!&lt; (@ 0x00000018) Timer Masked Interrupt Status                              */
+  __IM  uint32_t   RESERVED[1];
+  __IOM uint32_t   TimerBGLoad;                 /*!&lt; (@ 0x00000020) Background Load Register                                   */
+} &lt;DeviceAbbreviation&gt;_TMR_TypeDef;
+
+/*@}*/ /* end of group &lt;Device&gt;_Peripherals */
+
+
+/* =========================================  End of section using anonymous unions  ========================================= */
+#if   defined (__CC_ARM)
+  #pragma pop
+#elif defined (__ICCARM__)
+  /* leave anonymous unions enabled */
+#elif (__ARMCC_VERSION &gt;= 6010050)
+  #pragma clang diagnostic pop
+#elif defined (__GNUC__)
+  /* anonymous unions are enabled by default */
+#elif defined (__TMS470__)
+  /* anonymous unions are enabled by default */
+#elif defined (__TASKING__)
+  #pragma warning restore
+#elif defined (__CSMC__)
+  /* anonymous unions are enabled by default */
+#else
+  #warning Not supported compiler type
+#endif
+
+
+/* =========================================================================================================================== */
+/* ================                          Device Specific Peripheral Address Map                           ================ */
+/* =========================================================================================================================== */
+
+
+/* ToDo: add here your device peripherals base addresses
+         following is an example for timer */
+/** @addtogroup Device_Peripheral_peripheralAddr
+  * @{
+  */
+
+/* Peripheral and SRAM base address */
+#define &lt;DeviceAbbreviation&gt;_FLASH_BASE       (0x00000000UL)                              /*!&lt; (FLASH     ) Base Address */
+#define &lt;DeviceAbbreviation&gt;_SRAM_BASE        (0x20000000UL)                              /*!&lt; (SRAM      ) Base Address */
+#define &lt;DeviceAbbreviation&gt;_PERIPH_BASE      (0x40000000UL)                              /*!&lt; (Peripheral) Base Address */
+
+/* Peripheral memory map */
+#define &lt;DeviceAbbreviation&gt;TIM0_BASE         (&lt;DeviceAbbreviation&gt;_PERIPH_BASE)          /*!&lt; (Timer0    ) Base Address */
+#define &lt;DeviceAbbreviation&gt;TIM1_BASE         (&lt;DeviceAbbreviation&gt;_PERIPH_BASE + 0x0800) /*!&lt; (Timer1    ) Base Address */
+#define &lt;DeviceAbbreviation&gt;TIM2_BASE         (&lt;DeviceAbbreviation&gt;_PERIPH_BASE + 0x1000) /*!&lt; (Timer2    ) Base Address */
+
+/** @} */ /* End of group Device_Peripheral_peripheralAddr */
+
+
+/* =========================================================================================================================== */
+/* ================                                  Peripheral declaration                                   ================ */
+/* =========================================================================================================================== */
+
+
+/* ToDo: add here your device peripherals pointer definitions
+         following is an example for timer */
+/** @addtogroup Device_Peripheral_declaration
+  * @{
+  */
+
+#define &lt;DeviceAbbreviation&gt;_TIM0        ((&lt;DeviceAbbreviation&gt;_TMR_TypeDef *) &lt;DeviceAbbreviation&gt;TIM0_BASE)
+#define &lt;DeviceAbbreviation&gt;_TIM1        ((&lt;DeviceAbbreviation&gt;_TMR_TypeDef *) &lt;DeviceAbbreviation&gt;TIM0_BASE)
+#define &lt;DeviceAbbreviation&gt;_TIM2        ((&lt;DeviceAbbreviation&gt;_TMR_TypeDef *) &lt;DeviceAbbreviation&gt;TIM0_BASE)
+
+
+/** @} */ /* End of group &lt;Device&gt; */
+
+/** @} */ /* End of group &lt;Vendor&gt; */
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif  /* &lt;Device&gt;_H */
+</pre> </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
