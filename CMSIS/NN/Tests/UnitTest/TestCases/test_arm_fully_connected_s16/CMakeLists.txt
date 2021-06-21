@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2019-2021 Arm Limited. All rights reserved.
+# Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
 #
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -16,16 +16,8 @@
 # limitations under the License.
 #
 
-project(CMSISNNFullyConnected)
+add_cmsis_nn_unit_test_executable(test_arm_fully_connected_s16)
 
-file(GLOB SRC "./*_s8.c")
-add_library(CMSISNNFullyConnected STATIC ${SRC})
-target_sources(CMSISNNFullyConnected PUBLIC arm_fully_connected_s16.c)
-
-### Includes
-target_include_directories(CMSISNNFullyConnected PUBLIC "${NN}/Include")
-target_include_directories(CMSISNNFullyConnected PUBLIC "${ROOT}/CMSIS/Core/Include")
-target_include_directories(CMSISNNFullyConnected PUBLIC "${ROOT}/CMSIS/DSP/Include")
-
-
-
+target_sources(test_arm_fully_connected_s16 PRIVATE
+    Unity/unity_test_arm_fully_connected_s16.c
+    Unity/TestRunner/unity_test_arm_fully_connected_s16_runner.c)

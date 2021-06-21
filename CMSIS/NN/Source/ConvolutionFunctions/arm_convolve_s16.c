@@ -21,8 +21,8 @@
  * Title:        arm_convolve_s16.c
  * Description:  s16 version of convolution using symmetric quantization.
  *
- * $Date:        July 5, 2021
- * $Revision:    V.1.0.0
+ * $Date:        August 3, 2021
+ * $Revision:    V.1.0.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -90,7 +90,7 @@ arm_status arm_convolve_s16(const cmsis_nn_context *ctx,
 
         for (int32_t i_out_ch = 0; i_out_ch < output_ch; i_out_ch++)
         {
-            q31_t reduced_multiplier = REDUCE_MULTIPLIER(output_mult[i_out_ch]);
+            const q31_t reduced_multiplier = REDUCE_MULTIPLIER(output_mult[i_out_ch]);
 
             for (int32_t base_idx_y = -pad_y, i_out_y = 0; i_out_y < output_y; base_idx_y += stride_y, i_out_y++)
             {
