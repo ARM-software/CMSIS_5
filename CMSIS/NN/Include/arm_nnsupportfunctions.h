@@ -21,8 +21,8 @@
  * Title:        arm_nnsupportfunctions.h
  * Description:  Public header file of support functions for CMSIS NN Library
  *
- * $Date:        15. April 2021
- * $Revision:    V.5.5.0
+ * $Date:        5. July 2021
+ * $Revision:    V.5.6.0
  *
  * Target Processor:  Cortex-M CPUs
  * -------------------------------------------------------------------- */
@@ -46,6 +46,7 @@ extern "C" {
 #define MAX(A, B) ((A) > (B) ? (A) : (B))
 #define MIN(A, B) ((A) < (B) ? (A) : (B))
 #define CLAMP(x, h, l) MAX(MIN((x), (h)), (l))
+#define REDUCE_MULTIPLIER(_mult) ((_mult < 0x7FFF0000) ? ((_mult + (1 << 15)) >> 16) : 0x7FFF)
 
 /**
  * @brief Union for SIMD access of q31/q15/q7 types
@@ -796,6 +797,26 @@ __STATIC_FORCEINLINE q31_t arm_nn_requantize(const q31_t val, const q31_t multip
 {
     return arm_nn_divide_by_power_of_two(arm_nn_doubling_high_mult_no_sat(val * (1 << LEFT_SHIFT(shift)), multiplier),
                                          RIGHT_SHIFT(shift));
+}
+
+/**
+ * @brief           Requantize a given 64 bit value.
+ * @param[in]       val                 Value to be requantized
+ * @param[in]       reduced_multiplier  Reduced multiplier from range {Q31_MIN + 1, Q32_MAX} to {Q16_MIN + 1, Q16_MAX}
+ * @param[in]       shift               left or right shift for 'val * multiplier'
+ *
+ * @return          Returns (val * multiplier)/(2 ^ shift)
+ *
+ */
+__STATIC_FORCEINLINE q31_t arm_nn_requantize_s64(const q63_t val, const q31_t reduced_multiplier, const q31_t shift)
+{
+    q31_t result = 0;
+    q63_t new_val = val * reduced_multiplier;
+
+    result = new_val >> (14 - shift); // 64->32 bit reduction
+    result = (result + 1) >> 1;       // Last shift position and insert round
+
+    return result;
 }
 
 /**

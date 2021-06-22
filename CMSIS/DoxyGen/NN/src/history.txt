@@ -7,6 +7,18 @@
     <th>Description</th>
   </tr>
   <tr>
+    <td>V3.0.1</td>
+    <td>
+    <ul>
+      <li>Added arm_convolve_s16 and arm_convolve_wrapper_s16<br>
+      with support for int16.<br></li>
+      <li> Added conv int16 reference implementation </li>
+      <li> Added new requantization function for int16 </li>
+      <li> Added unit tests for int16 conv kernel </li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
     <td>V3.0.0</td>
     <td>
     <ul>

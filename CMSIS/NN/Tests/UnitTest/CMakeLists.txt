@@ -22,6 +22,12 @@ project(cmsis_nn_unit_tests VERSION 0.0.1)
 
 set(CMSIS_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../../../..")
 
+add_compile_options(-O0
+                    -Werror
+                    -Wimplicit-function-declaration
+                    -Wunused-variable
+                    -Wno-redundant-decls)
+
 option(BUILD_CMSIS_NN_UNIT "If building the unit tests from another project, i.e. \
 platform dependencies need to be provided externally." OFF)
 
@@ -62,6 +68,7 @@ endfunction(add_cmsis_nn_unit_test_executable)
 add_subdirectory(TestCases/test_arm_avgpool_s8)
 add_subdirectory(TestCases/test_arm_convolve_1x1_s8_fast)
 add_subdirectory(TestCases/test_arm_convolve_s8)
+add_subdirectory(TestCases/test_arm_convolve_s16)
 add_subdirectory(TestCases/test_arm_depthwise_conv_3x3_s8)
 add_subdirectory(TestCases/test_arm_depthwise_conv_s8)
 add_subdirectory(TestCases/test_arm_depthwise_conv_s8_opt)
