@@ -86,7 +86,7 @@ void svdf_arm_svdf_s8(void)
     const int scratch_size_out = SVDF_INPUT_BATCHES * number_units * sizeof(int32_t);
 
     input_ctx.buf = malloc(scratch_size);
-    output_ctx.buf = malloc(scratch_size);
+    output_ctx.buf = malloc(scratch_size_out);
 
     int8_t *input_data = malloc(input_round_size);
     q15_t *state_data = malloc(sizeof(svdf_state));
