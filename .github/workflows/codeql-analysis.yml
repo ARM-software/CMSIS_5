@@ -35,6 +35,7 @@ jobs:
         languages: ${{ matrix.language }}
 
     - run: |
+       ln -s /root/.rtebuild /github/home/.rtebuild
        cd CMSIS/CoreValidation/Tests
        python3 build.py -c GCC -o low build
 
