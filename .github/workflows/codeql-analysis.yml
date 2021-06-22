@@ -36,7 +36,8 @@ jobs:
 
     - run: |
        cd CMSIS/CoreValidation/Tests
-       ./build.py -c GCC -o low build
+       ls -la
+       python build.py -c GCC -o low build
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v1
