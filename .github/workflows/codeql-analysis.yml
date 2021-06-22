@@ -13,7 +13,7 @@ jobs:
     name: Analyze
     runs-on: ubuntu-latest
     container: 
-      image: jonatanantoni/cmsis/linux.gnu:latest
+      image: ghcr.io/jonatanantoni/cmsis/linux.gnu:latest
     permissions:
       actions: read
       contents: read
