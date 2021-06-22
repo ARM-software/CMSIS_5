@@ -11,6 +11,8 @@
     <release version="5.8.1">
       Active development ...
       CMSIS-DSP: 1.10.0 (see revision history for details)
+      CMSIS-NN: 3.0.1 (see revision history for details)
+       - Support for int16
     </release>
     <release version="5.8.0" date="2021-06-24">
       CMSIS-Core(M): 5.5.0 (see revision history for details)
@@ -2815,12 +2817,14 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_conv_s8.c"/>
         <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q15_fast_nonsquare.c"/>
         <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_s8.c"/>
+        <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_s16.c"/>
         <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_nn_mat_mult_s8.c"/>
         <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_conv_3x3_s8.c"/>
         <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_separable_conv_HWC_q7_nonsquare.c"/>
         <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q7_basic.c"/>
         <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_conv_s8_opt.c"/>
         <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_wrapper_s8.c"/>
+        <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_wrapper_s16.c"/>
         <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q15_fast.c"/>
         <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_nn_mat_mult_kernel_q7_q15_reordered.c"/>
         <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_nn_depthwise_conv_s8_core.c"/>
