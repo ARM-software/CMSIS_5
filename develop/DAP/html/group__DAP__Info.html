@@ -149,7 +149,7 @@ $(document).ready(function(){initNavTree('group__DAP__Info.html','');});
 </div><!-- fragment --><ul>
 <li><b>Len:</b> Info length in bytes.</li>
 <li><b>Info:</b> <ul>
-<li>a <b>string</b> encoded in US ASCII. Len is the string length including the \x00 terminator. Len = 0 indicates no information, and is distinct from an empty string indicated by Len = 1.</li>
+<li>a <b>string</b> encoded as UTF-8. Len is the string length including the \x00 terminator. Len = 0 indicates no information, and is distinct from an empty string indicated by Len = 1.</li>
 <li>a <b>BYTE</b> value (indicated with Len = 1).</li>
 <li>a <b>SHORT</b> value (indicated with Len = 2).</li>
 <li>a <b>WORD</b> value (indicated with Len = 4).</li>
