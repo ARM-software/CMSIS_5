@@ -8,8 +8,7 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
-    <release version="5.8.0">
-      Active development ...
+    <release version="5.8.0" date="2021-06-24">
       CMSIS-Core(M): 5.5.0 (see revision history for details)
         - Updated GCC LinkerDescription, GCC Assembler startup
         - Added Armv8-M Stack Sealing (to linker, startup) for toolchain ARM, GCC
