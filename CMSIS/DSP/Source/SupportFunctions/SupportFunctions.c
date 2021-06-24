@@ -45,8 +45,6 @@
 #include "arm_selection_sort_f32.c"
 #include "arm_sort_f32.c"
 #include "arm_sort_init_f32.c"
-#include "arm_spline_interp_f32.c"
-#include "arm_spline_interp_init_f32.c"
 #include "arm_weighted_sum_f32.c"
 
 #include "arm_float_to_q15.c"

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component_viewer schemaVersion="1.2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="Component_Viewer.xsd">
-  <component name="CMSIS:RTOS2:Keil RTX5" shortname="RTX5" version="5.5.2"/>    <!-- name and version of the component -->
+  <component name="CMSIS:RTOS2:Keil RTX5" shortname="RTX5" version="5.5.3"/>    <!-- name and version of the component -->
 
   <typedefs>
     <!-- Attributes structure for thread -->
@@ -91,8 +91,8 @@
       </member>
       <member name="flags"         type="uint8_t"        offset="2" info="Object Flags"/>
       <member name="attr"          type="uint8_t"        offset="3" info="Object Attributes">
-        <enum name="osThreadDetached" value="0x00" info="Thread created in detached state"/>
-        <enum name="osThreadJoinable" value="0x01" info="Thread created in joinable state"/>
+        <enum name="osThreadDetached" value="0x00" info="Thread created in detached mode"/>
+        <enum name="osThreadJoinable" value="0x01" info="Thread created in joinable mode"/>
       </member>
       <member name="name"          type="uint32_t"       offset="4"  info="Object name (type is *uint8_t)"/>
       <member name="thread_next"   type="*osRtxThread_t" offset="8"  info="Link pointer to next Thread in Object list"/>
@@ -370,8 +370,7 @@
       <member name="thread_wait_list"           type="*osRtxThread_t"       offset="48"  info="Wait list (no timeout)"/>
       <member name="thread_terminate_list"      type="*osRtxThread_t"       offset="52"  info="Terminate list"/>
 
-      <member name="thread_robin_thread"        type="*osRtxThread_t"       offset="56"  info="Round Robin thread"/>
-      <member name="thread_robin_tick"          type="uint32_t"             offset="60"  info="Round Robin time tick"/>
+      <member name="thread_robin_thread"        type="*osRtxThread_t"       offset="60"  info="Round Robin thread"/>
       <member name="thread_timeout"             type="uint32_t"             offset="64"  info="Round Robin timeout"/>
 
       <member name="timer_list"                 type="*osRtxTimer_t"        offset="68"  info="Active timer list"/>
@@ -404,6 +403,8 @@
       <member name="mpi_semaphore"              type="*osRtxMpInfo_t"       offset="152" info="Semaphore control blocks"/>
       <member name="mpi_memory_pool"            type="*osRtxMpInfo_t"       offset="156" info="Memory pool control blocks"/>
       <member name="mpi_message_queue"          type="*osRtxMpInfo_t"       offset="160" info="Message queue control blocks"/>
+
+      <var name="robin_tick" type="uint32_t" info="Round Robin time tick (thread_robin_thread.delay)"/>
     </typedef>
 
     <!-- OS Runtime Object Memory Usage structure -->
@@ -414,7 +415,7 @@
     </typedef>
 
     <!-- OS Configuration structure -->
-    <typedef name="osRtxConfig_t" const="1" info="OS Configuration Structure" size="104">
+    <typedef name="osRtxConfig_t" const="1" info="OS Configuration Structure" size="112">
       <member name="flags"                 type="uint32_t" offset="0" info="OS configuration flags"/>
       <member name="tick_freq"             type="uint32_t" offset="4" info="Kernel tick frequency"/>
 
@@ -444,8 +445,13 @@
       <member name="thread_stack_size"     type="uint32_t" offset="84"  info="Default thread stack size"/>
       <member name="idle_thread_attr"      type="uint32_t" offset="88"  info="Idle thread attributes (type is osThreadAttr_s *)"/>
       <member name="timer_thread_attr"     type="uint32_t" offset="92"  info="Timer thread attributes (type is osThreadAttr_s *)"/>
-      <member name="timer_mq_attr"         type="uint32_t" offset="96"  info="Timer message queue attributes (type is osMessageQueueAttr_s *)"/>
-      <member name="timer_mq_mcnt"         type="uint32_t" offset="100" info="Timer message queue maximum messages"/>
+      <member name="timer_thread"          type="uint32_t" offset="96"  info="Timer Thread Function (type is void(*func)(void *)"/>
+      <member name="timer_setup"           type="uint32_t" offset="100" info="Timer Setup Function (type is int32_t(*func)(void)"/>
+      <member name="timer_mq_attr"         type="uint32_t" offset="104" info="Timer message queue attributes (type is osMessageQueueAttr_s *)"/>
+      <member name="timer_mq_mcnt"         type="uint32_t" offset="108" info="Timer message queue maximum messages"/>
+
+      <var name="stack_check"  type="uint8_t" info="Stack checking (0:disabled, 1:enabled)"/>
+      <var name="stack_wmark"  type="uint8_t" info="Stack watermark (0:disabled, 1:enabled)"/>
     </typedef>
 
     <!-- Memory Pool Header -->
@@ -603,6 +609,16 @@
       </member>
     </typedef>
 
+    <typedef name="rtx_error" info="OS Error Code" size="4">
+      <member name="id" type="uint32_t" offset="0" info="Error Code">
+        <enum name="osRtxErrorStackOverflow"      value="1" info="Stack overflow"/>
+        <enum name="osRtxErrorISRQueueOverflow"   value="2" info="ISR Queue overflow"/>
+        <enum name="osRtxErrorTimerQueueOverflow" value="3" info="User Timer Callback Queue overflow"/>
+        <enum name="osRtxErrorClibSpace"          value="4" info="Standard C/C++ library libspace not available"/>
+        <enum name="osRtxErrorClibMutex"          value="5" info="Standard C/C++ library mutex initialization failed"/>
+      </member>
+    </typedef>
+
   </typedefs>
 
   <objects>
@@ -658,6 +674,11 @@
       <read name="os_Info"   type="osRtxInfo_t"   symbol="osRtxInfo"/>
       <read name="os_Config" type="osRtxConfig_t" symbol="osRtxConfig" const="1"/>
 
+      <calc>
+        os_Config.stack_check  = (os_Config.flags >> 1) &amp; 1;
+        os_Config.stack_wmark  = (os_Config.flags >> 2) &amp; 1;
+      </calc>
+
       <calc cond="((os_Info.version / 10000000) == 5) &amp;&amp; (os_Info.kernel_state &gt; 0) &amp;&amp; (os_Info.kernel_state &lt; 5)">
         RTX_En = 1;
       </calc>
@@ -671,9 +692,6 @@
       <calc cond="RTX_En &amp;&amp; (os_Config.mpi_thread || os_Config.mpi_timer || os_Config.mpi_event_flags || os_Config.mpi_mutex || os_Config.mpi_semaphore || os_Config.mpi_memory_pool || os_Config.mpi_message_queue)">
         StaticMp_En = 1;
       </calc>
-
-      <var name="stack_check" type="uint8_t" value="(os_Config.flags >> 1) &amp; 1"/>
-      <var name="stack_wmark" type="uint8_t" value="(os_Config.flags >> 2) &amp; 1"/>
 
       <!-- Read ISR FIFO queue -->
       <read name="ISR_FIFO" cond="RTX_En" type="uint32_t" offset="os_Config.isr_queue_data" size="os_Config.isr_queue_max"/>
@@ -805,14 +823,16 @@
         <readlist cond="(mem_list_com[i].len &amp; 1) &amp;&amp; (mem_list_com[i].id == 0xFA)" name="QCB" type="osRtxMessageQueue_t" offset="addr" count="1" />
       </list>
 
-      <!-- Read thread wait list -->
-      <readlist name="TWL" cond="RTX_En &amp;&amp; os_Info.thread_wait_list" type="osRtxThread_t" offset="os_Info.thread_wait_list" next="delay_next"/>
-
       <!-- Validate and process Thread control blocks -->
       <list name="i" start="0" limit="TCB._count">
         <calc>
           TCB[i].cb_valid = (TCB[i].id == 0xF1) &amp;&amp; (TCB[i].state != 0) &amp;&amp; (TCB[i].sp != 0);
           TCB[i].sp_valid = 1;
+        </calc>
+
+        <!-- Set Round Robin time tick from the running thread tick value -->
+        <calc cond="(TCB[i].state == 2) &amp;&amp; os_Config.robin_timeout">
+          os_Info.robin_tick = TCB[i].delay;
         </calc>
 
         <!-- Stack pointer for running thread -->
@@ -856,7 +876,7 @@
         </calc>
 
         <!-- Check also control values to determine maximum stack usage -->
-        <calc cond="(stack_wmark != 0) &amp;&amp; (TCB[i].sp != 0) &amp;&amp; (TCB[i].stack_over == 0) &amp;&amp; (TCB[i].stack_size &lt; 65536)">
+        <calc cond="(os_Config.stack_wmark != 0) &amp;&amp; (TCB[i].sp != 0) &amp;&amp; (TCB[i].stack_over == 0) &amp;&amp; (TCB[i].stack_size &lt; 65536)">
           TCB[i].stack_val  = __CalcMemUsed (TCB[i].stack_mem, sp - TCB[i].stack_mem, 0xCCCCCCCC, 0xE25A2EA5);
           TCB[i].stack_over =  TCB[i].stack_val >> 31;
           TCB[i].stack_maxb = (TCB[i].stack_mem + TCB[i].stack_size) - sp;
@@ -1048,10 +1068,10 @@
         <calc>TCB_En += TCB[i].cb_valid; </calc>
 
         <calc cond="TCB[i].cb_valid == 0"> TCB[i].out_type = 0;</calc>
-        <calc cond="TCB[i].cb_valid &amp;&amp; (TCB[i].name == 0) &amp;&amp; (stack_wmark == 0)"> TCB[i].out_type = 1; </calc>
-        <calc cond="TCB[i].cb_valid &amp;&amp; (TCB[i].name == 0) &amp;&amp; (stack_wmark != 0)"> TCB[i].out_type = 2; </calc>
-        <calc cond="TCB[i].cb_valid &amp;&amp; (TCB[i].name != 0) &amp;&amp; (stack_wmark == 0)"> TCB[i].out_type = 3; </calc>
-        <calc cond="TCB[i].cb_valid &amp;&amp; (TCB[i].name != 0) &amp;&amp; (stack_wmark != 0)"> TCB[i].out_type = 4; </calc>
+        <calc cond="TCB[i].cb_valid &amp;&amp; (TCB[i].name == 0) &amp;&amp; (os_Config.stack_wmark == 0)"> TCB[i].out_type = 1; </calc>
+        <calc cond="TCB[i].cb_valid &amp;&amp; (TCB[i].name == 0) &amp;&amp; (os_Config.stack_wmark != 0)"> TCB[i].out_type = 2; </calc>
+        <calc cond="TCB[i].cb_valid &amp;&amp; (TCB[i].name != 0) &amp;&amp; (os_Config.stack_wmark == 0)"> TCB[i].out_type = 3; </calc>
+        <calc cond="TCB[i].cb_valid &amp;&amp; (TCB[i].name != 0) &amp;&amp; (os_Config.stack_wmark != 0)"> TCB[i].out_type = 4; </calc>
 
         <calc cond="TCB[i].sp_valid == 0"> TCB[i].out_type += 4; </calc>
       </list>
@@ -1082,13 +1102,13 @@
           <item property="Kernel State" value="%E[os_Info.kernel_state]" cond="RTX_En != 0"/>
           <item property="Kernel Tick Count"      value="%d[os_Info.kernel_tick]"     cond="RTX_En != 0"/>
           <item property="Kernel Tick Frequency"  value="%d[os_Config.tick_freq]"     cond="RTX_En != 0" />
-          <item property="Round Robin"            value="Disabled"                      cond="(os_Config.robin_timeout == 0) &amp;&amp; (RTX_En != 0)" />
-          <item property="Round Robin Tick Count" value="%d[os_Info.thread_robin_tick]" cond="(os_Config.robin_timeout > 0)  &amp;&amp; (RTX_En != 0)" />
-          <item property="Round Robin Timeout"    value="%d[os_Config.robin_timeout]"   cond="(os_Config.robin_timeout > 0)  &amp;&amp; (RTX_En != 0)" />
-          <item property="Global Dynamic Memory" value="Not used"                                                                                                               cond="(os_Config.mem_common_size == 0) &amp;&amp; (RTX_En != 0)"/>
+          <item property="Round Robin"            value="Disabled"                    cond="(os_Config.robin_timeout == 0) &amp;&amp; (RTX_En != 0)" />
+          <item property="Round Robin Tick Count" value="%d[os_Info.robin_tick]"      cond="(os_Config.robin_timeout > 0)  &amp;&amp; (RTX_En != 0)" />
+          <item property="Round Robin Timeout"    value="%d[os_Config.robin_timeout]" cond="(os_Config.robin_timeout > 0)  &amp;&amp; (RTX_En != 0)" />
+          <item property="Global Dynamic Memory" value="Not used"                                                                                                                    cond="(os_Config.mem_common_size == 0) &amp;&amp; (RTX_En != 0)"/>
           <item property="Global Dynamic Memory" value="Base: %x[mem_head_com._addr], Size: %d[mem_head_com.size], Used: %d[mem_head_com.used], Max used: %d[mem_head_com.max_used]" cond="(os_Config.mem_common_size != 0) &amp;&amp; (RTX_En != 0)"/>
-          <item property="Stack Overrun Check"   value="%t[stack_check ? &quot;Enabled&quot; : &quot;Disabled&quot;]" cond="RTX_En != 0"/>
-          <item property="Stack Usage Watermark" value="%t[stack_wmark ? &quot;Enabled&quot; : &quot;Disabled&quot;]" cond="RTX_En != 0"/>
+          <item property="Stack Overrun Check"   value="%t[os_Config.stack_check ? &quot;Enabled&quot; : &quot;Disabled&quot;]" cond="RTX_En != 0"/>
+          <item property="Stack Usage Watermark" value="%t[os_Config.stack_wmark ? &quot;Enabled&quot; : &quot;Disabled&quot;]" cond="RTX_En != 0"/>
           <item property="Default Thread Stack Size" value="%d[os_Config.thread_stack_size]" cond="RTX_En != 0"/>
 
           <item property="ISR FIFO Queue" value="Size: %d[os_Info.isr_queue_max], Used: %d[os_Info.isr_queue_cnt]" cond="RTX_En">
@@ -1157,6 +1177,9 @@
               <item>
                 <print property="Waiting" value="%E[TCB[i].state], Timeout: %d[TCB[i].ex_delay]" cond="((TCB[i].state &amp; 0x07) == 3) &amp;&amp; (TCB[i].ex_delay != -1)"/>
                 <print property="Waiting" value="%E[TCB[i].state], Timeout: osWaitForever"       cond="((TCB[i].state &amp; 0x07) == 3) &amp;&amp; (TCB[i].ex_delay == -1)"/>
+                <!-- Wait Join -->
+                <item cond="TCB[i].state == 0x23" property="id: %x[TCB[i].thread_join]" value=""/>
+
                 <!-- Wait Thread Flags -->
                 <item cond="TCB[i].state == 0x33" property="id: %x[TCB[i].thread_prev]" value=""/>
 
@@ -1187,16 +1210,16 @@
               </item>
 
               <item>
-                <print cond="(TCB[i].sp_valid == 0) &amp;&amp; (stack_wmark == 0)" property="Stack" value="Used: unknown"/>
-                <print cond="(TCB[i].sp_valid == 0) &amp;&amp; (stack_wmark != 0)" property="Stack" value="Used: unknown, Max: %d[TCB[i].stack_maxp]%% [%d[TCB[i].stack_maxb]]"/>
-                <print cond="(TCB[i].sp_valid == 1) &amp;&amp; (stack_wmark == 0)" property="Stack" value="Used: %d[TCB[i].stack_curp]%% [%d[TCB[i].stack_curb]]"/>
-                <print cond="(TCB[i].sp_valid == 1) &amp;&amp; (stack_wmark != 0)" property="Stack" value="Used: %d[TCB[i].stack_curp]%% [%d[TCB[i].stack_curb]], Max: %d[TCB[i].stack_maxp]%% [%d[TCB[i].stack_maxb]]"/>
+                <print cond="(TCB[i].sp_valid == 0) &amp;&amp; (os_Config.stack_wmark == 0)" property="Stack" value="Used: unknown"/>
+                <print cond="(TCB[i].sp_valid == 0) &amp;&amp; (os_Config.stack_wmark != 0)" property="Stack" value="Used: unknown, Max: %d[TCB[i].stack_maxp]%% [%d[TCB[i].stack_maxb]]"/>
+                <print cond="(TCB[i].sp_valid == 1) &amp;&amp; (os_Config.stack_wmark == 0)" property="Stack" value="Used: %d[TCB[i].stack_curp]%% [%d[TCB[i].stack_curb]]"/>
+                <print cond="(TCB[i].sp_valid == 1) &amp;&amp; (os_Config.stack_wmark != 0)" property="Stack" value="Used: %d[TCB[i].stack_curp]%% [%d[TCB[i].stack_curb]], Max: %d[TCB[i].stack_maxp]%% [%d[TCB[i].stack_maxb]]"/>
 
                 <item>
                   <print cond="TCB[i].sp_valid == 0" property="Used" value="unknown"/>
                   <print cond="TCB[i].sp_valid == 1" property="Used" value="%d[TCB[i].stack_curb]"/>
                 </item>
-                <item property="Max"   value="%d[TCB[i].stack_maxb]" cond="stack_wmark != 0"/>
+                <item property="Max"   value="%d[TCB[i].stack_maxb]" cond="os_Config.stack_wmark != 0"/>
                 <item property="Top"   value="%x[TCB[i].stack_mem + TCB[i].stack_size]"/>
                 <item>
                   <print cond="TCB[i].sp_valid == 0" property="Current" value="unknown"/>
@@ -1420,6 +1443,7 @@
     <event id="0xF100 + 0x14" level="API"    property="KernelGetTickFreq"                   value="freq=%d[val1]" info="osKernelGetTickFreq function was called."/>
     <event id="0xF100 + 0x15" level="API"    property="KernelGetSysTimerCount"              value="count=%d[val1]" info="osKernelGetSysTimerCount function was called."/>
     <event id="0xF100 + 0x16" level="API"    property="KernelGetSysTimerFreq"               value="freq=%d[val1]" info="osKernelGetSysTimerFreq function was called."/>
+    <event id="0xF100 + 0x19" level="Error"  property="KernelErrorNotify"                   value="code=%E[val1, rtx_error:id], object_id=%x[val2]" info="osKernelErrorNotify function was called."/>
 
     <event id="0xF200 + 0x00" level="Error"  property="ThreadError"                                                                       value="thread_id=%x[val1], status=%E[val2, rtx_t:status]" info="Thread error occurred."/>
     <event id="0xF200 + 0x01" level="API"    property="ThreadNew"                                                                         value="func=%S[val1], argument=%x[val2], attr=%x[val3]" info="osThreadNew function was called."/>

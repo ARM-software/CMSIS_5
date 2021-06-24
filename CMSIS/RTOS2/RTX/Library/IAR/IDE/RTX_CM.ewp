@@ -66,7 +66,7 @@
                 </option>
                 <option>
                     <name>OGLastSavedByProductVersion</name>
-                    <state>8.32.3.20186</state>
+                    <state>8.40.1.21529</state>
                 </option>
                 <option>
                     <name>GeneralEnableMisra</name>
@@ -347,7 +347,7 @@
                 </option>
                 <option>
                     <name>CCIncludePath2</name>
-                    <state>$PROJ_DIR$\..\..\..\Config</state>
+                    <state>$PROJ_DIR$\..\..\..\Library</state>
                     <state>$PROJ_DIR$\..\..\..\Include</state>
                     <state>$PROJ_DIR$\..\..\..\..\Include</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Core\Include</state>
@@ -622,7 +622,8 @@
                 </option>
                 <option>
                     <name>AUserIncludes</name>
-                    <state></state>
+                    <state>$PROJ_DIR$\..\..\..\Library</state>
+                    <state>$PROJ_DIR$\..\..\..\Include</state>
                 </option>
                 <option>
                     <name>AExtraOptionsCheckV2</name>
@@ -694,7 +695,7 @@
             <name>ILINK</name>
             <archiveVersion>0</archiveVersion>
             <data>
-                <version>22</version>
+                <version>23</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>0</debug>
                 <option>
@@ -1014,6 +1015,22 @@
                     <name>OILinkExtraOption</name>
                     <state>1</state>
                 </option>
+                <option>
+                    <name>IlinkRawBinaryFile2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySymbol2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySegment2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryAlign2</name>
+                    <state></state>
+                </option>
             </data>
         </settings>
         <settings>
@@ -1108,7 +1125,7 @@
                 </option>
                 <option>
                     <name>OGLastSavedByProductVersion</name>
-                    <state>8.32.3.20186</state>
+                    <state>8.40.1.21529</state>
                 </option>
                 <option>
                     <name>GeneralEnableMisra</name>
@@ -1389,7 +1406,7 @@
                 </option>
                 <option>
                     <name>CCIncludePath2</name>
-                    <state>$PROJ_DIR$\..\..\..\Config</state>
+                    <state>$PROJ_DIR$\..\..\..\Library</state>
                     <state>$PROJ_DIR$\..\..\..\Include</state>
                     <state>$PROJ_DIR$\..\..\..\..\Include</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Core\Include</state>
@@ -1664,7 +1681,8 @@
                 </option>
                 <option>
                     <name>AUserIncludes</name>
-                    <state></state>
+                    <state>$PROJ_DIR$\..\..\..\Library</state>
+                    <state>$PROJ_DIR$\..\..\..\Include</state>
                 </option>
                 <option>
                     <name>AExtraOptionsCheckV2</name>
@@ -1736,7 +1754,7 @@
             <name>ILINK</name>
             <archiveVersion>0</archiveVersion>
             <data>
-                <version>22</version>
+                <version>23</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>0</debug>
                 <option>
@@ -2056,6 +2074,22 @@
                     <name>OILinkExtraOption</name>
                     <state>1</state>
                 </option>
+                <option>
+                    <name>IlinkRawBinaryFile2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySymbol2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySegment2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryAlign2</name>
+                    <state></state>
+                </option>
             </data>
         </settings>
         <settings>
@@ -2150,7 +2184,7 @@
                 </option>
                 <option>
                     <name>OGLastSavedByProductVersion</name>
-                    <state>8.32.3.20186</state>
+                    <state>8.40.1.21529</state>
                 </option>
                 <option>
                     <name>GeneralEnableMisra</name>
@@ -2431,7 +2465,7 @@
                 </option>
                 <option>
                     <name>CCIncludePath2</name>
-                    <state>$PROJ_DIR$\..\..\..\Config</state>
+                    <state>$PROJ_DIR$\..\..\..\Library</state>
                     <state>$PROJ_DIR$\..\..\..\Include</state>
                     <state>$PROJ_DIR$\..\..\..\..\Include</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Core\Include</state>
@@ -2706,7 +2740,8 @@
                 </option>
                 <option>
                     <name>AUserIncludes</name>
-                    <state></state>
+                    <state>$PROJ_DIR$\..\..\..\Library</state>
+                    <state>$PROJ_DIR$\..\..\..\Include</state>
                 </option>
                 <option>
                     <name>AExtraOptionsCheckV2</name>
@@ -2778,7 +2813,7 @@
             <name>ILINK</name>
             <archiveVersion>0</archiveVersion>
             <data>
-                <version>22</version>
+                <version>23</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>0</debug>
                 <option>
@@ -3097,6 +3132,22 @@
                 <option>
                     <name>OILinkExtraOption</name>
                     <state>1</state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryFile2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySymbol2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySegment2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryAlign2</name>
+                    <state></state>
                 </option>
             </data>
         </settings>
@@ -3192,7 +3243,7 @@
                 </option>
                 <option>
                     <name>OGLastSavedByProductVersion</name>
-                    <state>8.32.3.20186</state>
+                    <state>8.40.1.21529</state>
                 </option>
                 <option>
                     <name>GeneralEnableMisra</name>
@@ -3473,7 +3524,7 @@
                 </option>
                 <option>
                     <name>CCIncludePath2</name>
-                    <state>$PROJ_DIR$\..\..\..\Config</state>
+                    <state>$PROJ_DIR$\..\..\..\Library</state>
                     <state>$PROJ_DIR$\..\..\..\Include</state>
                     <state>$PROJ_DIR$\..\..\..\..\Include</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Core\Include</state>
@@ -3748,7 +3799,8 @@
                 </option>
                 <option>
                     <name>AUserIncludes</name>
-                    <state></state>
+                    <state>$PROJ_DIR$\..\..\..\Library</state>
+                    <state>$PROJ_DIR$\..\..\..\Include</state>
                 </option>
                 <option>
                     <name>AExtraOptionsCheckV2</name>
@@ -3820,7 +3872,7 @@
             <name>ILINK</name>
             <archiveVersion>0</archiveVersion>
             <data>
-                <version>22</version>
+                <version>23</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>0</debug>
                 <option>
@@ -4139,6 +4191,22 @@
                 <option>
                     <name>OILinkExtraOption</name>
                     <state>1</state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryFile2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySymbol2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySegment2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryAlign2</name>
+                    <state></state>
                 </option>
             </data>
         </settings>
@@ -4234,7 +4302,7 @@
                 </option>
                 <option>
                     <name>OGLastSavedByProductVersion</name>
-                    <state>8.32.3.20186</state>
+                    <state>8.40.1.21529</state>
                 </option>
                 <option>
                     <name>GeneralEnableMisra</name>
@@ -4516,7 +4584,7 @@
                 </option>
                 <option>
                     <name>CCIncludePath2</name>
-                    <state>$PROJ_DIR$\..\..\..\Config</state>
+                    <state>$PROJ_DIR$\..\..\..\Library</state>
                     <state>$PROJ_DIR$\..\..\..\Include</state>
                     <state>$PROJ_DIR$\..\..\..\..\Include</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Core\Include</state>
@@ -4791,7 +4859,8 @@
                 </option>
                 <option>
                     <name>AUserIncludes</name>
-                    <state></state>
+                    <state>$PROJ_DIR$\..\..\..\Library</state>
+                    <state>$PROJ_DIR$\..\..\..\Include</state>
                 </option>
                 <option>
                     <name>AExtraOptionsCheckV2</name>
@@ -4863,7 +4932,7 @@
             <name>ILINK</name>
             <archiveVersion>0</archiveVersion>
             <data>
-                <version>22</version>
+                <version>23</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>0</debug>
                 <option>
@@ -5182,6 +5251,22 @@
                 <option>
                     <name>OILinkExtraOption</name>
                     <state>1</state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryFile2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySymbol2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySegment2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryAlign2</name>
+                    <state></state>
                 </option>
             </data>
         </settings>
@@ -5277,7 +5362,7 @@
                 </option>
                 <option>
                     <name>OGLastSavedByProductVersion</name>
-                    <state>8.32.3.20186</state>
+                    <state>8.40.1.21529</state>
                 </option>
                 <option>
                     <name>GeneralEnableMisra</name>
@@ -5558,7 +5643,7 @@
                 </option>
                 <option>
                     <name>CCIncludePath2</name>
-                    <state>$PROJ_DIR$\..\..\..\Config</state>
+                    <state>$PROJ_DIR$\..\..\..\Library</state>
                     <state>$PROJ_DIR$\..\..\..\Include</state>
                     <state>$PROJ_DIR$\..\..\..\..\Include</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Core\Include</state>
@@ -5833,7 +5918,8 @@
                 </option>
                 <option>
                     <name>AUserIncludes</name>
-                    <state></state>
+                    <state>$PROJ_DIR$\..\..\..\Library</state>
+                    <state>$PROJ_DIR$\..\..\..\Include</state>
                 </option>
                 <option>
                     <name>AExtraOptionsCheckV2</name>
@@ -5905,7 +5991,7 @@
             <name>ILINK</name>
             <archiveVersion>0</archiveVersion>
             <data>
-                <version>22</version>
+                <version>23</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>0</debug>
                 <option>
@@ -6224,6 +6310,22 @@
                 <option>
                     <name>OILinkExtraOption</name>
                     <state>1</state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryFile2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySymbol2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySegment2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryAlign2</name>
+                    <state></state>
                 </option>
             </data>
         </settings>
@@ -6319,7 +6421,7 @@
                 </option>
                 <option>
                     <name>OGLastSavedByProductVersion</name>
-                    <state>8.32.3.20186</state>
+                    <state>8.40.1.21529</state>
                 </option>
                 <option>
                     <name>GeneralEnableMisra</name>
@@ -6601,7 +6703,7 @@
                 </option>
                 <option>
                     <name>CCIncludePath2</name>
-                    <state>$PROJ_DIR$\..\..\..\Config</state>
+                    <state>$PROJ_DIR$\..\..\..\Library</state>
                     <state>$PROJ_DIR$\..\..\..\Include</state>
                     <state>$PROJ_DIR$\..\..\..\..\Include</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Core\Include</state>
@@ -6876,7 +6978,8 @@
                 </option>
                 <option>
                     <name>AUserIncludes</name>
-                    <state></state>
+                    <state>$PROJ_DIR$\..\..\..\Library</state>
+                    <state>$PROJ_DIR$\..\..\..\Include</state>
                 </option>
                 <option>
                     <name>AExtraOptionsCheckV2</name>
@@ -6948,7 +7051,7 @@
             <name>ILINK</name>
             <archiveVersion>0</archiveVersion>
             <data>
-                <version>22</version>
+                <version>23</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>0</debug>
                 <option>
@@ -7268,6 +7371,22 @@
                     <name>OILinkExtraOption</name>
                     <state>1</state>
                 </option>
+                <option>
+                    <name>IlinkRawBinaryFile2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySymbol2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySegment2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryAlign2</name>
+                    <state></state>
+                </option>
             </data>
         </settings>
         <settings>
@@ -7362,7 +7481,7 @@
                 </option>
                 <option>
                     <name>OGLastSavedByProductVersion</name>
-                    <state>8.32.3.20186</state>
+                    <state>8.40.1.21529</state>
                 </option>
                 <option>
                     <name>GeneralEnableMisra</name>
@@ -7643,7 +7762,7 @@
                 </option>
                 <option>
                     <name>CCIncludePath2</name>
-                    <state>$PROJ_DIR$\..\..\..\Config</state>
+                    <state>$PROJ_DIR$\..\..\..\Library</state>
                     <state>$PROJ_DIR$\..\..\..\Include</state>
                     <state>$PROJ_DIR$\..\..\..\..\Include</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Core\Include</state>
@@ -7918,7 +8037,8 @@
                 </option>
                 <option>
                     <name>AUserIncludes</name>
-                    <state></state>
+                    <state>$PROJ_DIR$\..\..\..\Library</state>
+                    <state>$PROJ_DIR$\..\..\..\Include</state>
                 </option>
                 <option>
                     <name>AExtraOptionsCheckV2</name>
@@ -7990,7 +8110,7 @@
             <name>ILINK</name>
             <archiveVersion>0</archiveVersion>
             <data>
-                <version>22</version>
+                <version>23</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>0</debug>
                 <option>
@@ -8310,6 +8430,22 @@
                     <name>OILinkExtraOption</name>
                     <state>1</state>
                 </option>
+                <option>
+                    <name>IlinkRawBinaryFile2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySymbol2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySegment2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryAlign2</name>
+                    <state></state>
+                </option>
             </data>
         </settings>
         <settings>
@@ -8404,7 +8540,7 @@
                 </option>
                 <option>
                     <name>OGLastSavedByProductVersion</name>
-                    <state>8.32.3.20186</state>
+                    <state>8.40.1.21529</state>
                 </option>
                 <option>
                     <name>GeneralEnableMisra</name>
@@ -8686,7 +8822,7 @@
                 </option>
                 <option>
                     <name>CCIncludePath2</name>
-                    <state>$PROJ_DIR$\..\..\..\Config</state>
+                    <state>$PROJ_DIR$\..\..\..\Library</state>
                     <state>$PROJ_DIR$\..\..\..\Include</state>
                     <state>$PROJ_DIR$\..\..\..\..\Include</state>
                     <state>$PROJ_DIR$\..\..\..\..\..\Core\Include</state>
@@ -8961,7 +9097,8 @@
                 </option>
                 <option>
                     <name>AUserIncludes</name>
-                    <state></state>
+                    <state>$PROJ_DIR$\..\..\..\Library</state>
+                    <state>$PROJ_DIR$\..\..\..\Include</state>
                 </option>
                 <option>
                     <name>AExtraOptionsCheckV2</name>
@@ -9033,7 +9170,7 @@
             <name>ILINK</name>
             <archiveVersion>0</archiveVersion>
             <data>
-                <version>22</version>
+                <version>23</version>
                 <wantNonLocal>1</wantNonLocal>
                 <debug>0</debug>
                 <option>
@@ -9353,6 +9490,22 @@
                     <name>OILinkExtraOption</name>
                     <state>1</state>
                 </option>
+                <option>
+                    <name>IlinkRawBinaryFile2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySymbol2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinarySegment2</name>
+                    <state></state>
+                </option>
+                <option>
+                    <name>IlinkRawBinaryAlign2</name>
+                    <state></state>
+                </option>
             </data>
         </settings>
         <settings>
@@ -9427,11 +9580,11 @@
     <group>
         <name>Handlers</name>
         <file>
-            <name>$PROJ_DIR$\..\..\..\Source\IAR\irq_armv8mbl.s</name>
+            <name>$PROJ_DIR$\..\..\..\Source\IAR\irq_armv6m.s</name>
             <excluded>
-                <configuration>CM0</configuration>
                 <configuration>CM3</configuration>
                 <configuration>CM4F</configuration>
+                <configuration>V8MB</configuration>
                 <configuration>V8MBN</configuration>
                 <configuration>V8MM</configuration>
                 <configuration>V8MMN</configuration>
@@ -9440,12 +9593,23 @@
             </excluded>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\..\..\Source\IAR\irq_armv8mbl_ns.s</name>
+            <name>$PROJ_DIR$\..\..\..\Source\IAR\irq_armv7m.s</name>
+            <excluded>
+                <configuration>CM0</configuration>
+                <configuration>V8MB</configuration>
+                <configuration>V8MBN</configuration>
+                <configuration>V8MM</configuration>
+                <configuration>V8MMN</configuration>
+                <configuration>V8MMF</configuration>
+                <configuration>V8MMFN</configuration>
+            </excluded>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\..\..\Source\IAR\irq_armv8mbl.s</name>
             <excluded>
                 <configuration>CM0</configuration>
                 <configuration>CM3</configuration>
                 <configuration>CM4F</configuration>
-                <configuration>V8MB</configuration>
                 <configuration>V8MM</configuration>
                 <configuration>V8MMN</configuration>
                 <configuration>V8MMF</configuration>
@@ -9460,59 +9624,6 @@
                 <configuration>CM4F</configuration>
                 <configuration>V8MB</configuration>
                 <configuration>V8MBN</configuration>
-                <configuration>V8MMN</configuration>
-                <configuration>V8MMFN</configuration>
-            </excluded>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Source\IAR\irq_armv8mml_ns.s</name>
-            <excluded>
-                <configuration>CM0</configuration>
-                <configuration>CM3</configuration>
-                <configuration>CM4F</configuration>
-                <configuration>V8MB</configuration>
-                <configuration>V8MBN</configuration>
-                <configuration>V8MM</configuration>
-                <configuration>V8MMF</configuration>
-            </excluded>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Source\IAR\irq_cm0.s</name>
-            <excluded>
-                <configuration>CM3</configuration>
-                <configuration>CM4F</configuration>
-                <configuration>V8MB</configuration>
-                <configuration>V8MBN</configuration>
-                <configuration>V8MM</configuration>
-                <configuration>V8MMN</configuration>
-                <configuration>V8MMF</configuration>
-                <configuration>V8MMFN</configuration>
-            </excluded>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Source\IAR\irq_cm3.s</name>
-            <excluded>
-                <configuration>CM0</configuration>
-                <configuration>CM4F</configuration>
-                <configuration>V8MB</configuration>
-                <configuration>V8MBN</configuration>
-                <configuration>V8MM</configuration>
-                <configuration>V8MMN</configuration>
-                <configuration>V8MMF</configuration>
-                <configuration>V8MMFN</configuration>
-            </excluded>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\..\..\Source\IAR\irq_cm4f.s</name>
-            <excluded>
-                <configuration>CM0</configuration>
-                <configuration>CM3</configuration>
-                <configuration>V8MB</configuration>
-                <configuration>V8MBN</configuration>
-                <configuration>V8MM</configuration>
-                <configuration>V8MMN</configuration>
-                <configuration>V8MMF</configuration>
-                <configuration>V8MMFN</configuration>
             </excluded>
         </file>
     </group>

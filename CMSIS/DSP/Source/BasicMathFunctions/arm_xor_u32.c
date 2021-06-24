@@ -3,13 +3,13 @@
  * Title:        arm_xor_u32.c
  * Description:  uint32_t bitwise exclusive OR
  *
- * $Date:        14 November 2019
- * $Revision:    V1.6.0
+ * $Date:        23 April 2021
+ * $Revision:    V1.9.0
  *
- * Target Processor: Cortex-M cores
+ * Target Processor: Cortex-M and Cortex-A cores
  * -------------------------------------------------------------------- */
 /*
- * Copyright (C) 2010-2019 ARM Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -26,7 +26,7 @@
  * limitations under the License.
  */
 
-#include "arm_math.h"
+#include "dsp/basic_math_functions.h"
 
 /**
   @ingroup groupMath
@@ -55,7 +55,7 @@ void arm_xor_u32(
     uint32_t blkCnt;      /* Loop counter */
 
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
-    q31x4_t vecSrcA, vecSrcB;
+    uint32x4_t vecSrcA, vecSrcB;
 
     /* Compute 4 outputs at a time */
     blkCnt = blockSize >> 2;

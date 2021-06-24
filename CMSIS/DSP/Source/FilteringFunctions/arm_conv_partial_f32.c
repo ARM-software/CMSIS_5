@@ -3,13 +3,13 @@
  * Title:        arm_conv_partial_f32.c
  * Description:  Partial convolution of floating-point sequences
  *
- * $Date:        18. March 2019
- * $Revision:    V1.6.0
+ * $Date:        23 April 2021
+ * $Revision:    V1.9.0
  *
- * Target Processor: Cortex-M cores
+ * Target Processor: Cortex-M and Cortex-A cores
  * -------------------------------------------------------------------- */
 /*
- * Copyright (C) 2010-2019 ARM Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -26,7 +26,7 @@
  * limitations under the License.
  */
 
-#include "arm_math.h"
+#include "dsp/filtering_functions.h"
 
 /**
   @ingroup groupFilters
@@ -95,7 +95,7 @@ arm_status arm_conv_partial_f32(
   const float32_t *pSrc1, *pSrc2;                      /* Intermediate pointers */
         float32_t sum;                                 /* Accumulator */
         uint32_t j, k, count, blkCnt, check;
-        uint32_t blockSize1, blockSize2, blockSize3;    /* Loop counters */
+        int32_t blockSize1, blockSize2, blockSize3;    /* Loop counters */
         arm_status status;                             /* Status of Partial convolution */
 
 #if defined (ARM_MATH_LOOPUNROLL)
@@ -142,7 +142,7 @@ arm_status arm_conv_partial_f32(
     blockSize3 = ((int32_t)check > (int32_t)srcALen) ? (int32_t)check - (int32_t)srcALen : 0;
     blockSize3 = ((int32_t)firstIndex > (int32_t)srcALen - 1) ? blockSize3 - (int32_t)firstIndex + (int32_t)srcALen : blockSize3;
     blockSize1 = ((int32_t) srcBLen - 1) - (int32_t) firstIndex;
-    blockSize1 = (blockSize1 > 0) ? ((check > (srcBLen - 1U)) ? blockSize1 : numPoints) : 0;
+    blockSize1 = (blockSize1 > 0) ? ((check > (srcBLen - 1U)) ? blockSize1 : (int32_t)numPoints) : 0;
     blockSize2 = ((int32_t) check - blockSize3) - (blockSize1 + (int32_t) firstIndex);
     blockSize2 = (blockSize2 > 0) ? blockSize2 : 0;
 
@@ -187,7 +187,7 @@ arm_status arm_conv_partial_f32(
      * ----------------------*/
 
     /* The first stage starts here */
-    while (blockSize1 > 0U)
+    while (blockSize1 > 0)
     {
       /* Accumulator is made zero for every iteration */
       sum = 0.0f;
@@ -539,7 +539,14 @@ arm_status arm_conv_partial_f32(
     count = srcBLen - 1U;
 
     /* Working pointer of inputA */
-    pSrc1 = (pIn1 + srcALen) - (srcBLen - 1U);
+    if (firstIndex > srcALen)
+    {
+       pSrc1 = (pIn1 + firstIndex) - (srcBLen - 1U);
+    }
+    else
+    {
+       pSrc1 = (pIn1 + srcALen) - (srcBLen - 1U);
+    }
     px = pSrc1;
 
     /* Working pointer of inputB */
@@ -550,7 +557,7 @@ arm_status arm_conv_partial_f32(
      * Stage3 process
      * ------------------*/
 
-    while (blockSize3 > 0U)
+    while (blockSize3 > 0)
     {
       /* Accumulator is made zero for every iteration */
       sum = 0.0f;
@@ -627,7 +634,6 @@ arm_status arm_conv_partial_f32(
         float32_t sum;                                 /* Accumulator */
         uint32_t i, j;                                 /* Loop counters */
         arm_status status;                             /* Status of Partial convolution */
-
   /* Check for range of output samples to be calculated */
   if ((firstIndex + numPoints) > ((srcALen + (srcBLen - 1U))))
   {

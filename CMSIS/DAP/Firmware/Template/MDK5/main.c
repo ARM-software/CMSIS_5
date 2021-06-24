@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2017 ARM Limited. All rights reserved.
+ * Copyright (c) 2013-2021 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -17,7 +17,7 @@
  *
  * ----------------------------------------------------------------------
  *
- * $Date:        1. December 2017
+ * $Date:        21. May 2021
  * $Revision:    V2.0.0
  *
  * Project:      CMSIS-DAP Template MDK5
@@ -55,7 +55,7 @@ __NO_RETURN void app_main (void *argument) {
   SWO_ThreadId = osThreadNew(SWO_Thread, NULL, &SWO_ThreadAttr);
 
   osDelay(osWaitForever);
-  for (;;) {};
+  for (;;) {}
 }
 
 int main (void) {
@@ -67,5 +67,5 @@ int main (void) {
     osKernelStart();                    // Start thread execution
   }
 
-  for (;;) {};
+  for (;;) {}
 }

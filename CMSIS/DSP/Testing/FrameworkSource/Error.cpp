@@ -25,10 +25,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include <stdlib.h> 
-#include <stdio.h>
+#include <cstdlib> 
+#include <cstdio>
+#include "arm_math_types.h"
+#include "arm_math_types_f16.h"
 #include "Error.h"
-#include "arm_math.h"
+
 
 namespace Client {
 
@@ -68,6 +70,18 @@ void assert_near_equal(unsigned long nb,float32_t pa, float32_t pb, float32_t th
     }
 };
 
+#if !defined (__CC_ARM) && defined(ARM_FLOAT16_SUPPORTED)
+template <> 
+void assert_near_equal(unsigned long nb,float16_t pa, float16_t pb, float16_t threshold)
+{
+    if (fabs(pa - pb) > threshold)
+    {
+         char details[200];
+         sprintf(details,"diff %g > %g (%g,%g)",fabs(pa - pb) , threshold, pa, pb);
+         throw (Error(EQUAL_ERROR,nb,details));
+    }
+};
+#endif 
 
 template <> 
 void assert_near_equal(unsigned long nb,q63_t pa, q63_t pb, q63_t threshold)
@@ -122,6 +136,13 @@ void assert_not_empty(unsigned long nb, AnyPattern<float32_t> &p)
 {
   assert_not_empty_generic(nb,p);
 }
+
+#if !defined( __CC_ARM ) && defined(ARM_FLOAT16_SUPPORTED)
+void assert_not_empty(unsigned long nb, AnyPattern<float16_t> &p)
+{
+  assert_not_empty_generic(nb,p);
+}
+#endif
 
 void assert_not_empty(unsigned long nb, AnyPattern<q63_t> &p)
 {
@@ -183,6 +204,27 @@ void assert_relative_error(unsigned long nb,float32_t &a, float32_t &b, double t
     double rel,delta,average;
 
     delta=abs(a-b);
+    average = (abs((float)a) + abs((float)b)) / 2.0f;
+    if (average !=0)
+    {
+        rel = delta / average;
+        //printf("%6.9f %6.9f %6.9f %g %g\n",a,b,rel,delta,average);
+        if (rel > threshold)
+        {
+            //printf("rel = %g, threshold %g \n",rel,threshold);
+            char details[200];
+            sprintf(details,"diff (%g,%g), %g > %g",a,b,rel , threshold);
+            throw (Error(RELATIVE_ERROR,nb,details));
+        }
+    }
+};
+
+#if !defined( __CC_ARM ) && defined(ARM_FLOAT16_SUPPORTED)
+void assert_relative_error(unsigned long nb,float16_t &a, float16_t &b, double threshold)
+{
+    double rel,delta,average;
+
+    delta=abs(a-b);
     average = (abs(a) + abs(b)) / 2.0f;
     if (average !=0)
     {
@@ -197,6 +239,7 @@ void assert_relative_error(unsigned long nb,float32_t &a, float32_t &b, double t
         }
     }
 };
+#endif 
 
 void assert_relative_error(unsigned long nb,AnyPattern<float64_t> &pa, AnyPattern<float64_t> &pb, double threshold)
 {
@@ -260,13 +303,46 @@ void assert_relative_error(unsigned long nb,AnyPattern<float32_t> &pa, AnyPatter
     }
 };
 
+#if !defined( __CC_ARM ) && defined(ARM_FLOAT16_SUPPORTED)
+void assert_relative_error(unsigned long nb,AnyPattern<float16_t> &pa, AnyPattern<float16_t> &pb, double threshold)
+{
+    ASSERT_NOT_EMPTY(pa);
+    ASSERT_NOT_EMPTY(pb);
+
+    if (pa.nbSamples() != pb.nbSamples())
+    {
+        throw (Error(DIFFERENT_LENGTH_ERROR,nb));
+    }
+
+    unsigned long i=0;
+
+    float16_t *ptrA = pa.ptr();
+    float16_t *ptrB = pb.ptr();
+    char id[40];
+
+    for(i=0; i < pa.nbSamples(); i++)
+    {
+       try
+       {
+          assert_relative_error(nb,ptrA[i],ptrB[i],threshold);
+       }
+       catch(Error &err)
+       {          
+          sprintf(id," (nb=%lu)",i+1);
+          strcat(err.details,id);
+          throw(err);
+       }
+    }
+};
+#endif
+
 void assert_close_error(unsigned long nb,float64_t &ref, float64_t &val, double absthreshold,double relthreshold)
 {
     
     if (abs(val - ref) > (absthreshold + relthreshold * abs(ref)))
     {
         char details[200];
-        sprintf(details,"close %g : abs=%g, rel=%g",abs(val - ref) , absthreshold,relthreshold);
+        sprintf(details,"close error %g > %g: (val = %g, ref = %g)",abs(val - ref) , absthreshold + relthreshold * abs(ref),val,ref);
         throw (Error(CLOSE_ERROR,nb,details));
     }
 };
@@ -309,7 +385,7 @@ void assert_close_error(unsigned long nb,float32_t &ref, float32_t &val, double 
     if (abs(val - ref) > (absthreshold + relthreshold * abs(ref)))
     {
         char details[200];
-        sprintf(details,"close %g : abs=%g, rel=%g",abs(val - ref) , absthreshold,relthreshold);
+        sprintf(details,"close error %g > %g: (val = %g, ref = %g)",abs(val - ref) , absthreshold + relthreshold * abs(ref),val,ref);
         throw (Error(CLOSE_ERROR,nb,details));
     }
 };
@@ -345,6 +421,51 @@ void assert_close_error(unsigned long nb,AnyPattern<float32_t> &pref, AnyPattern
        
     }
 };
+
+#if !defined( __CC_ARM ) && defined(ARM_FLOAT16_SUPPORTED)
+void assert_close_error(unsigned long nb,float16_t &ref, float16_t &val, double absthreshold,double relthreshold)
+{
+    
+    if (abs((float)val - (float)ref) > (absthreshold + relthreshold * abs((float)ref)))
+    {
+        char details[200];
+        sprintf(details,"close error %g > %g: (val = %g, ref = %g)",abs(val - ref) , absthreshold + relthreshold * abs(ref),val,ref);
+        throw (Error(CLOSE_ERROR,nb,details));
+    }
+};
+
+void assert_close_error(unsigned long nb,AnyPattern<float16_t> &pref, AnyPattern<float16_t> &pval, double absthreshold,double relthreshold)
+{
+    ASSERT_NOT_EMPTY(pref);
+    ASSERT_NOT_EMPTY(pval);
+
+    if (pref.nbSamples() != pval.nbSamples())
+    {
+        throw (Error(DIFFERENT_LENGTH_ERROR,nb));
+    }
+
+    unsigned long i=0;
+    char id[40];
+
+    float16_t *ptrA = pref.ptr();
+    float16_t *ptrB = pval.ptr();
+
+    for(i=0; i < pref.nbSamples(); i++)
+    {
+       try
+       {
+          assert_close_error(nb,ptrA[i],ptrB[i],absthreshold,relthreshold);
+       }
+       catch(Error &err)
+       {          
+          sprintf(id," (nb=%lu)",i+1);
+          strcat(err.details,id);
+          throw(err);
+       }
+       
+    }
+};
+#endif
 
 /**
  * @brief  Calculation of SNR
@@ -408,6 +529,41 @@ float arm_snr_f32(float *pRef, float *pTest, uint32_t buffSize)
   return (SNR);
 
 }
+
+#if !defined( __CC_ARM ) && defined(ARM_FLOAT16_SUPPORTED)
+float arm_snr_f16(float16_t *pRef, float16_t *pTest, uint32_t buffSize)
+{
+  float EnergySignal = 0.0, EnergyError = 0.0;
+  uint32_t i;
+  float SNR;
+ 
+  for (i = 0; i < buffSize; i++)
+    {
+      /* Checking for a NAN value in pRef array */
+      IFNANRETURNZERO((float)pRef[i]);
+      
+      /* Checking for a NAN value in pTest array */
+      IFNANRETURNZERO((float)pTest[i]);
+
+      EnergySignal += pRef[i] * pRef[i];
+      EnergyError += (pRef[i] - pTest[i]) * (pRef[i] - pTest[i]);
+    }
+
+    /* Checking for a NAN value in EnergyError */
+    IFNANRETURNZERO(EnergyError);
+
+
+    SNR = 10 * log10f (EnergySignal / EnergyError);
+
+    /* Checking for a NAN value in SNR */
+    IFNANRETURNZERO(SNR);
+    IFINFINITERETURN(SNR,100000.0);
+    
+
+  return (SNR);
+
+}
+#endif
 
 float arm_snr_q63(q63_t *pRef, q63_t *pTest, uint32_t buffSize)
 {
@@ -606,6 +762,53 @@ void assert_snr_error(unsigned long nb,float32_t a,float32_t b, float32_t thresh
      throw (Error(SNR_ERROR,nb,details));
    }
 }
+
+#if !defined( __CC_ARM ) && defined(ARM_FLOAT16_SUPPORTED)
+void assert_snr_error(unsigned long nb,AnyPattern<float16_t> &pa,AnyPattern<float16_t> &pb, float32_t threshold)
+{
+   float32_t snr;
+
+   ASSERT_NOT_EMPTY(pa);
+   ASSERT_NOT_EMPTY(pb);
+
+   if (pa.nbSamples() != pb.nbSamples())
+   {
+        throw (Error(DIFFERENT_LENGTH_ERROR,nb));
+   }
+
+   float16_t *ptrA = pa.ptr();
+   float16_t *ptrB = pb.ptr();
+
+   snr = arm_snr_f16(ptrA, ptrB, pa.nbSamples());
+
+   //printf("SNR = %f\n",snr);
+   
+   if (snr < threshold)
+   {
+     char details[200];
+     sprintf(details,"SNR %g < %g",snr,threshold);
+     throw (Error(SNR_ERROR,nb,details));
+   }
+}
+#endif
+
+#if !defined (__CC_ARM) && defined(ARM_FLOAT16_SUPPORTED)
+void assert_snr_error(unsigned long nb,float16_t a,float16_t b, float32_t threshold)
+{
+   float32_t snr;
+
+   snr = arm_snr_f16(&a, &b, 1);
+
+   //printf("SNR = %f\n",snr);
+   
+   if (snr < threshold)
+   {
+     char details[200];
+     sprintf(details,"SNR %g < %g",snr,threshold);
+     throw (Error(SNR_ERROR,nb,details));
+   }
+}
+#endif 
 
 void assert_snr_error(unsigned long nb,AnyPattern<float64_t> &pa,AnyPattern<float64_t> &pb, float64_t threshold)
 {

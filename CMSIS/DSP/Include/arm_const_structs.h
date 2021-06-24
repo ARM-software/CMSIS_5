@@ -4,13 +4,13 @@
  * Description:  Constant structs that are initialized for user convenience.
  *               For example, some can be given as arguments to the arm_cfft_f32() function.
  *
- * $Date:        27. January 2017
- * $Revision:    V.1.5.1
+ * @version  V1.9.0
+ * @date     23 April 2021
  *
- * Target Processor: Cortex-M cores
+ * Target Processor: Cortex-M and Cortex-A cores
  * -------------------------------------------------------------------- */
 /*
- * Copyright (C) 2010-2017 ARM Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -30,9 +30,14 @@
 #ifndef _ARM_CONST_STRUCTS_H
 #define _ARM_CONST_STRUCTS_H
 
-#include "arm_math.h"
+#include "arm_math_types.h"
 #include "arm_common_tables.h"
+#include "dsp/transform_functions.h"
 
+#ifdef   __cplusplus
+extern "C"
+{
+#endif
    extern const arm_cfft_instance_f64 arm_cfft_sR_f64_len16;
    extern const arm_cfft_instance_f64 arm_cfft_sR_f64_len32;
    extern const arm_cfft_instance_f64 arm_cfft_sR_f64_len64;
@@ -73,4 +78,9 @@
    extern const arm_cfft_instance_q15 arm_cfft_sR_q15_len2048;
    extern const arm_cfft_instance_q15 arm_cfft_sR_q15_len4096;
 
+#ifdef   __cplusplus
+}
 #endif
+
+#endif
+

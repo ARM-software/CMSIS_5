@@ -114,9 +114,20 @@ related to TrustZone for Armv8-M.
 
 \image html "Registers.png" "Registers"
 
+\subsection RTOS_TrustZone_stacksealing Stack Sealing
+
+CMSIS-Core \ref stacksealing_support_trustzone_functions provide standard interface for implementing the <a href="https://developer.arm.com/support/arm-security-updates/armv8-m-stack-sealing" target="_blank"><b>Secure Stack Sealing technique</b></a> recommended for mitigating some security vulnerabilities on Armv8-M systems with TrustZone.
+
+\ref startup_c_sec_v8 demonstrates how this functionality can be used in a device startup file. 
+
+Stack Sealing also requires an application project to have a linker script that explicitly reserves 8 bytes for the stack seal on top of the secure main stack. Linker files provided with \ref device_examples for Armv8-M cores demonstrate how this can be implemented. For example see .\\Device\\ARM\\ARMCM33\\Source\\ARM\\ARMCM33_ac6.sct.
+
+To learn more about the stack sealing implementation in CMSIS projects for Armv8-M devices, refer to
+<a href="https://www.keil.com/appnotes/docs/apnt_335.asp" target="_blank"><b>Application Note 335</b></a>.
+
 \section CMSIS_Files_TrustZone CMSIS Files for TrustZone
 
-he CMSIS-Core files are extended by the header files \ref partition_h_pg and \ref partition_gen_h_pg :
+The CMSIS-Core files are extended by the header files \ref partition_h_pg and \ref partition_gen_h_pg :
 
  - The file \ref partition_h_pg "partition_<device>.h" defines the initial system configuration and during SystemInit in Secure state.
  - The file \ref partition_gen_h_pg "partition_gen.h" is optional and contains SAU region and interrupt target assignments. This file may be generated using CMSIS-Zone.

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2018 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_q7_to_q15_reordered_no_shift.c
  * Description:  Converts the elements of the Q7 vector to reordered Q15 vector without left-shift
  *
- * $Date:        17. January 2018
- * $Revision:    V.1.0.0
+ * $Date:        May 29, 2020
+ * $Revision:    V.1.0.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -74,14 +74,14 @@
  *
  */
 
-void arm_q7_to_q15_reordered_no_shift(const q7_t * pSrc, q15_t * pDst, uint32_t blockSize)
+void arm_q7_to_q15_reordered_no_shift(const q7_t *pSrc, q15_t *pDst, uint32_t blockSize)
 {
-    const q7_t *pIn = pSrc;     /* Src pointer */
-    uint32_t  blkCnt;           /* loop counter */
+    const q7_t *pIn = pSrc; /* Src pointer */
+    uint32_t blkCnt;        /* loop counter */
 
 #ifndef ARM_MATH_CM0_FAMILY
-    q31_t     in;
-    q31_t     in1, in2;
+    q31_t in;
+    q31_t in1, in2;
 
     /* Run the below code for Cortex-M4 and Cortex-M3 */
 
@@ -97,7 +97,7 @@ void arm_q7_to_q15_reordered_no_shift(const q7_t * pSrc, q15_t * pDst, uint32_t 
         in = arm_nn_read_q7x4_ia(&pIn);
 
         /* rotatate in by 8 and extend two q7_t values to q15_t values */
-        in1 = __SXTB16(__ROR(in, 8));
+        in1 = __SXTB16(__ROR((uint32_t)in, 8));
 
         /* extend remainig two q7_t values to q15_t values */
         in2 = __SXTB16(in);
@@ -125,18 +125,17 @@ void arm_q7_to_q15_reordered_no_shift(const q7_t * pSrc, q15_t * pDst, uint32_t 
     /* Loop over blockSize number of values */
     blkCnt = blockSize;
 
-#endif                          /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif /* #ifndef ARM_MATH_CM0_FAMILY */
 
     while (blkCnt > 0u)
     {
         /* C = (q15_t) A << 8 */
         /* convert from q7 to q15 and then store the results in the destination buffer */
-        *pDst++ = (q15_t) * pIn++;
+        *pDst++ = (q15_t)*pIn++;
 
         /* Decrement the loop counter */
         blkCnt--;
     }
-
 }
 
 /**

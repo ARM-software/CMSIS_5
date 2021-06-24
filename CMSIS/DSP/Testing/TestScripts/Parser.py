@@ -134,6 +134,12 @@ class TreeElem:
       else:
          return("")
 
+    def getSuiteMessage(self):
+      suite = self.parent
+      group = suite.parent
+      p = group.data["message"]
+      return(p)
+     
     def addGroup(self,g):
         """ Add a group to this node
 

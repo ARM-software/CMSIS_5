@@ -1,0 +1,30 @@
+#! armclang -E --target=arm-arm-none-eabi -mcpu=cortex-m33 -xc
+; command above MUST be in first line (no comment above!)
+
+/*
+;-------- <<< Use Configuration Wizard in Context Menu >>> -------------------
+*/
+
+#include "mem_ARMv81MML.h"
+
+LOAD_REGION 0x10000000
+{
+    CODE +0 0x100000
+    {
+        *.o (RESET, +First)
+	    * (InRoot$$$Sections)
+        * (+RO-CODE)                             
+    }
+
+    DATA 0x30000000 NOCOMPRESS 0xF0000
+    {
+      * (+RO-DATA)   
+	  * (+RW,+ZI)                         
+    }
+
+    ARM_LIB_STACK 0x30100000 ALIGN 64 EMPTY -0x00002000 
+    {}
+    ARM_LIB_HEAP 0x30100000 ALIGN 64 EMPTY 0x00100000 
+    {}
+
+}

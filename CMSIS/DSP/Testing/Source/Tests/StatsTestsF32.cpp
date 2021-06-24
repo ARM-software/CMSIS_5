@@ -1,7 +1,6 @@
 #include "StatsTestsF32.h"
 #include <stdio.h>
 #include "Error.h"
-#include "arm_math.h"
 #include "Test.h"
 
 
@@ -28,6 +27,32 @@ a double precision computation.
         int16_t  *ind    = index.ptr();
 
         arm_max_f32(inp,
+              inputA.nbSamples(),
+              &result,
+              &indexval);
+
+        outp[0] = result;
+        ind[0] = indexval;
+
+        ASSERT_EQ(result,refp[this->refOffset]);
+        ASSERT_EQ((int16_t)indexval,refind[this->refOffset]);
+
+    }
+
+    void StatsTestsF32::test_absmax_f32()
+    {
+        const float32_t *inp  = inputA.ptr();
+
+        float32_t result;
+        uint32_t  indexval;
+
+        float32_t *refp  = ref.ptr();
+        int16_t  *refind = maxIndexes.ptr();
+
+        float32_t *outp  = output.ptr();
+        int16_t  *ind    = index.ptr();
+
+        arm_absmax_f32(inp,
               inputA.nbSamples(),
               &result,
               &indexval);
@@ -74,6 +99,32 @@ a double precision computation.
         int16_t  *ind    = index.ptr();
 
         arm_min_f32(inp,
+              inputA.nbSamples(),
+              &result,
+              &indexval);
+
+        outp[0] = result;
+        ind[0] = indexval;
+
+        ASSERT_EQ(result,refp[this->refOffset]);
+        ASSERT_EQ((int16_t)indexval,refind[this->refOffset]);
+
+    }
+
+    void StatsTestsF32::test_absmin_f32()
+    {
+        const float32_t *inp  = inputA.ptr();
+
+        float32_t result;
+        uint32_t  indexval;
+
+        float32_t *refp  = ref.ptr();
+        int16_t  *refind = minIndexes.ptr();
+
+        float32_t *outp  = output.ptr();
+        int16_t  *ind    = index.ptr();
+
+        arm_absmin_f32(inp,
               inputA.nbSamples(),
               &result,
               &indexval);
@@ -246,7 +297,6 @@ a double precision computation.
       const float32_t *inp  = inputA.ptr();
       const int16_t *dimsp  = dims.ptr();
 
-      float32_t *refp         = ref.ptr();
       float32_t *outp         = output.ptr();
 
       for(int i=0;i < this->nbPatterns; i++)
@@ -267,7 +317,6 @@ a double precision computation.
       const float32_t *inp  = inputA.ptr();
       const int16_t *dimsp  = dims.ptr();
 
-      float32_t *refp         = ref.ptr();
       float32_t *outp         = output.ptr();
 
       for(int i=0;i < this->nbPatterns; i++)
@@ -289,7 +338,6 @@ a double precision computation.
       const float32_t *inpB  = inputB.ptr();
       const int16_t *dimsp  = dims.ptr();
 
-      float32_t *refp         = ref.ptr();
       float32_t *outp         = output.ptr();
 
       for(int i=0;i < this->nbPatterns; i++)
@@ -311,7 +359,6 @@ a double precision computation.
       const float32_t *inpB  = inputB.ptr();
       const int16_t *dimsp  = dims.ptr();
 
-      float32_t *refp         = ref.ptr();
       float32_t *outp         = output.ptr();
       float32_t *tmpp         = tmp.ptr();
 
@@ -332,6 +379,7 @@ a double precision computation.
   
     void StatsTestsF32::setUp(Testing::testID_t id,std::vector<Testing::param_t>& paramsArgs,Client::PatternMgr *mgr)
     {
+        (void)paramsArgs;
         switch(id)
         {
             case StatsTestsF32::TEST_MAX_F32_1:
@@ -726,12 +774,99 @@ a double precision computation.
 
                refOffset = 3;
             break;
+
+            case StatsTestsF32::TEST_ABSMAX_F32_34:
+            {
+               inputA.reload(StatsTestsF32::INPUTNEW1_F32_ID,mgr,3);
+              
+               maxIndexes.reload(StatsTestsF32::ABSMAXINDEXES_S16_ID,mgr);
+               ref.reload(StatsTestsF32::ABSMAXVALS_F32_ID,mgr);
+               
+               output.create(1,StatsTestsF32::OUT_F32_ID,mgr);
+               index.create(1,StatsTestsF32::OUT_S16_ID,mgr);
+
+               refOffset = 0;
+            }
+            break;
+
+            case StatsTestsF32::TEST_ABSMAX_F32_35:
+            {
+               inputA.reload(StatsTestsF32::INPUTNEW1_F32_ID,mgr,8);
+              
+               maxIndexes.reload(StatsTestsF32::ABSMAXINDEXES_S16_ID,mgr);
+               ref.reload(StatsTestsF32::ABSMAXVALS_F32_ID,mgr);
+               
+               output.create(1,StatsTestsF32::OUT_F32_ID,mgr);
+               index.create(1,StatsTestsF32::OUT_S16_ID,mgr);
+
+               refOffset = 1;
+            }
+            break;
+
+            case StatsTestsF32::TEST_ABSMAX_F32_36:
+            {
+               inputA.reload(StatsTestsF32::INPUTNEW1_F32_ID,mgr,11);
+              
+               maxIndexes.reload(StatsTestsF32::ABSMAXINDEXES_S16_ID,mgr);
+               ref.reload(StatsTestsF32::ABSMAXVALS_F32_ID,mgr);
+               
+               output.create(1,StatsTestsF32::OUT_F32_ID,mgr);
+               index.create(1,StatsTestsF32::OUT_S16_ID,mgr);
+
+               refOffset = 2;
+            }
+            break;
+
+            case StatsTestsF32::TEST_ABSMIN_F32_37:
+            {
+               inputA.reload(StatsTestsF32::INPUTNEW1_F32_ID,mgr,3);
+              
+               minIndexes.reload(StatsTestsF32::ABSMININDEXES_S16_ID,mgr);
+               ref.reload(StatsTestsF32::ABSMINVALS_F32_ID,mgr);
+               
+               output.create(1,StatsTestsF32::OUT_F32_ID,mgr);
+               index.create(1,StatsTestsF32::OUT_S16_ID,mgr);
+
+               refOffset = 0;
+            }
+            break;
+
+            case StatsTestsF32::TEST_ABSMIN_F32_38:
+            {
+               inputA.reload(StatsTestsF32::INPUTNEW1_F32_ID,mgr,8);
+              
+               minIndexes.reload(StatsTestsF32::ABSMININDEXES_S16_ID,mgr);
+               ref.reload(StatsTestsF32::ABSMINVALS_F32_ID,mgr);
+               
+               output.create(1,StatsTestsF32::OUT_F32_ID,mgr);
+               index.create(1,StatsTestsF32::OUT_S16_ID,mgr);
+
+               refOffset = 1;
+            }
+            break;
+
+            case StatsTestsF32::TEST_ABSMIN_F32_39:
+            {
+               inputA.reload(StatsTestsF32::INPUTNEW1_F32_ID,mgr,11);
+              
+               minIndexes.reload(StatsTestsF32::ABSMININDEXES_S16_ID,mgr);
+               ref.reload(StatsTestsF32::ABSMINVALS_F32_ID,mgr);
+               
+               output.create(1,StatsTestsF32::OUT_F32_ID,mgr);
+               index.create(1,StatsTestsF32::OUT_S16_ID,mgr);
+
+               refOffset = 2;
+            }
+            break;
+
+
         }
         
     }
 
     void StatsTestsF32::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)
     {
+      (void)id;
       switch(id)
       {
             case StatsTestsF32::TEST_MAX_F32_1:

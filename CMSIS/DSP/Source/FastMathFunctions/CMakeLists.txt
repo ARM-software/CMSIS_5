@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.6)
+cmake_minimum_required (VERSION 3.14)
 
 project(CMSISDSPFastMath)
 
@@ -46,6 +46,14 @@ target_sources(CMSISDSPFastMath PRIVATE arm_sqrt_q15.c)
 target_sources(CMSISDSPFastMath PRIVATE arm_sqrt_q31.c)
 target_sources(CMSISDSPFastMath PRIVATE arm_vlog_f32.c)
 target_sources(CMSISDSPFastMath PRIVATE arm_vexp_f32.c)
+
+if ((NOT ARMAC5) AND (NOT DISABLEFLOAT16))
+target_sources(CMSISDSPFastMath PRIVATE arm_vlog_f16.c)
+target_sources(CMSISDSPFastMath PRIVATE arm_vexp_f16.c)
+target_sources(CMSISDSPFastMath PRIVATE arm_vinverse_f16.c)
+endif()
+
+target_sources(CMSISDSPFastMath PRIVATE arm_divide_q15.c)
 
 
 ### Includes

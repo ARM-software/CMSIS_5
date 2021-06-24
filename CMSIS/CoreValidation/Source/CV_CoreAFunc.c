@@ -1,5 +1,5 @@
 /*-----------------------------------------------------------------------------
- *      Name:         CV_CoreFunc.c 
+ *      Name:         CV_CoreFunc.c
  *      Purpose:      CMSIS CORE validation tests implementation
  *-----------------------------------------------------------------------------
  *      Copyright (c) 2017 ARM Limited. All rights reserved.
@@ -19,15 +19,30 @@
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 void TC_CoreAFunc_IRQ(void) {
   uint32_t orig = __get_CPSR();
-  
+
   __enable_irq();
   uint32_t cpsr = __get_CPSR();
   ASSERT_TRUE((cpsr & CPSR_I_Msk) == 0U);
-  
+
   __disable_irq();
   cpsr = __get_CPSR();
   ASSERT_TRUE((cpsr & CPSR_I_Msk) == CPSR_I_Msk);
-  
+
+  __set_CPSR(orig);
+}
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+void TC_CoreAFunc_FaultIRQ(void) {
+  uint32_t orig = __get_CPSR();
+
+  __enable_fault_irq();
+  uint32_t cpsr = __get_CPSR();
+  ASSERT_TRUE((cpsr & CPSR_F_Msk) == 0U);
+
+  __disable_fault_irq();
+  cpsr = __get_CPSR();
+  ASSERT_TRUE((cpsr & CPSR_F_Msk) == CPSR_F_Msk);
+
   __set_CPSR(orig);
 }
 
@@ -225,24 +240,24 @@ static uint8_t vectorRAM[32U] __attribute__((aligned(32U)));
 
 void TC_CoreAFunc_VBAR(void) {
   uint32_t vbar = __get_VBAR();
-  
+
   memcpy(vectorRAM, (void*)vbar, sizeof(vectorRAM));
-  
+
   __set_VBAR((uint32_t)vectorRAM);
   ASSERT_TRUE(((uint32_t)vectorRAM) == __get_VBAR());
-  
+
   __set_VBAR(vbar);
 }
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 void TC_CoreAFunc_MVBAR(void) {
   uint32_t mvbar = __get_MVBAR();
-  
+
   memcpy(vectorRAM, (void*)mvbar, sizeof(vectorRAM));
-  
+
   __set_MVBAR((uint32_t)vectorRAM);
   ASSERT_TRUE(((uint32_t)vectorRAM) == __get_MVBAR());
-  
+
   __set_MVBAR(mvbar);
 }
 
@@ -251,19 +266,19 @@ void TC_CoreAFunc_MVBAR(void) {
 void TC_CoreAFunc_FPU_Enable(void) {
   uint32_t fpexc = __get_FPEXC();
   __set_FPEXC(fpexc & ~0x40000000u); // disable FPU
-  
+
   uint32_t cp15;
   __get_CP(15, 0, cp15, 1, 0, 2);
-  
+
   cp15 &= ~0x00F00000u;
   __set_CP(15, 0, cp15, 1, 0, 2); // disable FPU access
-  
+
   __FPU_Enable();
-    
+
   __get_CP(15, 0, cp15, 1, 0, 2);
   ASSERT_TRUE((cp15 & 0x00F00000u) == 0x00F00000u);
 
-  fpexc = __get_FPEXC();  
+  fpexc = __get_FPEXC();
   ASSERT_TRUE((fpexc & 0x40000000u) == 0x40000000u);
 }
 

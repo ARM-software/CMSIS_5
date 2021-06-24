@@ -1,11 +1,12 @@
 /******************************************************************************
  * @file     arm_vec_math.h
  * @brief    Public header file for CMSIS DSP Library
- * @version  V1.7.0
- * @date     15. October 2019
+ * @version  V1.9.0
+ * @date     23 April 2021
+ * Target Processor: Cortex-M and Cortex-A cores
  ******************************************************************************/
 /*
- * Copyright (c) 2010-2019 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (c) 2010-2021 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -25,7 +26,7 @@
 #ifndef _ARM_VEC_MATH_H
 #define _ARM_VEC_MATH_H
 
-#include "arm_math.h"
+#include "arm_math_types.h"
 #include "arm_common_tables.h"
 #include "arm_helium_utils.h"
 
@@ -295,7 +296,7 @@ __STATIC_INLINE f32x4_t vpowq_f32(
 
 #endif /* (defined(ARM_MATH_MVEF) || defined(ARM_MATH_HELIUM)) && !defined(ARM_MATH_AUTOVECTORIZE)*/
 
-#if (defined(ARM_MATH_MVEI) || defined(ARM_MATH_HELIUM))
+#if (defined(ARM_MATH_MVEI) || defined(ARM_MATH_HELIUM)) && !defined(ARM_MATH_AUTOVECTORIZE)
 #endif /* (defined(ARM_MATH_MVEI) || defined(ARM_MATH_HELIUM)) */
 
 #if (defined(ARM_MATH_NEON) || defined(ARM_MATH_NEON_EXPERIMENTAL)) && !defined(ARM_MATH_AUTOVECTORIZE)

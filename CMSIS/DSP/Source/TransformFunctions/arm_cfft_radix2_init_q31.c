@@ -3,13 +3,13 @@
  * Title:        arm_cfft_radix2_init_q31.c
  * Description:  Radix-2 Decimation in Frequency Fixed-point CFFT & CIFFT Initialization function
  *
- * $Date:        18. March 2019
- * $Revision:    V1.6.0
+ * $Date:        23 April 2021
+ * $Revision:    V1.9.0
  *
- * Target Processor: Cortex-M cores
+ * Target Processor: Cortex-M and Cortex-A cores
  * -------------------------------------------------------------------- */
 /*
- * Copyright (C) 2010-2019 ARM Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -26,7 +26,7 @@
  * limitations under the License.
  */
 
-#include "arm_math.h"
+#include "dsp/transform_functions.h"
 #include "arm_common_tables.h"
 
 /**
@@ -72,7 +72,14 @@ arm_status arm_cfft_radix2_init_q31(
   uint8_t bitReverseFlag)
 {
   /*  Initialise the default arm status */
-  arm_status status = ARM_MATH_SUCCESS;
+  arm_status status = ARM_MATH_ARGUMENT_ERROR;
+
+#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_FFT_ALLOW_TABLES)
+
+#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || defined(ARM_TABLE_TWIDDLECOEF_Q31_4096)
+
+  /*  Initialise the default arm status */
+  status = ARM_MATH_SUCCESS;
 
   /*  Initialise the FFT length */
   S->fftLen = fftLen;
@@ -85,6 +92,8 @@ arm_status arm_cfft_radix2_init_q31(
 
   /*  Initialise the Flag for calculation Bit reversal or not */
   S->bitReverseFlag = bitReverseFlag;
+
+#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || defined(ARM_TABLE_BITREV_1024)
 
   /*  Initializations of Instance structure depending on the FFT length */
   switch (S->fftLen)
@@ -171,6 +180,9 @@ arm_status arm_cfft_radix2_init_q31(
     break;
   }
 
+#endif
+#endif 
+#endif
   return (status);
 }
 

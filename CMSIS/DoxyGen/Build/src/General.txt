@@ -16,7 +16,7 @@
 The figure below shows how the <b>CMSIS-Build</b> components may be used to create a IoT cloud application:
   - The <b>Board I/O</b> layer contains the drivers and device configuration for a specific evaluation board.
   - The <b>Cloud</b> layer implements the software components that are required to connect to a Cloud Service Provider (CSP).
-  - The <b>Application Code</b> may start with reference example and is expanded to application specific requirements that
+  - The <b>Application Code</b> may start with a reference example and is expanded to application specific requirements that
     access specialized peripherals.
   
 \image html "Layer.png" "Software Layers and Virtual I/O"  
@@ -43,8 +43,8 @@ Software layers and Virtual I/O simplify these use cases:
  - \ref cprjFormat_pg describes all XML elements that are available for the project description and how to use them.
 
 <b>Tools</b> that support \ref CmdLineBuild with software packs and the generic project file format:
-  - \ref cbuildgen generates a standard MAKE file and allows to manage software layers.
-  - \ref ccmerge updates configuration files that are based on <a href="../../Pack/html/configWizard.html"><b>PackConfiguration Wizard Annotations</b></a>.
+  - \ref cbuildgen generates a standard MAKE or CMakeLists.txt file and allows to manage software layers.
+  - \ref ccmerge updates configuration files that are based on <a href="../../Pack/html/configWizard.html"><b>Configuration Wizard Annotations</b></a>.
 */
 
 
@@ -58,12 +58,27 @@ Software layers and Virtual I/O simplify these use cases:
     <th>Description</th>
   </tr>
   <tr>
+    <td>0.10.0 (beta)</td>
+    <td>Release for beta review:
+      - new command line options: --update, --quiet, --log, --intdir, --outdir (see usage for more information).
+      - building an executable always creates binaries in ELF, HEX and BIN format in output directory.
+      - added build progress information to build output.
+      - added makefile target 'rebuild' (clean + build).
+      - added makefile self-dependency. Generated makefile is only written if the content changed.
+      - added makefile target 'database' for generating a compilation database file.
+      - added special handling for layer files (layer.\<layer name>.\<ext>) copied unconditionally along with the layer on extract, remove, compose and add commands of cbuildgen.
+      - added special handling for layer markdown files (layer.\<layer name>.md) being concatenated into README.md on compose command of cbuildgen.
+      - fixed: #970 Toolchain configuration files corrected to handle Cortex-M0+, Cortex-M35P, SC000, SC300 and ARMV81MML based devices.
+      - fixed: #971 Unnecessary rebuild of libraries when using GCC toolchain.
+    </td>
+  </tr>
+  <tr>
     <td>0.9.0 (beta)</td>
     <td>Release for beta review:
-    - added layer description to project format specification.
-    - added support for multiple compilers.
-    - added commands for layer operations to cbuildgen.
-	</td>
+      - added layer description to project format specification.
+      - added support for multiple compilers.
+      - added commands for layer operations to cbuildgen.
+    </td>
   </tr>
   <tr>
     <td>0.1.0</td>

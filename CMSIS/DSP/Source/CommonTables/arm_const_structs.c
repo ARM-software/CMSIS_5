@@ -4,13 +4,13 @@
  * Description:  Constant structs that are initialized for user convenience.
  *               For example, some can be given as arguments to the arm_cfft_f32() or arm_rfft_f32() functions.
  *
- * $Date:        27. January 2017
- * $Revision:    V.1.5.1
+ * $Date:        23 April 2021
+ * $Revision:    V1.9.0
  *
- * Target Processor: Cortex-M cores
+ * Target Processor: Cortex-M and Cortex-A cores
  * -------------------------------------------------------------------- */
 /*
- * Copyright (C) 2010-2017 ARM Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -27,7 +27,7 @@
  * limitations under the License.
  */
 
-#include "arm_math.h"
+#include "arm_math_types.h"
 #include "arm_const_structs.h"
 
 /*
@@ -94,15 +94,6 @@ const arm_cfft_instance_f64 arm_cfft_sR_f64_len4096 = {
 /* Floating-point structs */
 #if !defined(ARM_MATH_MVEF) || defined(ARM_MATH_AUTOVECTORIZE)
 
-/* 
-
-Those structures cannot be used to initialize the MVE version of the FFT F32 instances.
-So they are not compiled when MVE is defined.
-
-For the MVE version, the new arm_cfft_init_f32 must be used.
-
-
-*/
 
 #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F32_16) && defined(ARM_TABLE_BITREVIDX_FLT_16))
 const arm_cfft_instance_f32 arm_cfft_sR_f32_len16 = {
@@ -163,7 +154,7 @@ const arm_cfft_instance_f32 arm_cfft_sR_f32_len4096 = {
 
 /* Fixed-point structs */
 
-#if !defined(ARM_MATH_MVEI)
+#if !defined(ARM_MATH_MVEI) || defined(ARM_MATH_AUTOVECTORIZE)
 
 /* 
 
@@ -357,7 +348,7 @@ const arm_rfft_fast_instance_f64 arm_rfft_fast_sR_f64_len4096 = {
 
 #if !defined(ARM_MATH_MVEF) || defined(ARM_MATH_AUTOVECTORIZE)
 
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F32_32) && defined(ARM_TABLE_BITREVIDX_FLT_32) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F32_32))
+#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F32_16) && defined(ARM_TABLE_BITREVIDX_FLT_16) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F32_32))
 const arm_rfft_fast_instance_f32 arm_rfft_fast_sR_f32_len32 = {
   { 16, twiddleCoef_16, armBitRevIndexTable16, ARMBITREVINDEXTABLE_16_TABLE_LENGTH },
   32U,
@@ -365,7 +356,7 @@ const arm_rfft_fast_instance_f32 arm_rfft_fast_sR_f32_len32 = {
 };
 #endif
 
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F32_64) && defined(ARM_TABLE_BITREVIDX_FLT_64) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F32_64))
+#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F32_32) && defined(ARM_TABLE_BITREVIDX_FLT_32) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F32_64))
 const arm_rfft_fast_instance_f32 arm_rfft_fast_sR_f32_len64 = {
    { 32, twiddleCoef_32, armBitRevIndexTable32, ARMBITREVINDEXTABLE_32_TABLE_LENGTH },
   64U,
@@ -373,7 +364,7 @@ const arm_rfft_fast_instance_f32 arm_rfft_fast_sR_f32_len64 = {
 };
 #endif
 
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F32_128) && defined(ARM_TABLE_BITREVIDX_FLT_128) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F32_128))
+#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F32_64) && defined(ARM_TABLE_BITREVIDX_FLT_64) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F32_128))
 const arm_rfft_fast_instance_f32 arm_rfft_fast_sR_f32_len128 = {
   { 64, twiddleCoef_64, armBitRevIndexTable64, ARMBITREVINDEXTABLE_64_TABLE_LENGTH },
   128U,
@@ -381,7 +372,7 @@ const arm_rfft_fast_instance_f32 arm_rfft_fast_sR_f32_len128 = {
 };
 #endif
 
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F32_256) && defined(ARM_TABLE_BITREVIDX_FLT_256) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F32_256))
+#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F32_128) && defined(ARM_TABLE_BITREVIDX_FLT_128) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F32_256))
 const arm_rfft_fast_instance_f32 arm_rfft_fast_sR_f32_len256 = {
   { 128, twiddleCoef_128, armBitRevIndexTable128, ARMBITREVINDEXTABLE_128_TABLE_LENGTH },
   256U,
@@ -389,7 +380,7 @@ const arm_rfft_fast_instance_f32 arm_rfft_fast_sR_f32_len256 = {
 };
 #endif
 
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F32_512) && defined(ARM_TABLE_BITREVIDX_FLT_512) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F32_512))
+#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F32_256) && defined(ARM_TABLE_BITREVIDX_FLT_256) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F32_512))
 const arm_rfft_fast_instance_f32 arm_rfft_fast_sR_f32_len512 = {
   { 256, twiddleCoef_256, armBitRevIndexTable256, ARMBITREVINDEXTABLE_256_TABLE_LENGTH },
   512U,
@@ -397,7 +388,7 @@ const arm_rfft_fast_instance_f32 arm_rfft_fast_sR_f32_len512 = {
 };
 #endif
 
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F32_1024) && defined(ARM_TABLE_BITREVIDX_FLT_1024) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F32_1024))
+#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F32_512) && defined(ARM_TABLE_BITREVIDX_FLT_512) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F32_1024))
 const arm_rfft_fast_instance_f32 arm_rfft_fast_sR_f32_len1024 = {
   { 512, twiddleCoef_512, armBitRevIndexTable512, ARMBITREVINDEXTABLE_512_TABLE_LENGTH },
   1024U,
@@ -405,7 +396,7 @@ const arm_rfft_fast_instance_f32 arm_rfft_fast_sR_f32_len1024 = {
 };
 #endif
 
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F32_2048) && defined(ARM_TABLE_BITREVIDX_FLT_2048) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F32_2048))
+#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F32_1024) && defined(ARM_TABLE_BITREVIDX_FLT_1024) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F32_2048))
 const arm_rfft_fast_instance_f32 arm_rfft_fast_sR_f32_len2048 = {
   { 1024, twiddleCoef_1024, armBitRevIndexTable1024, ARMBITREVINDEXTABLE_1024_TABLE_LENGTH },
   2048U,
@@ -413,7 +404,7 @@ const arm_rfft_fast_instance_f32 arm_rfft_fast_sR_f32_len2048 = {
 };
 #endif
 
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F32_4096) && defined(ARM_TABLE_BITREVIDX_FLT_4096) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F32_4096))
+#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || (defined(ARM_TABLE_TWIDDLECOEF_F32_2048) && defined(ARM_TABLE_BITREVIDX_FLT_2048) && defined(ARM_TABLE_TWIDDLECOEF_RFFT_F32_4096))
 const arm_rfft_fast_instance_f32 arm_rfft_fast_sR_f32_len4096 = {
   { 2048, twiddleCoef_2048, armBitRevIndexTable2048, ARMBITREVINDEXTABLE_2048_TABLE_LENGTH },
   4096U,
@@ -426,7 +417,7 @@ const arm_rfft_fast_instance_f32 arm_rfft_fast_sR_f32_len4096 = {
 /* Fixed-point structs */
 /* q31_t */
 
-#if !defined(ARM_MATH_MVEI)
+#if !defined(ARM_MATH_MVEI) || defined(ARM_MATH_AUTOVECTORIZE)
 
 /* 
 

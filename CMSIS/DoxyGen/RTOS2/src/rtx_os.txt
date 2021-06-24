@@ -181,6 +181,12 @@ static uint32_t mq_mem[osRtxMessageQueueMemSize(MSG_COUNT, sizeof(msg_item_t))/4
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \def osRtxErrorStackUnderflow
+
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\def osRtxErrorStackOverflow
 \brief Stack overflow, i.e. stack pointer below its lower memory limit for descending stacks.
 \details
 This error identifier is used with \ref osRtxErrorNotify when RTX5 detects a thread stack overflow.
@@ -256,7 +262,7 @@ error function \b osRtxErrorNotify for an object specified by parameter \a objec
 The parameter \a code passes the actual error code to this function:
 | Error Code                        | Description                                                                       |
 |-----------------------------------|-----------------------------------------------------------------------------------|
-| \ref osRtxErrorStackUnderflow     | Stack overflow detected for thread (thread_id=object_id)                          |
+| \ref osRtxErrorStackOverflow      | Stack overflow detected for thread (thread_id=object_id)                          |
 | \ref osRtxErrorISRQueueOverflow   | ISR Queue overflow detected when inserting object (object_id)                     |
 | \ref osRtxErrorTimerQueueOverflow | User Timer Callback Queue overflow detected for timer (timer_id=object_id)        |
 | \ref osRtxErrorClibSpace          | Standard C/C++ library libspace not available: increase \c OS_THREAD_LIBSPACE_NUM |
@@ -274,7 +280,7 @@ uint32_t osRtxErrorNotify (uint32_t code, void *object_id) {
   (void)object_id;
  
   switch (code) {
-    case osRtxErrorStackUnderflow:
+    case osRtxErrorStackOverflow:
       // Stack overflow detected for thread (thread_id=object_id)
       break;
     case osRtxErrorISRQueueOverflow:

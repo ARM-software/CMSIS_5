@@ -1,7 +1,6 @@
 #include "BayesF32.h"
 #include <stdio.h>
 #include "Error.h"
-#include "arm_math.h"
 #include "Test.h"
 
 
@@ -11,6 +10,7 @@
        const float32_t *inp = input.ptr();
 
        float32_t *bufp = outputProbas.ptr();
+       float32_t *tempp = temp.ptr();
        int16_t *p = outputPredicts.ptr();
 
        
@@ -18,7 +18,7 @@
        {
           *p = arm_gaussian_naive_bayes_predict_f32(&bayes, 
                 inp, 
-                bufp);
+                bufp,tempp);
 
           inp += this->vecDim;
           bufp += this->classNb;
@@ -34,7 +34,7 @@
     {
 
 
-       
+       (void)paramsArgs;
 
        switch(id)
        {
@@ -63,6 +63,8 @@
             predicts.reload(BayesF32::PREDICTS1_S16_ID,mgr);
 
             outputProbas.create(this->nbPatterns*this->classNb,BayesF32::OUT_PROBA_F32_ID,mgr);
+            temp.create(this->nbPatterns*this->classNb,BayesF32::OUT_PROBA_F32_ID,mgr);
+
             outputPredicts.create(this->nbPatterns,BayesF32::OUT_PREDICT_S16_ID,mgr);
 
             bayes.vectorDimension=this->vecDim;
@@ -82,6 +84,7 @@
 
     void BayesF32::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)
     {
+        (void)id;
         outputProbas.dump(mgr);
         outputPredicts.dump(mgr);
     }

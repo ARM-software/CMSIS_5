@@ -3,7 +3,7 @@ import numpy as np
 import itertools
 import Tools
 from scipy import signal
-from pylab import figure, clf, plot, xlabel, ylabel, xlim, ylim, title, grid, axes, show,semilogx, semilogy
+#from pylab import figure, clf, plot, xlabel, ylabel, xlim, ylim, title, grid, axes, show,semilogx, semilogy
 
 # Those patterns are used for tests and benchmarks.
 # For tests, there is the need to add tests for saturation
@@ -57,7 +57,7 @@ def writeTests(config,format):
     if format == 0 or format == 31:
        blk = [1, 2, 3, 8, 9,10,11, 16, 23]
        taps = [1, 2, 3, 4, 5, 6, 7, 8, 11, 16, 23, 25]
-    elif format == 15:
+    elif format == 15 or format == 16:
        blk = [1, 2, 3, 12,13,14,15]
        taps = [2, 3, 4, 5, 6, 7, 8, 11, 25]
     elif format == 7:
@@ -99,6 +99,7 @@ def generatePatterns():
     PARAMDIR = os.path.join("Parameters","DSP","Filtering","FIR","FIR")
     
     configf32=Tools.Config(PATTERNDIR,PARAMDIR,"f32")
+    configf16=Tools.Config(PATTERNDIR,PARAMDIR,"f16")
     configq31=Tools.Config(PATTERNDIR,PARAMDIR,"q31")
     configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
     configq7=Tools.Config(PATTERNDIR,PARAMDIR,"q7")
@@ -106,6 +107,7 @@ def generatePatterns():
     
     
     writeTests(configf32,0)
+    writeTests(configf16,16)
     writeTests(configq31,31)
     writeTests(configq15,15)
     writeTests(configq7,7)

@@ -1,5 +1,8 @@
 #include "Test.h"
 #include "Pattern.h"
+
+#include "dsp/transform_functions.h"
+
 class TransformCF64:public Client::Suite
     {
         public:
@@ -14,8 +17,10 @@ class TransformCF64:public Client::Suite
 
             Client::RefPattern<float64_t> ref;
 
-            const arm_cfft_instance_f64 *instCfftF64;
+            arm_cfft_instance_f64 varInstCfftF64;
 
             int ifft;
+
+            arm_status status;
             
     };

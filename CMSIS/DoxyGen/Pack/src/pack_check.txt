@@ -1,12 +1,12 @@
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\page packChk packChk
+\page packChk PackChk
 
-\b packChk is a utility for validation of a Software Pack. It operates on the unzipped content of the Software Pack and
+\b PackChk is a utility for validation of a Software Pack. It operates on the unzipped content of the Software Pack and
 is located in the directory <b>.\\CMSIS\\Utilities</b> of the <b>ARM::CMSIS</b> Pack.  
-\b packChk is available for Windows and Linux operating systems.
+\b PackChk is available for Windows and Linux operating systems.
 
-\b packChk performs the following operations:
+\b PackChk performs the following operations:
  - Reads the content of the specified *.pdsc file. The path to this *.pdsc file is considered as root directory of the Software Pack.
  - Verifies the existence of all files in the Software Pack that are referenced in the *.pdsc file.
  - Checks for presence and correctness of mandatory elements such as \<vendor>, \<version>, etc.
@@ -18,13 +18,16 @@ is located in the directory <b>.\\CMSIS\\Utilities</b> of the <b>ARM::CMSIS</b> 
      0 : no errors detected \n
      1 : errors during validation detected
 
+\note
+\b PackChk does not validate the XML conformance of your PDSC file. You need to run an additional XML validation tool such
+as \ref cp_Editors_xmllint "xmllint".
 
 Operation
 ---------
 
-\b packChk is invoked from the command line:\n
+\b PackChk is invoked from the command line:\n
 \code
- packChk <pdsc_file> <options>
+ PackChk <pdsc_file> <options>
 \endcode
 
 \n
@@ -48,7 +51,7 @@ Operation
     <td>-s</td>
     <td nowrap>Verify SVD files</td>	
     <td>Each SVD file referenced in the *.pdsc file is <a href="../../SVD/html/svd_validate_file_pg.html"><b>validated</b></a> with \b SVDConv.
-	With this option set, \b SVDConv.exe is invoked from the same directory as \b packChk.
+	With this option set, \b SVDConv.exe is invoked from the same directory as \b PackChk.
 	</td>
   </tr>
   <tr>
@@ -79,30 +82,30 @@ Operation
 
 <b>Examples</b>
 
-Run \b packChk on the package description file called <b>MyVendor.MyPack.pdsc</b>. \b packChk verifies the file against the Software Pack that is located in the same directory.
+Run \b PackChk on the package description file called <b>MyVendor.MyPack.pdsc</b>. \b PackChk verifies the file against the Software Pack that is located in the same directory.
 \verbatim
-packChk MyVendor.MyPack.pdsc
+PackChk MyVendor.MyPack.pdsc
 \endverbatim
 
-Run \b packChk on the package description file called <b>MyVendor.MyPack.pdsc</b> in the current directory and try to resolve conditions using the ARM.CMSIS.pdsc file based in another directory.
+Run \b PackChk on the package description file called <b>MyVendor.MyPack.pdsc</b> in the current directory and try to resolve conditions using the ARM.CMSIS.pdsc file based in another directory.
 \verbatim
-packChk MyVendor.MyPack.pdsc -i ..\..\PACK\ARM\CMSIS\ARM.CMSIS.pdsc
+PackChk MyVendor.MyPack.pdsc -i ..\..\PACK\ARM\CMSIS\ARM.CMSIS.pdsc
 \endverbatim
 
-Run \b packChk on the  package description file called <b>MyVendor.MVCM3.pdsc</b>, verify SVD files, verify the URL to the Pack Server, and generate a ASCII text file with the standardized name of the Software Pack.
+Run \b PackChk on the  package description file called <b>MyVendor.MVCM3.pdsc</b>, verify SVD files, verify the URL to the Pack Server, and generate a ASCII text file with the standardized name of the Software Pack.
 \verbatim
-packChk "MyVendor.MVCM3.pdsc" -s -u "http://www.myvendor.com/pack" -n packname.txt
+PackChk "MyVendor.MVCM3.pdsc" -s -u "http://www.myvendor.com/pack" -n packname.txt
 \endverbatim
 
-Run \b packChk on the  package description file called <b>MyVendor.MVCM3.pdsc</b>. Suppress validation messages M304 and M331.
+Run \b PackChk on the  package description file called <b>MyVendor.MVCM3.pdsc</b>. Suppress validation messages M304 and M331.
 \verbatim
-packChk MyVendor.MVCM3.pdsc -x M304 M331           // messages as a list
-packChk MyVendor.MVCM3.pdsc -x M304 -x M331        // option repeated
+PackChk MyVendor.MVCM3.pdsc -x M304 M331           // messages as a list
+PackChk MyVendor.MVCM3.pdsc -x M304 -x M331        // option repeated
 \endverbatim
 
 \section packChkMessages Error and Warning Messages
 
-The following table explains the categories for the output messages issued by packChk utility. Sections below list the errors and warnings and contain recommendations on how to resolve them.
+The following table explains the categories for the output messages issued by PackChk utility. Sections below list the errors and warnings and contain recommendations on how to resolve them.
 
 \b Categories
 \n
@@ -160,7 +163,7 @@ The errors in this category are issued because of an internal error in the PackC
 \anchor packchk_invoc_msgs 
 Invocation Errors
 -----------------
-The errors in this category are issued because of an incorrect command-line input that prevents the packChk execution.
+The errors in this category are issued because of an incorrect command-line input that prevents the PackChk execution.
 <table class="cmtable" summary="packChk Invocation Msgs">
   <tr>
     <th>Message Number</th>
@@ -175,7 +178,7 @@ The errors in this category are issued because of an incorrect command-line inpu
   <td>The list of arguments is too long. Verify if you have used one argument twice.</td>
 </tr>
 <tr><td>M202</td> <td>ERROR</td> <td>No PDSC input file specified</td>
-  <td>Correct the command line. \b packChk expects a \ref packFormat "*.pdsc" file name as input.</td>
+  <td>Correct the command line. \b PackChk expects a \ref packFormat "*.pdsc" file name as input.</td>
 </tr>
 <tr><td>M203</td> <td>ERROR</td> <td>Error reading PDSC file  \em 'PATH/FILENAME'!</td>
   <td>Verify the PDSC file for consistency.</td>
@@ -206,14 +209,14 @@ The errors in this category are issued because of an incorrect command-line inpu
 </tr>
 <tr><td>M211</td> <td>ERROR</td> <td>Cannot find SVDConv.exe: \em 'CMDLINE'</td>
   <td><a href="../../SVD/html/svd_SVDConv_pg.html">SVDConv utility</a> was not found in specified \em 'CMDLINE'.
-   <br>Copy the \b SVDConv.exe into the directory of \b packChk. Default is \token{CMSIS\\Utilities}.</td>
+   <br>Copy the \b SVDConv.exe into the directory of \b PackChk. Default is \token{CMSIS\\Utilities}.</td>
 </tr>
 </table>
 
 \anchor packchk_valid_msgs
 Validation Messages
 --------------------
-The messages in this category are issued by packChk during package validation. This can be for example incorrect use of the pack schema in the PDSC file, missing files, broken dependancies and others. \em ERROR messages must be resolved to ensure that the package is compliant to the CMSIS-format. \em WARNING messages should be checked and are strongly recommended to be resolved. 
+The messages in this category are issued by PackChk during package validation. This can be for example incorrect use of the pack schema in the PDSC file, missing files, broken dependancies and others. \em ERROR messages must be resolved to ensure that the package is compliant to the CMSIS-format. \em WARNING messages should be checked and are strongly recommended to be resolved. 
 
 <table class="cmtable" summary="packChk Validation Msgs">
   <tr>
@@ -474,11 +477,11 @@ The messages in this category are issued by packChk during package validation. T
   <td>There are no examples found for the board \em 'BOARD'.
   <br>Provide examples. Refer to \ref element_example.</td>
 </tr>
-<!-- /* not used*/
 <tr><td>M380</td> <td>WARNING</td> <td>No description found for [\em 'VENDOR'] 'MCU'</td>
-  <td> </td>
+  <td>No description was found for the device \em 'MCU' from \em 'VENDOR'.
+  <br>Use \token{description} attribute to provide information about the device, its subfamily, or family. Refer to \ref element_description.
+  </td>
 </tr>
--->
 <tr><td>M381</td> <td>WARNING</td> <td>Vendor names are not equal: '[\em 'VENDOR'] \em 'MCU', MCU '[\em 'VENDOR2'] \em 'MCU2', see Line \em 'LINE'</td>
   <td>Vendor name specified in the \token{Dvendor} attribute for the \token{\<mountedDevice>} tag does not match the actual device vendor name.
   <br>Verify and correct vendor name. Refer to \ref element_board_mountedDevice.</td>

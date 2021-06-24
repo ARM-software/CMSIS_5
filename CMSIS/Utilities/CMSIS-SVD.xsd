@@ -17,9 +17,12 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 
-  $Date:         05. September 2019
-  $Revision:     1.3.6
+  $Date:         12. June 2021
+  $Revision:     1.3.7
 
+  Version 1.3.7:
+  - add CM55 as enumerated value for cpuNameType.
+  
   Version 1.3.6:
   - add ARMV81MML as enumeration value for cpuNameType.
   
@@ -92,6 +95,7 @@
       <xs:enumeration value="CM3"/>
       <xs:enumeration value="CM33"/>
       <xs:enumeration value="CM35P"/>
+      <xs:enumeration value="CM55"/>
       <xs:enumeration value="SC300"/>
       <xs:enumeration value="CM4"/>
       <xs:enumeration value="CM7"/>

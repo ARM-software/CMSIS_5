@@ -9,6 +9,8 @@ FullBenchmark/
 Output/
 GeneratedInclude/
 GeneratedSource/
+GeneratedIncludeBench/
+GeneratedSourceBench/
 *.db
 TestDesc.txt
 currentConfig.csv

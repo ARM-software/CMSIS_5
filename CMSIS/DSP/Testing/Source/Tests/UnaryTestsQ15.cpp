@@ -10,7 +10,7 @@ Reference patterns are generated with
 a double precision computation.
 
 */
-#define ABS_ERROR_Q15 ((q15_t)2)
+#define ABS_ERROR_Q15 ((q15_t)4)
 #define ABS_ERROR_Q63 ((q63_t)(1<<16))
 
 #define ONEHALF 0x4000
@@ -75,10 +75,77 @@ a double precision computation.
       }                                                                  \
       out.pData = outp;
 
+#define PREPAREDATA1C(TRANSPOSED)                                         \
+      in1.numRows=rows;                                                  \
+      in1.numCols=columns;                                               \
+      memcpy((void*)ap,(const void*)inp1,2*sizeof(q15_t)*rows*columns);\
+      in1.pData = ap;                                                    \
+                                                                         \
+      if (TRANSPOSED)                                                    \
+      {                                                                  \
+         out.numRows=columns;                                            \
+         out.numCols=rows;                                               \
+      }                                                                  \
+      else                                                               \
+      {                                                                  \
+      out.numRows=rows;                                                  \
+      out.numCols=columns;                                               \
+      }                                                                  \
+      out.pData = outp;
+
+#define LOADVECDATA2()                          \
+      const q15_t *inp1=input1.ptr();    \
+      const q15_t *inp2=input2.ptr();    \
+                                             \
+      q15_t *ap=a.ptr();                 \
+      q15_t *bp=b.ptr();                 \
+                                             \
+      q15_t *outp=output.ptr();          \
+      int16_t *dimsp = dims.ptr();           \
+      int nbMatrixes = dims.nbSamples() / 2;\
+      int rows,internal;                      \
+      int i;
+
+#define PREPAREVECDATA2()                                                   \
+      in1.numRows=rows;                                                  \
+      in1.numCols=internal;                                               \
+      memcpy((void*)ap,(const void*)inp1,2*sizeof(q15_t)*rows*internal);\
+      in1.pData = ap;                                                    \
+                                                                         \
+      memcpy((void*)bp,(const void*)inp2,2*sizeof(q15_t)*internal);
+
+
+    void UnaryTestsQ15::test_mat_vec_mult_q15()
+    {     
+
+
+      LOADVECDATA2();
+
+      for(i=0;i < nbMatrixes ; i ++)
+      {
+          rows = *dimsp++;
+          internal = *dimsp++;
+
+          PREPAREVECDATA2();
+
+          arm_mat_vec_mult_q15(&this->in1, bp, outp);
+
+          outp += rows ;
+
+      }
+
+      ASSERT_EMPTY_TAIL(output);
+
+      ASSERT_SNR(output,ref,(q15_t)SNR_THRESHOLD);
+
+      ASSERT_NEAR_EQ(output,ref,ABS_ERROR_Q15);
+
+    } 
 
     void UnaryTestsQ15::test_mat_add_q15()
     {     
       LOADDATA2();
+      arm_status status;
 
       for(i=0;i < nbMatrixes ; i ++)
       {
@@ -87,7 +154,8 @@ a double precision computation.
 
           PREPAREDATA2();
 
-          arm_mat_add_q15(&this->in1,&this->in2,&this->out);
+          status=arm_mat_add_q15(&this->in1,&this->in2,&this->out);
+          ASSERT_TRUE(status==ARM_MATH_SUCCESS);
 
           outp += (rows * columns);
 
@@ -104,6 +172,7 @@ a double precision computation.
 void UnaryTestsQ15::test_mat_sub_q15()
     {     
       LOADDATA2();
+      arm_status status;
 
       for(i=0;i < nbMatrixes ; i ++)
       {
@@ -112,7 +181,8 @@ void UnaryTestsQ15::test_mat_sub_q15()
 
           PREPAREDATA2();
 
-          arm_mat_sub_q15(&this->in1,&this->in2,&this->out);
+          status=arm_mat_sub_q15(&this->in1,&this->in2,&this->out);
+          ASSERT_TRUE(status==ARM_MATH_SUCCESS);
 
           outp += (rows * columns);
 
@@ -129,6 +199,7 @@ void UnaryTestsQ15::test_mat_sub_q15()
 void UnaryTestsQ15::test_mat_scale_q15()
     {     
       LOADDATA1();
+      arm_status status;
 
       for(i=0;i < nbMatrixes ; i ++)
       {
@@ -137,7 +208,8 @@ void UnaryTestsQ15::test_mat_scale_q15()
 
           PREPAREDATA1(false);
 
-          arm_mat_scale_q15(&this->in1,ONEHALF,0,&this->out);
+          status=arm_mat_scale_q15(&this->in1,ONEHALF,0,&this->out);
+          ASSERT_TRUE(status==ARM_MATH_SUCCESS);
 
           outp += (rows * columns);
 
@@ -154,6 +226,7 @@ void UnaryTestsQ15::test_mat_scale_q15()
 void UnaryTestsQ15::test_mat_trans_q15()
     {     
       LOADDATA1();
+      arm_status status;
 
       for(i=0;i < nbMatrixes ; i ++)
       {
@@ -162,7 +235,8 @@ void UnaryTestsQ15::test_mat_trans_q15()
 
           PREPAREDATA1(true);
 
-          arm_mat_trans_q15(&this->in1,&this->out);
+          status=arm_mat_trans_q15(&this->in1,&this->out);
+          ASSERT_TRUE(status==ARM_MATH_SUCCESS);
 
           outp += (rows * columns);
 
@@ -176,12 +250,39 @@ void UnaryTestsQ15::test_mat_trans_q15()
 
     } 
 
+void UnaryTestsQ15::test_mat_cmplx_trans_q15()
+    {     
+      LOADDATA1();
+      arm_status status;
+
+      for(i=0;i < nbMatrixes ; i ++)
+      {
+          rows = *dimsp++;
+          columns = *dimsp++;
+
+          PREPAREDATA1C(true);
+
+          status=arm_mat_cmplx_trans_q15(&this->in1,&this->out);
+          ASSERT_TRUE(status==ARM_MATH_SUCCESS);
+
+          outp += 2*(rows * columns);
+
+      }
+
+      ASSERT_EMPTY_TAIL(output);
+
+      ASSERT_SNR(output,ref,(q15_t)SNR_THRESHOLD);
+
+      ASSERT_NEAR_EQ(output,ref,ABS_ERROR_Q15);
+
+    }
+
 
     void UnaryTestsQ15::setUp(Testing::testID_t id,std::vector<Testing::param_t>& params,Client::PatternMgr *mgr)
     {
 
 
-    
+      (void)params;
       switch(id)
       {
          case TEST_MAT_ADD_Q15_1:
@@ -228,6 +329,28 @@ void UnaryTestsQ15::test_mat_trans_q15()
             a.create(MAXMATRIXDIM*MAXMATRIXDIM,UnaryTestsQ15::TMPA_Q15_ID,mgr);
          break;
 
+         case TEST_MAT_VEC_MULT_Q15_5:
+            input1.reload(UnaryTestsQ15::INPUTS1_Q15_ID,mgr);
+            input2.reload(UnaryTestsQ15::INPUTVEC1_Q15_ID,mgr);
+            dims.reload(UnaryTestsQ15::DIMSUNARY1_S16_ID,mgr);
+
+            ref.reload(UnaryTestsQ15::REFVECMUL1_Q15_ID,mgr);
+
+            output.create(ref.nbSamples(),UnaryTestsQ15::OUT_Q15_ID,mgr);
+            a.create(MAXMATRIXDIM*MAXMATRIXDIM,UnaryTestsQ15::TMPA_Q15_ID,mgr);
+            b.create(MAXMATRIXDIM,UnaryTestsQ15::TMPB_Q15_ID,mgr);
+         break;
+
+         case TEST_MAT_CMPLX_TRANS_Q15_6:
+            input1.reload(UnaryTestsQ15::INPUTSC1_Q15_ID,mgr);
+            dims.reload(UnaryTestsQ15::DIMSUNARY1_S16_ID,mgr);
+
+            ref.reload(UnaryTestsQ15::REFTRANSC1_Q15_ID,mgr);
+
+            output.create(ref.nbSamples(),UnaryTestsQ15::OUT_Q15_ID,mgr);
+            a.create(MAXMATRIXDIM*MAXMATRIXDIM,UnaryTestsQ15::TMPA_Q15_ID,mgr);
+         break;
+
         
       }
        
@@ -237,5 +360,6 @@ void UnaryTestsQ15::test_mat_trans_q15()
 
     void UnaryTestsQ15::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)
     {
+       (void)id;
        output.dump(mgr);
     }

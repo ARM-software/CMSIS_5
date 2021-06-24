@@ -6,7 +6,33 @@ import Tools
 
 # Those patterns are used for tests and benchmarks.
 # For tests, there is the need to add tests for saturation
+def clipTest(config,format,nb):
+    NBSAMPLESBASE=256
+    #config.setOverwrite(True)
+    minValues=[-0.5,-0.5,0.1]
+    maxValues=[-0.1, 0.5,0.5]
+    nbSamples=[NBSAMPLESBASE+Tools.loopnb(format,Tools.TAILONLY)
+              ,NBSAMPLESBASE+Tools.loopnb(format,Tools.BODYONLY)
+              ,NBSAMPLESBASE+Tools.loopnb(format,Tools.BODYANDTAIL)
+              ]
 
+    maxLength = max(nbSamples)
+    minBound=-0.9 
+    maxBound=0.9
+    testSamples=np.linspace(minBound,maxBound,maxLength) 
+    config.writeInput(nb, testSamples)
+
+    i=0
+    for (mi,ma,nbForTest) in zip(minValues,maxValues,nbSamples):
+      ref = list(np.clip(testSamples[0:nbForTest],mi,ma))
+      config.writeReference(nb+i, ref)
+      i = i + 1
+    
+    
+    
+    #config.setOverwrite(False)
+
+    return(i)
 
 def writeTests(config,format):
     NBSAMPLES=256
@@ -18,6 +44,7 @@ def writeTests(config,format):
     data1 = Tools.normalize(data1)
     data2 = Tools.normalize(data2)
 
+    # temp for debug of f16
     config.writeInput(1, data1)
     config.writeInput(2, data2)
     
@@ -101,6 +128,13 @@ def writeTests(config,format):
        config.writeReferenceQ31(11, ref)
     else:
        config.writeReference(11, ref)
+
+    # This function is used in other test functions for q31 and q15
+    # So we can't add tests here for q15 and q31.
+    # But we can for f32:
+    if format == Tools.F32 or format==Tools.F16:
+       clipTest(config,format,12)
+       return(13)
 
     return(11)
 
@@ -260,21 +294,32 @@ def writeTests2(config,format):
     if format == 7:
       config.writeReferenceS8(nb+3, ref, "Xor")
 
+    clipTest(config,format,nb+4)
+
 
 def generatePatterns():
     PATTERNDIR = os.path.join("Patterns","DSP","BasicMaths","BasicMaths")
     PARAMDIR = os.path.join("Parameters","DSP","BasicMaths","BasicMaths")
     
     configf32=Tools.Config(PATTERNDIR,PARAMDIR,"f32")
+    configf16=Tools.Config(PATTERNDIR,PARAMDIR,"f16")
     configq31=Tools.Config(PATTERNDIR,PARAMDIR,"q31")
     configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
     configq7=Tools.Config(PATTERNDIR,PARAMDIR,"q7")
+
+    #configf32.setOverwrite(False)
+    #configf16.setOverwrite(False)
+    #configq31.setOverwrite(False)
+    #configq15.setOverwrite(False)
+    #configq7.setOverwrite(False)
     
     writeTests(configf32,0)
+    writeTests(configf16,16)
 
     writeTests2(configq31,31)
     writeTests2(configq15,15)
     writeTests2(configq7,7)
+
 
     # Params just as example
     someLists=[[1,3,5],[1,3,5],[1,3,5]]

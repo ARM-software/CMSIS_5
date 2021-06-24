@@ -6,6 +6,9 @@
   correspond to what is used for the test suite.
 
 */
+
+#include "dsp/basic_math_functions.h"
+
 class ExampleCategoryF32:public Client::Suite
     {
         public:

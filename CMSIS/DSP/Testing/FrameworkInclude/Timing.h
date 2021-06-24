@@ -2,14 +2,16 @@
 #define _TIMING_H_
 
 #include "Test.h"
-#include "arm_math.h"
+#include "arm_math_types.h"
+#include "arm_math_types_f16.h"
+
 void initCycleMeasurement();
 void cycleMeasurementStart();
 void cycleMeasurementStop();
 
 Testing::cycles_t getCycles();
 
-#ifdef EXTBENCH
+#if defined(EXTBENCH)  || defined(CACHEANALYSIS)
 extern unsigned long sectionCounter;
 
 #if   defined ( __CC_ARM )

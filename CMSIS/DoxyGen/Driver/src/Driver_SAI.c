@@ -751,12 +751,10 @@ The table lists the operation values for \em control. Values from different cate
 <table class="cmtable" summary="">
 <tr><th> Parameter \em control              </th><th>                                       Bit </th><th>             Category      </th>
     <th> Description                        </th></tr>
-<tr><td> \ref ARM_SAI_CONFIGURE_TX          </td><td rowspan="9" style="text-align:right"> 0..7 </td><td rowspan="9"> Operation    </td>
-    <td> Configure transmitter. \em arg1 (see  <a href="#sai_arg1_tab"><b>Parameter <i>arg1</i></b></a>) and \em arg2 provide additional configuration.  </td></tr>
-<tr><td> \ref ARM_SAI_CONFIGURE_TX          </td>    
+<tr><td> \ref ARM_SAI_CONFIGURE_TX          </td><td rowspan="8" style="text-align:right"> 0..7 </td><td rowspan="8"> Operation    </td>
     <td> Configure transmitter. \em arg1 (see  <a href="#sai_arg1_tab"><b>Parameter <i>arg1</i></b></a>) and \em arg2 provide additional configuration.  </td></tr>
 <tr><td> \ref ARM_SAI_CONFIGURE_RX          </td>
-    <td> Configure transmitter. \em arg1 and \em arg2 provide additional configuration.  </td></tr>
+    <td> Configure receiver. \em arg1 (see  <a href="#sai_arg1_tab"><b>Parameter <i>arg1</i></b></a>) and \em arg2 provide additional configuration.  </td></tr>
 <tr><td> \ref ARM_SAI_CONTROL_TX                </td>
     <td> Enable or disable transmitter and control mute; 
 	\em arg1.0 : \token{0=disable (default); 1=enable;} \em arg1.1 : \token{mute} (see \ref ARM_SAI_Send) </td></tr>

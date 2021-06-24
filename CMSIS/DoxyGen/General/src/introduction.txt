@@ -1,15 +1,20 @@
-
 /**
 \mainpage Introduction
 
-The <b>CMSIS</b> is a vendor-independent hardware abstraction layer for microcontrollers that are based on Arm&reg;
-Cortex&reg; processors. The CMSIS defines generic tool interfaces and enables consistent device support. It provides simple
-software interfaces to the processor and the peripherals, simplifying software re-use, reducing the learning curve for
-microcontroller developers, and reducing the time to market for new devices.
+The <b>CMSIS</b> is a set of tools, APIs, frameworks, and work flows that help to simplify software re-use, reduce the
+learning curve for microcontroller developers, speed-up project build and debug, and thus reduce the time to market for new
+applications.
 
-The CMSIS is defined in close cooperation with various silicon and software vendors and provides a common approach to
-interface to peripherals, real-time operating systems, and middleware components. The CMSIS is intended to enable the
-combination of software components from multiple middleware vendors.
+CMSIS started as a vendor-independent hardware abstraction layer Arm&reg; Cortex&reg;-M based processors and was later
+extended to support entry-level Arm Cortex-A based processors. To simplify access, CMSIS defines generic tool interfaces and
+enables consistent device support by providing simple software interfaces to the processor and the peripherals.
+
+CMSIS is defined in close cooperation with various silicon and software vendors and provides a common approach to interface
+to peripherals, real-time operating systems, and middleware components. It is intended to enable the combination of software
+components from multiple vendors.
+
+CMSIS is open-source and collaboratively developed on
+<a href="https://github.com/ARM-software/CMSIS_5" target="_blank">GitHub</a>.
 
 \section CM_Components CMSIS Components
 
@@ -18,7 +23,7 @@ combination of software components from multiple middleware vendors.
 |<a href="../../Core/html/index.html"><b>Core(M)</b></a>|   All Cortex-M, SecurCore | Standardized API for the Cortex-M processor core and peripherals. Includes intrinsic functions for Cortex-M4/M7/M33/M35P SIMD instructions.|
 |<a href="../../Core_A/html/index.html"><b>Core(A)</b></a>| Cortex-A5/A7/A9 | Standardized API and basic run-time system for the Cortex-A5/A7/A9 processor core and peripherals.|
 |<a href="../../Driver/html/index.html"><b>Driver</b></a>|  All Cortex | Generic peripheral driver interfaces for middleware. Connects microcontroller peripherals with middleware that implements for example communication stacks, file systems, or graphic user interfaces.|
-|<a href="../../DSP/html/index.html"><b>DSP</b></a>|        All Cortex-M | DSP library collection with over 60 Functions for various data types: fixed-point (fractional q7, q15, q31) and single precision floating-point (32-bit). Implementations optimized for the SIMD instruction set are available for Cortex-M4/M7/M33/M35P.|
+|<a href="../../DSP/html/index.html"><b>DSP</b></a>|        All Cortex-M | DSP library collection with over 60 functions for various data types: fixed-point (fractional q7, q15, q31) and single precision floating-point (32-bit). Implementations optimized for the SIMD instruction set are available for Cortex-M4/M7/M33/M35P.|
 |<a href="../../NN/html/index.html"><b>NN</b></a>|          All Cortex-M | Collection of efficient neural network kernels developed to maximize the performance and minimize the memory footprint on Cortex-M processor cores.|
 |<a href="../../RTOS/html/index.html"><b>RTOS v1</b></a>|   Cortex-M0/M0+/M3/M4/M7 | Common API for real-time operating systems along with a reference implementation based on RTX. It enables software components that can work across multiple RTOS systems.|
 |<a href="../../RTOS2/html/index.html"><b>RTOS v2</b></a>|  All Cortex-M, Cortex-A5/A7/A9 | Extends CMSIS-RTOS v1 with Armv8-M support, dynamic object creation, provisions for multi-core systems, binary compatible interface. |
@@ -31,21 +36,29 @@ combination of software components from multiple middleware vendors.
 
 \section Motivation Motivation
 
-CMSIS has been created to help the industry in standardization. It enables consistent software layers and device support across a wide range of development tools and microcontrollers.
-CMSIS is not a huge software layer that introduces overhead and does not define standard peripherals. The silicon industry can
-therefore support the wide variations of Cortex-M processor-based devices with this common standard.
+CMSIS has been created to help the industry in standardization. It enables consistent software layers and device support
+across a wide range of development tools and microcontrollers. CMSIS is not a huge software layer that introduces overhead
+and does not define standard peripherals. The silicon industry can therefore support the wide variations of Arm Cortex
+processor-based devices with this common standard.
 
 \image html Overview.png "CMSIS Structure"
 
 The benefits of the CMSIS are:
 
- - CMSIS reduces the learning curve, development costs, and time-to-market. Developers can write software quicker through a variety of easy-to-use, standardized software interfaces.
- - Consistent software interfaces improve the software portability and re-usability. Generic software libraries and interfaces provide consistent software framework.
- - It provides interfaces for debug connectivity, debug peripheral views, software delivery, and device support to reduce time-to-market for new microcontroller deployment.
- - Being a compiler independent layer, it allows to use the compiler of your choice. Thus, it is supported by mainstream compilers.
+ - CMSIS reduces the learning curve, development costs, and time-to-market. Developers can write software quicker through a
+   variety of easy-to-use, standardized software interfaces.
+ - Consistent software interfaces improve the software portability and re-usability. Generic software libraries and
+   interfaces provide consistent software framework.
+ - It provides interfaces for debug connectivity, debug peripheral views, software delivery, and device support to reduce
+   time-to-market for new microcontroller deployment.
+ - It allows to use the compiler of your choice, as it is compiler independent and thus supported by mainstream compilers.
  - It enhances program debugging with peripheral information for debuggers and ITM channels for printf-style output.
- - CMSIS is delivered in CMSIS-Pack format which enables fast software delivery, simplifies updates, and enables consistent integration into development tools.
- - CMSIS-Zone will simplify system resource and partitioning as it manages the configuration of multiple processors, memory areas, and peripherals.
+ - CMSIS is delivered in CMSIS-Pack format which enables fast software delivery, simplifies updates, and enables consistent
+   integration into development tools.
+ - CMSIS-Zone will simplify system resource and partitioning as it manages the configuration of multiple processors, memory
+   areas, and peripherals.
+ - Continuous integration is common practice for most software developers nowadays. CMSIS-Build supports these workflows
+   and makes continuous testing and validation easier.
 
 
 \section CodingRules Coding Rules
@@ -54,7 +67,7 @@ The CMSIS uses the following essential coding rules and conventions:
  - Compliant with ANSI C (C99) and C++ (C++03).
  - Uses ANSI C standard data types defined in \b <stdint.h>.
  - Variables and parameters have a complete data type.
- - Expressions for \em \#define constants are enclosed in parenthesis.
+ - Expressions for \c \#define constants are enclosed in parenthesis.
  - Conforms to MISRA 2012 (but does not claim MISRA compliance). MISRA rule violations are documented.
 
 In addition, the CMSIS recommends the following conventions for identifiers:
@@ -64,7 +77,7 @@ In addition, the CMSIS recommends the following conventions for identifiers:
 
 The CMSIS is documented within the source files with:
  \li Comments that use the C or C++ style.
- \li <a href="http://www.doxygen.nl/" target="_blank">Doxygen</a> compliant <b>function comments</b> that provide:
+ \li <a href="https://www.doxygen.nl/" target="_blank">Doxygen</a> compliant <b>function comments</b> that provide:
     - brief function overview.
     - detailed description of the function.
     - detailed parameter explanation.
@@ -84,18 +97,20 @@ Doxygen	comment example:
 
 \section Validation Validation
 
-The various components of CMSIS Version 5 are validated using mainstream compilers.  To get a diverse coverage,
-Arm uses the Arm Compiler v5 (based on EDG front-end), the Arm Compiler v6 (based on LLVM front-end), and the
-GCC Compiler in the various tests. For each component, the section \b "Validation" describes the scope of the
-various verifications.
+The various components of CMSIS are validated using mainstream compilers. To get a diverse coverage, Arm Compiler v5 (based
+on EDG front-end), Arm Compiler v6 (based on LLVM front-end), and GCC are used in the various tests. For each component, the
+section \b "Validation" describes the scope of the various verification steps.
 
-CMSIS components are compatible with a range of C and C++ language standards. The CMSIS components comply with
-the <a href="http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.ihi0036b/index.html">Application Binary
-Interface (ABI) for the Arm Architecture</a> (exception CMSIS-RTOS v1). This ensures C API interfaces that support
-inter-operation between various toolchains.
+CMSIS components are compatible with a range of C and C++ language standards. The CMSIS components comply with the
+<a href="https://developer.arm.com/documentation/ihi0036/d" target="_blank">Application Binary Interface (ABI) for the Arm
+Architecture</a> (exception CMSIS-RTOS v1). This ensures C API interfaces that support inter-operation between various
+toolchains.
 
 As CMSIS defines API interfaces and functions that scale to a wide range of processors and devices, the scope of
-the run-time test coverage is limited. However, several components are validated using dedicated test suites.
+the run-time test coverage is limited. However, several components are validated using dedicated test suites
+(<a href="../../Driver/html/driverValidation.html">CMSIS-Driver</a>,
+<a href="../../RTOS/html/rtosValidation.html">CMSIS-RTOS v1</a>, and
+<a href="../../RTOS2/html/rtosValidation.html">CMSIS-RTOS v2</a>).
 
 The CMSIS source code is checked for MISRA C:2012 conformance using PC-Lint. MISRA deviations are documented with
 reasonable effort, however Arm does not claim MISRA compliance as there is today for example no guideline enforcement
@@ -105,41 +120,39 @@ with C language standards, specifically warnings that may be generated by the va
 
 \section License License
 
-The CMSIS is provided free of charge by Arm under the <a href="LICENSE.txt">Apache 2.0 License</a>.
+CMSIS is provided free of charge by Arm under the <a href="LICENSE.txt">Apache 2.0 License</a>.
 
 
 \section CM_Pack_Content CMSIS Software Pack
 
-The CMSIS software components are delivered in CMSIS-Pack format.  The <b>ARM::CMSIS</b> Pack contains the following:
+CMSIS itself is delivered in <a href="../../Pack/html/index.html">CMSIS-Pack</a> format. The <b>ARM::CMSIS</b> pack contains
+the following:
 
 File/Directory    |Content
 :-----------------|:---------------------------------------------------------------------------------
 \b ARM.CMSIS.pdsc |Package description file in CMSIS-Pack format.
 \b LICENSE.txt    |CMSIS License Agreement (Apache 2.0)
 \b CMSIS          |\ref CM_Components "CMSIS components" (see also table below)
-\b Device         |CMSIS reference implementations of Arm Cortex-M processor based devices
+\b Device         |CMSIS reference implementations of Arm Cortex processor based devices
 
 CMSIS Directory
 ---------------
 
 Directory                 |Content
 :-------------------------|:----------------------------------------------------------------------------------------------------------------------------------------
-\b Documentation          |This documentation
 \b Core                   |User code templates for <a href="../../Core/html/index.html"><b>CMSIS-Core (Cortex-M)</b></a> related files, referenced in ARM.CMSIS.pdsc
 \b Core_A                 |User code templates for <a href="../../Core_A/html/index.html"><b>CMSIS-Core (Cortex-A)</b></a> related files, referenced in ARM.CMSIS.pdsc
 \b DAP                    |<a href="../../DAP/html/index.html"><b>CMSIS-DAP</b></a> Debug Access Port source code and reference implementations
+\b Documentation          |This documentation
 \b Driver                 |Header files for the <a href="../../Driver/html/index.html"><b>CMSIS-Driver</b></a> peripheral interface API
-\b DSP_Lib                |<a href="../../DSP/html/index.html"><b>CMSIS-DSP</b></a> software library source code
-\b NN                     |<a href="../../NN/html/index.html"><b>CMSIS-NN</b></a> software library source code
+\b DSP                    |<a href="../../DSP/html/index.html"><b>CMSIS-DSP</b></a> software library source code
 \b Include                |Include files for <a href="../../Core/html/index.html"><b>CMSIS-Core (Cortex-M)</b></a> and <a href="../../DSP/html/index.html"><b>CMSIS-DSP</b></a>
-\b Lib                    |<a href="../../DSP/html/index.html"><b>CMSIS-DSP</b></a> generated libraries for ARMCC and GCC
-\b Pack                   |<a href="../../Pack/html/pack_Example.html"><b>CMSIS-Pack</b></a> example
+\b NN                     |<a href="../../NN/html/index.html"><b>CMSIS-NN</b></a> software library source code
+\b Pack                   |<a href="../../Pack/html/index.html"><b>CMSIS-Pack</b></a>
 \b RTOS                   |<a href="../../RTOS/html/index.html"><b>CMSIS-RTOS Version 1</b></a> along with RTX4 reference implementation
 \b RTOS2                  |<a href="../../RTOS/html/index.html"><b>CMSIS-RTOS Version 2</b></a> along with RTX5 reference implementation
-\b SVD                    |<a href="../../SVD/html/index.html"><b>CMSIS-SVD</b></a> example
-\b Utilities              |PACK.xsd (<a href="../../Pack/html/pack_Example.html"><b>CMSIS-Pack</b></a> schema file), PackChk.exe (checking tool for software packs), \n CMSIS-SVD.xsd (<a href="../../SVD/html/index.html"><b>CMSIS-SVD</b></a> schema file), SVDConv.exe (conversion tool for SVD files)
-
-<hr>
+\b SVD                    |<a href="../../SVD/html/index.html"><b>CMSIS-SVD</b></a>
+\b Utilities              |PACK.xsd (<a href="../../Pack/html/packFormat.html#PackSchema"><b>CMSIS-Pack</b> schema file</a>), PackChk.exe (checking tool for software packs), \n CMSIS-SVD.xsd (<a href="../../SVD/html/schema_1_2_gr.html"><b>CMSIS-SVD</b> schema file</a>), SVDConv.exe (conversion tool for SVD files), \n CPRJ.xsd (<a href="../../Build/html/projectDescriptionSchema.html"><b>CMSIS-Build</b> schema file</a>)
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -166,6 +179,40 @@ In addition, each CMSIS component has its own release history:
     <tr>
       <th>Version</th>
       <th>Description</th>
+    </tr>
+    <tr>
+      <td>5.8.0</td>
+      <td>
+        Active development ...
+        - CMSIS-Build 0.10.0 (beta)
+          - Enhancements (see revision history for details)
+        - CMSIS-Core (Cortex-M) 5.5.0
+          - Updated GCC LinkerDescription, GCC Assembler startup
+          - Added ARMv8-M Stack Sealing (to linker, startup) for toolchain ARM, GCC
+          - Changed C-Startup to default Startup.
+        - CMSIS-Core (Cortex-A) 1.2.1
+        - CMSIS-Driver 2.8.0 (unchanged)
+        - CMSIS-DSP 1.9.0
+          - Purged pre-built libs from Git
+        - CMSIS-NN 3.0.0
+          - Major interface change for functions compatible with TensorFlow Lite for Microcontroller
+          - Added optimization for SVDF kernel
+          - Improved MVE performance for fully Connected and max pool operator
+          - NULL bias support for fully connected operator in non-MVE case(Can affect performance)
+          - Expanded existing unit test suite along with support for FVP
+        - CMSIS-RTOS 2.1.3 (unchanged)
+          - RTX 5.5.3 (see revision history for details)
+        - CMSIS-Pack 1.7.2
+          - Support for Microchip XC32 compiler
+          - Support for Custom Datapath Extension
+        - CMSIS-SVD 1.3.3 (unchanged)
+        - CMSIS-DAP 2.0.0 (unchanged)
+        - CMSIS-Zone 1.0.0 (unchanged)
+        - Devices
+        - Utilities
+          - SVDConv 3.3.35
+          - PackChk 1.3.89
+      </td>
     </tr>
     <tr>
       <td>5.7.0</td>

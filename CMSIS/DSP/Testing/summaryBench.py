@@ -52,8 +52,14 @@ def joinit(iterable, delimiter):
 
 def formatProd(a,b):
   if a == "Intercept":
-     return(str(b))
-  return("%s * %s" % (a,b))
+     return("%.3f" % b)
+  return("%s * %.3f" % (a,b))
+
+def log2(x):
+  return(np.log2(x))
+
+def log(x):
+  return(np.log(x))
 
 def summaryBenchmark(resultPath,elem,path):
    regressionPath=os.path.join(os.path.dirname(path),"regression.csv")
@@ -77,14 +83,17 @@ def summaryBenchmark(resultPath,elem,path):
   
       def reg(d):
        m=d["CYCLES"].max()
+       #print( elem.params.formula)
+       
        results = smf.ols('CYCLES ~ ' + elem.params.formula, data=d).fit()
+
        f=joinit([formatProd(a,b) for (a,b) in zip(results.params.index,results.params.values)]," + ")
        f="".join(f)
        f = re.sub(r':','*',f)
        #print(results.summary())
        return(pd.Series({'Regression':"%s" % f,'MAX' : m,'MAXREGCOEF' : results.params.values[-1]}))
    
-      regList = ['ID','OLDID','CATEGORY','NAME'] + csvheaders + groupList 
+      regList = ['ID','OLDID','CATEGORY','TESTNAME','NAME'] + csvheaders + groupList 
       
       regression=full.groupby(regList).apply(reg)
       regression.reset_index(level=regression.index.names, inplace=True)

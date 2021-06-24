@@ -99,6 +99,22 @@
       <th>Description</th>
     </tr>
     <tr>
+      <td>V5.5.3</td>
+      <td>
+       - CVE-2021-27431 vulnerability mitigation.
+       - Added OS Initialization for IAR.
+       - Fixed osDelay/osDelayUntil error handling.
+       - Fixed Round-Robin (timeout value is not reset when switching to higher priority threads).
+       - Fixed osThreadJoin (when terminating thread which is waiting to be joined).
+       - Fixed Message Queue Data allocation size when using object specific memory allocation.
+       - Fixed Mutex priority inversion (when mixing mutexes with and without priority inherit).
+       - Enhanced stack overrun checking.
+       - Updated osKernelResume handling (processing past sleep ticks).
+       - Updated configuration (Event Recorder).
+       - Reorganized and optimized IRQ modules.
+      </td>
+    </tr>
+    <tr>
       <td>V5.5.2</td>
       <td>
        - Added support for Cortex-M55.

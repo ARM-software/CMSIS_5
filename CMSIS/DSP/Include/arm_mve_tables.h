@@ -4,13 +4,13 @@
  * Description:  common tables like fft twiddle factors, Bitreverse, reciprocal etc
  *               used for MVE implementation only
  *
- * $Date:        08. January 2020
- * $Revision:    V1.7.0
+ * @version  V1.9.0
+ * @date     23 April 2021
  *
- * Target Processor: Cortex-M cores
+ * Target Processor: Cortex-M and Cortex-A cores
  * -------------------------------------------------------------------- */
 /*
- * Copyright (C) 2010-2020 ARM Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -30,9 +30,12 @@
  #ifndef _ARM_MVE_TABLES_H
  #define _ARM_MVE_TABLES_H
 
- #include "arm_math.h"
+#include "arm_math_types.h"
 
- 
+#ifdef   __cplusplus
+extern "C"
+{
+#endif
 
 
  
@@ -98,7 +101,7 @@ extern float32_t rearranged_twiddle_stride3_4096_f32[2728];
 
 
 
-#if defined(ARM_MATH_MVEI) 
+#if defined(ARM_MATH_MVEI)  && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_FFT_ALLOW_TABLES)
 
@@ -159,7 +162,7 @@ extern q31_t rearranged_twiddle_stride3_4096_q31[2728];
 
 
 
-#if defined(ARM_MATH_MVEI) 
+#if defined(ARM_MATH_MVEI)  && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_FFT_ALLOW_TABLES)
 
@@ -220,16 +223,9 @@ extern q15_t rearranged_twiddle_stride3_4096_q15[2728];
 
 
 
-#if defined(ARM_MATH_MVEI) 
-
-#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_FFT_ALLOW_TABLES)
-
-
-#endif /* !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_FFT_ALLOW_TABLES) */
-
-#endif /* defined(ARM_MATH_MVEI) */
-
-
+#ifdef   __cplusplus
+}
+#endif
 
 #endif /*_ARM_MVE_TABLES_H*/
 

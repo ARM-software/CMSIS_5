@@ -3,13 +3,13 @@
  * Title:        arm_biquad_cascade_df2T_f32.c
  * Description:  Processing function for floating-point transposed direct form II Biquad cascade filter
  *
- * $Date:        18. March 2019
- * $Revision:    V1.6.0
+ * $Date:        23 April 2021
+ * $Revision:    V1.9.0
  *
- * Target Processor: Cortex-M cores
+ * Target Processor: Cortex-M and Cortex-A cores
  * -------------------------------------------------------------------- */
 /*
- * Copyright (C) 2010-2019 ARM Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -26,7 +26,7 @@
  * limitations under the License.
  */
 
-#include "arm_math.h"
+#include "dsp/filtering_functions.h"
 
 /**
   @ingroup groupFilters
@@ -45,7 +45,7 @@
   @param[in]     blockSize number of samples to process
   @return        none
  */
-#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if (defined(ARM_MATH_MVEF) && defined(ARM_MATH_HELIUM_EXPERIMENTAL)) && !defined(ARM_MATH_AUTOVECTORIZE)
 #include "arm_helium_utils.h"
 
 void arm_biquad_cascade_df2T_f32(
@@ -89,8 +89,8 @@ void arm_biquad_cascade_df2T_f32(
 
         /* b1Coeffs = {b0, b1, b2, x} */
         /* b1Coeffs = { x, x, a1, a2} */
-        b1Coeffs = vshlcq_s32(b0Coeffs, &tmp, 32);
-        a1Coeffs = vshlcq_s32(a0Coeffs, &tmp, 32);
+        b1Coeffs = (f32x4_t)vshlcq_s32((int32x4_t)b0Coeffs, &tmp, 32);
+        a1Coeffs = (f32x4_t)vshlcq_s32((int32x4_t)a0Coeffs, &tmp, 32);
 
         sample = blockSize / 2;
 

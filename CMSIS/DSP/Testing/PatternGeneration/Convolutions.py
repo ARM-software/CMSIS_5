@@ -2,6 +2,7 @@ import os.path
 import numpy as np
 import itertools
 import Tools
+import statsmodels.tsa.stattools
 
 # Those patterns are used for tests and benchmarks.
 # For tests, there is the need to add tests for saturation
@@ -12,7 +13,14 @@ def cartesian(*somelists):
        r.append(element)
    return(r)
 
+def autocorr(x):
+    result = np.correlate(x, x, mode='full')
+    return result[result.size//2:]
+
 def writeTests(config,format):
+
+    config.setOverwrite(False)
+
     NBSAMPLES=128
 
     inputsA=np.random.randn(NBSAMPLES)
@@ -76,6 +84,72 @@ def writeTests(config,format):
         config.writeReference(nbTest, ref)
         nbTest = nbTest + 1
 
+    # Levinson durbin tests
+
+    a = [Tools.loopnb(format,Tools.TAILONLY),
+    Tools.loopnb(format,Tools.BODYONLY),
+    Tools.loopnb(format,Tools.BODYANDTAIL),
+    ]
+
+    a = list(np.unique(np.array(a)))
+
+    #a = [3]
+
+    # Errors of each levinson durbin test
+    err=[]
+
+    errTestID = nbTest
+
+    for na in a:
+      
+      s = np.random.randn(na+1)
+      s = Tools.normalize(s)
+      phi = autocorr(s)
+
+      phi = Tools.normalize(phi)
+
+      config.writeInput(nbTest, phi,"InputPhi")
+
+      sigmav,arcoef,pacf,sigma,phi=statsmodels.tsa.stattools.levinson_durbin(phi,nlags=na,isacov=True)
+      
+      err.append(sigmav)
+      
+      config.writeReference(nbTest, arcoef)
+      nbTest = nbTest + 1
+
+      config.writeReference(errTestID, err,"LDErrors")
+
+    # Partial convolutions
+    config.setOverwrite(True)
+
+    inputsA=np.random.randn(NBSAMPLES)
+    inputsB=np.random.randn(NBSAMPLES)
+
+    inputsA = Tools.normalize(inputsA)
+    inputsB = Tools.normalize(inputsB)
+
+    config.writeInput(2, inputsA,"InputsA")
+    config.writeInput(2, inputsB,"InputsB")
+
+    (na,nb) = (6, 8) 
+    # First = 3
+    numPoints=4
+    ref = np.convolve(inputsA[0:na],inputsB[0:nb],"full")
+    
+    first=3
+    config.writeReference(nbTest, ref[first:first+numPoints])
+    nbTest = nbTest + 1
+
+    first=9
+    config.writeReference(nbTest, ref[first:first+numPoints])
+    nbTest = nbTest + 1
+
+    first=7
+    config.writeReference(nbTest, ref[first:first+numPoints])
+    nbTest = nbTest + 1
+
+
+
     
 
     
@@ -84,13 +158,14 @@ def generatePatterns():
     PARAMDIR = os.path.join("Parameters","DSP","Filtering","MISC","MISC")
     
     configf32=Tools.Config(PATTERNDIR,PARAMDIR,"f32")
+    configf16=Tools.Config(PATTERNDIR,PARAMDIR,"f16")
     configq31=Tools.Config(PATTERNDIR,PARAMDIR,"q31")
     configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
     configq7=Tools.Config(PATTERNDIR,PARAMDIR,"q7")
-    
-    
+
     
     writeTests(configf32,0)
+    writeTests(configf16,16)
     writeTests(configq31,31)
     writeTests(configq15,15)
     writeTests(configq7,7)

@@ -116,6 +116,13 @@ def logSumExpDotTest(config,nb):
     config.writeInputS16(nb, dims,"Dims")
     config.writeReference(nb, outputs,"RefLogSumExpDot")
 
+def writeF16OnlyTests(config,nb):
+    entropyTest(config,nb)
+    logsumexpTest(config,nb+1)
+    klTest(config,nb+2)
+    logSumExpDotTest(config,nb+3)
+    return(nb+4)
+
 def writeF32OnlyTests(config,nb):
     entropyTest(config,nb)
     logsumexpTest(config,nb+1)
@@ -138,6 +145,7 @@ def writeF64OnlyTests(config,nb):
 def floatRound(x,f):
     return(np.round(x * 2**f)/2**f)
 
+# Min / Max tests
 def generateMaxTests(config,nb,format,data):
 
     
@@ -233,6 +241,104 @@ def generateMinTests(config,nb,format,data):
        config.writeInput(nb, data,"InputMinIndexMax")
     config.writeReference(nb, maxvals,"MinVals")
     config.writeInputS16(nb, indexes,"MinIndexes")
+    return(nb+1)
+
+# Min/Max Abs Tests
+def generateMaxAbsTests(config,nb,format,data):
+    data = np.abs(data)
+    
+    indexes=[]
+    maxvals=[]
+
+    nbiters = Tools.loopnb(format,Tools.TAILONLY)
+    index=np.argmax(data[0:nbiters])
+    maxvalue=data[index]
+
+    indexes.append(index)
+    maxvals.append(maxvalue)
+
+    nbiters = Tools.loopnb(format,Tools.BODYONLY)
+    index=np.argmax(data[0:nbiters])
+    maxvalue=data[index]
+
+    indexes.append(index)
+    maxvals.append(maxvalue)
+
+    nbiters = Tools.loopnb(format,Tools.BODYANDTAIL)
+    index=np.argmax(data[0:nbiters])
+    maxvalue=data[index]
+
+    indexes.append(index)
+    maxvals.append(maxvalue)
+
+    if format == 7:
+      # Force max at position 280
+  
+      nbiters = 280
+  
+      data = np.zeros(nbiters)
+  
+      data[nbiters-1] = 0.9 
+      data[nbiters-2] = 0.8 
+  
+      index=np.argmax(data[0:nbiters])
+      maxvalue=data[index]
+  
+      indexes.append(index)
+      maxvals.append(maxvalue)
+
+      config.writeInput(nb, data,"InputAbsMaxIndexMax")
+
+    config.writeReference(nb, maxvals,"AbsMaxVals")
+    config.writeInputS16(nb, indexes,"AbsMaxIndexes")
+    return(nb+1)
+
+def generateMinAbsTests(config,nb,format,data):
+    data = np.abs(data)
+    
+    indexes=[]
+    maxvals=[]
+
+    nbiters = Tools.loopnb(format,Tools.TAILONLY)
+    index=np.argmin(data[0:nbiters])
+    maxvalue=data[index]
+
+    indexes.append(index)
+    maxvals.append(maxvalue)
+
+    nbiters = Tools.loopnb(format,Tools.BODYONLY)
+    index=np.argmin(data[0:nbiters])
+    maxvalue=data[index]
+
+    indexes.append(index)
+    maxvals.append(maxvalue)
+
+    nbiters = Tools.loopnb(format,Tools.BODYANDTAIL)
+    index=np.argmin(data[0:nbiters])
+    maxvalue=data[index]
+
+    indexes.append(index)
+    maxvals.append(maxvalue)
+
+    if format == 7:
+       # Force max at position 280
+       nbiters = 280
+   
+       data = 0.9*np.ones(nbiters)
+   
+       data[nbiters-1] = 0.0 
+       data[nbiters-2] = 0.1 
+   
+       index=np.argmin(data[0:nbiters])
+       maxvalue=data[index]
+   
+       indexes.append(index)
+       maxvals.append(maxvalue)
+   
+      
+       config.writeInput(nb, data,"InputAbsMinIndexMax")
+    config.writeReference(nb, maxvals,"AbsMinVals")
+    config.writeInputS16(nb, indexes,"AbsMinIndexes")
     return(nb+1)
 
 def averageTest(format,data):
@@ -337,23 +443,85 @@ def writeTests(config,nb,format):
     nb=generateFuncTests(config,nb,format,data1,varTest,"VarVals")
     return(nb)
 
+# We don't want to change ID number of existing tests.
+# So new tests have to be added after existing ones
+def writeNewsTests(config,nb,format):
+    config.setOverwrite(True)
+    NBSAMPLES = 300
+    data1=np.random.randn(NBSAMPLES)
+    
+    data1 = Tools.normalize(data1)
+
+    config.writeInput(1, data1,"InputNew")
+    nb=generateMaxAbsTests(config,nb,format,data1)
+    nb=generateMinAbsTests(config,nb,format,data1)
+
+    config.setOverwrite(False)
+
+def generateBenchmark(config,format):
+    NBSAMPLES = 256
+    data1=np.random.randn(NBSAMPLES)
+    data2=np.random.randn(NBSAMPLES)
+    
+    data1 = Tools.normalize(data1)
+    data2 = np.abs(data1)
+
+    if format==31:
+       data1=floatRound(data1,31)
+
+    if format==15:
+       data1=floatRound(data1,15)
+
+    if format==7:
+       data1=floatRound(data1,7)
+
+    config.writeInput(1, data1,"InputBench")
+    config.writeInput(2, data2,"InputBench")
+
 
 def generatePatterns():
     PATTERNDIR = os.path.join("Patterns","DSP","Stats","Stats")
     PARAMDIR = os.path.join("Parameters","DSP","Stats","Stats")
     
     configf32=Tools.Config(PATTERNDIR,PARAMDIR,"f32")
+    configf16=Tools.Config(PATTERNDIR,PARAMDIR,"f16")
     configf64=Tools.Config(PATTERNDIR,PARAMDIR,"f64")
     configq31=Tools.Config(PATTERNDIR,PARAMDIR,"q31")
     configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
     configq7 =Tools.Config(PATTERNDIR,PARAMDIR,"q7")
     
+    configf32.setOverwrite(False)
+    configf16.setOverwrite(False)
+    configf64.setOverwrite(False)
+    configq31.setOverwrite(False)
+    configq15.setOverwrite(False)
+    configq7.setOverwrite(False)
+
     nb=writeTests(configf32,1,0)
     nb=writeF32OnlyTests(configf32,22)
-    writeF64OnlyTests(configf64,22)    
-    writeTests(configq31,1,31)
-    writeTests(configq15,1,15)
-    writeTests(configq7,1,7)
+    writeNewsTests(configf32,nb,Tools.F32)
+
+    writeF64OnlyTests(configf64,22)
+
+    nb=writeTests(configq31,1,31)
+    writeNewsTests(configq31,nb,Tools.Q31)
+
+    nb=writeTests(configq15,1,15)
+    writeNewsTests(configq15,nb,Tools.Q15)
+
+    nb=writeTests(configq7,1,7)
+    writeNewsTests(configq7,nb,Tools.Q7)
+
+    nb=writeTests(configf16,1,16)
+    nb=writeF16OnlyTests(configf16,22)
+    writeNewsTests(configf16,nb,Tools.F16)
+
+    generateBenchmark(configf64, Tools.F64)
+    generateBenchmark(configf32, Tools.F32)
+    generateBenchmark(configf16, Tools.F16)
+    generateBenchmark(configq31, Tools.Q31)
+    generateBenchmark(configq15, Tools.Q15)
+    generateBenchmark(configq7, Tools.Q7)
 
 if __name__ == '__main__':
   generatePatterns()

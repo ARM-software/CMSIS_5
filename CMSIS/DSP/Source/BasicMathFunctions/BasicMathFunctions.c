@@ -73,3 +73,7 @@
 #include "arm_xor_u16.c"
 #include "arm_xor_u32.c"
 #include "arm_xor_u8.c"
+#include "arm_clip_f32.c"
+#include "arm_clip_q31.c"
+#include "arm_clip_q15.c"
+#include "arm_clip_q7.c"

@@ -1,6 +1,6 @@
 # CMSIS Version 5
 
-The branch *master* of this GitHub repository contains the CMSIS Version 5.7.0.  The [documentation](http://arm-software.github.io/CMSIS_5/General/html/index.html) is available under http://arm-software.github.io/CMSIS_5/General/html/index.html
+The branch *master* of this GitHub repository contains the CMSIS Version 5.8.0.  The [documentation](http://arm-software.github.io/CMSIS_5/General/html/index.html) is available under http://arm-software.github.io/CMSIS_5/General/html/index.html
 
 Use [Issues](https://github.com/ARM-software/CMSIS_5#issues-and-labels) to provide feedback and report problems for CMSIS Version 5. 
 
@@ -84,19 +84,20 @@ To build a complete CMSIS pack for installation the following additional tools a
  - **7z.exe (7-Zip)** Version: 16.02 (File Archiver)
  
 Using these tools, you can generate on a Windows PC:
- - **CMSIS Software Pack** using the batch file **gen_pack.bat** (located in ./CMSIS/Utilities). This batch file also generates the documentation.
-  
- - **CMSIS Documentation** using the batch file **genDoc.bat** (located in ./CMSIS/Doxygen). 
+ - **CMSIS Documentation** using the batch file **gen_doc.sh** (located in ./CMSIS/Doxygen). 
+ - **CMSIS Software Pack** using the batch file **gen_pack.sh** (located in ./CMSIS/Utilities).
+   The bash script does not generate the documentation. The pre-built libraries for RTX4 and RTX5
+   are not included within this repository.
 
 The file ./CMSIS/DoxyGen/How2Doc.txt describes the rules for creating API documentation.
 
 ## License
 
-Arm CMSIS is licensed under Apache-2.0.
+Arm CMSIS is licensed under Apache 2.0.
 
 ## Contributions and Pull Requests
 
-Contributions are accepted under Apache-2.0. Only submit contributions where you have authored all of the code.
+Contributions are accepted under Apache 2.0. Only submit contributions where you have authored all of the code.
 
 ### Issues and Labels
 

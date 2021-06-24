@@ -3,11 +3,13 @@
  * Title:        arm_logsumexp_f64.c
  * Description:  LogSumExp
  *
+ * $Date:        23 April 2021
+ * $Revision:    V1.9.0
  *
  * Target Processor: Cortex-M and Cortex-A cores
  * -------------------------------------------------------------------- */
 /*
- * Copyright (C) 2010-2020 ARM Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -24,12 +26,12 @@
  * limitations under the License.
  */
 
-#include "arm_math.h"
+#include "dsp/statistics_functions.h"
 #include <limits.h>
 #include <math.h>
 
 /**
- * @addtogroup groupStats
+ * @addtogroup Kullback-Leibler
  * @{
  */
 
@@ -69,5 +71,5 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA, const float64_t * pS
 }
 
 /**
- * @} end of groupStats group
+ * @} end of Kullback-Leibler group
  */

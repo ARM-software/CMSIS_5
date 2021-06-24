@@ -3,13 +3,13 @@
  * Title:        arm_cmplx_mult_cmplx_f32.c
  * Description:  Floating-point complex-by-complex multiplication
  *
- * $Date:        18. March 2019
- * $Revision:    V1.6.0
+ * $Date:        23 April 2021
+ * $Revision:    V1.9.0
  *
- * Target Processor: Cortex-M cores
+ * Target Processor: Cortex-M and Cortex-A cores
  * -------------------------------------------------------------------- */
 /*
- * Copyright (C) 2010-2019 ARM Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -26,7 +26,7 @@
  * limitations under the License.
  */
 
-#include "arm_math.h"
+#include "dsp/complex_math_functions.h"
 
 /**
   @ingroup groupCmplxMath
@@ -76,54 +76,104 @@ void arm_cmplx_mult_cmplx_f32(
         float32_t * pDst,
         uint32_t numSamples)
 {
-    uint32_t blkCnt;           /* loop counters */
-    uint32_t blockSize = numSamples;  /* loop counters */
-    float32_t a, b, c, d;  /* Temporary variables to store real and imaginary values */
+     int32_t         blkCnt;
+    f32x4_t         vecSrcA, vecSrcB;
+    f32x4_t         vecSrcC, vecSrcD;
+    f32x4_t         vec_acc;
 
-    f32x4x2_t vecA;
-    f32x4x2_t vecB;
-    f32x4x2_t vecDst;
+    blkCnt = numSamples >> 2;
+    blkCnt -= 1;
+    if (blkCnt > 0) {
+        /* should give more freedom to generate stall free code */
+        vecSrcA = vld1q(pSrcA);
+        vecSrcB = vld1q(pSrcB);
+        pSrcA += 4;
+        pSrcB += 4;
 
-    /* Compute 4 complex outputs at a time */
-    blkCnt = blockSize >> 2;
-    while (blkCnt > 0U)
-    {
-            vecA = vld2q(pSrcA);  // load & separate real/imag pSrcA (de-interleave 2)
-            vecB = vld2q(pSrcB);  // load & separate real/imag pSrcB
-            pSrcA += 8;
-            pSrcB += 8;
+        while (blkCnt > 0) {
+            vec_acc = vcmulq(vecSrcA, vecSrcB);
+            vecSrcC = vld1q(pSrcA);
+            pSrcA += 4;
 
-            /* C[2 * i] = A[2 * i] * B[2 * i] - A[2 * i + 1] * B[2 * i + 1].  */
-            vecDst.val[0] = vmulq(vecA.val[0], vecB.val[0]);
-            vecDst.val[0] = vfmsq(vecDst.val[0],vecA.val[1], vecB.val[1]);
-            /* C[2 * i + 1] = A[2 * i] * B[2 * i + 1] + A[2 * i + 1] * B[2 * i].  */
-            vecDst.val[1] = vmulq(vecA.val[0], vecB.val[1]);
-            vecDst.val[1] = vfmaq(vecDst.val[1], vecA.val[1], vecB.val[0]);
+            vec_acc = vcmlaq_rot90(vec_acc, vecSrcA, vecSrcB);
+            vecSrcD = vld1q(pSrcB);
+            pSrcB += 4;
+            vst1q(pDst, vec_acc);
+            pDst += 4;
 
-            vst2q(pDst, vecDst);
-            pDst += 8;
+            vec_acc = vcmulq(vecSrcC, vecSrcD);
+            vecSrcA = vld1q(pSrcA);
+            pSrcA += 4;
 
+            vec_acc = vcmlaq_rot90(vec_acc, vecSrcC, vecSrcD);
+            vecSrcB = vld1q(pSrcB);
+            pSrcB += 4;
+            vst1q(pDst, vec_acc);
+            pDst += 4;
+            /*
+             * Decrement the blockSize loop counter
+             */
             blkCnt--;
-    }
+        }
 
-    /* Tail */
-    blkCnt = blockSize & 3;
-    while (blkCnt > 0U)
-    {
-      /* C[2 * i    ] = A[2 * i] * B[2 * i    ] - A[2 * i + 1] * B[2 * i + 1]. */
-      /* C[2 * i + 1] = A[2 * i] * B[2 * i + 1] + A[2 * i + 1] * B[2 * i    ]. */
-  
-      a = *pSrcA++;
-      b = *pSrcA++;
-      c = *pSrcB++;
-      d = *pSrcB++;
-  
-      /* store result in destination buffer. */
-      *pDst++ = (a * c) - (b * d);
-      *pDst++ = (a * d) + (b * c);
-  
-      /* Decrement loop counter */
-      blkCnt--;
+        /* process last elements out of the loop avoid the armclang breaking the SW pipeline */
+        vec_acc = vcmulq(vecSrcA, vecSrcB);
+        vecSrcC = vld1q(pSrcA);
+
+        vec_acc = vcmlaq_rot90(vec_acc, vecSrcA, vecSrcB);
+        vecSrcD = vld1q(pSrcB);
+        vst1q(pDst, vec_acc);
+        pDst += 4;
+
+        vec_acc = vcmulq(vecSrcC, vecSrcD);
+        vec_acc = vcmlaq_rot90(vec_acc, vecSrcC, vecSrcD);
+        vst1q(pDst, vec_acc);
+        pDst += 4;
+
+        /*
+         * tail
+         */
+        blkCnt = CMPLX_DIM * (numSamples & 3);
+        while (blkCnt > 0) {
+            mve_pred16_t    p = vctp32q(blkCnt);
+            pSrcA += 4;
+            pSrcB += 4;
+
+            vecSrcA = vldrwq_z_f32(pSrcA, p);
+            vecSrcB = vldrwq_z_f32(pSrcB, p);
+            vec_acc = vcmulq_m(vuninitializedq_f32(),vecSrcA, vecSrcB, p);
+            vec_acc = vcmlaq_rot90_m(vec_acc, vecSrcA, vecSrcB, p);
+
+            vstrwq_p_f32(pDst, vec_acc, p);
+            pDst += 4;
+
+            blkCnt -= 4;
+        }
+    } else {
+        /* small vector */
+        blkCnt = numSamples * CMPLX_DIM;
+        vec_acc = vdupq_n_f32(0.0f);
+
+        do {
+            mve_pred16_t    p = vctp32q(blkCnt);
+
+            vecSrcA = vldrwq_z_f32(pSrcA, p);
+            vecSrcB = vldrwq_z_f32(pSrcB, p);
+
+            vec_acc = vcmulq_m(vuninitializedq_f32(),vecSrcA, vecSrcB, p);
+            vec_acc = vcmlaq_rot90_m(vec_acc, vecSrcA, vecSrcB, p);
+            vstrwq_p_f32(pDst, vec_acc, p);
+            pDst += 4;
+
+            /*
+             * Decrement the blkCnt loop counter
+             * Advance vector source and destination pointers
+             */
+            pSrcA += 4;
+            pSrcB += 4;
+            blkCnt -= 4;
+        }
+        while (blkCnt > 0);
     }
 
 }

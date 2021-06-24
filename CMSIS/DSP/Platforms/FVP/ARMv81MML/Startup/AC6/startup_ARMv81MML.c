@@ -28,6 +28,11 @@
   #error device not specified!
 #endif
 
+#define SERIAL_BASE_ADDRESS (0xA8000000ul)
+
+#define SERIAL_DATA  *((volatile unsigned *) SERIAL_BASE_ADDRESS)
+
+
 /*----------------------------------------------------------------------------
   Exception / Interrupt Handler Function Prototype
  *----------------------------------------------------------------------------*/
@@ -138,6 +143,8 @@ void Reset_Handler(void)
  *----------------------------------------------------------------------------*/
 void HardFault_Handler(void)
 {
+  SERIAL_DATA = 'H';
+  SERIAL_DATA = '\n';
   while(1);
 }
 
@@ -146,5 +153,7 @@ void HardFault_Handler(void)
  *----------------------------------------------------------------------------*/
 void Default_Handler(void)
 {
+  SERIAL_DATA = 'D';
+  SERIAL_DATA = '\n';
   while(1);
 }

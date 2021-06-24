@@ -16,7 +16,7 @@ The following header file defines the Application Programming Interface (API) fo
 
 <b>VIO User Code Templates</b>
 
-The VIO software component contains two user code templates wit different purposes:
+The VIO software component contains two user code templates with different purposes:
   - VIO:Custom: This file is an empty stub with all functions that are defined in the header file that can be used to
     implement the VIO layer for the hardware that is used in the application.
   - VIO:Virtual: This file uses a fixed memory location to emulate the VIO functionality and can be used off-the-shelf.
@@ -247,8 +247,8 @@ int32_t vioPrint (uint32_t level, const char *format, ...) {
 /**
 \fn int32_t vioPrint (uint32_t level, const char *format, ...)
 \details
-The function \b vioPrint prints a formatted string to a test terminal. Formatting of the output follows the rulse od standard
-C language printf().
+The function \b vioPrint prints a formatted string to a test terminal. Formatting of the output follows the rules of 
+standard C language printf().
 
 Refer to \ref vioPrintLevels_gr for information about the possible \a levels.
 

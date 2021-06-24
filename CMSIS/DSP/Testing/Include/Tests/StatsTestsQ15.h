@@ -1,5 +1,8 @@
 #include "Test.h"
 #include "Pattern.h"
+
+#include "dsp/statistics_functions.h"
+
 class StatsTestsQ15:public Client::Suite
     {
         public:

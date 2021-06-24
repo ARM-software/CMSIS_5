@@ -1,8 +1,8 @@
+#include "arm_vec_math.h"
+
 #include "MISCF32.h"
 #include <stdio.h>
 #include "Error.h"
-#include "arm_math.h"
-#include "arm_vec_math.h"
 #include "Test.h"
 
 #define SNR_THRESHOLD 120
@@ -14,6 +14,34 @@ a double precision computation.
 */
 #define REL_ERROR (1.0e-6)
 #define ABS_ERROR (1.0e-5)
+
+/*
+
+For tests of the error value of the Levinson Durbin algorithm
+
+*/
+#define REL_LD_ERROR (1.0e-6)
+#define ABS_LD_ERROR (1.0e-6)
+
+    void MISCF32::test_levinson_durbin_f32()
+    {
+        const float32_t *inpA=inputA.ptr(); 
+        const float32_t *errs=inputB.ptr(); 
+        float32_t *outp=output.ptr();
+        float32_t err;
+
+        float32_t refError=errs[this->errOffset];
+
+        arm_levinson_durbin_f32(inpA,outp,&err,this->nba);
+
+        ASSERT_EMPTY_TAIL(output);
+        ASSERT_SNR(ref,output,(float32_t)SNR_THRESHOLD);
+        ASSERT_CLOSE_ERROR(ref,output,ABS_LD_ERROR,REL_LD_ERROR);
+
+        
+        ASSERT_CLOSE_ERROR(refError,err,ABS_LD_ERROR,REL_LD_ERROR);
+
+    }
 
     void MISCF32::test_correlate_f32()
     {
@@ -45,10 +73,37 @@ a double precision computation.
 
     }
 
+    // This value must be coherent with the Python script
+    // generating the test patterns
+    #define NBPOINTS 4
+
+    void MISCF32::test_conv_partial_f32()
+    {
+        const float32_t *inpA=inputA.ptr(); 
+        const float32_t *inpB=inputB.ptr(); 
+        float32_t *outp=output.ptr();
+        float32_t *tmpp=tmp.ptr();
+
+
+        arm_status status=arm_conv_partial_f32(inpA, inputA.nbSamples(),
+          inpB, inputB.nbSamples(),
+          outp,
+          this->first,
+          NBPOINTS);
+
+        memcpy((void*)tmpp,(void*)&outp[this->first],NBPOINTS*sizeof(float32_t));
+        ASSERT_TRUE(status==ARM_MATH_SUCCESS);
+        ASSERT_SNR(ref,tmp,(float32_t)SNR_THRESHOLD);
+        ASSERT_CLOSE_ERROR(ref,tmp,ABS_ERROR,REL_ERROR);
+
+
+    }
+
 
   
     void MISCF32::setUp(Testing::testID_t id,std::vector<Testing::param_t>& paramsArgs,Client::PatternMgr *mgr)
     {
+        (void)paramsArgs;
         switch(id)
         {
 
@@ -692,11 +747,86 @@ a double precision computation.
             }
             break;
 
+            case MISCF32::TEST_LEVINSON_DURBIN_F32_81:
+            {
+                       this->nba = 3;
+                       inputA.reload(MISCF32::INPUTPHI_A_F32_ID,mgr);
+
+                       this->errOffset=0;
+                       inputB.reload(MISCF32::INPUT_ERRORS_F32_ID,mgr);
+                       ref.reload(MISCF32::REF81_F32_ID,mgr);
+            }
+            break;
+
+            case MISCF32::TEST_LEVINSON_DURBIN_F32_82:
+            {
+                       this->nba = 8;
+                       inputA.reload(MISCF32::INPUTPHI_B_F32_ID,mgr);
+
+                       this->errOffset=1;
+                       inputB.reload(MISCF32::INPUT_ERRORS_F32_ID,mgr);
+                       ref.reload(MISCF32::REF82_F32_ID,mgr);
+            }
+            break;
+
+            case MISCF32::TEST_LEVINSON_DURBIN_F32_83:
+            {
+                       this->nba = 11;
+                       inputA.reload(MISCF32::INPUTPHI_C_F32_ID,mgr);
+
+                       this->errOffset=2;
+                       inputB.reload(MISCF32::INPUT_ERRORS_F32_ID,mgr);
+                       ref.reload(MISCF32::REF83_F32_ID,mgr);
+            }
+            break;
+
+            case MISCF32::TEST_CONV_PARTIAL_F32_84:
+            {
+              this->first=3;
+              this->nba = 6;
+              this->nbb = 8;
+              ref.reload(MISCF32::REF84_F32_ID,mgr);
+              tmp.create(ref.nbSamples(),MISCF32::TMP_F32_ID,mgr);
+
+            }
+            break;
+
+            case MISCF32::TEST_CONV_PARTIAL_F32_85:
+            {
+              this->first=9;
+              this->nba = 6;
+              this->nbb = 8;
+              ref.reload(MISCF32::REF85_F32_ID,mgr);
+              tmp.create(ref.nbSamples(),MISCF32::TMP_F32_ID,mgr);
+
+            }
+            break;
+
+            case MISCF32::TEST_CONV_PARTIAL_F32_86:
+            {
+              this->first=7;
+              this->nba = 6;
+              this->nbb = 8;
+              ref.reload(MISCF32::REF86_F32_ID,mgr);
+              tmp.create(ref.nbSamples(),MISCF32::TMP_F32_ID,mgr);
+
+            }
+            break;
+
 
         }
 
-       inputA.reload(MISCF32::INPUTA_F32_ID,mgr,nba);
-       inputB.reload(MISCF32::INPUTB_F32_ID,mgr,nbb);
+       if (id < TEST_LEVINSON_DURBIN_F32_81) 
+       {
+         inputA.reload(MISCF32::INPUTA_F32_ID,mgr,nba);
+         inputB.reload(MISCF32::INPUTB_F32_ID,mgr,nbb);
+       }
+
+       if (id > TEST_LEVINSON_DURBIN_F32_83)
+       {
+         inputA.reload(MISCF32::INPUTA2_F32_ID,mgr,nba);
+         inputB.reload(MISCF32::INPUTB2_F32_ID,mgr,nbb);
+       }
 
        output.create(ref.nbSamples(),MISCF32::OUT_F32_ID,mgr);
         
@@ -704,6 +834,7 @@ a double precision computation.
 
     void MISCF32::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)
     {
+      (void)id;
       output.dump(mgr);
       
     }

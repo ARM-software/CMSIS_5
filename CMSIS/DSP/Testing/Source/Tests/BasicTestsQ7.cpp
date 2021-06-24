@@ -12,13 +12,11 @@
 #define GET_Q7_PTR() \
 const q7_t *inp1=input1.ptr(); \
 const q7_t *inp2=input2.ptr(); \
-q7_t *refp=ref.ptr(); \
 q7_t *outp=output.ptr();
 
 #define GET_LOGICAL_UINT8_PTR() \
 const uint8_t *inp1=inputLogical1.ptr(); \
 const uint8_t *inp2=inputLogical2.ptr(); \
-uint8_t *refp=refLogical.ptr(); \
 uint8_t *outp=outputLogical.ptr();
 
     void BasicTestsQ7::test_add_q7()
@@ -27,6 +25,21 @@ uint8_t *outp=outputLogical.ptr();
 
         arm_add_q7(inp1,inp2,outp,input1.nbSamples());
         
+        ASSERT_EMPTY_TAIL(output);
+
+        ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
+
+        ASSERT_NEAR_EQ(output,ref,ABS_ERROR_Q7);
+
+    } 
+
+    void BasicTestsQ7::test_clip_q7()
+    {
+        const q7_t *inp=input1.ptr();
+        q7_t *outp=output.ptr();
+
+        arm_clip_q7(inp,outp,this->min, this->max,input1.nbSamples());
+
         ASSERT_EMPTY_TAIL(output);
 
         ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
@@ -87,7 +100,6 @@ uint8_t *outp=outputLogical.ptr();
     void BasicTestsQ7::test_negate_q7()
     {
         const q7_t *inp1=input1.ptr();
-        q7_t *refp=ref.ptr();
         q7_t *outp=output.ptr();
 
         arm_negate_q7(inp1,outp,input1.nbSamples());
@@ -103,7 +115,6 @@ uint8_t *outp=outputLogical.ptr();
     void BasicTestsQ7::test_offset_q7()
     {
         const q7_t *inp1=input1.ptr();
-        q7_t *refp=ref.ptr();
         q7_t *outp=output.ptr();
 
         arm_offset_q7(inp1,this->scalar,outp,input1.nbSamples());
@@ -119,7 +130,6 @@ uint8_t *outp=outputLogical.ptr();
     void BasicTestsQ7::test_scale_q7()
     {
         const q7_t *inp1=input1.ptr();
-        q7_t *refp=ref.ptr();
         q7_t *outp=output.ptr();
 
         arm_scale_q7(inp1,this->scalar,0,outp,input1.nbSamples());
@@ -138,7 +148,6 @@ uint8_t *outp=outputLogical.ptr();
 
         const q7_t *inp1=input1.ptr();
         const q7_t *inp2=input2.ptr();
-        q31_t *refp=dotRef.ptr(); 
         q31_t *outp=dotOutput.ptr();
 
         arm_dot_prod_q7(inp1,inp2,input1.nbSamples(),&r);
@@ -158,6 +167,8 @@ uint8_t *outp=outputLogical.ptr();
     {
         GET_Q7_PTR();
 
+        (void)inp2;
+
         arm_abs_q7(inp1,outp,input1.nbSamples());
 
         ASSERT_EMPTY_TAIL(output);
@@ -171,7 +182,6 @@ uint8_t *outp=outputLogical.ptr();
     void BasicTestsQ7::test_shift_q7()
     {
         const q7_t *inp1=input1.ptr();
-        q7_t *refp=ref.ptr();
         q7_t *outp=output.ptr();
 
         arm_shift_q7(inp1,1,outp,input1.nbSamples());
@@ -187,7 +197,7 @@ uint8_t *outp=outputLogical.ptr();
     void BasicTestsQ7::test_and_u8()
     {
 
-            GET_LOGICAL_UINT8_PTR();
+        GET_LOGICAL_UINT8_PTR();
 
 
         arm_and_u8(inp1,inp2,outp,inputLogical1.nbSamples());
@@ -215,6 +225,8 @@ uint8_t *outp=outputLogical.ptr();
     {
         GET_LOGICAL_UINT8_PTR();
 
+        (void)inp2;
+
         arm_not_u8(inp1,outp,inputLogical1.nbSamples());
         
         ASSERT_EMPTY_TAIL(outputLogical);
@@ -241,6 +253,8 @@ uint8_t *outp=outputLogical.ptr();
        Testing::nbSamples_t nb=MAX_NB_SAMPLES; 
 
        this->scalar = ONEHALF;
+
+       (void)params;
 
        
        switch(id)
@@ -641,6 +655,37 @@ uint8_t *outp=outputLogical.ptr();
           input1.reload(BasicTestsQ7::INPUT1_Q7_ID,mgr,nb);
           input2.reload(BasicTestsQ7::INPUT2_Q7_ID,mgr,nb);
         break;
+
+        case BasicTestsQ7::TEST_CLIP_Q7_57:
+          ref.reload(BasicTestsQ7::REF_CLIP1_Q7_ID,mgr);
+          input1.reload(BasicTestsQ7::INPUT_CLIP_Q7_ID,mgr,ref.nbSamples());
+          
+          output.create(ref.nbSamples(),BasicTestsQ7::OUT_SAMPLES_ID,mgr);
+          // Must be coherent with Python script used to generate test patterns
+          this->min=0xC0;
+          this->max=0xF3;
+        break;
+
+        case BasicTestsQ7::TEST_CLIP_Q7_58:
+          ref.reload(BasicTestsQ7::REF_CLIP2_Q7_ID,mgr);
+          input1.reload(BasicTestsQ7::INPUT_CLIP_Q7_ID,mgr,ref.nbSamples());
+          
+          output.create(ref.nbSamples(),BasicTestsQ7::OUT_SAMPLES_ID,mgr);
+          // Must be coherent with Python script used to generate test patterns
+          this->min=0xC0;
+          this->max=0x40;
+        break;
+
+        case BasicTestsQ7::TEST_CLIP_Q7_59:
+          ref.reload(BasicTestsQ7::REF_CLIP3_Q7_ID,mgr);
+          input1.reload(BasicTestsQ7::INPUT_CLIP_Q7_ID,mgr,ref.nbSamples());
+          
+          output.create(ref.nbSamples(),BasicTestsQ7::OUT_SAMPLES_ID,mgr);
+          // Must be coherent with Python script used to generate test patterns
+          this->min=0x0D;
+          this->max=0x40;
+        break;
+
         
 
        }

@@ -627,6 +627,12 @@ Functions that cannot be called from an ISR are verifying the interrupt status a
 case they are called from an ISR context. In some implementations, this condition might be caught using the HARD_FAULT
 vector.
 
+\note
+- RTX does not disable interrupts during critical sections for Armv7-M and Armv8-M architecture based devices, but rather
+  uses atomic operations.
+- Therefore, there is no need to configure interrupt priorities of interrupt service routines that use RTOS functions.
+
+
 \section CMSIS_RTOS_svcFunctions SVC Functions
 
 Supervisor Calls (SVC) are exceptions targeted at software and operating systems for generating system function calls. They
@@ -777,7 +783,7 @@ Round-Robin Timeout                    | \c OS_ROBIN_TIMEOUT      | Defines how 
 ISR FIFO Queue                         | \c OS_ISR_FIFO_QUEUE     | RTOS Functions called from ISR store requests to this buffer. Default value is \token{16 entries}. Value range is \token{[4-256]} entries in multiples of \token{4}.
 Object Memory usage counters           | \c OS_OBJ_MEM_USAGE      | Enables object memory usage counters to evaluate the maximum memory pool requirements individually for each RTOS object type.
 
-\subsection systemConfig_glob_mem Global dynamic memory
+\subsection systemConfig_glob_mem Global Dynamic Memory size [bytes]
 Refer to \ref GlobalMemoryPool.
 
 
@@ -797,8 +803,6 @@ Round-robin thread switching functions as follows:
 In other words, threads execute for the duration of their time slice (unless a thread's time slice is given up). Then, RTX
 switches to the next thread that is in \b READY state and has the same priority. If no other thread with the same priority is
 ready to run, the current running thread resumes it execution.
-
-\note When switching to higher priority threads, the round-robin timeout value is reset.
 
 Round-Robin multitasking is controlled with the <b>\#define OS_ROBIN_ENABLE</b>. The time slice period is configured (in RTX
 timer ticks) with the <b>\#define OS_ROBIN_TIMEOUT</b>.
@@ -838,7 +842,7 @@ Number of user Threads with default Stack size  | \c OS_THREAD_DEF_STACK_NUM    
 Total Stack size [bytes] for user Threads with user-provided Stack size    | \c OS_THREAD_USER_STACK_SIZE | Defines the combined stack size for user threads with user-provided stack size. Default value is \token{0}. Value range is \token{[0-1073741824]} Bytes, in multiples of \token{8}. 
 Default Thread Stack size [bytes]                        | \c OS_STACK_SIZE    | Defines stack size for threads with zero stack size specified. Default value is \token{3072}. Value range is \token{[96-1073741824]} Bytes, in multiples of \token{8}. 
 Idle Thread Stack size [bytes]                           | \c OS_IDLE_THREAD_STACK_SIZE              | Defines stack size for Idle thread. Default value is \token{512}. Value range is \token{[72-1073741824]} bytes, in multiples of \token{8}. 
-Idle Thread TrustZone Module ID                                            | \c OS_IDLE_THREAD_TZ_MOD_ID    | Defines the \ref osThreadAttr_t::tz_module "TrustZone Module ID" the Idle Thread shall use. This needs to be set to a non-zero value if the Idle Thread need to call secure functions. Default value is \token{0}.
+Idle Thread TrustZone Module ID                          | \c OS_IDLE_THREAD_TZ_MOD_ID    | Defines the \ref osThreadAttr_t::tz_module "TrustZone Module ID" the Idle Thread shall use. This needs to be set to a non-zero value if the Idle Thread need to call secure functions. Default value is \token{0}.
 Stack overrun checking                                   | \c OS_STACK_CHECK   | Enable stack overrun checks at thread switch. 
 Stack usage watermark                                    | \c OS_STACK_WATERMARK    | Initialize thread stack with watermark pattern for analyzing stack usage. Enabling this option increases significantly the execution time of thread creation.
 Processor mode for Thread execution                      | \c OS_PRIVILEGE_MODE     | Controls the processor mode. Default value is \token{Privileged} mode. Value range is \token{[0=Unprivileged; 1=Privileged]} mode.
@@ -872,7 +876,7 @@ RTX5 implements a software stack overflow checking that traps stack overruns. St
 automatic variables. Extensive usage or incorrect stack configuration may cause a stack overflow. Software stack overflow
 checking is controlled with the define \c OS_STACK_CHECK.
  
-If a stack overflow is detected, the function \ref osRtxErrorNotify with error code \ref osRtxErrorStackUnderflow is called. By
+If a stack overflow is detected, the function \ref osRtxErrorNotify with error code \ref osRtxErrorStackOverflow is called. By
 default, this function is implemented as an endless loop and will practically stop code execution.
 
 \subsection threadConfig_watermark Stack Usage Watermark
@@ -1260,9 +1264,9 @@ System Control Block (SBC) | To control and setup the processor exceptions inclu
 Interrupt Control          | The CMSIS-Core functions __disable_irq and __enable_irq to control the interrupt system via the CPSR core register.
 
 The RTX implements interfaces to the processor hardware in following files: 
- - <b>%irq_cm0.s</b> defines exception handlers for Cortex-M0/M0+
+ - <b>%irq_armv6m.s</b> defines exception handlers for Cortex-M0/M0+
 \if ARMv8M
- - <b>%irq_armv8mbl_common.s</b> defines exception handlers for Cortex-M23
+ - <b>%irq_armv8mbl.s</b> defines exception handlers for Cortex-M23
 \endif 
  - <b>%rtx_core_cm.h</b> defines processor specific helper functions and the interfaces to Core Registers and Core Peripherals.
  - <b>%os_tick.h</b> is the \ref CMSIS_RTOS_TickAPI that defines the interface functions to the SysTick timer.
@@ -1288,10 +1292,9 @@ NVIC Interface             | CMSIS-Core function \b NVIC_GetPriorityGrouping is 
 LDREX, STREX instructions  | Exclusive access instructions \b LDREX and \b STREX are used to implement atomic execution without disabling interrupts.
 
 The interface files to the processor hardware are: 
- - <b>%irq_cm3.s</b> defines exception handlers for Cortex-M3 and Cortex-M4/M7 without floating point unit.
- - <b>%irq_cm4f.s</b> defines exception handlers for Cortex-M4/M7 with floating point unit.
+ - <b>%irq_armv7m.s</b> defines exception handlers for Cortex-M3 and Cortex-M4/M7.
 \if ARMv8M 
- - <b>%irq_armv8mml_common.s</b> defines exception handlers for Cortex-M33/M35P
+ - <b>%irq_armv8mml.s</b> defines exception handlers for Cortex-M33/M35P
 \endif
  - <b>%rtx_core_cm.h</b> defines processor specific helper functions and the interfaces to Core Registers and Core Peripherals.
  - <b>%os_tick.h</b> is the \ref CMSIS_RTOS_TickAPI that defines the interface functions to the SysTick timer.
@@ -1311,7 +1314,7 @@ LDREX, STREX instruction   | Atomic execution avoids the requirement to disable 
 Interrupt Controller       | An interrupt controller interface is required to setup and control Timer Peripheral interrupt. The interface for Arm GIC (Generic Interrupt Controller) is implemented in %irq_ctrl_gic.c using the <a class="el" href="../../Core_A/html/group__irq__ctrl__gr.html">IRQ Controller API</a>.
 
 The interface files to the processor hardware are: 
- - <b>%irq_ca.s</b> defines SVC, IRQ, Data Abort, Prefetch Abort and Undefined Instruction exception handlers.
+ - <b>%irq_armv7a.s</b> defines SVC, IRQ, Data Abort, Prefetch Abort and Undefined Instruction exception handlers.
  - <b>%rtx_core_ca.h</b> defines processor specific helper functions and the interfaces to Core Registers and Core Peripherals.
  - <b>%os_tick.h</b> is the \ref CMSIS_RTOS_TickAPI that defines the interface functions to the timer peripheral.
  - <b>%irq_ctrl.h</b> is the <a class="el" href="../../Core_A/html/group__irq__ctrl__gr.html">IRQ Controller API</a> that defines the interface functions to the interrupt controller.
@@ -1411,21 +1414,21 @@ The CMSIS-RTOS RTX v5 is delivered in source code and several examples are provi
       <td>Template</td>
       <td><a class="el" href="../../RTOS/html/index.html">CMSIS-RTOS API v1</a> template source and header file.</td>
     </tr>
-\endif	
+\endif
     <tr>
       <td>RTX</td>
       <td>Directory with RTX specific files and folders. Also contains the component viewer description file.</td>
     </tr>
     <tr>
       <td>RTX/Config</td>
-      <td>CMSIS-RTOS RTX configuration files %RTX_Config.h and %RTX_Config.c.</td>
+      <td>CMSIS-RTOS RTX configuration files \b %RTX_Config.h and \b %RTX_Config.c.</td>
     </tr>
 \ifnot FuSaRTS
     <tr>
       <td>RTX/Examples</td>
       <td>Example projects that can be directly used in development tools.</td>
     </tr>
-\endif	
+\endif
     <tr>
       <td>RTX/Include</td>
       <td>RTX v5 specific include files.</td>
@@ -1442,7 +1445,7 @@ The CMSIS-RTOS RTX v5 is delivered in source code and several examples are provi
 \endif	
     <tr>
       <td>RTX/Source</td>
-      <td>Source code that can be used with ARMCC and GCC.</td>
+      <td>Source code.</td>
     </tr>
     <tr>
       <td>RTX/Template</td>
@@ -1498,7 +1501,7 @@ processor variants in every configuration  \if ARMv8M , including Arm Cortex-M23
       <td>Library/ARM/RTX_V8MMN.lib</td>
       <td>CMSIS-RTOS RTX Library for ARMCC Compiler, Armv8-M Mainline, non-secure.</td>
     </tr>
-\endif	
+\endif
 \ifnot FuSaRTS
     <tr>
       <td>Library/GCC/libRTX_CM0.a</td>
@@ -1512,7 +1515,7 @@ processor variants in every configuration  \if ARMv8M , including Arm Cortex-M23
       <td>Library/GCC/libRTX_CM4F.a</td>
       <td>CMSIS-RTOS libRTX Library for GCC Compiler, Cortex-M4 and M7 with FPU, little-endian.</td>
     </tr>
-\endif	
+\endif
 \if ARMv8M	
     <tr>
       <td>Library/GCC/libRTX_V8MB.a</td>
@@ -1561,10 +1564,10 @@ Keil RTX5 is developed and tested using the common toolchains and development en
 RTX5 is initially developed and optimized using Arm Compiler and Arm/Keil MDK.
 The current release is tested with the following versions:
 <ul>
- <li>Arm Compiler 5.06 Update 6</li>
- <li>Arm Compiler 6.6.2 (Long Term Maintenance)</li>
- <li>Arm Compiler 6.9</li>
- <li>RTOS-aware debugging with uVision 5.24</li>
+ <li>Arm Compiler 5.06 Update 7</li>
+ <li>Arm Compiler 6.6.4 (Long Term Maintenance)</li>
+ <li>Arm Compiler 6.16</li>
+ <li>RTOS-aware debugging with uVision 5.34</li>
 </ul>
 
 
@@ -1582,7 +1585,7 @@ RTX5 has been ported to the IAR Embedded Workbench. The following releases are k
 RTX5 has also been ported to support GCC, maintenance mainly relays on community contribution.
 Active development is currently tested with:
 <ul>
- <li>GNU Tools for Arm Embedded 6.3.1 20170620</li>
+ <li>GNU Arm Embedded Toolchain 10-2020-q4-major (10.2.1 20201103)</li>
 </ul>
 
 \endif
@@ -1617,7 +1620,7 @@ The CMSIS-RTOS2 RTX v5 implementation is using the following <b>Namespace</b> pr
 \page misraCompliance5 MISRA C:2012 Compliance 
 The RTX5 C source files use <b><a class=el href="http://www.misra.org.uk/" target="_blank">MISRA C:2012</a></b> guidelines as underlying coding standard.
 
-For MISRA validation, <b><a class=el href="http://www.gimpel.com/" target="_blank">PC-lint</a></b> V9.00L is used with configuration for Arm Compiler V6.9.
+For MISRA validation, <b><a class=el href="http://www.gimpel.com/" target="_blank">PC-lint</a></b> V9.00L is used with configuration for Arm Compiler V6.16.
 The PC-Lint validation setup is part of the project file <b>.\\CMSIS\\RTOS2\\RTX\\Library\\ARM\\MDK\\RTX_CM.uvprojx</b> as shown below. 
 Refer to <b><a class=el href="https://www.keil.com/support/man/docs/uv4/uv4_ut_pclint_validation.htm" target="_blank">Setup for PC-Lint</a></b> for more information.
 
@@ -1626,11 +1629,13 @@ Refer to <b><a class=el href="https://www.keil.com/support/man/docs/uv4/uv4_ut_p
 The PC-Lint configuration uses the following Options under <b>Tools - PC-Lint Setup...</b>:
  - Config File: co-ARMCC-6.lnt (20-Mar-2017) with additional options:
 \code
-   +rw(__restrict)
-   -esym(526,__builtin_*) -esym(628,__builtin_*)
-   -sem(__builtin_clz, pure)
-   +doffsetof(t,m)=((size_t)&((t*)0)->m) -emacro((413,923,9078),offsetof)
-   -ecall(534,__disable_irq)
+   -esym(526,__builtin_*)
+   -esym(628,__builtin_*)
+   -esym(718,__builtin_*)
+   -esym(746,__builtin_*)
+   -sem(__CLZ, pure)
+   +doffsetof(t,m)=((size_t)&((t*)0)->m)
+   -emacro((413,923,9078),offsetof)
 \endcode
  - Included Project Information: 
    - Enable: Add 'Include' paths
@@ -1643,7 +1648,7 @@ The PC-Lint configuration uses the following Options under <b>Tools - PC-Lint Se
    - includes definition file: au-misra3.lnt (12-Jun-2014)
  - Additional Lint Commands (for both single and multiple files):
 \code
-   - emacro(835,osRtxConfigPrivilegedMode)
+   -emacro(835,osRtxConfigPrivilegedMode)
 \endcode
 
 The C source code is annotated with PC-Lint control comments to allows MISRA deviations.
@@ -1800,8 +1805,6 @@ Code example:
   thread = osRtxMemoryPoolAlloc(osRtxInfo.mpi.thread);
 \endcode
 
-
-
 \section MISRA_6 [MISRA Note 6]: Conversion from user provided storage
 
 CMSIS-RTOS2 and RTX5 support user provided storage for object control blocks, stack, and data storage.
@@ -1841,7 +1844,7 @@ This design decision implies the following MISRA deviations:
 
 All locations in the source code are marked with: 
 \code
-  //lint -e(923) -e(9078) "cast from pointer to unsigned int" [MISRA Note 7]
+  //lint -e{923} -e{9078} "cast from pointer to unsigned int" [MISRA Note 7]
 \endcode
 
 Code example:
@@ -1851,7 +1854,7 @@ static osThreadId_t svcRtxThreadNew (osThreadFunc_t func, void *argument, const 
   void         *stack_mem;
     :
   if (stack_mem != NULL) {
-    //lint -e(923) -e(9078) "cast from pointer to unsigned int" [MISRA Note 7]
+    //lint -e{923} "cast from pointer to unsigned int" [MISRA Note 7]
     if ((((uint32_t)stack_mem & 7U) != 0U) || (stack_size == 0U)) {
     :
 \endcode
@@ -1867,7 +1870,7 @@ This design decision implies the following MISRA deviations:
 
 All locations in the source code are marked with: 
 \code
-  //lint -e(923) -e(9078) "cast from pointer to unsigned int" [MISRA Note 8]
+  //lint -e{923} -e{9078} "cast from pointer to unsigned int" [MISRA Note 8]
 \endcode
 
 The required pointer arithmetic is implemented in \em rtx_memory.c with the following function:
@@ -2241,7 +2244,7 @@ A C++11/C++14 interface is planned for the future.
 /**
 \page rtos_os_tick_api OS Tick API
 
-The CMSIS OS Tick API may be used by an RTOS implementation to be easily potable across the different Cortex-M and Cortex-A processors.
+The CMSIS OS Tick API may be used by an RTOS implementation to be easily portable across the different Cortex-M and Cortex-A processors.
 It provides a generic interface to a kernel system tick timer and defines the following functions:
 
  - The Reference for \ref CMSIS_RTOS_TickAPI provides details about these functions:

@@ -14,6 +14,8 @@ group Root {
               folder = StatsF32
 
               Pattern INPUT1_F32_ID : Input1_f32.txt 
+              Pattern INPUTNEW1_F32_ID : InputNew1_f32.txt 
+
               Pattern INPUT2_F32_ID : Input2_f32.txt 
               Pattern MAXINDEXES_S16_ID : MaxIndexes1_s16.txt
               Pattern MAXVALS_F32_ID : MaxVals1_f32.txt
@@ -42,6 +44,13 @@ group Root {
               Pattern INPUTB25_F32_ID : InputB25_f32.txt
               Pattern DIM25_S16_ID : Dims25_s16.txt 
               Pattern REF25_LOGSUMEXP_DOT_F32_ID : RefLogSumExpDot25_f32.txt
+
+              Pattern ABSMAXINDEXES_S16_ID : AbsMaxIndexes26_s16.txt
+              Pattern ABSMAXVALS_F32_ID : AbsMaxVals26_f32.txt
+
+              Pattern ABSMININDEXES_S16_ID : AbsMinIndexes27_s16.txt
+              Pattern ABSMINVALS_F32_ID : AbsMinVals27_f32.txt
+
 
               Output  OUT_F32_ID : Output
               Output  OUT_S16_ID : Index
@@ -91,6 +100,16 @@ group Root {
                 Test long  arm_var_f32:test_var_f32
 
                 Test stability  arm_std_f32:test_std_stability_f32
+
+                Test nb=3    arm_absmax_f32:test_absmax_f32
+                Test nb=4n   arm_absmax_f32:test_absmax_f32
+                Test nb=4n+1 arm_absmax_f32:test_absmax_f32
+
+                Test nb=3    arm_absmin_f32:test_absmin_f32
+                Test nb=4n   arm_absmin_f32:test_absmin_f32
+                Test nb=4n+1 arm_absmin_f32:test_absmin_f32
+
+
               }
 
            }
@@ -124,6 +143,8 @@ group Root {
               folder = StatsQ31
 
               Pattern INPUT1_Q31_ID : Input1_q31.txt 
+              Pattern INPUTNEW1_Q31_ID : InputNew1_q31.txt 
+
               Pattern INPUT2_Q31_ID : Input2_q31.txt 
               Pattern MAXINDEXES_S16_ID : MaxIndexes1_s16.txt
               Pattern MAXVALS_Q31_ID : MaxVals1_q31.txt
@@ -134,6 +155,12 @@ group Root {
               Pattern RMSVALS_Q31_ID : RmsVals5_q31.txt
               Pattern STDVALS_Q31_ID : StdVals6_q31.txt
               Pattern VARVALS_Q31_ID : VarVals7_q31.txt
+
+              Pattern ABSMAXINDEXES_S16_ID : AbsMaxIndexes8_s16.txt
+              Pattern ABSMAXVALS_Q31_ID : AbsMaxVals8_q31.txt
+
+              Pattern ABSMININDEXES_S16_ID : AbsMinIndexes9_s16.txt
+              Pattern ABSMINVALS_Q31_ID : AbsMinVals9_q31.txt
 
               Output  OUT_Q31_ID : Output
               Output  OUT_Q63_ID : Output
@@ -169,6 +196,14 @@ group Root {
                 Test nb=4n   arm_var_q31:test_var_q31
                 Test nb=4n+1 arm_var_q31:test_var_q31
 
+                Test nb=3    arm_absmax_q31:test_absmax_q31
+                Test nb=4n   arm_absmax_q31:test_absmax_q31
+                Test nb=4n+1 arm_absmax_q31:test_absmax_q31
+
+                Test nb=3    arm_absmin_q31:test_absmin_q31
+                Test nb=4n   arm_absmin_q31:test_absmin_q31
+                Test nb=4n+1 arm_absmin_q31:test_absmin_q31
+
               }
 
            }
@@ -178,6 +213,8 @@ group Root {
               folder = StatsQ15
 
               Pattern INPUT1_Q15_ID : Input1_q15.txt 
+              Pattern INPUTNEW1_Q15_ID : InputNew1_q15.txt
+
               Pattern INPUT2_Q15_ID : Input2_q15.txt 
               Pattern MAXINDEXES_S16_ID : MaxIndexes1_s16.txt
               Pattern MAXVALS_Q15_ID : MaxVals1_q15.txt
@@ -188,6 +225,14 @@ group Root {
               Pattern RMSVALS_Q15_ID : RmsVals5_q15.txt
               Pattern STDVALS_Q15_ID : StdVals6_q15.txt
               Pattern VARVALS_Q15_ID : VarVals7_q15.txt
+
+              Pattern ABSMAXINDEXES_S16_ID : AbsMaxIndexes8_s16.txt
+              Pattern ABSMAXVALS_Q15_ID : AbsMaxVals8_q15.txt
+
+              Pattern ABSMININDEXES_S16_ID : AbsMinIndexes9_s16.txt
+              Pattern ABSMINVALS_Q15_ID : AbsMinVals9_q15.txt
+
+
 
               Output  OUT_Q15_ID : Output
               Output  OUT_Q63_ID : Output
@@ -223,6 +268,14 @@ group Root {
                 Test nb=8n   arm_var_q15:test_var_q15
                 Test nb=8n+1 arm_var_q15:test_var_q15
 
+                Test nb=3    arm_absmax_q15:test_absmax_q15
+                Test nb=4n   arm_absmax_q15:test_absmax_q15
+                Test nb=4n+1 arm_absmax_q15:test_absmax_q15
+
+                Test nb=3    arm_absmin_q15:test_absmin_q15
+                Test nb=4n   arm_absmin_q15:test_absmin_q15
+                Test nb=4n+1 arm_absmin_q15:test_absmin_q15
+
               }
 
            }
@@ -232,6 +285,8 @@ group Root {
               folder = StatsQ7
 
               Pattern INPUT1_Q7_ID : Input1_q7.txt 
+              Pattern INPUTNEW1_Q7_ID : InputNew1_q7.txt
+
               Pattern INPUT2_Q7_ID : Input2_q7.txt 
               Pattern MAXINDEXES_S16_ID : MaxIndexes1_s16.txt
               Pattern MAXVALS_Q7_ID : MaxVals1_q7.txt
@@ -241,6 +296,16 @@ group Root {
               Pattern POWERVALS_Q31_ID : PowerVals4_q31.txt
               Pattern MAXINDEXMAX_Q7_ID : InputMaxIndexMax1_q7.txt
               Pattern MININDEXMAX_Q7_ID : InputMinIndexMax3_q7.txt
+
+              Pattern ABSMAXINDEXES_S16_ID : AbsMaxIndexes8_s16.txt
+              Pattern ABSMAXVALS_Q7_ID : AbsMaxVals8_q7.txt
+
+              Pattern ABSMININDEXES_S16_ID : AbsMinIndexes9_s16.txt
+              Pattern ABSMINVALS_Q7_ID : AbsMinVals9_q7.txt
+
+              Pattern ABSMAXINDEXMAX_Q7_ID : InputAbsMaxIndexMax8_q7.txt
+              Pattern ABSMININDEXMAX_Q7_ID : InputAbsMinIndexMax9_q7.txt
+
 
               //Pattern RMSVALS_Q7_ID : RmsVals5_q7.txt
               //Pattern STDVALS_Q7_ID : StdVals6_q7.txt
@@ -271,6 +336,17 @@ group Root {
                 Test big index  arm_max_q7:test_max_q7
                 Test big index  arm_min_q7:test_min_q7
 
+                Test nb=3    arm_absmax_q7:test_absmax_q7
+                Test nb=4n   arm_absmax_q7:test_absmax_q7
+                Test nb=4n+1 arm_absmax_q7:test_absmax_q7
+
+                Test nb=3    arm_absmin_q7:test_absmin_q7
+                Test nb=4n   arm_absmin_q7:test_absmin_q7
+                Test nb=4n+1 arm_absmin_q7:test_absmin_q7
+
+                Test big index  arm_absmax_q7:test_absmax_q7
+                Test big index  arm_absmin_q7:test_absmin_q7
+
               }
 
            }
@@ -289,33 +365,20 @@ group Root {
               Pattern INPUT_BITONIC_SORT_16_F32_ID : Input8_f32.txt
               Pattern INPUT_BITONIC_SORT_32_F32_ID : Input9_f32.txt
               Pattern INPUT_SORT_CONST_F32_ID : Input10_f32.txt
-              Pattern INPUT_SPLINE_SQU_X_F32_ID : InputX11_f32.txt
-              Pattern INPUT_SPLINE_SQU_Y_F32_ID : InputY11_f32.txt
-              Pattern OUTPUT_SPLINE_SQU_X_F32_ID : OutputX11_f32.txt
-              Pattern INPUT_SPLINE_SIN_X_F32_ID : InputX12_f32.txt 
-              Pattern INPUT_SPLINE_SIN_Y_F32_ID : InputY12_f32.txt
-              Pattern OUTPUT_SPLINE_SIN_X_F32_ID : OutputX12_f32.txt 
-              Pattern INPUT_SPLINE_RAM_X_F32_ID : InputX13_f32.txt
-              Pattern INPUT_SPLINE_RAM_Y_F32_ID : InputY13_f32.txt
-              Pattern OUTPUT_SPLINE_RAM_X_F32_ID : OutputX13_f32.txt
               Pattern WEIGHTS_F32_ID : Weights6_f32.txt 
               Pattern REF_F32_ID : Ref6_f32.txt
               Pattern REF_SORT_F32_ID : Reference7_f32.txt 
               Pattern REF_BITONIC_SORT_16_F32_ID : Reference8_f32.txt
               Pattern REF_BITONIC_SORT_32_F32_ID : Reference9_f32.txt
               Pattern REF_SORT_CONST_F32_ID : Reference10_f32.txt
-              Pattern REF_SPLINE_SQU_F32_ID : Reference11_f32.txt
-              Pattern REF_SPLINE_SIN_F32_ID : Reference12_f32.txt
-              Pattern REF_SPLINE_RAM_F32_ID : Reference13_f32.txt
+
               Pattern SAMPLES_F32_ID : Samples1_f32.txt 
               Pattern SAMPLES_Q15_ID : Samples3_q15.txt 
               Pattern SAMPLES_Q31_ID : Samples4_q31.txt 
               Pattern SAMPLES_Q7_ID : Samples5_q7.txt 
 
               Output  OUT_F32_ID : Output
-              Output  COEFS_SPLINE_F32_ID : SplineCoefs
-              Output  TEMP_SPLINE_F32_ID : SplineTemp
-
+             
               Functions {
                 test_weighted_sum_f32 nb=3:test_weighted_sum_f32
                 test_weighted_sum_f32 nb=4n:test_weighted_sum_f32
@@ -358,9 +421,7 @@ group Root {
                 test_selection_sort_f32 nb=11 inplace:test_selection_sort_in_f32
                 test_selection_sort_f32 nb=16 const:test_selection_sort_const_f32
 
-                test_spline_f32 square:test_spline_square_f32
-                test_spline_f32 sin:test_spline_sine_f32
-                test_spline_f32 ramp:test_spline_ramp_f32
+                
               }
 
            }
@@ -504,12 +565,32 @@ group Root {
               Pattern REF_LINEAR_F32_ID : Reference1_f32.txt
               Pattern REF_BILINEAR_F32_ID : Reference2_f32.txt
 
+              Pattern REF_SPLINE_SQU_F32_ID : Reference3_f32.txt
+              Pattern REF_SPLINE_SIN_F32_ID : Reference4_f32.txt
+              Pattern REF_SPLINE_RAM_F32_ID : Reference5_f32.txt
+
+              Pattern INPUT_SPLINE_SQU_X_F32_ID : InputX3_f32.txt
+              Pattern INPUT_SPLINE_SQU_Y_F32_ID : InputY3_f32.txt
+              Pattern OUTPUT_SPLINE_SQU_X_F32_ID : OutputX3_f32.txt
+              Pattern INPUT_SPLINE_SIN_X_F32_ID : InputX4_f32.txt 
+              Pattern INPUT_SPLINE_SIN_Y_F32_ID : InputY4_f32.txt
+              Pattern OUTPUT_SPLINE_SIN_X_F32_ID : OutputX4_f32.txt 
+              Pattern INPUT_SPLINE_RAM_X_F32_ID : InputX5_f32.txt
+              Pattern INPUT_SPLINE_RAM_Y_F32_ID : InputY5_f32.txt
+              Pattern OUTPUT_SPLINE_RAM_X_F32_ID : OutputX5_f32.txt
+
 
               Output  OUT_SAMPLES_F32_ID : Output
+              Output  COEFS_SPLINE_F32_ID : SplineCoefs
+              Output  TEMP_SPLINE_F32_ID : SplineTemp
 
               Functions {
                 Test arm_linear_interp_f32:test_linear_interp_f32
                 Test arm_bilinear_interp_f32:test_bilinear_interp_f32
+
+                test_spline_f32 square:test_spline_square_f32
+                test_spline_f32 sin:test_spline_sine_f32
+                test_spline_f32 ramp:test_spline_ramp_f32
               }
           }
 
@@ -580,6 +661,42 @@ group Root {
           }
         }
 
+        group Quaternion Tests {
+           class = QuaternionTests
+           folder = QuaternionMaths
+
+           suite Quaternion Tests F32{
+              class = QuaternionTestsF32
+              folder = QuaternionMathsF32
+   
+              Pattern INPUT1_F32_ID : Input1_f32.txt 
+              Pattern INPUT2_F32_ID : Input2_f32.txt 
+              Pattern INPUT7_F32_ID : Input7_f32.txt 
+   
+              Pattern REF_NORM_F32_ID : Reference1_f32.txt
+              Pattern REF_INVERSE_F32_ID : Reference2_f32.txt
+              Pattern REF_CONJUGATE_F32_ID : Reference3_f32.txt
+              Pattern REF_NORMALIZE_F32_ID : Reference4_f32.txt
+              Pattern REF_MULT_F32_ID : Reference5_f32.txt
+              Pattern REF_QUAT2ROT_F32_ID : Reference6_f32.txt
+              Pattern REF_ROT2QUAT_F32_ID : Reference7_f32.txt
+            
+   
+              Output  OUT_SAMPLES_F32_ID : Output
+   
+              Functions {
+                Test arm_quaternion_norm_f32:test_quaternion_norm_f32
+                Test arm_quaternion_inverse_f32:test_quaternion_inverse_f32
+                Test arm_quaternion_conjugate_f32:test_quaternion_conjugate_f32
+                Test arm_quaternion_normalize_f32:test_quaternion_normalize_f32
+                Test arm_quaternion_prod_single_f32:test_quaternion_prod_single_f32
+                Test arm_quaternion_product_f32:test_quaternion_product_f32
+                Test arm_quaternion2rotation_f32:test_quaternion2rotation_f32
+                Test arm_rotation2quaternion_f32:test_rotation2quaternion_f32
+              }
+           }
+        }
+
         group Basic Tests {
            class = BasicTests
            folder = BasicMaths
@@ -590,7 +707,9 @@ group Root {
    
               Pattern INPUT1_F32_ID : Input1_f32.txt 
               Pattern INPUT2_F32_ID : Input2_f32.txt 
-   
+
+              Pattern INPUT_CLIP_F32_ID : Input12_f32.txt 
+              
               Pattern REF_ADD_F32_ID : Reference1_f32.txt
               Pattern REF_SUB_F32_ID : Reference2_f32.txt
               Pattern REF_MULT_F32_ID : Reference3_f32.txt
@@ -602,6 +721,10 @@ group Root {
               Pattern REF_DOT_4N1_F32_ID : Reference9_f32.txt
               Pattern REF_ABS_F32_ID : Reference10_f32.txt
               Pattern REF_DOT_LONG_F32_ID : Reference11_f32.txt
+
+              Pattern REF_CLIP1_F32_ID : Reference12_f32.txt
+              Pattern REF_CLIP2_F32_ID : Reference13_f32.txt
+              Pattern REF_CLIP3_F32_ID : Reference14_f32.txt
    
               Output  OUT_SAMPLES_F32_ID : Output
               Output  OUT_STATE_F32_ID : State
@@ -647,6 +770,9 @@ group Root {
                 Test long    arm_scale_f32:test_scale_f32
                 Test long    arm_dot_prod_f32:test_dot_prod_f32
                 Test long    arm_abs_f32:test_abs_f32
+                Test 1       arm_clip_f32:test_clip_f32
+                Test 2       arm_clip_f32:test_clip_f32
+                Test 3       arm_clip_f32:test_clip_f32
               }
            }
 
@@ -664,7 +790,9 @@ group Root {
  
               Pattern INPUT1_BITWISE_Q31_ID : BitwiseInput24_s32.txt
               Pattern INPUT2_BITWISE_Q31_ID : BitwiseInput25_s32.txt
-  
+
+              Pattern INPUT_CLIP_Q31_ID : Input28_q31.txt 
+              
               Pattern REF_ADD_Q31_ID : Reference1_q31.txt
               Pattern REF_SUB_Q31_ID : Reference2_q31.txt
               Pattern REF_MULT_Q31_ID : Reference3_q31.txt
@@ -695,6 +823,10 @@ group Root {
               Pattern REF_OR_Q31_ID  : Or25_s32.txt
               Pattern REF_NOT_Q31_ID : Not26_s32.txt
               Pattern REF_XOR_Q31_ID : Xor27_s32.txt
+
+              Pattern REF_CLIP1_Q31_ID : Reference28_q31.txt
+              Pattern REF_CLIP2_Q31_ID : Reference29_q31.txt
+              Pattern REF_CLIP3_Q31_ID : Reference30_q31.txt
 
               Output  OUT_SAMPLES_ID : Output
               Output  OUT_STATE_Q31_ID : State
@@ -775,6 +907,9 @@ group Root {
                 Test long    arm_scale_q31:test_scale_q31
                 Test long    arm_dot_prod_q31:test_dot_prod_q31
                 Test long    arm_abs_q31:test_abs_q31
+                Test 1       arm_clip_q31:test_clip_q31
+                Test 2       arm_clip_q31:test_clip_q31
+                Test 3       arm_clip_q31:test_clip_q31
 
               }
            }
@@ -794,6 +929,8 @@ group Root {
               Pattern INPUT1_BITWISE_Q15_ID : BitwiseInput24_s16.txt
               Pattern INPUT2_BITWISE_Q15_ID : BitwiseInput25_s16.txt 
 
+              Pattern INPUT_CLIP_Q15_ID : Input28_q15.txt 
+              
               Pattern REF_ADD_Q15_ID : Reference1_q15.txt
               Pattern REF_SUB_Q15_ID : Reference2_q15.txt
               Pattern REF_MULT_Q15_ID : Reference3_q15.txt
@@ -824,6 +961,10 @@ group Root {
               Pattern REF_OR_Q15_ID  : Or25_s16.txt
               Pattern REF_NOT_Q15_ID : Not26_s16.txt
               Pattern REF_XOR_Q15_ID : Xor27_s16.txt
+
+              Pattern REF_CLIP1_Q15_ID : Reference28_q15.txt
+              Pattern REF_CLIP2_Q15_ID : Reference29_q15.txt
+              Pattern REF_CLIP3_Q15_ID : Reference30_q15.txt
 
               Output  OUT_SAMPLES_ID : Output
               Output  OUT_STATE_Q15_ID : State
@@ -904,7 +1045,9 @@ group Root {
                 Test long    arm_scale_q15:test_scale_q15
                 Test long    arm_dot_prod_q15:test_dot_prod_q15
                 Test long    arm_abs_q15:test_abs_q15
-
+                Test 1       arm_clip_q15:test_clip_q15
+                Test 2       arm_clip_q15:test_clip_q15
+                Test 3       arm_clip_q15:test_clip_q15
               }
            }
 
@@ -922,7 +1065,9 @@ group Root {
 
               Pattern INPUT1_BITWISE_Q7_ID : BitwiseInput24_s8.txt
               Pattern INPUT2_BITWISE_Q7_ID : BitwiseInput25_s8.txt 
-  
+
+              Pattern INPUT_CLIP_Q7_ID : Input28_q7.txt 
+             
               Pattern REF_ADD_Q7_ID : Reference1_q7.txt
               Pattern REF_SUB_Q7_ID : Reference2_q7.txt
               Pattern REF_MULT_Q7_ID : Reference3_q7.txt
@@ -953,6 +1098,10 @@ group Root {
               Pattern REF_OR_Q7_ID  : Or25_s8.txt
               Pattern REF_NOT_Q7_ID : Not26_s8.txt
               Pattern REF_XOR_Q7_ID : Xor27_s8.txt
+
+              Pattern REF_CLIP1_Q7_ID : Reference28_q7.txt
+              Pattern REF_CLIP2_Q7_ID : Reference29_q7.txt
+              Pattern REF_CLIP3_Q7_ID : Reference30_q7.txt
 
               Output  OUT_SAMPLES_ID : Output
               Output  OUT_STATE_Q7_ID : State
@@ -1033,6 +1182,9 @@ group Root {
                 Test long    arm_scale_q7:test_scale_q7
                 Test long    arm_dot_prod_q7:test_dot_prod_q7
                 Test long    arm_abs_q7:test_abs_q7
+                Test 1       arm_clip_q7:test_clip_q7
+                Test 2       arm_clip_q7:test_clip_q7
+                Test 3       arm_clip_q7:test_clip_q7
               }
            }
         }
@@ -1253,6 +1405,7 @@ group Root {
               Pattern COS1_Q31_ID : Cos1_q31.txt 
               Pattern SIN1_Q31_ID : Sin1_q31.txt 
               Pattern SQRT1_Q31_ID : Sqrt1_q31.txt 
+              
 
               Output  OUT_Q31_ID : Output
 
@@ -1273,12 +1426,20 @@ group Root {
               Pattern SIN1_Q15_ID : Sin1_q15.txt 
               Pattern SQRT1_Q15_ID : Sqrt1_q15.txt 
 
+              Pattern NUMERATOR_Q15_ID : Numerator1_q15.txt
+              Pattern DENOMINATOR_Q15_ID : Denominator1_q15.txt
+
+              Pattern DIVISION_VALUE_Q15_ID : DivisionValue1_q15.txt
+              Pattern DIVISION_SHIFT_S16_ID : DivisionShift1_s16.txt
+
               Output  OUT_Q15_ID : Output
+              Output  SHIFT_S16_ID : Output
 
               Functions {
                 test_cos_q15:test_cos_q15
                 test_sin_q15:test_sin_q15
                 test_sqrt_q15:test_sqrt_q15
+                test_division_q15:test_division_q15
               }
           }
         }
@@ -1323,7 +1484,7 @@ group Root {
                  arm_svm_polynomial_predict_f32:test_svm_polynomial_predict_f32
                  arm_svm_rbf_predict_f32:test_svm_rbf_predict_f32
                  arm_svm_sigmoid_predict_f32:test_svm_sigmoid_predict_f32
-                 arm_svm_oneclass_predict_f32:test_svm_rbf_predict_f32
+                 disabled{arm_svm_oneclass_predict_f32:test_svm_linear_predict_f32}
               }
            }
         }
@@ -1522,6 +1683,15 @@ group Root {
                 Pattern INPUTA_F32_ID : InputsA1_f32.txt
                 Pattern INPUTB_F32_ID : InputsB1_f32.txt
 
+                Pattern INPUTA2_F32_ID : InputsA2_f32.txt
+                Pattern INPUTB2_F32_ID : InputsB2_f32.txt
+
+                Pattern INPUTPHI_A_F32_ID : InputPhi81_f32.txt
+                Pattern INPUTPHI_B_F32_ID : InputPhi82_f32.txt
+                Pattern INPUTPHI_C_F32_ID : InputPhi83_f32.txt
+
+                Pattern INPUT_ERRORS_F32_ID : LDErrors81_f32.txt
+
                 Pattern REF1_F32_ID : Reference1_f32.txt
                 Pattern REF2_F32_ID : Reference2_f32.txt
                 Pattern REF3_F32_ID : Reference3_f32.txt
@@ -1602,9 +1772,17 @@ group Root {
                 Pattern REF78_F32_ID : Reference78_f32.txt
                 Pattern REF79_F32_ID : Reference79_f32.txt
                 Pattern REF80_F32_ID : Reference80_f32.txt
+                Pattern REF81_F32_ID : Reference81_f32.txt
+                Pattern REF82_F32_ID : Reference82_f32.txt
+                Pattern REF83_F32_ID : Reference83_f32.txt
+
+                Pattern REF84_F32_ID : Reference84_f32.txt
+                Pattern REF85_F32_ID : Reference85_f32.txt
+                Pattern REF86_F32_ID : Reference86_f32.txt
 
 
                 Output  OUT_F32_ID : Output
+                Output  TMP_F32_ID : Temp
 
                 Functions {
                   arm_correlate_f32 nba=4 nbb=1:test_correlate_f32
@@ -1687,6 +1865,12 @@ group Root {
                   arm_conv_f32 nba=13 nbb=3:test_conv_f32
                   arm_conv_f32 nba=13 nbb=8:test_conv_f32
                   arm_conv_f32 nba=13 nbb=11:test_conv_f32
+                  arm_levinson_durbin_f32 n=3:test_levinson_durbin_f32
+                  arm_levinson_durbin_f32 n=8:test_levinson_durbin_f32
+                  arm_levinson_durbin_f32 n=11:test_levinson_durbin_f32
+                  arm_conv_partial_f32 nba=6 nbb=8 first=3:test_conv_partial_f32
+                  arm_conv_partial_f32 nba=6 nbb=8 first=9:test_conv_partial_f32
+                  arm_conv_partial_f32 nba=6 nbb=8 first=7:test_conv_partial_f32
                 }
 
              }
@@ -1697,6 +1881,15 @@ group Root {
 
                 Pattern INPUTA_Q31_ID : InputsA1_q31.txt
                 Pattern INPUTB_Q31_ID : InputsB1_q31.txt
+
+                Pattern INPUTA2_Q31_ID : InputsA2_q31.txt
+                Pattern INPUTB2_Q31_ID : InputsB2_q31.txt
+
+                Pattern INPUTPHI_A_Q31_ID : InputPhi81_q31.txt
+                Pattern INPUTPHI_B_Q31_ID : InputPhi82_q31.txt
+                Pattern INPUTPHI_C_Q31_ID : InputPhi83_q31.txt
+
+                Pattern INPUT_ERRORS_Q31_ID : LDErrors81_q31.txt
 
                 Pattern REF1_Q31_ID : Reference1_q31.txt
                 Pattern REF2_Q31_ID : Reference2_q31.txt
@@ -1778,9 +1971,17 @@ group Root {
                 Pattern REF78_Q31_ID : Reference78_q31.txt
                 Pattern REF79_Q31_ID : Reference79_q31.txt
                 Pattern REF80_Q31_ID : Reference80_q31.txt
+                Pattern REF81_Q31_ID : Reference81_q31.txt
+                Pattern REF82_Q31_ID : Reference82_q31.txt
+                Pattern REF83_Q31_ID : Reference83_q31.txt
+
+                Pattern REF84_Q31_ID : Reference84_q31.txt
+                Pattern REF85_Q31_ID : Reference85_q31.txt
+                Pattern REF86_Q31_ID : Reference86_q31.txt
 
 
                 Output  OUT_Q31_ID : Output
+                Output  TMP_Q31_ID : Temp
 
                 Functions {
                   arm_correlate_q31 nba=4 nbb=1:test_correlate_q31
@@ -1863,6 +2064,15 @@ group Root {
                   arm_conv_q31 nba=13 nbb=3:test_conv_q31
                   arm_conv_q31 nba=13 nbb=8:test_conv_q31
                   arm_conv_q31 nba=13 nbb=11:test_conv_q31
+                  arm_levinson_durbin_q31 n=3:test_levinson_durbin_q31
+                  arm_levinson_durbin_q31 n=8:test_levinson_durbin_q31
+                  arm_levinson_durbin_q31 n=11:test_levinson_durbin_q31
+                  arm_conv_partial_q31 nba=6 nbb=8 first=3:test_conv_partial_q31
+                  arm_conv_partial_q31 nba=6 nbb=8 first=9:test_conv_partial_q31
+                  arm_conv_partial_q31 nba=6 nbb=8 first=7:test_conv_partial_q31
+                  arm_conv_partial_fast_q31 nba=6 nbb=8 first=3:test_conv_partial_fast_q31
+                  arm_conv_partial_fast_q31 nba=6 nbb=8 first=9:test_conv_partial_fast_q31
+                  arm_conv_partial_fast_q31 nba=6 nbb=8 first=7:test_conv_partial_fast_q31
                 }
 
              }
@@ -1873,6 +2083,9 @@ group Root {
 
                 Pattern INPUTA_Q15_ID : InputsA1_q15.txt
                 Pattern INPUTB_Q15_ID : InputsB1_q15.txt
+
+                Pattern INPUTA2_Q15_ID : InputsA2_q15.txt
+                Pattern INPUTB2_Q15_ID : InputsB2_q15.txt
 
                 Pattern REF1_Q15_ID : Reference1_q15.txt
                 Pattern REF2_Q15_ID : Reference2_q15.txt
@@ -1925,8 +2138,15 @@ group Root {
                 Pattern REF49_Q15_ID : Reference49_q15.txt
                 Pattern REF50_Q15_ID : Reference50_q15.txt
 
+                Pattern REF54_Q15_ID : Reference54_q15.txt
+                Pattern REF55_Q15_ID : Reference55_q15.txt
+                Pattern REF56_Q15_ID : Reference56_q15.txt
+
 
                 Output  OUT_Q15_ID : Output
+                Output  TMP_Q15_ID : Temp
+                Output  SCRATCH1_Q15_ID : Scratch1
+                Output  SCRATCH2_Q15_ID : Scratch2
 
                 Functions {
                   arm_correlate_q15 nba=14 nbb=15:test_correlate_q15
@@ -1979,6 +2199,18 @@ group Root {
                   arm_conv_q15 nba=32 nbb=17:test_conv_q15
                   arm_conv_q15 nba=32 nbb=18:test_conv_q15
                   arm_conv_q15 nba=32 nbb=33:test_conv_q15
+                  arm_conv_partial_q15 nba=6 nbb=8 first=3:test_conv_partial_q15
+                  arm_conv_partial_q15 nba=6 nbb=8 first=9:test_conv_partial_q15
+                  arm_conv_partial_q15 nba=6 nbb=8 first=7:test_conv_partial_q15
+                  arm_conv_partial_fast_q15 nba=6 nbb=8 first=3:test_conv_partial_fast_q15
+                  arm_conv_partial_fast_q15 nba=6 nbb=8 first=9:test_conv_partial_fast_q15
+                  arm_conv_partial_fast_q15 nba=6 nbb=8 first=7:test_conv_partial_fast_q15
+                  arm_conv_partial_opt_q15 nba=6 nbb=8 first=3:test_conv_partial_opt_q15
+                  arm_conv_partial_opt_q15 nba=6 nbb=8 first=9:test_conv_partial_opt_q15
+                  arm_conv_partial_opt_q15 nba=6 nbb=8 first=7:test_conv_partial_opt_q15
+                  arm_conv_partial_fast_opt_q15 nba=6 nbb=8 first=3:test_conv_partial_fast_opt_q15
+                  arm_conv_partial_fast_opt_q15 nba=6 nbb=8 first=9:test_conv_partial_fast_opt_q15
+                  arm_conv_partial_fast_opt_q15 nba=6 nbb=8 first=7:test_conv_partial_fast_opt_q15
                 }
 
              }
@@ -1989,6 +2221,9 @@ group Root {
 
                 Pattern INPUTA_Q7_ID : InputsA1_q7.txt
                 Pattern INPUTB_Q7_ID : InputsB1_q7.txt
+
+                Pattern INPUTA2_Q7_ID : InputsA2_q7.txt
+                Pattern INPUTB2_Q7_ID : InputsB2_q7.txt
 
                 Pattern REF1_Q7_ID : Reference1_q7.txt
                 Pattern REF2_Q7_ID : Reference2_q7.txt
@@ -2041,8 +2276,15 @@ group Root {
                 Pattern REF49_Q7_ID : Reference49_q7.txt
                 Pattern REF50_Q7_ID : Reference50_q7.txt
 
+                Pattern REF54_Q7_ID : Reference54_q7.txt
+                Pattern REF55_Q7_ID : Reference55_q7.txt
+                Pattern REF56_Q7_ID : Reference56_q7.txt
+
 
                 Output  OUT_Q7_ID : Output
+                Output  TMP_Q7_ID : Temp
+                Output  SCRATCH1_Q15_ID : Scratch1
+                Output  SCRATCH2_Q15_ID : Scratch2
 
                 Functions {
                   arm_correlate_q7 nba=30 nbb=31:test_correlate_q7
@@ -2095,6 +2337,12 @@ group Root {
                   arm_conv_q7 nba=48 nbb=33:test_conv_q7
                   arm_conv_q7 nba=48 nbb=34:test_conv_q7
                   arm_conv_q7 nba=48 nbb=49:test_conv_q7
+                  arm_conv_partial_q7 nba=6 nbb=8 first=3:test_conv_partial_q7
+                  arm_conv_partial_q7 nba=6 nbb=8 first=9:test_conv_partial_q7
+                  arm_conv_partial_q7 nba=6 nbb=8 first=7:test_conv_partial_q7
+                  arm_conv_partial_opt_q7 nba=6 nbb=8 first=3:test_conv_partial_opt_q7
+                  arm_conv_partial_opt_q7 nba=6 nbb=8 first=9:test_conv_partial_opt_q7
+                  arm_conv_partial_opt_q7 nba=6 nbb=8 first=7:test_conv_partial_opt_q7
                 }
 
              }
@@ -2279,12 +2527,17 @@ group Root {
               class = UnaryTests
               folder = Unary
 
+
               suite Unary Tests F32 {
                 class = UnaryTestsF32 
                 folder = UnaryF32
 
                 Pattern INPUTS1_F32_ID : InputA1_f32.txt 
+                Pattern INPUTSC1_F32_ID : InputAC1_f32.txt 
+
                 Pattern INPUTS2_F32_ID : InputB1_f32.txt 
+                Pattern INPUTVEC1_F32_ID : InputVec1_f32.txt 
+
                 Pattern INPUTSINV_F32_ID : InputInvert1_f32.txt 
                 Pattern DIMSUNARY1_S16_ID : DimsUnary1_s16.txt 
                 Pattern DIMSINVERT1_S16_ID : DimsInvert1_s16.txt 
@@ -2293,11 +2546,49 @@ group Root {
                 Pattern REFSUB1_F32_ID : RefSub1_f32.txt
                 Pattern REFSCALE1_F32_ID : RefScale1_f32.txt
                 Pattern REFTRANS1_F32_ID : RefTranspose1_f32.txt
+                Pattern REFTRANSC1_F32_ID : RefTransposeC1_f32.txt
                 Pattern REFINV1_F32_ID : RefInvert1_f32.txt
+                Pattern REFVECMUL1_F32_ID : RefVecMul1_f32.txt
+
+                Pattern DIMSCHOLESKY1_DPO_S16_ID : DimsCholeskyDPO1_s16.txt 
+                Pattern DIMSCHOLESKY1_SDPO_S16_ID : DimsCholeskySDPO1_s16.txt 
+                Pattern INPUTSCHOLESKY1_DPO_F32_ID : InputCholeskyDPO1_f32.txt 
+                Pattern INPUTSCHOLESKY1_SDPO_F32_ID : InputCholeskySDPO1_f32.txt 
+
+                Pattern REFCHOLESKY1_DPO_F32_ID : RefCholeskyDPO1_f32.txt
+
+                Pattern REFLDLT_D_DPO1_F32_ID : RefLDLT_D_DPO1_f32.txt
+                Pattern REFLDLT_LL_DPO1_F32_ID : RefLDLT_LL_DPO1_f32.txt
+                Pattern REFLDLT_PERM_DPO1_S16_ID : RefLDLT_PERM_DPO1_s16.txt
+
+                Pattern REFLDLT_D_SDPO1_F32_ID : RefLDLT_D_SDPO1_f32.txt
+                Pattern REFLDLT_LL_SDPO1_F32_ID : RefLDLT_LL_SDPO1_f32.txt
+                Pattern REFLDLT_PERM_SDPO1_S16_ID : RefLDLT_PERM_SDPO1_s16.txt
+
+                Pattern INPUT_UT_DPO_F32_ID : InputUTDPO1_f32.txt
+                Pattern INPUT_LT_DPO_F32_ID : InputLTDPO1_f32.txt
+                Pattern INPUT_RNDA_DPO_F32_ID : InputRNDA1_f32.txt
+            
+                Pattern REF_UTINV_DPO_F32_ID : Ref_UTINV_DPO1_f32.txt
+                Pattern REF_LTINV_DPO_F32_ID : Ref_LTINV_DPO1_f32.txt
+                Pattern REF_CHOLINV_DPO_F32_ID : Ref_CHOLINV_DPO1_f32.txt
+
+
+                Output  D_F32_ID : Output
+                Output  LL_F32_ID : Output
+                Output  PERM_S16_ID : Output
 
                 Output  OUT_F32_ID : Output
                 Output  TMPA_F32_ID : TmpA
                 Output  TMPB_F32_ID : TmpB
+                Output  TMPC_F32_ID : TmpC
+                Output  TMPD_F32_ID : TmpD
+
+                Output  TMPB_F64_ID : TmpDB
+                Output  TMPC_F64_ID : TmpDC
+                Output  TMPD_F64_ID : TmpDD
+                Output  OUTA_F64_ID : OutputAD
+                Output  OUTB_F64_ID : OutputBD
 
                 Functions {
                  test matrix add:test_mat_add_f32
@@ -2305,6 +2596,13 @@ group Root {
                  test matrix scale:test_mat_scale_f32
                  test matrix transpose:test_mat_trans_f32
                  test matrix inverse:test_mat_inverse_f32
+                 test mat mult vec:test_mat_vec_mult_f32
+                 test matrix complex transpose:test_mat_cmplx_trans_f32
+                 test matrix cholesky decomposition:test_mat_cholesky_dpo_f32
+                 test solve upper triangular:test_solve_upper_triangular_f32
+                 test solve lower triangular:test_solve_lower_triangular_f32
+                 test matrix LDL decomposition DPO:test_mat_ldl_f32
+                 test matrix LDL decomposition SDPO:test_mat_ldl_f32
                 }
 
               }
@@ -2314,7 +2612,10 @@ group Root {
                 folder = UnaryQ31
 
                 Pattern INPUTS1_Q31_ID : InputA1_q31.txt 
+                Pattern INPUTSC1_Q31_ID : InputAC1_q31.txt 
                 Pattern INPUTS2_Q31_ID : InputB1_q31.txt 
+                Pattern INPUTVEC1_Q31_ID : InputVec1_q31.txt 
+
                 Pattern INPUTSINV_Q31_ID : InputInvert1_q31.txt 
                 Pattern DIMSUNARY1_S16_ID : DimsUnary1_s16.txt 
                 Pattern DIMSINVERT1_S16_ID : DimsInvert1_s16.txt 
@@ -2323,7 +2624,9 @@ group Root {
                 Pattern REFSUB1_Q31_ID : RefSub1_q31.txt
                 Pattern REFSCALE1_Q31_ID : RefScale1_q31.txt
                 Pattern REFTRANS1_Q31_ID : RefTranspose1_q31.txt
+                Pattern REFTRANSC1_Q31_ID : RefTransposeC1_q31.txt
                 Pattern REFINV1_Q31_ID : RefInvert1_q31.txt
+                Pattern REFVECMUL1_Q31_ID : RefVecMul1_q31.txt
 
                 Output  OUT_Q31_ID : Output
                 Output  TMPA_Q31_ID : TmpA
@@ -2334,6 +2637,8 @@ group Root {
                  test matrix sub:test_mat_sub_q31
                  test matrix scale:test_mat_scale_q31
                  test matrix transpose:test_mat_trans_q31
+                 test mat mult vec:test_mat_vec_mult_q31
+                 test matrix complex transpose:test_mat_cmplx_trans_q31
                 }
 
               }
@@ -2343,7 +2648,10 @@ group Root {
                 folder = UnaryQ15
 
                 Pattern INPUTS1_Q15_ID : InputA1_q15.txt 
+                Pattern INPUTSC1_Q15_ID : InputAC1_q15.txt 
                 Pattern INPUTS2_Q15_ID : InputB1_q15.txt 
+                Pattern INPUTVEC1_Q15_ID : InputVec1_q15.txt 
+
                 Pattern INPUTSINV_Q15_ID : InputInvert1_q15.txt 
                 Pattern DIMSUNARY1_S16_ID : DimsUnary1_s16.txt 
                 Pattern DIMSINVERT1_S16_ID : DimsInvert1_s16.txt 
@@ -2352,7 +2660,9 @@ group Root {
                 Pattern REFSUB1_Q15_ID : RefSub1_q15.txt
                 Pattern REFSCALE1_Q15_ID : RefScale1_q15.txt
                 Pattern REFTRANS1_Q15_ID : RefTranspose1_q15.txt
+                Pattern REFTRANSC1_Q15_ID : RefTransposeC1_q15.txt
                 Pattern REFINV1_Q15_ID : RefInvert1_q15.txt
+                Pattern REFVECMUL1_Q15_ID : RefVecMul1_q15.txt
 
                 Output  OUT_Q15_ID : Output
                 Output  TMPA_Q15_ID : TmpA
@@ -2363,6 +2673,40 @@ group Root {
                  test matrix sub:test_mat_sub_q15
                  test matrix scale:test_mat_scale_q15
                  test matrix transpose:test_mat_trans_q15
+                 test mat mult vec:test_mat_vec_mult_q15
+                 test matrix complex transpose:test_mat_cmplx_trans_q15
+                }
+
+              }
+
+              suite Unary Tests Q7 {
+                class = UnaryTestsQ7 
+                folder = UnaryQ7
+
+                Pattern INPUTS1_Q7_ID : InputA1_q7.txt 
+                Pattern INPUTSC1_Q7_ID : InputAC1_q7.txt 
+                Pattern INPUTS2_Q7_ID : InputB1_q7.txt 
+                Pattern INPUTVEC1_Q7_ID : InputVec1_q7.txt 
+
+                Pattern INPUTSINV_Q7_ID : InputInvert1_q7.txt 
+                Pattern DIMSUNARY1_S16_ID : DimsUnary1_s16.txt 
+                Pattern DIMSINVERT1_S16_ID : DimsInvert1_s16.txt 
+                
+                Pattern REFADD1_Q7_ID : RefAdd1_q7.txt
+                Pattern REFSUB1_Q7_ID : RefSub1_q7.txt
+                Pattern REFSCALE1_Q7_ID : RefScale1_q7.txt
+                Pattern REFTRANS1_Q7_ID : RefTranspose1_q7.txt
+                Pattern REFTRANSC1_Q7_ID : RefTransposeC1_q7.txt
+                Pattern REFINV1_Q7_ID : RefInvert1_q7.txt
+                Pattern REFVECMUL1_Q7_ID : RefVecMul1_q7.txt
+
+                Output  OUT_Q7_ID : Output
+                Output  TMPA_Q7_ID : TmpA
+                Output  TMPB_Q7_ID : TmpB
+
+                Functions {
+                 test matrix transpose:test_mat_trans_q7
+                 test mat mult vec:test_mat_vec_mult_q7
                 }
 
               }
@@ -2383,16 +2727,57 @@ group Root {
                 Pattern REFTRANS1_F64_ID : RefTranspose1_f64.txt
                 Pattern REFINV1_F64_ID : RefInvert1_f64.txt
 
+                Pattern DIMSCHOLESKY1_DPO_S16_ID : DimsCholeskyDPO1_s16.txt 
+                Pattern DIMSCHOLESKY1_SDPO_S16_ID : DimsCholeskySDPO1_s16.txt 
+                Pattern INPUTSCHOLESKY1_DPO_F64_ID : InputCholeskyDPO1_f64.txt 
+                Pattern INPUTSCHOLESKY1_SDPO_F64_ID : InputCholeskySDPO1_f64.txt 
+
+                Pattern REFCHOLESKY1_DPO_F64_ID : RefCholeskyDPO1_f64.txt
+
+                Pattern REFLDLT_D_DPO1_F64_ID : RefLDLT_D_DPO1_f64.txt
+                Pattern REFLDLT_LL_DPO1_F64_ID : RefLDLT_LL_DPO1_f64.txt
+                Pattern REFLDLT_PERM_DPO1_S16_ID : RefLDLT_PERM_DPO1_s16.txt
+
+                Pattern REFLDLT_D_SDPO1_F64_ID : RefLDLT_D_SDPO1_f64.txt
+                Pattern REFLDLT_LL_SDPO1_F64_ID : RefLDLT_LL_SDPO1_f64.txt
+                Pattern REFLDLT_PERM_SDPO1_S16_ID : RefLDLT_PERM_SDPO1_s16.txt
+
+                Pattern INPUT_UT_DPO_F64_ID : InputUTDPO1_f64.txt
+                Pattern INPUT_LT_DPO_F64_ID : InputLTDPO1_f64.txt
+                Pattern INPUT_RNDA_DPO_F64_ID : InputRNDA1_f64.txt
+            
+                Pattern REF_UTINV_DPO_F64_ID : Ref_UTINV_DPO1_f64.txt
+                Pattern REF_LTINV_DPO_F64_ID : Ref_LTINV_DPO1_f64.txt
+                Pattern REF_CHOLINV_DPO_F64_ID : Ref_CHOLINV_DPO1_f64.txt
+
+                Output  D_F64_ID : Output
+                Output  LL_F64_ID : Output
+                Output  PERM_S16_ID : Output
+
+
                 Output  OUT_F64_ID : Output
                 Output  TMPA_F64_ID : TmpA
                 Output  TMPB_F64_ID : TmpB
+                Output  TMPC_F64_ID : TmpC
+                Output  TMPD_F64_ID : TmpD
+
+                Output  TMPDB_F64_ID : TmpDB
+                Output  TMPDC_F64_ID : TmpDC
+                Output  TMPDD_F64_ID : TmpDD
+                Output  OUTA_F64_ID : OutputAD
+                Output  OUTB_F64_ID : OutputBD
 
                 Functions {
                  disabled {test matrix add:test_mat_add_f64}
-                 disabled {test matrix sub:test_mat_sub_f64}
+                 test matrix sub:test_mat_sub_f64
                  disabled {test matrix scale:test_mat_scale_f64}
-                 disabled {test matrix transpose:test_mat_trans_f64}
+                 test matrix transpose:test_mat_trans_f64
                  test matrix inverse:test_mat_inverse_f64
+                 test matrix cholesky decomposition:test_mat_cholesky_dpo_f64
+                 test solve upper triangular:test_solve_upper_triangular_f64
+                 test solve lower triangular:test_solve_lower_triangular_f64
+                 test matrix LDL decomposition DPO:test_mat_ldl_f64
+                 test matrix LDL decomposition SDPO:test_mat_ldl_f64
                 }
 
               }
@@ -2416,6 +2801,7 @@ group Root {
                 Pattern REFCMPLXMUL1_F32_ID : RefCmplxMul1_f32.txt
                 Pattern DIMSBINARY1_S16_ID : DimsBinary1_s16.txt 
 
+
                 Output  OUT_F32_ID : Output
                 Output  TMPA_F32_ID : TmpA
                 Output  TMPB_F32_ID : TmpB
@@ -2423,6 +2809,31 @@ group Root {
                 Functions {
                   test mult:test_mat_mult_f32
                   test complex mult:test_mat_cmplx_mult_f32
+                }
+
+             }
+
+             suite Binary F64 {
+                class = BinaryTestsF64 
+                folder = BinaryF64
+
+                Pattern INPUTS1_F64_ID : InputA1_f64.txt 
+                Pattern INPUTS2_F64_ID : InputB1_f64.txt 
+
+                Pattern INPUTSC1_F64_ID : InputAC1_f64.txt 
+                Pattern INPUTSC2_F64_ID : InputBC1_f64.txt 
+
+                Pattern REFMUL1_F64_ID : RefMul1_f64.txt
+                Pattern REFCMPLXMUL1_F64_ID : RefCmplxMul1_f64.txt
+                Pattern DIMSBINARY1_S16_ID : DimsBinary1_s16.txt 
+
+
+                Output  OUT_F64_ID : Output
+                Output  TMPA_F64_ID : TmpA
+                Output  TMPB_F64_ID : TmpB
+
+                Functions {
+                  test mult:test_mat_mult_f64
                 }
 
              }
@@ -2440,6 +2851,8 @@ group Root {
                 Pattern REFMUL1_Q31_ID : RefMul1_q31.txt
                 Pattern REFCMPLXMUL1_Q31_ID : RefCmplxMul1_q31.txt
                 Pattern DIMSBINARY1_S16_ID : DimsBinary1_s16.txt 
+
+                
 
                 Output  OUT_Q31_ID : Output
                 Output  TMPA_Q31_ID : TmpA
@@ -2474,6 +2887,31 @@ group Root {
                 Functions {
                   test mult:test_mat_mult_q15
                   test complex mult:test_mat_cmplx_mult_q15
+                }
+
+             }
+
+             suite Binary Q7 {
+                class = BinaryTestsQ7 
+                folder = BinaryQ7
+
+                Pattern INPUTS1_Q7_ID : InputA1_q7.txt 
+                Pattern INPUTS2_Q7_ID : InputB1_q7.txt 
+
+                Pattern INPUTSC1_Q7_ID : InputAC1_q7.txt 
+                Pattern INPUTSC2_Q7_ID : InputBC1_q7.txt 
+
+                Pattern REFMUL1_Q7_ID : RefMul1_q7.txt
+                Pattern REFCMPLXMUL1_Q7_ID : RefCmplxMul1_q7.txt
+                Pattern DIMSBINARY1_S16_ID : DimsBinary1_s16.txt 
+
+                Output  OUT_Q7_ID : Output
+                Output  TMPA_Q7_ID : TmpA
+                Output  TMPB_Q7_ID : TmpB
+                Output  TMP_Q7_ID : Tmp
+
+                Functions {
+                  test mult:test_mat_mult_q7
                 }
 
              }

@@ -1,15 +1,22 @@
-cmake_minimum_required (VERSION 3.6)
-cmake_policy(SET CMP0077 NEW)
-project(CMSISNN)
+#
+# Copyright (c) 2019-2021 Arm Limited. All rights reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+# Licensed under the Apache License, Version 2.0 (the License); you may
+# not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an AS IS BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
 
-# Needed to find the config modules
-list(APPEND CMAKE_MODULE_PATH ${ROOT}/CMSIS/DSP)
-# CMSIS-NN is dependent on features in the CMSIS-DSP
-# and must use similar logic for configuring the build
-list(APPEND CMAKE_MODULE_PATH ${ROOT}/CMSIS/DSP/Source)
-
-include(configLib)
-include(configDsp)
+SET(ROOT ${CMSIS_PATH})
 
 # Select which parts of the CMSIS-DSP must be compiled.
 # There are some dependencies between the parts but they are not tracked
@@ -23,6 +30,7 @@ option(POOLING              "Pooling"               ON)
 option(SOFTMAX              "Softmax"               ON)
 option(BASICMATHSNN         "Basic Maths for NN"    ON)
 option(RESHAPE              "Reshape"               ON)
+option(SVDF                 "SVDF"                  ON)
 
 # When OFF it is the default behavior : all tables are included.
 option(NNSUPPORT            "NN Support"            ON)
@@ -38,9 +46,6 @@ option(NNSUPPORT            "NN Support"            ON)
 SET(NN ${ROOT}/CMSIS/NN)
 
 list(APPEND CMAKE_MODULE_PATH ${NN}/Source)
-
-
-
 
 add_library(CMSISNN INTERFACE)
 
@@ -79,9 +84,9 @@ if (SOFTMAX)
   target_link_libraries(CMSISNN INTERFACE CMSISNNSoftmax)
 endif()
 
-if (NNSUPPORT)
-  add_subdirectory(NNSupportFunctions)
-  target_link_libraries(CMSISNN INTERFACE CMSISNNSupport)
+if (SVDF)
+  add_subdirectory(SVDFunctions)
+  target_link_libraries(CMSISNN INTERFACE CMSISNNSVDF)
 endif()
 
 if (RESHAPE)
@@ -89,8 +94,13 @@ if (RESHAPE)
   target_link_libraries(CMSISNN INTERFACE CMSISNNReshape)
 endif()
 
+# Keep NNSUPPORT at the end
+if (NNSUPPORT)
+  add_subdirectory(NNSupportFunctions)
+  target_link_libraries(CMSISNN INTERFACE CMSISNNSupport)
+endif()
+
+
+
 ### Includes
 target_include_directories(CMSISNN INTERFACE "${NN}/Include")
-
-
-

@@ -39,12 +39,12 @@
  * @{
  */
 
-  /*
-   *  s8 version of concatenation along the X axis
-   *
-   * Refer to header file for details.
-   *
-   */
+/*
+ *  s8 version of concatenation along the X axis
+ *
+ * Refer to header file for details.
+ *
+ */
 void arm_concatenation_s8_x(const int8_t *input,
                             const uint16_t input_x,
                             const uint16_t input_y,
@@ -64,7 +64,7 @@ void arm_concatenation_s8_x(const int8_t *input,
     for (i = 0; i < num_iterations; ++i)
     {
         memcpy(output, input, input_x);
-        input  += input_x;
+        input += input_x;
         output += output_x;
     }
 }

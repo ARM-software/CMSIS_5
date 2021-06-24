@@ -18,13 +18,11 @@ a double precision computation.
 #define GET_Q31_PTR() \
 const q31_t *inp1=input1.ptr(); \
 const q31_t *inp2=input2.ptr(); \
-q31_t *refp=ref.ptr(); \
 q31_t *outp=output.ptr();
 
 #define GET_LOGICAL_UINT32_PTR() \
 const uint32_t *inp1=inputLogical1.ptr(); \
 const uint32_t *inp2=inputLogical2.ptr(); \
-uint32_t *refp=refLogical.ptr(); \
 uint32_t *outp=outputLogical.ptr();
 
 
@@ -34,6 +32,21 @@ uint32_t *outp=outputLogical.ptr();
 
         arm_add_q31(inp1,inp2,outp,input1.nbSamples());
         
+        ASSERT_EMPTY_TAIL(output);
+
+        ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
+
+        ASSERT_NEAR_EQ(output,ref,ABS_ERROR_Q31);
+
+    } 
+
+    void BasicTestsQ31::test_clip_q31()
+    {
+        const q31_t *inp=input1.ptr();
+        q31_t *outp=output.ptr();
+
+        arm_clip_q31(inp,outp,this->min, this->max,input1.nbSamples());
+
         ASSERT_EMPTY_TAIL(output);
 
         ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
@@ -73,7 +86,6 @@ uint32_t *outp=outputLogical.ptr();
     void BasicTestsQ31::test_negate_q31()
     {
         const q31_t *inp1=input1.ptr();
-        q31_t *refp=ref.ptr();
         q31_t *outp=output.ptr();
 
         arm_negate_q31(inp1,outp,input1.nbSamples());
@@ -89,7 +101,6 @@ uint32_t *outp=outputLogical.ptr();
     void BasicTestsQ31::test_offset_q31()
     {
         const q31_t *inp1=input1.ptr();
-        q31_t *refp=ref.ptr();
         q31_t *outp=output.ptr();
 
         arm_offset_q31(inp1,this->scalar,outp,input1.nbSamples());
@@ -105,7 +116,6 @@ uint32_t *outp=outputLogical.ptr();
     void BasicTestsQ31::test_scale_q31()
     {
         const q31_t *inp1=input1.ptr();
-        q31_t *refp=ref.ptr();
         q31_t *outp=output.ptr();
 
         arm_scale_q31(inp1,this->scalar,0,outp,input1.nbSamples());
@@ -124,7 +134,6 @@ uint32_t *outp=outputLogical.ptr();
 
         const q31_t *inp1=input1.ptr();
         const q31_t *inp2=input2.ptr();
-        q63_t *refp=dotRef.ptr(); 
         q63_t *outp=dotOutput.ptr();
 
         arm_dot_prod_q31(inp1,inp2,input1.nbSamples(),&r);
@@ -145,6 +154,8 @@ uint32_t *outp=outputLogical.ptr();
     {
         GET_Q31_PTR();
 
+        (void)inp2;
+
         arm_abs_q31(inp1,outp,input1.nbSamples());
 
         ASSERT_EMPTY_TAIL(output);
@@ -158,7 +169,6 @@ uint32_t *outp=outputLogical.ptr();
     void BasicTestsQ31::test_shift_q31()
     {
         const q31_t *inp1=input1.ptr();
-        q31_t *refp=ref.ptr();
         q31_t *outp=output.ptr();
 
         arm_shift_q31(inp1,1,outp,input1.nbSamples());
@@ -199,6 +209,8 @@ uint32_t *outp=outputLogical.ptr();
     {
         GET_LOGICAL_UINT32_PTR();
 
+        (void)inp2;
+
         arm_not_u32(inp1,outp,inputLogical1.nbSamples());
         
         ASSERT_EMPTY_TAIL(outputLogical);
@@ -222,6 +234,7 @@ uint32_t *outp=outputLogical.ptr();
     void BasicTestsQ31::setUp(Testing::testID_t id,std::vector<Testing::param_t>& params,Client::PatternMgr *mgr)
     {
       
+       (void)params;
        Testing::nbSamples_t nb=MAX_NB_SAMPLES; 
 
        this->scalar = ONEHALF;
@@ -627,6 +640,35 @@ uint32_t *outp=outputLogical.ptr();
         break;
         
 
+        case BasicTestsQ31::TEST_CLIP_Q31_57:
+          ref.reload(BasicTestsQ31::REF_CLIP1_Q31_ID,mgr);
+          input1.reload(BasicTestsQ31::INPUT_CLIP_Q31_ID,mgr,ref.nbSamples());
+          
+          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
+          // Must be coherent with Python script used to generate test patterns
+          this->min=0xC0000000;
+          this->max=0xF3333333;
+        break;
+
+        case BasicTestsQ31::TEST_CLIP_Q31_58:
+          ref.reload(BasicTestsQ31::REF_CLIP2_Q31_ID,mgr);
+          input1.reload(BasicTestsQ31::INPUT_CLIP_Q31_ID,mgr,ref.nbSamples());
+          
+          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
+          // Must be coherent with Python script used to generate test patterns
+          this->min=0xC0000000;
+          this->max=0x40000000;
+        break;
+
+        case BasicTestsQ31::TEST_CLIP_Q31_59:
+          ref.reload(BasicTestsQ31::REF_CLIP3_Q31_ID,mgr);
+          input1.reload(BasicTestsQ31::INPUT_CLIP_Q31_ID,mgr,ref.nbSamples());
+          
+          output.create(ref.nbSamples(),BasicTestsQ31::OUT_SAMPLES_ID,mgr);
+          // Must be coherent with Python script used to generate test patterns
+          this->min=0x0CCCCCCD;
+          this->max=0x40000000;
+        break;
 
        }
       

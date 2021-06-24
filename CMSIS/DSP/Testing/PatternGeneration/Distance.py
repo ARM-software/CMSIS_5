@@ -193,15 +193,53 @@ def writeFTests(config):
 def writeBTests(config):
     writeBTest(config,[dice,hamming,jaccard,kulsinski,rogerstanimoto,russellrao,sokalmichener,sokalsneath,yule])
 
+def writeFBenchmark(config):
+    NBSAMPLES=256
+
+    va = np.random.randn(NBSAMPLES)
+    vb = np.random.randn(NBSAMPLES)
+
+    inputsA = list(va) 
+    inputsB = list(vb)
+
+    va = np.abs(va)
+    va = list(va / np.sum(va))
+
+    vb = np.abs(vb)
+    vb = list(vb / np.sum(vb))
+
+    config.writeInput(1, inputsA,"InputBenchA")
+    config.writeInput(1, inputsB,"InputBenchB")
+
+    config.writeInput(1, va,"InputBenchProbaA")
+    config.writeInput(1, vb,"InputBenchProbaB")
+
+def writeUBenchmark(config):
+    NBSAMPLES=256*32
+    va = np.random.choice([0,1],NBSAMPLES)
+    vb = np.random.choice([0,1],NBSAMPLES)
+    pva = list(Tools.packset(va))
+    pvb = list(Tools.packset(vb))
+    config.writeInput(1, pva,"InputBenchA")
+    config.writeInput(1, pvb,"InputBenchB")
+
+
+
 def  generatePatterns():
      PATTERNDIR = os.path.join("Patterns","DSP","Distance","Distance")
      PARAMDIR = os.path.join("Parameters","DSP","Distance","Distance")
      
      configf32=Tools.Config(PATTERNDIR,PARAMDIR,"f32")
+     configf16=Tools.Config(PATTERNDIR,PARAMDIR,"f16")
      configu32=Tools.Config(PATTERNDIR,PARAMDIR,"u32")
      
      writeFTests(configf32)
+     writeFTests(configf16)
      writeBTests(configu32)
+
+     writeFBenchmark(configf32)
+     writeFBenchmark(configf16)
+     writeUBenchmark(configu32)
 
 if __name__ == '__main__':
   generatePatterns()

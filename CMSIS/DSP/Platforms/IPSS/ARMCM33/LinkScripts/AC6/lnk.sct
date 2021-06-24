@@ -1,0 +1,35 @@
+#! armclang -E --target=arm-arm-none-eabi -mcpu=cortex-m33 -xc
+; command above MUST be in first line (no comment above!)
+
+/*
+;-------- <<< Use Configuration Wizard in Context Menu >>> -------------------
+*/
+
+#include "mem_ARMCM33.h"
+
+#define __STACK_SIZE       STACK_SIZE
+#define __HEAP_SIZE        HEAP_SIZE
+
+LOAD_REGION 0x0
+{
+    CODE +0 0x80000
+    {
+        *.o (RESET, +First)
+        * (InRoot$$$Sections)
+        * (+RO-CODE)                                
+    }
+
+   
+    DATA 0x20000000 NOCOMPRESS 0x60000
+    {
+    * (+RO-DATA)
+    * (+RW,+ZI)                         
+    }
+
+    ARM_LIB_STACK 0x20062000 ALIGN 64 EMPTY -0x00002000 
+    {}
+    ARM_LIB_HEAP  0x20062000 ALIGN 64 EMPTY 0x00050000 
+    {}
+
+    
+}

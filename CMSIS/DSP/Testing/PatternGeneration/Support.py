@@ -3,7 +3,6 @@ import itertools
 import Tools
 import random
 import numpy as np
-from scipy import interpolate
 
 NBTESTSAMPLES = 10
 
@@ -12,7 +11,7 @@ NBVECTORS = [4,10,16]
 
 VECDIM = [12,14,20]
 
-def genWsum(config,nb):
+def genWsum(config,f,nb):
     DIM=50
     inputs=[] 
     weights=[]
@@ -24,15 +23,15 @@ def genWsum(config,nb):
     inputs += list(va)
     weights += list(vb)
 
-    nbiters = Tools.loopnb(0,Tools.TAILONLY)
+    nbiters = Tools.loopnb(f,Tools.TAILONLY)
     e = np.sum(va[0:nbiters].T * vb[0:nbiters]) / np.sum(vb[0:nbiters]) 
     output.append(e)
 
-    nbiters = Tools.loopnb(0,Tools.BODYONLY)
+    nbiters = Tools.loopnb(f,Tools.BODYONLY)
     e = np.sum(va[0:nbiters].T * vb[0:nbiters]) / np.sum(vb[0:nbiters]) 
     output.append(e)
 
-    nbiters = Tools.loopnb(0,Tools.BODYANDTAIL)
+    nbiters = Tools.loopnb(f,Tools.BODYANDTAIL)
     e = np.sum(va[0:nbiters].T * vb[0:nbiters]) / np.sum(vb[0:nbiters]) 
     output.append(e)
 
@@ -86,15 +85,27 @@ def writeTestsF32(config):
     va = np.random.rand(NBSAMPLES)
     va = Tools.normalize(va)
     config.writeInput(1,va,"Samples")
-
     config.writeInputQ15(3,va,"Samples")
     config.writeInputQ31(4,va,"Samples")
     config.writeInputQ7(5,va,"Samples")
+    config.writeInputF16(11,va,"Samples")
+
 
     # This is for benchmarking the weighted sum and we use only one test pattern
-    genWsum(config,6)
+    genWsum(config,Tools.F32,6)
     
 
+def writeTestsF16(config):
+    NBSAMPLES=256
+
+    va = np.random.rand(NBSAMPLES)
+    va = Tools.normalize(va)
+    config.writeInputF32(1,va,"Samples")
+    config.writeInputQ15(3,va,"Samples")
+    config.writeInput(11,va,"Samples")
+
+    # This is for benchmarking the weighted sum and we use only one test pattern
+    genWsum(config,Tools.F16,6)
 
 def writeTestsQ31(config):
     NBSAMPLES=256
@@ -116,6 +127,7 @@ def writeTestsQ15(config):
     config.writeInput(3,va,"Samples")
     config.writeInputQ31(4,va,"Samples")
     config.writeInputQ7(5,va,"Samples")
+    config.writeInputF16(11,va,"Samples")
 
 def writeTestsQ7(config):
     NBSAMPLES=256
@@ -166,48 +178,25 @@ def writeTests2(config, format):
     ref = np.sort(data)
     config.writeReference(10, ref)
 
-    x = [0,3,10,20]
-    config.writeInput(11,x,"InputX")
-    y = [0,9,100,400]
-    config.writeInput(11,y,"InputY")
-    xnew = np.arange(0,20,1)
-    config.writeInput(11,xnew,"OutputX")
-    ynew = interpolate.CubicSpline(x,y)
-    config.writeReference(11, ynew(xnew))
-
-    x = np.arange(0, 2*np.pi+np.pi/4, np.pi/4)
-    config.writeInput(12,x,"InputX")
-    y = np.sin(x)
-    config.writeInput(12,y,"InputY")
-    xnew = np.arange(0, 2*np.pi+np.pi/16, np.pi/16)
-    config.writeInput(12,xnew,"OutputX")
-    ynew = interpolate.CubicSpline(x,y,bc_type="natural")
-    config.writeReference(12, ynew(xnew))
-
-    x = [0,3,10]
-    config.writeInput(13,x,"InputX")
-    y = x
-    config.writeInput(13,y,"InputY")
-    xnew = np.arange(-10,20,1)
-    config.writeInput(13,xnew,"OutputX")
-    ynew = interpolate.CubicSpline(x,y)
-    config.writeReference(13, ynew(xnew))
 
 def generatePatterns():
     PATTERNDIR = os.path.join("Patterns","DSP","Support","Support")
     PARAMDIR = os.path.join("Parameters","DSP","Support","Support")
     
     configf32=Tools.Config(PATTERNDIR,PARAMDIR,"f32")
+    configf16=Tools.Config(PATTERNDIR,PARAMDIR,"f16")
     configq31=Tools.Config(PATTERNDIR,PARAMDIR,"q31")
     configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
     configq7=Tools.Config(PATTERNDIR,PARAMDIR,"q7")
     
     writeTestsF32(configf32)
+    writeTestsF16(configf16)
     writeTestsQ31(configq31)
     writeTestsQ15(configq15)
     writeTestsQ7(configq7)
 
     writeTests2(configf32,0)
+    
 
     
     # For benchmarking we need to vary number of vectors and vector dimension separately
@@ -215,8 +204,10 @@ def generatePatterns():
     PARAMBARDIR = os.path.join("Parameters","DSP","SupportBar")
     
     configBarf32=Tools.Config(PATTERNBARDIR,PARAMBARDIR,"f32")
+    configBarf16=Tools.Config(PATTERNBARDIR,PARAMBARDIR,"f16")
     
     writeBarTests(configBarf32)
+    writeBarTests(configBarf16)
 
 if __name__ == '__main__':
   generatePatterns()

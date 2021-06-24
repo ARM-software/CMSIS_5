@@ -69,7 +69,7 @@ __vector_table_0x1c
                 DCD      0                                   ;     Reserved
                 DCD      0                                   ;     Reserved
                 DCD      0                                   ;     Reserved
-                DCD      SVC_Handler                         ;  -5 SVCall Handler
+                DCD      SVC_Handler                         ;  -5 SVC Handler
                 DCD      0                                   ;     Reserved
                 DCD      0                                   ;     Reserved
                 DCD      PendSV_Handler                      ;  -2 PendSV Handler

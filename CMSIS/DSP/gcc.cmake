@@ -6,26 +6,28 @@ SET(CMAKE_SYSTEM_PROCESSOR arm)
 
 
 
-#SET(tools "C:/PROGRA~2/GNUTOO~1/82018-~1")
 
-#SET(CMAKE_C_COMPILER "${tools}/bin/arm-none-eabi-gcc.exe")
-#SET(CMAKE_CXX_COMPILER "${tools}/bin/arm-none-eabi-g++.exe")
-#SET(CMAKE_ASM_COMPILER "${tools}/bin/arm-none-eabi-gcc.exe")
+#SET(CMAKE_C_COMPILER "${tools}/bin/arm-none-eabi-gcc")
+#SET(CMAKE_CXX_COMPILER "${tools}/bin/arm-none-eabi-g++")
+#SET(CMAKE_ASM_COMPILER "${tools}/bin/arm-none-eabi-gcc")
 
 find_program(CMAKE_C_COMPILER NAMES arm-none-eabi-gcc arm-none-eabi-gcc.exe)
 find_program(CMAKE_CXX_COMPILER NAMES arm-none-eabi-g++ arm-none-eabi-g++.exe)
 find_program(CMAKE_ASM_COMPILER NAMES arm-none-eabi-gcc arm-none-eabi-gcc.exe)
 
-#SET(CMAKE_AR "${tools}/bin/arm-none-eabi-gcc-ar.exe")
-find_program(CMAKE_AR NAMES arm-none-eabi-gcc-ar arm-none-eabi-gcc-ar.exe)
-find_program(CMAKE_CXX_COMPILER_AR NAMES arm-none-eabi-gcc-ar arm-none-eabi-gcc-ar.exe)
+
+if (NOT ("${tools}" STREQUAL ""))
+message(STATUS "Tools path is set")
+SET(CMAKE_AR "${tools}/bin/ar")
+SET(CMAKE_CXX_COMPILER_AR "${tools}/bin/ar")
+SET(CMAKE_C_COMPILER_AR "${tools}/bin/ar")
+else()
+find_program(CMAKE_AR NAMES arm-none-eabi-gcc-ar arm-none-eabi-gcc-ar.exe )
+find_program(CMAKE_CXX_COMPILER_AR NAMES arm-none-eabi-gcc-ar arm-none-eabi-gcc-ar.exe )
 find_program(CMAKE_C_COMPILER_AR NAMES arm-none-eabi-gcc-ar arm-none-eabi-gcc-ar.exe)
+endif()
 
-
-#SET(CMAKE_CXX_COMPILER_AR "${tools}/bin/arm-none-eabi-gcc-ar.exe")
-#SET(CMAKE_C_COMPILER_AR "${tools}/bin/arm-none-eabi-gcc-ar.exe")
-
-#SET(CMAKE_LINKER "${tools}/bin/arm-none-eabi-g++.exe")
+#SET(CMAKE_LINKER "${tools}/bin/arm-none-eabi-g++")
 find_program(CMAKE_LINKER NAMES arm-none-eabi-g++ arm-none-eabi-g++.exe)
 
 SET(CMAKE_C_LINK_EXECUTABLE "<CMAKE_LINKER> <LINK_FLAGS> -o <TARGET> <OBJECTS> <LINK_LIBRARIES>")
@@ -48,10 +50,24 @@ if(NOT ARM_CPU)
     )
 endif(NOT ARM_CPU)
 
-SET(CMAKE_C_FLAGS "-g -ffunction-sections -fdata-sections -mcpu=${ARM_CPU}" CACHE INTERNAL "C compiler common flags")
-SET(CMAKE_CXX_FLAGS "-g -ffunction-sections -fdata-sections -mcpu=${ARM_CPU}" CACHE INTERNAL "C compiler common flags")
+if (ARM_CPU STREQUAL "cortex-m55")
+# For gcc 10q4
+SET(CMAKE_C_FLAGS "-ffunction-sections -fdata-sections -march=armv8.1-m.main+mve.fp+fp.dp" CACHE INTERNAL "C compiler common flags")
+SET(CMAKE_CXX_FLAGS "-ffunction-sections -fdata-sections -march=armv8.1-m.main+mve.fp+fp.dp" CACHE INTERNAL "C compiler common flags")
+SET(CMAKE_ASM_FLAGS "-march=armv8.1-m.main+mve.fp+fp.dp" CACHE INTERNAL "ASM compiler common flags")
+SET(CMAKE_EXE_LINKER_FLAGS "-fno-use-linker-plugin -march=armv8.1-m.main+mve.fp+fp.dp"  CACHE INTERNAL "linker flags")
+elseif (ARM_CPU STREQUAL "cortex-m55+nomve.fp+nofp")
+# This case is not tested nor supported
+SET(CMAKE_C_FLAGS "-ffunction-sections -fdata-sections -march=armv8.1-m.main+dsp+fp.dp" CACHE INTERNAL "C compiler common flags")
+SET(CMAKE_CXX_FLAGS "-ffunction-sections -fdata-sections -march=armv8.1-m.main+dsp+fp.dp" CACHE INTERNAL "C compiler common flags")
+SET(CMAKE_ASM_FLAGS "-march=armv8.1-m.main+dsp+fp.dp" CACHE INTERNAL "ASM compiler common flags")
+SET(CMAKE_EXE_LINKER_FLAGS "-fno-use-linker-plugin -march=armv8.1-m.main+dsp+fp.dp"  CACHE INTERNAL "linker flags")
+else()
+SET(CMAKE_C_FLAGS "-ffunction-sections -fdata-sections -mcpu=${ARM_CPU}" CACHE INTERNAL "C compiler common flags")
+SET(CMAKE_CXX_FLAGS "-ffunction-sections -fdata-sections -mcpu=${ARM_CPU}" CACHE INTERNAL "C compiler common flags")
 SET(CMAKE_ASM_FLAGS "-mcpu=${ARM_CPU}" CACHE INTERNAL "ASM compiler common flags")
-#SET(CMAKE_EXE_LINKER_FLAGS "--specs=nosys.specs"  CACHE INTERNAL "linker flags")
+SET(CMAKE_EXE_LINKER_FLAGS "-mcpu=${ARM_CPU}"  CACHE INTERNAL "linker flags")
+endif()
 
 get_property(IS_IN_TRY_COMPILE GLOBAL PROPERTY IN_TRY_COMPILE)
 if(IS_IN_TRY_COMPILE)
@@ -59,6 +75,7 @@ if(IS_IN_TRY_COMPILE)
 endif()
 
 add_link_options("-Wl,--start-group")
+#add_link_options("-mcpu=${ARM_CPU}")
 
 # Where is the target environment
 #SET(CMAKE_FIND_ROOT_PATH "${tools}")

@@ -1,0 +1,32 @@
+#! armclang -E --target=arm-arm-none-eabi -mcpu=cortex-m4 -xc
+; command above MUST be in first line (no comment above!)
+
+/*
+;-------- <<< Use Configuration Wizard in Context Menu >>> -------------------
+*/
+
+#include "mem_ARMCM4.h"
+
+LOAD_REGION 0x0
+{
+    CODE +0 0x0007ffff
+    {
+        *.o (RESET, +First)
+        * (InRoot$$$Sections)
+        * (+RO-CODE)                             
+    }
+
+    DATA 0x20000000 0x60000
+    {
+     * (+RO-DATA)   
+     * (+RW,+ZI)                         
+    }
+
+    ARM_LIB_STACK 0x20062000 ALIGN 64 EMPTY -0x00002000  
+    {}
+    ARM_LIB_HEAP 0x20062000 ALIGN 64 EMPTY 0x0050000 
+    {}
+
+    
+}
+

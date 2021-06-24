@@ -1,11 +1,11 @@
 /******************************************************************************
  * @file     gcc_arm.ld
  * @brief    GNU Linker Script for Cortex-M based device
- * @version  V2.0.0
- * @date     21. May 2019
+ * @version  V1.1.0
+ * @date     04. August 2020
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2020 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,9 +21,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include "mem_ARMCM7.h" 
+
 /*
  *-------- <<< Use Configuration Wizard in Context Menu >>> -------------------
+ */
+
+/* memory regions are:
+       secure ROM: 0x10000000
+   non-secure ROM: 0x00000000
+
+       secure RAM: 0x30000000
+   non-secure RAM: 0x20000000
  */
 
 /*---------------------- Flash Configuration ----------------------------------
@@ -33,7 +41,7 @@
   </h>
   -----------------------------------------------------------------------------*/
 __ROM_BASE = 0x00000000;
-__ROM_SIZE = 0x00400000;
+__ROM_SIZE = 0x00110000;
 
 /*--------------------- Embedded RAM Configuration ----------------------------
   <h> RAM Configuration
@@ -42,7 +50,7 @@ __ROM_SIZE = 0x00400000;
   </h>
  -----------------------------------------------------------------------------*/
 __RAM_BASE = 0x20000000;
-__RAM_SIZE = 0x00300000;
+__RAM_SIZE = 0x00100000;
 
 /*--------------------- Stack / Heap Configuration ----------------------------
   <h> Stack / Heap Configuration
@@ -50,8 +58,8 @@ __RAM_SIZE = 0x00300000;
     <o1> Heap Size (in Bytes) <0x0-0xFFFFFFFF:8>
   </h>
   -----------------------------------------------------------------------------*/
-__STACK_SIZE = STACK_SIZE;
-__HEAP_SIZE  = HEAP_SIZE;
+__STACK_SIZE = 0x00002000;
+__HEAP_SIZE  = 0x00050000;
 
 /*
  *-------------------- <<< end of configuration section >>> -------------------
@@ -127,7 +135,7 @@ SECTIONS
   /*
    * SG veneers:
    * All SG veneers are placed in the special output section .gnu.sgstubs. Its start address
-   * must be set, either with the command line option ‘--section-start’ or in a linker script,
+   * must be set, either with the command line option â€˜--section-startâ€™ or in a linker script,
    * to indicate where to place these veneers in memory.
    */
 /*
@@ -152,14 +160,16 @@ SECTIONS
   {
     . = ALIGN(4);
     __copy_table_start__ = .;
+
     LONG (__etext)
     LONG (__data_start__)
-    LONG (__data_end__ - __data_start__)
+    LONG ((__data_end__ - __data_start__) / 4)
+
     /* Add each additional data section here */
 /*
     LONG (__etext2)
     LONG (__data2_start__)
-    LONG (__data2_end__ - __data2_start__)
+    LONG ((__data2_end__ - __data2_start__) / 4)
 */
     __copy_table_end__ = .;
   } > FLASH
@@ -171,7 +181,7 @@ SECTIONS
     /* Add each additional bss section here */
 /*
     LONG (__bss2_start__)
-    LONG (__bss2_end__ - __bss2_start__)
+    LONG ((__bss2_end__ - __bss2_start__) / 4)
 */
     __zero_table_end__ = .;
   } > FLASH
@@ -179,7 +189,7 @@ SECTIONS
   /**
    * Location counter can end up 2byte aligned with narrow Thumb code but
    * __etext is assumed by startup code to be the LMA of a section in RAM
-   * which must be 4byte aligned 
+   * which must be 4byte aligned
    */
   __etext = ALIGN (4);
 
@@ -202,7 +212,6 @@ SECTIONS
     KEEP(*(SORT(.init_array.*)))
     KEEP(*(.init_array))
     PROVIDE_HIDDEN (__init_array_end = .);
-
 
     . = ALIGN(4);
     /* finit data */
@@ -274,12 +283,12 @@ SECTIONS
   {
     . = ALIGN(8);
     __end__ = .;
-    __HeapBase = .;
     PROVIDE(end = .);
     . = . + __HEAP_SIZE;
     . = ALIGN(8);
     __HeapLimit = .;
   } > RAM
+  PROVIDE(__HeapBase = __end__);
 
   .stack (ORIGIN(RAM) + LENGTH(RAM) - __STACK_SIZE) (COPY) :
   {

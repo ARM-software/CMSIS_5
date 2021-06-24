@@ -8,3 +8,10 @@ CMSIS/CoreValidation/Tests/build
 CMSIS/CoreValidation/Tests/bootloader/build
 *.uvguix.*
 *.uvmpw.uvgui.*
+*.zip
+docker/dependenciesFiles
+CMSIS/RTOS/RTX/LIB/**/*.a
+CMSIS/RTOS/RTX/LIB/**/*.lib
+CMSIS/RTOS2/RTX/Library/**/*.a
+CMSIS/RTOS2/RTX/Library/**/*.lib
+output

@@ -1,5 +1,8 @@
 #include "Test.h"
 #include "Pattern.h"
+
+#include "dsp/support_functions.h"
+
 class SupportTestsF32:public Client::Suite
     {
         public:
@@ -11,13 +14,7 @@ class SupportTestsF32:public Client::Suite
             
             Client::Pattern<float32_t> input;
             Client::Pattern<float32_t> coefs;
-
-            Client::Pattern<float32_t> inputX;
-            Client::Pattern<float32_t> inputY;
-            Client::Pattern<float32_t> outputX;
-
             Client::LocalPattern<float32_t> buffer;
-            Client::LocalPattern<float32_t> splineCoefs;
 
             Client::LocalPattern<float32_t> output;
             Client::LocalPattern<q15_t> outputQ15;

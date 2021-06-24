@@ -6,6 +6,9 @@ It is a very experimental wrapper with lots of limitations as described in the c
 
 But even with those limitations, it can be very useful to test a CMSIS-DSP implemention of an algorithm with all the power of numpy and scipy.
 
+A tutorial is also available but with less details than this README:
+https://developer.arm.com/documentation/102463/latest/
+
 # How to build and install
 
 ## Tested configurations
@@ -193,7 +196,7 @@ In a real C code, a pointer to a data structure for the result v would have to b
 
 This example depends on a data file which can be downloaded here:
 
-https://www.physionet.org/pn3/ecgiddb/Person_87/rec_2.dat
+https://archive.physionet.org/pn3/ecgiddb/Person_87/rec_2.dat
 
 This signal was created for a master thesis:
 
@@ -202,6 +205,8 @@ Lugovaya T.S. Biometric human identification based on electrocardiogram. [Master
 and it is part of the PhysioNet database
 
 Goldberger AL, Amaral LAN, Glass L, Hausdorff JM, Ivanov PCh, Mark RG, Mietus JE, Moody GB, Peng C-K, Stanley HE. PhysioBank, PhysioToolkit, and PhysioNet: Components of a New Research Resource for Complex Physiologic Signals. Circulation 101(23):e215-e220 [Circulation Electronic Pages; http://circ.ahajournals.org/cgi/content/full/101/23/e215]; 2000 (June 13). 
+
+Note that the example file
 
 
 # LIMITATIONS

@@ -38,53 +38,47 @@ Files relevant to CMSIS-Core (Cortex-M) are present in the following <b>ARM::CMS
 \section ref_v6-v8M Processor Support
 
 CMSIS supports the complete range of <a href="https://developer.arm.com/products/processors/cortex-m" target="_blank"><b>Cortex-M processors</b></a> and 
-the <a href="http://www.arm.com/products/processors/instruction-set-architectures/armv8-m-architecture.php" target="_blank"><b>Armv8-M/v8.1-M architecture</b></a> including security extensions.
+the <a href="https://developer.arm.com/architectures/cpu-architecture/m-profile" target="_blank"><b>Armv8-M/v8.1-M architecture</b></a> including security extensions.
 
-\subsection ref_man_sec Cortex-M Reference Manuals
+\subsection ref_man_sec Cortex-M Generic User Guides
 
 The Cortex-M Device Generic User Guides contain the programmers model and detailed information about the core peripherals and are available for:
 
-- <a href="http://infocenter.arm.com/help/topic/com.arm.doc.dui0497a/DUI0497A_cortex_m0_r0p0_generic_ug.pdf" target="_blank"><b>Cortex-M0 Devices Generic User Guide</b></a> (Armv6-M architecture)
-- <a href="http://infocenter.arm.com/help/topic/com.arm.doc.dui0662b/DUI0662B_cortex_m0p_r0p1_dgug.pdf" target="_blank"><b>Cortex-M0+ Devices Generic User Guide</b></a> (Armv6-M architecture)
-- <a href="http://infocenter.arm.com/help/topic/com.arm.doc.dui0552a/DUI0552A_cortex_m3_dgug.pdf" target="_blank"><b>Cortex-M3 Devices Generic User Guide</b></a> (Armv7-M architecture)
-- <a href="http://infocenter.arm.com/help/topic/com.arm.doc.dui0553a/DUI0553A_cortex_m4_dgug.pdf" target="_blank"><b>Cortex-M4 Devices Generic User Guide</b></a> (ARMv7-M architecture)
-- <a href="http://infocenter.arm.com/help/topic/com.arm.doc.dui0646a/DUI0646A_cortex_m7_dgug.pdf" target="_blank"><b>Cortex-M7 Devices Generic User Guide</b></a> (Armv7-M architecture)
-
-\if ARMv8M
-The \b Cortex-M23 and \b Cortex-M33 are described with Technical Reference Manuals that are available here:
-- <a href="http://infocenter.arm.com/help/topic/com.arm.doc.ddi0550c/cortex_m23_r1p0_technical_reference_manual_DDI0550C_en.pdf" target="_blank"><b>Cortex-M23 Technical Reference Manual</b></a> (Armv8-M baseline architecture)
-- <a href="http://infocenter.arm.com/help/topic/com.arm.doc.100230_0002_00_en/cortex_m33_trm_100230_0002_00_en.pdf" target="_blank"><b>Cortex-M33 Technical Reference Manual</b></a> (Armv8-M mainline architecture)
+- <a href="https://developer.arm.com/documentation/dui0497a/latest/" target="_blank"><b>Cortex-M0 Devices Generic User Guide</b></a> (Armv6-M architecture)
+- <a href="https://developer.arm.com/documentation/dui0662/latest/"  target="_blank"><b>Cortex-M0+ Devices Generic User Guide</b></a> (Armv6-M architecture)
+- <a href="https://developer.arm.com/documentation/dui0552/latest/"  target="_blank"><b>Cortex-M3 Devices Generic User Guide</b></a> (Armv7-M architecture)
+- <a href="https://developer.arm.com/documentation/dui0553/latest/"  target="_blank"><b>Cortex-M4 Devices Generic User Guide</b></a> (Armv7-M architecture)
+- <a href="https://developer.arm.com/documentation/dui0646/latest/"  target="_blank"><b>Cortex-M7 Devices Generic User Guide</b></a> (Armv7-M architecture)
+- <a href="https://developer.arm.com/documentation/dui1095/latest/"  target="_blank"><b>Cortex-M23 Devices Generic User Guide</b></a> (Armv8-M architecture)
+- <a href="https://developer.arm.com/documentation/100235/latest/"   target="_blank"><b>Cortex-M33 Devices Generic User Guide</b></a> (Armv8-M architecture)
+- <a href="https://developer.arm.com/documentation/101273/latest/"   target="_blank"><b>Cortex-M55 Devices Generic User Guide</b></a> (Armv8.1-M architecture)
 
 CMSIS also supports the following Cortex-M processor variants:
-- <a href="https://developer.arm.com/products/processors/cortex-m/cortex-m1" target="_blank"><b>Cortex-M1</b></a> is a processor designed specifically for implementation in FPGAs (Armv6-M architecture).
+- <a href="https://developer.arm.com/products/processors/cortex-m/cortex-m1"       target="_blank"><b>Cortex-M1</b></a> is a processor designed specifically for implementation in FPGAs (Armv6-M architecture).
 - <a href="https://developer.arm.com/products/processors/cortex-m/sc000-processor" target="_blank"><b>SecurCore SC000</b></a> is designed specifically for smartcard and security applications (Armv6-M architecture).
 - <a href="https://developer.arm.com/products/processors/cortex-m/sc300-processor" target="_blank"><b>SecurCore SC300</b></a> is designed specifically for smartcard and security applications (Armv7-M architecture).
-- <a href="https://developer.arm.com/products/processors/cortex-m/sc300-processor" target="_blank"><b>Cortex-M35P</b></a> is a temper resistant Cortex-M processor with optional software isolation using TrustZone for Armv8-M.  
+- <a href="https://developer.arm.com/products/processors/cortex-m/cortex-m35p"     target="_blank"><b>Cortex-M35P</b></a> is a temper resistant Cortex-M processor with optional software isolation using TrustZone for Armv8-M.  
 
 \subsection ARMv8M Armv8-M and Armv8.1-M Architecture
 
 Armv8-M introduces two profiles \b baseline (for power and area constrained applications) and \b mainline (full-featured with optional SIMD, floating-point, and co-processor extensions).
-Both Armv8-M profiles and Armv8.1M are supported by CMSIS.
+Both Armv8-M profiles and Armv8.1-M are supported by CMSIS.
 
-The Armv8-M Architecture is described in the <a href="http://developer.arm.com/products/architecture/m-profile/docs/ddi0553/latest/armv8-m-architecture-reference-manual" target="_blank"><b>Armv8-M Architecture Reference Manual</b></a>.
+The Armv8-M architecture is described in the <a href="https://developer.arm.com/documentation/ddi0553/latest/" target="_blank"><b>Armv8-M Architecture Reference Manual</b></a>.
 
-The Armv8.1-M Architecture further extends Armv8-M with Helium, an Microcontroller Vector Extension (MVE) and further instruction set and debug extensions. 
-More information about Armv8.1-M Architecture is available under <a href="https://developer.arm.com/technologies/helium" target="_blank"><b>Arm Helium technology</b></a>.
-
-\endif
+The Armv8.1-M architecture further extends Armv8-M with Helium (the so called M-Profile Vector Extension (MVE)), as well as further instruction set and debug extensions. 
+More information about Armv8.1-M architecture is available under <a href="https://developer.arm.com/technologies/helium" target="_blank"><b>Arm Helium technology</b></a>.
 
 <hr>
 
 \section tested_tools_sec Tested and Verified Toolchains
 
 The \ref templates_pg supplied by Arm have been tested and verified with the following toolchains:
- - Arm: Arm Compiler 5.06 update 6 (not for Cortex-M23/33/35P/55, Armv8-M, Armv8.1-M)
- - Arm: Arm Compiler 6.14
- - Arm: Arm Compiler 6.6.2 (not for Cortex-M0/23/33/35P/55, Armv8-M, Armv8.1-M)
- - GNU: GNU Tools for Arm Embedded 9.2.1 2019q4
+ - Arm: Arm Compiler 5.06 update 7 (not for Cortex-M23/33/35P/55, Armv8-M, Armv8.1-M)
+ - Arm: Arm Compiler 6.16
+ - Arm: Arm Compiler 6.6.4 (not for Cortex-M0/23/33/35P/55, Armv8-M, Armv8.1-M)
+ - GNU: GNU Arm Embedded Toolchain 10-2020-q4-major (10.2.1 20201103)
  - IAR: IAR ANSI C/C++ Compiler for Arm 8.20.1.14183
-
-<hr>
 */
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
@@ -95,6 +89,10 @@ The \ref templates_pg supplied by Arm have been tested and verified with the fol
     <tr>
       <th>Version</th>
       <th>Description</th>
+    </tr>
+    <tr>
+      <td>V5.5.0</td>
+      <td></td>
     </tr>
     <tr>
       <td>V5.4.0</td>

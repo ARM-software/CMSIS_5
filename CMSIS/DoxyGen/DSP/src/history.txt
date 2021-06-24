@@ -7,6 +7,74 @@
     <th>Description</th>
   </tr>
   <tr>
+    <td>V1.9.0</td>
+    <td>
+      Re-organization of arm_math.h
+
+      Re-organization of interpolation functions:
+      - New Interpolation folder
+
+      New q7 functions:
+      - arm_mat_mult_q7.c
+      - arm_mat_trans_q7.c
+
+      Matrix x vector multiply
+
+      Complex Matrix Transpose
+
+      Cholesky (LL^t and LDL^t decompositions)
+
+      More support for f16 datatype:
+      - arm_cfft_f16.c
+      - arm_rfft_fast_f16.c
+      - f16 basic Maths
+      - f16 complex Maths
+      - f16 filtering (FIR and BiQuad and correlate)
+      - f16 matrix
+      - f16 interpolation
+      - f16 statistics
+      - f16 support functions
+      - f16 svm
+      - f16 distances
+      - f16 bayes
+
+      Support for Quaternions
+
+      Levinson Durbin algorithm
+
+      Q15 scalar division
+
+      New absmax and absmin functions
+
+      GCC issues:
+      Some functions have build issues when building Helium code with gcc. So
+      they are replaced with a less efficient scalar version when built with gcc.
+      - Scalar version of arm_mat_cmplx_mult_f16.c
+      - Scalar version of arm_biquad_cascade_stereo_df2T_f16.c
+      - Scalar version of arm_levinson_durbin_f32.c
+      - Scalar version of arm_levinson_durbin_f16.c
+      - Scalar version of arm_levinson_durbin_q31.c
+      - Scalar version of arm_float_to_f16.c
+      - Scalar version of arm_f16_to_float.c
+
+      Important:
+      - Initialization of FIRs has changed for the Helium version (state and coefs).
+        Read the corresponding documentations.
+      - Initialization of float biquad DF1 has changed for the Helium
+        version (two init functions are required).
+        Read the corresponding documentations.
+      - The states of the vectorized filters are different from their scalar
+        versions (which may break some algorithms which are working on the
+        state of a filter like Goertzel)
+      - For performance reasons, some vectorized algorithms may read one vector
+        after the end of buffer (but the data read is not used).
+        If the buffer is close to the end of a memory zone, it is advised
+        to leave some free memory area between the end of the buffer and the end
+        of the memory zone.
+
+    </td>
+  </tr>
+  <tr>
     <td>V1.8.0</td>
     <td> 
       Helium implementation of lots of functions in the CMSIS-DSP.

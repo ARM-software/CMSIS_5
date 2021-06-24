@@ -21,15 +21,15 @@
  * Title:        arm_relu_q7.c
  * Description:  Q7 version of ReLU
  *
- * $Date:        February 27, 2020
- * $Revision:    V.1.0.1
+ * $Date:        09. October 2020
+ * $Revision:    V.1.0.3
  *
  * Target Processor:  Cortex-M cores
  *
  * -------------------------------------------------------------------- */
 
-#include "arm_math.h"
 #include "arm_nnfunctions.h"
+#include "arm_nnsupportfunctions.h"
 
 /**
  *  @ingroup groupNN
@@ -40,16 +40,16 @@
  * @{
  */
 
-  /**
-   * @brief Q7 RELU function
-   * @param[in,out]   data        pointer to input
-   * @param[in]       size        number of elements
-   *
-   * @details
-   *
-   * Optimized relu with QSUB instructions.
-   *
-   */
+/**
+ * @brief Q7 RELU function
+ * @param[in,out]   data        pointer to input
+ * @param[in]       size        number of elements
+ *
+ * @details
+ *
+ * Optimized relu with QSUB instructions.
+ *
+ */
 
 void arm_relu_q7(q7_t *data, uint16_t size)
 {
@@ -69,7 +69,7 @@ void arm_relu_q7(q7_t *data, uint16_t size)
         in = read_q7x4_ia(&input);
 
         /* extract the first bit */
-        buf = __ROR(in & 0x80808080, 7);
+        buf = (int32_t)__ROR((uint32_t)in & 0x80808080, 7);
 
         /* if MSB=1, mask will be 0xFF, 0x0 otherwise */
         mask = __QSUB8(0x00000000, buf);

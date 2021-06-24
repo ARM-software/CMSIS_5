@@ -17,7 +17,7 @@ function(compilerSpecificCompileOptions PROJECTNAME ROOT)
   get_target_property(DISABLEOPTIM ${PROJECTNAME} DISABLEOPTIMIZATION)
   if ((OPTIMIZED) AND (NOT DISABLEOPTIM))
     #cmake_print_variables(DISABLEOPTIM)
-    target_compile_options(${PROJECTNAME} PRIVATE "-O3")
+    target_compile_options(${PROJECTNAME} PRIVATE "-Ofast")
   endif()
 
   if (FASTMATHCOMPUTATIONS)
@@ -31,10 +31,19 @@ function(compilerSpecificCompileOptions PROJECTNAME ROOT)
   if (LITTLEENDIAN)
     target_compile_options(${PROJECTNAME} PUBLIC "-mlittle-endian")
   endif()
+
+  if (CORTEXM OR CORTEXR)
+    target_compile_options(${PROJECTNAME} PUBLIC "-mthumb")
+  endif()
   
   # Core specific config
 
   if (ARM_CPU STREQUAL "cortex-m55" )
+        target_compile_options(${PROJECTNAME} PUBLIC "-fshort-enums")
+        target_compile_options(${PROJECTNAME} PUBLIC "-fshort-wchar")
+  endif()
+
+  if (ARM_CPU STREQUAL "cortex-m55+nomve" )
         target_compile_options(${PROJECTNAME} PUBLIC "-fshort-enums")
         target_compile_options(${PROJECTNAME} PUBLIC "-fshort-wchar")
   endif()
@@ -44,7 +53,7 @@ function(compilerSpecificCompileOptions PROJECTNAME ROOT)
   endif()
 
   if (ARM_CPU STREQUAL "cortex-m7" )
-        target_compile_options(${PROJECTNAME} PUBLIC "-mfpu=fpv5-sp-d16")
+        target_compile_options(${PROJECTNAME} PUBLIC "-mfpu=fpv5-d16")
   endif()
 
   if (ARM_CPU STREQUAL "cortex-m4" )
@@ -57,11 +66,20 @@ function(compilerSpecificCompileOptions PROJECTNAME ROOT)
       endif()
   endif()
   
+
+  if (ARM_CPU STREQUAL "cortex-a32" )
+      if (NEON OR NEONEXPERIMENTAL)
+          target_compile_options(${PROJECTNAME} PUBLIC "-mfpu=neon-fp-armv8")
+      endif()
+  endif()
+
+  
   if (ARM_CPU STREQUAL "cortex-a7" )
       if (NOT (NEON OR NEONEXPERIMENTAL))
           target_compile_options(${PROJECTNAME} PUBLIC "-mfpu=vfpv4-d16")
       endif()
   endif()
+
   
   if (ARM_CPU STREQUAL "cortex-a5" )
       if ((NEON OR NEONEXPERIMENTAL))
@@ -70,6 +88,19 @@ function(compilerSpecificCompileOptions PROJECTNAME ROOT)
         target_compile_options(${PROJECTNAME} PUBLIC "-mfpu=vfpv4-d16")
       endif()
   endif()
+
+  if (ARM_CPU STREQUAL "cortex-r52" )
+      target_compile_options(${PROJECTNAME} PUBLIC "-mfpu=neon-fp-armv8")
+  endif()
+
+  if (ARM_CPU STREQUAL "cortex-r8" )
+      target_compile_options(${PROJECTNAME} PUBLIC "-mfpu=vfpv3-d16-fp16")
+  endif()
+
+  if (ARM_CPU STREQUAL "cortex-r5" )
+      target_compile_options(${PROJECTNAME} PUBLIC "-mfpu=vfpv3")
+  endif()
+
 
   if(EXPERIMENTAL)
     experimentalCompilerSpecificCompileOptions(${PROJECTNAME} ${ROOT})
@@ -115,14 +146,38 @@ function(toolchainSpecificLinkForCortexA PROJECTNAME ROOT CORE PLATFORMFOLDER)
 
 endfunction()
 
+function(toolchainSpecificLinkForCortexR PROJECTNAME ROOT CORE PLATFORMFOLDER)
+    #target_sources(${PROJECTNAME} PRIVATE ${PLATFORMFOLDER}/${CORE}/Startup/AC6/startup_${CORE}.c)
+    target_sources(${PROJECTNAME} PRIVATE ${PLATFORMFOLDER}/${CORE}/Startup/AC6/startup.s)
+    
+
+    # RTE Components.h
+    target_include_directories(${PROJECTNAME} PRIVATE ${ROOT}/CMSIS/DSP/Testing)
+
+    set(SCATTERFILE "${PLATFORMFOLDER}/${CORE}/LinkScripts/AC6/lnk.sct")
+
+    set_target_properties(${PROJECTNAME} PROPERTIES LINK_DEPENDS "${SCATTERFILE};${PLATFORMFOLDER}/${CORE}/LinkScripts/AC6/mem_${CORE}.h")
+
+    target_include_directories(${PROJECTNAME} PRIVATE ${PLATFORMFOLDER}/${CORE}/LinkScripts/AC6)
+
+    #target_link_options(${PROJECTNAME} PRIVATE "--info=sizes")
+    target_link_options(${PROJECTNAME} PRIVATE "--entry=Reset_Handler;--scatter=${SCATTERFILE}")
+endfunction()
+
 function(compilerSpecificPlatformConfigLibForM PROJECTNAME ROOT)
 endfunction()
 
 function(compilerSpecificPlatformConfigLibForA PROJECTNAME ROOT)
 endfunction()
 
+function(compilerSpecificPlatformConfigLibForR PROJECTNAME ROOT)
+endfunction()
+
 function(compilerSpecificPlatformConfigAppForM PROJECTNAME ROOT)
 endfunction()
 
 function(compilerSpecificPlatformConfigAppForA PROJECTNAME ROOT)
+endfunction()
+
+function(compilerSpecificPlatformConfigAppForR PROJECTNAME ROOT)
 endfunction()

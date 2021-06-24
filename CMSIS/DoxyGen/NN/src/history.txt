@@ -7,6 +7,38 @@
     <th>Description</th>
   </tr>
   <tr>
+    <td>V3.0.0</td>
+    <td>
+    <ul>
+      <li>Updated arm_fully_connected_s8 to use zero weight offset<br> 
+      as per the TFLM int8 quantization spec. The API is the same but,<br>
+      the weight offset parameter is expected to be zero<br> </li>
+      <li> Added unit test for Softmax </li>
+      <li> Added MVE optimiztion for SVDF operator </li>
+      <li> Removed Examples folder </li>
+      </ul>
+    </td>
+  </tr>
+    <tr>
+    <td>V2.0.0</td>
+    <td>
+      Added the following function for int8 SVDF operator.<br>
+      <ul>
+        <li>arm_svdf_s8</li>
+      </ul>
+      <ul>
+        <li>arm_depthwise_conv_wrapper_s8</li>
+        <li>arm_convolve_wrapper_s8</li>
+        <li>arm_nn_doubling_high_mult_no_sat</li>
+      </ul>
+      Deleted functions
+      <ul>
+        <li>arm_max_pool_s8_opt</li>
+      </ul>
+
+    </td>
+  </tr>
+  <tr>
     <td>V1.3.0</td>
     <td>
       Added following functions for int8 operators with symmetric quantization.<br>

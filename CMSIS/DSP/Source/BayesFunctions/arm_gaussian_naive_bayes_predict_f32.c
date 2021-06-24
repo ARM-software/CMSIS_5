@@ -3,11 +3,13 @@
  * Title:        arm_naive_gaussian_bayes_predict_f32
  * Description:  Naive Gaussian Bayesian Estimator
  *
+ * $Date:        23 April 2021
+ * $Revision:    V1.9.0
  *
  * Target Processor: Cortex-M and Cortex-A cores
  * -------------------------------------------------------------------- */
 /*
- * Copyright (C) 2010-2019 ARM Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -24,7 +26,7 @@
  * limitations under the License.
  */
 
-#include "arm_math.h"
+#include "dsp/bayes_functions.h"
 #include <limits.h>
 #include <math.h>
 
@@ -39,13 +41,12 @@
 /**
  * @brief Naive Gaussian Bayesian Estimator
  *
- * @param[in]  *S         points to a naive bayes instance structure
- * @param[in]  *in        points to the elements of the input vector.
- * @param[in]  *pBuffer   points to a buffer of length numberOfClasses
+ * @param[in]   *S                      points to a naive bayes instance structure
+ * @param[in]   *in                     points to the elements of the input vector.
+ * @param[out]  *pOutputProbabilities   points to a buffer of length numberOfClasses containing estimated probabilities
+ * @param[out]  *pBufferB               points to a temporary buffer of length numberOfClasses
  * @return The predicted class
  *
- * @par If the number of classes is big, MVE version will consume lot of
- * stack since the log prior are computed on the stack.
  *
  */
 
@@ -56,19 +57,21 @@
 
 uint32_t arm_gaussian_naive_bayes_predict_f32(const arm_gaussian_naive_bayes_instance_f32 *S, 
    const float32_t * in, 
-   float32_t *pBuffer)
+   float32_t *pOutputProbabilities,
+   float32_t *pBufferB
+   )
 {
     uint32_t         nbClass;
     const float32_t *pTheta = S->theta;
     const float32_t *pSigma = S->sigma;
-    float32_t      *buffer = pBuffer;
+    float32_t      *buffer = pOutputProbabilities;
     const float32_t *pIn = in;
     float32_t       result;
     f32x4_t         vsigma;
     float32_t       tmp;
     f32x4_t         vacc1, vacc2;
     uint32_t        index;
-    float32_t       logclassPriors[S->numberOfClasses];
+    float32_t       *logclassPriors=pBufferB;
     float32_t      *pLogPrior = logclassPriors;
 
     arm_vlog_f32((float32_t *) S->classPriors, logclassPriors, S->numberOfClasses);
@@ -131,7 +134,7 @@ uint32_t arm_gaussian_naive_bayes_predict_f32(const arm_gaussian_naive_bayes_ins
         buffer++;
     }
 
-    arm_max_f32(pBuffer, S->numberOfClasses, &result, &index);
+    arm_max_f32(pOutputProbabilities, S->numberOfClasses, &result, &index);
 
     return (index);
 }
@@ -146,7 +149,8 @@ uint32_t arm_gaussian_naive_bayes_predict_f32(const arm_gaussian_naive_bayes_ins
 
 uint32_t arm_gaussian_naive_bayes_predict_f32(const arm_gaussian_naive_bayes_instance_f32 *S, 
    const float32_t * in, 
-   float32_t *pBuffer)
+   float32_t *pOutputProbabilities,
+   float32_t *pBufferB)
 {
     
     const float32_t *pPrior = S->classPriors;
@@ -157,7 +161,7 @@ uint32_t arm_gaussian_naive_bayes_predict_f32(const arm_gaussian_naive_bayes_ins
     const float32_t *pTheta1 = S->theta + S->vectorDimension;
     const float32_t *pSigma1 = S->sigma + S->vectorDimension;
 
-    float32_t *buffer = pBuffer;
+    float32_t *buffer = pOutputProbabilities;
     const float32_t *pIn=in;
 
     float32_t result;
@@ -172,6 +176,7 @@ uint32_t arm_gaussian_naive_bayes_predict_f32(const arm_gaussian_naive_bayes_ins
     float32x2_t tmpV2;
     float32x4_t thetaV,thetaV1;
     float32x4_t inV;
+    (void)pBufferB;
 
     epsilonV = vdupq_n_f32(S->epsilon);
 
@@ -320,38 +325,32 @@ uint32_t arm_gaussian_naive_bayes_predict_f32(const arm_gaussian_naive_bayes_ins
         classBlkCnt--;
     }
 
-    arm_max_f32(pBuffer,S->numberOfClasses,&result,&index);
+    arm_max_f32(pOutputProbabilities,S->numberOfClasses,&result,&index);
 
     return(index);
 }
 
 #else
 
-/**
- * @brief Naive Gaussian Bayesian Estimator
- *
- * @param[in]  *S         points to a naive bayes instance structure
- * @param[in]  *in        points to the elements of the input vector.
- * @param[in]  *pBuffer   points to a buffer of length numberOfClasses
- * @return The predicted class
- *
- */
 uint32_t arm_gaussian_naive_bayes_predict_f32(const arm_gaussian_naive_bayes_instance_f32 *S, 
    const float32_t * in, 
-   float32_t *pBuffer)
+   float32_t *pOutputProbabilities,
+   float32_t *pBufferB)
 {
     uint32_t nbClass;
     uint32_t nbDim;
     const float32_t *pPrior = S->classPriors;
     const float32_t *pTheta = S->theta;
     const float32_t *pSigma = S->sigma;
-    float32_t *buffer = pBuffer;
+    float32_t *buffer = pOutputProbabilities;
     const float32_t *pIn=in;
     float32_t result;
     float32_t sigma;
     float32_t tmp;
     float32_t acc1,acc2;
     uint32_t index;
+
+    (void)pBufferB;
 
     pTheta=S->theta;
     pSigma=S->sigma;
@@ -384,7 +383,7 @@ uint32_t arm_gaussian_naive_bayes_predict_f32(const arm_gaussian_naive_bayes_ins
         buffer++;
     }
 
-    arm_max_f32(pBuffer,S->numberOfClasses,&result,&index);
+    arm_max_f32(pOutputProbabilities,S->numberOfClasses,&result,&index);
 
     return(index);
 }

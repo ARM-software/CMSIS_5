@@ -1,5 +1,8 @@
 #include "Test.h"
 #include "Pattern.h"
+
+#include "dsp/filtering_functions.h"
+
 class MISCF32:public Client::Suite
     {
         public:

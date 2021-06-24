@@ -8,14 +8,46 @@ from contextlib import contextmanager
 import shutil
 import glob
 from pathlib import Path
+import sys
 
 DEBUGMODE = False
+KEEPBUILDFOLDER = True
+
+DEBUGLIST=[
+"-DBASICMATH=ON",
+"-DCOMPLEXMATH=OFF",
+"-DCONTROLLER=OFF",
+"-DFASTMATH=OFF",
+"-DFILTERING=OFF",
+"-DMATRIX=OFF",
+"-DSTATISTICS=OFF",
+"-DSUPPORT=OFF",
+"-DTRANSFORM=OFF",
+"-DSVM=OFF",
+"-DBAYES=OFF",
+"-DDISTANCE=OFF"]
 
 NOTESTFAILED = 0
 MAKEFAILED = 1 
 TESTFAILED = 2
 FLOWFAILURE = 3 
 CALLFAILURE = 4
+
+def setDebugMode():
+  global DEBUGMODE
+  DEBUGMODE=True
+
+def isDebugMode():
+  global DEBUGMODE
+  return(DEBUGMODE)
+
+def setNokeepBuildFolder():
+  global KEEPBUILDFOLDER
+  KEEPBUILDFOLDER=False
+
+def isKeepMode():
+  global KEEPBUILDFOLDER
+  return(KEEPBUILDFOLDER)
 
 
 def joinit(iterable, delimiter):
@@ -24,6 +56,17 @@ def joinit(iterable, delimiter):
     for x in it:
         yield delimiter
         yield x
+
+def addToDb(db,desc,runid):
+    msg("Add %s to summary database\n" % desc)
+    completed = subprocess.run([sys.executable, "addToDB.py","-o",db,"-r",str(runid),desc], timeout=3600)
+    check(completed)
+
+def addToRegDb(db,desc,runid):
+    msg("Add %s to regression database\n" % desc)
+    completed = subprocess.run([sys.executable, "addToRegDB.py","-o",db,"-r",str(runid),desc], timeout=3600)
+    check(completed)
+
 
 class TestFlowFailure(Exception):
     def __init__(self,completed):
@@ -140,9 +183,9 @@ class BuildConfig:
            with open(os.path.join(self.archiveLogPath(),"makelog_%s.txt" % test),"w") as makelog:
                with open(os.path.join(self.archiveErrorPath(),"makeerror_%s.txt" % test),"w") as makeerr:
                     if DEBUGMODE:
-                       completed=subprocess.run(["make","-j8","VERBOSE=1"],timeout=3600)
+                       completed=subprocess.run(["make","-j4","VERBOSE=1"],timeout=3600)
                     else:
-                       completed=subprocess.run(["make","-j8","VERBOSE=1"],stdout=makelog,stderr=makeerr,timeout=3600)
+                       completed=subprocess.run(["make","-j4","VERBOSE=1"],stdout=makelog,stderr=makeerr,timeout=3600)
         # Restore environment variables
         self.restoreEnv()
         check(completed)
@@ -153,33 +196,38 @@ class BuildConfig:
     
 
     # Launch cmake command.
-    def createCMake(self,flags):
+    def createCMake(self,configid,flags,benchMode,platform):
         with self.buildFolder() as b:
             self.saveEnv()
+            if benchMode:
+              msg("Benchmark mode\n")
             msg("Create cmake for %s\n" % self.buildFolderName())
             toolchainCmake = os.path.join(self.toolChainPath(),self.toolChainFile())
             cmd = [self._cmake]
             cmd += ["-DCMAKE_PREFIX_PATH=%s" % self.compiler(),
                              "-DCMAKE_TOOLCHAIN_FILE=%s" % toolchainCmake,
                              "-DARM_CPU=%s" % self.core(),
-                             "-DPLATFORM=FVP"
+                             "-DPLATFORM=%s" % platform,
+                             "-DCONFIGID=%s" % configid
                     ]
             cmd += flags 
-            cmd += ["-DBENCHMARK=OFF",
-                             "-DFULLYCONNECTED=OFF",
-                             "-DCONVOLUTION=OFF",
-                             "-DACTIVATION=OFF",
-                             "-DPOOLING=OFF",
-                             "-DSOFTMAX=OFF",
-                             "-DNNSUPPORT=OFF",
-                             "-DBASICMATHSNN=OFF",
-                             "-DRESHAPE=OFF",
-                             "-DCONCATENATION=OFF",
-                             "-DWRAPPER=OFF",
-                             "-DCONFIGTABLE=OFF",
-                             "-DROOT=%s" % self._rootFolder,
-                             "-DCMAKE_BUILD_TYPE=Release",
-                             "-G", "Unix Makefiles" ,"%s" % self.cmakeFilePath()]
+
+            if DEBUGMODE:
+              cmd += DEBUGLIST
+
+            if benchMode:
+              cmd += ["-DBENCHMARK=ON"]
+              cmd += ["-DWRAPPER=ON"]
+            else: 
+              cmd += ["-DBENCHMARK=OFF"]
+              cmd += ["-DWRAPPER=OFF"]
+
+            cmd += ["-DROOT=%s" % self._rootFolder,
+                    "-DCMAKE_BUILD_TYPE=Release",
+                    "-G", "Unix Makefiles" ,"%s" % self.cmakeFilePath()]
+
+            if DEBUGMODE:
+               print(cmd)
 
             with open(os.path.join(self.archiveLogPath(),"cmakecmd.txt"),"w") as cmakecmd:
                  cmakecmd.write("".join(joinit(cmd," ")))
@@ -210,7 +258,7 @@ class BuildConfig:
     def cleanFolder(self):
         print("Delete %s\n" % self.path())
         #DEBUG
-        if not DEBUGMODE:
+        if not isDebugMode() and not isKeepMode():
            shutil.rmtree(self.path())
 
     # Archive results and currentConfig.csv to another folder
@@ -282,8 +330,18 @@ class Test:
         return(self._test)
 
     # Process a test from the test description file
-    def processTest(self):
-        completed=subprocess.run(["python","processTests.py","-e",self.testName()],timeout=3600)
+    def processTest(self,patternConfig):
+      if isDebugMode():
+        if patternConfig:
+           completed=subprocess.run([sys.executable,"processTests.py","-p",patternConfig["patterns"],"-d",patternConfig["parameters"],"-e",self.testName(),"1"],timeout=3600)
+        else:
+           completed=subprocess.run([sys.executable,"processTests.py","-e",self.testName(),"1"],timeout=3600)
+        check(completed)
+      else:
+        if patternConfig:
+           completed=subprocess.run([sys.executable,"processTests.py","-p",patternConfig["patterns"],"-d",patternConfig["parameters"],"-e",self.testName()],timeout=3600)
+        else:
+           completed=subprocess.run([sys.executable,"processTests.py","-e",self.testName()],timeout=3600)
         check(completed)
 
     def getResultPath(self):
@@ -297,12 +355,20 @@ class Test:
     # the build folder for this test
     #
     # We need a timeout and detect failed run
-    def run(self,fvp):
+    def run(self,fvp,benchmode):
+        timeoutVal=3600
+        if benchmode:
+          timeoutVal = 3600 * 4
         completed = None
         with self.buildConfig().buildFolder() as b:
            msg("  Run %s\n" % self.testName() )
            with open(self.resultName(),"w") as results:
-              completed=subprocess.run(fvp.split(),stdout=results,timeout=3600)
+              if isDebugMode():
+                 print(os.getcwd())
+                 print(fvp.split())
+                 completed=subprocess.run(fvp.split(),timeout=timeoutVal)
+              else:
+                 completed=subprocess.run(fvp.split(),stdout=results,timeout=timeoutVal)
         check(completed)
 
     # Process results of the given tests
@@ -311,7 +377,7 @@ class Test:
     def processResult(self):
         msg("  Parse result for %s\n" % self.testName())
         with open(os.path.join(self.buildConfig().archiveResultPath(),"processedResult_%s.txt" % self.testName()),"w") as presult:
-             completed=subprocess.run(["python","processResult.py","-e","-r",self.getResultPath()],stdout=presult,timeout=3600)
+             completed=subprocess.run([sys.executable,"processResult.py","-e","-r",self.getResultPath()],stdout=presult,timeout=3600)
         # When a test fail, the regression is continuing but we
         # track that a test has failed
         if completed.returncode==0:
@@ -319,9 +385,20 @@ class Test:
         else:
            return(TESTFAILED)
 
-    def runAndProcess(self,compiler,fvp):
+    # Compute the regression data
+    def computeSummaryStat(self):
+        msg("  Compute regressions for %s\n" % self.testName())
+        completed=subprocess.run([sys.executable,"summaryBench.py","-r",self.getResultPath(),self.testName()],timeout=3600)
+        # When a test fail, the regression is continuing but we
+        # track that a test has failed
+        if completed.returncode==0:
+           return(NOTESTFAILED)
+        else:
+           return(TESTFAILED)
+
+    def runAndProcess(self,patternConfig,compiler,fvp,sim,benchmode,db,regdb,benchid,regid):
         # If we can't parse test description we fail all tests
-        self.processTest()
+        self.processTest(patternConfig)
         # Otherwise if only building or those tests are failing, we continue
         # with other tests
         try:
@@ -332,10 +409,19 @@ class Test:
         # For other compilers only build is tests
         # Since full build is no more possible because of huge pattersn,
         # build is done per test suite.
-        if compiler == "AC6":
+        if sim:
            if fvp is not None:
-              self.run(fvp)
-              return(self.processResult())
+              if isDebugMode():
+                 print(fvp)
+              self.run(fvp,benchmode)
+              error=self.processResult()
+              if benchmode and (error == NOTESTFAILED):
+                 error = self.computeSummaryStat()
+                 if db is not None:
+                    addToDb(db,self.testName(),benchid)
+                 if regdb is not None:
+                    addToRegDb(regdb,self.testName(),regid)
+              return(error)
            else:
               msg("No FVP available")
               return(NOTESTFAILED)
@@ -345,18 +431,28 @@ class Test:
 
 
 # Preprocess the test description
-def preprocess():
-    msg("Process test description file\n")
-    completed = subprocess.run(["python", "preprocess.py","-f","desc.txt"],timeout=3600)
+def preprocess(desc):
+    msg("Process test description file %s\n" % desc)
+    completed = subprocess.run([sys.executable, "preprocess.py","-f",desc],timeout=3600)
     check(completed)
 
 # Generate all missing C code by using all classes in the
 # test description file
-def generateAllCCode():
+def generateAllCCode(patternConfig):
     msg("Generate all missing C files\n")
-    completed = subprocess.run(["python","processTests.py", "-e"],timeout=3600)
+    if patternConfig:
+       completed = subprocess.run([sys.executable,"processTests.py",
+        "-p",patternConfig["patterns"],"-d",patternConfig["parameters"],"-e"],timeout=3600)
+    else:
+       completed = subprocess.run([sys.executable,"processTests.py", "-e"],timeout=3600)
     check(completed)
 
+# Create db
+def createDb(sqlite,desc):
+    msg("Create database %s\n" % desc)
+    with open("createDb.sql") as db:
+        completed = subprocess.run([sqlite, desc],stdin=db, timeout=3600)
+    check(completed)
 
 
 

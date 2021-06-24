@@ -1,0 +1,1095 @@
+group Root {
+    class = Root
+
+    group DSP Tests {
+        class = DSPTests
+        folder = DSP
+
+        group Statistics Tests {
+           class = StatsTests
+           folder = Stats
+
+           suite Statistics Tests F16 {
+              class = StatsTestsF16
+              folder = StatsF16
+
+              Pattern INPUT1_F16_ID : Input1_f16.txt 
+              Pattern INPUTNEW1_F16_ID : InputNew1_f16.txt 
+
+              Pattern INPUT2_F16_ID : Input2_f16.txt 
+              Pattern MAXINDEXES_S16_ID : MaxIndexes1_s16.txt
+              Pattern MAXVALS_F16_ID : MaxVals1_f16.txt
+              Pattern MEANVALS_F16_ID : MeanVals2_f16.txt
+              Pattern MININDEXES_S16_ID : MinIndexes3_s16.txt
+              Pattern MINVALS_F16_ID : MinVals3_f16.txt
+              Pattern POWERVALS_F16_ID : PowerVals4_f16.txt
+              Pattern RMSVALS_F16_ID : RmsVals5_f16.txt
+              Pattern STDVALS_F16_ID : StdVals6_f16.txt
+              Pattern VARVALS_F16_ID : VarVals7_f16.txt
+
+              Pattern INPUT22_F16_ID : Input22_f16.txt 
+              Pattern DIM22_S16_ID : Dims22_s16.txt 
+              Pattern REF22_ENTROPY_F16_ID : RefEntropy22_f16.txt
+              
+              Pattern INPUT23_F16_ID : Input23_f16.txt 
+              Pattern DIM23_S16_ID : Dims23_s16.txt 
+              Pattern REF23_LOGSUMEXP_F16_ID : RefLogSumExp23_f16.txt
+              
+              Pattern INPUTA24_F16_ID : InputA24_f16.txt 
+              Pattern INPUTB24_F16_ID : InputB24_f16.txt
+              Pattern DIM24_S16_ID : Dims24_s16.txt 
+              Pattern REF24_KL_F16_ID : RefKL24_f16.txt
+              
+              Pattern INPUTA25_F16_ID : InputA25_f16.txt 
+              Pattern INPUTB25_F16_ID : InputB25_f16.txt
+              Pattern DIM25_S16_ID : Dims25_s16.txt 
+              Pattern REF25_LOGSUMEXP_DOT_F16_ID : RefLogSumExpDot25_f16.txt
+
+              Pattern ABSMAXINDEXES_S16_ID : AbsMaxIndexes26_s16.txt
+              Pattern ABSMAXVALS_F16_ID : AbsMaxVals26_f16.txt
+
+              Pattern ABSMININDEXES_S16_ID : AbsMinIndexes27_s16.txt
+              Pattern ABSMINVALS_F16_ID : AbsMinVals27_f16.txt
+
+              Output  OUT_F16_ID : Output
+              Output  OUT_S16_ID : Index
+              Output  TMP_F16_ID : Temp
+
+              Functions {
+                Test nb=7    arm_max_f16:test_max_f16
+                Test nb=8n   arm_max_f16:test_max_f16
+                Test nb=8n+1 arm_max_f16:test_max_f16
+
+                Test nb=7    arm_mean_f16:test_mean_f16
+                Test nb=8n   arm_mean_f16:test_mean_f16
+                Test nb=8n+1 arm_mean_f16:test_mean_f16
+
+                Test nb=7    arm_min_f16:test_min_f16
+                Test nb=8n   arm_min_f16:test_min_f16
+                Test nb=8n+1 arm_min_f16:test_min_f16
+
+                Test nb=7    arm_power_f16:test_power_f16
+                Test nb=8n   arm_power_f16:test_power_f16
+                Test nb=8n+1 arm_power_f16:test_power_f16
+
+                Test nb=7    arm_rms_f16:test_rms_f16
+                Test nb=8n   arm_rms_f16:test_rms_f16
+                Test nb=8n+1 arm_rms_f16:test_rms_f16
+
+                Test nb=7    arm_std_f16:test_std_f16
+                Test nb=8n   arm_std_f16:test_std_f16
+                Test nb=8n+1 arm_std_f16:test_std_f16
+
+                Test nb=7    arm_var_f16:test_var_f16
+                Test nb=8n   arm_var_f16:test_var_f16
+                Test nb=8n+1 arm_var_f16:test_var_f16
+
+                arm_entropy_f16:test_entropy_f16
+                arm_logsumexp_f16:test_logsumexp_f16
+                arm_kullback_leibler_f16:test_kullback_leibler_f16
+                arm_logsumexp_dot_prod_f16:test_logsumexp_dot_prod_f16
+
+                Test nb=7    arm_max_no_idx_f16:test_max_no_idx_f16
+                Test nb=8n   arm_max_no_idx_f16:test_max_no_idx_f16
+                Test nb=8n+1 arm_max_no_idx_f16:test_max_no_idx_f16
+
+                Test long  arm_mean_f16:test_mean_f16
+                Test long  arm_rms_f16:test_rms_f16
+                Test long  arm_std_f16:test_std_f16
+                Test long  arm_var_f16:test_var_f16
+
+                Test stability  arm_std_f16:test_std_stability_f16
+
+                Test nb=3    arm_absmax_f16:test_absmax_f16
+                Test nb=4n   arm_absmax_f16:test_absmax_f16
+                Test nb=4n+1 arm_absmax_f16:test_absmax_f16
+
+                Test nb=3    arm_absmin_f16:test_absmin_f16
+                Test nb=4n   arm_absmin_f16:test_absmin_f16
+                Test nb=4n+1 arm_absmin_f16:test_absmin_f16
+              }
+           }
+        }
+
+        group Support Tests {
+           class = SupportTests
+           folder = Support
+
+           suite Support Tests F16 {
+              class = SupportTestsF16
+              folder = SupportF16
+
+              Pattern INPUTS_F16_ID : Inputs6_f16.txt 
+              Pattern WEIGHTS_F16_ID : Weights6_f16.txt 
+              Pattern REF_F16_ID : Ref6_f16.txt
+
+              Pattern SAMPLES_F32_ID : Samples1_f32.txt 
+              Pattern SAMPLES_Q15_ID : Samples3_q15.txt 
+              Pattern SAMPLES_F16_ID : Samples11_f16.txt 
+
+              Output  OUT_F32_ID : Output
+              Output  OUT_Q15_ID : OutputQ15
+              Output  OUT_F16_ID : OutputF16
+             
+              Functions {
+                test_weighted_sum_f16 nb=3:test_weighted_sum_f16
+                test_weighted_sum_f16 nb=4n:test_weighted_sum_f16
+                test_weighted_sum_f16 nb=4n+1:test_weighted_sum_f16
+                test_copy_f16 nb=7:test_copy_f16
+                test_copy_f16 nb=8n:test_copy_f16
+                test_copy_f16 nb=8n+1:test_copy_f16
+                test_fill_f16 nb=7:test_fill_f16
+                test_fill_f16 nb=8n:test_fill_f16
+                test_fill_f16 nb=8n+1:test_fill_f16
+                test_f16_q15 nb=7:test_f16_q15
+                test_f16_q15 nb=8n:test_f16_q15
+                test_f16_q15 nb=8n+1:test_f16_q15
+                test_f16_f32 nb=7:test_f16_f32
+                test_f16_f32 nb=8n:test_f16_f32
+                test_f16_f32 nb=8n+1:test_f16_f32
+                test_q15_f16 nb=7:test_q15_f16
+                test_q15_f16 nb=8n:test_q15_f16
+                test_q15_f16 nb=8n+1:test_q15_f16
+                test_f32_f16 nb=3:test_f32_f16
+                test_f32_f16 nb=4n:test_f32_f16
+                test_f32_f16 nb=4n+1:test_f32_f16
+              }
+
+           }
+
+        }
+
+        suite Support Bar Tests F16 {
+              class = SupportBarTestsF16
+              folder = SupportBarF16
+
+              Pattern SAMPLES_F16_ID : Inputs1_f16.txt 
+              Pattern COEFS_F16_ID : Weights1_f16.txt 
+              Pattern REF_F16_ID : Ref1_f16.txt
+              Pattern DIM_S16_ID : Dims1_s16.txt
+
+
+              Output  OUT_SAMPLES_F16_ID : Output
+
+
+              Functions {
+                test_barycenter_f16:test_barycenter_f16
+              }
+
+        }
+
+
+        group Interpolation Tests{
+          class = InterpolationTests
+          folder = Interpolation
+
+          suite Interpolation Tests F16{
+              class = InterpolationTestsF16
+              folder = InterpolationF16
+
+              Pattern INPUT_F16_ID : Input1_f16.txt 
+              Pattern INPUTBI_F16_ID : Input2_f16.txt 
+              Pattern CONFIGBI_S16_ID : Config2_s16.txt 
+
+              Pattern YVAL_F16_ID : YVals1_f16.txt 
+              Pattern YVALBI_F16_ID : YVals2_f16.txt 
+
+              Pattern REF_LINEAR_F16_ID : Reference1_f16.txt
+              Pattern REF_BILINEAR_F16_ID : Reference2_f16.txt
+
+              Pattern REF_SPLINE_SQU_F16_ID : Reference3_f16.txt
+              Pattern REF_SPLINE_SIN_F16_ID : Reference4_f16.txt
+              Pattern REF_SPLINE_RAM_F16_ID : Reference5_f16.txt
+
+              Pattern INPUT_SPLINE_SQU_X_F16_ID : InputX3_f16.txt
+              Pattern INPUT_SPLINE_SQU_Y_F16_ID : InputY3_f16.txt
+              Pattern OUTPUT_SPLINE_SQU_X_F16_ID : OutputX3_f16.txt
+              Pattern INPUT_SPLINE_SIN_X_F16_ID : InputX4_f16.txt 
+              Pattern INPUT_SPLINE_SIN_Y_F16_ID : InputY4_f16.txt
+              Pattern OUTPUT_SPLINE_SIN_X_F16_ID : OutputX4_f16.txt 
+              Pattern INPUT_SPLINE_RAM_X_F16_ID : InputX5_f16.txt
+              Pattern INPUT_SPLINE_RAM_Y_F16_ID : InputY5_f16.txt
+              Pattern OUTPUT_SPLINE_RAM_X_F16_ID : OutputX5_f16.txt
+
+
+              Output  OUT_SAMPLES_F16_ID : Output
+              Output  COEFS_SPLINE_F16_ID : SplineCoefs
+              Output  TEMP_SPLINE_F16_ID : SplineTemp
+
+              Functions {
+                Test arm_linear_interp_f16:test_linear_interp_f16
+                Test arm_bilinear_interp_f16:test_bilinear_interp_f16
+              }
+          }
+        }
+
+        group Basic Tests {
+           class = BasicTests
+           folder = BasicMaths
+
+           suite Basic Tests F16 {
+              class = BasicTestsF16
+              folder = BasicMathsF16
+   
+              Pattern INPUT1_F16_ID : Input1_f16.txt 
+              Pattern INPUT2_F16_ID : Input2_f16.txt 
+
+              Pattern INPUT_CLIP_F16_ID : Input12_f16.txt 
+              
+              Pattern REF_ADD_F16_ID : Reference1_f16.txt
+              Pattern REF_SUB_F16_ID : Reference2_f16.txt
+              Pattern REF_MULT_F16_ID : Reference3_f16.txt
+              Pattern REF_NEGATE_F16_ID : Reference4_f16.txt
+              Pattern REF_OFFSET_F16_ID : Reference5_f16.txt
+              Pattern REF_SCALE_F16_ID : Reference6_f16.txt
+              Pattern REF_DOT_3_F16_ID : Reference7_f16.txt
+              Pattern REF_DOT_4N_F16_ID : Reference8_f16.txt
+              Pattern REF_DOT_4N1_F16_ID : Reference9_f16.txt
+              Pattern REF_ABS_F16_ID : Reference10_f16.txt
+              Pattern REF_DOT_LONG_F16_ID : Reference11_f16.txt
+
+              Pattern REF_CLIP1_F16_ID : Reference12_f16.txt
+              Pattern REF_CLIP2_F16_ID : Reference13_f16.txt
+              Pattern REF_CLIP3_F16_ID : Reference14_f16.txt
+   
+              Output  OUT_SAMPLES_F16_ID : Output
+              Output  OUT_STATE_F16_ID : State
+   
+              Functions {
+                Test nb=3    arm_add_f16:test_add_f16
+                Test nb=4n   arm_add_f16:test_add_f16
+                Test nb=4n+1 arm_add_f16:test_add_f16
+         
+                Test nb=3    arm_sub_f16:test_sub_f16
+                Test nb=4n   arm_sub_f16:test_sub_f16
+                Test nb=4n+1 arm_sub_f16:test_sub_f16
+         
+                Test nb=3    arm_mult_f16:test_mult_f16
+                Test nb=4n   arm_mult_f16:test_mult_f16
+                Test nb=4n+1 arm_mult_f16:test_mult_f16
+         
+                Test nb=3    arm_negate_f16:test_negate_f16
+                Test nb=4n   arm_negate_f16:test_negate_f16
+                Test nb=4n+1 arm_negate_f16:test_negate_f16
+         
+                Test nb=3    arm_offset_f16:test_offset_f16
+                Test nb=4n   arm_offset_f16:test_offset_f16
+                Test nb=4n+1 arm_offset_f16:test_offset_f16
+         
+                Test nb=3    arm_scale_f16:test_scale_f16
+                Test nb=4n   arm_scale_f16:test_scale_f16
+                Test nb=4n+1 arm_scale_f16:test_scale_f16
+         
+                Test nb=3    arm_dot_prod_f16:test_dot_prod_f16
+                Test nb=4n   arm_dot_prod_f16:test_dot_prod_f16
+                Test nb=4n+1 arm_dot_prod_f16:test_dot_prod_f16
+         
+                Test nb=3    arm_abs_f16:test_abs_f16
+                Test nb=4n   arm_abs_f16:test_abs_f16
+                Test nb=4n+1 arm_abs_f16:test_abs_f16
+
+                Test long    arm_add_f16:test_add_f16
+                Test long    arm_sub_f16:test_sub_f16
+                Test long    arm_mult_f16:test_mult_f16
+                Test long    arm_negate_f16:test_negate_f16
+                Test long    arm_offset_f16:test_offset_f16
+                Test long    arm_scale_f16:test_scale_f16
+                Test long    arm_dot_prod_f16:test_dot_prod_f16
+                Test long    arm_abs_f16:test_abs_f16
+                Test 1       arm_clip_f16:test_clip_f16
+                Test 2       arm_clip_f16:test_clip_f16
+                Test 3       arm_clip_f16:test_clip_f16
+              }
+           }
+
+        }
+
+        group Complex Tests {
+           class = ComplexTests
+           folder = ComplexMaths
+
+           suite Complex Tests F16{
+              class = ComplexTestsF16
+              folder = ComplexMathsF16
+
+              Pattern INPUT1_F16_ID : Input1_f16.txt 
+              Pattern INPUT2_F16_ID : Input2_f16.txt 
+              Pattern INPUT3_F16_ID : Input3_f16.txt 
+
+              Pattern REF_CONJ_F16_ID : Reference1_f16.txt
+              Pattern REF_DOT_PROD_3_F16_ID : Reference2_f16.txt
+              Pattern REF_DOT_PROD_4N_F16_ID : Reference3_f16.txt
+              Pattern REF_DOT_PROD_4N1_F16_ID : Reference4_f16.txt
+              Pattern REF_MAG_F16_ID : Reference5_f16.txt
+              Pattern REF_MAG_SQUARED_F16_ID : Reference6_f16.txt
+              Pattern REF_CMPLX_MULT_CMPLX_F16_ID : Reference7_f16.txt
+              Pattern REF_CMPLX_MULT_REAL_F16_ID : Reference8_f16.txt
+              Pattern REF_DOT_PROD_LONG_F16_ID : Reference9_f16.txt
+
+              Output  OUT_SAMPLES_F16_ID : Output
+              Output  OUT_STATE_F16_ID : State
+
+              Functions {
+                Test nb=3    arm_cmplx_conj_f16:test_cmplx_conj_f16
+                Test nb=4n   arm_cmplx_conj_f16:test_cmplx_conj_f16
+                Test nb=4n+1 arm_cmplx_conj_f16:test_cmplx_conj_f16
+
+                Test nb=3    arm_cmplx_dot_prod_f16:test_cmplx_dot_prod_f16
+                Test nb=4n   arm_cmplx_dot_prod_f16:test_cmplx_dot_prod_f16
+                Test nb=4n+1 arm_cmplx_dot_prod_f16:test_cmplx_dot_prod_f16
+
+                Test nb=3    arm_cmplx_mag_f16:test_cmplx_mag_f16
+                Test nb=4n   arm_cmplx_mag_f16:test_cmplx_mag_f16
+                Test nb=4n+1 arm_cmplx_mag_f16:test_cmplx_mag_f16
+
+                Test nb=3    arm_cmplx_mag_squared_f16:test_cmplx_mag_squared_f16
+                Test nb=4n   arm_cmplx_mag_squared_f16:test_cmplx_mag_squared_f16
+                Test nb=4n+1 arm_cmplx_mag_squared_f16:test_cmplx_mag_squared_f16
+
+                Test nb=3    arm_cmplx_mult_cmplx_f16:test_cmplx_mult_cmplx_f16
+                Test nb=4n   arm_cmplx_mult_cmplx_f16:test_cmplx_mult_cmplx_f16
+                Test nb=4n+1 arm_cmplx_mult_cmplx_f16:test_cmplx_mult_cmplx_f16
+
+                Test nb=3    arm_cmplx_mult_real_f16:test_cmplx_mult_real_f16
+                Test nb=4n   arm_cmplx_mult_real_f16:test_cmplx_mult_real_f16
+                Test nb=4n+1 arm_cmplx_mult_real_f16:test_cmplx_mult_real_f16
+
+                Test long    arm_cmplx_conj_f16:test_cmplx_conj_f16
+                Test long    arm_cmplx_dot_prod_f16:test_cmplx_dot_prod_f16
+                Test long    arm_cmplx_mag_f16:test_cmplx_mag_f16
+                Test long    arm_cmplx_mag_squared_f16:test_cmplx_mag_squared_f16
+                Test long    arm_cmplx_mult_cmplx_f16:test_cmplx_mult_cmplx_f16
+                Test long    arm_cmplx_mult_real_f16:test_cmplx_mult_real_f16
+
+              }
+
+           }
+
+        }
+
+        group Fast Maths Tests {
+          class = FastMath
+          folder = FastMath 
+
+          suite Fast Maths F16 {
+              class = FastMathF16
+              folder = FastMathF16
+
+              Pattern ANGLES1_F16_ID : Angles1_f16.txt
+              Pattern SQRTINPUT1_F16_ID : SqrtInput1_f16.txt
+              Pattern LOGINPUT1_F16_ID : LogInput1_f16.txt
+              Pattern EXPINPUT1_F16_ID : ExpInput1_f16.txt
+              Pattern INPUT1_F16_ID : Samples1_f16.txt
+
+              Pattern COS1_F16_ID : Cos1_f16.txt 
+              Pattern SIN1_F16_ID : Sin1_f16.txt 
+              Pattern SQRT1_F16_ID : Sqrt1_f16.txt 
+              Pattern LOG1_F16_ID : Log1_f16.txt 
+              Pattern EXP1_F16_ID : Exp1_f16.txt 
+              Pattern INVERSE1_F16_ID : Inverse1_f16.txt
+
+              Output  OUT_F16_ID : Output
+
+              Functions {
+                disabled{test_cos_f16:test_cos_f16}
+                disabled{test_sin_f16:test_sin_f16}
+                test_sqrt_f16:test_sqrt_f16
+                test_vlog_f16:test_vlog_f16
+                test_vlog_f16 nb=3:test_vlog_f16
+                test_vlog_f16 nb=4n:test_vlog_f16
+                test_vlog_f16 nb=4n+1:test_vlog_f16
+                test_vexp_f16:test_vexp_f16
+                test_vexp_f16 nb=3:test_vexp_f16
+                test_vexp_f16 nb=4n:test_vexp_f16
+                test_vexp_f16 nb=4n+1:test_vexp_f16
+                test_inverse_f16:test_inverse_f16
+              }
+          }
+        }
+
+        group SVM Tests {
+           class = SVMTests
+           folder = SVM 
+
+           suite SVM F16 {
+              class = SVMF16
+              folder = SVMF16
+
+              Pattern SAMPLES1_F16_ID : Samples1_f16.txt 
+              Pattern PARAMS1_F16_ID : Params1_f16.txt 
+              Pattern DIMS1_S16_ID : Dims1_s16.txt 
+              Pattern REF1_S32_ID : Reference1_s32.txt
+
+              Pattern SAMPLES2_F16_ID : Samples2_f16.txt 
+              Pattern PARAMS2_F16_ID : Params2_f16.txt 
+              Pattern DIMS2_S16_ID : Dims2_s16.txt 
+              Pattern REF2_S32_ID : Reference2_s32.txt
+
+              Pattern SAMPLES3_F16_ID : Samples3_f16.txt 
+              Pattern PARAMS3_F16_ID : Params3_f16.txt 
+              Pattern DIMS3_S16_ID : Dims3_s16.txt 
+              Pattern REF3_S32_ID : Reference3_s32.txt
+
+              Pattern SAMPLES4_F16_ID : Samples4_f16.txt 
+              Pattern PARAMS4_F16_ID : Params4_f16.txt 
+              Pattern DIMS4_S16_ID : Dims4_s16.txt 
+              Pattern REF4_S32_ID : Reference4_s32.txt
+
+              Pattern SAMPLES5_F16_ID : Samples5_f16.txt 
+              Pattern PARAMS5_F16_ID : Params5_f16.txt 
+              Pattern DIMS5_S16_ID : Dims5_s16.txt 
+              Pattern REF5_S32_ID : Reference5_s32.txt
+              
+              Output  OUT_S32_ID : Output
+
+              Functions {
+                 arm_svm_linear_predict_f16:test_svm_linear_predict_f16
+                 arm_svm_polynomial_predict_f16:test_svm_polynomial_predict_f16
+                 arm_svm_rbf_predict_f16:test_svm_rbf_predict_f16
+                 arm_svm_sigmoid_predict_f16:test_svm_sigmoid_predict_f16
+                 disabled{arm_svm_oneclass_predict_f16:test_svm_linear_predict_f16}
+              }
+           }
+        }
+
+        group Bayes Tests {
+           class = BayesTests
+           folder = Bayes 
+
+           suite Bayes F16 {
+              class = BayesF16
+              folder = BayesF16
+
+              Pattern DIMS1_S16_ID : Dims1_s16.txt 
+              Pattern INPUTS1_F16_ID : Inputs1_f16.txt 
+              Pattern PARAMS1_F16_ID : Params1_f16.txt 
+              Pattern PROBAS1_F16_ID : Probas1_f16.txt
+              Pattern PREDICTS1_S16_ID : Predicts1_s16.txt
+
+              Output  OUT_PROBA_F16_ID : Probas
+              Output  OUT_PREDICT_S16_ID : Predicts
+
+              Functions {
+                 arm_gaussian_naive_bayes_predict_f16:test_gaussian_naive_bayes_predict_f16
+              }
+           }
+        }
+
+        group Distance Tests {
+           class = DistanceTests
+           folder = Distance
+
+           suite Distance Tests F16 {
+              class = DistanceTestsF16
+              folder = DistanceF16
+
+              Pattern DIMS_S16_ID : Dims1_s16.txt 
+              Pattern DIMS_MINKOWSKI_S16_ID : Dims9_s16.txt 
+
+              Pattern INPUTA_F16_ID : InputA1_f16.txt
+              Pattern INPUTB_F16_ID : InputB1_f16.txt
+
+              Pattern INPUTA_JEN_F16_ID : InputA8_f16.txt
+              Pattern INPUTB_JEN_F16_ID : InputB8_f16.txt
+
+              Pattern REF1_F16_ID : Ref1_f16.txt
+              Pattern REF2_F16_ID : Ref2_f16.txt
+              Pattern REF3_F16_ID : Ref3_f16.txt
+              Pattern REF4_F16_ID : Ref4_f16.txt
+              Pattern REF5_F16_ID : Ref5_f16.txt
+              Pattern REF6_F16_ID : Ref6_f16.txt
+              Pattern REF7_F16_ID : Ref7_f16.txt
+              Pattern REF8_F16_ID : Ref8_f16.txt
+              Pattern REF9_F16_ID : Ref9_f16.txt
+
+              Output  OUT_F16_ID : Output
+              Output  TMPA_F16_ID : TmpA
+              Output  TMPB_F16_ID : TmpB
+
+              Functions {
+                 arm_braycurtis_distance_f16:test_braycurtis_distance_f16
+                 arm_canberra_distance_f16:test_canberra_distance_f16
+                 arm_chebyshev_distance_f16:test_chebyshev_distance_f16
+                 arm_cityblock_distance_f16:test_cityblock_distance_f16
+                 arm_correlation_distance_f16:test_correlation_distance_f16
+                 arm_cosine_distance_f16:test_cosine_distance_f16
+                 arm_euclidean_distance_f16:test_euclidean_distance_f16
+                 arm_jensenshannon_distance_f16:test_jensenshannon_distance_f16
+                 arm_minkowski_distance_f16:test_minkowski_distance_f16
+              }
+           }
+        }
+
+        group Filtering Tests {
+           class = FilteringTests
+           folder = Filtering
+
+           group MISC {
+             class = MISC 
+             folder = MISC
+
+             suite MISC F16 {
+                class = MISCF16 
+                folder = MISCF16
+
+                Pattern INPUTA_F16_ID : InputsA1_f16.txt
+                Pattern INPUTB_F16_ID : InputsB1_f16.txt
+
+                Pattern INPUTA2_F16_ID : InputsA2_f16.txt
+                Pattern INPUTB2_F16_ID : InputsB2_f16.txt
+
+                Pattern INPUTPHI_A_F16_ID : InputPhi81_f16.txt
+                Pattern INPUTPHI_B_F16_ID : InputPhi82_f16.txt
+                Pattern INPUTPHI_C_F16_ID : InputPhi83_f16.txt
+
+                Pattern INPUT_ERRORS_F16_ID : LDErrors81_f16.txt
+
+                Pattern REF1_F16_ID : Reference1_f16.txt
+                Pattern REF2_F16_ID : Reference2_f16.txt
+                Pattern REF3_F16_ID : Reference3_f16.txt
+                Pattern REF4_F16_ID : Reference4_f16.txt
+                Pattern REF5_F16_ID : Reference5_f16.txt
+                Pattern REF6_F16_ID : Reference6_f16.txt
+                Pattern REF7_F16_ID : Reference7_f16.txt
+                Pattern REF8_F16_ID : Reference8_f16.txt
+                Pattern REF9_F16_ID : Reference9_f16.txt
+                Pattern REF10_F16_ID : Reference10_f16.txt
+                Pattern REF11_F16_ID : Reference11_f16.txt
+                Pattern REF12_F16_ID : Reference12_f16.txt
+                Pattern REF13_F16_ID : Reference13_f16.txt
+                Pattern REF14_F16_ID : Reference14_f16.txt
+                Pattern REF15_F16_ID : Reference15_f16.txt
+                Pattern REF16_F16_ID : Reference16_f16.txt
+                Pattern REF17_F16_ID : Reference17_f16.txt
+                Pattern REF18_F16_ID : Reference18_f16.txt
+                Pattern REF19_F16_ID : Reference19_f16.txt
+                Pattern REF20_F16_ID : Reference20_f16.txt
+                Pattern REF21_F16_ID : Reference21_f16.txt
+                Pattern REF22_F16_ID : Reference22_f16.txt
+                Pattern REF23_F16_ID : Reference23_f16.txt
+                Pattern REF24_F16_ID : Reference24_f16.txt
+                Pattern REF25_F16_ID : Reference25_f16.txt
+                Pattern REF26_F16_ID : Reference26_f16.txt
+                Pattern REF27_F16_ID : Reference27_f16.txt
+                Pattern REF28_F16_ID : Reference28_f16.txt
+                Pattern REF29_F16_ID : Reference29_f16.txt
+                Pattern REF30_F16_ID : Reference30_f16.txt
+                Pattern REF31_F16_ID : Reference31_f16.txt
+                Pattern REF32_F16_ID : Reference32_f16.txt
+                Pattern REF33_F16_ID : Reference33_f16.txt
+                Pattern REF34_F16_ID : Reference34_f16.txt
+                Pattern REF35_F16_ID : Reference35_f16.txt
+                Pattern REF36_F16_ID : Reference36_f16.txt
+                Pattern REF37_F16_ID : Reference37_f16.txt
+                Pattern REF38_F16_ID : Reference38_f16.txt
+                Pattern REF39_F16_ID : Reference39_f16.txt
+                Pattern REF40_F16_ID : Reference40_f16.txt
+                Pattern REF41_F16_ID : Reference41_f16.txt
+                Pattern REF42_F16_ID : Reference42_f16.txt
+                Pattern REF43_F16_ID : Reference43_f16.txt
+                Pattern REF44_F16_ID : Reference44_f16.txt
+                Pattern REF45_F16_ID : Reference45_f16.txt
+                Pattern REF46_F16_ID : Reference46_f16.txt
+                Pattern REF47_F16_ID : Reference47_f16.txt
+                Pattern REF48_F16_ID : Reference48_f16.txt
+                Pattern REF49_F16_ID : Reference49_f16.txt
+                Pattern REF50_F16_ID : Reference50_f16.txt
+                Pattern REF51_F16_ID : Reference51_f16.txt
+                Pattern REF52_F16_ID : Reference52_f16.txt
+                Pattern REF53_F16_ID : Reference53_f16.txt
+                Pattern REF54_F16_ID : Reference54_f16.txt
+                Pattern REF55_F16_ID : Reference55_f16.txt
+                Pattern REF56_F16_ID : Reference56_f16.txt
+                Pattern REF57_F16_ID : Reference57_f16.txt
+                Pattern REF58_F16_ID : Reference58_f16.txt
+                Pattern REF59_F16_ID : Reference59_f16.txt
+                Pattern REF60_F16_ID : Reference60_f16.txt
+                Pattern REF61_F16_ID : Reference61_f16.txt
+                Pattern REF62_F16_ID : Reference62_f16.txt
+                Pattern REF63_F16_ID : Reference63_f16.txt
+                Pattern REF64_F16_ID : Reference64_f16.txt
+                Pattern REF65_F16_ID : Reference65_f16.txt
+                Pattern REF66_F16_ID : Reference66_f16.txt
+                Pattern REF67_F16_ID : Reference67_f16.txt
+                Pattern REF68_F16_ID : Reference68_f16.txt
+                Pattern REF69_F16_ID : Reference69_f16.txt
+                Pattern REF70_F16_ID : Reference70_f16.txt
+                Pattern REF71_F16_ID : Reference71_f16.txt
+                Pattern REF72_F16_ID : Reference72_f16.txt
+                Pattern REF73_F16_ID : Reference73_f16.txt
+                Pattern REF74_F16_ID : Reference74_f16.txt
+                Pattern REF75_F16_ID : Reference75_f16.txt
+                Pattern REF76_F16_ID : Reference76_f16.txt
+                Pattern REF77_F16_ID : Reference77_f16.txt
+                Pattern REF78_F16_ID : Reference78_f16.txt
+                Pattern REF79_F16_ID : Reference79_f16.txt
+                Pattern REF80_F16_ID : Reference80_f16.txt
+                Pattern REF81_F16_ID : Reference81_f16.txt
+                Pattern REF82_F16_ID : Reference82_f16.txt
+                Pattern REF83_F16_ID : Reference83_f16.txt
+
+                Pattern REF84_F16_ID : Reference84_f16.txt
+                Pattern REF85_F16_ID : Reference85_f16.txt
+                Pattern REF86_F16_ID : Reference86_f16.txt
+
+
+                Output  OUT_F16_ID : Output
+                Output  TMP_F16_ID : Temp
+
+                Functions {
+                  arm_correlate_f16 nba=4 nbb=1:test_correlate_f16
+                  arm_correlate_f16 nba=4 nbb=2:test_correlate_f16
+                  arm_correlate_f16 nba=4 nbb=3:test_correlate_f16
+                  arm_correlate_f16 nba=4 nbb=8:test_correlate_f16
+                  arm_correlate_f16 nba=4 nbb=11:test_correlate_f16
+                  arm_correlate_f16 nba=5 nbb=1:test_correlate_f16
+                  arm_correlate_f16 nba=5 nbb=2:test_correlate_f16
+                  arm_correlate_f16 nba=5 nbb=3:test_correlate_f16
+                  arm_correlate_f16 nba=5 nbb=8:test_correlate_f16
+                  arm_correlate_f16 nba=5 nbb=11:test_correlate_f16
+                  arm_correlate_f16 nba=6 nbb=1:test_correlate_f16
+                  arm_correlate_f16 nba=6 nbb=2:test_correlate_f16
+                  arm_correlate_f16 nba=6 nbb=3:test_correlate_f16
+                  arm_correlate_f16 nba=6 nbb=8:test_correlate_f16
+                  arm_correlate_f16 nba=6 nbb=11:test_correlate_f16
+                  arm_correlate_f16 nba=9 nbb=1:test_correlate_f16
+                  arm_correlate_f16 nba=9 nbb=2:test_correlate_f16
+                  arm_correlate_f16 nba=9 nbb=3:test_correlate_f16
+                  arm_correlate_f16 nba=9 nbb=8:test_correlate_f16
+                  arm_correlate_f16 nba=9 nbb=11:test_correlate_f16
+                  arm_correlate_f16 nba=10 nbb=1:test_correlate_f16
+                  arm_correlate_f16 nba=10 nbb=2:test_correlate_f16
+                  arm_correlate_f16 nba=10 nbb=3:test_correlate_f16
+                  arm_correlate_f16 nba=10 nbb=8:test_correlate_f16
+                  arm_correlate_f16 nba=10 nbb=11:test_correlate_f16
+                  arm_correlate_f16 nba=11 nbb=1:test_correlate_f16
+                  arm_correlate_f16 nba=11 nbb=2:test_correlate_f16
+                  arm_correlate_f16 nba=11 nbb=3:test_correlate_f16
+                  arm_correlate_f16 nba=11 nbb=8:test_correlate_f16
+                  arm_correlate_f16 nba=11 nbb=11:test_correlate_f16
+                  arm_correlate_f16 nba=12 nbb=1:test_correlate_f16
+                  arm_correlate_f16 nba=12 nbb=2:test_correlate_f16
+                  arm_correlate_f16 nba=12 nbb=3:test_correlate_f16
+                  arm_correlate_f16 nba=12 nbb=8:test_correlate_f16
+                  arm_correlate_f16 nba=12 nbb=11:test_correlate_f16
+                  arm_correlate_f16 nba=13 nbb=1:test_correlate_f16
+                  arm_correlate_f16 nba=13 nbb=2:test_correlate_f16
+                  arm_correlate_f16 nba=13 nbb=3:test_correlate_f16
+                  arm_correlate_f16 nba=13 nbb=8:test_correlate_f16
+                  arm_correlate_f16 nba=13 nbb=11:test_correlate_f16
+                  arm_levinson_durbin_f16 n=7:test_levinson_durbin_f16
+                  arm_levinson_durbin_f16 n=16:test_levinson_durbin_f16
+                  arm_levinson_durbin_f16 n=23:test_levinson_durbin_f16
+                }
+
+             }
+           }
+
+           group FIR {
+             class = FIR 
+             folder = FIR
+
+             suite FIR F16 {
+                class = FIRF16 
+                folder = FIRF16
+
+                Pattern FIRINPUTS_F16_ID : FirInput1_f16.txt
+                Pattern FIRCOEFS_F16_ID : FirCoefs1_f16.txt
+                Pattern FIRCONFIGS_S16_ID : FirConfigs1_s16.txt 
+
+                Pattern FIRREFS_F16_ID : FirRefs1_f16.txt
+
+                Output  OUT_F16_ID : Output
+
+                Functions {
+                  arm_fir_f16:test_fir_f16
+                }
+
+             }
+           }
+
+           group BIQUAD {
+             class = BIQUAD 
+             folder = BIQUAD
+
+             suite BIQUAD F16 {
+                class = BIQUADF16 
+                folder = BIQUADF16
+
+                Pattern BIQUADINPUTS_F16_ID : BiquadInput1_f16.txt
+                Pattern BIQUADCOEFS_F16_ID : BiquadCoefs1_f16.txt
+                Pattern BIQUADREFS_F16_ID : BiquadOutput1_f16.txt
+
+                Pattern ALLBIQUADINPUTS_F16_ID : AllBiquadInputs2_f16.txt
+                Pattern ALLBIQUADSTEREOINPUTS_F16_ID : AllBiquadStereoInputs2_f16.txt
+                Pattern ALLBIQUADCOEFS_F16_ID : AllBiquadCoefs2_f16.txt
+                Pattern ALLBIQUADREFS_F16_ID : AllBiquadRefs2_f16.txt
+                Pattern ALLBIQUADSTEREOREFS_F16_ID : AllBiquadStereoRefs2_f16.txt
+                Pattern ALLBIQUADCONFIGS_S16_ID : AllBiquadConfigs2_s16.txt
+
+                Output  OUT_F16_ID : Output
+                Output  STATE_F16_ID : State
+
+                Functions {
+                  arm_biquad_cascade_df1 ref pattern:test_biquad_cascade_df1_ref
+                  arm_biquad_cascade_df2T ref pattern:test_biquad_cascade_df2T_ref
+                  arm_biquad_cascade_df1 random pattern:test_biquad_cascade_df1_rand
+                  arm_biquad_cascade_df2T random pattern:test_biquad_cascade_df2T_rand
+                  arm_biquad_cascade_stereo_df2T random pattern:test_biquad_cascade_stereo_df2T_rand
+                }
+
+             }
+           }
+
+
+        }
+
+        group Matrix Tests {
+           class = MatrixTests
+           folder = Matrix
+
+           group Unary Tests {
+              class = UnaryTests
+              folder = Unary
+
+              suite Unary Tests F16 {
+                class = UnaryTestsF16 
+                folder = UnaryF16
+
+                Pattern INPUTS1_F16_ID : InputA1_f16.txt 
+                Pattern INPUTSC1_F16_ID : InputAC1_f16.txt 
+
+                Pattern INPUTS2_F16_ID : InputB1_f16.txt 
+                Pattern INPUTVEC1_F16_ID : InputVec1_f16.txt 
+
+                Pattern INPUTSINV_F16_ID : InputInvert1_f16.txt 
+                Pattern DIMSUNARY1_S16_ID : DimsUnary1_s16.txt 
+                Pattern DIMSINVERT1_S16_ID : DimsInvert1_s16.txt 
+                
+                Pattern REFADD1_F16_ID : RefAdd1_f16.txt
+                Pattern REFSUB1_F16_ID : RefSub1_f16.txt
+                Pattern REFSCALE1_F16_ID : RefScale1_f16.txt
+                Pattern REFTRANS1_F16_ID : RefTranspose1_f16.txt
+                Pattern REFTRANSC1_F16_ID : RefTransposeC1_f16.txt
+                Pattern REFINV1_F16_ID : RefInvert1_f16.txt
+                Pattern REFVECMUL1_F16_ID : RefVecMul1_f16.txt
+
+                Pattern DIMSCHOLESKY1_DPO_S16_ID : DimsCholeskyDPO1_s16.txt 
+                Pattern DIMSCHOLESKY1_SDPO_S16_ID : DimsCholeskySDPO1_s16.txt 
+                Pattern INPUTSCHOLESKY1_DPO_F16_ID : InputCholeskyDPO1_f16.txt 
+                Pattern INPUTSCHOLESKY1_SDPO_F16_ID : InputCholeskySDPO1_f16.txt 
+
+                Pattern REFCHOLESKY1_DPO_F16_ID : RefCholeskyDPO1_f16.txt
+
+                Pattern REFLDLT_D_DPO1_F16_ID : RefLDLT_D_DPO1_f16.txt
+                Pattern REFLDLT_LL_DPO1_F16_ID : RefLDLT_LL_DPO1_f16.txt
+                Pattern REFLDLT_PERM_DPO1_S16_ID : RefLDLT_PERM_DPO1_s16.txt
+
+                Pattern REFLDLT_D_SDPO1_F16_ID : RefLDLT_D_SDPO1_f16.txt
+                Pattern REFLDLT_LL_SDPO1_F16_ID : RefLDLT_LL_SDPO1_f16.txt
+                Pattern REFLDLT_PERM_SDPO1_S16_ID : RefLDLT_PERM_SDPO1_s16.txt
+
+                Pattern INPUT_UT_DPO_F16_ID : InputUTDPO1_f16.txt
+                Pattern INPUT_LT_DPO_F16_ID : InputLTDPO1_f16.txt
+                Pattern INPUT_RNDA_DPO_F16_ID : InputRNDA1_f16.txt
+            
+                Pattern REF_UTINV_DPO_F16_ID : Ref_UTINV_DPO1_f16.txt
+                Pattern REF_LTINV_DPO_F16_ID : Ref_LTINV_DPO1_f16.txt
+                Pattern REF_CHOLINV_DPO_F16_ID : Ref_CHOLINV_DPO1_f16.txt
+
+                Output  D_F16_ID : Output
+                Output  LL_F16_ID : Output
+                Output  PERM_S16_ID : Output
+
+                Output  OUT_F16_ID : Output
+                Output  TMPA_F16_ID : TmpA
+                Output  TMPB_F16_ID : TmpB
+
+                Functions {
+                 test matrix add:test_mat_add_f16
+                 test matrix sub:test_mat_sub_f16
+                 test matrix scale:test_mat_scale_f16
+                 test matrix transpose:test_mat_trans_f16
+                 test matrix inverse:test_mat_inverse_f16
+                 test mat mult vec:test_mat_vec_mult_f16
+                 test matrix complex transpose:test_mat_cmplx_trans_f16
+                 test matrix cholesky decomposition:test_mat_cholesky_dpo_f16
+                 test solve upper triangular:test_solve_upper_triangular_f16
+                 test solve lower triangular:test_solve_lower_triangular_f16
+                }
+
+              }
+
+           }
+
+           group Binary Tests{
+              class = BinaryTests 
+              folder = Binary
+
+              suite Binary F16 {
+                class = BinaryTestsF16 
+                folder = BinaryF16
+
+                Pattern INPUTS1_F16_ID : InputA1_f16.txt 
+                Pattern INPUTS2_F16_ID : InputB1_f16.txt 
+
+                Pattern INPUTSC1_F16_ID : InputAC1_f16.txt 
+                Pattern INPUTSC2_F16_ID : InputBC1_f16.txt 
+
+                Pattern REFMUL1_F16_ID : RefMul1_f16.txt
+                Pattern REFCMPLXMUL1_F16_ID : RefCmplxMul1_f16.txt
+                Pattern DIMSBINARY1_S16_ID : DimsBinary1_s16.txt 
+
+
+                Output  OUT_F16_ID : Output
+                Output  TMPA_F16_ID : TmpA
+                Output  TMPB_F16_ID : TmpB
+
+                Functions {
+                  test mult:test_mat_mult_f16
+                  test complex mult:test_mat_cmplx_mult_f16
+                }
+
+             }
+           }
+
+        }
+
+        group Transform Tests {
+           class = TransformTests
+           folder = Transform 
+
+           suite Transform Complex F16 {
+              class = TransformCF16
+              folder = TransformF16
+
+              Pattern INPUTS_CFFT_NOISY_16_F16_ID : ComplexInputSamples_Noisy_16_1_f16.txt 
+              Pattern INPUTS_CIFFT_NOISY_16_F16_ID : ComplexInputIFFTSamples_Noisy_16_1_f16.txt 
+              Pattern REF_CFFT_NOISY_16_F16_ID : ComplexFFTSamples_Noisy_16_1_f16.txt 
+
+              Pattern INPUTS_CFFT_NOISY_32_F16_ID : ComplexInputSamples_Noisy_32_2_f16.txt 
+              Pattern INPUTS_CIFFT_NOISY_32_F16_ID : ComplexInputIFFTSamples_Noisy_32_2_f16.txt 
+              Pattern REF_CFFT_NOISY_32_F16_ID : ComplexFFTSamples_Noisy_32_2_f16.txt 
+
+              Pattern INPUTS_CFFT_NOISY_64_F16_ID : ComplexInputSamples_Noisy_64_3_f16.txt
+              Pattern INPUTS_CIFFT_NOISY_64_F16_ID : ComplexInputIFFTSamples_Noisy_64_3_f16.txt 
+              Pattern REF_CFFT_NOISY_64_F16_ID : ComplexFFTSamples_Noisy_64_3_f16.txt 
+
+              Pattern INPUTS_CFFT_NOISY_128_F16_ID : ComplexInputSamples_Noisy_128_4_f16.txt 
+              Pattern INPUTS_CIFFT_NOISY_128_F16_ID : ComplexInputIFFTSamples_Noisy_128_4_f16.txt 
+              Pattern REF_CFFT_NOISY_128_F16_ID : ComplexFFTSamples_Noisy_128_4_f16.txt 
+
+              Pattern INPUTS_CFFT_NOISY_256_F16_ID : ComplexInputSamples_Noisy_256_5_f16.txt 
+              Pattern INPUTS_CIFFT_NOISY_256_F16_ID : ComplexInputIFFTSamples_Noisy_256_5_f16.txt 
+              Pattern REF_CFFT_NOISY_256_F16_ID : ComplexFFTSamples_Noisy_256_5_f16.txt 
+
+              Pattern INPUTS_CFFT_NOISY_512_F16_ID : ComplexInputSamples_Noisy_512_6_f16.txt 
+              Pattern INPUTS_CIFFT_NOISY_512_F16_ID : ComplexInputIFFTSamples_Noisy_512_6_f16.txt 
+              Pattern REF_CFFT_NOISY_512_F16_ID : ComplexFFTSamples_Noisy_512_6_f16.txt 
+
+              Pattern INPUTS_CFFT_NOISY_1024_F16_ID : ComplexInputSamples_Noisy_1024_7_f16.txt 
+              Pattern INPUTS_CIFFT_NOISY_1024_F16_ID : ComplexInputIFFTSamples_Noisy_1024_7_f16.txt 
+              Pattern REF_CFFT_NOISY_1024_F16_ID : ComplexFFTSamples_Noisy_1024_7_f16.txt 
+
+              Pattern INPUTS_CFFT_NOISY_2048_F16_ID : ComplexInputSamples_Noisy_2048_8_f16.txt 
+              Pattern INPUTS_CIFFT_NOISY_2048_F16_ID : ComplexInputIFFTSamples_Noisy_2048_8_f16.txt 
+              Pattern REF_CFFT_NOISY_2048_F16_ID : ComplexFFTSamples_Noisy_2048_8_f16.txt 
+
+              Pattern INPUTS_CFFT_NOISY_4096_F16_ID : ComplexInputSamples_Noisy_4096_9_f16.txt 
+              Pattern INPUTS_CIFFT_NOISY_4096_F16_ID : ComplexInputIFFTSamples_Noisy_4096_9_f16.txt 
+              Pattern REF_CFFT_NOISY_4096_F16_ID : ComplexFFTSamples_Noisy_4096_9_f16.txt 
+
+              Pattern INPUTS_CFFT_STEP_16_F16_ID : ComplexInputSamples_Step_16_10_f16.txt 
+              Pattern INPUTS_CIFFT_STEP_16_F16_ID : ComplexInputIFFTSamples_Step_16_10_f16.txt 
+              Pattern REF_CFFT_STEP_16_F16_ID : ComplexFFTSamples_Step_16_10_f16.txt 
+
+              Pattern INPUTS_CFFT_STEP_32_F16_ID : ComplexInputSamples_Step_32_11_f16.txt 
+              Pattern INPUTS_CIFFT_STEP_32_F16_ID : ComplexInputIFFTSamples_Step_32_11_f16.txt 
+              Pattern REF_CFFT_STEP_32_F16_ID : ComplexFFTSamples_Step_32_11_f16.txt 
+
+              Pattern INPUTS_CFFT_STEP_64_F16_ID : ComplexInputSamples_Step_64_12_f16.txt 
+              Pattern INPUTS_CIFFT_STEP_64_F16_ID : ComplexInputIFFTSamples_Step_64_12_f16.txt 
+              Pattern REF_CFFT_STEP_64_F16_ID : ComplexFFTSamples_Step_64_12_f16.txt 
+
+              Pattern INPUTS_CFFT_STEP_128_F16_ID : ComplexInputSamples_Step_128_13_f16.txt 
+              Pattern INPUTS_CIFFT_STEP_128_F16_ID : ComplexInputIFFTSamples_Step_128_13_f16.txt 
+              Pattern REF_CFFT_STEP_128_F16_ID : ComplexFFTSamples_Step_128_13_f16.txt 
+
+              Pattern INPUTS_CFFT_STEP_256_F16_ID : ComplexInputSamples_Step_256_14_f16.txt 
+              Pattern INPUTS_CIFFT_STEP_256_F16_ID : ComplexInputIFFTSamples_Step_256_14_f16.txt 
+              Pattern REF_CFFT_STEP_256_F16_ID : ComplexFFTSamples_Step_256_14_f16.txt 
+
+              Pattern INPUTS_CFFT_STEP_512_F16_ID : ComplexInputSamples_Step_512_15_f16.txt 
+              Pattern INPUTS_CIFFT_STEP_512_F16_ID : ComplexInputIFFTSamples_Step_512_15_f16.txt 
+              Pattern REF_CFFT_STEP_512_F16_ID : ComplexFFTSamples_Step_512_15_f16.txt 
+
+              Pattern INPUTS_CFFT_STEP_1024_F16_ID : ComplexInputSamples_Step_1024_16_f16.txt 
+              Pattern INPUTS_CIFFT_STEP_1024_F16_ID : ComplexInputIFFTSamples_Step_1024_16_f16.txt 
+              Pattern REF_CFFT_STEP_1024_F16_ID : ComplexFFTSamples_Step_1024_16_f16.txt 
+
+              Pattern INPUTS_CFFT_STEP_2048_F16_ID : ComplexInputSamples_Step_2048_17_f16.txt 
+              Pattern INPUTS_CIFFT_STEP_2048_F16_ID : ComplexInputIFFTSamples_Step_2048_17_f16.txt 
+              Pattern REF_CFFT_STEP_2048_F16_ID : ComplexFFTSamples_Step_2048_17_f16.txt 
+
+              Pattern INPUTS_CFFT_STEP_4096_F16_ID : ComplexInputSamples_Step_4096_18_f16.txt 
+              Pattern INPUTS_CIFFT_STEP_4096_F16_ID : ComplexInputIFFTSamples_Step_4096_18_f16.txt 
+              Pattern REF_CFFT_STEP_4096_F16_ID : ComplexFFTSamples_Step_4096_18_f16.txt 
+
+              Output  OUTPUT_CFFT_F16_ID : ComplexFFTSamples
+
+              Functions {
+                 cfft_noisy_16_f16:test_cfft_f16
+                 cfft_noisy_32_f16:test_cfft_f16
+                 cfft_noisy_64_f16:test_cfft_f16
+                 cfft_noisy_128_f16:test_cfft_f16
+                 cfft_noisy_256_f16:test_cfft_f16
+                 cfft_noisy_512_f16:test_cfft_f16
+                 cfft_noisy_1024_f16:test_cfft_f16
+                 cfft_noisy_2048_f16:test_cfft_f16
+                 cfft_noisy_4096_f16:test_cfft_f16
+                 cfft_step_16_f16:test_cfft_f16
+                 cfft_step_32_f16:test_cfft_f16
+                 cfft_step_64_f16:test_cfft_f16
+                 cfft_step_128_f16:test_cfft_f16
+                 cfft_step_256_f16:test_cfft_f16
+                 cfft_step_512_f16:test_cfft_f16
+                 cfft_step_1024_f16:test_cfft_f16
+                 cfft_step_2048_f16:test_cfft_f16
+                 cfft_step_4096_f16:test_cfft_f16
+                 cifft_noisy_16_f16:test_cfft_f16
+                 cifft_noisy_32_f16:test_cfft_f16
+                 cifft_noisy_64_f16:test_cfft_f16
+                 cifft_noisy_128_f16:test_cfft_f16
+                 cifft_noisy_256_f16:test_cfft_f16
+                 cifft_noisy_512_f16:test_cfft_f16
+                 cifft_noisy_1024_f16:test_cfft_f16
+                 cifft_noisy_2048_f16:test_cfft_f16
+                 cifft_noisy_4096_f16:test_cfft_f16
+                 cifft_step_16_f16:test_cfft_f16
+                 cifft_step_32_f16:test_cfft_f16
+                 cifft_step_64_f16:test_cfft_f16
+                 cifft_step_128_f16:test_cfft_f16
+                 cifft_step_256_f16:test_cfft_f16
+                 cifft_step_512_f16:test_cfft_f16
+                 cifft_step_1024_f16:test_cfft_f16
+                 cifft_step_2048_f16:test_cfft_f16
+                 cifft_step_4096_f16:test_cfft_f16
+
+              }
+
+            }
+
+           suite Transform Real F16 {
+              class = TransformRF16
+              folder = TransformF16
+
+              Pattern INPUTS_RFFT_NOISY_32_F16_ID : RealInputSamples_Noisy_32_2_f16.txt 
+              Pattern INPUTS_RIFFT_NOISY_32_F16_ID : RealInputIFFTSamples_Noisy_32_2_f16.txt 
+              Pattern REF_RFFT_NOISY_32_F16_ID : RealFFTSamples_Noisy_32_2_f16.txt 
+
+              Pattern INPUTS_RFFT_NOISY_64_F16_ID : RealInputSamples_Noisy_64_3_f16.txt
+              Pattern INPUTS_RIFFT_NOISY_64_F16_ID : RealInputIFFTSamples_Noisy_64_3_f16.txt 
+              Pattern REF_RFFT_NOISY_64_F16_ID : RealFFTSamples_Noisy_64_3_f16.txt 
+
+              Pattern INPUTS_RFFT_NOISY_128_F16_ID : RealInputSamples_Noisy_128_4_f16.txt 
+              Pattern INPUTS_RIFFT_NOISY_128_F16_ID : RealInputIFFTSamples_Noisy_128_4_f16.txt 
+              Pattern REF_RFFT_NOISY_128_F16_ID : RealFFTSamples_Noisy_128_4_f16.txt 
+
+              Pattern INPUTS_RFFT_NOISY_256_F16_ID : RealInputSamples_Noisy_256_5_f16.txt 
+              Pattern INPUTS_RIFFT_NOISY_256_F16_ID : RealInputIFFTSamples_Noisy_256_5_f16.txt 
+              Pattern REF_RFFT_NOISY_256_F16_ID : RealFFTSamples_Noisy_256_5_f16.txt 
+
+              Pattern INPUTS_RFFT_NOISY_512_F16_ID : RealInputSamples_Noisy_512_6_f16.txt 
+              Pattern INPUTS_RIFFT_NOISY_512_F16_ID : RealInputIFFTSamples_Noisy_512_6_f16.txt 
+              Pattern REF_RFFT_NOISY_512_F16_ID : RealFFTSamples_Noisy_512_6_f16.txt 
+
+              Pattern INPUTS_RFFT_NOISY_1024_F16_ID : RealInputSamples_Noisy_1024_7_f16.txt 
+              Pattern INPUTS_RIFFT_NOISY_1024_F16_ID : RealInputIFFTSamples_Noisy_1024_7_f16.txt 
+              Pattern REF_RFFT_NOISY_1024_F16_ID : RealFFTSamples_Noisy_1024_7_f16.txt 
+
+              Pattern INPUTS_RFFT_NOISY_2048_F16_ID : RealInputSamples_Noisy_2048_8_f16.txt 
+              Pattern INPUTS_RIFFT_NOISY_2048_F16_ID : RealInputIFFTSamples_Noisy_2048_8_f16.txt 
+              Pattern REF_RFFT_NOISY_2048_F16_ID : RealFFTSamples_Noisy_2048_8_f16.txt 
+
+              Pattern INPUTS_RFFT_NOISY_4096_F16_ID : RealInputSamples_Noisy_4096_9_f16.txt 
+              Pattern INPUTS_RIFFT_NOISY_4096_F16_ID : RealInputIFFTSamples_Noisy_4096_9_f16.txt 
+              Pattern REF_RFFT_NOISY_4096_F16_ID : RealFFTSamples_Noisy_4096_9_f16.txt 
+
+              Pattern INPUTS_RFFT_STEP_16_F16_ID : RealInputSamples_Step_16_10_f16.txt 
+              Pattern INPUTS_RIFFT_STEP_16_F16_ID : RealInputIFFTSamples_Step_16_10_f16.txt 
+              Pattern REF_RFFT_STEP_16_F16_ID : RealFFTSamples_Step_16_10_f16.txt 
+
+              Pattern INPUTS_RFFT_STEP_32_F16_ID : RealInputSamples_Step_32_11_f16.txt 
+              Pattern INPUTS_RIFFT_STEP_32_F16_ID : RealInputIFFTSamples_Step_32_11_f16.txt 
+              Pattern REF_RFFT_STEP_32_F16_ID : RealFFTSamples_Step_32_11_f16.txt 
+
+              Pattern INPUTS_RFFT_STEP_64_F16_ID : RealInputSamples_Step_64_12_f16.txt 
+              Pattern INPUTS_RIFFT_STEP_64_F16_ID : RealInputIFFTSamples_Step_64_12_f16.txt 
+              Pattern REF_RFFT_STEP_64_F16_ID : RealFFTSamples_Step_64_12_f16.txt 
+
+              Pattern INPUTS_RFFT_STEP_128_F16_ID : RealInputSamples_Step_128_13_f16.txt 
+              Pattern INPUTS_RIFFT_STEP_128_F16_ID : RealInputIFFTSamples_Step_128_13_f16.txt 
+              Pattern REF_RFFT_STEP_128_F16_ID : RealFFTSamples_Step_128_13_f16.txt 
+
+              Pattern INPUTS_RFFT_STEP_256_F16_ID : RealInputSamples_Step_256_14_f16.txt 
+              Pattern INPUTS_RIFFT_STEP_256_F16_ID : RealInputIFFTSamples_Step_256_14_f16.txt 
+              Pattern REF_RFFT_STEP_256_F16_ID : RealFFTSamples_Step_256_14_f16.txt 
+
+              Pattern INPUTS_RFFT_STEP_512_F16_ID : RealInputSamples_Step_512_15_f16.txt 
+              Pattern INPUTS_RIFFT_STEP_512_F16_ID : RealInputIFFTSamples_Step_512_15_f16.txt 
+              Pattern REF_RFFT_STEP_512_F16_ID : RealFFTSamples_Step_512_15_f16.txt 
+
+              Pattern INPUTS_RFFT_STEP_1024_F16_ID : RealInputSamples_Step_1024_16_f16.txt 
+              Pattern INPUTS_RIFFT_STEP_1024_F16_ID : RealInputIFFTSamples_Step_1024_16_f16.txt 
+              Pattern REF_RFFT_STEP_1024_F16_ID : RealFFTSamples_Step_1024_16_f16.txt 
+
+              Pattern INPUTS_RFFT_STEP_2048_F16_ID : RealInputSamples_Step_2048_17_f16.txt 
+              Pattern INPUTS_RIFFT_STEP_2048_F16_ID : RealInputIFFTSamples_Step_2048_17_f16.txt 
+              Pattern REF_RFFT_STEP_2048_F16_ID : RealFFTSamples_Step_2048_17_f16.txt 
+
+              Pattern INPUTS_RFFT_STEP_4096_F16_ID : RealInputSamples_Step_4096_18_f16.txt 
+              Pattern INPUTS_RIFFT_STEP_4096_F16_ID : RealInputIFFTSamples_Step_4096_18_f16.txt 
+              Pattern REF_RFFT_STEP_4096_F16_ID : RealFFTSamples_Step_4096_18_f16.txt 
+              
+              Output  OUTPUT_RFFT_F16_ID : RealFFTSamples
+              Output  TEMP_F16_ID : Temp
+
+              Functions {
+                 rfft_noisy_32_f16:test_rfft_f16
+                 rfft_noisy_64_f16:test_rfft_f16
+                 rfft_noisy_128_f16:test_rfft_f16
+                 rfft_noisy_256_f16:test_rfft_f16
+                 rfft_noisy_512_f16:test_rfft_f16
+                 rfft_noisy_1024_f16:test_rfft_f16
+                 rfft_noisy_2048_f16:test_rfft_f16
+                 rfft_noisy_4096_f16:test_rfft_f16
+                 rfft_step_32_f16:test_rfft_f16
+                 rfft_step_64_f16:test_rfft_f16
+                 rfft_step_128_f16:test_rfft_f16
+                 rfft_step_256_f16:test_rfft_f16
+                 rfft_step_512_f16:test_rfft_f16
+                 rfft_step_1024_f16:test_rfft_f16
+                 rfft_step_2048_f16:test_rfft_f16
+                 rfft_step_4096_f16:test_rfft_f16
+                 rifft_noisy_32_f16:test_rfft_f16
+                 rifft_noisy_64_f16:test_rfft_f16
+                 rifft_noisy_128_f16:test_rfft_f16
+                 rifft_noisy_256_f16:test_rfft_f16
+                 rifft_noisy_512_f16:test_rfft_f16
+                 rifft_noisy_1024_f16:test_rfft_f16
+                 rifft_noisy_2048_f16:test_rfft_f16
+                 rifft_noisy_4096_f16:test_rfft_f16
+                 rifft_step_32_f16:test_rfft_f16
+                 rifft_step_64_f16:test_rfft_f16
+                 rifft_step_128_f16:test_rfft_f16
+                 rifft_step_256_f16:test_rfft_f16
+                 rifft_step_512_f16:test_rfft_f16
+                 rifft_step_1024_f16:test_rfft_f16
+                 rifft_step_2048_f16:test_rfft_f16
+                 rifft_step_4096_f16:test_rfft_f16
+              }
+
+            }
+        }
+    }
+}

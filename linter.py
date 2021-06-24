@@ -280,10 +280,13 @@ class CmsisPackLinter(PackLinter):
     """Documentation"""
     self.debug("Using pattern '%s'", pattern)
     for html in iglob(pattern, recursive=True):
-      self.info("%s: Checking links ...", html)
       parser = AdvancedHTMLParser()
       parser.parseFile(html)
       links = parser.getElementsByTagName("a")
+      if links:
+        self.info("%s: Checking links ...", html)
+      else:
+        self.debug("%s: No links found...", html)
       for l in links:
         href = l.getAttribute("href")
         if href:
@@ -292,6 +295,9 @@ class CmsisPackLinter(PackLinter):
             try:
               self.info("%s: Checking link to %s...", html, href.geturl())
               r = requests.head(href.geturl(), headers={'user-agent' : "packlint/1.0"}, timeout=10)
+              if r.status_code >= 400:
+                self.debug(f'HEAD method failed with HTTP-{r.status_code}, falling back to GET method.')
+                r = requests.get(href.geturl(), headers={'user-agent': "packlint/1.0"}, timeout=10)
               r.raise_for_status()
             except (requests.exceptions.ConnectionError, requests.exceptions.HTTPError) as e:
               exc_info = None

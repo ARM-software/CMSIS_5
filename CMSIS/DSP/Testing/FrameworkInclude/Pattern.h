@@ -30,12 +30,18 @@
 
 #include "Test.h"
 #include "Pattern.h"
+#include "arm_math_types.h"
+#include "arm_math_types_f16.h"
 
 namespace Client {
 
 template <typename T> 
 T *loadPattern(Testing::PatternID_t id, PatternMgr *mgr,Testing::nbSamples_t &nb, Testing::nbSamples_t maxSamples=MAX_NB_SAMPLES)
 {
+    (void)id;
+    (void)mgr; 
+    (void)nb;
+    (void)maxSamples;
     return(NULL);
 };
 
@@ -44,6 +50,11 @@ float64_t *loadPattern(Testing::PatternID_t id, PatternMgr *mgr,Testing::nbSampl
 
 template <>
 float32_t *loadPattern(Testing::PatternID_t id, PatternMgr *mgr,Testing::nbSamples_t &nb, Testing::nbSamples_t maxSamples);
+
+#if !defined( __CC_ARM ) && defined(ARM_FLOAT16_SUPPORTED)
+template <>
+float16_t *loadPattern(Testing::PatternID_t id, PatternMgr *mgr,Testing::nbSamples_t &nb, Testing::nbSamples_t maxSamples);
+#endif
 
 template <>
 q63_t *loadPattern(Testing::PatternID_t id, PatternMgr *mgr,Testing::nbSamples_t &nb, Testing::nbSamples_t maxSamples);
@@ -69,6 +80,8 @@ uint8_t *loadPattern(Testing::PatternID_t id, PatternMgr *mgr,Testing::nbSamples
 template <typename T> 
 T *localPattern(Testing::nbSamples_t id, PatternMgr *mgr)
 {
+    (void)id; 
+    (void)mgr;
     return(NULL);
 };
 
@@ -77,6 +90,11 @@ float64_t *localPattern(Testing::nbSamples_t nb, PatternMgr *mgr);
 
 template <>
 float32_t *localPattern(Testing::nbSamples_t nb, PatternMgr *mgr);
+
+#if !defined( __CC_ARM ) && defined(ARM_FLOAT16_SUPPORTED)
+template <>
+float16_t *localPattern(Testing::nbSamples_t nb, PatternMgr *mgr);
+#endif
 
 template <>
 q63_t *localPattern(Testing::nbSamples_t nb, PatternMgr *mgr);
@@ -101,6 +119,9 @@ uint8_t *localPattern(Testing::nbSamples_t nb, PatternMgr *mgr);
 
 extern void dumpPattern(Testing::outputID_t id,Testing::nbSamples_t nb,float64_t* data,PatternMgr *mgr);
 extern void dumpPattern(Testing::outputID_t id,Testing::nbSamples_t,float32_t*,PatternMgr *);
+#if !defined( __CC_ARM ) && defined(ARM_FLOAT16_SUPPORTED)
+extern void dumpPattern(Testing::outputID_t id,Testing::nbSamples_t,float16_t*,PatternMgr *);
+#endif
 extern void dumpPattern(Testing::outputID_t id,Testing::nbSamples_t,q63_t*,PatternMgr *);
 extern void dumpPattern(Testing::outputID_t id,Testing::nbSamples_t,q31_t*,PatternMgr *);
 extern void dumpPattern(Testing::outputID_t id,Testing::nbSamples_t,q15_t*,PatternMgr *);
@@ -312,6 +333,7 @@ class LocalPattern : public AnyPattern<T>{
 
        void dump(PatternMgr *mgr)
        {
+           (void)mgr;
            /*
 
            If the pattern has never been created then m_mgr is NULL.

@@ -1,8 +1,8 @@
+#include "arm_vec_math.h"
+
 #include "MISCQ31.h"
 #include <stdio.h>
 #include "Error.h"
-#include "arm_math.h"
-#include "arm_vec_math.h"
 #include "Test.h"
 
 #define SNR_THRESHOLD 100
@@ -13,6 +13,37 @@ a double precision computation.
 
 */
 #define ABS_ERROR_Q31 ((q31_t)2)
+
+#define ABS_ERROR_FAST_Q31 ((q31_t)11)
+
+
+/*
+
+For tests of the error value of the Levinson Durbin algorithm
+
+*/
+#define ABS_LD_ERROR ((q31_t)30)
+
+
+    void MISCQ31::test_levinson_durbin_q31()
+    {
+
+
+        const q31_t *inpA=inputA.ptr(); 
+        const q31_t *errs=inputB.ptr(); 
+        q31_t *outp=output.ptr();
+        q31_t err;
+        q31_t refError=errs[this->errOffset];
+
+       
+        arm_levinson_durbin_q31(inpA,outp,&err,this->nba);
+        
+        ASSERT_EMPTY_TAIL(output);
+        ASSERT_SNR(ref,output,(q31_t)SNR_THRESHOLD);
+        ASSERT_NEAR_EQ(ref,output,ABS_LD_ERROR);
+        ASSERT_NEAR_EQ(refError,err,ABS_LD_ERROR);
+
+    }
 
     void MISCQ31::test_correlate_q31()
     {
@@ -44,10 +75,61 @@ a double precision computation.
 
     }
 
+    // This value must be coherent with the Python script
+    // generating the test patterns
+    #define NBPOINTS 4
+
+    void MISCQ31::test_conv_partial_q31()
+    {
+        const q31_t *inpA=inputA.ptr(); 
+        const q31_t *inpB=inputB.ptr(); 
+        q31_t *outp=output.ptr();
+        q31_t *tmpp=tmp.ptr();
+
+
+        arm_status status=arm_conv_partial_q31(inpA, inputA.nbSamples(),
+          inpB, inputB.nbSamples(),
+          outp,
+          this->first,
+          NBPOINTS);
+
+ 
+
+        memcpy((void*)tmpp,(void*)&outp[this->first],NBPOINTS*sizeof(q31_t));
+        ASSERT_TRUE(status==ARM_MATH_SUCCESS);
+        ASSERT_SNR(ref,tmp,(q31_t)SNR_THRESHOLD);
+        ASSERT_NEAR_EQ(ref,tmp,ABS_ERROR_Q31);
+
+    }
+
+    void MISCQ31::test_conv_partial_fast_q31()
+    {
+        const q31_t *inpA=inputA.ptr(); 
+        const q31_t *inpB=inputB.ptr(); 
+        q31_t *outp=output.ptr();
+        q31_t *tmpp=tmp.ptr();
+
+
+        arm_status status=arm_conv_partial_fast_q31(inpA, inputA.nbSamples(),
+          inpB, inputB.nbSamples(),
+          outp,
+          this->first,
+          NBPOINTS);
+
+ 
+
+        memcpy((void*)tmpp,(void*)&outp[this->first],NBPOINTS*sizeof(q31_t));
+        ASSERT_TRUE(status==ARM_MATH_SUCCESS);
+        ASSERT_SNR(ref,tmp,(q31_t)SNR_THRESHOLD);
+        ASSERT_NEAR_EQ(ref,tmp,ABS_ERROR_FAST_Q31);
+
+    }
+
 
   
     void MISCQ31::setUp(Testing::testID_t id,std::vector<Testing::param_t>& paramsArgs,Client::PatternMgr *mgr)
     {
+        (void)paramsArgs;
         switch(id)
         {
 
@@ -692,10 +774,88 @@ a double precision computation.
             }
             break;
 
+            case MISCQ31::TEST_LEVINSON_DURBIN_Q31_81:
+            {
+                       this->nba = 3;
+                       inputA.reload(MISCQ31::INPUTPHI_A_Q31_ID,mgr);
+
+                       this->errOffset=0;
+                       inputB.reload(MISCQ31::INPUT_ERRORS_Q31_ID,mgr);
+                       ref.reload(MISCQ31::REF81_Q31_ID,mgr);
+            }
+            break;
+
+            case MISCQ31::TEST_LEVINSON_DURBIN_Q31_82:
+            {
+                       this->nba = 8;
+                       inputA.reload(MISCQ31::INPUTPHI_B_Q31_ID,mgr);
+
+                       this->errOffset=1;
+                       inputB.reload(MISCQ31::INPUT_ERRORS_Q31_ID,mgr);
+                       ref.reload(MISCQ31::REF82_Q31_ID,mgr);
+            }
+            break;
+
+            case MISCQ31::TEST_LEVINSON_DURBIN_Q31_83:
+            {
+                       this->nba = 11;
+                       inputA.reload(MISCQ31::INPUTPHI_C_Q31_ID,mgr);
+
+                       this->errOffset=2;
+                       inputB.reload(MISCQ31::INPUT_ERRORS_Q31_ID,mgr);
+                       ref.reload(MISCQ31::REF83_Q31_ID,mgr);
+            }
+            break;
+
+            case MISCQ31::TEST_CONV_PARTIAL_Q31_84:
+            case MISCQ31::TEST_CONV_PARTIAL_FAST_Q31_87:
+            {
+              this->first=3;
+              this->nba = 6;
+              this->nbb = 8;
+              ref.reload(MISCQ31::REF84_Q31_ID,mgr);
+              tmp.create(ref.nbSamples(),MISCQ31::TMP_Q31_ID,mgr);
+
+            }
+            break;
+
+            case MISCQ31::TEST_CONV_PARTIAL_Q31_85:
+            case MISCQ31::TEST_CONV_PARTIAL_FAST_Q31_88:
+            {
+              this->first=9;
+              this->nba = 6;
+              this->nbb = 8;
+              ref.reload(MISCQ31::REF85_Q31_ID,mgr);
+              tmp.create(ref.nbSamples(),MISCQ31::TMP_Q31_ID,mgr);
+
+            }
+            break;
+
+            case MISCQ31::TEST_CONV_PARTIAL_Q31_86:
+            case MISCQ31::TEST_CONV_PARTIAL_FAST_Q31_89:
+            {
+              this->first=7;
+              this->nba = 6;
+              this->nbb = 8;
+              ref.reload(MISCQ31::REF86_Q31_ID,mgr);
+              tmp.create(ref.nbSamples(),MISCQ31::TMP_Q31_ID,mgr);
+
+            }
+            break;
+
         }
 
-       inputA.reload(MISCQ31::INPUTA_Q31_ID,mgr,nba);
-       inputB.reload(MISCQ31::INPUTB_Q31_ID,mgr,nbb);
+       if (id < TEST_LEVINSON_DURBIN_Q31_81)
+       {
+          inputA.reload(MISCQ31::INPUTA_Q31_ID,mgr,nba);
+          inputB.reload(MISCQ31::INPUTB_Q31_ID,mgr,nbb);
+       }
+
+       if (id > TEST_LEVINSON_DURBIN_Q31_83)
+       {
+         inputA.reload(MISCQ31::INPUTA2_Q31_ID,mgr,nba);
+         inputB.reload(MISCQ31::INPUTB2_Q31_ID,mgr,nbb);
+       }
 
        output.create(ref.nbSamples(),MISCQ31::OUT_Q31_ID,mgr);
         
@@ -703,6 +863,7 @@ a double precision computation.
 
     void MISCQ31::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)
     {
+      (void)id;
       output.dump(mgr);
       
     }

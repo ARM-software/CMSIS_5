@@ -91,7 +91,7 @@ extern const VECTOR_TABLE_Type __VECTOR_TABLE[240];
   0,                                        /*     Reserved */
   0,                                        /*     Reserved */
   0,                                        /*     Reserved */
-  SVC_Handler,                              /*  -5 SVCall Handler */
+  SVC_Handler,                              /*  -5 SVC Handler */
   DebugMon_Handler,                         /*  -4 Debug Monitor Handler */
   0,                                        /*     Reserved */
   PendSV_Handler,                           /*  -2 PendSV Handler */

@@ -3,13 +3,13 @@
  * Title:        arm_cfft_q15.c
  * Description:  Combined Radix Decimation in Q15 Frequency CFFT processing function
  *
- * $Date:        18. March 2019
- * $Revision:    V1.6.0
+ * $Date:        23 April 2021
+ * $Revision:    V1.9.0
  *
- * Target Processor: Cortex-M cores
+ * Target Processor: Cortex-M and Cortex-A cores
  * -------------------------------------------------------------------- */
 /*
- * Copyright (C) 2010-2019 ARM Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -26,71 +26,12 @@
  * limitations under the License.
  */
 
-#include "arm_math.h"
+#include "dsp/transform_functions.h"
 
-#if defined(ARM_MATH_MVEI)
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #include "arm_vec_fft.h"
 
-
-static void arm_bitreversal_16_inpl_mve(
-        uint16_t *pSrc,
-  const uint16_t bitRevLen,
-  const uint16_t *pBitRevTab)
-
-{
-    uint32_t       *src = (uint32_t *)pSrc;
-    uint32_t        blkCnt;     /* loop counters */
-    uint32x4_t      bitRevTabOff;
-    uint16x8_t      one = vdupq_n_u16(1);
-
-    blkCnt = (bitRevLen / 2) / 4;
-    while (blkCnt > 0U) {
-        bitRevTabOff = vldrhq_u16(pBitRevTab);
-        pBitRevTab += 8;
-
-        uint32x4_t      bitRevOff1 = vmullbq_int_u16(bitRevTabOff, one);
-        uint32x4_t      bitRevOff2 = vmulltq_int_u16(bitRevTabOff, one);
-
-        bitRevOff1 = bitRevOff1 >> 3;
-        bitRevOff2 = bitRevOff2 >> 3;
-
-        uint32x4_t      in1 = vldrwq_gather_shifted_offset_u32(src, bitRevOff1);
-        uint32x4_t      in2 = vldrwq_gather_shifted_offset_u32(src, bitRevOff2);
-
-        vstrwq_scatter_shifted_offset_u32(src, bitRevOff1, in2);
-        vstrwq_scatter_shifted_offset_u32(src, bitRevOff2, in1);
-
-        /*
-         * Decrement the blockSize loop counter
-         */
-        blkCnt--;
-    }
-
-
-    /*
-     * tail
-     * (will be merged thru tail predication)
-     */
-    blkCnt = bitRevLen & 7;
-    if (blkCnt > 0U) {
-        mve_pred16_t    p0 = vctp16q(blkCnt);
-
-        bitRevTabOff = vldrhq_z_u16(pBitRevTab, p0);
-
-        uint32x4_t      bitRevOff1 = vmullbq_int_u16(bitRevTabOff, one);
-        uint32x4_t      bitRevOff2 = vmulltq_int_u16(bitRevTabOff, one);
-
-        bitRevOff1 = bitRevOff1 >> 3;
-        bitRevOff2 = bitRevOff2 >> 3;
-
-        uint32x4_t      in1 = vldrwq_gather_shifted_offset_z_u32(src, bitRevOff1, p0);
-        uint32x4_t      in2 = vldrwq_gather_shifted_offset_z_u32(src, bitRevOff2, p0);
-
-        vstrwq_scatter_shifted_offset_p_u32(src, bitRevOff1, in2, p0);
-        vstrwq_scatter_shifted_offset_p_u32(src, bitRevOff2, in1, p0);
-    }
-}
 
 static void _arm_radix4_butterfly_q15_mve(
     const arm_cfft_instance_q15 * S,
@@ -216,7 +157,7 @@ static void _arm_radix4_butterfly_q15_mve(
     /*
      * start of Last stage process
      */
-    uint32x4_t vecScGathAddr = *(uint32x4_t *) strides;
+    uint32x4_t vecScGathAddr = vld1q_u32 (strides);
     vecScGathAddr = vecScGathAddr + (uint32_t) pSrc;
 
     /*
@@ -451,7 +392,7 @@ static void _arm_radix4_butterfly_inverse_q15_mve(const arm_cfft_instance_q15 *S
     /*
      * start of Last stage process
      */
-    uint32x4_t vecScGathAddr = *(uint32x4_t *) strides;
+    uint32x4_t vecScGathAddr = vld1q_u32(strides);
     vecScGathAddr = vecScGathAddr + (uint32_t) pSrc;
 
     /*
@@ -592,53 +533,53 @@ void arm_cfft_q15(
         q15_t * pSrc,
         uint8_t ifftFlag,
         uint8_t bitReverseFlag)
-{                                                                             
-        uint32_t fftLen = S->fftLen;     
+{
+        uint32_t fftLen = S->fftLen;
 
-        if (ifftFlag == 1U) {                                                            
-                                                                                         
-            switch (fftLen) {                                                            
-            case 16:                                                                     
-            case 64:                                                                     
-            case 256:                                                                    
-            case 1024:                                                                   
-            case 4096:                                                                   
-                _arm_radix4_butterfly_inverse_q15_mve(S, pSrc, fftLen); 
-                break;                                                                   
-                                                                                         
-            case 32:                                                                     
-            case 128:                                                                    
-            case 512:                                                                    
-            case 2048:                                                                   
-                arm_cfft_radix4by2_inverse_q15_mve(S, pSrc, fftLen);              
-                break;                                                                   
-            }  
-        } else {                                                                         
-            switch (fftLen) {                                                            
-            case 16:                                                                     
-            case 64:                                                                     
-            case 256:                                                                    
-            case 1024:                                                                   
-            case 4096:    
-                _arm_radix4_butterfly_q15_mve(S, pSrc, fftLen);         
-                break;                                                                   
-                                                                                         
-            case 32:                                                                     
-            case 128:                                                                    
-            case 512:                                                                    
-            case 2048:                                                                   
-                arm_cfft_radix4by2_q15_mve(S, pSrc, fftLen);                      
-                break;                                                                   
-            }                                                                            
-        }                                                                                
-                                                                                         
-                                                                                         
-        if (bitReverseFlag) 
-        {                                                            
-            
+        if (ifftFlag == 1U) {
+
+            switch (fftLen) {
+            case 16:
+            case 64:
+            case 256:
+            case 1024:
+            case 4096:
+                _arm_radix4_butterfly_inverse_q15_mve(S, pSrc, fftLen);
+                break;
+
+            case 32:
+            case 128:
+            case 512:
+            case 2048:
+                arm_cfft_radix4by2_inverse_q15_mve(S, pSrc, fftLen);
+                break;
+            }
+        } else {
+            switch (fftLen) {
+            case 16:
+            case 64:
+            case 256:
+            case 1024:
+            case 4096:
+                _arm_radix4_butterfly_q15_mve(S, pSrc, fftLen);
+                break;
+
+            case 32:
+            case 128:
+            case 512:
+            case 2048:
+                arm_cfft_radix4by2_q15_mve(S, pSrc, fftLen);
+                break;
+            }
+        }
+
+
+        if (bitReverseFlag)
+        {
+
             arm_bitreversal_16_inpl_mve((uint16_t*)pSrc, S->bitRevLength, S->pBitRevTable);
-       
-        } 
+
+        }
 }
 
 #else
@@ -794,7 +735,7 @@ void arm_cfft_radix4by2_q15(
       out2 = __SMUAD(coeff, R);
 #endif /* #ifndef ARM_MATH_BIG_ENDIAN */
 
-      write_q15x2_ia (&pSl, (q31_t) ((out2) & 0xFFFF0000) | (out1 & 0x0000FFFF));
+      write_q15x2_ia (&pSl, (q31_t)__PKHBT( out1, out2, 0 ) );
   }
 
 #else /* #if defined (ARM_MATH_DSP) */
@@ -893,7 +834,7 @@ void arm_cfft_radix4by2_inverse_q15(
      out2 = __SMUSD(__QSUB(0, coeff), R);
 #endif /* #ifndef ARM_MATH_BIG_ENDIAN */
 
-     write_q15x2_ia (&pSl, (q31_t) ((out2) & 0xFFFF0000) | (out1 & 0x0000FFFF));
+     write_q15x2_ia (&pSl, (q31_t)__PKHBT( out1, out2, 0 ));
   }
 
 #else /* #if defined (ARM_MATH_DSP) */

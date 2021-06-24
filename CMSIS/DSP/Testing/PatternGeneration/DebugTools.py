@@ -35,6 +35,10 @@ def readQ15Pattern(r):
 def hex2float(h):
     return(struct.unpack('<f', struct.pack('<I', int(h,16)))[0])
 
+def hex2f16(h):
+    return(struct.unpack('<e', struct.pack('<H', int(h,16)))[0])
+
+
 def readF32Pattern(r):
     l = []
     with open(r, 'r') as f:
@@ -43,6 +47,18 @@ def readF32Pattern(r):
        for i in range(nb):
           f.readline()
           l.append(hex2float(f.readline()))
+    l = (1.0*np.array(l))
+    #print(l)
+    return(l)
+
+def readF16Pattern(r):
+    l = []
+    with open(r, 'r') as f:
+       f.readline()
+       nb = int(f.readline())
+       for i in range(nb):
+          f.readline()
+          l.append(hex2f16(f.readline()))
     l = (1.0*np.array(l))
     #print(l)
     return(l)
@@ -72,6 +88,11 @@ def readQ15Output(path):
 
 def readF32Output(path):
    sig = np.loadtxt(path, delimiter=',',dtype="float",converters= {0:hex2float})
+   sig = 1.0 * sig
+   return(sig)
+
+def readF16Output(path):
+   sig = np.loadtxt(path, delimiter=',',dtype="float",converters= {0:hex2f16})
    sig = 1.0 * sig
    return(sig)
 

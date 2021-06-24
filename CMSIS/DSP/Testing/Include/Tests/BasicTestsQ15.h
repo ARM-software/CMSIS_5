@@ -1,5 +1,8 @@
 #include "Test.h"
 #include "Pattern.h"
+
+#include "dsp/basic_math_functions.h"
+
 class BasicTestsQ15:public Client::Suite
     {
         public:
@@ -25,4 +28,6 @@ class BasicTestsQ15:public Client::Suite
 
             /* Offset or scale value */
             q15_t scalar;
+
+            q15_t min,max;
     };

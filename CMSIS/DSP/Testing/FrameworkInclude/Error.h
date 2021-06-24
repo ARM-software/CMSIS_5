@@ -27,10 +27,12 @@
  */
 #ifndef _ASSERT_H_
 #define _ASSERT_H_
-#include "arm_math.h"
+#include "arm_math_types.h"
+#include "arm_math_types_f16.h"
 #include <exception>
 #include "Test.h"
 #include "Pattern.h"
+
 
 #define UNKNOWN_ERROR 1
 #define EQUAL_ERROR 2
@@ -79,8 +81,10 @@ to get the line number.
 (SNR functions to finish implementing)
 
 */
-
-
+#if !defined( __CC_ARM ) && defined(ARM_FLOAT16_SUPPORTED)
+extern void assert_relative_error(unsigned long nb,float16_t &a, float16_t &b, double threshold);
+extern void assert_relative_error(unsigned long nb,AnyPattern<float16_t> &pa, AnyPattern<float16_t> &pb, double threshold);
+#endif
 
 extern void assert_relative_error(unsigned long nb,float32_t &a, float32_t &b, double threshold);
 extern void assert_relative_error(unsigned long nb,AnyPattern<float32_t> &pa, AnyPattern<float32_t> &pb, double threshold);
@@ -95,8 +99,18 @@ extern void assert_close_error(unsigned long nb,AnyPattern<float64_t> &pref, Any
 extern void assert_close_error(unsigned long nb,float32_t &ref, float32_t &val, double absthreshold, double relthreshold);
 extern void assert_close_error(unsigned long nb,AnyPattern<float32_t> &pref, AnyPattern<float32_t> &pval, double absthreshold, double relthreshold);
 
+#if !defined( __CC_ARM ) && defined(ARM_FLOAT16_SUPPORTED)
+extern void assert_close_error(unsigned long nb,float16_t &ref, float16_t &val, double absthreshold, double relthreshold);
+extern void assert_close_error(unsigned long nb,AnyPattern<float16_t> &pref, AnyPattern<float16_t> &pval, double absthreshold, double relthreshold);
+#endif
+
 extern void assert_snr_error(unsigned long nb,AnyPattern<float64_t> &pa,AnyPattern<float64_t> &pb, float64_t threshold);
 extern void assert_snr_error(unsigned long nb,AnyPattern<float32_t> &pa,AnyPattern<float32_t> &pb, float32_t threshold);
+
+#if !defined( __CC_ARM ) && defined(ARM_FLOAT16_SUPPORTED)
+extern void assert_snr_error(unsigned long nb,AnyPattern<float16_t> &pa,AnyPattern<float16_t> &pb, float32_t threshold);
+#endif
+
 extern void assert_snr_error(unsigned long nb,AnyPattern<q63_t> &pa,AnyPattern<q63_t> &pb, float32_t threshold);
 extern void assert_snr_error(unsigned long nb,AnyPattern<q31_t> &pa,AnyPattern<q31_t> &pb, float32_t threshold);
 extern void assert_snr_error(unsigned long nb,AnyPattern<q15_t> &pa,AnyPattern<q15_t> &pb, float32_t threshold);
@@ -104,6 +118,11 @@ extern void assert_snr_error(unsigned long nb,AnyPattern<q7_t> &pa,AnyPattern<q7
 
 extern void assert_snr_error(unsigned long nb,float64_t pa,float64_t pb, float32_t threshold);
 extern void assert_snr_error(unsigned long nb,float32_t pa,float32_t pb, float32_t threshold);
+
+#if !defined (__CC_ARM) && defined(ARM_FLOAT16_SUPPORTED)
+extern void assert_snr_error(unsigned long nb,float16_t pa,float16_t pb, float32_t threshold);
+#endif 
+
 extern void assert_snr_error(unsigned long nb,q63_t pa,q63_t pb, float32_t threshold);
 extern void assert_snr_error(unsigned long nb,q31_t pa,q31_t pb, float32_t threshold);
 extern void assert_snr_error(unsigned long nb,q15_t pa,q15_t pb, float32_t threshold);
@@ -114,6 +133,11 @@ extern void assert_false(unsigned long nb,bool cond);
 
 extern void assert_not_empty(unsigned long nb, AnyPattern<float64_t> &p);
 extern void assert_not_empty(unsigned long nb, AnyPattern<float32_t> &p);
+
+#if !defined( __CC_ARM ) && defined(ARM_FLOAT16_SUPPORTED)
+extern void assert_not_empty(unsigned long nb, AnyPattern<float16_t> &p);
+#endif 
+
 extern void assert_not_empty(unsigned long nb, AnyPattern<q63_t> &p);
 extern void assert_not_empty(unsigned long nb, AnyPattern<q31_t> &p);
 extern void assert_not_empty(unsigned long nb, AnyPattern<q15_t> &p);
@@ -140,7 +164,10 @@ Macros to use to implement tests.
 #define ASSERT_EMPTY_TAIL(A) if (!A.isTailEmpty()) throw (Client::Error(TAIL_NOT_EMPTY_ERROR,__LINE__))
 
 namespace Client {
-    template <typename T> 
+
+using namespace std;
+
+template <typename T> 
 void assert_equal(unsigned long nb,T pa, T pb)
 {
     if (pa != pb)

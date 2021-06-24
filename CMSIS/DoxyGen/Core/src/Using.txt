@@ -29,7 +29,7 @@ The \ref device_h_pg is the central include file that the application programmer
 
 CMSIS-Pack provides the <b>\#define CMSIS_header_file</b> in <a href="../../Pack/html/pdsc_components_pg.html#RTE_Components_h"><b>RTE_Components.h</b></a> which gives you access to this <b><i>device</i>.h</b> file.
 
-\image html "CMSIS_CORE_Files_user.png" "CMSIS-Core (Cortex-M) User Files"
+\image html "CMSIS_CORE_Files_USER.png" "CMSIS-Core (Cortex-M) User Files"
 
 The CMSIS-Core (Cortex-M) system files are device specific. In addition, the deprecated \ref startup_s_pg is also compiler vendor specific.
 The versions provided by CMSIS are only generic templates. The adopted versions for a concrete device are typically provided by the device
@@ -233,15 +233,50 @@ The table below lists the folder and device names of the Arm processors.
       <td>Cortex-M4</td>
       <td>Contains \b Include and \b Source template files configured for the Cortex-M4 processor.
         The device name is ARMCM4 and the name of the \ref device_h_pg is <ARMCM4.h>.
-    </td>
+      </td>
     </tr>
     <tr>
       <td>".\Device\ARM\ARMCM7"</td>
       <td>Cortex-M7</td>
       <td>Contains \b Include and \b Source template files configured for the Cortex-M7 processor.
         The device name is ARMCM7 and the name of the \ref device_h_pg is <ARMCM7.h>.
-    </td>
+      </td>
     </tr>
+\if ARMv8M
+    </tr>
+    <tr>
+      <td>".\Device\ARM\ARMCM23"</td>
+      <td>Cortex-M23</td>
+      <td>Contains \b Include and \b Source template files configured for the Cortex-M23 processor.
+        The device name is ARMCM23 and the name of the \ref device_h_pg is <ARMCM23.h>.
+        This device is available with and without TrustZone.
+      </td>
+    </tr>
+    <tr>
+      <td>".\Device\ARM\ARMCM33"</td>
+      <td>Cortex-M33</td>
+      <td>Contains \b Include and \b Source template files configured for the Cortex-M33 processor.
+        The device name is ARMCM33 and the name of the \ref device_h_pg is <ARMCM33.h>.
+        This device is available with and without TrustZone.
+      </td>
+    </tr>
+    <tr>
+      <td>".\Device\ARM\ARMCM35P"</td>
+      <td>Cortex-M35P</td>
+      <td>Contains \b Include and \b Source template files configured for the Cortex-M35P processor.
+        The device name is ARMCM35P and the name of the \ref device_h_pg is <ARMCM35P.h>.
+        This device is available with and without TrustZone.
+      </td>
+    </tr>
+    <tr>
+      <td>".\Device\ARM\ARMCM55"</td>
+      <td>Cortex-M55</td>
+      <td>Contains \b Include and \b Source template files configured for the Cortex-M55 processor.
+        The device name is ARMCM55 and the name of the \ref device_h_pg is <ARMCM55.h>.
+        This device is only available with TrustZone.
+      </td>
+    </tr>
+\endif
 \if ARMSC 
     <tr>
       <td>".\Device\ARM\ARMSC000"</td>

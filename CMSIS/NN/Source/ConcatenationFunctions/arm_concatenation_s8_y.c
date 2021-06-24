@@ -39,12 +39,12 @@
  * @{
  */
 
-  /*
-   *  s8 version of concatenation along the Y axis
-   *
-   * Refer to header file for details.
-   *
-   */
+/*
+ *  s8 version of concatenation along the Y axis
+ *
+ * Refer to header file for details.
+ *
+ */
 void arm_concatenation_s8_y(const int8_t *input,
                             const uint16_t input_x,
                             const uint16_t input_y,
@@ -54,9 +54,9 @@ void arm_concatenation_s8_y(const int8_t *input,
                             const uint16_t output_y,
                             const uint32_t offset_y)
 {
-    const uint32_t num_iterations  = input_z * input_w;
+    const uint32_t num_iterations = input_z * input_w;
     const uint32_t input_copy_size = input_x * input_y;
-    const uint32_t output_stride   = input_x * output_y;
+    const uint32_t output_stride = input_x * output_y;
 
     output += offset_y * input_x;
     uint32_t i;
@@ -65,7 +65,7 @@ void arm_concatenation_s8_y(const int8_t *input,
     for (i = 0; i < num_iterations; ++i)
     {
         memcpy(output, input, input_copy_size);
-        input  += input_copy_size;
+        input += input_copy_size;
         output += output_stride;
     }
 }

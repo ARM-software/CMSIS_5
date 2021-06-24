@@ -365,10 +365,10 @@ inline float16x8_t vtanhq_f16(float16x8_t val)
 
 inline float16x8_t vtaylor_polyq_f16(float16x8_t x, const float16_t *coeffs)
 {
-    const float16x8_t A   = vaddq_f16(&coeffs[8*0], vmulq_f16(&coeffs[8*4], x));
-    const float16x8_t B   = vaddq_f16(&coeffs[8*2], vmulq_f16(&coeffs[8*6], x));
-    const float16x8_t C   = vaddq_f16(&coeffs[8*1], vmulq_f16(&coeffs[8*5], x));
-    const float16x8_t D   = vaddq_f16(&coeffs[8*3], vmulq_f16(&coeffs[8*7], x));
+    const float16x8_t A   = vaddq_f16(vld1q_f16(&coeffs[8*0]), vmulq_f16(vld1q_f16(&coeffs[8*4]), x));
+    const float16x8_t B   = vaddq_f16(vld1q_f16(&coeffs[8*2]), vmulq_f16(vld1q_f16(&coeffs[8*6]), x));
+    const float16x8_t C   = vaddq_f16(vld1q_f16(&coeffs[8*1]), vmulq_f16(vld1q_f16(&coeffs[8*5]), x));
+    const float16x8_t D   = vaddq_f16(vld1q_f16(&coeffs[8*3]), vmulq_f16(vld1q_f16(&coeffs[8*7]), x));
     const float16x8_t x2  = vmulq_f16(x, x);
     const float16x8_t x4  = vmulq_f16(x2, x2);
     const float16x8_t res = vaddq_f16(vaddq_f16(A, vmulq_f16(B, x2)), vmulq_f16(vaddq_f16(C, vmulq_f16(D, x2)), x4));

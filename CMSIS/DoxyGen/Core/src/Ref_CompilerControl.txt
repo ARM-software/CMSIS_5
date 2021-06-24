@@ -449,7 +449,7 @@ void Reset_Handler(void)
 /**************************************************************************************************/
 /**
 \def __INITIAL_SP
-\brief Compiler/linker symbol specifiying the location of the main stack (MSP).
+\brief Compiler/linker symbol specifying the location of the main stack (MSP).
 \details
 The address of the specified symbol is used to initialize the main stack pointer (MSP) during low
 level init. This is compiler/linker specific. CMSIS specifies common default for supported compilers. 
@@ -461,7 +461,7 @@ level init. This is compiler/linker specific. CMSIS specifies common default for
 /**************************************************************************************************/
 /**
 \def __STACK_LIMIT
-\brief Compiler/linker symbol specifiying the limit of the main stack (MSP).
+\brief Compiler/linker symbol specifying the limit of the main stack (MSP).
 \details
 The address of the specified symbol is used to initialize the main stack pointer limit (MSPLIM on Armv8-M)
 during low level init. This is compiler/linker specific. CMSIS specifies common default for supported

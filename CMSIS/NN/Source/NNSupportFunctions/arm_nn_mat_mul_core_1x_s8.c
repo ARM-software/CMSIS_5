@@ -21,14 +21,13 @@
  * Title:        arm_nn_mat_mul_core_1x_s8.c
  * Description:  General Matrix-multiplication function
  *
- * $Date:        January 20, 2020
- * $Revision:    V.1.0.1
+ * $Date:        09. October 2020
+ * $Revision:    V.1.0.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
 
-#include "arm_math.h"
-#include "arm_nnfunctions.h"
+#include "arm_nnsupportfunctions.h"
 
 /**
  * @ingroup groupSupport
@@ -40,11 +39,11 @@
  */
 
 /*
-   * s8 matrix multiplication to process 1 row
-   *
-   * Refer header file for details.
-   *
-   */
+ * s8 matrix multiplication to process 1 row
+ *
+ * Refer header file for details.
+ *
+ */
 
 arm_status arm_nn_mat_mul_core_1x_s8(int32_t row_elements,
                                      const int8_t *row_base,
@@ -57,22 +56,18 @@ arm_status arm_nn_mat_mul_core_1x_s8(int32_t row_elements,
 
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 
-        __asm volatile (
-           "   vldrb.8         q0, [%[col]], 16     \n"
-           "   wlstp.8         lr, %[cnt], 1f       \n"
-           "2:                                      \n"
-           "   vaddva.s8      %[sum], q0            \n"
-           "   vldrb.8         q1, [%[row0]], 16    \n"
-           "   vmladava.s8    %[out0], q0, q1       \n"
-           "   vldrb.8         q0, [%[col]], 16     \n"
-           "   letp            lr, 2b               \n"
-           "1:                                      \n"
-           :[col] "+r"(col_base)
-           ,[sum] "+Te"(sum_tmp)
-           ,[row0] "+r"(row_base)
-           ,[out0] "+Te"(acc_n0)
-           :[cnt] "r"(row_elements)
-           :"q0","q1", "memory", "r14");
+    __ASM volatile("   vldrb.8         q0, [%[col]], 16     \n"
+                   "   wlstp.8         lr, %[cnt], 1f       \n"
+                   "2:                                      \n"
+                   "   vaddva.s8      %[sum], q0            \n"
+                   "   vldrb.8         q1, [%[row0]], 16    \n"
+                   "   vmladava.s8    %[out0], q0, q1       \n"
+                   "   vldrb.8         q0, [%[col]], 16     \n"
+                   "   letp            lr, 2b               \n"
+                   "1:                                      \n"
+                   : [col] "+r"(col_base), [sum] "+Te"(sum_tmp), [row0] "+r"(row_base), [out0] "+Te"(acc_n0)
+                   : [cnt] "r"(row_elements)
+                   : "q0", "q1", "memory", "r14");
 #else
     for (int i = 0; i < row_elements; i++)
     {

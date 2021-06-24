@@ -3,7 +3,7 @@ import numpy as np
 import itertools
 import Tools
 from scipy import signal
-from pylab import figure, clf, plot, xlabel, ylabel, xlim, ylim, title, grid, axes, show,semilogx, semilogy
+#from pylab import figure, clf, plot, xlabel, ylabel, xlim, ylim, title, grid, axes, show,semilogx, semilogy
 import math
 
 # Those patterns are used for tests and benchmarks.
@@ -165,7 +165,8 @@ def writeTests(config,format):
     config.writeInput(2,allsamples,"AllBiquadInputs")
     config.writeInput(2,allcoefs,"AllBiquadCoefs")
     config.writeReference(2,alloutputs,"AllBiquadRefs")
-    if format==0:
+    # Stereo version only for floats
+    if format==0 or format==16:
         config.writeInput(2,allStereo,"AllBiquadStereoInputs")
         config.writeReference(2,allStereoOutputs,"AllBiquadStereoRefs")
 
@@ -177,6 +178,7 @@ def generatePatterns():
     
     configf64=Tools.Config(PATTERNDIR,PARAMDIR,"f64")
     configf32=Tools.Config(PATTERNDIR,PARAMDIR,"f32")
+    configf16=Tools.Config(PATTERNDIR,PARAMDIR,"f16")
     configq31=Tools.Config(PATTERNDIR,PARAMDIR,"q31")
     configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
     #configq7=Tools.Config(PATTERNDIR,PARAMDIR,"q7")
@@ -184,11 +186,13 @@ def generatePatterns():
     
     
     writeBenchmarks(configf32)
+    writeBenchmarks(configf16)
     writeBenchmarks(configq31)
     writeBenchmarks(configq15)
     writeBenchmarks(configf64)
 
     writeTests(configf32,0)
+    writeTests(configf16,16)
     writeTests(configq31,31)
     writeTests(configq15,15)
     writeTests(configf64,64)
