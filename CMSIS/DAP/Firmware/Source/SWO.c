@@ -77,7 +77,7 @@ static volatile uint32_t TraceIndexO  = 0U; /* Outgoing Trace Index */
 static volatile uint8_t  TraceUpdate;       /* Trace Update Flag */
 static          uint32_t TraceBlockSize;    /* Current Trace Block Size */
 
-#if (TIMESTAMP_CLOCK != 0U) 
+#if (TIMESTAMP_CLOCK != 0U)
 // Trace Timestamp
 static volatile struct {
   uint32_t index;
@@ -110,14 +110,14 @@ static void USART_Callback (uint32_t event) {
   uint32_t num;
 
   if (event &  ARM_USART_EVENT_RECEIVE_COMPLETE) {
-#if (TIMESTAMP_CLOCK != 0U) 
+#if (TIMESTAMP_CLOCK != 0U)
     TraceTimestamp.tick = TIMESTAMP_GET();
 #endif
     index_o  = TraceIndexO;
     index_i  = TraceIndexI;
     index_i += TraceBlockSize;
     TraceIndexI = index_i;
-#if (TIMESTAMP_CLOCK != 0U) 
+#if (TIMESTAMP_CLOCK != 0U)
     TraceTimestamp.index = index_i;
 #endif
     num   = TRACE_BLOCK_SIZE - (index_i & (TRACE_BLOCK_SIZE - 1U));
@@ -228,7 +228,7 @@ __WEAK uint32_t SWO_Control_UART (uint32_t active) {
   int32_t status;
 
   if (active) {
-    if (!USART_Ready) { 
+    if (!USART_Ready) {
       return (0U);
     }
     TraceBlockSize = 1U;
@@ -329,7 +329,7 @@ static void ClearTrace (void) {
   TraceIndexI   = 0U;
   TraceIndexO   = 0U;
 
-#if (TIMESTAMP_CLOCK != 0U) 
+#if (TIMESTAMP_CLOCK != 0U)
   TraceTimestamp.index = 0U;
   TraceTimestamp.tick  = 0U;
 #endif
@@ -640,7 +640,7 @@ uint32_t SWO_ExtendedStatus (const uint8_t *request, uint8_t *response) {
   uint8_t  cmd;
   uint8_t  status;
   uint32_t count;
-#if (TIMESTAMP_CLOCK != 0U) 
+#if (TIMESTAMP_CLOCK != 0U)
   uint32_t index;
   uint32_t tick;
 #endif
@@ -664,7 +664,7 @@ uint32_t SWO_ExtendedStatus (const uint8_t *request, uint8_t *response) {
     num += 4U;
   }
 
-#if (TIMESTAMP_CLOCK != 0U) 
+#if (TIMESTAMP_CLOCK != 0U)
   if (cmd & 0x04U) {
     do {
       TraceUpdate = 0U;
