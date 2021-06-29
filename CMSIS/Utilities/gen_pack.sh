@@ -1,6 +1,6 @@
 #!/bin/bash
-# Version: 1.3
-# Date: 2021-04-27
+# Version: 1.4
+# Date: 2021-06-29
 # This bash script generates a CMSIS Software Pack:
 #
 # Pre-requisites:
@@ -10,6 +10,13 @@
 #   e.g. Ubuntu: sudo apt-get install p7zip-full p7zip-rar)
 # - PackChk is taken from latest install CMSIS Pack installed in $CMSIS_PACK_ROOT
 # - xmllint in path (XML schema validation; available only for Linux)
+#
+# Preparation steps:
+# - Generate documentation, see CMSIS/DoxyGen/gen_doc.sh
+# - Populate pre-built libraries, see
+#   - CMSIS/RTOS/RTX/LIB/fetch_libs.sh
+#   - CMSIS/RTOS2/RTX/Library/fetch_libs.sh
+#
 
 ############### EDIT BELOW ###############
 # Extend Path environment variable locally
@@ -21,8 +28,10 @@ function usage {
   echo "$(basename $0) [-h|--help] [<pdsc>]"
   echo ""
   echo "Arguments:"
-  echo "  -h|--help  Print this usage message and exit."
-  echo "  pdsc       The pack description to generate the pack for."
+  echo "  -h|--help        Print this usage message and exit."
+  echo "  --ignore_errors  Ignore errors detected during pack generation."
+  echo "  --version <VER>  Force pack version to <VER>."
+  echo "  pdsc             The pack description to generate the pack for."
   echo ""
   echo "Environment:"
   echo " 7z"
@@ -42,13 +51,18 @@ function pack_version()
 
 function git_describe()
 {
-  local gitversion=$(git describe --match $1* --abbrev=9 || echo "$1-dirty-0-g$(git describe --match $1* --always --abbrev=9)")
-  local version=$(echo $gitversion | sed -r -e 's/-([0-9]+)-(g[0-9a-f]{9})/\1+\2/')
-  if [[ $version != $1 ]] && [[ $version == $gitversion ]]; then
-    version+=0
+  if [ git rev-parse --git-dir 2>/dev/null ]; then
+    local gitversion=$(git describe --match $1* --abbrev=9 2>/dev/null || echo "$1-dirty-0-g$(git describe --match $1* --always --abbrev=9 2>/dev/null)")
+    local version=$(echo $gitversion | sed -r -e 's/-([0-9]+)-(g[0-9a-f]{9})/\1+\2/')
+    if [[ $version != $1 ]] && [[ $version == $gitversion ]]; then
+        version+=0
+    fi
+    echo "Git version: '$version'" >&2
+    echo $version
+  else
+    echo "No Git repository: '$1-nogit'" >&2
+    echo "$1-nogit"
   fi
-  echo "Git version: '$version'" >&2
-  echo $version
 }
 
 function patch_pdsc()
@@ -59,6 +73,8 @@ function patch_pdsc()
   fi
 }
 
+IGNORE_ERRORS=0
+VERSION=
 POSITIONAL=()
 while [[ $# -gt 0 ]]
 do
@@ -68,6 +84,15 @@ do
     '-h'|'--help')
       usage
       exit 1
+    ;;
+    '--ignore-errors')
+      IGNORE_ERRORS=1
+      shift # past argument
+    ;;
+    '--version')
+      shift # past argument
+      VERSION=$1
+      shift # past argument
     ;;
     *)    # unknown option
       POSITIONAL+=("$1") # save it in an array for later
@@ -118,7 +143,6 @@ PACK_DIRS="
   CMSIS/DSP/ComputeLibrary
   CMSIS/DSP/Include
   CMSIS/DSP/Source
-  CMSIS/DSP/Projects
   CMSIS/DSP/Examples
   CMSIS/DSP/Include
   CMSIS/DSP/PrivateInclude
@@ -174,7 +198,9 @@ if [ $errorlevel != 0 ]; then
   echo "Hint: Included in CMSIS Pack:"
   echo "$CMSIS_PACK_ROOT/ARM/CMSIS/<version>/CMSIS/Utilities/<os>/"
   echo " "
-  exit 1
+  if [[ $IGNORE_ERRORS == 0 ]]; then
+    exit 1
+  fi
 fi
 echo " "
 
@@ -276,7 +302,9 @@ if [ $(uname -s) = "Linux" ]; then
   if [ $errorlevel -ne 0 ]; then
     echo "build aborted: Schema check of $PACK_VENDOR.$PACK_NAME.pdsc against PACK.xsd failed"
     echo " "
-    exit 1
+    if [[ $IGNORE_ERRORS == 0 ]]; then
+        exit 1
+    fi
   fi
 else
   echo "Use MDK PackInstaller to run schema validation for $PACK_VENDOR.$PACK_NAME.pdsc"
@@ -285,8 +313,10 @@ fi
 # Patch pack version
 echo "Checking PDCS version against Git..."
 pdsc_version=$(pack_version "${PACK_BUILD}/${PACK_VENDOR}.${PACK_NAME}.pdsc")
-git_version=$(git_describe ${pdsc_version})
-patch_pdsc "${PACK_BUILD}/${PACK_VENDOR}.${PACK_NAME}.pdsc" ${pdsc_version} ${git_version}
+if [ -z $VERSION ]; then
+  VERSION=$(git_describe ${pdsc_version})
+fi
+patch_pdsc "${PACK_BUILD}/${PACK_VENDOR}.${PACK_NAME}.pdsc" ${pdsc_version} ${VERSION}
 
 # Run Pack Check and generate PackName file with version
 "${PACKCHK}" "${PACK_BUILD}/${PACK_VENDOR}.${PACK_NAME}.pdsc" \
@@ -295,8 +325,11 @@ patch_pdsc "${PACK_BUILD}/${PACK_VENDOR}.${PACK_NAME}.pdsc" ${pdsc_version} ${gi
 errorlevel=$?
 if [ $errorlevel -ne 0 ]; then
   echo "build aborted: pack check failed"
+  echo "Check preparation steps if missing files are reported!"
   echo " "
-  exit 1
+  if [[ $IGNORE_ERRORS == 0 ]]; then
+    exit 1
+  fi
 fi
 
 PACKNAME=$(cat ${PACK_BUILD}/PackName.txt)
