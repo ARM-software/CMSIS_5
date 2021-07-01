@@ -133,6 +133,18 @@ extern "C"
 
 
   /**
+     * @brief  Floating-point complex magnitude
+     * @param[in]  pSrc        points to the complex input vector
+     * @param[out] pDst        points to the real output vector
+     * @param[in]  numSamples  number of complex samples in the input vector
+     */
+    void arm_cmplx_mag_f64(
+    const float64_t * pSrc,
+          float64_t * pDst,
+          uint32_t numSamples);
+
+
+  /**
    * @brief  Q31 complex magnitude
    * @param[in]  pSrc        points to the complex input vector
    * @param[out] pDst        points to the real output vector

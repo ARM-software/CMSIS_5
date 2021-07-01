@@ -229,6 +229,48 @@ __STATIC_FORCEINLINE arm_status arm_sqrt_f32(
 
 
 /**
+  @brief         Floating-point square root function.
+  @param[in]     in    input value
+  @param[out]    pOut  square root of input value
+  @return        execution status
+                   - \ref ARM_MATH_SUCCESS        : input value is positive
+                   - \ref ARM_MATH_ARGUMENT_ERROR : input value is negative; *pOut is set to 0
+ */
+__STATIC_FORCEINLINE arm_status arm_sqrt_f64(
+  float64_t in,
+  float64_t * pOut)
+  {
+    if (in >= 0.0f)
+    {
+#if defined ( __CC_ARM )
+  #if defined __TARGET_FPU_VFP
+      *pOut = __sqrtf(in);
+  #else
+      *pOut = sqrt(in);
+  #endif
+
+#elif defined ( __ICCARM__ )
+  #if defined __ARMVFP__
+      __ASM("VSQRT.F64 %0,%1" : "=t"(*pOut) : "t"(in));
+  #else
+      *pOut = sqrt(in);
+  #endif
+
+#else
+      *pOut = sqrt(in);
+#endif
+
+      return (ARM_MATH_SUCCESS);
+    }
+    else
+    {
+      *pOut = 0.0f;
+      return (ARM_MATH_ARGUMENT_ERROR);
+    }
+  }
+
+
+/**
   @brief         Q31 square root function.
   @param[in]     in    input value.  The range of the input value is [0 +1) or 0x00000000 to 0x7FFFFFFF
   @param[out]    pOut  points to square root of input value
