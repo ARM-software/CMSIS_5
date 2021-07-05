@@ -159,20 +159,20 @@ Environment Variables</h1>
 </table>
 <h1><a class="anchor" id="cbuild_compiler_config"></a>
 Compiler Configuration</h1>
-<p><a class="el" href="cbuildgen.html">cbuildgen</a> uses toolchain specific <b>.mak files</b> that map the CMSIS project settings to the toolchain. For each supported toolchain a <b>.mak files</b> is provided in the directory <b>./cbuild/etc</b> and specifies the base directory of the toolchain installation(<code>TOOLCHAIN_ROOT</code>). In addition other toolchain specific environment variables may be setup here (e.g. license file and product variant). The user is required to update the these settings after installation to reflect the actual installation.</p>
-<p><b>Example file: ./cbuild/etc/ARMCC.6.13.1.mak</b></p>
+<p><a class="el" href="cbuildgen.html">cbuildgen</a> uses toolchain specific <b>.cmake files</b> that map the CMSIS project settings to the toolchain. For each supported toolchain a <b>.cmake file</b> is provided in the directory <b>./cbuild/etc</b> and specifies the base directory of the toolchain installation(<code>TOOLCHAIN_ROOT</code>). In addition other toolchain specific environment variables may be setup here (e.g. license file and product variant). The user is required to update the these settings after installation to reflect the actual installation.</p>
+<p><b>Example file: ./cbuild/etc/ARMCC.6.16.0.cmake</b></p>
 <div class="fragment"><div class="line"><span class="preprocessor"># Version: 0.10.0</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor"># Date: 2020-09-30</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor"># This file maps the CMSIS project options to toolchain settings.</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#   - Applies to toolchain: ARMCC 6.14.0</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#   - Applies to toolchain: ARMCC 6.16.0</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">############### EDIT BELOW ###############</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor"># Set base directory of toolchain</span></div>
 <div class="line"><span class="preprocessor"></span>TOOLCHAIN_ROOT:=C:/Keil_v5/ARM/ARMCLANG</div>
 <div class="line"></div>
 <div class="line"><span class="preprocessor">############ DO NOT EDIT BELOW ###########</span></div>
-</div><!-- fragment --><p>The toolchain for compilation is defined in project file <b>*.cprj</b> and used by <a class="el" href="cbuildgen.html">cbuildgen</a>. <a class="el" href="cbuildgen.html">cbuildgen</a> first searches for the toolchain specific <b>.mak file</b> in the project directory. If the toolchain specific <b>.mak file</b> is not present there, it uses the directory that is specified by the <b>$CMSIS_BUILD_ROOT</b> environment variable.</p>
+</div><!-- fragment --><p>The toolchain for compilation is defined in project file <b>*.cprj</b> and used by <a class="el" href="cbuildgen.html">cbuildgen</a>. <a class="el" href="cbuildgen.html">cbuildgen</a> first searches for the toolchain specific <b>.cmake file</b> in the project directory. If the toolchain specific <b>.cmake file</b> is not present there, it uses the directory that is specified by the <b>$CMSIS_BUILD_ROOT</b> environment variable.</p>
 <h1><a class="anchor" id="libxml"></a>
 libxml (optional for Windows)</h1>
 <p>For Windows the <a href="https://www.zlatkovic.com/pub/libxml/" target="_blank"><b>libxml</b></a> provides an XML processor that provides the functionality of <b>xmllint</b>.</p>

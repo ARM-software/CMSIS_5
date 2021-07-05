@@ -117,12 +117,7 @@ $(document).ready(function(){initNavTree('cbuildgen.html','');});
 <li>Software packs are used to get source and include files of software components. The location of software packs is defined with the environment variable <code>$CMSIS_PACK_ROOT</code>.</li>
 <li>The version of configuration files is specified in project file *.cprj and related software packs are used to update it.</li>
 <li>Device information is read from the device family pack (DFP) that defines the device.</li>
-<li>Command line options for a toolchain is used from the <b>&lt;name&gt;.&lt;version&gt;.mak</b> file, if not present in the project file directory, the <code>$CMSIS_COMPILER_ROOT</code> is used.</li>
-</ul>
-<p>The <code>&lt;ProjectFile&gt;</code>.mak file includes two additional makefiles:</p>
-<ul>
-<li>include <code>${CMSIS_BUILD_ROOT}/etc/Whitespace.mak</code> for handling of white space characters in filenames.</li>
-<li>include <code>${CMSIS_COMPILER_ROOT}/&lt;name&gt;.&lt;version&gt;.mak</code> that specifies default options for the toolchain.</li>
+<li>Command line options for a toolchain is used from the <b>&lt;name&gt;.&lt;version&gt;.cmake</b> file, if not present in the project file directory, the <code>$CMSIS_COMPILER_ROOT</code> is used.</li>
 </ul>
 <h1><a class="anchor" id="cbuildgen_invocation"></a>
 Invocation</h1>
@@ -146,17 +141,13 @@ Invocation</h1>
 <tr>
 <td>--quiet </td><td>Suppress messages. </td><td>Suppresses all tool messages except build progress and result information.  </td></tr>
 <tr>
-<td>make </td><td></td><td>Generate makefile(s). </td><td>Generates <code>&lt;ProjectFile&gt;.mak</code> for <a class="el" href="make.html">Make</a> required to build the project. This command also generates a ASCII log file <code>&lt;ProjectFile&gt;.clog</code> recording location and version of the selected toolchain, packs, components and config files.   </td></tr>
-<tr>
 <td rowspan="6"></td><td>--toolchain=&lt;Toolchain&gt; </td><td>Select the toolchain. </td><td>For projects that can be built with multiple toolchains, it defines the toolchain for the build.  </td></tr>
-<tr>
-<td>--merge=&lt;MergeTool&gt; </td><td>Update configuration files. </td><td>When used with the command <code>make</code>, it generates also <code>&lt;ProjectFile&gt;_cfg.mak</code> for <a class="el" href="make.html">Make</a> to update configuration files using <a class="el" href="ccmerge.html">ccmerge: Config File Updater</a>.  </td></tr>
 <tr>
 <td>--update=&lt;CprjFile&gt; </td><td>Create fixed version CPRJ file. </td><td>Generate <code>&lt;CprjFile&gt;</code> with fixed versions for reproducing the current build.  </td></tr>
 <tr>
 <td>--outdir=&lt;OutDir&gt; </td><td>Build output directory. </td><td>Set output directory for binary executables, as well as log and map files.  </td></tr>
 <tr>
-<td>--intdir=&lt;IntDir&gt; </td><td>Intermediate files output directory. </td><td>Output directory for generated make files, list of missing packs (cpinstall), command files, object files, and dependency files.  </td></tr>
+<td>--intdir=&lt;IntDir&gt; </td><td>Intermediate files output directory. </td><td>Output directory for generated CMakeLists, list of missing packs (cpinstall), command files, object files, and dependency files.  </td></tr>
 <tr>
 <td>--quiet </td><td>Suppress messages. </td><td>Suppresses all tool messages except build progress and result information.  </td></tr>
 <tr>
@@ -168,7 +159,7 @@ Invocation</h1>
 <tr>
 <td>--outdir=&lt;OutDir&gt; </td><td>Build output directory. </td><td>Set output directory for binary executables, as well as log and map files.  </td></tr>
 <tr>
-<td>--intdir=&lt;IntDir&gt; </td><td>Intermediate files output directory. </td><td>Output directory for generated make files, list of missing packs (cpinstall), command files, object files, and dependency files.  </td></tr>
+<td>--intdir=&lt;IntDir&gt; </td><td>Intermediate files output directory. </td><td>Output directory for generated CMakeLists, list of missing packs (cpinstall), command files, object files, and dependency files.  </td></tr>
 <tr>
 <td>--quiet </td><td>Suppress messages. </td><td>Suppresses all tool messages except build progress and result information.  </td></tr>
 <tr>
@@ -198,7 +189,7 @@ Invocation</h1>
 <tr>
 <td>--quiet </td><td>Suppress messages. </td><td>Suppresses all tool messages except build progress and result information.  </td></tr>
 </table>
-<p>Note: <b>cbuildgen</b> does not update the *.cprj for commands <code>packlist</code>, <code>make</code> and <code>extract</code>. The merge tool updates the outdated configuration files with new merged data, keeping a copy of the original file.</p>
+<p>Note: <b>cbuildgen</b> does not update the *.cprj for commands <code>packlist</code>, <code>cmake</code> and <code>extract</code>.</p>
 <h1><a class="anchor" id="cbuildgen_example"></a>
 Usage Examples</h1>
 <p><b>Create a list of missing packs</b></p>
@@ -207,11 +198,6 @@ Usage Examples</h1>
 M654: URL 'http://www.keil.com/pack/ARM.CMSIS.5.6.0.pack' was added to the list of missing packages.
 M654: URL 'http://www.keil.com/pack/Keil.ARM_Compiler.1.6.1.pack' was added to the list of missing packages.
 M650: Command completed successfully.
-</pre><p><b>Generate make file for building the project</b></p>
-<pre class="fragment">$ cbuildgen Simulation.cprj make
-(cbuildgen): Build Process Manager 0.9.1 (C) 2020 ARM
-M651: Generated makefile for merging config files: 'Simulation_cfg.mak'
-M652: Generated makefile for project build:'Simulation.mak'
 </pre><p><b>Extract a specific layer from the CPRJ file</b></p>
 <pre class="fragment">$ cbuildgen Simulation.cprj extract --layer=Board --outdir=Layer
 (cbuildgen): Build Process Manager 0.9.1 (C) 2020 ARM
@@ -240,7 +226,7 @@ Error Messages</h1>
 <tr>
 <td>M205 </td><td>ERROR </td><td>$CMSIS_PACK_ROOT environment variable is not defined! </td><td>The tool requires the environment variable $CMSIS_PACK_ROOT to locate the CMSIS Packs.  </td></tr>
 <tr>
-<td>M206 </td><td>ERROR </td><td>No command was specified! </td><td>The tool requires a command. See usage information for available commands (e.g. config, make)  </td></tr>
+<td>M206 </td><td>ERROR </td><td>No command was specified! </td><td>The tool requires a command. See usage information for available commands (e.g. packlist, cmake)  </td></tr>
 <tr>
 <td>M207 </td><td>ERROR </td><td>Multiple commands were specified! </td><td>More than one command was provided in arguments. A single command is required.  </td></tr>
 <tr>
@@ -280,9 +266,7 @@ Error Messages</h1>
 <tr>
 <td>M650 </td><td>INFO </td><td>Setup run successfully </td><td>For information only.  </td></tr>
 <tr>
-<td>M651 </td><td>INFO </td><td>Generated makefile for merging config files: ...  </td><td>For information only.  </td></tr>
-<tr>
-<td>M652 </td><td>INFO </td><td>Generated makefile for project build:'NAME%.mak' </td><td>For information only.  </td></tr>
+<td>M652 </td><td>INFO </td><td>Generated file for project build:'NAME' </td><td>For information only.  </td></tr>
 <tr>
 <td>M653 </td><td>INFO </td><td>Local config file ... was not found. Copying default file from package. </td><td>Please validate whether the config file is intentionally missing. The default config file may be missing project specific settings.  </td></tr>
 <tr>

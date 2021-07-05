@@ -111,26 +111,23 @@ $(document).ready(function(){initNavTree('cbuild.html','');});
 <div class="title">cbuild.sh: Build Invocation </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><b>cbuild.sh</b> implements the build flow by chaining the utilities <a class="el" href="cbuildgen.html">cbuildgen</a>, <a class="el" href="ccmerge.html">ccmerge</a>, and <b>Make</b>. It replicates the build steps of CMSIS-Pack aware IDEs and also updates configuration files if necessary. The script can be adopted to project specific requirements or replaced by a custom implementation (for example a Python script).</p>
+<div class="textblock"><p><b>cbuild.sh</b> implements the build flow by chaining the utilities <a class="el" href="cbuildgen.html">cbuildgen</a> and <b>CMake</b>. It replicates the build steps of CMSIS-Pack aware IDEs and also copies configuration files from packs if necessary. The script can be adopted to project specific requirements or replaced by a custom implementation (for example a Python script).</p>
 <p>The build flow of the <b>cbuild.sh</b> script is:</p>
 <ul>
 <li>Call <a class="el" href="cbuildgen.html">cbuildgen</a> with command <code>packlist</code> to list the URLs of missing software packs.</li>
 <li>Call <a class="el" href="cp_install.html">cp_install.sh</a> to download and install missing software packs.</li>
-<li>Call <a class="el" href="cbuildgen.html">cbuildgen</a> with command <code>make</code> to generate make files <em>or</em> </li>
 <li>Call <a class="el" href="cbuildgen.html">cbuildgen</a> with command <code>cmake</code> to generate a CMakeLists.txt file (if <code>--cmake</code> is specified).</li>
-<li>Call <a class="el" href="make.html">Make</a> to update configuration files using <a class="el" href="ccmerge.html">ccmerge</a> (not supported for <code>--cmake</code>).</li>
-<li>Call <a class="el" href="make.html">Make</a> to compile the project source code into the binary image <em>or</em> </li>
 <li>Call <a class="el" href="cmake.html">cmake</a> to compile the project source code into the binary image using the specified <code>&lt;BuildSystem&gt;</code>.</li>
 </ul>
 <h1><a class="anchor" id="cbuild_invocation"></a>
 Invocation</h1>
 <p>It is called from the <b>Bash</b> command line with the following syntax:</p>
-<div class="fragment"><div class="line">$ cbuild.sh &lt;ProjectFile&gt;.cprj [--toolchain=&lt;Toolchain&gt; --outdir=&lt;OutDir&gt; --intdir=&lt;IntDir&gt; --update=&lt;CprjFile&gt; --jobs=&lt;N&gt; --log=&lt;LogFile&gt; --quiet --merge &lt;MakefileTarget&gt;]</div>
+<div class="fragment"><div class="line">$ cbuild.sh &lt;ProjectFile&gt;.cprj [--toolchain=&lt;Toolchain&gt; --outdir=&lt;OutDir&gt; --intdir=&lt;IntDir&gt; --update=&lt;CprjFile&gt; --jobs=&lt;N&gt; --log=&lt;LogFile&gt; --quiet &lt;CMakeTarget&gt;]</div>
 </div><!-- fragment --><p><b>Where:</b> </p>
 <p><code>cbuild.sh</code> is the name of the script.</p>
 <p>&lt;<code>ProjectFile&gt;</code> specifies the project file in CMSIS project format.</p>
 <p><b>Operation</b> </p>
-<table  class="cmtable" summary="ccmerge Arguments">
+<table  class="cmtable" summary="cbuild Arguments">
 <tr>
 <th style="min-width:210px">Option </th><th>Description  </th></tr>
 <tr>
@@ -140,11 +137,11 @@ Invocation</h1>
 <tr>
 <td>--intdir=&lt;IntDir&gt; </td><td>Specifies the directory for intermediate files (such as generated make files, list of missing packs (<code>cpinstall</code>), command files, object files, and dependency files).  </td></tr>
 <tr>
-<td>&lt;MakefileTarget&gt; </td><td>Specifies the &lt;<code>target&gt;</code> option for <a class="el" href="make.html">Make</a>.  </td></tr>
+<td>&lt;CMakeTarget&gt; </td><td>Specifies the &lt;<code>target&gt;</code> option for <a class="el" href="cmake.html">CMake</a>.  </td></tr>
 <tr>
 <td>--quiet </td><td>Suppresses output messages except build invocations.  </td></tr>
 <tr>
-<td>--merge </td><td>Updates configuration files with the <a class="el" href="ccmerge.html">ccmerge: Config File Updater</a> utility. <b>Note:</b> not supported when used with <code>--cmake</code>.  </td></tr>
+<td>--clean </td><td>Removes intermediate and output directories.  </td></tr>
 <tr>
 <td>--update=&lt;CprjFile&gt; </td><td>Generates <code>&lt;CprjFile&gt;</code> with fixed versions for reproducing the current build.  </td></tr>
 <tr>
@@ -152,30 +149,13 @@ Invocation</h1>
 <tr>
 <td>--log=&lt;LogFile&gt; </td><td>Saves output messages in a log file.  </td></tr>
 <tr>
-<td>--jobs=&lt;N&gt; </td><td>Specifies the number of job slots for <a class="el" href="make.html">Make</a> parallel execution. Minimum 1.  </td></tr>
+<td>--jobs=&lt;N&gt; </td><td>Specifies the number of job slots for the underlying build system parallel execution. Minimum 1.  </td></tr>
 <tr>
-<td>--cmake[=&lt;BuildSystem&gt;] </td><td>Generates CMakeLists.txt file [and invokes <a class="el" href="cmake.html">CMake</a> with the specified <code>&lt;BuildSystem&gt;</code>].  </td></tr>
+<td>[&ndash;cmake=&lt;BuildSystem&gt;] </td><td>Selects the build system, default <b>Ninja</b>.  </td></tr>
 </table>
 <h1><a class="anchor" id="cbuild_example"></a>
 Usage Example</h1>
-<p><b>Make based build</b></p>
-<pre class="fragment">$ cbuild.sh Simulation.cprj
-(cbuild.sh): Build Invocation 0.10.0 (C) 2020 ARM
-Simulation.cprj validates
-(cbuildgen): Build Process Manager 0.10.0 (C) 2020 ARM
-M650: Command completed successfully.
-(cbuildgen): Build Process Manager 0.10.0 (C) 2020 ARM
-M652: Generated makefile for project build: 'C:/Examples/Blinky/IntDir/Simulation.mak'
-[1/7] Compiling C:/Examples/Blinky/RTE/CMSIS/RTX_Config.c
-[2/7] Compiling C:/Users/danbro01/AppData/Local/Arm/Packs/ARM/CMSIS/5.7.0/CMSIS/RTOS2/RTX/Source/rtx_lib.c
-[3/7] Compiling C:/Users/danbro01/AppData/Local/Arm/Packs/Keil/ARM_Compiler/1.6.3/Source/retarget_io.c
-[4/7] Compiling C:/Examples/Blinky/Blinky.c
-[5/7] Compiling C:/Examples/Blinky/RTE/Device/ARMCM3/startup_ARMCM3.c
-[6/7] Compiling C:/Examples/Blinky/RTE/Device/ARMCM3/system_ARMCM3.c
-[7/7] Linking to C:/Examples/Blinky/OutDir/Blinky_AC6.axf
-Program Size: Code=7468 RO-data=1264 RW-data=168 ZI-data=9084
-cbuild.sh finished successfully!
-</pre><p><b>CMake based build</b></p>
+<p><b>CMake based build</b></p>
 <pre class="fragment">$ cbuild.sh Blinky.B-L475E-IOT01A.cprj --cmake
 (cbuild.sh): Build Invocation 0.10.0 (C) 2020 ARM
 Blinky.B-L475E-IOT01A.cprj validates
@@ -208,9 +188,7 @@ Error Messages</h1>
 <tr>
 <td>ERROR </td><td>error: CMSIS_BUILD_ROOT environment variable not set </td><td>Set <a class="el" href="cbuild_install.html#cbuild_envsetup">Environment Variables</a>.  </td></tr>
 <tr>
-<td>ERROR </td><td>make ${output}${project}_cfg.mak failed! </td><td>Check make error messages.  </td></tr>
-<tr>
-<td>ERROR </td><td>make ${output}${project}.mak failed! </td><td>Check make error messages.  </td></tr>
+<td>ERROR </td><td>cmake ${output}${project}.cprj failed! </td><td>Check CMake error messages.  </td></tr>
 <tr>
 <td>INFO </td><td>cbuild.sh finished successfully! </td><td>For information only.  </td></tr>
 </table>
