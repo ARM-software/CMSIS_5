@@ -108,6 +108,15 @@ __STATIC_FORCEINLINE arm_status arm_sqrt_f16(
         float16_t * pDst,
         uint32_t blockSize);
 
+  /**
+     @brief  Arc tangent in radian of y/x using sign of x and y to determine right quadrant.
+     @param[in]   y  y coordinate
+     @param[in]   x  x coordinate
+     @param[out]  result  Result
+     @return  error status.
+   */
+  arm_status arm_atan2_f16(float16_t y,float16_t x,float16_t *result);
+
 #endif /*defined(ARM_FLOAT16_SUPPORTED)*/
 #ifdef   __cplusplus
 }

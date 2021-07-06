@@ -33,6 +33,9 @@
 #include "dsp/none.h"
 #include "dsp/utils.h"
 
+#include "dsp/basic_math_functions.h"
+
+
 #ifdef   __cplusplus
 extern "C"
 {
@@ -349,6 +352,35 @@ arm_status arm_divide_q31(q31_t numerator,
   q31_t *quotient,
   int16_t *shift);
 
+
+
+  /**
+     @brief  Arc tangent in radian of y/x using sign of x and y to determine right quadrant.
+     @param[in]   y  y coordinate
+     @param[in]   x  x coordinate
+     @param[out]  result  Result
+     @return  error status.
+   */
+  arm_status arm_atan2_f32(float32_t y,float32_t x,float32_t *result);
+
+
+  /**
+     @brief  Arc tangent in radian of y/x using sign of x and y to determine right quadrant.
+     @param[in]   y  y coordinate
+     @param[in]   x  x coordinate
+     @param[out]  result  Result in Q2.29
+     @return  error status.
+   */
+  arm_status arm_atan2_q31(q31_t y,q31_t x,q31_t *result);
+
+  /**
+     @brief  Arc tangent in radian of y/x using sign of x and y to determine right quadrant.
+     @param[in]   y  y coordinate
+     @param[in]   x  x coordinate
+     @param[out]  result  Result in Q2.13
+     @return  error status.
+   */
+  arm_status arm_atan2_q15(q15_t y,q15_t x,q15_t *result);
 
 #ifdef   __cplusplus
 }

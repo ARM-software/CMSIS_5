@@ -17,6 +17,8 @@ a double precision computation.
 #define ABS_ERROR ((q15_t)10)
 
 #define LOG_ABS_ERROR ((q15_t)3)
+#define ABS_ATAN_ERROR ((q15_t)3)
+#define DIV_ERROR ((q15_t)2)
 
 
     void FastMathQ15::test_vlog_q15()
@@ -31,6 +33,28 @@ a double precision computation.
         ASSERT_EMPTY_TAIL(output);
 
     }
+
+    void FastMathQ15::test_atan2_scalar_q15()
+    {
+        const q15_t *inp  = input.ptr();
+        q15_t *outp  = output.ptr();
+        q15_t res;
+        unsigned long i;
+        arm_status status=ARM_MATH_SUCCESS;
+
+        for(i=0; i < ref.nbSamples(); i++)
+        {
+          status=arm_atan2_q15(inp[2*i],inp[2*i+1],&res);
+          outp[i]=res;
+          
+          ASSERT_TRUE((status == ARM_MATH_SUCCESS));
+
+        }
+
+        ASSERT_SNR(ref,output,(q15_t)SNR_THRESHOLD);
+        ASSERT_NEAR_EQ(ref,output,ABS_ATAN_ERROR);
+    }
+
 
     void FastMathQ15::test_division_q15()
     {
@@ -49,7 +73,7 @@ a double precision computation.
         (void)status;
 
         ASSERT_SNR(ref,output,(float32_t)SNR_THRESHOLD);
-        ASSERT_NEAR_EQ(ref,output,ABS_ERROR);
+        ASSERT_NEAR_EQ(ref,output,DIV_ERROR);
         ASSERT_EQ(refShift,shift);
 
     }
@@ -189,6 +213,15 @@ a double precision computation.
 
             }
             break;
+
+            case FastMathQ15::TEST_ATAN2_SCALAR_Q15_9:
+            {
+               input.reload(FastMathQ15::ATAN2INPUT1_Q15_ID,mgr);
+               ref.reload(FastMathQ15::ATAN2_Q15_ID,mgr);
+               output.create(ref.nbSamples(),FastMathQ15::OUT_Q15_ID,mgr);
+            }
+            break;
+
         }
         
     }

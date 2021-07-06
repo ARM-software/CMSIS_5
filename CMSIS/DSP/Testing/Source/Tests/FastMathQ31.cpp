@@ -14,11 +14,30 @@ a double precision computation.
 #define ABS_SQRT_ERROR ((q31_t)7)
 
 #define ABS_ERROR ((q31_t)2200)
-#define ABS_DIV_ERROR ((q31_t)1)
-
-
+#define ABS_DIV_ERROR ((q31_t)2)
 #define LOG_ABS_ERROR ((q31_t)2)
 
+#define ABS_ATAN_ERROR ((q31_t)3)
+
+    void FastMathQ31::test_atan2_scalar_q31()
+    {
+        const q31_t *inp  = input.ptr();
+        q31_t *outp  = output.ptr();
+        q31_t res;
+        unsigned long i;
+        arm_status status=ARM_MATH_SUCCESS;
+
+        for(i=0; i < ref.nbSamples(); i++)
+        {
+          status=arm_atan2_q31(inp[2*i],inp[2*i+1],&res);
+          outp[i]=res;
+          ASSERT_TRUE((status == ARM_MATH_SUCCESS));
+
+        }
+
+        ASSERT_SNR(ref,output,(q31_t)SNR_THRESHOLD);
+        ASSERT_NEAR_EQ(ref,output,ABS_ATAN_ERROR);
+    }
 
     void FastMathQ31::test_vlog_q31()
     {
@@ -54,6 +73,7 @@ a double precision computation.
         ASSERT_SNR(ref,output,(float32_t)SNR_THRESHOLD);
         ASSERT_NEAR_EQ(ref,output,ABS_DIV_ERROR);
         ASSERT_EQ(refShift,shift);
+
 
     }
 
@@ -189,6 +209,15 @@ a double precision computation.
 
             }
             break;
+
+           case FastMathQ31::TEST_ATAN2_SCALAR_Q31_9:
+            {
+               input.reload(FastMathQ31::ATAN2INPUT1_Q31_ID,mgr);
+               ref.reload(FastMathQ31::ATAN2_Q31_ID,mgr);
+               output.create(ref.nbSamples(),FastMathQ31::OUT_Q31_ID,mgr);
+            }
+            break;
+
         }
         
     }

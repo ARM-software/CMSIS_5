@@ -75,6 +75,7 @@ def divide(f,r):
 
     return(a/b,k)
 
+
 def initLogValues(format):
     if format == Tools.Q15:
         vals=np.linspace(np.float_power(2,-15),1.0,num=125)
@@ -116,10 +117,8 @@ def writeTests(config,format):
         angles = angles / (2*math.pi)
     config.writeInput(1, angles,"Angles")
     
-    config.setOverwrite(True)
     config.writeInput(1, vals,"SqrtInput")
     config.writeReference(1, sqrtvals,"Sqrt")
-    config.setOverwrite(False)
 
     config.writeReference(1, refcos,"Cos")
     config.writeReference(1, refsin,"Sin")
@@ -131,7 +130,9 @@ def writeTests(config,format):
     config.writeInput(1, samples,"Samples")
 
     numerator=np.linspace(-0.9,0.9)
+    numerator=np.hstack([numerator,np.array([-1.0,1.0])])
     denominator=np.linspace(-0.9,0.9)
+    denominator=np.hstack([denominator,np.array([-1.0,1.0])])
 
     samples=cartesian(numerator,denominator)
     numerator=[x[0] for x in samples]
@@ -142,15 +143,47 @@ def writeTests(config,format):
     resultValue=[x[0] for x in result]
     resultShift=[x[1] for x in result]
 
+    config.setOverwrite(True)
     config.writeInput(1, numerator,"Numerator")
     config.writeInput(1, denominator,"Denominator")
     config.writeReference(1, resultValue,"DivisionValue")
     config.writeReferenceS16(1, resultShift,"DivisionShift")
+    config.setOverwrite(False)
 
 
     vals,ref=initLogValues(format)
     config.writeInput(1, vals,"LogInput")
     config.writeReference(1, ref,"Log")
+
+    config.setOverwrite(False)
+
+    # Testing of ATAN2
+    angles=np.linspace(0.0,2*math.pi,1000,endpoint=True)
+    angles=np.hstack([angles,np.array([math.pi/4.0])])
+    if format == Tools.Q31 or format == Tools.Q15:
+        radius=[1.0]
+    else:
+        radius=np.linspace(0.1,0.9,10,endpoint=True)
+    combinations = cartesian(radius,angles)
+    res=[]
+    yx = []
+    for r,angle in combinations:
+        x = r*np.cos(angle)
+        y = r*np.sin(angle)
+        res.append(np.arctan2(y,x))
+        yx.append(y)
+        yx.append(x)
+
+    
+    config.writeInput(1, np.array(yx).flatten(),"Atan2Input")
+
+    # Q2.29 or Q2.13 to represent PI in the output
+    if format == Tools.Q31 or format == Tools.Q15:
+       config.writeReference(1, np.array(res)/4.0,"Atan2Ref")
+    else:
+       config.writeReference(1, np.array(res),"Atan2Ref")
+
+    config.setOverwrite(False)
 
 
 
@@ -182,7 +215,6 @@ def writeTestsFloat(config,format):
 
 
 
-
     
 def generatePatterns():
     PATTERNDIR = os.path.join("Patterns","DSP","FastMath","FastMath")
@@ -194,6 +226,7 @@ def generatePatterns():
     configq31=Tools.Config(PATTERNDIR,PARAMDIR,"q31")
     configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
     
+
     configf64.setOverwrite(False)
     configf32.setOverwrite(False)
     configf16.setOverwrite(False)

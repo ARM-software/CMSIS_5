@@ -83,8 +83,8 @@ arm_status arm_divide_q15(q15_t numerator,
      return(ARM_MATH_NANINF);
   }
 
-  numerator = abs(numerator);
-  denominator = abs(denominator);
+  arm_abs_q15(&numerator,&numerator,1);
+  arm_abs_q15(&denominator,&denominator,1);
   
   temp = ((q31_t)numerator << 15) / ((q31_t)denominator);
 

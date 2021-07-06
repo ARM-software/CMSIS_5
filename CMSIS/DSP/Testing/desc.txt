@@ -1793,12 +1793,14 @@ group Root {
               Pattern SQRTINPUT1_F32_ID : SqrtInput1_f32.txt
               Pattern LOGINPUT1_F32_ID : LogInput1_f32.txt
               Pattern EXPINPUT1_F32_ID : ExpInput1_f32.txt
+              Pattern ATAN2INPUT1_F32_ID : Atan2Input1_f32.txt 
               
               Pattern COS1_F32_ID : Cos1_f32.txt 
               Pattern SIN1_F32_ID : Sin1_f32.txt 
               Pattern SQRT1_F32_ID : Sqrt1_f32.txt 
               Pattern LOG1_F32_ID : Log1_f32.txt 
               Pattern EXP1_F32_ID : Exp1_f32.txt 
+              Pattern ATAN2_F32_ID : Atan2Ref1_f32.txt
 
               Output  OUT_F32_ID : Output
 
@@ -1814,6 +1816,7 @@ group Root {
                 test_vexp_f32 nb=3:test_vexp_f32
                 test_vexp_f32 nb=4n:test_vexp_f32
                 test_vexp_f32 nb=4n+1:test_vexp_f32
+                test_atan2_scalar_f32:test_atan2_scalar_f32
               }
           }
 
@@ -1824,6 +1827,10 @@ group Root {
               Pattern ANGLES1_Q31_ID : Angles1_q31.txt
               Pattern SQRTINPUT1_Q31_ID : SqrtInput1_q31.txt
               Pattern LOGINPUT1_Q31_ID : LogInput1_q31.txt
+              
+              Pattern ATAN2INPUT1_Q31_ID : Atan2Input1_q31.txt 
+              Pattern ATAN2_Q31_ID : Atan2Ref1_q31.txt
+              
               Pattern COS1_Q31_ID : Cos1_q31.txt 
               Pattern SIN1_Q31_ID : Sin1_q31.txt 
               Pattern SQRT1_Q31_ID : Sqrt1_q31.txt 
@@ -1848,6 +1855,7 @@ group Root {
                 test_vlog_q31 nb=3:test_vlog_q31
                 test_vlog_q31 nb=4n:test_vlog_q31
                 test_vlog_q31 nb=4n+1:test_vlog_q31
+                test_atan2_scalar_q31:test_atan2_scalar_q31
               }
           }
 
@@ -1869,6 +1877,9 @@ group Root {
               Pattern DIVISION_VALUE_Q15_ID : DivisionValue1_q15.txt
               Pattern DIVISION_SHIFT_S16_ID : DivisionShift1_s16.txt
 
+              Pattern ATAN2INPUT1_Q15_ID : Atan2Input1_q15.txt 
+              Pattern ATAN2_Q15_ID : Atan2Ref1_q15.txt
+
               Output  OUT_Q15_ID : Output
               Output  SHIFT_S16_ID : Output
 
@@ -1881,6 +1892,7 @@ group Root {
                 test_vlog_q15 nb=3:test_vlog_q15
                 test_vlog_q15 nb=4n:test_vlog_q15
                 test_vlog_q15 nb=4n+1:test_vlog_q15
+                test_atan2_scalar_q15:test_atan2_scalar_q15
               }
           }
         }
