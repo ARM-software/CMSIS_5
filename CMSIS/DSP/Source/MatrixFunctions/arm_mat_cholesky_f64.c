@@ -96,7 +96,7 @@ arm_status arm_mat_cholesky_f64(
           }
        }
 
-       if (pG[i * n + i] <= 0.0f)
+       if (pG[i * n + i] <= 0.0)
        {
          return(ARM_MATH_DECOMPOSITION_FAILURE);
        }

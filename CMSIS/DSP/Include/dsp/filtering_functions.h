@@ -1,8 +1,8 @@
 /******************************************************************************
  * @file     filtering_functions.h
  * @brief    Public header file for CMSIS DSP Library
- * @version  V1.9.0
- * @date     23 April 2021
+ * @version  V1.10.0
+ * @date     08 July 2021
  * Target Processor: Cortex-M and Cortex-A cores
  ******************************************************************************/
 /*
@@ -1176,7 +1176,7 @@ arm_status arm_fir_decimate_init_f32(
 void arm_biquad_cascade_df2T_compute_coefs_f32(
   arm_biquad_cascade_df2T_instance_f32 * S,
   uint8_t numStages,
-  float32_t * pCoeffs);
+  const float32_t * pCoeffs);
 #endif
   /**
    * @brief  Initialization function for the floating-point transposed direct form II Biquad cascade filter.

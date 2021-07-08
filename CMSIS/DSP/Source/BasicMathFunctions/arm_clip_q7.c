@@ -116,7 +116,8 @@ void arm_clip_q7(const q7_t * pSrc,
   q7_t high, 
   uint32_t numSamples)
 {
-    for (uint32_t i = 0; i < numSamples; i++)
+    uint32_t i;
+    for (i = 0; i < numSamples; i++)
     {                                        
         if (pSrc[i] > high)                  
             pDst[i] = high;                  

@@ -307,6 +307,7 @@ void arm_levinson_durbin_q31(const q31_t *phi,
   int nbCoefs)
 {
    q31_t e;
+   int p;
 
    //a[0] = phi[1] / phi[0];
    a[0] = divide(phi[1], phi[0]);
@@ -315,14 +316,14 @@ void arm_levinson_durbin_q31(const q31_t *phi,
    //e = phi[0] - phi[1] * a[0];
    e = phi[0] - mul32x32(phi[1],a[0]);
 
-   for(int p=1; p < nbCoefs; p++)
+   for(p=1; p < nbCoefs; p++)
    {
       q63_t suma=0;
       q63_t sumb=0;
       q31_t k;
-      int nb,j;
+      int nb,j,i;
 
-      for(int i=0; i < p; i++)
+      for(i=0; i < p; i++)
       {
          suma += ((q63_t)a[i] * phi[p - i]);
          sumb += ((q63_t)a[i] * phi[i + 1]);
@@ -339,7 +340,7 @@ void arm_levinson_durbin_q31(const q31_t *phi,
 
       nb = p >> 1;
       j=0;
-      for(int i =0;i < nb ; i++)
+      for(i =0;i < nb ; i++)
       {
           q31_t x,y;
 

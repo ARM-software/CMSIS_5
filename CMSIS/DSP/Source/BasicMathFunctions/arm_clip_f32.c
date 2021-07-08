@@ -126,7 +126,8 @@ void arm_clip_f32(const float32_t * pSrc,
   float32_t high, 
   uint32_t numSamples)
 {
-    for (uint32_t i = 0; i < numSamples; i++)
+    uint32_t i;
+    for (i = 0; i < numSamples; i++)
     {                                        
         if (pSrc[i] > high)                  
             pDst[i] = high;                  

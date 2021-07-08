@@ -71,8 +71,8 @@ float16_t arm_cosine_distance_f16(const float16_t *pA,const float16_t *pB, uint3
 
     arm_dot_prod_f16(pA,pB,blockSize,&dot);
 
-    arm_sqrt_f16(pwra * pwrb, &tmp);
-    return(1.0f - dot / tmp);
+    arm_sqrt_f16((_Float16)pwra * (_Float16)pwrb, &tmp);
+    return(1.0f16 - (_Float16)dot / (_Float16)tmp);
 
 }
 

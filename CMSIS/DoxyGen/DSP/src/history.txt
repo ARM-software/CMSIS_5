@@ -7,6 +7,13 @@
     <th>Description</th>
   </tr>
   <tr>
+    <td>V1.10.0</td>
+    <td>
+      Float promotion issues:
+      - Removed remaining issues of implicit float promotion (mainly in f16 code)
+    </td>
+  </tr>
+  <tr>
     <td>V1.9.0</td>
     <td>
       Re-organization of arm_math.h

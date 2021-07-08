@@ -106,7 +106,7 @@ arm_status status;                             /* status of matrix inverse */
                 vecA = vfmsq(vecA,vdupq_n_f16(pUT[n*i + k]),vecX);
             }
 
-            if (pUT[n*i + i]==0.0f16)
+            if ((_Float16)pUT[n*i + i]==0.0f16)
             {
               return(ARM_MATH_SINGULAR);
             }
@@ -131,7 +131,7 @@ arm_status status;                             /* status of matrix inverse */
                 tmp -= (_Float16)ut_row[k] * (_Float16)pX[n*k+j];
             }
 
-            if (ut_row[i]==0.0f16)
+            if ((_Float16)ut_row[i]==0.0f16)
             {
               return(ARM_MATH_SINGULAR);
             }
@@ -197,14 +197,14 @@ arm_status status;                             /* status of matrix inverse */
             
             for(k=n-1; k > i; k--)
             {
-                tmp -= ut_row[k] * pX[n*k+j];
+                tmp -= (_Float16)ut_row[k] * (_Float16)pX[n*k+j];
             }
 
-            if (ut_row[i]==0.0f)
+            if ((_Float16)ut_row[i]==0.0f16)
             {
               return(ARM_MATH_SINGULAR);
             }
-            tmp = tmp / ut_row[i];
+            tmp = (_Float16)tmp / (_Float16)ut_row[i];
             pX[i*n+j] = tmp;
        }
 

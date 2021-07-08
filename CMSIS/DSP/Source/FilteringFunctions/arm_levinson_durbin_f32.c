@@ -223,18 +223,19 @@ void arm_levinson_durbin_f32(const float32_t *phi,
   int nbCoefs)
 {
    float32_t e;
+   int p;
 
    a[0] = phi[1] / phi[0];
 
    e = phi[0] - phi[1] * a[0];
-   for(int p=1; p < nbCoefs; p++)
+   for(p=1; p < nbCoefs; p++)
    {
       float32_t suma=0.0f;
       float32_t sumb=0.0f;
       float32_t k;
-      int nb,j;
+      int nb,j,i;
 
-      for(int i=0; i < p; i++)
+      for(i=0; i < p; i++)
       {
          suma += a[i] * phi[p - i];
          sumb += a[i] * phi[i + 1];
@@ -245,7 +246,7 @@ void arm_levinson_durbin_f32(const float32_t *phi,
 
       nb = p >> 1;
       j=0;
-      for(int i =0; i < nb ; i++)
+      for(i =0; i < nb ; i++)
       {
           float32_t x,y;
 

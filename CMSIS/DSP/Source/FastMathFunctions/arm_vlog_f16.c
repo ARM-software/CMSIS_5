@@ -69,7 +69,7 @@ void arm_vlog_f16(
       /* C = log(A) */
   
       /* Calculate log and store result in destination buffer. */
-      *pDst++ = logf(*pSrc++);
+      *pDst++ = (_Float16)logf((float32_t)*pSrc++);
   
       /* Decrement loop counter */
       blkCnt--;

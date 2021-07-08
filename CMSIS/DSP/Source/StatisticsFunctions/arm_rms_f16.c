@@ -73,7 +73,7 @@ void arm_rms_f16(
     arm_power_f16(pSrc, blockSize, &pow);
 
     /* Compute Rms and store the result in the destination */
-    arm_sqrt_f16(pow / (float16_t) blockSize, pResult);
+    arm_sqrt_f16((_Float16)pow / (_Float16) blockSize, pResult);
 }
 #else
 
@@ -135,7 +135,7 @@ void arm_rms_f16(
   }
 
   /* Compute Rms and store result in destination */
-  arm_sqrt_f16(sum / (float16_t) blockSize, pResult);
+  arm_sqrt_f16((_Float16)sum / (_Float16) blockSize, pResult);
 }
 #endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 

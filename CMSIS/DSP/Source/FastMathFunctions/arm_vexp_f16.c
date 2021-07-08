@@ -71,7 +71,7 @@ void arm_vexp_f16(
       /* C = log(A) */
   
       /* Calculate log and store result in destination buffer. */
-      *pDst++ = expf(*pSrc++);
+      *pDst++ = (_Float16)expf((float32_t)*pSrc++);
   
       /* Decrement loop counter */
       blkCnt--;

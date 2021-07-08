@@ -112,7 +112,7 @@
                 vecA = vfmsq(vecA,vdupq_n_f16(pLT[n*i + k]),vecX);
             }
 
-            if (pLT[n*i + i]==0.0f16)
+            if ((_Float16)pLT[n*i + i]==0.0f16)
             {
               return(ARM_MATH_SINGULAR);
             }
@@ -135,7 +135,7 @@
                 tmp -= (_Float16)lt_row[k] * (_Float16)pX[n*k+j];
             }
 
-            if (lt_row[i]==0.0f16)
+            if ((_Float16)lt_row[i]==0.0f16)
             {
               return(ARM_MATH_SINGULAR);
             }
@@ -207,14 +207,14 @@
             
             for(k=0; k < i; k++)
             {
-                tmp -= lt_row[k] * pX[n*k+j];
+                tmp -= (_Float16)lt_row[k] * (_Float16)pX[n*k+j];
             }
 
-            if (lt_row[i]==0.0f)
+            if ((_Float16)lt_row[i]==0.0f16)
             {
               return(ARM_MATH_SINGULAR);
             }
-            tmp = tmp / lt_row[i];
+            tmp = (_Float16)tmp / (_Float16)lt_row[i];
             pX[i*n+j] = tmp;
        }
 

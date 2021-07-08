@@ -301,15 +301,15 @@ void arm_mat_vec_mult_q7(const arm_matrix_instance_q7 *pSrcMat, const q7_t *pVec
 
     /* The following loop performs the dot-product of each row in pSrcA with the vector */
     while (row > 0) {
-        /* For every row wise process, the pInVec pointer is set
-         ** to the starting address of the vector */
-        pInVec = pVec;
-
         /* Initialize accumulators */
         q31_t sum1 = 0;
         q31_t sum2 = 0;
         q31_t sum3 = 0;
         q31_t sum4 = 0;
+
+        /* For every row wise process, the pInVec pointer is set
+         ** to the starting address of the vector */
+        pInVec = pVec;
 
         /* Loop unrolling: process 4 columns per iteration */
         colCnt = numCols >> 2;

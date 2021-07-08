@@ -123,9 +123,9 @@ void arm_clip_f16(const float16_t * pSrc,
 {
     for (uint32_t i = 0; i < numSamples; i++)
     {                                        
-        if (pSrc[i] > high)                  
+        if ((_Float16)pSrc[i] > (_Float16)high)                  
             pDst[i] = high;                  
-        else if (pSrc[i] < low)              
+        else if ((_Float16)pSrc[i] < (_Float16)low)              
             pDst[i] = low;                   
         else                                 
             pDst[i] = pSrc[i];               

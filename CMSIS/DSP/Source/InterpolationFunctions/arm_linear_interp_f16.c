@@ -91,7 +91,7 @@
     float16_t *pYData = S->pYData;               /* pointer to output table */
 
     /* Calculation of index */
-    i = (int32_t) ((x - S->x1) / xSpacing);
+    i = (int32_t) (((_Float16)x - (_Float16)S->x1) / (_Float16)xSpacing);
 
     if (i < 0)
     {
@@ -106,15 +106,16 @@
     else
     {
       /* Calculation of nearest input values */
-      x0 = S->x1 +  i      * xSpacing;
-      x1 = S->x1 + (i + 1) * xSpacing;
+      x0 = (_Float16)S->x1 +  (_Float16)i      * (_Float16)xSpacing;
+      x1 = (_Float16)S->x1 + (_Float16)(i + 1) * (_Float16)xSpacing;
 
       /* Read of nearest output values */
       y0 = pYData[i];
       y1 = pYData[i + 1];
 
       /* Calculation of output */
-      y = y0 + (x - x0) * ((y1 - y0) / (x1 - x0));
+      y = (_Float16)y0 + ((_Float16)x - (_Float16)x0) * 
+      (((_Float16)y1 - (_Float16)y0) / ((_Float16)x1 - (_Float16)x0));
 
     }
 

@@ -638,16 +638,16 @@ void arm_correlate_f16(
     while (k > 0U)
     {
       /* x[0] * y[srcBLen - 4] */
-      sum += *px++ * *py++;
+      sum += (_Float16)*px++ * (_Float16)*py++;
 
       /* x[1] * y[srcBLen - 3] */
-      sum += *px++ * *py++;
+      sum += (_Float16)*px++ * (_Float16)*py++;
 
       /* x[2] * y[srcBLen - 2] */
-      sum += *px++ * *py++;
+      sum += (_Float16)*px++ * (_Float16)*py++;
 
       /* x[3] * y[srcBLen - 1] */
-      sum += *px++ * *py++;
+      sum += (_Float16)*px++ * (_Float16)*py++;
 
       /* Decrement loop counter */
       k--;
@@ -667,7 +667,7 @@ void arm_correlate_f16(
     {
       /* Perform the multiply-accumulate */
       /* x[0] * y[srcBLen - 1] */
-      sum += *px++ * *py++;
+      sum += (_Float16)*px++ * (_Float16)*py++;
 
       /* Decrement loop counter */
       k--;
@@ -750,13 +750,13 @@ void arm_correlate_f16(
 
         /* Perform the multiply-accumulate */
         /* acc0 +=  x[0] * y[0] */
-        acc0 += x0 * c0;
+        acc0 += (_Float16)x0 * (_Float16)c0;
         /* acc1 +=  x[1] * y[0] */
-        acc1 += x1 * c0;
+        acc1 += (_Float16)x1 * (_Float16)c0;
         /* acc2 +=  x[2] * y[0] */
-        acc2 += x2 * c0;
+        acc2 += (_Float16)x2 * (_Float16)c0;
         /* acc3 +=  x[3] * y[0] */
-        acc3 += x3 * c0;
+        acc3 += (_Float16)x3 * (_Float16)c0;
 
         /* Read y[1] sample */
         c0 = *(py++);
@@ -765,13 +765,13 @@ void arm_correlate_f16(
 
         /* Perform the multiply-accumulate */
         /* acc0 +=  x[1] * y[1] */
-        acc0 += x1 * c0;
+        acc0 += (_Float16)x1 * (_Float16)c0;
         /* acc1 +=  x[2] * y[1] */
-        acc1 += x2 * c0;
+        acc1 += (_Float16)x2 * (_Float16)c0;
         /* acc2 +=  x[3] * y[1] */
-        acc2 += x3 * c0;
+        acc2 += (_Float16)x3 * (_Float16)c0;
         /* acc3 +=  x[4] * y[1] */
-        acc3 += x0 * c0;
+        acc3 += (_Float16)x0 * (_Float16)c0;
 
         /* Read y[2] sample */
         c0 = *(py++);
@@ -780,13 +780,13 @@ void arm_correlate_f16(
 
         /* Perform the multiply-accumulate */
         /* acc0 +=  x[2] * y[2] */
-        acc0 += x2 * c0;
+        acc0 += (_Float16)x2 * (_Float16)c0;
         /* acc1 +=  x[3] * y[2] */
-        acc1 += x3 * c0;
+        acc1 += (_Float16)x3 * (_Float16)c0;
         /* acc2 +=  x[4] * y[2] */
-        acc2 += x0 * c0;
+        acc2 += (_Float16)x0 * (_Float16)c0;
         /* acc3 +=  x[5] * y[2] */
-        acc3 += x1 * c0;
+        acc3 += (_Float16)x1 * (_Float16)c0;
 
         /* Read y[3] sample */
         c0 = *(py++);
@@ -795,13 +795,13 @@ void arm_correlate_f16(
 
         /* Perform the multiply-accumulate */
         /* acc0 +=  x[3] * y[3] */
-        acc0 += x3 * c0;
+        acc0 += (_Float16)x3 * (_Float16)c0;
         /* acc1 +=  x[4] * y[3] */
-        acc1 += x0 * c0;
+        acc1 += (_Float16)x0 * (_Float16)c0;
         /* acc2 +=  x[5] * y[3] */
-        acc2 += x1 * c0;
+        acc2 += (_Float16)x1 * (_Float16)c0;
         /* acc3 +=  x[6] * y[3] */
-        acc3 += x2 * c0;
+        acc3 += (_Float16)x2 * (_Float16)c0;
 
       } while (--k);
 
@@ -818,13 +818,13 @@ void arm_correlate_f16(
 
         /* Perform the multiply-accumulate */
         /* acc0 +=  x[4] * y[4] */
-        acc0 += x0 * c0;
+        acc0 += (_Float16)x0 * (_Float16)c0;
         /* acc1 +=  x[5] * y[4] */
-        acc1 += x1 * c0;
+        acc1 += (_Float16)x1 * (_Float16)c0;
         /* acc2 +=  x[6] * y[4] */
-        acc2 += x2 * c0;
+        acc2 += (_Float16)x2 * (_Float16)c0;
         /* acc3 +=  x[7] * y[4] */
-        acc3 += x3 * c0;
+        acc3 += (_Float16)x3 * (_Float16)c0;
 
         /* Reuse the present samples for the next MAC */
         x0 = x1;
@@ -886,10 +886,10 @@ void arm_correlate_f16(
       while (k > 0U)
       {
         /* Perform the multiply-accumulate */
-        sum += *px++ * *py++;
-        sum += *px++ * *py++;
-        sum += *px++ * *py++;
-        sum += *px++ * *py++;
+        sum += (_Float16)*px++ * (_Float16)*py++;
+        sum += (_Float16)*px++ * (_Float16)*py++;
+        sum += (_Float16)*px++ * (_Float16)*py++;
+        sum += (_Float16)*px++ * (_Float16)*py++;
 
         /* Decrement loop counter */
         k--;
@@ -907,7 +907,7 @@ void arm_correlate_f16(
       while (k > 0U)
       {
         /* Perform the multiply-accumulate */
-        sum += *px++ * *py++;
+        sum += (_Float16)*px++ * (_Float16)*py++;
 
         /* Decrement the loop counter */
         k--;
@@ -947,7 +947,7 @@ void arm_correlate_f16(
       while (k > 0U)
       {
         /* Perform the multiply-accumulate */
-        sum += *px++ * *py++;
+        sum += (_Float16)*px++ * (_Float16)*py++;
 
         /* Decrement the loop counter */
         k--;
@@ -1014,16 +1014,16 @@ void arm_correlate_f16(
     {
       /* Perform the multiply-accumulate */
       /* sum += x[srcALen - srcBLen + 4] * y[3] */
-      sum += *px++ * *py++;
+      sum += (_Float16)*px++ * (_Float16)*py++;
 
       /* sum += x[srcALen - srcBLen + 3] * y[2] */
-      sum += *px++ * *py++;
+      sum += (_Float16)*px++ * (_Float16)*py++;
 
       /* sum += x[srcALen - srcBLen + 2] * y[1] */
-      sum += *px++ * *py++;
+      sum += (_Float16)*px++ * (_Float16)*py++;
 
       /* sum += x[srcALen - srcBLen + 1] * y[0] */
-      sum += *px++ * *py++;
+      sum += (_Float16)*px++ * (_Float16)*py++;
 
       /* Decrement loop counter */
       k--;
@@ -1042,7 +1042,7 @@ void arm_correlate_f16(
     while (k > 0U)
     {
       /* Perform the multiply-accumulate */
-      sum += *px++ * *py++;
+      sum += (_Float16)*px++ * (_Float16)*py++;
 
       /* Decrement loop counter */
       k--;
@@ -1136,7 +1136,7 @@ void arm_correlate_f16(
       if ((((i - j) < srcBLen) && (j < srcALen)))
       {
         /* z[i] += x[i-j] * y[j] */
-        sum += pIn1[j] * pIn2[-((int32_t) i - (int32_t) j)];
+        sum += (_Float16)pIn1[j] * (_Float16)pIn2[-((int32_t) i - (int32_t) j)];
       }
     }
 

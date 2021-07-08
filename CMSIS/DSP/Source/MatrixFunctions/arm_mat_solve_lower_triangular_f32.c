@@ -284,8 +284,6 @@
     */
     int i,j,k,n;
 
-    n = dst->numRows;
-
     float32_t *pX = dst->pData;
     float32_t *pLT = lt->pData;
     float32_t *pA = a->pData;
@@ -293,15 +291,17 @@
     float32_t *lt_row;
     float32_t *a_col;
 
+    n = dst->numRows;
+
     for(j=0; j < n; j ++)
     {
        a_col = &pA[j];
 
        for(i=0; i < n ; i++)
        {
-            lt_row = &pLT[n*i];
-
             float32_t tmp=a_col[i * n];
+
+            lt_row = &pLT[n*i];
             
             for(k=0; k < i; k++)
             {

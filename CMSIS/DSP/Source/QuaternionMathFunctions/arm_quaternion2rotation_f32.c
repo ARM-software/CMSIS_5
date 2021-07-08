@@ -145,7 +145,8 @@ void arm_quaternion2rotation_f32(const float32_t *pInputQuaternions,
     float32_t *pOutputRotations, 
     uint32_t nbQuaternions)
 {
-   for(uint32_t nb=0; nb < nbQuaternions; nb++)
+   uint32_t nb;
+   for(nb=0; nb < nbQuaternions; nb++)
    {
         float32_t q00 = SQ(pInputQuaternions[0 + nb * 4]);
         float32_t q11 = SQ(pInputQuaternions[1 + nb * 4]);

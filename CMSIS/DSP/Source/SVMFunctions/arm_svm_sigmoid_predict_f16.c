@@ -295,7 +295,7 @@ void arm_svm_sigmoid_predict_f16(
                         vtanhq_f16(vaddq_n_f16(vmulq_n_f16(vtmp, S->gamma), S->coef0)),
                         vctp16q(1));
     }
-    sum += vecAddAcrossF16Mve(vSum);
+    sum += (_Float16)vecAddAcrossF16Mve(vSum);
 
     *pResult = S->classes[STEP(sum)];
 }
@@ -316,9 +316,9 @@ void arm_svm_sigmoid_predict_f16(
         dot=0.0f16;
         for(j=0; j < S->vectorDimension; j++)
         {
-            dot = dot + (_Float16)in[j] * (_Float16)*pSupport++;
+            dot = (_Float16)dot + (_Float16)in[j] * (_Float16)*pSupport++;
         }
-        sum += (_Float16)S->dualCoefficients[i] * (_Float16)tanhf((_Float16)S->gamma * dot + (_Float16)S->coef0);
+        sum += (_Float16)S->dualCoefficients[i] * (_Float16)tanhf((float32_t)((_Float16)S->gamma * (_Float16)dot + (_Float16)S->coef0));
     }
     *pResult=S->classes[STEP(sum)];
 }

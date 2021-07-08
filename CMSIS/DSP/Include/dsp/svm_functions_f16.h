@@ -1,8 +1,8 @@
 /******************************************************************************
  * @file     svm_functions_f16.h
  * @brief    Public header file for CMSIS DSP Library
- * @version  V1.9.0
- * @date     23 April 2021
+ * @version  V1.10.0
+ * @date     08 July 2021
  * Target Processor: Cortex-M and Cortex-A cores
  ******************************************************************************/
 /*
@@ -34,6 +34,7 @@
 #include "dsp/utils.h"
 #include "dsp/svm_defines.h"
 
+
 #ifdef   __cplusplus
 extern "C"
 {
@@ -57,24 +58,6 @@ extern "C"
  * 
  */
 
-/**
- * @brief Integer exponentiation
- * @param[in]    x           value
- * @param[in]    nb          integer exponent >= 1
- * @return x^nb
- *
- */
-__STATIC_INLINE float16_t arm_exponent_f16(float16_t x, int32_t nb)
-{
-    float16_t r = x;
-    nb --;
-    while(nb > 0)
-    {
-        r = r * x;
-        nb--;
-    }
-    return(r);
-}
 
 
 /**

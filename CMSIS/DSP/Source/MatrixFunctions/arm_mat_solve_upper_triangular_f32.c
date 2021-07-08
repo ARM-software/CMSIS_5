@@ -270,8 +270,6 @@ arm_status status;                             /* status of matrix inverse */
 
     int i,j,k,n;
 
-    n = dst->numRows;
-
     float32_t *pX = dst->pData;
     float32_t *pUT = ut->pData;
     float32_t *pA = a->pData;
@@ -279,16 +277,18 @@ arm_status status;                             /* status of matrix inverse */
     float32_t *ut_row;
     float32_t *a_col;
 
+    n = dst->numRows;
+
     for(j=0; j < n; j ++)
     {
        a_col = &pA[j];
 
        for(i=n-1; i >= 0 ; i--)
        {
+            float32_t tmp=a_col[i * n];
+
             ut_row = &pUT[n*i];
 
-            float32_t tmp=a_col[i * n];
-            
             for(k=n-1; k > i; k--)
             {
                 tmp -= ut_row[k] * pX[n*k+j];

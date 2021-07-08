@@ -100,51 +100,51 @@ void arm_rotation2quaternion_f32(const float32_t *pInputRotations,
 
       if (trace > 0)
       {
-        (void)arm_sqrt_f32(trace + 1.0, &doubler) ; // invs=4*qw
-        doubler = 2*doubler;
-        s = 1.0 / doubler;
+        (void)arm_sqrt_f32(trace + 1.0f, &doubler) ; // invs=4*qw
+        doubler = 2.0f*doubler;
+        s = 1.0f / doubler;
 
         q1 = vmulq_n_f32(q1,s);
         q2 = vmulq_n_f32(q2,s);
 
-        q[0] = 0.25 * doubler;
+        q[0] = 0.25f * doubler;
         q[1] = R21 - R12;
         q[2] = R02 - R20;
         q[3] = R10 - R01;
       }
       else if ((R00 > R11) && (R00 > R22) )
       {
-        (void)arm_sqrt_f32(1.0 + R00 - R11 - R22,&doubler); // invs=4*qx
-        doubler = 2*doubler;
-        s = 1.0 / doubler;
+        (void)arm_sqrt_f32(1.0f + R00 - R11 - R22,&doubler); // invs=4*qx
+        doubler = 2.0f*doubler;
+        s = 1.0f / doubler;
 
         q1 = vmulq_n_f32(q1,s);
         q2 = vmulq_n_f32(q2,s);
 
         q[0] = R21 - R12;
-        q[1] = 0.25 * doubler;
+        q[1] = 0.25f * doubler;
         q[2] = R01 + R10;
         q[3] = R02 + R20;
       }
       else if (R11 > R22)
       {
-        (void)arm_sqrt_f32(1.0 + R11 - R00 - R22,&doubler); // invs=4*qy
-        doubler = 2*doubler;
-        s = 1.0 / doubler;
+        (void)arm_sqrt_f32(1.0f + R11 - R00 - R22,&doubler); // invs=4*qy
+        doubler = 2.0f*doubler;
+        s = 1.0f / doubler;
 
         q1 = vmulq_n_f32(q1,s);
         q2 = vmulq_n_f32(q2,s);
 
         q[0] = R02 - R20;
         q[1] = R01 + R10;
-        q[2] = 0.25 * doubler;
+        q[2] = 0.25f * doubler;
         q[3] = R12 + R21;
       }
       else
       {
-        (void)arm_sqrt_f32(1.0 + R22 - R00 - R11,&doubler); // invs=4*qz
-        doubler = 2*doubler;
-        s = 1.0 / doubler;
+        (void)arm_sqrt_f32(1.0f + R22 - R00 - R11,&doubler); // invs=4*qz
+        doubler = 2.0f*doubler;
+        s = 1.0f / doubler;
 
         q1 = vmulq_n_f32(q1,s);
         q2 = vmulq_n_f32(q2,s);
@@ -152,7 +152,7 @@ void arm_rotation2quaternion_f32(const float32_t *pInputRotations,
         q[0] = R10 - R01;
         q[1] = R02 + R20;
         q[2] = R12 + R21;
-        q[3] = 0.25 * doubler;
+        q[3] = 0.25f * doubler;
       }
 
       vst1q(pOutputQuaternions, q);
@@ -166,7 +166,8 @@ void arm_rotation2quaternion_f32(const float32_t *pInputRotations,
     float32_t *pOutputQuaternions,  
     uint32_t nbQuaternions)
 {
-   for(uint32_t nb=0; nb < nbQuaternions; nb++)
+   uint32_t nb;
+   for(nb=0; nb < nbQuaternions; nb++)
    {
        const float32_t *r=&pInputRotations[nb*9];
        float32_t *q=&pOutputQuaternions[nb*4];
@@ -178,41 +179,41 @@ void arm_rotation2quaternion_f32(const float32_t *pInputRotations,
 
 
 
-      if (trace > 0)
+      if (trace > 0.0f)
       {
-        doubler = sqrtf(trace + 1.0) * 2; // invs=4*qw
-        s = 1.0 / doubler;
-        q[0] = 0.25 * doubler;
+        doubler = sqrtf(trace + 1.0f) * 2.0f; // invs=4*qw
+        s = 1.0f / doubler;
+        q[0] = 0.25f * doubler;
         q[1] = (RI(2,1) - RI(1,2)) * s;
         q[2] = (RI(0,2) - RI(2,0)) * s;
         q[3] = (RI(1,0) - RI(0,1)) * s;
       }
       else if ((RI(0,0) > RI(1,1)) && (RI(0,0) > RI(2,2)) )
       {
-        doubler = sqrtf(1.0 + RI(0,0) - RI(1,1) - RI(2,2)) * 2; // invs=4*qx
-        s = 1.0 / doubler;
+        doubler = sqrtf(1.0f + RI(0,0) - RI(1,1) - RI(2,2)) * 2.0f; // invs=4*qx
+        s = 1.0f / doubler;
         q[0] = (RI(2,1) - RI(1,2)) * s;
-        q[1] = 0.25 * doubler;
+        q[1] = 0.25f * doubler;
         q[2] = (RI(0,1) + RI(1,0)) * s;
         q[3] = (RI(0,2) + RI(2,0)) * s;
       }
       else if (RI(1,1) > RI(2,2))
       {
-        doubler = sqrtf(1.0 + RI(1,1) - RI(0,0) - RI(2,2)) * 2; // invs=4*qy
-        s = 1.0 / doubler;
+        doubler = sqrtf(1.0f + RI(1,1) - RI(0,0) - RI(2,2)) * 2.0f; // invs=4*qy
+        s = 1.0f / doubler;
         q[0] = (RI(0,2) - RI(2,0)) * s;
         q[1] = (RI(0,1) + RI(1,0)) * s;
-        q[2] = 0.25 * doubler;
+        q[2] = 0.25f * doubler;
         q[3] = (RI(1,2) + RI(2,1)) * s;
       }
       else
       {
-        doubler = sqrtf(1.0 + RI(2,2) - RI(0,0) - RI(1,1)) * 2; // invs=4*qz
-        s = 1.0 / doubler;
+        doubler = sqrtf(1.0f + RI(2,2) - RI(0,0) - RI(1,1)) * 2.0f; // invs=4*qz
+        s = 1.0f / doubler;
         q[0] = (RI(1,0) - RI(0,1)) * s;
         q[1] = (RI(0,2) + RI(2,0)) * s;
         q[2] = (RI(1,2) + RI(2,1)) * s;
-        q[3] = 0.25 * doubler;
+        q[3] = 0.25f * doubler;
       }
 
     }

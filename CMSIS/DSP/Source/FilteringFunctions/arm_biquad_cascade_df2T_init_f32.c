@@ -101,7 +101,7 @@ The pCoeffs passed in init is bigger than the one for the not Neon version.
 void arm_biquad_cascade_df2T_compute_coefs_f32(
   arm_biquad_cascade_df2T_instance_f32 * S,
   uint8_t numStages,
-  float32_t * pCoeffs)
+  const float32_t * pCoeffs)
 {
    uint8_t cnt;
    float32_t *pDstCoeffs;

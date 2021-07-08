@@ -72,8 +72,6 @@ arm_status status;                             /* status of matrix inverse */
 
     int i,j,k,n;
 
-    n = dst->numRows;
-
     float64_t *pX = dst->pData;
     float64_t *pUT = ut->pData;
     float64_t *pA = a->pData;
@@ -81,22 +79,24 @@ arm_status status;                             /* status of matrix inverse */
     float64_t *ut_row;
     float64_t *a_col;
 
+    n = dst->numRows;
+
     for(j=0; j < n; j ++)
     {
        a_col = &pA[j];
 
        for(i=n-1; i >= 0 ; i--)
        {
+            float64_t tmp=a_col[i * n];
+
             ut_row = &pUT[n*i];
 
-            float64_t tmp=a_col[i * n];
-            
             for(k=n-1; k > i; k--)
             {
                 tmp -= ut_row[k] * pX[n*k+j];
             }
 
-            if (ut_row[i]==0.0f)
+            if (ut_row[i]==0.0)
             {
               return(ARM_MATH_SINGULAR);
             }
