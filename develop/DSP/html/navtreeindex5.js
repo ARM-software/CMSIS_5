@@ -1,5 +1,6 @@
 var NAVTREEINDEX5 =
 {
+"structarm__svm__rbf__instance__f16.html#a2d1be16c16d99cbba003a47ee2a3234f":[4,85,2],
 "structarm__svm__rbf__instance__f16.html#a3fb69b6a70ff2d687329d334d02af9e1":[4,85,0],
 "structarm__svm__rbf__instance__f16.html#a5d4e70779fa42764818a1fcbf44e3b91":[4,85,1],
 "structarm__svm__rbf__instance__f16.html#a6f886b9e51ee9222dda09261ee20799c":[4,85,5],

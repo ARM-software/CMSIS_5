@@ -1,5 +1,6 @@
 var NAVTREEINDEX3 =
 {
+"group__variance.html#gaef3ebc6401209c3f93749e08d341ab48":[3,11,11,2],
 "group__weightedsum.html":[3,12,9],
 "group__weightedsum.html#ga06e10e847786d8d96c5459fb36d5c752":[3,12,9,0],
 "group__weightedsum.html#gaffef5e0e3e1d0289e419c23853e20850":[3,12,9,1],
@@ -248,6 +249,5 @@ var NAVTREEINDEX3 =
 "structarm__fir__lattice__instance__f32.html":[4,43],
 "structarm__fir__lattice__instance__f32.html#a335c87e6fdc4b96601d95a5de8b9c463":[4,43,2],
 "structarm__fir__lattice__instance__f32.html#a39230f04a29d8321948e339633780442":[4,43,1],
-"structarm__fir__lattice__instance__f32.html#a4cceb90547b3e585d4c7aabaa8057212":[4,43,0],
-"structarm__fir__lattice__instance__q15.html":[4,44]
+"structarm__fir__lattice__instance__f32.html#a4cceb90547b3e585d4c7aabaa8057212":[4,43,0]
 };

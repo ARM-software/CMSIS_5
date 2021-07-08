@@ -1,5 +1,6 @@
 var NAVTREEINDEX4 =
 {
+"structarm__fir__lattice__instance__q15.html":[4,44],
 "structarm__fir__lattice__instance__q15.html#a4cceb90547b3e585d4c7aabaa8057212":[4,44,0],
 "structarm__fir__lattice__instance__q15.html#ae29dfdb736374fcddaeaec4b7770170c":[4,44,2],
 "structarm__fir__lattice__instance__q15.html#ae85d417edcdce57e9a54f8c841580578":[4,44,1],
@@ -248,6 +249,5 @@ var NAVTREEINDEX4 =
 "structarm__svm__polynomial__instance__f32.html#ac74855c4f6df20c9b07ee5fe002378fc":[4,84,7],
 "structarm__svm__polynomial__instance__f32.html#aed464fe96870d4fcee492ab05b5dba21":[4,84,1],
 "structarm__svm__rbf__instance__f16.html":[4,85],
-"structarm__svm__rbf__instance__f16.html#a1abe530f26ba6a68edea942ebd904a0a":[4,85,3],
-"structarm__svm__rbf__instance__f16.html#a2d1be16c16d99cbba003a47ee2a3234f":[4,85,2]
+"structarm__svm__rbf__instance__f16.html#a1abe530f26ba6a68edea942ebd904a0a":[4,85,3]
 };

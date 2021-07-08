@@ -497,7 +497,7 @@ var searchData=
   ['arm_5feuclidean_5fdistance_5ff16_2ec',['arm_euclidean_distance_f16.c',['../arm__euclidean__distance__f16_8c.html',1,'']]],
   ['arm_5feuclidean_5fdistance_5ff32',['arm_euclidean_distance_f32',['../group__Euclidean.html#ga838f0a157454dfd95996691309c3828e',1,'arm_euclidean_distance_f32(const float32_t *pA, const float32_t *pB, uint32_t blockSize):&#160;arm_euclidean_distance_f32.c'],['../group__Euclidean.html#ga838f0a157454dfd95996691309c3828e',1,'arm_euclidean_distance_f32(const float32_t *pA, const float32_t *pB, uint32_t blockSize):&#160;arm_euclidean_distance_f32.c']]],
   ['arm_5feuclidean_5fdistance_5ff32_2ec',['arm_euclidean_distance_f32.c',['../arm__euclidean__distance__f32_8c.html',1,'']]],
-  ['arm_5fexponent_5ff16',['arm_exponent_f16',['../svm__functions__f16_8h.html#a0528740899345db759a44378f2b9b849',1,'svm_functions_f16.h']]],
+  ['arm_5fexponent_5ff16',['arm_exponent_f16',['../group__polysvm.html#ga0528740899345db759a44378f2b9b849',1,'arm_svm_polynomial_predict_f16.c']]],
   ['arm_5fexponent_5ff32',['arm_exponent_f32',['../svm__functions_8h.html#a653ddea4ad545ab8c755c3649078ad59',1,'svm_functions.h']]],
   ['arm_5ff16_5fto_5ffloat',['arm_f16_to_float',['../group__f16__to__x.html#ga809b0be376f5cbfe044239cefe36d246',1,'arm_f16_to_float(const float16_t *pSrc, float32_t *pDst, uint32_t blockSize):&#160;arm_f16_to_float.c'],['../group__f16__to__x.html#ga809b0be376f5cbfe044239cefe36d246',1,'arm_f16_to_float(const float16_t *pSrc, float32_t *pDst, uint32_t blockSize):&#160;arm_f16_to_float.c']]],
   ['arm_5ff16_5fto_5ffloat_2ec',['arm_f16_to_float.c',['../arm__f16__to__float_8c.html',1,'']]],
