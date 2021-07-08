@@ -10,6 +10,7 @@
   <releases>
     <release version="5.8.1">
       Active development ...
+      CMSIS-DSP: 1.10.0 (see revision history for details)
     </release>
     <release version="5.8.0" date="2021-06-24">
       CMSIS-Core(M): 5.5.0 (see revision history for details)
@@ -2733,7 +2734,7 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- CMSIS-DSP component -->
-    <component Cclass="CMSIS" Cgroup="DSP" Cvariant="Source"  Cversion="1.9.0-dev" isDefaultVariant="true" condition="CMSIS DSP">
+    <component Cclass="CMSIS" Cgroup="DSP" Cvariant="Source"  Cversion="1.10.0-dev" isDefaultVariant="true" condition="CMSIS DSP">
       <description>CMSIS-DSP Library for Cortex-M, SC000, and SC300</description>
       <files>
         <!-- CPU independent -->
