@@ -60,6 +60,7 @@ The following sections explain:
 - \ref zoneToolUsage describes the tool features and explains the usage on several examples.
 - \ref zoneFormat (XML based) that stores resource (*.rzone) and assignment (*.azone) information.
 - \ref GenDataModel which is used to create tool set-up files and hardware configuration files.
+- \ref ErrorMessages explains the output messages issued by CMSIS-Zone utility.
 
 \section mainIntroVideo Introduction Video
 
