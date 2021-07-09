@@ -1,5 +1,6 @@
 var NAVTREEINDEX1 =
 {
+"group__ComplexFFT.html#ga5c5b2127b3c4ea2d03692127f8543858":[3,14,0,15],
 "group__ComplexFFT.html#ga6321f703ec87a274aedaab33d3e766b4":[3,14,0,18],
 "group__ComplexFFT.html#ga68cdacd2267a2967955e40e6b7ec1229":[3,14,0,9],
 "group__ComplexFFT.html#ga76de02a40b34e5ff8c20886d34fdcd71":[3,14,0,13],
@@ -248,6 +249,5 @@ var NAVTREEINDEX1 =
 "group__MatrixVectMult.html":[3,9,10],
 "group__MatrixVectMult.html#ga3d7eee440c159eb007d11af8ccb7ec50":[3,9,10,1],
 "group__MatrixVectMult.html#ga5a57a580abcde48e253528344905ba25":[3,9,10,0],
-"group__MatrixVectMult.html#gab0464f2b361d4fa2efedf7a943fdb767":[3,9,10,4],
-"group__MatrixVectMult.html#gac2d83078f35c9d0b42226404de20b137":[3,9,10,3]
+"group__MatrixVectMult.html#gab0464f2b361d4fa2efedf7a943fdb767":[3,9,10,4]
 };

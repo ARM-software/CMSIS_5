@@ -1,5 +1,6 @@
 var NAVTREEINDEX2 =
 {
+"group__MatrixVectMult.html#gac2d83078f35c9d0b42226404de20b137":[3,9,10,3],
 "group__MatrixVectMult.html#gad31a43da83affa509393cfab4c1248b8":[3,9,10,2],
 "group__Max.html":[3,11,5],
 "group__Max.html#ga504abf036854dc0c4a43bd9a27827863":[3,11,5,6],
@@ -208,11 +209,10 @@ var NAVTREEINDEX2 =
 "group__park.html#ga18f92d09e080edc98a00c01886b56b5d":[3,4,1,0],
 "group__park.html#ga69be76685149b18f345f705aa8efaad0":[3,4,1,1],
 "group__polysvm.html":[3,13,1],
-"group__polysvm.html#ga0528740899345db759a44378f2b9b849":[3,13,1,0],
-"group__polysvm.html#ga5719f32544ecc1b568aaba7f5d237df8":[3,13,1,4],
-"group__polysvm.html#ga6dcdfd9ae4e94b8e2239fdd22ddf10bd":[3,13,1,1],
-"group__polysvm.html#gad004464aae8fdecfc985a02a0de6b0af":[3,13,1,2],
-"group__polysvm.html#gafd022241fbd983b4184a9edfa813044e":[3,13,1,3],
+"group__polysvm.html#ga5719f32544ecc1b568aaba7f5d237df8":[3,13,1,3],
+"group__polysvm.html#ga6dcdfd9ae4e94b8e2239fdd22ddf10bd":[3,13,1,0],
+"group__polysvm.html#gad004464aae8fdecfc985a02a0de6b0af":[3,13,1,1],
+"group__polysvm.html#gafd022241fbd983b4184a9edfa813044e":[3,13,1,2],
 "group__power.html":[3,11,8],
 "group__power.html#ga6b87986c6a3617d4fc32c0572a07706c":[3,11,8,2],
 "group__power.html#gad0630e3743da2b5aedbe2bb624a8532f":[3,11,8,1],

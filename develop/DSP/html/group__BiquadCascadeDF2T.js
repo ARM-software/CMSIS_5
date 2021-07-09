@@ -1,7 +1,8 @@
 var group__BiquadCascadeDF2T =
 [
+    [ "arm_biquad_cascade_df2T_compute_coefs_f32", "group__BiquadCascadeDF2T.html#gaf334c523c4a34eb45d57f916f60afb05", null ],
     [ "arm_biquad_cascade_df2T_f16", "group__BiquadCascadeDF2T.html#gad7baf70ce62f0cd8a50360539f7938fb", null ],
-    [ "arm_biquad_cascade_df2T_f32", "group__BiquadCascadeDF2T.html#gaecf9b22907e89fc35f097b50589cf86a", null ],
+    [ "arm_biquad_cascade_df2T_f32", "group__BiquadCascadeDF2T.html#ga93e62f2e5db1f4c5878f2f9458023115", null ],
     [ "arm_biquad_cascade_df2T_f64", "group__BiquadCascadeDF2T.html#ga8b53614bce70ec6f1c44800ae677558d", null ],
     [ "arm_biquad_cascade_df2T_init_f16", "group__BiquadCascadeDF2T.html#gaf4312635d1a27b5f8657364cd4da769e", null ],
     [ "arm_biquad_cascade_df2T_init_f32", "group__BiquadCascadeDF2T.html#gafd8b4068de567e9012e444f1c2320e1c", null ],

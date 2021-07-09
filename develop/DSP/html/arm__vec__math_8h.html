@@ -108,10 +108,108 @@ $(document).ready(function(){initNavTree('arm__vec__math_8h.html','');});
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">arm_vec_math.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:aa2e8b710168a2d8d8db95bd917221381"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE float32x4_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__vec__math_8h.html#aa2e8b710168a2d8d8db95bd917221381">arm_vec_exponent_f32</a> (float32x4_t x, int32_t nb)</td></tr>
+<tr class="memdesc:aa2e8b710168a2d8d8db95bd917221381"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vectorized integer exponentiation.  <a href="#aa2e8b710168a2d8d8db95bd917221381">More...</a><br/></td></tr>
+<tr class="separator:aa2e8b710168a2d8d8db95bd917221381"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b9bc9f81a3404dad76b72ce44fd20fe"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE float32x4_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__vec__math_8h.html#a6b9bc9f81a3404dad76b72ce44fd20fe">__arm_vec_sqrt_f32_neon</a> (float32x4_t x)</td></tr>
+<tr class="separator:a6b9bc9f81a3404dad76b72ce44fd20fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54df61ad0d505d5ea5c247862c5a6bf5"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE int16x8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__vec__math_8h.html#a54df61ad0d505d5ea5c247862c5a6bf5">__arm_vec_sqrt_q15_neon</a> (int16x8_t vec)</td></tr>
+<tr class="separator:a54df61ad0d505d5ea5c247862c5a6bf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae4124b00a234f74662f762b8f013a571"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE int32x4_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__vec__math_8h.html#ae4124b00a234f74662f762b8f013a571">__arm_vec_sqrt_q31_neon</a> (int32x4_t vec)</td></tr>
+<tr class="separator:ae4124b00a234f74662f762b8f013a571"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="a6b9bc9f81a3404dad76b72ce44fd20fe"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE float32x4_t __arm_vec_sqrt_f32_neon </td>
+          <td>(</td>
+          <td class="paramtype">float32x4_t&#160;</td>
+          <td class="paramname"><em>x</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a54df61ad0d505d5ea5c247862c5a6bf5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE int16x8_t __arm_vec_sqrt_q15_neon </td>
+          <td>(</td>
+          <td class="paramtype">int16x8_t&#160;</td>
+          <td class="paramname"><em>vec</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ae4124b00a234f74662f762b8f013a571"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE int32x4_t __arm_vec_sqrt_q31_neon </td>
+          <td>(</td>
+          <td class="paramtype">int32x4_t&#160;</td>
+          <td class="paramname"><em>vec</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aa2e8b710168a2d8d8db95bd917221381"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_INLINE float32x4_t arm_vec_exponent_f32 </td>
+          <td>(</td>
+          <td class="paramtype">float32x4_t&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int32_t&#160;</td>
+          <td class="paramname"><em>nb</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">x</td><td>value </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">nb</td><td>integer exponent &gt;= 1 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>x^nb </dd></dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

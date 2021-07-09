@@ -1,6 +1,7 @@
 var searchData=
 [
   ['fixed_20point_20division',['Fixed point division',['../group__divide.html',1,'']]],
+  ['f',['f',['../unionany32x4__t.html#a5a1b1bbefd65485f30beccc0ed7cc70d',1,'any32x4_t::f()'],['../unionany32x2__t.html#a77adc1820dcdcdc812bacdbe7e389759',1,'any32x2_t::f()']]],
   ['f16_5fabsmax',['F16_ABSMAX',['../arm__math__types__f16_8h.html#a0fc919838f53d7d929c043e80e1d6013',1,'arm_math_types_f16.h']]],
   ['f16_5fabsmin',['F16_ABSMIN',['../arm__math__types__f16_8h.html#a8d7b79926d1894bbbc56edd37de7f7f0',1,'arm_math_types_f16.h']]],
   ['f16_5fmax',['F16_MAX',['../arm__math__types__f16_8h.html#a19258b265fecac5e34497eab8b9cc133',1,'arm_math_types_f16.h']]],
@@ -10,6 +11,14 @@ var searchData=
   ['f32_5fabsmin',['F32_ABSMIN',['../arm__math__types_8h.html#a30173fccebc0c990bd9d4ee7a864cade',1,'arm_math_types.h']]],
   ['f32_5fmax',['F32_MAX',['../arm__math__types_8h.html#a754d8f564bd5d1fb49931b2f4c0ec00c',1,'arm_math_types.h']]],
   ['f32_5fmin',['F32_MIN',['../arm__math__types_8h.html#a0f9ce95191fb035fcd53ab63b9663e20',1,'arm_math_types.h']]],
+  ['f32x2_5ft',['f32x2_t',['../arm__math__types_8h.html#a5a2e6d25ddb5523307305c42189bf05d',1,'arm_math_types.h']]],
+  ['f32x2x2_5ft',['f32x2x2_t',['../arm__math__types_8h.html#a4e8ac500763bf83f06aeb0113ad297e6',1,'arm_math_types.h']]],
+  ['f32x2x3_5ft',['f32x2x3_t',['../arm__math__types_8h.html#a56b58ee03e4f65b8be19d79f653e3863',1,'arm_math_types.h']]],
+  ['f32x2x4_5ft',['f32x2x4_t',['../arm__math__types_8h.html#af9f443d7781e43e681beb3e4725902aa',1,'arm_math_types.h']]],
+  ['f32x4_5ft',['f32x4_t',['../arm__math__types_8h.html#aa72ea28cbde94b8b5992a6fe3e1dbd6c',1,'arm_math_types.h']]],
+  ['f32x4x2_5ft',['f32x4x2_t',['../arm__math__types_8h.html#a915e90433fb41b8db1e0dfb621337c38',1,'arm_math_types.h']]],
+  ['f32x4x3_5ft',['f32x4x3_t',['../arm__math__types_8h.html#ac2b1a8aad973e75a63ff72c48d0410de',1,'arm_math_types.h']]],
+  ['f32x4x4_5ft',['f32x4x4_t',['../arm__math__types_8h.html#ac0b7ca992b885f69bb8789505b482d24',1,'arm_math_types.h']]],
   ['f64_5fabsmax',['F64_ABSMAX',['../arm__math__types_8h.html#a165289cdbeeb4f5903df34d70489ab19',1,'arm_math_types.h']]],
   ['f64_5fabsmin',['F64_ABSMIN',['../arm__math__types_8h.html#a07c00c6b967495f5e56dc989d859c3db',1,'arm_math_types.h']]],
   ['f64_5fmax',['F64_MAX',['../arm__math__types_8h.html#a82daf28d8d0052302ccf95c163687ce5',1,'arm_math_types.h']]],

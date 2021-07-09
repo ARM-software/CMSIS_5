@@ -1,5 +1,8 @@
 var searchData=
 [
+  ['_5f_5farm_5fvec_5fsqrt_5ff32_5fneon',['__arm_vec_sqrt_f32_neon',['../arm__vec__math_8h.html#a6b9bc9f81a3404dad76b72ce44fd20fe',1,'arm_vec_math.h']]],
+  ['_5f_5farm_5fvec_5fsqrt_5fq15_5fneon',['__arm_vec_sqrt_q15_neon',['../arm__vec__math_8h.html#a54df61ad0d505d5ea5c247862c5a6bf5',1,'arm_vec_math.h']]],
+  ['_5f_5farm_5fvec_5fsqrt_5fq31_5fneon',['__arm_vec_sqrt_q31_neon',['../arm__vec__math_8h.html#ae4124b00a234f74662f762b8f013a571',1,'arm_vec_math.h']]],
   ['_5f_5fqadd',['__QADD',['../none_8h.html#a3cfcec82d3ff1b8570010b771052cb96',1,'none.h']]],
   ['_5f_5fqadd16',['__QADD16',['../none_8h.html#ae849a77250aa7bdc008f3f5e279de24e',1,'none.h']]],
   ['_5f_5fqadd8',['__QADD8',['../none_8h.html#a2fb737513178e1e4b473008d0ebca517',1,'none.h']]],

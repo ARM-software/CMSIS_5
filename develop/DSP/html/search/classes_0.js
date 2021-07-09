@@ -1,5 +1,7 @@
 var searchData=
 [
+  ['any32x2_5ft',['any32x2_t',['../unionany32x2__t.html',1,'']]],
+  ['any32x4_5ft',['any32x4_t',['../unionany32x4__t.html',1,'']]],
   ['arm_5fbilinear_5finterp_5finstance_5ff16',['arm_bilinear_interp_instance_f16',['../structarm__bilinear__interp__instance__f16.html',1,'']]],
   ['arm_5fbilinear_5finterp_5finstance_5ff32',['arm_bilinear_interp_instance_f32',['../structarm__bilinear__interp__instance__f32.html',1,'']]],
   ['arm_5fbilinear_5finterp_5finstance_5fq15',['arm_bilinear_interp_instance_q15',['../structarm__bilinear__interp__instance__q15.html',1,'']]],

@@ -1,6 +1,8 @@
 var annotated =
 [
     [ "train", "namespacetrain.html", null ],
+    [ "any32x2_t", "unionany32x2__t.html", "unionany32x2__t" ],
+    [ "any32x4_t", "unionany32x4__t.html", "unionany32x4__t" ],
     [ "arm_bilinear_interp_instance_f16", "structarm__bilinear__interp__instance__f16.html", "structarm__bilinear__interp__instance__f16" ],
     [ "arm_bilinear_interp_instance_f32", "structarm__bilinear__interp__instance__f32.html", "structarm__bilinear__interp__instance__f32" ],
     [ "arm_bilinear_interp_instance_q15", "structarm__bilinear__interp__instance__q15.html", "structarm__bilinear__interp__instance__q15" ],

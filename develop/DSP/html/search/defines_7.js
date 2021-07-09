@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['index_5fmask',['INDEX_MASK',['../utils_8h.html#a29f839928f4752b73c8858d6dbb55294',1,'utils.h']]],
-  ['input_5fspacing',['INPUT_SPACING',['../controller__functions_8h.html#a1339e9abc11a3870e0c04f822a62166a',1,'controller_functions.h']]]
+  ['half_5fq15',['HALF_Q15',['../arm__levinson__durbin__q31_8c.html#af53eb1f80ad06646990e67560ab2a8b0',1,'arm_levinson_durbin_q31.c']]],
+  ['half_5fq31',['HALF_Q31',['../arm__levinson__durbin__q31_8c.html#a84b2434cbc9524cea6f4487aa94d5bfa',1,'arm_levinson_durbin_q31.c']]]
 ];

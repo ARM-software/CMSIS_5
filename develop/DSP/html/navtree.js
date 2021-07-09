@@ -24,8 +24,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "ChangeLog_pg.html",
-"group__ComplexFFT.html#ga6321f703ec87a274aedaab33d3e766b4",
-"group__MatrixVectMult.html#gad31a43da83affa509393cfab4c1248b8",
+"group__ComplexFFT.html#ga5c5b2127b3c4ea2d03692127f8543858",
+"group__MatrixVectMult.html#gac2d83078f35c9d0b42226404de20b137",
 "group__variance.html#gaef3ebc6401209c3f93749e08d341ab48",
 "structarm__fir__lattice__instance__q15.html",
 "structarm__svm__rbf__instance__f16.html#a2d1be16c16d99cbba003a47ee2a3234f"
