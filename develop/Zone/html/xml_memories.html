@@ -125,7 +125,7 @@ $(document).ready(function(){initNavTree('xml_memories.html','');});
 <div class="line">    &lt;memory name=<span class="stringliteral">&quot;Flash_S&quot;</span>    start=<span class="stringliteral">&quot;0x0c000000&quot;</span> physical=<span class="stringliteral">&quot;0x08001000&quot;</span> size=<span class="stringliteral">&quot;0x00080000&quot;</span> access=<span class="stringliteral">&quot;rx&quot;</span>  security=<span class="stringliteral">&quot;c&quot;</span> type=<span class="stringliteral">&quot;ROM&quot;</span> info=<span class="stringliteral">&quot;Flash Memory (secure)&quot;</span>                     /&gt;</div>
 <div class="line"></div>
 <div class="line">    &lt;memory name=<span class="stringliteral">&quot;SRAM1_C_NS&quot;</span> start=<span class="stringliteral">&quot;0x0A000000&quot;</span>                       size=<span class="stringliteral">&quot;0x00030000&quot;</span> access=<span class="stringliteral">&quot;rwx&quot;</span> security=<span class="stringliteral">&quot;&quot;</span>  type=<span class="stringliteral">&quot;RAM&quot;</span> info=<span class="stringliteral">&quot;SRAM1 Code (non secure)&quot;</span>   /&gt;</div>
-<div class="line">    &lt;memory name=<span class="stringliteral">&quot;SRAM1_C_S&quot;</span>  start=<span class="stringliteral">&quot;0x0E000000&quot;</span> physical=<span class="stringliteral">&quot;0x0A000000&quot;</span> size=<span class="stringliteral">&quot;0x00030000&quot;</span> access=<span class="stringliteral">&quot;rwx&quot;</span> security=<span class="stringliteral">&quot;c&quot;</span> type=<span class="stringliteral">&quot;RAM&quot;</span> info=<span class="stringliteral">&quot;SRAM1 Code (secure)&quot;</span>       /&gt;</div>
+<div class="line">    &lt;memory name=<span class="stringliteral">&quot;SRAM1_C_S&quot;</span>  start=<span class="stringliteral">&quot;0x0E000000&quot;</span> physical=<span class="stringliteral">&quot;0x0A000000&quot;</span> size=<span class="stringliteral">&quot;0x00030000&quot;</span> access=<span class="stringliteral">&quot;rwx&quot;</span> security=<span class="stringliteral">&quot;c&quot;</span> type=<span class="stringliteral">&quot;RAM&quot;</span> info=<span class="stringliteral">&quot;SRAM1 Code (secure)&quot;</span> linker_control=<span class="stringliteral">&quot;*sram1&quot;</span> /&gt;</div>
 <div class="line">    &lt;memory name=<span class="stringliteral">&quot;SRAM1_S&quot;</span>    start=<span class="stringliteral">&quot;0x30000000&quot;</span> physical=<span class="stringliteral">&quot;0x0A000000&quot;</span> size=<span class="stringliteral">&quot;0x00030000&quot;</span> access=<span class="stringliteral">&quot;rw&quot;</span>  security=<span class="stringliteral">&quot;s&quot;</span> type=<span class="stringliteral">&quot;RAM&quot;</span> info=<span class="stringliteral">&quot;SRAM1 (secure)&quot;</span>            /&gt;</div>
 <div class="line">    &lt;memory name=<span class="stringliteral">&quot;SRAM1_NS&quot;</span>   start=<span class="stringliteral">&quot;0x20000000&quot;</span> physical=<span class="stringliteral">&quot;0x0A000000&quot;</span> size=<span class="stringliteral">&quot;0x00030000&quot;</span> access=<span class="stringliteral">&quot;rw&quot;</span>  security=<span class="stringliteral">&quot;&quot;</span>  type=<span class="stringliteral">&quot;RAM&quot;</span> info=<span class="stringliteral">&quot;SRAM1 (non secure)&quot;</span>        /&gt;</div>
 <div class="line"></div>
@@ -185,6 +185,8 @@ $(document).ready(function(){initNavTree('xml_memories.html','');});
 <td>Pname </td><td>The processor that can access this memory region. If omitted all processors of the system have access. </td><td>xs:string </td><td>optional  </td></tr>
 <tr>
 <td>info </td><td>Brief description of the memory region. </td><td>xs:string </td><td>optional  </td></tr>
+<tr>
+<td>linker_control </td><td>Linker control settings for the memory region. </td><td>xs:string </td><td>optional  </td></tr>
 </table>
 <h1><a class="anchor" id="xml_rmpc"></a>
 /rzone/resources/memories/mpc element</h1>
@@ -213,7 +215,7 @@ $(document).ready(function(){initNavTree('xml_memories.html','');});
 </ul>
 </td><td>MpcTypeEnum </td><td>optional  </td></tr>
 <tr>
-<td>info </td><td>Brief description of the memory region. </td><td>xs:string </td><td>optional  </td></tr>
+<td>info </td><td>Brief description of the MPC region. </td><td>xs:string </td><td>optional  </td></tr>
 </table>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
