@@ -351,6 +351,11 @@ The \ref fm_memory provides a sequence of memory information.
     <td>Brief description of the memory region.</td>
     <td>xs:string</td>
   </tr>
+  <tr>
+    <td>.memory[<i>n</i>].linker_control</td>
+    <td>Brief description of the memory region.</td>
+    <td>xs:string</td>
+  </tr>
 </table>
 */
 
