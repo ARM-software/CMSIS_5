@@ -12,13 +12,14 @@ var NAVTREE =
     ] ],
     [ "CMSIS-Zone Utility", "zoneToolUsage.html", "zoneToolUsage" ],
     [ "Zone Description Format", "zoneFormat.html", "zoneFormat" ],
-    [ "Generator Data Model", "GenDataModel.html", "GenDataModel" ]
+    [ "Generator Data Model", "GenDataModel.html", "GenDataModel" ],
+    [ "Error Messages", "ErrorMessages.html", null ]
   ] ]
 ];
 
 var NAVTREEINDEX =
 [
-"GenDataModel.html"
+"ErrorMessages.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
