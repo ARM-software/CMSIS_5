@@ -6,6 +6,7 @@ FROM ${DOCKER_REGISTRY}/ubuntu:focal
 
 # install packages from official Ubuntu repo
 ENV DEBIAN_FRONTEND=noninteractive
+# hadolint ignore=DL3008
 RUN apt-get update && \
     apt-get install --no-install-recommends -y \
         bc \
@@ -48,6 +49,7 @@ WORKDIR /
 
 # install Python requirements
 COPY requirements.txt ${INSTALLER_PATH}/
+# hadolint ignore=DL3013
 RUN python3 -m pip install -U --no-cache-dir pip && \
     python3 -m pip install -U --no-cache-dir -r ${INSTALLER_PATH}/requirements.txt
 
