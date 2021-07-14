@@ -48,13 +48,13 @@ WORKDIR /
 
 # install Python requirements
 COPY requirements.txt ${INSTALLER_PATH}/
-RUN python3 -m pip install --no-cache-dir -r ${INSTALLER_PATH}/requirements.txt
+RUN python3 -m pip install -U --no-cache-dir pip && \
+    python3 -m pip install -U --no-cache-dir -r ${INSTALLER_PATH}/requirements.txt
 
 # install buildtools
 RUN python3 -m pip install --no-cache-dir -r ${TOOLS_PATH}/buildtools/requirements.txt
 COPY rtebuild /root/.rtebuild
 ENV PATH=${PATH}:${TOOLS_PATH}/buildtools
-
 
 # remove dependency folder
 RUN rm -rf ${INSTALLER_PATH}

@@ -84,7 +84,8 @@ RUN chmod +x /usr/local/bin/PackChk
 
 # install Python requirements
 COPY requirements.txt ${INSTALLER_PATH}/
-RUN python3 -m pip install --no-cache-dir -r ${INSTALLER_PATH}/requirements.txt
+RUN python3 -m pip install -U --no-cache-dir pip && \
+    python3 -m pip install -U --no-cache-dir -r ${INSTALLER_PATH}/requirements.txt
 
 # install buildtools
 RUN python3 -m pip install --no-cache-dir -r ${INSTALLER_PATH}/buildtools/requirements.txt
@@ -92,10 +93,6 @@ RUN mv ${INSTALLER_PATH}/buildtools ${TOOLS_PATH}
 COPY rtebuild /home/jenkins/.rtebuild
 COPY rtebuild /root/.rtebuild
 ENV PATH=${PATH}:${TOOLS_PATH}/buildtools
-
-# install python-matrix-runner
-# hadolint disable=DL3013
-RUN python3 -m pip install ${INSTALLER_PATH}/python-matrix-runner
 
 # set ARMLMD_LICENSE_FILE for ARM compilers
 ENV ARMLMD_LICENSE_FILE="7010@euhpc-lic-armlmd.euhpc.arm.com:7010@euhpc-lic03.euhpc.arm.com:7010@euhpc-lic05.euhpc.arm.com:7010@euhpc-lic07.euhpc.arm.com"
