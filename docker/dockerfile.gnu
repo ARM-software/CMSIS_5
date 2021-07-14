@@ -37,7 +37,6 @@ ARG INSTALLER_PATH=/tmp/dependenciesFiles
 RUN mkdir -p ${INSTALLER_PATH}
 COPY dependenciesFiles/${GCC} ${INSTALLER_PATH}/${GCC}
 COPY dependenciesFiles/buildtools ${TOOLS_PATH}/buildtools
-COPY dependenciesFiles/python-matrix-runner ${INSTALLER_PATH}/python-matrix-runner
 
 # install & setup gcc
 RUN mkdir -p ${TOOLS_PATH}
@@ -56,9 +55,6 @@ RUN python3 -m pip install --no-cache-dir -r ${TOOLS_PATH}/buildtools/requiremen
 COPY rtebuild /root/.rtebuild
 ENV PATH=${PATH}:${TOOLS_PATH}/buildtools
 
-# install python-matrix-runner
-# hadolint disable=DL3013
-RUN python3 -m pip install ${INSTALLER_PATH}/python-matrix-runner
 
 # remove dependency folder
 RUN rm -rf ${INSTALLER_PATH}
