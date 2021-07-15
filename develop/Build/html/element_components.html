@@ -323,6 +323,8 @@ $(document).ready(function(){initNavTree('element_components.html','');});
 <td>add </td><td>commandline string to be added to the inherited command line for the compiler invoked for C++-modules specific to the tool-chain selected by the 'compiler' attribute. </td><td>xs:string </td><td>required  </td></tr>
 <tr>
 <td>remove </td><td>option tokens to be removed from the inherited command line for the compiler invoked for C++-modules specific to the tool-chain selected by the 'compiler' attribute. </td><td>xs:string </td><td>required  </td></tr>
+<tr>
+<td>use </td><td>selects legacy assembler to be invoked in place of the default assembler for a given tool-chain. Currently supported values: armasm (AC6), gas (GCC) </td><td>xs:string </td><td>optional  </td></tr>
 </table>
 <p>&#160;</p>
 <hr/>
