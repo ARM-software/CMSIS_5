@@ -146,6 +146,8 @@ Macros</h2></td></tr>
 <tr class="separator:adcd021ac91d43a62b2cdecf9a5b971a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abe05f0e80d965ae31dec16ba4063f48a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__nnsupportfunctions_8h.html#abe05f0e80d965ae31dec16ba4063f48a">CLAMP</a>(x, h, l)</td></tr>
 <tr class="separator:abe05f0e80d965ae31dec16ba4063f48a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19343832dbe881d527496171f69dc0c3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__nnsupportfunctions_8h.html#a19343832dbe881d527496171f69dc0c3">REDUCE_MULTIPLIER</a>(_mult)</td></tr>
+<tr class="separator:a19343832dbe881d527496171f69dc0c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4cbd428a2b4a4f6b2a6e4219520c7ce0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__nnsupportfunctions_8h.html#a4cbd428a2b4a4f6b2a6e4219520c7ce0">NN_ROUND</a>(out_shift)</td></tr>
 <tr class="memdesc:a4cbd428a2b4a4f6b2a6e4219520c7ce0"><td class="mdescLeft">&#160;</td><td class="mdescRight">macro for adding rounding offset  <a href="#a4cbd428a2b4a4f6b2a6e4219520c7ce0">More...</a><br/></td></tr>
 <tr class="separator:a4cbd428a2b4a4f6b2a6e4219520c7ce0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -246,6 +248,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a6a13b7a567485da5fc7f0d311318886d"><td class="memItemLeft" align="right" valign="top">__STATIC_FORCEINLINE q31_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__nnsupportfunctions_8h.html#a6a13b7a567485da5fc7f0d311318886d">arm_nn_requantize</a> (const q31_t val, const q31_t multiplier, const q31_t shift)</td></tr>
 <tr class="memdesc:a6a13b7a567485da5fc7f0d311318886d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Requantize a given value.  <a href="#a6a13b7a567485da5fc7f0d311318886d">More...</a><br/></td></tr>
 <tr class="separator:a6a13b7a567485da5fc7f0d311318886d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa03e369b608572b80a4e56e8298a21c0"><td class="memItemLeft" align="right" valign="top">__STATIC_FORCEINLINE q31_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__nnsupportfunctions_8h.html#aa03e369b608572b80a4e56e8298a21c0">arm_nn_requantize_s64</a> (const q63_t val, const q31_t reduced_multiplier, const q31_t shift)</td></tr>
+<tr class="memdesc:aa03e369b608572b80a4e56e8298a21c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Requantize a given 64 bit value.  <a href="#aa03e369b608572b80a4e56e8298a21c0">More...</a><br/></td></tr>
+<tr class="separator:aa03e369b608572b80a4e56e8298a21c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a085459f6280c8f586ddd64998dece532"><td class="memItemLeft" align="right" valign="top">__STATIC_FORCEINLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__nnsupportfunctions_8h.html#a085459f6280c8f586ddd64998dece532">arm_memcpy_q7</a> (q7_t *__RESTRICT dst, const q7_t *__RESTRICT src, uint32_t block_size)</td></tr>
 <tr class="memdesc:a085459f6280c8f586ddd64998dece532"><td class="mdescLeft">&#160;</td><td class="mdescRight">memcpy optimized for MVE  <a href="#a085459f6280c8f586ddd64998dece532">More...</a><br/></td></tr>
 <tr class="separator:a085459f6280c8f586ddd64998dece532"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -446,7 +451,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Referenced by <a class="el" href="group__Pooling.html#gafa69cdb8a711ddef477d330204fa412c">arm_avgpool_s8()</a>, <a class="el" href="group__NNConv.html#ga5b85b56e06e563c05b08ad6ba7423e1d">arm_convolve_1_x_n_s8()</a>, <a class="el" href="group__NNConv.html#ga53608c814d9b8a458f4d87f8f40051b7">arm_convolve_1x1_s8_fast()</a>, <a class="el" href="group__NNConv.html#ga34bb5c05805ca7d5ea9681fcad8a711d">arm_convolve_s8()</a>, <a class="el" href="group__NNConv.html#ga558337f134d84dac2c312c5175bd67de">arm_depthwise_conv_3x3_s8()</a>, <a class="el" href="group__NNConv.html#gab9dc832c407c0fe0f4d6fbb063e85e97">arm_depthwise_conv_s8_opt()</a>, <a class="el" href="group__BasicMath.html#gabc9644ba533138059baa8b582734698c">arm_elementwise_add_s8()</a>, <a class="el" href="group__BasicMath.html#ga64125471aeb41aef308e5e729f52da1f">arm_elementwise_mul_s8()</a>, <a class="el" href="group__Pooling.html#ga3628978b2ab0b43d8f8723118c12acc4">arm_max_pool_s8()</a>, <a class="el" href="arm__nn__mat__mult__kernel__s8__s16_8c.html#a2da69a593037381cd149616f2fd57cce">arm_nn_mat_mult_kernel_s8_s16()</a>, <a class="el" href="arm__nn__mat__mult__kernel__s8__s16__reordered_8c.html#a1bbc24203cf1766cf75fa27db48b5eb4">arm_nn_mat_mult_kernel_s8_s16_reordered()</a>, <a class="el" href="group__NNBasicMath.html#ga360cdaa16c399e3bfbeaaa7296c326e1">arm_nn_mat_mult_nt_t_s8()</a>, <a class="el" href="arm__nn__mat__mult__s8_8c.html#a35a57ea2ae587628c8cc32fdb6e455d1">arm_nn_mat_mult_s8()</a>, <a class="el" href="group__NNBasicMath.html#gacbc28cf23c7549bcf89d1e8f1481c389">arm_nn_vec_mat_mult_t_s8()</a>, <a class="el" href="group__NNBasicMath.html#gac0675e8069a303ce2e8f8ed2a9320859">arm_nn_vec_mat_mult_t_svdf_s8()</a>, <a class="el" href="group__Acti.html#ga01a7a7c17f0cd544e29c4752daeecdc3">arm_relu6_s8()</a>, <a class="el" href="group__Softmax.html#gaf309cdd53978a85a39c9bfdc476aea17">arm_softmax_s8()</a>, <a class="el" href="group__Softmax.html#gaa1627ed96bd597a8046d00689f077dce">arm_softmax_u8()</a>, <a class="el" href="arm__max__pool__s8_8c.html#ae73d902e6c38cf63ab235d6c4a3ff3b0">clamp_output()</a>, <a class="el" href="group__NNConv.html#gae9f070a198f67a5337700b0a6cf7ef21">depthwise_conv_s8_generic()</a>, <a class="el" href="group__NNConv.html#ga06d7783f6788faad5165fd0ae583bc59">depthwise_conv_s8_mult_4()</a>, <a class="el" href="group__NNConv.html#gab98fd934700dff7667131744c8972d91">depthwise_conv_u8_generic()</a>, and <a class="el" href="group__NNConv.html#ga4c54b5bdb38fc20c2167bdfa289f1a2b">depthwise_conv_u8_mult_4()</a>.</p>
+<p>Referenced by <a class="el" href="group__Pooling.html#gafa69cdb8a711ddef477d330204fa412c">arm_avgpool_s8()</a>, <a class="el" href="group__NNConv.html#ga5b85b56e06e563c05b08ad6ba7423e1d">arm_convolve_1_x_n_s8()</a>, <a class="el" href="group__NNConv.html#ga53608c814d9b8a458f4d87f8f40051b7">arm_convolve_1x1_s8_fast()</a>, <a class="el" href="group__NNConv.html#gaf3e58798b12fa230d6a6487887aa13bf">arm_convolve_s16()</a>, <a class="el" href="group__NNConv.html#ga34bb5c05805ca7d5ea9681fcad8a711d">arm_convolve_s8()</a>, <a class="el" href="group__NNConv.html#ga558337f134d84dac2c312c5175bd67de">arm_depthwise_conv_3x3_s8()</a>, <a class="el" href="group__NNConv.html#gab9dc832c407c0fe0f4d6fbb063e85e97">arm_depthwise_conv_s8_opt()</a>, <a class="el" href="group__BasicMath.html#gabc9644ba533138059baa8b582734698c">arm_elementwise_add_s8()</a>, <a class="el" href="group__BasicMath.html#ga64125471aeb41aef308e5e729f52da1f">arm_elementwise_mul_s8()</a>, <a class="el" href="group__Pooling.html#ga3628978b2ab0b43d8f8723118c12acc4">arm_max_pool_s8()</a>, <a class="el" href="arm__nn__mat__mult__kernel__s8__s16_8c.html#a2da69a593037381cd149616f2fd57cce">arm_nn_mat_mult_kernel_s8_s16()</a>, <a class="el" href="arm__nn__mat__mult__kernel__s8__s16__reordered_8c.html#a1bbc24203cf1766cf75fa27db48b5eb4">arm_nn_mat_mult_kernel_s8_s16_reordered()</a>, <a class="el" href="group__NNBasicMath.html#ga360cdaa16c399e3bfbeaaa7296c326e1">arm_nn_mat_mult_nt_t_s8()</a>, <a class="el" href="arm__nn__mat__mult__s8_8c.html#a35a57ea2ae587628c8cc32fdb6e455d1">arm_nn_mat_mult_s8()</a>, <a class="el" href="group__NNBasicMath.html#gacbc28cf23c7549bcf89d1e8f1481c389">arm_nn_vec_mat_mult_t_s8()</a>, <a class="el" href="group__NNBasicMath.html#gac0675e8069a303ce2e8f8ed2a9320859">arm_nn_vec_mat_mult_t_svdf_s8()</a>, <a class="el" href="group__Acti.html#ga01a7a7c17f0cd544e29c4752daeecdc3">arm_relu6_s8()</a>, <a class="el" href="group__Softmax.html#gaf309cdd53978a85a39c9bfdc476aea17">arm_softmax_s8()</a>, <a class="el" href="group__Softmax.html#gaa1627ed96bd597a8046d00689f077dce">arm_softmax_u8()</a>, <a class="el" href="arm__max__pool__s8_8c.html#ae73d902e6c38cf63ab235d6c4a3ff3b0">clamp_output()</a>, <a class="el" href="group__NNConv.html#gae9f070a198f67a5337700b0a6cf7ef21">depthwise_conv_s8_generic()</a>, <a class="el" href="group__NNConv.html#ga06d7783f6788faad5165fd0ae583bc59">depthwise_conv_s8_mult_4()</a>, <a class="el" href="group__NNConv.html#gab98fd934700dff7667131744c8972d91">depthwise_conv_u8_generic()</a>, and <a class="el" href="group__NNConv.html#ga4c54b5bdb38fc20c2167bdfa289f1a2b">depthwise_conv_u8_mult_4()</a>.</p>
 
 </div>
 </div>
@@ -474,7 +479,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Referenced by <a class="el" href="group__Pooling.html#gafa69cdb8a711ddef477d330204fa412c">arm_avgpool_s8()</a>, <a class="el" href="group__NNConv.html#ga5b85b56e06e563c05b08ad6ba7423e1d">arm_convolve_1_x_n_s8()</a>, <a class="el" href="group__NNConv.html#ga53608c814d9b8a458f4d87f8f40051b7">arm_convolve_1x1_s8_fast()</a>, <a class="el" href="group__NNConv.html#ga34bb5c05805ca7d5ea9681fcad8a711d">arm_convolve_s8()</a>, <a class="el" href="group__NNConv.html#ga558337f134d84dac2c312c5175bd67de">arm_depthwise_conv_3x3_s8()</a>, <a class="el" href="group__NNConv.html#gab9dc832c407c0fe0f4d6fbb063e85e97">arm_depthwise_conv_s8_opt()</a>, <a class="el" href="group__BasicMath.html#gabc9644ba533138059baa8b582734698c">arm_elementwise_add_s8()</a>, <a class="el" href="group__BasicMath.html#ga64125471aeb41aef308e5e729f52da1f">arm_elementwise_mul_s8()</a>, <a class="el" href="group__Pooling.html#ga3628978b2ab0b43d8f8723118c12acc4">arm_max_pool_s8()</a>, <a class="el" href="arm__nn__mat__mult__kernel__s8__s16_8c.html#a2da69a593037381cd149616f2fd57cce">arm_nn_mat_mult_kernel_s8_s16()</a>, <a class="el" href="arm__nn__mat__mult__kernel__s8__s16__reordered_8c.html#a1bbc24203cf1766cf75fa27db48b5eb4">arm_nn_mat_mult_kernel_s8_s16_reordered()</a>, <a class="el" href="group__NNBasicMath.html#ga360cdaa16c399e3bfbeaaa7296c326e1">arm_nn_mat_mult_nt_t_s8()</a>, <a class="el" href="arm__nn__mat__mult__s8_8c.html#a35a57ea2ae587628c8cc32fdb6e455d1">arm_nn_mat_mult_s8()</a>, <a class="el" href="group__NNBasicMath.html#gacbc28cf23c7549bcf89d1e8f1481c389">arm_nn_vec_mat_mult_t_s8()</a>, <a class="el" href="group__NNBasicMath.html#gac0675e8069a303ce2e8f8ed2a9320859">arm_nn_vec_mat_mult_t_svdf_s8()</a>, <a class="el" href="group__Acti.html#ga01a7a7c17f0cd544e29c4752daeecdc3">arm_relu6_s8()</a>, <a class="el" href="arm__max__pool__s8_8c.html#ae73d902e6c38cf63ab235d6c4a3ff3b0">clamp_output()</a>, <a class="el" href="group__NNConv.html#gae9f070a198f67a5337700b0a6cf7ef21">depthwise_conv_s8_generic()</a>, <a class="el" href="group__NNConv.html#ga06d7783f6788faad5165fd0ae583bc59">depthwise_conv_s8_mult_4()</a>, <a class="el" href="group__NNConv.html#gab98fd934700dff7667131744c8972d91">depthwise_conv_u8_generic()</a>, and <a class="el" href="group__NNConv.html#ga4c54b5bdb38fc20c2167bdfa289f1a2b">depthwise_conv_u8_mult_4()</a>.</p>
+<p>Referenced by <a class="el" href="group__Pooling.html#gafa69cdb8a711ddef477d330204fa412c">arm_avgpool_s8()</a>, <a class="el" href="group__NNConv.html#ga5b85b56e06e563c05b08ad6ba7423e1d">arm_convolve_1_x_n_s8()</a>, <a class="el" href="group__NNConv.html#ga53608c814d9b8a458f4d87f8f40051b7">arm_convolve_1x1_s8_fast()</a>, <a class="el" href="group__NNConv.html#gaf3e58798b12fa230d6a6487887aa13bf">arm_convolve_s16()</a>, <a class="el" href="group__NNConv.html#ga34bb5c05805ca7d5ea9681fcad8a711d">arm_convolve_s8()</a>, <a class="el" href="group__NNConv.html#ga558337f134d84dac2c312c5175bd67de">arm_depthwise_conv_3x3_s8()</a>, <a class="el" href="group__NNConv.html#gab9dc832c407c0fe0f4d6fbb063e85e97">arm_depthwise_conv_s8_opt()</a>, <a class="el" href="group__BasicMath.html#gabc9644ba533138059baa8b582734698c">arm_elementwise_add_s8()</a>, <a class="el" href="group__BasicMath.html#ga64125471aeb41aef308e5e729f52da1f">arm_elementwise_mul_s8()</a>, <a class="el" href="group__Pooling.html#ga3628978b2ab0b43d8f8723118c12acc4">arm_max_pool_s8()</a>, <a class="el" href="arm__nn__mat__mult__kernel__s8__s16_8c.html#a2da69a593037381cd149616f2fd57cce">arm_nn_mat_mult_kernel_s8_s16()</a>, <a class="el" href="arm__nn__mat__mult__kernel__s8__s16__reordered_8c.html#a1bbc24203cf1766cf75fa27db48b5eb4">arm_nn_mat_mult_kernel_s8_s16_reordered()</a>, <a class="el" href="group__NNBasicMath.html#ga360cdaa16c399e3bfbeaaa7296c326e1">arm_nn_mat_mult_nt_t_s8()</a>, <a class="el" href="arm__nn__mat__mult__s8_8c.html#a35a57ea2ae587628c8cc32fdb6e455d1">arm_nn_mat_mult_s8()</a>, <a class="el" href="group__NNBasicMath.html#gacbc28cf23c7549bcf89d1e8f1481c389">arm_nn_vec_mat_mult_t_s8()</a>, <a class="el" href="group__NNBasicMath.html#gac0675e8069a303ce2e8f8ed2a9320859">arm_nn_vec_mat_mult_t_svdf_s8()</a>, <a class="el" href="group__Acti.html#ga01a7a7c17f0cd544e29c4752daeecdc3">arm_relu6_s8()</a>, <a class="el" href="arm__max__pool__s8_8c.html#ae73d902e6c38cf63ab235d6c4a3ff3b0">clamp_output()</a>, <a class="el" href="group__NNConv.html#gae9f070a198f67a5337700b0a6cf7ef21">depthwise_conv_s8_generic()</a>, <a class="el" href="group__NNConv.html#ga06d7783f6788faad5165fd0ae583bc59">depthwise_conv_s8_mult_4()</a>, <a class="el" href="group__NNConv.html#gab98fd934700dff7667131744c8972d91">depthwise_conv_u8_generic()</a>, and <a class="el" href="group__NNConv.html#ga4c54b5bdb38fc20c2167bdfa289f1a2b">depthwise_conv_u8_mult_4()</a>.</p>
 
 </div>
 </div>
@@ -595,6 +600,24 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Referenced by <a class="el" href="group__Softmax.html#gaf309cdd53978a85a39c9bfdc476aea17">arm_softmax_s8()</a>, and <a class="el" href="group__Softmax.html#gaa1627ed96bd597a8046d00689f077dce">arm_softmax_u8()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a19343832dbe881d527496171f69dc0c3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define REDUCE_MULTIPLIER</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">_mult</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Referenced by <a class="el" href="group__NNConv.html#gaf3e58798b12fa230d6a6487887aa13bf">arm_convolve_s16()</a>.</p>
 
 </div>
 </div>
@@ -1299,6 +1322,49 @@ Functions</h2></td></tr>
 <p>References <a class="el" href="arm__nnsupportfunctions_8h.html#ab6dbc2fd53fae3ccdd1d0d70c8d3b491">arm_nn_divide_by_power_of_two()</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#a4e5183e2400227aafc91fb796fe99a6d">arm_nn_doubling_high_mult_no_sat()</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#a2953f124ae444ebdd2b2a0873ac36b7e">LEFT_SHIFT</a>, and <a class="el" href="arm__nnsupportfunctions_8h.html#a26af54489c1401b91595bf0c92ef87c4">RIGHT_SHIFT</a>.</p>
 
 <p>Referenced by <a class="el" href="group__NNConv.html#ga53608c814d9b8a458f4d87f8f40051b7">arm_convolve_1x1_s8_fast()</a>, <a class="el" href="group__NNConv.html#ga34bb5c05805ca7d5ea9681fcad8a711d">arm_convolve_s8()</a>, <a class="el" href="group__NNConv.html#ga558337f134d84dac2c312c5175bd67de">arm_depthwise_conv_3x3_s8()</a>, <a class="el" href="group__NNConv.html#gab9dc832c407c0fe0f4d6fbb063e85e97">arm_depthwise_conv_s8_opt()</a>, <a class="el" href="group__BasicMath.html#ga64125471aeb41aef308e5e729f52da1f">arm_elementwise_mul_s8()</a>, <a class="el" href="arm__nn__mat__mult__kernel__s8__s16_8c.html#a2da69a593037381cd149616f2fd57cce">arm_nn_mat_mult_kernel_s8_s16()</a>, <a class="el" href="arm__nn__mat__mult__kernel__s8__s16__reordered_8c.html#a1bbc24203cf1766cf75fa27db48b5eb4">arm_nn_mat_mult_kernel_s8_s16_reordered()</a>, <a class="el" href="group__NNBasicMath.html#ga360cdaa16c399e3bfbeaaa7296c326e1">arm_nn_mat_mult_nt_t_s8()</a>, <a class="el" href="arm__nn__mat__mult__s8_8c.html#a35a57ea2ae587628c8cc32fdb6e455d1">arm_nn_mat_mult_s8()</a>, <a class="el" href="group__NNBasicMath.html#gacbc28cf23c7549bcf89d1e8f1481c389">arm_nn_vec_mat_mult_t_s8()</a>, <a class="el" href="group__NNBasicMath.html#gac0675e8069a303ce2e8f8ed2a9320859">arm_nn_vec_mat_mult_t_svdf_s8()</a>, <a class="el" href="group__SVDF.html#ga9c4e7065f10d63b269f82b8e4e8afa04">arm_svdf_s8()</a>, <a class="el" href="group__NNConv.html#gae9f070a198f67a5337700b0a6cf7ef21">depthwise_conv_s8_generic()</a>, <a class="el" href="group__NNConv.html#ga06d7783f6788faad5165fd0ae583bc59">depthwise_conv_s8_mult_4()</a>, <a class="el" href="group__NNConv.html#gab98fd934700dff7667131744c8972d91">depthwise_conv_u8_generic()</a>, and <a class="el" href="group__NNConv.html#ga4c54b5bdb38fc20c2167bdfa289f1a2b">depthwise_conv_u8_mult_4()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aa03e369b608572b80a4e56e8298a21c0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_FORCEINLINE q31_t arm_nn_requantize_s64 </td>
+          <td>(</td>
+          <td class="paramtype">const q63_t&#160;</td>
+          <td class="paramname"><em>val</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const q31_t&#160;</td>
+          <td class="paramname"><em>reduced_multiplier</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const q31_t&#160;</td>
+          <td class="paramname"><em>shift</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">val</td><td>Value to be requantized </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">reduced_multiplier</td><td>Reduced multiplier from range {Q31_MIN + 1, Q32_MAX} to {Q16_MIN + 1, Q16_MAX} </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">shift</td><td>left or right shift for 'val * multiplier'</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns (val * multiplier)/(2 ^ shift) </dd></dl>
+
+<p>Referenced by <a class="el" href="group__NNConv.html#gaf3e58798b12fa230d6a6487887aa13bf">arm_convolve_s16()</a>.</p>
 
 </div>
 </div>
