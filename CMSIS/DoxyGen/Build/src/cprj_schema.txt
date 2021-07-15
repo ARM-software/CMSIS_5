@@ -977,6 +977,12 @@ are 'removed' on a lower level (component, group, file).
     <td>xs:string</td>
     <td>required</td>
   </tr>
+  <tr>
+    <td>use</td>
+    <td>selects legacy assembler to be invoked in place of the default assembler for a given tool-chain. Currently supported values: armasm (AC6), gas (GCC)</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>
 </table>
 
 \delim
@@ -1394,6 +1400,12 @@ component. This flag can also be added to file groups and individual files withi
         tool-chain selected by the 'compiler' attribute.</td>
     <td>xs:string</td>
     <td>required</td>
+  </tr>
+  <tr>
+    <td>use</td>
+    <td>selects legacy assembler to be invoked in place of the default assembler for a given tool-chain. Currently supported values: armasm (AC6), gas (GCC)</td>
+    <td>xs:string</td>
+    <td>optional</td>
   </tr>
 </table>
 \delim
