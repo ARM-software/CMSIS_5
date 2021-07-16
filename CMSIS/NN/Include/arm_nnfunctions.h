@@ -21,8 +21,8 @@
  * Title:        arm_nnfunctions.h
  * Description:  Public header file for CMSIS NN Library
  *
- * $Date:        13 August 2021
- * $Revision:    V.7.3.0
+ * $Date:        17 August 2021
+ * $Revision:    V.7.3.1
  *
  * Target Processor:  Cortex-M CPUs
  * -------------------------------------------------------------------- */
@@ -124,7 +124,7 @@
 #ifndef _ARM_NNFUNCTIONS_H
 #define _ARM_NNFUNCTIONS_H
 
-#include "arm_math_types.h"
+#include "arm_nn_math_types.h"
 #include "arm_nn_types.h"
 
 #define USE_INTRINSIC

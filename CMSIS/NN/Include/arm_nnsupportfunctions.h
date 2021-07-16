@@ -21,8 +21,8 @@
  * Title:        arm_nnsupportfunctions.h
  * Description:  Public header file of support functions for CMSIS NN Library
  *
- * $Date:        13. Aug 2021
- * $Revision:    V.5.9.0
+ * $Date:        17. Aug 2021
+ * $Revision:    V.5.9.1
  *
  * Target Processor:  Cortex-M CPUs
  * -------------------------------------------------------------------- */
@@ -30,8 +30,7 @@
 #ifndef _ARM_NNSUPPORTFUNCTIONS_H_
 #define _ARM_NNSUPPORTFUNCTIONS_H_
 
-#include "arm_common_tables.h"
-#include "arm_math_types.h"
+#include "arm_nn_math_types.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -768,8 +767,8 @@ void arm_nn_mult_q7(q7_t *pSrcA, q7_t *pSrcB, q7_t *pDst, const uint16_t out_shi
 /**
  * @brief           Saturating doubling high multiply. Result matches
  *                  NEON instruction VQRDMULH.
- * @param[in]       m1        Multiplicand. Range: {Q31_MIN, Q31_MAX}
- * @param[in]       m2        Multiplier. Range: {Q31_MIN, Q31_MAX}
+ * @param[in]       m1        Multiplicand. Range: {NN_Q31_MIN, NN_Q31_MAX}
+ * @param[in]       m2        Multiplier. Range: {NN_Q31_MIN, NN_Q31_MAX}
  * @return          Result of multiplication.
  *
  */
@@ -790,9 +789,9 @@ __STATIC_FORCEINLINE q31_t arm_nn_doubling_high_mult(const q31_t m1, const q31_t
     // as well.
     result = (int32_t)(mult / (1ll << 31));
 
-    if ((m1 == m2) && (m1 == (int32_t)Q31_MIN))
+    if ((m1 == m2) && (m1 == (int32_t)NN_Q31_MIN))
     {
-        result = Q31_MAX;
+        result = NN_Q31_MAX;
     }
     return result;
 }
@@ -801,13 +800,13 @@ __STATIC_FORCEINLINE q31_t arm_nn_doubling_high_mult(const q31_t m1, const q31_t
  * @brief           Doubling high multiply without saturation. This is intended
  *                  for requantization where the scale is a positive integer
  *
- * @param[in]       m1        Multiplicand. Range: {Q31_MIN, Q31_MAX}
- * @param[in]       m2        Multiplier Range: {Q31_MIN, Q31_MAX}
+ * @param[in]       m1        Multiplicand. Range: {NN_Q31_MIN, NN_Q31_MAX}
+ * @param[in]       m2        Multiplier Range: {NN_Q31_MIN, NN_Q31_MAX}
  * @return          Result of multiplication.
  * @note            The result of this matches that of neon instruction
- *                  VQRDMULH for m1 in range {Q31_MIN, Q31_MAX} and m2 in
- *                  range {Q31_MIN + 1, Q31_MAX}. Saturation occurs when
- *                  m1 equals m2 equals Q31_MIN and that is not handled by
+ *                  VQRDMULH for m1 in range {NN_Q31_MIN, NN_Q31_MAX} and m2 in
+ *                  range {NN_Q31_MIN + 1, NN_Q31_MAX}. Saturation occurs when
+ *                  m1 equals m2 equals NN_Q31_MIN and that is not handled by
  *                  this function.
  *
  */
@@ -864,7 +863,7 @@ __STATIC_FORCEINLINE q31_t arm_nn_divide_by_power_of_two(const q31_t dividend, c
 /**
  * @brief           Requantize a given value.
  * @param[in]       val         Value to be requantized
- * @param[in]       multiplier  multiplier. Range {Q31_MIN + 1, Q32_MAX}
+ * @param[in]       multiplier  multiplier. Range {NN_Q31_MIN + 1, Q32_MAX}
  * @param[in]       shift       left or right shift for 'val * multiplier'
  *
  * @return          Returns (val * multiplier)/(2 ^ shift)
@@ -879,7 +878,8 @@ __STATIC_FORCEINLINE q31_t arm_nn_requantize(const q31_t val, const q31_t multip
 /**
  * @brief           Requantize a given 64 bit value.
  * @param[in]       val                 Value to be requantized
- * @param[in]       reduced_multiplier  Reduced multiplier from range {Q31_MIN + 1, Q32_MAX} to {Q16_MIN + 1, Q16_MAX}
+ * @param[in]       reduced_multiplier  Reduced multiplier from range {NN_Q31_MIN + 1, Q32_MAX} to {Q16_MIN + 1,
+ * Q16_MAX}
  * @param[in]       shift               left or right shift for 'val * multiplier'
  *
  * @return          Returns (val * multiplier)/(2 ^ shift)
@@ -1024,21 +1024,21 @@ __STATIC_FORCEINLINE int32_t arm_nn_exp_on_negative_values(int32_t val)
 #undef SELECT_IF_NON_ZERO
 
     mask = MASK_IF_ZERO(val);
-    return SELECT_USING_MASK(mask, Q31_MAX, result);
+    return SELECT_USING_MASK(mask, NN_Q31_MAX, result);
 }
 
 __STATIC_FORCEINLINE q31_t arm_nn_mult_by_power_of_two(const int32_t val, const int32_t exp)
 {
     const int32_t thresh = ((1 << (31 - exp)) - 1);
     int32_t result = val << exp;
-    result = SELECT_USING_MASK(MASK_IF_NON_ZERO(val > thresh), Q31_MAX, result);
-    result = SELECT_USING_MASK(MASK_IF_NON_ZERO(val < -thresh), Q31_MIN, result);
+    result = SELECT_USING_MASK(MASK_IF_NON_ZERO(val > thresh), NN_Q31_MAX, result);
+    result = SELECT_USING_MASK(MASK_IF_NON_ZERO(val < -thresh), NN_Q31_MIN, result);
     return result;
 }
 
 __STATIC_FORCEINLINE int32_t arm_nn_one_over_one_plus_x_for_x_in_0_1(int32_t val)
 {
-    const int64_t sum = (int64_t)val + (int64_t)Q31_MAX;
+    const int64_t sum = (int64_t)val + (int64_t)NN_Q31_MAX;
     const int32_t half_denominator = (int32_t)((sum + (sum >= 0 ? 1 : -1)) / 2L);
     int32_t x = 1515870810 + MUL_SAT(half_denominator, -1010580540);
 

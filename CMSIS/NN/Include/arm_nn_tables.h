@@ -3,8 +3,8 @@
  * Title:        arm_nn_tables.h
  * Description:  Extern declaration for NN tables
  *
- * $Date:        09. October 2020
- * $Revision:    V.1.0.1
+ * $Date:        17. August 2021
+ * $Revision:    V.1.0.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -29,12 +29,12 @@
 #ifndef _ARM_NN_TABLES_H
 #define _ARM_NN_TABLES_H
 
-#include "arm_math_types.h"
+#include "arm_nn_math_types.h"
 
 /**
-* @brief tables for various activation functions
-*
-*/
+ * @brief tables for various activation functions
+ *
+ */
 
 extern const q15_t sigmoidTable_q15[256];
 extern const q7_t sigmoidTable_q7[256];

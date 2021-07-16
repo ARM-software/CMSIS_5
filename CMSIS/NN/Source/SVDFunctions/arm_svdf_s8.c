@@ -21,8 +21,8 @@
  * Title:        arm_svdf_s8.c
  * Description:  S8 basic SVDF layer function
  *
- * $Date:        15. April 2021
- * $Revision:    V.1.5.0
+ * $Date:        17. August 2021
+ * $Revision:    V.1.5.1
  *
  * Target Processor:  Cortex-M processors
  *
