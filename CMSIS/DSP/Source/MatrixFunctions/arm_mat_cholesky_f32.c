@@ -264,7 +264,7 @@ arm_status arm_mat_cholesky_f32(
              k+=4;
           }
 
-#if __aarch64__
+#if defined(__aarch64__)
           sum0 = vpadds_f32(vpadd_f32(vget_low_f32(acc0), vget_high_f32(acc0)));
           sum1 = vpadds_f32(vpadd_f32(vget_low_f32(acc1), vget_high_f32(acc1)));
           sum2 = vpadds_f32(vpadd_f32(vget_low_f32(acc2), vget_high_f32(acc2)));
@@ -322,7 +322,7 @@ arm_status arm_mat_cholesky_f32(
              k+=4;
           }
 
-#if __aarch64__
+#if defined(__aarch64__)
           sum = vpadds_f32(vpadd_f32(vget_low_f32(acc), vget_high_f32(acc)));
 #else
           tmp = vpadd_f32(vget_low_f32(acc), vget_high_f32(acc));

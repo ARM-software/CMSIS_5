@@ -64,7 +64,7 @@ arm_status arm_conv_partial_q7(
         uint32_t numPoints)
 {
 
-#if ARM_MATH_DSP
+#if defined(ARM_MATH_DSP)
 
   const q7_t *pIn1;                                    /* InputA pointer */
   const q7_t *pIn2;                                    /* InputB pointer */

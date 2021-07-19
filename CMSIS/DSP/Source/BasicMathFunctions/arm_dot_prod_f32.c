@@ -158,7 +158,7 @@ void arm_dot_prod_f32(
         blkCnt--;
     }
     
-#if __aarch64__
+#if defined(__aarch64__)
     sum = vpadds_f32(vpadd_f32(vget_low_f32(accum), vget_high_f32(accum)));
 #else
     tmp = vpadd_f32(vget_low_f32(accum), vget_high_f32(accum));
