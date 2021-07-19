@@ -2025,6 +2025,11 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
 	<td>https://www.etacompute.com</td>
   </tr>
   <tr>
+    <td class="XML-Token">FMD:169</td>
+    <td>FMD</td>
+    <td>https://www.fremontmicro.com/</td>
+  </tr>
+  <tr>
     <td class="XML-Token">Geehy:163</td>
     <td>Geehy</td>
     <td>https://www.geehy.com/</td>
