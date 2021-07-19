@@ -331,7 +331,7 @@ arm_status arm_rfft_fast_init_f64(
     break;
 #endif
   default:
-    return ARM_MATH_ARGUMENT_ERROR;
+    break;
   }
 
   if( ! fptr ) return ARM_MATH_ARGUMENT_ERROR;
