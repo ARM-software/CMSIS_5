@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_q7_to_q15_reordered_no_shift.c
  * Description:  Converts the elements of the Q7 vector to reordered Q15 vector without left-shift
  *
- * $Date:        May 29, 2020
- * $Revision:    V.1.0.1
+ * $Date:        July 20, 2021
+ * $Revision:    V.1.1.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -79,7 +79,7 @@ void arm_q7_to_q15_reordered_no_shift(const q7_t *pSrc, q15_t *pDst, uint32_t bl
     const q7_t *pIn = pSrc; /* Src pointer */
     uint32_t blkCnt;        /* loop counter */
 
-#ifndef ARM_MATH_CM0_FAMILY
+#if defined(ARM_MATH_DSP) && !defined(ARM_MATH_MVEI)
     q31_t in;
     q31_t in1, in2;
 
@@ -103,11 +103,11 @@ void arm_q7_to_q15_reordered_no_shift(const q7_t *pSrc, q15_t *pDst, uint32_t bl
         in2 = __SXTB16(in);
 
 #ifndef ARM_MATH_BIG_ENDIAN
-        *__SIMD32(pDst)++ = in2;
-        *__SIMD32(pDst)++ = in1;
+        arm_nn_write_q7x4_ia((q7_t **)&pDst, in2);
+        arm_nn_write_q7x4_ia((q7_t **)&pDst, in1);
 #else
-        *__SIMD32(pDst)++ = in1;
-        *__SIMD32(pDst)++ = in2;
+        arm_nn_write_q7x4_ia((q7_t **)&pDst, in1);
+        arm_nn_write_q7x4_ia((q7_t **)&pDst, in2);
 #endif
 
         /* Decrement the loop counter */

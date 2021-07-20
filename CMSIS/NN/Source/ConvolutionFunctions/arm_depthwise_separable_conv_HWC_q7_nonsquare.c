@@ -21,8 +21,8 @@
  * Title:        arm_depthwise_separable_conv_HWC_q7_nonsquare.c
  * Description:  Q7 depthwise separable convolution function (non-square shape)
  *
- * $Date:        January 26, 2021
- * $Revision:    V.1.0.2
+ * $Date:        July 20, 2021
+ * $Revision:    V.1.1.2
  *
  * Target Processor:  Cortex-M cores
  *
@@ -95,7 +95,7 @@ arm_status arm_depthwise_separable_conv_HWC_q7_nonsquare(const q7_t *Im_in,
 
     (void)bufferB;
 
-#if defined(ARM_MATH_DSP)
+#if defined(ARM_MATH_DSP) && !defined(ARM_MATH_MVEI)
     /* Run the following code for Cortex-M4 and Cortex-M7 */
 
     /*

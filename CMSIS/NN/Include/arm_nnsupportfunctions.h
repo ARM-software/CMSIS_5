@@ -21,8 +21,8 @@
  * Title:        arm_nnsupportfunctions.h
  * Description:  Public header file of support functions for CMSIS NN Library
  *
- * $Date:        5. July 2021
- * $Revision:    V.5.6.0
+ * $Date:        20. July 2021
+ * $Revision:    V.5.7.0
  *
  * Target Processor:  Cortex-M CPUs
  * -------------------------------------------------------------------- */
@@ -47,6 +47,13 @@ extern "C" {
 #define MIN(A, B) ((A) < (B) ? (A) : (B))
 #define CLAMP(x, h, l) MAX(MIN((x), (h)), (l))
 #define REDUCE_MULTIPLIER(_mult) ((_mult < 0x7FFF0000) ? ((_mult + (1 << 15)) >> 16) : 0x7FFF)
+
+/**
+ * @brief definition to pack four 8 bit values.
+ */
+#define PACK_Q7x4_32x1(v0, v1, v2, v3)                                                                                 \
+    ((((int32_t)(v0) << 0) & (int32_t)0x000000FF) | (((int32_t)(v1) << 8) & (int32_t)0x0000FF00) |                     \
+     (((int32_t)(v2) << 16) & (int32_t)0x00FF0000) | (((int32_t)(v3) << 24) & (int32_t)0xFF000000))
 
 /**
  * @brief Union for SIMD access of q31/q15/q7 types
@@ -537,6 +544,18 @@ __STATIC_FORCEINLINE q31_t arm_nn_read_q7x4(const q7_t *in_q7)
     memcpy(&val, in_q7, 4);
 
     return (val);
+}
+
+/**
+  @brief         Write four q7 to q7 pointer and increment pointer afterwards.
+  @param[in]     in       Double pointer to input value
+  @param[in]     value    Four bytes to copy
+  @return        none
+ */
+__STATIC_FORCEINLINE void arm_nn_write_q7x4_ia(q7_t **in, q31_t value)
+{
+    memcpy(*in, &value, 4);
+    *in += 4;
 }
 
 /**

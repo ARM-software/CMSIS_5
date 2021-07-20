@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_nn_accumulate_q7_to_q15.c
  * Description:  Accumulate q7 vector into q15 one.
  *
- * $Date:        09. October 2020
- * $Revision:    V.1.0.2
+ * $Date:        20 July 2021
+ * $Revision:    V.1.1.2
  *
  * pSrc Processor:  Cortex-M CPUs
  *
@@ -44,11 +44,13 @@ void arm_nn_accumulate_q7_to_q15(q15_t *pDst, const q7_t *pSrc, uint32_t length)
 {
     q15_t *pCnt = pDst;
     const q7_t *pV = pSrc;
+    int32_t count = length;
+#if defined(ARM_MATH_DSP) && !defined(ARM_MATH_MVEI)
     q31_t v1, v2, vo1, vo2;
-    int32_t cnt = length >> 2;
+    count = length >> 2;
     q31_t in;
 
-    while (cnt > 0l)
+    while (count > 0l)
     {
         q31_t value = arm_nn_read_q7x4_ia(&pV);
         v1 = __SXTB16(__ROR((uint32_t)value, 8));
@@ -67,13 +69,14 @@ void arm_nn_accumulate_q7_to_q15(q15_t *pDst, const q7_t *pSrc, uint32_t length)
         in = arm_nn_read_q15x2(pCnt);
         arm_nn_write_q15x2_ia(&pCnt, __QADD16(vo2, in));
 
-        cnt--;
+        count--;
     }
-    cnt = length & 0x3;
-    while (cnt > 0l)
+    count = length & 0x3;
+#endif
+    while (count > 0l)
     {
         *pCnt++ += *pV++;
-        cnt--;
+        count--;
     }
 }
 

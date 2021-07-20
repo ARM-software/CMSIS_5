@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_relu_q7.c
  * Description:  Q7 version of ReLU
  *
- * $Date:        09. October 2020
- * $Revision:    V.1.0.3
+ * $Date:        20. July 2021
+ * $Revision:    V.1.1.3
  *
  * Target Processor:  Cortex-M cores
  *
@@ -54,7 +54,7 @@
 void arm_relu_q7(q7_t *data, uint16_t size)
 {
 
-#if defined(ARM_MATH_DSP)
+#if defined(ARM_MATH_DSP) && !defined(ARM_MATH_MVEI)
     /* Run the following code for M cores with DSP extension */
 
     uint16_t i = size >> 2;
@@ -66,7 +66,7 @@ void arm_relu_q7(q7_t *data, uint16_t size)
 
     while (i)
     {
-        in = read_q7x4_ia(&input);
+        in = arm_nn_read_q7x4_ia((const q7_t **)&input);
 
         /* extract the first bit */
         buf = (int32_t)__ROR((uint32_t)in & 0x80808080, 7);
@@ -74,7 +74,7 @@ void arm_relu_q7(q7_t *data, uint16_t size)
         /* if MSB=1, mask will be 0xFF, 0x0 otherwise */
         mask = __QSUB8(0x00000000, buf);
 
-        write_q7x4_ia(&output, in & (~mask));
+        arm_nn_write_q7x4_ia(&output, in & (~mask));
 
         i--;
     }
