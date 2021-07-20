@@ -21,8 +21,8 @@
  * Title:        arm_elementwise_add_s8
  * Description:  Element wise add
  *
- * $Date:        01. March 2021
- * $Revision:    V.2.5.3
+ * $Date:        20. July 2021
+ * $Revision:    V.2.5.4
  *
  * Target Processor:  Cortex-M CPUs
  *
@@ -30,9 +30,6 @@
 
 #include "arm_nnfunctions.h"
 #include "arm_nnsupportfunctions.h"
-#if defined(ARM_MATH_MVEI)
-#include "arm_helium_utils.h"
-#endif
 
 #if defined(ARM_MATH_MVEI)
 #define SAT_INPUT_VECT(__INPUT_V, __MULT, __SHIFT)                                                                     \
@@ -209,7 +206,7 @@ arm_status arm_elementwise_add_s8(const int8_t *input_1_vect,
         sum = MIN(sum, out_activation_max);
         r4 = (q7_t)sum;
 
-        write_q7x4_ia(&output, __PACKq7(r1, r2, r3, r4));
+        arm_nn_write_q7x4_ia(&output, PACK_Q7x4_32x1(r1, r2, r3, r4));
 
         loop_count--;
     }

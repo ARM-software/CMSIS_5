@@ -21,8 +21,8 @@
  * Title:        arm_elementwise_mul_s8
  * Description:  Element wise multiplication
  *
- * $Date:        January 26, 2021
- * $Revision:    V.1.0.5
+ * $Date:        July 20, 2021
+ * $Revision:    V.1.0.6
  *
  * Target Processor:  Cortex-M cores
  *
@@ -163,7 +163,7 @@ arm_status arm_elementwise_mul_s8(const int8_t *input_1_vect,
         mul_res = MIN(mul_res, out_activation_max);
         r4 = (q7_t)mul_res;
 
-        write_q7x4_ia(&output, __PACKq7(r1, r2, r3, r4));
+        arm_nn_write_q7x4_ia(&output, PACK_Q7x4_32x1(r1, r2, r3, r4));
 
         loop_count--;
     }

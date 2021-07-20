@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_fully_connected_q7_opt.c
  * Description:  Q7 basic fully-connected layer function
  *
- * $Date:        09. October 2020
- * $Revision:    V.1.0.1
+ * $Date:        20. July 2021
+ * $Revision:    V.1.1.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -136,7 +136,7 @@ arm_status arm_fully_connected_q7_opt(const q7_t *pV,
                                       q15_t *vec_buffer)
 {
 
-#if defined(ARM_MATH_DSP)
+#if defined(ARM_MATH_DSP) && !defined(ARM_MATH_MVEI)
     /* Run the following code for Cortex-M4 and Cortex-M7 */
 
     const q7_t *pB = pM;
@@ -382,6 +382,7 @@ arm_status arm_fully_connected_q7_opt(const q7_t *pV,
 
 #else
     /* Run the following code as reference implementation for Cortex-M0 and Cortex-M3 */
+    (void)vec_buffer;
     uint16_t rowCnt = num_of_rows >> 2;
     const q7_t *pB = pM;
     const q7_t *pA;
