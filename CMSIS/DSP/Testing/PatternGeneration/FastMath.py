@@ -46,6 +46,23 @@ def divide(f,r):
        k = k + 1 
     return(a/b,k)
 
+def initLogValues(format):
+    if format == Tools.Q15:
+       exps = -np.linspace(0,15,num=125)
+    else:
+       exps = -np.linspace(0,31,num=125)
+    basis=2.0*np.ones(exps.size)
+    vals=np.float_power(basis,exps)
+    ref=np.log(vals)
+    if format==Tools.Q31 :
+        # Format must be Q5.26
+        ref = ref / 32.0
+    if format == Tools.Q15:
+        # Format must be Q4.11
+        ref = ref / 16.0
+    return(vals,ref)
+
+
 def writeTests(config,format):
     
     config.setOverwrite(False)
@@ -79,7 +96,6 @@ def writeTests(config,format):
     samples = np.abs(Tools.normalize(samples))
     config.writeInput(1, samples,"Samples")
 
-    config.setOverwrite(True)
     numerator=np.linspace(-0.9,0.9)
     denominator=np.linspace(-0.9,0.9)
 
@@ -95,6 +111,11 @@ def writeTests(config,format):
     config.writeInput(1, denominator,"Denominator")
     config.writeReference(1, resultValue,"DivisionValue")
     config.writeReferenceS16(1, resultShift,"DivisionShift")
+
+    config.setOverwrite(True)
+    vals,ref=initLogValues(format)
+    config.writeInput(1, vals,"LogInput")
+    config.writeReference(1, ref,"Log")
     config.setOverwrite(False)
 
 
@@ -111,10 +132,13 @@ def writeTestsFloat(config,format):
     data1 = data1 + 1e-3 # To avoid zero values
     data1 = Tools.normalize(data1)
 
-    samples=np.concatenate((np.array([0.1,0.3,0.5,1.0,2.0]) , data1))
+    config.setOverwrite(True)
+
+    samples,v=initLogValues(format)
     config.writeInput(1, samples,"LogInput")
-    v = np.log(samples)
     config.writeReference(1, v,"Log")
+
+    config.setOverwrite(False)
 
     samples=np.concatenate((np.array([0.0,1.0]),np.linspace(-0.4,0.4)))
     config.writeInput(1, samples,"ExpInput")
@@ -129,7 +153,7 @@ def writeTestsFloat(config,format):
     v = 1.0 / samples
     config.writeReference(1, v,"Inverse")
 
-    config.setOverwrite(True)
+    config.setOverwrite(False)
 
 
 
@@ -144,10 +168,9 @@ def generatePatterns():
     configq31=Tools.Config(PATTERNDIR,PARAMDIR,"q31")
     configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
     
-    
-    #writeTestsFloat(configf32,0)
-    #writeTestsFloat(configf16,16)
-    #writeTests(configq31,31)
+    writeTestsFloat(configf32,0)
+    writeTestsFloat(configf16,16)
+    writeTests(configq31,31)
     writeTests(configq15,15)
 
 

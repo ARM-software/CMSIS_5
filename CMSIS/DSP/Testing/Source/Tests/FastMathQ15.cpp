@@ -14,7 +14,24 @@ a double precision computation.
 */
 #define ABS_ERROR ((q15_t)10)
 
+#define LOG_ABS_ERROR ((q15_t)1000)
 
+    void FastMathQ15::test_vlog_q15()
+    {
+        const q15_t *inp  = input.ptr();
+        q15_t *outp  = output.ptr();
+
+        //printf("Nb samples = %lu\n",ref.nbSamples());
+        arm_vlog_q15(inp,outp,ref.nbSamples());
+        //arm_vlog_q15(inp,outp,1);
+        //printf("in = %08X\n",inp[124]);
+        //printf("out = %08X\n",outp[124]);
+    
+        //ASSERT_SNR(ref,output,(float32_t)SNR_THRESHOLD);
+        ASSERT_NEAR_EQ(ref,output,LOG_ABS_ERROR);
+        ASSERT_EMPTY_TAIL(output);
+
+    }
 
     void FastMathQ15::test_division_q15()
     {
@@ -132,6 +149,42 @@ a double precision computation.
 
                output.create(ref.nbSamples(),FastMathQ15::OUT_Q15_ID,mgr);
                shift.create(ref.nbSamples(),FastMathQ15::SHIFT_S16_ID,mgr);
+
+            }
+            break;
+
+            case FastMathQ15::TEST_VLOG_Q15_5:
+            {
+               input.reload(FastMathQ15::LOGINPUT1_Q15_ID,mgr);
+               ref.reload(FastMathQ15::LOG1_Q15_ID,mgr);
+               output.create(ref.nbSamples(),FastMathQ15::OUT_Q15_ID,mgr);
+
+            }
+            break;
+
+            case FastMathQ15::TEST_VLOG_Q15_6:
+            {
+               input.reload(FastMathQ15::LOGINPUT1_Q15_ID,mgr,7);
+               ref.reload(FastMathQ15::LOG1_Q15_ID,mgr,7);
+               output.create(ref.nbSamples(),FastMathQ15::OUT_Q15_ID,mgr);
+
+            }
+            break;
+
+            case FastMathQ15::TEST_VLOG_Q15_7:
+            {
+               input.reload(FastMathQ15::LOGINPUT1_Q15_ID,mgr,16);
+               ref.reload(FastMathQ15::LOG1_Q15_ID,mgr,16);
+               output.create(ref.nbSamples(),FastMathQ15::OUT_Q15_ID,mgr);
+
+            }
+            break;
+
+            case FastMathQ15::TEST_VLOG_Q15_8:
+            {
+               input.reload(FastMathQ15::LOGINPUT1_Q15_ID,mgr,23);
+               ref.reload(FastMathQ15::LOG1_Q15_ID,mgr,23);
+               output.create(ref.nbSamples(),FastMathQ15::OUT_Q15_ID,mgr);
 
             }
             break;
