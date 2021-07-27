@@ -28,7 +28,6 @@ CMSIS is open-source and collaboratively developed on
 |<a href="../../RTOS/html/index.html"><b>RTOS v1</b></a>|   Cortex-M0/M0+/M3/M4/M7 | Common API for real-time operating systems along with a reference implementation based on RTX. It enables software components that can work across multiple RTOS systems.|
 |<a href="../../RTOS2/html/index.html"><b>RTOS v2</b></a>|  All Cortex-M, Cortex-A5/A7/A9 | Extends CMSIS-RTOS v1 with Armv8-M support, dynamic object creation, provisions for multi-core systems, binary compatible interface. |
 |<a href="../../Pack/html/index.html"><b>Pack</b></a>|      All Cortex-M, SecurCore, Cortex-A5/A7/A9 | Describes a delivery mechanism for software components, device parameters, and evaluation board support. It simplifies software re-use and product life-cycle management (PLM). |
-|<a href="../../Build/html/index.html"><b>Build</b></a>|      All Cortex-M, SecurCore, Cortex-A5/A7/A9 | A set of tools, software frameworks, and work flows that improve productivity, for example with Continuous Integration (CI). |
 |<a href="../../SVD/html/index.html"><b>SVD</b></a>|        All Cortex-M, SecurCore | Peripheral description of a device that can be used to create peripheral awareness in debuggers or CMSIS-Core header files.|
 |<a href="../../DAP/html/index.html"><b>DAP</b></a>|        All Cortex | Firmware for a debug unit that interfaces to the CoreSight Debug Access Port. |
 |<a href="../../Zone/html/index.html"><b>Zone</b></a>|      All Cortex-M | Defines methods to describe system resources and to partition these resources into multiple projects and execution areas. |
@@ -152,7 +151,7 @@ Directory                 |Content
 \b RTOS                   |<a href="../../RTOS/html/index.html"><b>CMSIS-RTOS Version 1</b></a> along with RTX4 reference implementation
 \b RTOS2                  |<a href="../../RTOS/html/index.html"><b>CMSIS-RTOS Version 2</b></a> along with RTX5 reference implementation
 \b SVD                    |<a href="../../SVD/html/index.html"><b>CMSIS-SVD</b></a>
-\b Utilities              |PACK.xsd (<a href="../../Pack/html/packFormat.html#PackSchema"><b>CMSIS-Pack</b> schema file</a>), PackChk.exe (checking tool for software packs), \n CMSIS-SVD.xsd (<a href="../../SVD/html/schema_1_2_gr.html"><b>CMSIS-SVD</b> schema file</a>), SVDConv.exe (conversion tool for SVD files), \n CPRJ.xsd (<a href="../../Build/html/projectDescriptionSchema.html"><b>CMSIS-Build</b> schema file</a>)
+\b Utilities              |PACK.xsd (<a href="../../Pack/html/packFormat.html#PackSchema"><b>CMSIS-Pack</b> schema file</a>), PackChk.exe (checking tool for software packs), \n CMSIS-SVD.xsd (<a href="../../SVD/html/schema_1_2_gr.html"><b>CMSIS-SVD</b> schema file</a>), SVDConv.exe (conversion tool for SVD files)
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/

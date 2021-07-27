@@ -79,7 +79,6 @@ if [[ $REGEN != 0 ]]; then
 fi
 
 echo "Generating documentation ..."
-doxygen "${DIRNAME}/Build/Build.dxy" 1
 doxygen "${DIRNAME}/Core/core.dxy" 1
 doxygen "${DIRNAME}/Core_A/core_A.dxy" 1
 doxygen "${DIRNAME}/DAP/dap.dxy" 1

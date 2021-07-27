@@ -108,8 +108,7 @@ Files relevant to CMSIS-Pack are present in the following \b ARM::CMSIS director
   <tr>
     <td>1.6.3</td>
 	<td>
-- removed CMSIS Project Description format (cpdsc) from CMSIS-Pack. Format has been superseeded by new format specification located in the CMSIS 
-  <a href="../../Build/html/cprjFormat_pg.html"><b>Build</b></a> tab.
+- removed CMSIS Project Description format (cpdsc) from CMSIS-Pack. Format has been superseeded by new format specification (cprj).
 - added \ref dbg_setup_tutorial "debug setup tutorial" to the documentation.
 - updated documentation of PackChk \ref packChkMessages "errors and warnings".
 - updated documentation to reflect switch from 'http' to 'https'.
