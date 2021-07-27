@@ -22,7 +22,6 @@ var arr = [];
  arr.push( new tabElement( "RTOSv1",  "/RTOS/html/",        "RTOS v1")   );
  arr.push( new tabElement( "RTOSv2",  "/RTOS2/html/",       "RTOS v2")   );
  arr.push( new tabElement( "PACK",    "/Pack/html/",        "Pack")      );
- arr.push( new tabElement( "Build",   "/Build/html/",       "Build")     );
  arr.push( new tabElement( "SVD",     "/SVD/html/",         "SVD")       );
  arr.push( new tabElement( "DAP",     "/DAP/html/",         "DAP")       );
  arr.push( new tabElement( "ZONE",    "/Zone/html/",        "Zone")      );
