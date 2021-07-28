@@ -148,6 +148,31 @@ extern "C"
         float32_t * pDst,
         uint32_t blockSize);
 
+
+  /**
+   * @brief  q31 vector of log values.
+   * @param[in]     pSrc       points to the input vector in q31
+   * @param[out]    pDst       points to the output vector in q5.26
+   * @param[in]     blockSize  number of samples in each vector
+   * @return        none
+   */
+  void arm_vlog_q31(const q31_t * pSrc,
+        q31_t * pDst,
+        uint32_t blockSize);
+
+  /**
+   * @brief  q15 vector of log values.
+   * @param[in]     pSrc       points to the input vector in q15
+   * @param[out]    pDst       points to the output vector in q4.11
+   * @param[in]     blockSize  number of samples in each vector
+   * @return        none
+   */
+  void arm_vlog_q15(const q15_t * pSrc,
+        q15_t * pDst,
+        uint32_t blockSize);
+
+
+
 /**
   @brief         Floating-point vector of exp values.
   @param[in]     pSrc       points to the input vector

@@ -21,8 +21,8 @@
  * Title:        arm_depthwise_separable_conv_HWC_q7.c
  * Description:  Q7 depthwise separable convolution function
  *
- * $Date:        January 26, 2021
- * $Revision:    V.1.0.2
+ * $Date:        July 20, 2021
+ * $Revision:    V.1.1.2
  *
  * Target Processor:  Cortex-M cores
  *
@@ -96,7 +96,7 @@ arm_status arm_depthwise_separable_conv_HWC_q7(const q7_t *Im_in,
                                                q7_t *bufferB)
 {
     (void)bufferB;
-#if defined(ARM_MATH_DSP)
+#if defined(ARM_MATH_DSP) && !defined(ARM_MATH_MVEI)
     /* Run the following code for Cortex-M4 and Cortex-M7 */
 
     int16_t i_out_y, i_out_x;

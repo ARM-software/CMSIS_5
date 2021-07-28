@@ -7,7 +7,7 @@
 #include "Test.h"
 
 
-#define SNR_THRESHOLD 120
+#define SNR_THRESHOLD 119
 /* 
 
 Reference patterns are generated with

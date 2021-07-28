@@ -59,4 +59,7 @@
 #include "arm_vexp_f32.c"
 #include "arm_vlog_f32.c"
 #include "arm_divide_q15.c"
+#include "arm_vlog_q31.c"
+#include "arm_vlog_q15.c"
+
 

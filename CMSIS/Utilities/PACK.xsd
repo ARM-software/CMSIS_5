@@ -178,6 +178,7 @@
       <xs:enumeration value="e-peas:167" />
       <xs:enumeration value="EtaCompute:157" />
       <xs:enumeration value="Evatronix:64" />
+      <xs:enumeration value="FMD:169" />
       <xs:enumeration value="Geehy:163" />
       <xs:enumeration value="Generic:5" />
       <xs:enumeration value="Generalplus:151" />

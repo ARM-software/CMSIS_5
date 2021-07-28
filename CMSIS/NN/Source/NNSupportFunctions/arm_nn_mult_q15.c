@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2018 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_nn_mult_q15.c
  * Description:  Q15 vector multiplication with variable output shifts
  *
- * $Date:        09. October 2020
- * $Revision:    V.1.0.2
+ * $Date:        20. July 2021
+ * $Revision:    V.1.1.2
  *
  * Target Processor:  Cortex-M cores
  *
@@ -55,72 +55,7 @@
 
 void arm_nn_mult_q15(q15_t *pSrcA, q15_t *pSrcB, q15_t *pDst, const uint16_t out_shift, uint32_t blockSize)
 {
-    uint32_t blkCnt; /* loop counters */
-
-#if defined(ARM_MATH_DSP)
-
-    /* Run the below code for Cortex-M4 and Cortex-M3 */
-    q31_t inA1, inA2, inB1, inB2; /* temporary input variables */
-    q15_t out1, out2, out3, out4; /* temporary output variables */
-    q31_t mul1, mul2, mul3, mul4; /* temporary variables */
-
-    /* loop Unrolling */
-    blkCnt = blockSize >> 2U;
-
-    /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
-     ** a second loop below computes the remaining 1 to 3 samples. */
-    while (blkCnt > 0U)
-    {
-        /* read two samples at a time from sourceA */
-        inA1 = arm_nn_read_q15x2_ia((const q15_t **)&pSrcA);
-        /* read two samples at a time from sourceB */
-        inB1 = arm_nn_read_q15x2_ia((const q15_t **)&pSrcB);
-        /* read two samples at a time from sourceA */
-        inA2 = arm_nn_read_q15x2_ia((const q15_t **)&pSrcA);
-        /* read two samples at a time from sourceB */
-        inB2 = arm_nn_read_q15x2_ia((const q15_t **)&pSrcB);
-
-        /* multiply mul = sourceA * sourceB */
-        mul1 = (q31_t)((q15_t)(inA1 >> 16) * (q15_t)(inB1 >> 16));
-        mul2 = (q31_t)((q15_t)inA1 * (q15_t)inB1);
-        mul3 = (q31_t)((q15_t)(inA2 >> 16) * (q15_t)(inB2 >> 16));
-        mul4 = (q31_t)((q15_t)inA2 * (q15_t)inB2);
-
-        /* saturate result to 16 bit */
-        out1 = (q15_t)__SSAT((q31_t)(mul1 + NN_ROUND(out_shift)) >> out_shift, 16);
-        out2 = (q15_t)__SSAT((q31_t)(mul2 + NN_ROUND(out_shift)) >> out_shift, 16);
-        out3 = (q15_t)__SSAT((q31_t)(mul3 + NN_ROUND(out_shift)) >> out_shift, 16);
-        out4 = (q15_t)__SSAT((q31_t)(mul4 + NN_ROUND(out_shift)) >> out_shift, 16);
-
-        /* store the result */
-#ifndef ARM_MATH_BIG_ENDIAN
-
-        *__SIMD32(pDst)++ = __PKHBT(out2, out1, 16);
-        *__SIMD32(pDst)++ = __PKHBT(out4, out3, 16);
-
-#else
-
-        *__SIMD32(pDst)++ = __PKHBT(out2, out1, 16);
-        *__SIMD32(pDst)++ = __PKHBT(out4, out3, 16);
-
-#endif /* #ifndef ARM_MATH_BIG_ENDIAN */
-
-        /* Decrement the blockSize loop counter */
-        blkCnt--;
-    }
-
-    /* If the blockSize is not a multiple of 4, compute any remaining output samples here.
-     ** No loop unrolling is used. */
-    blkCnt = blockSize % 0x4U;
-
-#else
-
-    /* Run the below code for Cortex-M0 */
-
-    /* Initialize blkCnt with number of samples */
-    blkCnt = blockSize;
-
-#endif /* #if defined (ARM_MATH_DSP) */
+    uint32_t blkCnt = blockSize; /* loop counters */
 
     while (blkCnt > 0U)
     {

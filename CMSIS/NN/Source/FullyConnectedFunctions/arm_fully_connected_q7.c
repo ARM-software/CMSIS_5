@@ -21,8 +21,8 @@
  * Title:        arm_fully_connected_q7.c
  * Description:  Q7 basic fully-connected layer function
  *
- * $Date:        January 26, 2021
- * $Revision:    V.1.0.2
+ * $Date:        July 20, 2021
+ * $Revision:    V.1.1.2
  *
  * Target Processor:  Cortex-M cores
  *
@@ -75,7 +75,7 @@ arm_status arm_fully_connected_q7(const q7_t *pV,
                                   q15_t *vec_buffer)
 {
 
-#if defined(ARM_MATH_DSP)
+#if defined(ARM_MATH_DSP) && !defined(ARM_MATH_MVEI)
     /* Run the following code for Cortex-M4 and Cortex-M7 */
 
     const q7_t *pB = pM;

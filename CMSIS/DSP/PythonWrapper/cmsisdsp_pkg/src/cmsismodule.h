@@ -9867,6 +9867,37 @@ cmsis_arm_abs_q15(PyObject *obj, PyObject *args)
   return(NULL);
 }
 
+static PyObject *
+cmsis_arm_vlog_q15(PyObject *obj, PyObject *args)
+{
+
+  PyObject *pSrc=NULL; // input
+  q15_t *pSrc_converted=NULL; // input
+  q15_t *pDst=NULL; // output
+  uint32_t blockSize; // input
+
+  if (PyArg_ParseTuple(args,"O",&pSrc))
+  {
+
+    GETARGUMENT(pSrc,NPY_INT16,int16_t,int16_t);
+    blockSize = arraySizepSrc ;
+
+    pDst=PyMem_Malloc(sizeof(q15_t)*blockSize);
+
+
+    arm_vlog_q15(pSrc_converted,pDst,blockSize);
+ INT16ARRAY1(pDstOBJ,blockSize,pDst);
+
+    PyObject *pythonResult = Py_BuildValue("O",pDstOBJ);
+
+    FREEARGUMENT(pSrc_converted);
+    Py_DECREF(pDstOBJ);
+    return(pythonResult);
+
+  }
+  return(NULL);
+}
+
 
 static PyObject *
 cmsis_arm_abs_q31(PyObject *obj, PyObject *args)
@@ -9887,6 +9918,37 @@ cmsis_arm_abs_q31(PyObject *obj, PyObject *args)
 
 
     arm_abs_q31(pSrc_converted,pDst,blockSize);
+ INT32ARRAY1(pDstOBJ,blockSize,pDst);
+
+    PyObject *pythonResult = Py_BuildValue("O",pDstOBJ);
+
+    FREEARGUMENT(pSrc_converted);
+    Py_DECREF(pDstOBJ);
+    return(pythonResult);
+
+  }
+  return(NULL);
+}
+
+static PyObject *
+cmsis_arm_vlog_q31(PyObject *obj, PyObject *args)
+{
+
+  PyObject *pSrc=NULL; // input
+  q31_t *pSrc_converted=NULL; // input
+  q31_t *pDst=NULL; // output
+  uint32_t blockSize; // input
+
+  if (PyArg_ParseTuple(args,"O",&pSrc))
+  {
+
+    GETARGUMENT(pSrc,NPY_INT32,int32_t,int32_t);
+    blockSize = arraySizepSrc ;
+
+    pDst=PyMem_Malloc(sizeof(q31_t)*blockSize);
+
+
+    arm_vlog_q31(pSrc_converted,pDst,blockSize);
  INT32ARRAY1(pDstOBJ,blockSize,pDst);
 
     PyObject *pythonResult = Py_BuildValue("O",pDstOBJ);
@@ -13700,21 +13762,25 @@ cmsis_arm_sin_cos_f32(PyObject *obj, PyObject *args)
 {
 
   float32_t theta; // input
-  PyObject *pSinVal=NULL; // input
-  float32_t *pSinVal_converted=NULL; // input
-  PyObject *pCosVal=NULL; // input
-  float32_t *pCosVal_converted=NULL; // input
+  float32_t pS;
+  float32_t pC;
 
-  if (PyArg_ParseTuple(args,"fOO",&theta,&pSinVal,&pCosVal))
+  if (PyArg_ParseTuple(args,"f",&theta))
   {
 
-    GETARGUMENT(pSinVal,NPY_DOUBLE,double,float32_t);
-    GETARGUMENT(pCosVal,NPY_DOUBLE,double,float32_t);
 
-    arm_sin_cos_f32(theta,pSinVal_converted,pCosVal_converted);
-    FREEARGUMENT(pSinVal_converted);
-    FREEARGUMENT(pCosVal_converted);
-    Py_RETURN_NONE;
+    
+    arm_sin_cos_f32(theta,&pS,&pC);
+    
+    PyObject* retS=Py_BuildValue("f",pS);
+    PyObject* retC=Py_BuildValue("f",pC);
+
+    PyObject *pythonResult = Py_BuildValue("OO",retS,retC);
+
+    Py_DECREF(retS);
+    Py_DECREF(retC);
+
+    return(pythonResult);
 
   }
   return(NULL);
@@ -13726,21 +13792,23 @@ cmsis_arm_sin_cos_q31(PyObject *obj, PyObject *args)
 {
 
   q31_t theta; // input
-  PyObject *pSinVal=NULL; // input
-  q31_t *pSinVal_converted=NULL; // input
-  PyObject *pCosVal=NULL; // input
-  q31_t *pCosVal_converted=NULL; // input
+  q31_t pS;
+  q31_t pC;
 
-  if (PyArg_ParseTuple(args,"iOO",&theta,&pSinVal,&pCosVal))
+  if (PyArg_ParseTuple(args,"i",&theta))
   {
 
-    GETARGUMENT(pSinVal,NPY_INT32,int32_t,int32_t);
-    GETARGUMENT(pCosVal,NPY_INT32,int32_t,int32_t);
+    arm_sin_cos_q31(theta,&pS,&pC);
+    
+    PyObject* retS=Py_BuildValue("i",pS);
+    PyObject* retC=Py_BuildValue("i",pC);
 
-    arm_sin_cos_q31(theta,pSinVal_converted,pCosVal_converted);
-    FREEARGUMENT(pSinVal_converted);
-    FREEARGUMENT(pCosVal_converted);
-    Py_RETURN_NONE;
+    PyObject *pythonResult = Py_BuildValue("OO",retS,retC);
+
+    Py_DECREF(retS);
+    Py_DECREF(retC);
+
+    return(pythonResult);
 
   }
   return(NULL);
@@ -14686,23 +14754,21 @@ cmsis_arm_sqrt_f32(PyObject *obj, PyObject *args)
 {
 
   float32_t in; // input
-  float32_t *pOut=NULL; // output
+  float32_t pOut; // output
 
   if (PyArg_ParseTuple(args,"f",&in))
   {
 
 
-    pOut=PyMem_Malloc(sizeof(float32_t)*1);
-
-
-    arm_status returnValue = arm_sqrt_f32(in,pOut);
+    arm_status returnValue = arm_sqrt_f32(in,&pOut);
     PyObject* theReturnOBJ=Py_BuildValue("i",returnValue);
-    PyObject* pOutOBJ=Py_BuildValue("f",*pOut);
+    PyObject* pOutOBJ=Py_BuildValue("f",pOut);
 
     PyObject *pythonResult = Py_BuildValue("OO",theReturnOBJ,pOutOBJ);
 
     Py_DECREF(theReturnOBJ);
     Py_DECREF(pOutOBJ);
+
     return(pythonResult);
 
   }
@@ -14715,18 +14781,17 @@ cmsis_arm_sqrt_q31(PyObject *obj, PyObject *args)
 {
 
   q31_t in; // input
-  q31_t *pOut=NULL; // output
+  q31_t pOut; // output
 
   if (PyArg_ParseTuple(args,"i",&in))
   {
 
 
-    pOut=PyMem_Malloc(sizeof(q31_t)*1);
 
 
-    arm_status returnValue = arm_sqrt_q31(in,pOut);
+    arm_status returnValue = arm_sqrt_q31(in,&pOut);
     PyObject* theReturnOBJ=Py_BuildValue("i",returnValue);
-    PyObject* pOutOBJ=Py_BuildValue("i",*pOut);
+    PyObject* pOutOBJ=Py_BuildValue("i",pOut);
 
     PyObject *pythonResult = Py_BuildValue("OO",theReturnOBJ,pOutOBJ);
 
@@ -14744,18 +14809,16 @@ cmsis_arm_sqrt_q15(PyObject *obj, PyObject *args)
 {
 
   q15_t in; // input
-  q15_t *pOut=NULL; // output
+  q15_t pOut; // output
 
   if (PyArg_ParseTuple(args,"h",&in))
   {
 
 
-    pOut=PyMem_Malloc(sizeof(q15_t)*1);
 
-
-    arm_status returnValue = arm_sqrt_q15(in,pOut);
+    arm_status returnValue = arm_sqrt_q15(in,&pOut);
     PyObject* theReturnOBJ=Py_BuildValue("i",returnValue);
-    PyObject* pOutOBJ=Py_BuildValue("h",*pOut);
+    PyObject* pOutOBJ=Py_BuildValue("h",pOut);
 
     PyObject *pythonResult = Py_BuildValue("OO",theReturnOBJ,pOutOBJ);
 
@@ -16931,6 +16994,8 @@ static PyMethodDef CMSISMLMethods[] = {
 {"arm_abs_f32",  cmsis_arm_abs_f32, METH_VARARGS,""},
 {"arm_abs_q15",  cmsis_arm_abs_q15, METH_VARARGS,""},
 {"arm_abs_q31",  cmsis_arm_abs_q31, METH_VARARGS,""},
+{"arm_vlog_q15",  cmsis_arm_vlog_q15, METH_VARARGS,""},
+{"arm_vlog_q31",  cmsis_arm_vlog_q31, METH_VARARGS,""},
 {"arm_dot_prod_f32",  cmsis_arm_dot_prod_f32, METH_VARARGS,""},
 {"arm_dot_prod_q7",  cmsis_arm_dot_prod_q7, METH_VARARGS,""},
 {"arm_dot_prod_q15",  cmsis_arm_dot_prod_q15, METH_VARARGS,""},

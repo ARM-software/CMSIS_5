@@ -33,6 +33,15 @@
 #include "arm_common_tables.h"
 #include "arm_vec_math_f16.h"
 
+
+/**
+  @ingroup groupFastMath
+ */
+
+/**
+  @addtogroup vlog
+  @{
+ */
 void arm_vlog_f16(
   const float16_t * pSrc,
         float16_t * pDst,
@@ -75,6 +84,11 @@ void arm_vlog_f16(
       blkCnt--;
    }
 }
+
+/**
+  @} end of vlog group
+ */
+
 
 #endif /* #if defined(ARM_FLOAT16_SUPPORTED) */ 
 

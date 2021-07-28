@@ -1402,9 +1402,11 @@ group Root {
 
               Pattern ANGLES1_Q31_ID : Angles1_q31.txt
               Pattern SQRTINPUT1_Q31_ID : SqrtInput1_q31.txt
+              Pattern LOGINPUT1_Q31_ID : LogInput1_q31.txt
               Pattern COS1_Q31_ID : Cos1_q31.txt 
               Pattern SIN1_Q31_ID : Sin1_q31.txt 
               Pattern SQRT1_Q31_ID : Sqrt1_q31.txt 
+              Pattern LOG1_Q31_ID : Log1_q31.txt 
               
 
               Output  OUT_Q31_ID : Output
@@ -1413,6 +1415,10 @@ group Root {
                 test_cos_q31:test_cos_q31
                 test_sin_q31:test_sin_q31
                 test_sqrt_q31:test_sqrt_q31
+                test_vlog_q31:test_vlog_q31
+                test_vlog_q31 nb=3:test_vlog_q31
+                test_vlog_q31 nb=4n:test_vlog_q31
+                test_vlog_q31 nb=4n+1:test_vlog_q31
               }
           }
 
@@ -1422,9 +1428,11 @@ group Root {
 
               Pattern ANGLES1_Q15_ID : Angles1_q15.txt
               Pattern SQRTINPUT1_Q15_ID : SqrtInput1_q15.txt
+              Pattern LOGINPUT1_Q15_ID : LogInput1_q15.txt
               Pattern COS1_Q15_ID : Cos1_q15.txt 
               Pattern SIN1_Q15_ID : Sin1_q15.txt 
               Pattern SQRT1_Q15_ID : Sqrt1_q15.txt 
+              Pattern LOG1_Q15_ID : Log1_q15.txt 
 
               Pattern NUMERATOR_Q15_ID : Numerator1_q15.txt
               Pattern DENOMINATOR_Q15_ID : Denominator1_q15.txt
@@ -1440,6 +1448,10 @@ group Root {
                 test_sin_q15:test_sin_q15
                 test_sqrt_q15:test_sqrt_q15
                 test_division_q15:test_division_q15
+                test_vlog_q15:test_vlog_q15
+                test_vlog_q15 nb=3:test_vlog_q15
+                test_vlog_q15 nb=4n:test_vlog_q15
+                test_vlog_q15 nb=4n+1:test_vlog_q15
               }
           }
         }

@@ -66,6 +66,17 @@ Now, you can install the cmsisdsp package in editable mode:
 
 Then you can copy the scripts testdsp.py and example.py and try to run them from this virtual environment. example.y is requiring a data file to be downloaded from the web. See below in this document for the link.
 
+It is also possible to compile and install directly from a Jupyter notebook by doing something like:
+
+    !pip install git+https://github.com/ARM-software/
+    CMSIS_5.git@5.8.0#egg=CMSISDSP\&subdirectory=CMSIS/DSP/PythonWrapper
+
+This will download, compile and install the PythonWrapper from the version 5.8.0 of the CMSIS-DSP (so not from the develop branch).
+
+It will work only if the compiler can be found and run from Jupyter.
+
+Note that due to the great number of possible configurations (OS, Compiler, Python), we can't give any support if you have problems compiling the PythonWrapper on your specific configuration. But, generally people manage to do it and solve all the problems.
+
 # Usage
 
 You can look at testdsp.py and example.py for some examples.
