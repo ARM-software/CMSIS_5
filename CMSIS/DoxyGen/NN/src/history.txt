@@ -7,6 +7,17 @@
     <th>Description</th>
   </tr>
   <tr>
+    <td>V3.1.0</td>
+    <td>
+    <ul>
+      <li> Added arm_convolve_fast_s16 </li>
+      <li> Added arm_nn_mat_mult_kernel_s16 DSP implementation </li>
+      <li> Added conv int16 DSP implementation </li>
+      <li> Added unit tests for int16 DSP conv kernel </li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
     <td>V3.0.1</td>
     <td>
     <ul>
