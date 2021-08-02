@@ -11,8 +11,9 @@
     <release version="5.8.1">
       Active development ...
       CMSIS-DSP: 1.10.0 (see revision history for details)
-      CMSIS-NN: 3.0.1 (see revision history for details)
-       - Support for int16
+      CMSIS-NN: 3.1.0 (see revision history for details)
+       - Support for int16 convolution
+       - Support for DSP extension optimization for int16 convolution
     </release>
     <release version="5.8.0" date="2021-06-24">
       CMSIS-Core(M): 5.5.0 (see revision history for details)
@@ -2815,6 +2816,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q15_basic.c"/>
         <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_1x1_s8_fast.c"/>
         <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_conv_s8.c"/>
+        <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_fast_s16.c"/>
         <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q15_fast_nonsquare.c"/>
         <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_s8.c"/>
         <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_s16.c"/>
@@ -2853,6 +2855,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_q7_to_q15_with_offset.c"/>
         <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_nn_accumulate_q7_to_q15.c"/>
         <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_nn_mat_mult_nt_t_s8.c"/>
+        <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_nn_mat_mul_kernel_s16.c"/>
         <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_nn_depthwise_conv_nt_t_padded_s8.c"/>
         <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_nn_add_q7.c"/>
         <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_nn_mat_mul_core_4x_s8.c"/>
