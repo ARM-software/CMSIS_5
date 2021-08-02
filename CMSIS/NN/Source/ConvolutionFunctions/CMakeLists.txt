@@ -20,7 +20,7 @@ project(CMSISNNConvolutions)
 
 file(GLOB SRC "./*_s8*.c")
 add_library(CMSISNNConvolutions STATIC ${SRC})
-target_sources(CMSISNNConvolutions PUBLIC arm_convolve_s16.c arm_convolve_wrapper_s16.c)
+target_sources(CMSISNNConvolutions PUBLIC arm_convolve_s16.c arm_convolve_wrapper_s16.c arm_convolve_fast_s16.c)
 
 ### Includes
 target_include_directories(CMSISNNConvolutions PUBLIC "${NN}/Include")

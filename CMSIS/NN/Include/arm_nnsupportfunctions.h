@@ -21,8 +21,8 @@
  * Title:        arm_nnsupportfunctions.h
  * Description:  Public header file of support functions for CMSIS NN Library
  *
- * $Date:        20. July 2021
- * $Revision:    V.5.7.0
+ * $Date:        12 August 2021
+ * $Revision:    V.5.8.0
  *
  * Target Processor:  Cortex-M CPUs
  * -------------------------------------------------------------------- */
@@ -244,7 +244,37 @@ q7_t *arm_nn_mat_mult_s8(const q7_t *input_row,
                          const uint16_t row_len,
                          const int32_t *const bias,
                          q7_t *out);
-
+/**
+ * @brief Matrix-multiplication function for convolution with per-channel requantization for 16 bits convolution.
+ * @param[in]       input_a     pointer to operand A
+ * @param[in]       input_b     pointer to operand B, always consists of 2 vectors.
+ * @param[in]       output_ch   number of rows of A
+ * @param[in]       out_shift  pointer to per output channel requantization shift parameter.
+ * @param[in]       out_mult   pointer to per output channel requantization multiplier parameter.
+ * @param[in]       activation_min   minimum value to clamp the output to. Range : int16
+ * @param[in]       activation_max   maximum value to clamp the output to. Range : int16
+ * @param[in]       num_col_a   number of columns of A
+ * @param[in]       output_bias per output channel bias. Range : int64
+ * @param[in,out]   out_0       pointer to output
+ * @return     The function returns one of the two
+ *              1. The incremented output pointer for a successful operation or
+ *              2. NULL if implementation is not available.
+ *
+ * @details   This function does the matrix multiplication of weight matrix for all output channels
+ *            with 2 columns from im2col and produces two elements/output_channel. The outputs are
+ *            clamped in the range provided by activation min and max.
+ *            Supported framework: TensorFlow Lite micro.
+ */
+q15_t *arm_nn_mat_mult_kernel_s16(const q7_t *input_a,
+                                  const q15_t *input_b,
+                                  const int32_t output_ch,
+                                  const int32_t *out_shift,
+                                  const int32_t *out_mult,
+                                  const int16_t activation_min,
+                                  const int16_t activation_max,
+                                  const int32_t num_col_a,
+                                  const int64_t *const output_bias,
+                                  q15_t *out_0);
 /**
  * @brief General Matrix-multiplication without requantization for one row & one column
  * @param[in]       row_elements  number of row elements

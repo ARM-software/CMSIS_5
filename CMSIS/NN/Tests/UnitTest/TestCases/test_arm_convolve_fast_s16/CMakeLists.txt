@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2019-2021 Arm Limited. All rights reserved.
+# Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
 #
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -16,13 +16,8 @@
 # limitations under the License.
 #
 
-project(CMSISNNSupport)
+add_cmsis_nn_unit_test_executable(test_arm_convolve_fast_s16)
 
-file(GLOB SRC "./*_s8.c")
-add_library(CMSISNNSupport STATIC ${SRC})
-target_sources(CMSISNNSupport PUBLIC arm_q7_to_q15_with_offset.c arm_nn_mat_mul_kernel_s16.c)
-
-### Includes
-target_include_directories(CMSISNNSupport PUBLIC "${NN}/Include")
-target_include_directories(CMSISNNSupport PUBLIC "${ROOT}/CMSIS/Core/Include")
-target_include_directories(CMSISNNSupport PUBLIC "${ROOT}/CMSIS/DSP/Include")
+target_sources(test_arm_convolve_fast_s16 PRIVATE
+    Unity/unity_test_arm_convolve_fast_s16.c
+    Unity/TestRunner/unity_test_arm_convolve_fast_s16_runner.c)
