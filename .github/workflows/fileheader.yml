@@ -25,6 +25,7 @@ jobs:
       uses: jitterbit/get-changed-files@v1
     - name: Check changed files
       run: |
+        echo "::add-matcher::.github/fileheader.json"
         RC=0
         for changed_file in ${{ steps.files.outputs.all }}; do
           ./CMSIS/Utilities/check_header.sh ${changed_file} || RC=1
