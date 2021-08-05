@@ -4,10 +4,19 @@ on:
   workflow_dispatch:
   push:
     branches: [ develop ]
+    paths:
+      - 'CMSIS/Core/**'
+      - 'CMSIS/Core_A/**'
+      - 'CMSIS/CoreValidation/**'
+      - 'Device/ARM/**'
   pull_request:
-    # The branches below must be a subset of the branches above
     branches: [ develop ]
-
+    paths:
+      - '.github/workflows/codeql-analysis.yml'
+      - 'CMSIS/Core/**'
+      - 'CMSIS/Core_A/**'
+      - 'CMSIS/CoreValidation/**'
+      - 'Device/ARM/**'
 jobs:
   analyze:
     name: Analyze
