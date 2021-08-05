@@ -1,10 +1,17 @@
 name: Publish Documentation
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - develop
+  pull_request:
+    branches: [ develop ]
     paths:
+      - '.github/workflows/gh-pages.yaml'
+      - 'CMSIS/Utilities/check_links.sh'
+      - 'CMSIS/DoxyGen/**'
+  push:
+    branches: [ develop ]
+    paths:
+      - '.github/workflows/gh-pages.yaml'
+      - 'CMSIS/Utilities/check_links.sh'
       - 'CMSIS/DoxyGen/**'
 jobs:
   docs:
@@ -21,16 +28,31 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install --no-install-recommends -y mscgen=0.20-12
+      - name: Install linkchecker
+        run: |
+          sudo pip install LinkChecker
       - name: Generate doxygen
         run: CMSIS/DoxyGen/gen_doc.sh
+      - name: Run linkchecker
+        run: |
+          echo "::add-matcher::.github/linkchecker.json"
+          CMSIS/Utilities/check_links.sh CMSIS/Documentation/index.html
+      - name: Upload documentation
+        if: ${{ github.event_name == 'pull_request' }}
+        uses: actions/upload-artifact@v2
+        with:
+          path: CMSIS/Documentation/**
       - name: Archive documentation
+        if: ${{ github.event_name == 'push' || github.event_name == 'workflow_dispatch' }}
         run: |
           cd CMSIS/Documentation
           tar -cvjf /tmp/doc.tbz2 .
       - uses: actions/checkout@v2
+        if: ${{ github.event_name == 'push' || github.event_name == 'workflow_dispatch' }}
         with:
           ref: gh-pages
       - name: Publish documentation
+        if: ${{ github.event_name == 'push' || github.event_name == 'workflow_dispatch' }}
         run: |
           rm -r develop
           mkdir develop
