@@ -164,7 +164,7 @@ In terms of the CMSIS-Driver for SAI, the PCM protocol can be described as follo
 <a href="http://www.intel.com" target="_blank">Intel</a>. It is composed of five wires: the clock (12.288 MHz), a sync
 signal, a reset signal, and two data wires: sdata_out (contains the AC97 output) and sdata_in (contains the CODEC output).
 For more information, consult the
-<a href="http://www-inst.eecs.berkeley.edu/~cs150/Documents/ac97_r23.pdf" target="_blank">standard documentation</a>.
+<a href="http://inst.eecs.berkeley.edu/~cs150/Documents/ac97_r23.pdf" target="_blank">standard documentation</a>.
 
 \section Driver_SAI_User User Defined Protocol
 Using the control structs of the CMSIS-Driver SAI, it is possible to create support for nearly all serial audio protocols
