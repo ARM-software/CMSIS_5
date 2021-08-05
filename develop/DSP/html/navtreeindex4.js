@@ -1,5 +1,10 @@
 var NAVTREEINDEX4 =
 {
+"structarm__fir__interpolate__instance__q31.html#aee73cc056696e504430c53eaa9c58cf0":[4,44,0],
+"structarm__fir__lattice__instance__f32.html":[4,45],
+"structarm__fir__lattice__instance__f32.html#a335c87e6fdc4b96601d95a5de8b9c463":[4,45,2],
+"structarm__fir__lattice__instance__f32.html#a39230f04a29d8321948e339633780442":[4,45,1],
+"structarm__fir__lattice__instance__f32.html#a4cceb90547b3e585d4c7aabaa8057212":[4,45,0],
 "structarm__fir__lattice__instance__q15.html":[4,46],
 "structarm__fir__lattice__instance__q15.html#a4cceb90547b3e585d4c7aabaa8057212":[4,46,0],
 "structarm__fir__lattice__instance__q15.html#ae29dfdb736374fcddaeaec4b7770170c":[4,46,2],
@@ -244,10 +249,5 @@ var NAVTREEINDEX4 =
 "structarm__svm__polynomial__instance__f32.html#a3fb69b6a70ff2d687329d334d02af9e1":[4,86,0],
 "structarm__svm__polynomial__instance__f32.html#a4c677d8d24d26b5f2aeb6162f796460b":[4,86,5],
 "structarm__svm__polynomial__instance__f32.html#a97fe467fbc733cbaa864399edaaf7366":[4,86,3],
-"structarm__svm__polynomial__instance__f32.html#aba6e7453494beedd1e73763a57247e33":[4,86,6],
-"structarm__svm__polynomial__instance__f32.html#ac0020a4e04df9d200969b1ba84799d88":[4,86,8],
-"structarm__svm__polynomial__instance__f32.html#ac74855c4f6df20c9b07ee5fe002378fc":[4,86,7],
-"structarm__svm__polynomial__instance__f32.html#aed464fe96870d4fcee492ab05b5dba21":[4,86,1],
-"structarm__svm__rbf__instance__f16.html":[4,87],
-"structarm__svm__rbf__instance__f16.html#a1abe530f26ba6a68edea942ebd904a0a":[4,87,3]
+"structarm__svm__polynomial__instance__f32.html#aba6e7453494beedd1e73763a57247e33":[4,86,6]
 };

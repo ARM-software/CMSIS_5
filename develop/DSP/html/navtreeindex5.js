@@ -1,5 +1,10 @@
 var NAVTREEINDEX5 =
 {
+"structarm__svm__polynomial__instance__f32.html#ac0020a4e04df9d200969b1ba84799d88":[4,86,8],
+"structarm__svm__polynomial__instance__f32.html#ac74855c4f6df20c9b07ee5fe002378fc":[4,86,7],
+"structarm__svm__polynomial__instance__f32.html#aed464fe96870d4fcee492ab05b5dba21":[4,86,1],
+"structarm__svm__rbf__instance__f16.html":[4,87],
+"structarm__svm__rbf__instance__f16.html#a1abe530f26ba6a68edea942ebd904a0a":[4,87,3],
 "structarm__svm__rbf__instance__f16.html#a2d1be16c16d99cbba003a47ee2a3234f":[4,87,2],
 "structarm__svm__rbf__instance__f16.html#a3fb69b6a70ff2d687329d334d02af9e1":[4,87,0],
 "structarm__svm__rbf__instance__f16.html#a5d4e70779fa42764818a1fcbf44e3b91":[4,87,1],

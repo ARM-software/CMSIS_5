@@ -21,5 +21,6 @@ var searchData=
   ['vector_20sorting_20algorithms',['Vector sorting algorithms',['../group__Sorting.html',1,'']]],
   ['variance',['Variance',['../group__variance.html',1,'']]],
   ['variance_20example',['Variance Example',['../group__VarianceExample.html',1,'']]],
+  ['vector_20log',['Vector Log',['../group__vlog.html',1,'']]],
   ['vector_20bitwise_20exclusive_20or',['Vector bitwise exclusive OR',['../group__Xor.html',1,'']]]
 ];
