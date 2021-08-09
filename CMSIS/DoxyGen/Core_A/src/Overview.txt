@@ -14,8 +14,8 @@ The following sections provide details about the CMSIS-Core (Cortex-A):
  - \ref using_pg describes the project setup and shows a simple program example.
  - \ref templates_pg describes the files of the CMSIS-Core (Cortex-A) in detail and explains how to adapt template files provided by Arm to silicon vendor devices.
  - \ref coreMISRA_Exceptions_pg describes the violations to the MISRA standard.
- - <a href="Modules.html">\b Reference </a> describe the features and functions of the \ref device_h_pg in detail.
- - <a href="Annotated.html">\b Data \b Structures </a> describe the data structures of the \ref device_h_pg in detail.
+ - <a href="modules.html">\b Reference </a> describe the features and functions of the \ref device_h_pg in detail.
+ - <a href="annotated.html">\b Data \b Structures </a> describe the data structures of the \ref device_h_pg in detail.
     
 <hr>
 

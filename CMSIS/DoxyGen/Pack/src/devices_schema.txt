@@ -2358,7 +2358,7 @@ These values can be used in the elements:
   </tr>
   <tr>
     <td class="XML-Token">Cortex-M55</td>
-    <td><a href="http://developer.arm.com/products/processors/cortex-m/cortex-m55" target="_blank">Arm Cortex-M55</a> processor based device</td>
+    <td><a href="http://developer.arm.com/ip-products/processors/cortex-m/cortex-m55" target="_blank">Arm Cortex-M55</a> processor based device</td>
   </tr>  
   <tr>
     <td class="XML-Token">SC000</td>
