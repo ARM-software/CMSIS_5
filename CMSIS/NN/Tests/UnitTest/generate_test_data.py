@@ -1209,6 +1209,12 @@ def load_all_testdatasets():
                                                         input_zero_point=-3, output_zero_point=-303,
                                                         out_activation_min=-32766, out_activation_max=32767,
                                                         int16xint8=True)
+    dataset = 'fully_connected_int16_big'
+    ALL_TESTDATA_SETS[dataset] = FullyConnectedSettings(dataset, type_of_test, args, in_ch=7, out_ch=11, x_in=10, y_in=10,
+                                                        w_x=10, w_y=10, batches=3, randmin=-5, randmax=5,
+                                                        input_zero_point=-3, output_zero_point=-303,
+                                                        out_activation_min=-32766, out_activation_max=32767,
+                                                        int16xint8=True)
 
     type_of_test = 'avgpool'
     dataset = 'avgpooling'

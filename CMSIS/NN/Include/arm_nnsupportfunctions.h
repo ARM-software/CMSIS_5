@@ -21,8 +21,8 @@
  * Title:        arm_nnsupportfunctions.h
  * Description:  Public header file of support functions for CMSIS NN Library
  *
- * $Date:        17. Aug 2021
- * $Revision:    V.5.9.1
+ * $Date:        24. Aug 2021
+ * $Revision:    V.5.10.0
  *
  * Target Processor:  Cortex-M CPUs
  * -------------------------------------------------------------------- */
@@ -648,7 +648,7 @@ __STATIC_FORCEINLINE void arm_memset_q7(q7_t *dst, const q7_t val, uint32_t bloc
 __STATIC_FORCEINLINE const q7_t *read_and_pad(const q7_t *source, q31_t *out1, q31_t *out2)
 {
     q31_t inA = arm_nn_read_q7x4_ia(&source);
-    q31_t inAbuf1 = __SXTB16(__ROR((uint32_t)inA, 8));
+    q31_t inAbuf1 = __SXTB16_RORn((uint32_t)inA, 8);
     q31_t inAbuf2 = __SXTB16(inA);
 
 #ifndef ARM_MATH_BIG_ENDIAN
