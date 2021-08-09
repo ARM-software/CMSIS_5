@@ -209,7 +209,7 @@ RTOS Thread Context Management</h2>
 <div class="caption">
 RTOS Thread Context Management for Armv8-M TrustZone</div></div>
 <p> To allocate the context memory for threads, an RTOS kernel that runs in <em>non-secure state</em> calls the interface functions defined by the header file <b>TZ_context.h</b>. The <b>TZ_context</b> functions itself are part of the <em>secure state</em> application. An minimum implementation is provided as part of RTOS2 and should handle the secure stack for the thread execution. However it is also possible to implement the context memory management system with additional features such as access control to <em>secure state</em> memory regions using an MPU.</p>
-<p>The API functions of <b>TZ_context</b> are described in the chapter <a href="Modules.html"><b>Reference</b> </a> under <a class="el" href="group__trustzone__functions.html">TrustZone for Armv8-M/v8.1-M</a> - <a class="el" href="group__context__trustzone__functions.html">RTOS Context Management</a>.</p>
+<p>The API functions of <b>TZ_context</b> are described in the chapter <a href="modules.html"><b>Reference</b> </a> under <a class="el" href="group__trustzone__functions.html">TrustZone for Armv8-M/v8.1-M</a> - <a class="el" href="group__context__trustzone__functions.html">RTOS Context Management</a>.</p>
 <p>Refer to <a class="el" href="using_TrustZone_pg.html#Example_TrustZone">Program Examples</a> for RTOS examples that provide a template implementation for <b>TZ_context.c</b>. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
