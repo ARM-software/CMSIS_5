@@ -63,7 +63,7 @@ For example, the following files are provided by the STM32F10x device family pac
 
 \note The silicon vendors create these device-specific CMSIS-Core (Cortex-M) files based on \ref templates_pg provide by Arm.
 
-Thereafter, the functions described under <a href="Modules.html">\b Reference </a> can be used in the application.
+Thereafter, the functions described under <a href="modules.html">\b Reference </a> can be used in the application.
 
 \b Examples
  - \subpage using_CMSIS is a simple example that shows the usage of the CMSIS layer.
