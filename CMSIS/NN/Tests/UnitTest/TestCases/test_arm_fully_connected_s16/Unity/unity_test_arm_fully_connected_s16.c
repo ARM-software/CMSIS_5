@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -45,3 +45,7 @@ void setUp(void)
 void tearDown(void) {}
 
 void test_fully_connected_int16_arm_fully_connected_s16(void) { fully_connected_int16_arm_fully_connected_s16(); }
+void test_fully_connected_int16_big_arm_fully_connected_s16(void)
+{
+    fully_connected_int16_big_arm_fully_connected_s16();
+}

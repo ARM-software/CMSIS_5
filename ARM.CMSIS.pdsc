@@ -13,7 +13,7 @@
       CMSIS-DSP: 1.10.0 (see revision history for details)
       CMSIS-NN: 3.1.0 (see revision history for details)
        - Support for int16 convolution and fully connected for reference implementation
-       - Support for DSP extension optimization for int16 convolution
+       - Support for DSP extension optimization for int16 convolution and fully connected
     </release>
     <release version="5.8.0" date="2021-06-24">
       CMSIS-Core(M): 5.5.0 (see revision history for details)
