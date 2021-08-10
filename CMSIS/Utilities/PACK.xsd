@@ -218,6 +218,7 @@
       <xs:enumeration value="RelChip:146" />
       <xs:enumeration value="Renesas:117" />
       <xs:enumeration value="ROHM:103" />
+      <xs:enumeration value="RPi:170" />
       <xs:enumeration value="Samsung:47" />
       <xs:enumeration value="SILAN:164" />
       <xs:enumeration value="Silergy Corp:139" />
