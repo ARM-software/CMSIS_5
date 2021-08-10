@@ -2030,6 +2030,11 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
     <td>https://www.fremontmicro.com/</td>
   </tr>
   <tr>
+    <td class="XML-Token">FMSH:159</td>
+    <td>Shanghai Fudan Microelectronics Group Co., Ltd</td>
+    <td>http://www.fmsh.com</td>
+  </tr>
+  <tr>
     <td class="XML-Token">Geehy:163</td>
     <td>Geehy</td>
     <td>https://www.geehy.com/</td>
