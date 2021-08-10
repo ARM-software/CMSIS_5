@@ -2180,6 +2180,11 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
     <td>http://www.rohm.com</td>
   </tr>
   <tr>
+    <td class="XML-Token">RPi:170</td>
+    <td>Raspberry Pi Foundation</td>
+    <td>https://www.raspberrypi.org/</td>
+  </tr>
+  <tr>
     <td class="XML-Token">Samsung:47</td>
     <td>Samsung Semiconductor</td>
     <td>http://www.samsung.com</td>
