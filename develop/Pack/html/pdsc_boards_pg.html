@@ -135,9 +135,9 @@ $(document).ready(function(){initNavTree('pdsc_boards_pg.html','');});
 <div class="line">    &lt;book category=<span class="stringliteral">&quot;schematic&quot;</span> name=<span class="stringliteral">&quot;Documents/UM1670.pdf&quot;</span> title=<span class="stringliteral">&quot;Schematics&quot;</span>/&gt;</div>
 <div class="line">    &lt;book category=<span class="stringliteral">&quot;manual&quot;</span>    name=<span class="stringliteral">&quot;Documents/UM1670.pdf&quot;</span> title=<span class="stringliteral">&quot;User Manual&quot;</span>/&gt;</div>
 <div class="line">         </div>
-<div class="line">    &lt;mountedDevice    deviceIndex=<span class="stringliteral">&quot;0&quot;</span> Dvendor=<span class="stringliteral">&quot;STMicroelectronics:13&quot;</span> Dname=<span class="stringliteral">&quot;STM32F429ZI&quot;</span>/&gt;</div>
+<div class="line">    &lt;mountedDevice    Dvendor=<span class="stringliteral">&quot;STMicroelectronics:13&quot;</span> Dname=<span class="stringliteral">&quot;STM32F429ZITx&quot;</span>/&gt;</div>
 <div class="line">         </div>
-<div class="line">    &lt;compatibleDevice deviceIndex=<span class="stringliteral">&quot;0&quot;</span> Dvendor=<span class="stringliteral">&quot;STMicroelectronics:13&quot;</span> Dfamily=<span class="stringliteral">&quot;STM32F4 Series&quot;</span> DsubFamily=<span class="stringliteral">&quot;STM32F429 Line&quot;</span>/&gt;</div>
+<div class="line">    &lt;compatibleDevice Dvendor=<span class="stringliteral">&quot;STMicroelectronics:13&quot;</span> Dfamily=<span class="stringliteral">&quot;STM32F4 Series&quot;</span> DsubFamily=<span class="stringliteral">&quot;STM32F429&quot;</span>/&gt;</div>
 <div class="line">         </div>
 <div class="line">    &lt;feature type=<span class="stringliteral">&quot;ODbg&quot;</span>      n=<span class="stringliteral">&quot;1&quot;</span>              name=<span class="stringliteral">&quot;On-board ST-LINK/V2 with selection mode switch to use the kit as a standalone&quot;</span>/&gt;</div>
 <div class="line">    &lt;feature type=<span class="stringliteral">&quot;XTAL&quot;</span>      n=<span class="stringliteral">&quot;80000000&quot;</span>/&gt;</div>
@@ -154,7 +154,7 @@ $(document).ready(function(){initNavTree('pdsc_boards_pg.html','');});
 <div class="line">    &lt;feature type=<span class="stringliteral">&quot;GLCD&quot;</span>      n=<span class="stringliteral">&quot;1&quot;</span>  m=<span class="stringliteral">&quot;240.320&quot;</span> name=<span class="stringliteral">&quot;2.4 inch QVGA TFT LCD&quot;</span>/&gt;</div>
 <div class="line">         </div>
 <div class="line">    &lt;debugInterface adapter=<span class="stringliteral">&quot;ST-Link&quot;</span> connector=<span class="stringliteral">&quot;Mini-USB&quot;</span>/&gt;</div>
-<div class="line">         </div>
+<div class="line">    &lt;debugProbe connector=<span class="stringliteral">&quot;Mini-USB&quot;</span> debugClock=<span class="stringliteral">&quot;10000000&quot;</span> debugLink=<span class="stringliteral">&quot;swd&quot;</span> name=<span class="stringliteral">&quot;ST-Link&quot;</span>/&gt;   </div>
 <div class="line">  &lt;/board&gt;</div>
 <div class="line">&lt;/boards&gt;</div>
 </div><!-- fragment --><p>&#160;</p>
@@ -201,7 +201,7 @@ $(document).ready(function(){initNavTree('pdsc_boards_pg.html','');});
 <tr>
 <td><a class="el" href="pdsc_boards_pg.html#element_board_feature">feature</a> </td><td>Describes the features of the development board. </td><td>BoardsFeatureType </td><td>1..*   </td></tr>
 <tr>
-<td><a class="el" href="pdsc_boards_pg.html#element_board_mountedDevice">mountedDevice</a> </td><td>Specifies the microcontroller device mounted on the development board. </td><td>BoardsDeviceType </td><td>1..*   </td></tr>
+<td><a class="el" href="pdsc_boards_pg.html#element_board_mountedDevice">mountedDevice</a> </td><td>Specifies the specific microcontroller device mounted on the development board. </td><td>BoardsDeviceType </td><td>1..*   </td></tr>
 <tr>
 <td><a class="el" href="pdsc_boards_pg.html#element_board_compatibleDevice">compatibleDevice</a> </td><td>Specifies compatible microcontroller devices. </td><td>CompatibleDeviceType </td><td>1..*   </td></tr>
 <tr>
@@ -353,9 +353,9 @@ $(document).ready(function(){initNavTree('pdsc_boards_pg.html','');});
 <hr/>
 <h1><a class="anchor" id="element_board_mountedDevice"></a>
 /package/boards/board/mountedDevice</h1>
-<p>The element specifies the devices mounted on the board. At least one device must be specified.</p>
+<p>The element specifies the devices mounted on the board. Exactly one device must be specified per deviceIndex.</p>
 <p><b>Example</b> </p>
-<div class="fragment"><div class="line">&lt;mountedDevice deviceIndex=<span class="stringliteral">&quot;0&quot;</span> Dvendor=<span class="stringliteral">&quot;STMicroelectronics:13&quot;</span> Dname=<span class="stringliteral">&quot;STM32F429ZI&quot;</span>/&gt;</div>
+<div class="fragment"><div class="line">&lt;mountedDevice deviceIndex=<span class="stringliteral">&quot;0&quot;</span> Dvendor=<span class="stringliteral">&quot;STMicroelectronics:13&quot;</span> Dname=<span class="stringliteral">&quot;STM32F429ZITx&quot;</span>/&gt;</div>
 </div><!-- fragment --> <p>&#160;</p>
 <table  class="cmtable" summary="Element: Boards mountedDevice">
 <tr>
@@ -369,11 +369,7 @@ $(document).ready(function(){initNavTree('pdsc_boards_pg.html','');});
 <tr>
 <td>Dvendor </td><td>Is the name of vendor of the device specified by <span class="XML-Token">Dname</span>. Use predefined values as listed in the table <a class="el" href="pdsc_family_pg.html#DeviceVendorEnum">Device Vendor</a>. </td><td>DeviceVendorEnum </td><td>required  </td></tr>
 <tr>
-<td>Dfamily </td><td>Is the name of the target device family used on the board. </td><td>xs:string </td><td>optional  </td></tr>
-<tr>
-<td>DsubFamily </td><td>Is the name of the target device sub family used on the board. </td><td>xs:string </td><td>optional  </td></tr>
-<tr>
-<td>Dname </td><td>Is the name of the target device used on the board. </td><td>xs:string </td><td>optional  </td></tr>
+<td>Dname </td><td>Is the name of the target device used on the board. If the device is specified Dvariant this string needs to be assigned to the Dname attribute. </td><td>xs:string </td><td>required  </td></tr>
 </table>
 <p>&#160;</p>
 <hr/>
@@ -381,8 +377,10 @@ $(document).ready(function(){initNavTree('pdsc_boards_pg.html','');});
 /package/boards/board/compatibleDevice</h1>
 <p>This element contains information about devices that are compatible to the device used on the board. Compatible means that the user is able to generate code for compatible devices and test it on the development board. At least one compatible device must be specified.</p>
 <p><b>Example</b> </p>
-<div class="fragment"><div class="line">&lt;compatibleDevice deviceIndex=<span class="stringliteral">&quot;0&quot;</span> Dvendor=<span class="stringliteral">&quot;STMicroelectronics:13&quot;</span> Dfamily=<span class="stringliteral">&quot;STM32F4 Series&quot;</span> DsubFamily=<span class="stringliteral">&quot;STM32F429 Line&quot;</span>/&gt;</div>
-</div><!-- fragment --> <p>&#160;</p>
+<div class="fragment"><div class="line">&lt;compatibleDevice Dvendor=<span class="stringliteral">&quot;STMicroelectronics:13&quot;</span> Dfamily=<span class="stringliteral">&quot;STM32F4 Series&quot;</span> DsubFamily=<span class="stringliteral">&quot;STM32F429&quot;</span>/&gt;</div>
+</div><!-- fragment --><p>Since Dfamily and DsubFamily are volatile, it is recommended to use Dname attribute with wild-cards.</p>
+<div class="fragment"><div class="line">&lt;compatibleDevice Dvendor=<span class="stringliteral">&quot;STMicroelectronics:13&quot;</span> Dname=<span class="stringliteral">&quot;STM32F429*&quot;</span>/&gt;</div>
+</div><!-- fragment --><p>&#160;</p>
 <table  class="cmtable" summary="Element: Board compatibleDevice">
 <tr>
 <th>Parent </th><th colspan="3">Chain  </th></tr>
@@ -393,14 +391,22 @@ $(document).ready(function(){initNavTree('pdsc_boards_pg.html','');});
 <tr>
 <td>deviceIndex </td><td>Index number of the device (in case more than one device is present on the board). </td><td>xs:string </td><td>optional  </td></tr>
 <tr>
-<td>Dvendor </td><td>Vendor name of the target device specified by <b>Dname</b>. Use predefined values as listed in the table <a class="el" href="pdsc_family_pg.html#DeviceVendorEnum">Device Vendor</a>. This element is required if at least one of the following attributs is defined: <b>Dname</b>, <b>DsubFamily</b>, <b>Dfamily</b>. </td><td>DeviceVendorEnum </td><td>optional  </td></tr>
+<td>Dvendor </td><td>Vendor name of the target device specified by <b>Dname</b>. Use predefined values as listed in the table <a class="el" href="pdsc_family_pg.html#DeviceVendorEnum">Device Vendor</a>. This element is required if at least one of the following attributs is defined: <b>Dname</b>, <b>DsubFamily</b>, <b>Dfamily</b>. </td><td>DeviceVendorEnum </td><td>required  </td></tr>
+<tr>
+<td>Dname<b>*</b> </td><td>Name of the target device used on the board. Requires <b>Dvendor</b> to be specified. </td><td>xs:string </td><td>optional  </td></tr>
 <tr>
 <td>Dfamily </td><td>Name of the target device family used on the board. Requires <b>Dvendor</b> to be specified. </td><td>xs:string </td><td>optional  </td></tr>
 <tr>
-<td>DsubFamily </td><td>Name of the target device sub-family used on the board. Requires <b>Dvendor</b> to be specified. </td><td>xs:string </td><td>optional  </td></tr>
-<tr>
-<td>Dname </td><td>Name of the target device used on the board. Requires <b>Dvendor</b> to be specified. </td><td>xs:string </td><td>optional  </td></tr>
+<td>DsubFamily </td><td>Name of the target device sub-family used on the board. Requires <b>Dvendor</b> to be specified. </td><td>xs:string </td><td><p class="starttd">optional </p>
+<p class="endtd"></p>
+</td></tr>
 </table>
+<p><b>*)</b> Wild-cards can be used to match names with the following definitions:</p>
+<ul>
+<li>'*' matches any substring</li>
+<li>'?' matches any single character</li>
+<li>[abc] matches any character in the set (a,b,c) </li>
+</ul>
 <p>&#160;</p>
 <hr/>
 <h1><a class="anchor" id="element_board_image"></a>
