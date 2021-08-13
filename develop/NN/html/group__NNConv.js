@@ -5,6 +5,8 @@ var group__NNConv =
     [ "arm_convolve_1x1_HWC_q7_fast_nonsquare", "group__NNConv.html#ga110adcfdaab356c750c6270aa5e05f29", null ],
     [ "arm_convolve_1x1_s8_fast", "group__NNConv.html#ga53608c814d9b8a458f4d87f8f40051b7", null ],
     [ "arm_convolve_1x1_s8_fast_get_buffer_size", "group__NNConv.html#gaf8bf3e2c2f8b4f2a0cbfb8a797a8b5a8", null ],
+    [ "arm_convolve_fast_s16", "group__NNConv.html#gadda1e5325d511d56716111548c787a1c", null ],
+    [ "arm_convolve_fast_s16_get_buffer_size", "group__NNConv.html#ga8db7c4be84de273cfba630106d912737", null ],
     [ "arm_convolve_HWC_q15_basic", "group__NNConv.html#ga55701f213b198084b52eab53097f1f58", null ],
     [ "arm_convolve_HWC_q15_fast", "group__NNConv.html#ga4efb1ccbbaa7dd936961989dcb443f50", null ],
     [ "arm_convolve_HWC_q15_fast_nonsquare", "group__NNConv.html#ga614ec3b71eb96e29952ec3f09e7b9c3c", null ],

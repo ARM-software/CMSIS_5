@@ -3,8 +3,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>cmsis_nn_context Struct Reference</title>
-<title>CMSIS-NN: cmsis_nn_context Struct Reference</title>
+<title>arm_convolve_fast_s16.c File Reference</title>
+<title>CMSIS-NN: arm_convolve_fast_s16.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="cmsis.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
@@ -78,12 +78,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       </li>
     </ul>
   </div>
-  <div id="navrow2" class="tabs2">
-    <ul class="tablist">
-      <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
-      <li><a href="functions.html"><span>Data&#160;Fields</span></a></li>
-    </ul>
-  </div>
 </div><!-- top -->
 <div id="side-nav" class="ui-resizable side-nav-resizable">
   <div id="nav-tree">
@@ -96,7 +90,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('structcmsis__nn__context.html','');});
+$(document).ready(function(){initNavTree('arm__convolve__fast__s16_8c.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -115,56 +109,27 @@ $(document).ready(function(){initNavTree('structcmsis__nn__context.html','');});
 
 <div class="header">
   <div class="summary">
-<a href="#pub-attribs">Data Fields</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">cmsis_nn_context Struct Reference</div>  </div>
+<div class="title">arm_convolve_fast_s16.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Data Fields</h2></td></tr>
-<tr class="memitem:a3e613ad30f12df59853a1b3565212702"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structcmsis__nn__context.html#a3e613ad30f12df59853a1b3565212702">buf</a></td></tr>
-<tr class="separator:a3e613ad30f12df59853a1b3565212702"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7ad7f9757c6f2623e65306924367e82a"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structcmsis__nn__context.html#a7ad7f9757c6f2623e65306924367e82a">size</a></td></tr>
-<tr class="separator:a7ad7f9757c6f2623e65306924367e82a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gadda1e5325d511d56716111548c787a1c"><td class="memItemLeft" align="right" valign="top">arm_status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NNConv.html#gadda1e5325d511d56716111548c787a1c">arm_convolve_fast_s16</a> (const <a class="el" href="structcmsis__nn__context.html">cmsis_nn_context</a> *ctx, const <a class="el" href="structcmsis__nn__conv__params.html">cmsis_nn_conv_params</a> *conv_params, const <a class="el" href="structcmsis__nn__per__channel__quant__params.html">cmsis_nn_per_channel_quant_params</a> *quant_params, const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *input_dims, const q15_t *input_data, const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *filter_dims, const q7_t *filter_data, const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *bias_dims, const int64_t *bias_data, const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *output_dims, q15_t *output_data)</td></tr>
+<tr class="memdesc:gadda1e5325d511d56716111548c787a1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Optimized s16 convolution function.  <a href="group__NNConv.html#gadda1e5325d511d56716111548c787a1c">More...</a><br/></td></tr>
+<tr class="separator:gadda1e5325d511d56716111548c787a1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8db7c4be84de273cfba630106d912737"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NNConv.html#ga8db7c4be84de273cfba630106d912737">arm_convolve_fast_s16_get_buffer_size</a> (const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *input_dims, const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *filter_dims)</td></tr>
+<tr class="memdesc:ga8db7c4be84de273cfba630106d912737"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the required buffer size for fast s16 convolution function.  <a href="group__NNConv.html#ga8db7c4be84de273cfba630106d912737">More...</a><br/></td></tr>
+<tr class="separator:ga8db7c4be84de273cfba630106d912737"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Description</h2>
-<div class="textblock"><p>CMSIS-NN object used for the function context. </p>
-</div><h2 class="groupheader">Field Documentation</h2>
-<a class="anchor" id="a3e613ad30f12df59853a1b3565212702"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void* cmsis_nn_context::buf</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Pointer to a buffer needed for the optimization </p>
-
-<p>Referenced by <a class="el" href="group__Pooling.html#gafa69cdb8a711ddef477d330204fa412c">arm_avgpool_s8()</a>, <a class="el" href="group__NNConv.html#gadda1e5325d511d56716111548c787a1c">arm_convolve_fast_s16()</a>, <a class="el" href="group__NNConv.html#gaf3e58798b12fa230d6a6487887aa13bf">arm_convolve_s16()</a>, <a class="el" href="group__NNConv.html#ga34bb5c05805ca7d5ea9681fcad8a711d">arm_convolve_s8()</a>, <a class="el" href="group__NNConv.html#gab9dc832c407c0fe0f4d6fbb063e85e97">arm_depthwise_conv_s8_opt()</a>, and <a class="el" href="group__SVDF.html#ga9c4e7065f10d63b269f82b8e4e8afa04">arm_svdf_s8()</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a7ad7f9757c6f2623e65306924367e82a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int32_t cmsis_nn_context::size</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Buffer size </p>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="structcmsis__nn__context.html">cmsis_nn_context</a></li>
+    <li class="navelem"><a class="el" href="dir_06560e3359c5da94845158f0031c08e8.html">NN</a></li><li class="navelem"><a class="el" href="dir_13dc9928808d08450b31fdaf572dfc8e.html">Source</a></li><li class="navelem"><a class="el" href="dir_44941783335eeef51fdbcde02b124fbf.html">ConvolutionFunctions</a></li><li class="navelem"><a class="el" href="arm__convolve__fast__s16_8c.html">arm_convolve_fast_s16.c</a></li>
     <li class="footer">
       <script type="text/javascript">
         <!--
