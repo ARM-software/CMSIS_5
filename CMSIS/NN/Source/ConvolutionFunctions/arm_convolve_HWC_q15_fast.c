@@ -74,6 +74,8 @@
  *
  * ch_im_out is multiple of 2
  *
+ * dim_im_out is a multiple of 2
+ *
  */
 
 arm_status arm_convolve_HWC_q15_fast(const q15_t *Im_in,
@@ -100,7 +102,7 @@ arm_status arm_convolve_HWC_q15_fast(const q15_t *Im_in,
     q15_t *im_buffer = bufferA;
     q15_t *pOut = Im_out;
 
-    if (ch_im_in % 2 != 0 || ch_im_out % 2 != 0)
+    if (ch_im_in % 2 != 0 || ch_im_out % 2 != 0 || dim_im_out & 0x1)
     {
         /* check if the input dimension meets the constraints */
         return ARM_MATH_SIZE_MISMATCH;
