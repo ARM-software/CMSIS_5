@@ -874,6 +874,7 @@ arm_status arm_convolve_HWC_q7_RGB(const q7_t *Im_in,
  * some contraints:
  *   ch_im_in is multiple of 2
  *   ch_im_out is multiple of 2
+ *   dim_im_out is a multiple of 2
  */
 
 arm_status arm_convolve_HWC_q15_fast(const q15_t *Im_in,
