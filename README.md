@@ -1,5 +1,7 @@
 # CMSIS Version 5
 
+[![Version](https://img.shields.io/github/v/release/arm-software/CMSIS_5)](https://github.com/ARM-software/CMSIS_5/releases/latest) [![License](https://img.shields.io/github/license/arm-software/CMSIS_5)](https://arm-software.github.io/CMSIS_5/General/html/LICENSE.txt)
+
 The branch *master* of this GitHub repository contains the CMSIS Version 5.8.0.  The [documentation](http://arm-software.github.io/CMSIS_5/General/html/index.html) is available under http://arm-software.github.io/CMSIS_5/General/html/index.html
 
 Use [Issues](https://github.com/ARM-software/CMSIS_5#issues-and-labels) to provide feedback and report problems for CMSIS Version 5. 
