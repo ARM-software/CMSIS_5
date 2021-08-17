@@ -47,60 +47,50 @@ SET(NN ${ROOT}/CMSIS/NN)
 
 list(APPEND CMAKE_MODULE_PATH ${NN}/Source)
 
-add_library(CMSISNN INTERFACE)
+add_library(cmsis-nn STATIC)
+
+### Includes
+target_include_directories(cmsis-nn PUBLIC "${NN}/Include")
+target_include_directories(cmsis-nn PUBLIC "${ROOT}/CMSIS/Core/Include")
+target_include_directories(cmsis-nn PUBLIC "${ROOT}/CMSIS/DSP/Include")
 
 if (BASICMATHSNN)
   add_subdirectory(BasicMathFunctions)
-  target_link_libraries(CMSISNN INTERFACE CMSISNNBasicMaths)
 endif()
 
 if (CONCATENATION)
   add_subdirectory(ConcatenationFunctions)
-  target_link_libraries(CMSISNN INTERFACE CMSISNNConcatenation)
 endif()
 
 if (FULLYCONNECTED)
   add_subdirectory(FullyConnectedFunctions)
-  target_link_libraries(CMSISNN INTERFACE CMSISNNFullyConnected)
 endif()
 
 if (CONVOLUTION)
   add_subdirectory(ConvolutionFunctions)
-  target_link_libraries(CMSISNN INTERFACE CMSISNNConvolutions)
 endif()
 
 if (ACTIVATION)
   add_subdirectory(ActivationFunctions)
-  target_link_libraries(CMSISNN INTERFACE CMSISNNActivation)
 endif()
 
 if (POOLING)
   add_subdirectory(PoolingFunctions)
-  target_link_libraries(CMSISNN INTERFACE CMSISNNPooling)
 endif()
 
 if (SOFTMAX)
   add_subdirectory(SoftmaxFunctions)
-  target_link_libraries(CMSISNN INTERFACE CMSISNNSoftmax)
 endif()
 
 if (SVDF)
   add_subdirectory(SVDFunctions)
-  target_link_libraries(CMSISNN INTERFACE CMSISNNSVDF)
 endif()
 
 if (RESHAPE)
   add_subdirectory(ReshapeFunctions)
-  target_link_libraries(CMSISNN INTERFACE CMSISNNReshape)
 endif()
 
 # Keep NNSUPPORT at the end
 if (NNSUPPORT)
   add_subdirectory(NNSupportFunctions)
-  target_link_libraries(CMSISNN INTERFACE CMSISNNSupport)
 endif()
-
-
-
-### Includes
-target_include_directories(CMSISNN INTERFACE "${NN}/Include")

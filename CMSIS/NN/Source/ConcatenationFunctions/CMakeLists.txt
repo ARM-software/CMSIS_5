@@ -16,13 +16,5 @@
 # limitations under the License.
 #
 
-project(CMSISNNConcatenation)
-
 file(GLOB SRC "./*_*.c")
-
-add_library(CMSISNNConcatenation STATIC ${SRC})
-
-### Includes
-target_include_directories(CMSISNNConcatenation PUBLIC "${NN}/Include")
-target_include_directories(CMSISNNConcatenation PUBLIC "${ROOT}/CMSIS/Core/Include")
-target_include_directories(CMSISNNConcatenation PUBLIC "${ROOT}/CMSIS/DSP/Include")
+target_sources(cmsis-nn PUBLIC ${SRC})

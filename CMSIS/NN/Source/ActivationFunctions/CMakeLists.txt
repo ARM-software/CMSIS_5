@@ -16,15 +16,5 @@
 # limitations under the License.
 #
 
-project(CMSISNNActivation)
-
 file(GLOB SRC "./*_s8.c")
-add_library(CMSISNNActivation STATIC ${SRC})
-
-### Includes
-target_include_directories(CMSISNNActivation PUBLIC "${NN}/Include")
-target_include_directories(CMSISNNActivation PUBLIC "${ROOT}/CMSIS/Core/Include")
-target_include_directories(CMSISNNActivation PUBLIC "${ROOT}/CMSIS/DSP/Include")
-
-
-
+target_sources(cmsis-nn PUBLIC ${SRC})
