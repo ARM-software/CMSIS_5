@@ -16,16 +16,5 @@
 # limitations under the License.
 #
 
-project(CMSISNNBasicMaths)
-
 file(GLOB SRC "./*_*.c")
-
-add_library(CMSISNNBasicMaths STATIC ${SRC})
-
-### Includes
-target_include_directories(CMSISNNBasicMaths PUBLIC "${NN}/Include")
-target_include_directories(CMSISNNBasicMaths PUBLIC "${ROOT}/CMSIS/Core/Include")
-target_include_directories(CMSISNNBasicMaths PUBLIC "${ROOT}/CMSIS/DSP/Include")
-
-
-
+target_sources(cmsis-nn PUBLIC ${SRC})

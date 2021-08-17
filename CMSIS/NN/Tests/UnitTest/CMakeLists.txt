@@ -22,8 +22,7 @@ project(cmsis_nn_unit_tests VERSION 0.0.1)
 
 set(CMSIS_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../../../..")
 
-add_compile_options(-O0
-                    -Werror
+add_compile_options(-Werror
                     -Wimplicit-function-declaration
                     -Wunused-variable
                     -Wunused-function
@@ -45,7 +44,6 @@ if(BUILD_CMSIS_NN_UNIT_TESTS_FOR_FVP_BASED_CORSTONE_300)
 endif()
 
 # Build the functions to be tested.
-set(BUILD_CMSIS_NN_FUNCTIONS ON)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../.. cmsis-nn)
 
 # Target for all unit tests.
@@ -93,7 +91,7 @@ get_property(executables GLOBAL PROPERTY cmsis_nn_unit_test_executables)
 string(REPLACE " " ";" cmsis_nn_unit_test_list_of_executables ${executables})
 foreach(target ${cmsis_nn_unit_test_list_of_executables})
     target_link_libraries(${target} LINK_PUBLIC unity)
-    target_link_libraries(${target} LINK_PUBLIC CMSISNN)
+    target_link_libraries(${target} LINK_PUBLIC cmsis-nn)
 endforeach()
 
 if(BUILD_CMSIS_NN_UNIT_TESTS_FOR_FVP_BASED_CORSTONE_300)
@@ -135,7 +133,7 @@ if(BUILD_CMSIS_NN_UNIT_TESTS_FOR_FVP_BASED_CORSTONE_300)
         set(LINK_ENTRY_OPTION "")
         set(LINK_ENTRY "")
     endif()
- 
+
     # Link in FVP dependencies to every unit test.
     get_property(executables GLOBAL PROPERTY cmsis_nn_unit_test_executables)
     string(REPLACE " " ";" cmsis_nn_unit_test_list_of_executables ${executables})

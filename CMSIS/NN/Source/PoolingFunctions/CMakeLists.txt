@@ -16,15 +16,7 @@
 # limitations under the License.
 #
 
-project(CMSISNNPooling)
-
 file(GLOB SRC "./*_s8.c")
-add_library(CMSISNNPooling STATIC ${SRC})
-
-### Includes
-target_include_directories(CMSISNNPooling PUBLIC "${NN}/Include")
-target_include_directories(CMSISNNPooling PUBLIC "${ROOT}/CMSIS/Core/Include")
-target_include_directories(CMSISNNPooling PUBLIC "${ROOT}/CMSIS/DSP/Include")
-
+target_sources(cmsis-nn PUBLIC ${SRC})
 
 
