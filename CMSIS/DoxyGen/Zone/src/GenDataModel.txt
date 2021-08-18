@@ -123,6 +123,11 @@ the related linker setup.
     <td>RestrictedString</td>
   </tr>
   <tr>
+    <td>.class</td>
+    <td>Class information for execution zones.</td>
+    <td>string</td>
+  </tr>
+  <tr>
     <td>.security</td>
     <td>The \ref security "security" setting for this zone in the following separate fields.</td>
     <td>SecurityType</td>

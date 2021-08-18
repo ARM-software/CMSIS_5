@@ -1923,6 +1923,12 @@ The \ref xml_zone defines the name of a zone.
     <td>optional</td>
   </tr>
   <tr>
+    <td>class</td>
+    <td>Class information for execution zones.</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>
+  <tr>
     <th>Child Elements</th>
     <th>Description</th>
     <th>Type</th>
