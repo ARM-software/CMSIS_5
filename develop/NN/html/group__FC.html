@@ -135,6 +135,12 @@ Functions</h2></td></tr>
 <tr class="memitem:gaf82b71ef472a38f8fc9ac414d9d07e67"><td class="memItemLeft" align="right" valign="top">arm_status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__FC.html#gaf82b71ef472a38f8fc9ac414d9d07e67">arm_fully_connected_q7_opt</a> (const q7_t *pV, const q7_t *pM, const uint16_t dim_vec, const uint16_t num_of_rows, const uint16_t bias_shift, const uint16_t out_shift, const q7_t *bias, q7_t *pOut, q15_t *vec_buffer)</td></tr>
 <tr class="memdesc:gaf82b71ef472a38f8fc9ac414d9d07e67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Q7 opt fully-connected layer function.  <a href="#gaf82b71ef472a38f8fc9ac414d9d07e67">More...</a><br/></td></tr>
 <tr class="separator:gaf82b71ef472a38f8fc9ac414d9d07e67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga22aa22fe80e323429e8ac6aaeef878e8"><td class="memItemLeft" align="right" valign="top">arm_status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__FC.html#ga22aa22fe80e323429e8ac6aaeef878e8">arm_fully_connected_s16</a> (const <a class="el" href="structcmsis__nn__context.html">cmsis_nn_context</a> *ctx, const <a class="el" href="structcmsis__nn__fc__params.html">cmsis_nn_fc_params</a> *fc_params, const <a class="el" href="structcmsis__nn__per__tensor__quant__params.html">cmsis_nn_per_tensor_quant_params</a> *quant_params, const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *input_dims, const q15_t *input, const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *filter_dims, const q7_t *kernel, const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *bias_dims, const int64_t *bias, const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *output_dims, q15_t *output)</td></tr>
+<tr class="memdesc:ga22aa22fe80e323429e8ac6aaeef878e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Basic s16 Fully Connected function.  <a href="#ga22aa22fe80e323429e8ac6aaeef878e8">More...</a><br/></td></tr>
+<tr class="separator:ga22aa22fe80e323429e8ac6aaeef878e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5f0e89482a3ea7ab417630be80ca983d"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__FC.html#ga5f0e89482a3ea7ab417630be80ca983d">arm_fully_connected_s16_get_buffer_size</a> (const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *filter_dims)</td></tr>
+<tr class="memdesc:ga5f0e89482a3ea7ab417630be80ca983d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the required buffer size for S16 basic fully-connected and matrix multiplication layer function for TF Lite.  <a href="#ga5f0e89482a3ea7ab417630be80ca983d">More...</a><br/></td></tr>
+<tr class="separator:ga5f0e89482a3ea7ab417630be80ca983d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga30d44fed122f2e159a417f9c12181ded"><td class="memItemLeft" align="right" valign="top">arm_status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__FC.html#ga30d44fed122f2e159a417f9c12181ded">arm_fully_connected_s8</a> (const <a class="el" href="structcmsis__nn__context.html">cmsis_nn_context</a> *ctx, const <a class="el" href="structcmsis__nn__fc__params.html">cmsis_nn_fc_params</a> *fc_params, const <a class="el" href="structcmsis__nn__per__tensor__quant__params.html">cmsis_nn_per_tensor_quant_params</a> *quant_params, const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *input_dims, const q7_t *input, const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *filter_dims, const q7_t *kernel, const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *bias_dims, const int32_t *bias, const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *output_dims, q7_t *output)</td></tr>
 <tr class="memdesc:ga30d44fed122f2e159a417f9c12181ded"><td class="mdescLeft">&#160;</td><td class="mdescRight">Basic s8 Fully Connected function.  <a href="#ga30d44fed122f2e159a417f9c12181ded">More...</a><br/></td></tr>
 <tr class="separator:ga30d44fed122f2e159a417f9c12181ded"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -739,6 +745,132 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="ga22aa22fe80e323429e8ac6aaeef878e8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">arm_status arm_fully_connected_s16 </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structcmsis__nn__context.html">cmsis_nn_context</a> *&#160;</td>
+          <td class="paramname"><em>ctx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structcmsis__nn__fc__params.html">cmsis_nn_fc_params</a> *&#160;</td>
+          <td class="paramname"><em>fc_params</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structcmsis__nn__per__tensor__quant__params.html">cmsis_nn_per_tensor_quant_params</a> *&#160;</td>
+          <td class="paramname"><em>quant_params</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *&#160;</td>
+          <td class="paramname"><em>input_dims</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const q15_t *&#160;</td>
+          <td class="paramname"><em>input_data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *&#160;</td>
+          <td class="paramname"><em>filter_dims</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const q7_t *&#160;</td>
+          <td class="paramname"><em>filter_data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *&#160;</td>
+          <td class="paramname"><em>bias_dims</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int64_t *&#160;</td>
+          <td class="paramname"><em>bias_data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *&#160;</td>
+          <td class="paramname"><em>output_dims</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">q15_t *&#160;</td>
+          <td class="paramname"><em>output_data</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">ctx</td><td>Function context (e.g. temporary buffer). Check the function definition file to see if an additional buffer is required. Optional function {API}_get_buffer_size() provides the buffer size if an additional buffer is required. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">fc_params</td><td>Fully Connected layer parameters. fc_params-&gt;input_offset : 0 fc_params-&gt;filter_offset : 0 fc_params-&gt;output_offset : 0 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">quant_params</td><td>Per-tensor quantization info. It contains the multiplier and shift values to be applied to the output tensor. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">input_dims</td><td>Input (activation) tensor dimensions. Format: [N, H, W, C_IN] Input dimension is taken as Nx(H * W * C_IN) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">input_data</td><td>Input (activation) data pointer. Data type: int16 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">filter_dims</td><td>Two dimensional filter dimensions. Format: [N, C] N : accumulation depth and equals (H * W * C_IN) from input_dims C : output depth and equals C_OUT in output_dims H &amp; W : Not used </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">filter_data</td><td>Filter data pointer. Data type: int8 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">bias_dims</td><td>Bias tensor dimensions. Format: [C_OUT] N, H, W : Not used </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">bias_data</td><td>Bias data pointer. Data type: int64 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">output_dims</td><td>Output tensor dimensions. Format: [N, C_OUT] N : Batches C_OUT : Output depth H &amp; W : Not used. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">output_data</td><td>Output data pointer. Data type: int16 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The function returns <code>ARM_MATH_SUCCESS</code></dd></dl>
+<ul>
+<li>Supported framework: TensorFlow Lite</li>
+<li>q15 is used as data type eventhough it is s16 data. It is done so to be consistent with existing APIs. </li>
+</ul>
+
+<p>References <a class="el" href="structcmsis__nn__fc__params.html#ac4c27a0819335364ec291bac9043cd07">cmsis_nn_fc_params::activation</a>, <a class="el" href="group__NNBasicMath.html#ga721f565a0b8015a3d6d46535cadf63d3">arm_nn_vec_mat_mult_t_s16()</a>, <a class="el" href="structcmsis__nn__dims.html#ac9c268ab90554ab8ea2c3d76ecf1ed6c">cmsis_nn_dims::c</a>, <a class="el" href="structcmsis__nn__fc__params.html#a73c44b038fbb561281e27d58bb18b9a0">cmsis_nn_fc_params::filter_offset</a>, <a class="el" href="structcmsis__nn__activation.html#a5fefc67d8979f6a9efe36330b9ba81cf">cmsis_nn_activation::max</a>, <a class="el" href="structcmsis__nn__activation.html#a88a2ecd4bda8cd5f339c826df578585a">cmsis_nn_activation::min</a>, <a class="el" href="structcmsis__nn__per__tensor__quant__params.html#a4edb6cf363e3d30ad7e5166275629548">cmsis_nn_per_tensor_quant_params::multiplier</a>, <a class="el" href="structcmsis__nn__dims.html#a907a0be31e2e3de73df89b1327724555">cmsis_nn_dims::n</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#a19343832dbe881d527496171f69dc0c3">REDUCE_MULTIPLIER</a>, and <a class="el" href="structcmsis__nn__per__tensor__quant__params.html#a944f9c7b4f01355406b0a2ec9d578b87">cmsis_nn_per_tensor_quant_params::shift</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ga5f0e89482a3ea7ab417630be80ca983d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int32_t arm_fully_connected_s16_get_buffer_size </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *&#160;</td>
+          <td class="paramname"><em>filter_dims</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">filter_dims</td><td>dimension of filter </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The function returns required buffer size in bytes </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="ga30d44fed122f2e159a417f9c12181ded"></a>
 <div class="memitem">
 <div class="memproto">
@@ -819,7 +951,7 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in,out]</td><td class="paramname">ctx</td><td>Function context (e.g. temporary buffer). Check the function definition file to see if an additional buffer is required. Optional function {API}_get_buffer_size() provides the buffer size if an additional buffer is required. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">fc_params</td><td>Fully Connected layer parameters (e.g. strides, dilations, pads,...) Range of fc_params-&gt;input_offset : [-127, 128] fc_params-&gt;filter_offset : 0 Range of fc_params-&gt;output_offset : [-128, 127] </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">fc_params</td><td>Fully Connected layer parameters. Range of fc_params-&gt;input_offset : [-127, 128] fc_params-&gt;filter_offset : 0 Range of fc_params-&gt;output_offset : [-128, 127] </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">quant_params</td><td>Per-tensor quantization info. It contains the multiplier and shift values to be applied to the output tensor. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">input_dims</td><td>Input (activation) tensor dimensions. Format: [N, H, W, C_IN] Input dimension is taken as Nx(H * W * C_IN) </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">input_data</td><td>Input (activation) data pointer. Data type: int8 </td></tr>

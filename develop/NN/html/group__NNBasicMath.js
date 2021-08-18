@@ -9,6 +9,7 @@ var group__NNBasicMath =
     [ "arm_nn_mat_mult_nt_t_s8", "group__NNBasicMath.html#ga360cdaa16c399e3bfbeaaa7296c326e1", null ],
     [ "arm_nn_mult_q15", "group__NNBasicMath.html#ga08f8340aa6533271b3aa6d211614fe22", null ],
     [ "arm_nn_mult_q7", "group__NNBasicMath.html#gad46c9ab012cceda8ce6681c687a58c70", null ],
+    [ "arm_nn_vec_mat_mult_t_s16", "group__NNBasicMath.html#ga721f565a0b8015a3d6d46535cadf63d3", null ],
     [ "arm_nn_vec_mat_mult_t_s8", "group__NNBasicMath.html#gacbc28cf23c7549bcf89d1e8f1481c389", null ],
     [ "arm_nn_vec_mat_mult_t_svdf_s8", "group__NNBasicMath.html#gac0675e8069a303ce2e8f8ed2a9320859", null ]
 ];

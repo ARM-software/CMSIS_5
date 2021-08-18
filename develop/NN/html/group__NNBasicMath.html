@@ -144,6 +144,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gad46c9ab012cceda8ce6681c687a58c70"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NNBasicMath.html#gad46c9ab012cceda8ce6681c687a58c70">arm_nn_mult_q7</a> (q7_t *pSrcA, q7_t *pSrcB, q7_t *pDst, const uint16_t out_shift, uint32_t blockSize)</td></tr>
 <tr class="memdesc:gad46c9ab012cceda8ce6681c687a58c70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Q7 vector multiplication with variable output shifts.  <a href="#gad46c9ab012cceda8ce6681c687a58c70">More...</a><br/></td></tr>
 <tr class="separator:gad46c9ab012cceda8ce6681c687a58c70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga721f565a0b8015a3d6d46535cadf63d3"><td class="memItemLeft" align="right" valign="top">arm_status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NNBasicMath.html#ga721f565a0b8015a3d6d46535cadf63d3">arm_nn_vec_mat_mult_t_s16</a> (const q15_t *lhs, const q7_t *rhs, const q63_t *bias, q15_t *dst, const int32_t dst_multiplier, const int32_t dst_shift, const int32_t rhs_cols, const int32_t rhs_rows, const int32_t activation_min, const int32_t activation_max)</td></tr>
+<tr class="memdesc:ga721f565a0b8015a3d6d46535cadf63d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">s16 Vector by Matrix (transposed) multiplication  <a href="#ga721f565a0b8015a3d6d46535cadf63d3">More...</a><br/></td></tr>
+<tr class="separator:ga721f565a0b8015a3d6d46535cadf63d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gacbc28cf23c7549bcf89d1e8f1481c389"><td class="memItemLeft" align="right" valign="top">arm_status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NNBasicMath.html#gacbc28cf23c7549bcf89d1e8f1481c389">arm_nn_vec_mat_mult_t_s8</a> (const q7_t *lhs, const q7_t *rhs, const q31_t *bias, q7_t *dst, const int32_t lhs_offset, const int32_t rhs_offset, const int32_t dst_offset, const int32_t dst_multiplier, const int32_t dst_shift, const int32_t rhs_cols, const int32_t rhs_rows, const int32_t activation_min, const int32_t activation_max)</td></tr>
 <tr class="memdesc:gacbc28cf23c7549bcf89d1e8f1481c389"><td class="mdescLeft">&#160;</td><td class="mdescRight">s8 Vector by Matrix (transposed) multiplication  <a href="#gacbc28cf23c7549bcf89d1e8f1481c389">More...</a><br/></td></tr>
 <tr class="separator:gacbc28cf23c7549bcf89d1e8f1481c389"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -839,6 +842,100 @@ Functions</h2></td></tr>
 <dl class="section user"><dt></dt><dd>The function uses saturating arithmetic. Results outside of the allowable Q7 range [0x80 0x7F] will be saturated. </dd></dl>
 
 <p>References <a class="el" href="arm__nnsupportfunctions_8h.html#a4cbd428a2b4a4f6b2a6e4219520c7ce0">NN_ROUND</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ga721f565a0b8015a3d6d46535cadf63d3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">arm_status arm_nn_vec_mat_mult_t_s16 </td>
+          <td>(</td>
+          <td class="paramtype">const q15_t *&#160;</td>
+          <td class="paramname"><em>lhs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const q7_t *&#160;</td>
+          <td class="paramname"><em>rhs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const q63_t *&#160;</td>
+          <td class="paramname"><em>bias</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">q15_t *&#160;</td>
+          <td class="paramname"><em>dst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>dst_multiplier</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>dst_shift</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>rhs_cols</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>rhs_rows</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>activation_min</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>activation_max</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">lhs</td><td>Input left-hand side vector </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rhs</td><td>Input right-hand side matrix (transposed) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">bias</td><td>Input bias </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">dst</td><td>Output vector </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">dst_multiplier</td><td>Output multiplier </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">dst_shift</td><td>Output shift </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rhs_cols</td><td>Number of columns in the right-hand side input matrix </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rhs_rows</td><td>Number of rows in the right-hand side input matrix </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">activation_min</td><td>Minimum value to clamp the output to. Range: int16 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">activation_max</td><td>Maximum value to clamp the output to. Range: int16</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The function returns <code>ARM_MATH_SUCCESS</code> </dd></dl>
+
+<p>References <a class="el" href="arm__nnsupportfunctions_8h.html#aa03e369b608572b80a4e56e8298a21c0">arm_nn_requantize_s64()</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#ad935f1ff1a50822e317bdb321ce991ad">MAX</a>, and <a class="el" href="arm__nnsupportfunctions_8h.html#adcd021ac91d43a62b2cdecf9a5b971a7">MIN</a>.</p>
+
+<p>Referenced by <a class="el" href="group__FC.html#ga22aa22fe80e323429e8ac6aaeef878e8">arm_fully_connected_s16()</a>.</p>
 
 </div>
 </div>
