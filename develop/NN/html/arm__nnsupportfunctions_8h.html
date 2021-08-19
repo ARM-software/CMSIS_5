@@ -991,12 +991,14 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">m1</td><td>Multiplicand. Range: {Q31_MIN, Q31_MAX} </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">m2</td><td>Multiplier. Range: {Q31_MIN, Q31_MAX} </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">m1</td><td>Multiplicand. Range: {NN_Q31_MIN, NN_Q31_MAX} </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">m2</td><td>Multiplier. Range: {NN_Q31_MIN, NN_Q31_MAX} </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Result of multiplication. </dd></dl>
+
+<p>References <a class="el" href="arm__nn__math__types_8h.html#a602e8d32c870d50039bbd651fd9b4544">NN_Q31_MAX</a>, and <a class="el" href="arm__nn__math__types_8h.html#aa10494e03ee6bdf5d573079ca559f073">NN_Q31_MIN</a>.</p>
 
 <p>Referenced by <a class="el" href="group__BasicMath.html#gabc9644ba533138059baa8b582734698c">arm_elementwise_add_s8()</a>.</p>
 
@@ -1027,13 +1029,13 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">m1</td><td>Multiplicand. Range: {Q31_MIN, Q31_MAX} </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">m2</td><td>Multiplier Range: {Q31_MIN, Q31_MAX} </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">m1</td><td>Multiplicand. Range: {NN_Q31_MIN, NN_Q31_MAX} </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">m2</td><td>Multiplier Range: {NN_Q31_MIN, NN_Q31_MAX} </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Result of multiplication. </dd></dl>
-<dl class="section note"><dt>Note</dt><dd>The result of this matches that of neon instruction VQRDMULH for m1 in range {Q31_MIN, Q31_MAX} and m2 in range {Q31_MIN + 1, Q31_MAX}. Saturation occurs when m1 equals m2 equals Q31_MIN and that is not handled by this function. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The result of this matches that of neon instruction VQRDMULH for m1 in range {NN_Q31_MIN, NN_Q31_MAX} and m2 in range {NN_Q31_MIN + 1, NN_Q31_MAX}. Saturation occurs when m1 equals m2 equals NN_Q31_MIN and that is not handled by this function. </dd></dl>
 
 <p>References <a class="el" href="structarm__nn__double.html#a66939b6b5007a77c843d260b431e68ac">arm_nn_double::high</a>, <a class="el" href="unionarm__nn__long__long.html#a4dbadc95589c36dcfdb4ec2f21bd2a72">arm_nn_long_long::long_long</a>, <a class="el" href="structarm__nn__double.html#a9a087dfc1ed77e9f00ac7411a5827c82">arm_nn_double::low</a>, and <a class="el" href="unionarm__nn__long__long.html#a911c83d212457726d888e0c845a01155">arm_nn_long_long::word</a>.</p>
 
@@ -1055,7 +1057,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>References <a class="el" href="arm__nnsupportfunctions_8h.html#a7ce5ee6d8839bf541fb4bbdf4ef80eb1">DIV_POW2</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#a76b700415a2c22cea484103b7123739b">MASK_IF_ZERO</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#a518f7e0db18bea6b61a2b88f266aef20">MUL_SAT</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#a4b3b6a6ed8cb224c5bcabd9ad1c94fde">SELECT_IF_NON_ZERO</a>, and <a class="el" href="arm__nnsupportfunctions_8h.html#a6f69b7e95b80e10a5f5d2ddbbfbc301f">SELECT_USING_MASK</a>.</p>
+<p>References <a class="el" href="arm__nnsupportfunctions_8h.html#a7ce5ee6d8839bf541fb4bbdf4ef80eb1">DIV_POW2</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#a76b700415a2c22cea484103b7123739b">MASK_IF_ZERO</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#a518f7e0db18bea6b61a2b88f266aef20">MUL_SAT</a>, <a class="el" href="arm__nn__math__types_8h.html#a602e8d32c870d50039bbd651fd9b4544">NN_Q31_MAX</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#a4b3b6a6ed8cb224c5bcabd9ad1c94fde">SELECT_IF_NON_ZERO</a>, and <a class="el" href="arm__nnsupportfunctions_8h.html#a6f69b7e95b80e10a5f5d2ddbbfbc301f">SELECT_USING_MASK</a>.</p>
 
 </div>
 </div>
@@ -1309,7 +1311,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>References <a class="el" href="arm__nnsupportfunctions_8h.html#a0bc8558b22558613ed3ad3eb624ec7a5">MASK_IF_NON_ZERO</a>, and <a class="el" href="arm__nnsupportfunctions_8h.html#a6f69b7e95b80e10a5f5d2ddbbfbc301f">SELECT_USING_MASK</a>.</p>
+<p>References <a class="el" href="arm__nnsupportfunctions_8h.html#a0bc8558b22558613ed3ad3eb624ec7a5">MASK_IF_NON_ZERO</a>, <a class="el" href="arm__nn__math__types_8h.html#a602e8d32c870d50039bbd651fd9b4544">NN_Q31_MAX</a>, <a class="el" href="arm__nn__math__types_8h.html#aa10494e03ee6bdf5d573079ca559f073">NN_Q31_MIN</a>, and <a class="el" href="arm__nnsupportfunctions_8h.html#a6f69b7e95b80e10a5f5d2ddbbfbc301f">SELECT_USING_MASK</a>.</p>
 
 </div>
 </div>
@@ -1327,7 +1329,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>References <a class="el" href="arm__nnsupportfunctions_8h.html#a9d7332bc4331d55ada7ea19407e2a8c3">MUL_POW2</a>, and <a class="el" href="arm__nnsupportfunctions_8h.html#a518f7e0db18bea6b61a2b88f266aef20">MUL_SAT</a>.</p>
+<p>References <a class="el" href="arm__nnsupportfunctions_8h.html#a9d7332bc4331d55ada7ea19407e2a8c3">MUL_POW2</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#a518f7e0db18bea6b61a2b88f266aef20">MUL_SAT</a>, and <a class="el" href="arm__nn__math__types_8h.html#a602e8d32c870d50039bbd651fd9b4544">NN_Q31_MAX</a>.</p>
 
 </div>
 </div>
@@ -1463,7 +1465,7 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">val</td><td>Value to be requantized </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">multiplier</td><td>multiplier. Range {Q31_MIN + 1, Q32_MAX} </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">multiplier</td><td>multiplier. Range {NN_Q31_MIN + 1, Q32_MAX} </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">shift</td><td>left or right shift for 'val * multiplier'</td></tr>
   </table>
   </dd>
@@ -1508,7 +1510,7 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">val</td><td>Value to be requantized </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">reduced_multiplier</td><td>Reduced multiplier from range {Q31_MIN + 1, Q32_MAX} to {Q16_MIN + 1, Q16_MAX} </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">reduced_multiplier</td><td>Reduced multiplier from range {NN_Q31_MIN + 1, Q32_MAX} to {Q16_MIN + 1, Q16_MAX} </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">shift</td><td>left or right shift for 'val * multiplier'</td></tr>
   </table>
   </dd>
