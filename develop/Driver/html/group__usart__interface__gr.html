@@ -966,7 +966,7 @@ reserved: 28</td>
 
 <p>Get driver capabilities. </p>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="group__usart__interface__gr.html#structARM__USART__CAPABILITIES">ARM_USART_CAPABILITIES</a></dd></dl>
-<p>The function <b>ARM_USART_GetCapabilities</b> returns information about capabilities in this driver implementation. The data fields of the structure <a class="el" href="group__usart__interface__gr.html#structARM__USART__CAPABILITIES">ARM_USART_CAPABILITIES</a> encode various capabilities, for example supported modes, if a hardware is capable to create signal events using the <a class="el" href="group__usart__interface__gr.html#gad796cd023f8f6300a6caadcc39d43cbf">ARM_USART_SignalEvent</a> callback function ...</p>
+<p>The function <b>ARM_USART_GetCapabilities</b> returns information about capabilities in this driver implementation. The data fields of the structure <a class="el" href="group__usart__interface__gr.html#structARM__USART__CAPABILITIES">ARM_USART_CAPABILITIES</a> encode various capabilities, for example: supported modes, if hardware and driver are capable of signaling events using the <a class="el" href="group__usart__interface__gr.html#gad796cd023f8f6300a6caadcc39d43cbf">ARM_USART_SignalEvent</a> callback function ...</p>
 <p>Example: </p>
 <div class="fragment"><div class="line"><span class="keyword">extern</span> <a class="code" href="group__usart__interface__gr.html#structARM__DRIVER__USART">ARM_DRIVER_USART</a> Driver_USART0;</div>
 <div class="line"><a class="code" href="group__usart__interface__gr.html#structARM__DRIVER__USART">ARM_DRIVER_USART</a> *drv_info;</div>
@@ -1363,7 +1363,7 @@ reserved: 28</td>
 <tr>
 <td><a class="el" href="group__usart__clock__polarity.html#ga472d459abb99f1caaff94fa0cdd2ad27">ARM_USART_CPOL0</a> </td><td rowspan="2" style="text-align:right">18  </td><td rowspan="2">Clock Polarity </td><td>CPOL=<span class="XML-Token">0</span> (default) : data are captured on rising edge (low-&gt;high transition) </td></tr>
 <tr>
-<td><a class="el" href="group__usart__clock__polarity.html#ga9e5541d8937a9d92e42aeb273138592a">ARM_USART_CPOL1</a> </td><td>CPOL=<span class="XML-Token">1</span> : data are captured on falling edge (high-&gt;lowh transition) </td></tr>
+<td><a class="el" href="group__usart__clock__polarity.html#ga9e5541d8937a9d92e42aeb273138592a">ARM_USART_CPOL1</a> </td><td>CPOL=<span class="XML-Token">1</span> : data are captured on falling edge (high-&gt;low transition) </td></tr>
 <tr>
 <td><a class="el" href="group__usart__clock__phase.html#ga5eb27c2294b7d14a20d0c7e2ef0a47b4">ARM_USART_CPHA0</a> </td><td rowspan="2" style="text-align:right">19  </td><td rowspan="2">Clock Phase </td><td>CPHA=<span class="XML-Token">0</span> (default) : sample on first (leading) edge </td></tr>
 <tr>
@@ -1518,7 +1518,7 @@ reserved: 28</td>
 <tr>
 <td><a class="el" href="group__USART__events.html#ga0599793e6aa531d56ff9f81ff12605d7">ARM_USART_EVENT_TRANSFER_COMPLETE</a> </td><td>2 </td><td>Occurs after call to <a class="el" href="group__usart__interface__gr.html#ga878899928d34a818edd3e97d67b65c2a">ARM_USART_Transfer</a> to indicate that all the data has been transferred. The driver is ready for the next call to <a class="el" href="group__usart__interface__gr.html#ga878899928d34a818edd3e97d67b65c2a">ARM_USART_Transfer</a>.  </td><td><em>always supported</em>   </td></tr>
 <tr>
-<td><a class="el" href="group__USART__events.html#ga12872a3b04343f97d9535b5b0d37286d">ARM_USART_EVENT_TX_COMPLETE</a> </td><td>3 </td><td>Occurs after call to <a class="el" href="group__usart__interface__gr.html#ga878899928d34a818edd3e97d67b65c2a">ARM_USART_Transfer</a> to indicate that all the data has been transferred. The driver is ready for the next call to <a class="el" href="group__usart__interface__gr.html#ga878899928d34a818edd3e97d67b65c2a">ARM_USART_Transfer</a>.  </td><td>data field <em>event_tx_complete</em> = <span class="XML-Token">1</span>   </td></tr>
+<td><a class="el" href="group__USART__events.html#ga12872a3b04343f97d9535b5b0d37286d">ARM_USART_EVENT_TX_COMPLETE</a> </td><td>3 </td><td>Occurs after call to <a class="el" href="group__usart__interface__gr.html#ga5cf758b0b9d03dca68846962f73c0b08">ARM_USART_Send</a> to indicate that all the data has been physically transmitted on the wires.  </td><td>data field <em>event_tx_complete</em> = <span class="XML-Token">1</span>   </td></tr>
 <tr>
 <td><a class="el" href="group__USART__events.html#gae57b9977bd338bf8bef86978843fa443">ARM_USART_EVENT_TX_UNDERFLOW</a> </td><td>4 </td><td>Occurs in synchronous slave mode when data is requested by the master but send/receive/transfer operation has not been started. Data field <em>rx_underflow</em> = <span class="XML-Token">1</span> of <a class="el" href="group__usart__interface__gr.html#structARM__USART__STATUS">ARM_USART_STATUS</a>.  </td><td><em>always supported</em>   </td></tr>
 <tr>
@@ -1532,16 +1532,16 @@ reserved: 28</td>
 <tr>
 <td><a class="el" href="group__USART__events.html#gadb4fec2530fc5ae3ad2b056741883451">ARM_USART_EVENT_RX_PARITY_ERROR</a> </td><td>9 </td><td>Occurs when parity error is detected during receive. Data field <em>rx_parity_error</em> = <span class="XML-Token">1</span> of <a class="el" href="group__usart__interface__gr.html#structARM__USART__STATUS">ARM_USART_STATUS</a>.  </td><td><em>always supported</em>   </td></tr>
 <tr>
-<td>ARM_USART_EVENT_CTS </td><td>10 </td><td>Indicates that CTS modem line state has changed. Data field <em>cts</em> = <span class="XML-Token">1</span> of <a class="el" href="group__usart__interface__gr.html#structARM__USART__MODEM__STATUS">ARM_USART_MODEM_STATUS</a>.  </td><td>data field <em>event_cts</em> = <span class="XML-Token">1</span> and <br/>
+<td>ARM_USART_EVENT_CTS </td><td>10 </td><td>Indicates that CTS modem line state has changed. Data field <em>cts</em> of <a class="el" href="group__usart__interface__gr.html#structARM__USART__MODEM__STATUS">ARM_USART_MODEM_STATUS</a> has changed.  </td><td>data field <em>event_cts</em> = <span class="XML-Token">1</span> and <br/>
  data field <em>cts</em> = <span class="XML-Token">1</span>   </td></tr>
 <tr>
-<td>ARM_USART_EVENT_DSR </td><td>11 </td><td>Indicates that DSR modem line state has changed. Data field <em>dsr</em> = <span class="XML-Token">1</span> of <a class="el" href="group__usart__interface__gr.html#structARM__USART__MODEM__STATUS">ARM_USART_MODEM_STATUS</a>.  </td><td>data field <em>event_dsr</em> = <span class="XML-Token">1</span> and <br/>
+<td>ARM_USART_EVENT_DSR </td><td>11 </td><td>Indicates that DSR modem line state has changed. Data field <em>dsr</em> of <a class="el" href="group__usart__interface__gr.html#structARM__USART__MODEM__STATUS">ARM_USART_MODEM_STATUS</a> has changed.  </td><td>data field <em>event_dsr</em> = <span class="XML-Token">1</span> and <br/>
  data field <em>dsr</em> = <span class="XML-Token">1</span>   </td></tr>
 <tr>
-<td>ARM_USART_EVENT_DCD </td><td>12 </td><td>Indicates that DCD modem line state has changed. Data field <em>dcd</em> = <span class="XML-Token">1</span> of <a class="el" href="group__usart__interface__gr.html#structARM__USART__MODEM__STATUS">ARM_USART_MODEM_STATUS</a>.  </td><td>data field <em>event_dcd</em> = <span class="XML-Token">1</span> and <br/>
+<td>ARM_USART_EVENT_DCD </td><td>12 </td><td>Indicates that DCD modem line state has changed. Data field <em>dcd</em> of <a class="el" href="group__usart__interface__gr.html#structARM__USART__MODEM__STATUS">ARM_USART_MODEM_STATUS</a> has changed.  </td><td>data field <em>event_dcd</em> = <span class="XML-Token">1</span> and <br/>
  data field <em>dcd</em> = <span class="XML-Token">1</span>   </td></tr>
 <tr>
-<td>ARM_USART_EVENT_RI </td><td>13 </td><td>Indicates that RI modem line state has changed. Data field <em>ri</em> = <span class="XML-Token">1</span> of <a class="el" href="group__usart__interface__gr.html#structARM__USART__MODEM__STATUS">ARM_USART_MODEM_STATUS</a>.  </td><td>data field <em>event_ri</em> = <span class="XML-Token">1</span> and <br/>
+<td>ARM_USART_EVENT_RI </td><td>13 </td><td>Indicates that RI modem line state has changed from active to inactive (trailing edge on RI). Data field <em>ri</em> of <a class="el" href="group__usart__interface__gr.html#structARM__USART__MODEM__STATUS">ARM_USART_MODEM_STATUS</a> has changed from <span class="XML-Token">1</span> to <span class="XML-Token">0</span>.  </td><td>data field <em>event_ri</em> = <span class="XML-Token">1</span> and <br/>
  data field <em>ri</em> = <span class="XML-Token">1</span>   </td></tr>
 </table>
 

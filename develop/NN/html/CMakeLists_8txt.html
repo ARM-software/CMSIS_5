@@ -119,11 +119,13 @@ $(document).ready(function(){initNavTree('CMakeLists_8txt.html','');});
 Functions</h2></td></tr>
 <tr class="memitem:a066db2d33ac22bd2065327c03fbba3b2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="CMakeLists_8txt.html#a066db2d33ac22bd2065327c03fbba3b2">SET</a> (ROOT ${CMSIS_PATH}) option(CONCATENATION&quot;Concatenation&quot;ON) option(FULLYCONNECTED&quot;Fully Connected&quot;ON) option(CONVOLUTION&quot;Convolutions&quot;ON) option(ACTIVATION&quot;Activations&quot;ON) option(POOLING&quot;Pooling&quot;ON) option(SOFTMAX&quot;Softmax&quot;ON) option(BASICMATHSNN&quot;Basic Maths for NN&quot;ON) option(RESHAPE&quot;Reshape&quot;ON) option(SVDF&quot;SVDF&quot;ON) option(NNSUPPORT&quot;NN Support&quot;ON) SET(NN $</td></tr>
 <tr class="separator:a066db2d33ac22bd2065327c03fbba3b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7564e6b04de54b2296cfdcea07e42785"><td class="memItemLeft" align="right" valign="top">CMSIS NN&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="CMakeLists_8txt.html#a7564e6b04de54b2296cfdcea07e42785">list</a> (APPEND CMAKE_MODULE_PATH ${NN}/Source) add_library(CMSISNN INTERFACE) if(BASICMATHSNN) add_subdirectory(BasicMathFunctions) target_link_libraries(CMSISNN INTERFACE CMSISNNBasicMaths) endif() if(CONCATENATION) add_subdirectory(ConcatenationFunctions) target_link_libraries(CMSISNN INTERFACE CMSISNNConcatenation) endif() if(FULLYCONNECTED) add_subdirectory(FullyConnectedFunctions) target_link_libraries(CMSISNN INTERFACE CMSISNNFullyConnected) endif() if(CONVOLUTION) add_subdirectory(ConvolutionFunctions) target_link_libraries(CMSISNN INTERFACE CMSISNNConvolutions) endif() if(ACTIVATION) add_subdirectory(ActivationFunctions) target_link_libraries(CMSISNN INTERFACE CMSISNNActivation) endif() if(POOLING) add_subdirectory(PoolingFunctions) target_link_libraries(CMSISNN INTERFACE CMSISNNPooling) endif() if(SOFTMAX) add_subdirectory(SoftmaxFunctions) target_link_libraries(CMSISNN INTERFACE CMSISNNSoftmax) endif() if(SVDF) add_subdirectory(SVDFunctions) target_link_libraries(CMSISNN INTERFACE CMSISNNSVDF) endif() if(RESHAPE) add_subdirectory(ReshapeFunctions) target_link_libraries(CMSISNN INTERFACE CMSISNNReshape) endif() if(NNSUPPORT) add_subdirectory(NNSupportFunctions) target_link_libraries(CMSISNN INTERFACE CMSISNNSupport) endif() target_include_directories(CMSISNN INTERFACE&quot;$</td></tr>
-<tr class="separator:a7564e6b04de54b2296cfdcea07e42785"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f83f40417fddd48769218b0a9789ed7"><td class="memItemLeft" align="right" valign="top">CMSIS NN&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="CMakeLists_8txt.html#a1f83f40417fddd48769218b0a9789ed7">list</a> (APPEND CMAKE_MODULE_PATH ${NN}/Source) add_library(cmsis-nn STATIC) <a class="el" href="CMakeLists_8txt.html#aac75ff05180815f57b01dd091c13c181">target_include_directories</a>(cmsis-nn PUBLIC&quot;$</td></tr>
+<tr class="separator:a1f83f40417fddd48769218b0a9789ed7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac75ff05180815f57b01dd091c13c181"><td class="memItemLeft" align="right" valign="top">Include&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="CMakeLists_8txt.html#aac75ff05180815f57b01dd091c13c181">target_include_directories</a> (cmsis-nn PUBLIC&quot;${ROOT}/CMSIS/Core/Include&quot;) target_include_directories(cmsis-nn PUBLIC&quot;$</td></tr>
+<tr class="separator:aac75ff05180815f57b01dd091c13c181"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="a7564e6b04de54b2296cfdcea07e42785"></a>
+<a class="anchor" id="a1f83f40417fddd48769218b0a9789ed7"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -147,6 +149,22 @@ Functions</h2></td></tr>
           <td class="memname">SET </td>
           <td>(</td>
           <td class="paramtype">ROOT ${CMSIS_PATH}&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="aac75ff05180815f57b01dd091c13c181"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Include target_include_directories </td>
+          <td>(</td>
+          <td class="paramtype">cmsis-nn PUBLIC&quot;${ROOT}/CMSIS/Core/Include&quot;&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
