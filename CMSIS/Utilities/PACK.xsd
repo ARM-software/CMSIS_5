@@ -226,6 +226,7 @@
       <xs:enumeration value="Sinowealth:149" />
       <xs:enumeration value="SmartChip:156" />
       <xs:enumeration value="SONiX:110" />
+      <xs:enumeration value="Socionext:171" />
       <xs:enumeration value="Spansion:100" />
       <xs:enumeration value="STMicroelectronics:13" />
       <xs:enumeration value="Sunrise Micro Devices:121" />
