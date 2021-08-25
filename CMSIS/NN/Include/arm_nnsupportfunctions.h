@@ -748,7 +748,7 @@ void arm_nn_mult_q7(q7_t *pSrcA, q7_t *pSrcB, q7_t *pDst, const uint16_t out_shi
  * @brief macro for adding rounding offset
  */
 #ifndef ARM_NN_TRUNCATE
-#define NN_ROUND(out_shift) ((0x1u << out_shift) >> 1)
+#define NN_ROUND(out_shift) ((0x1 << out_shift) >> 1)
 #else
 #define NN_ROUND(out_shift) 0
 #endif
