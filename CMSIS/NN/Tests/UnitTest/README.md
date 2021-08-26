@@ -9,6 +9,8 @@ The [Unity test framework](http://www.throwtheswitch.org/unity) is used for runn
 Python3 is required.
 It has been tested with Python 3.6 and it has been tested on Ubuntu 16 and 18.
 
+Make sure to use a `pip` version > 19.0 (or >20.3 for macOS), otherwise tensorflow 2 packages are not available.
+
 There is a requirement file that can be used to install the dependencies.
 
 ```

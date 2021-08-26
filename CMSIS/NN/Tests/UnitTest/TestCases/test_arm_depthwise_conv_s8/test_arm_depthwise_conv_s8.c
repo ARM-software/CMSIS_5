@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -83,6 +83,25 @@ void basic_arm_depthwise_conv_s8(void)
     free(ctx.buf);
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, basic_output_ref, BASIC_DST_SIZE));
+
+    ctx.buf = NULL;
+    ctx.size = 0;
+
+    result = arm_depthwise_conv_wrapper_s8(&ctx,
+                                           &dw_conv_params,
+                                           &quant_params,
+                                           &input_dims,
+                                           input_data,
+                                           &filter_dims,
+                                           basic_weights,
+                                           &bias_dims,
+                                           bias_data,
+                                           &output_dims,
+                                           output);
+
+    free(ctx.buf);
+    TEST_ASSERT_EQUAL(expected, result);
+    TEST_ASSERT_TRUE(validate(output, basic_output_ref, BASIC_DST_SIZE));
 }
 
 void stride2pad1_arm_depthwise_conv_s8(void)
@@ -139,6 +158,25 @@ void stride2pad1_arm_depthwise_conv_s8(void)
                                               bias_data,
                                               &output_dims,
                                               output);
+
+    free(ctx.buf);
+    TEST_ASSERT_EQUAL(expected, result);
+    TEST_ASSERT_TRUE(validate(output, stride2pad1_output_ref, STRIDE2PAD1_DST_SIZE));
+
+    ctx.buf = NULL;
+    ctx.size = 0;
+
+    result = arm_depthwise_conv_wrapper_s8(&ctx,
+                                           &dw_conv_params,
+                                           &quant_params,
+                                           &input_dims,
+                                           input_data,
+                                           &filter_dims,
+                                           kernel_data,
+                                           &bias_dims,
+                                           bias_data,
+                                           &output_dims,
+                                           output);
 
     free(ctx.buf);
     TEST_ASSERT_EQUAL(expected, result);
@@ -203,6 +241,25 @@ void depthwise_2_arm_depthwise_conv_s8(void)
     free(ctx.buf);
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, depthwise_2_output_ref, DEPTHWISE_2_DST_SIZE));
+
+    ctx.buf = NULL;
+    ctx.size = 0;
+
+    result = arm_depthwise_conv_s8(&ctx,
+                                   &dw_conv_params,
+                                   &quant_params,
+                                   &input_dims,
+                                   input_data,
+                                   &filter_dims,
+                                   kernel_data,
+                                   &bias_dims,
+                                   bias_data,
+                                   &output_dims,
+                                   output);
+
+    free(ctx.buf);
+    TEST_ASSERT_EQUAL(expected, result);
+    TEST_ASSERT_TRUE(validate(output, depthwise_2_output_ref, DEPTHWISE_2_DST_SIZE));
 }
 
 void depthwise_out_activation_arm_depthwise_conv_s8(void)
@@ -263,6 +320,25 @@ void depthwise_out_activation_arm_depthwise_conv_s8(void)
     free(ctx.buf);
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, depthwise_out_activation_output_ref, DEPTHWISE_OUT_ACTIVATION_DST_SIZE));
+
+    ctx.buf = NULL;
+    ctx.size = 0;
+
+    result = arm_depthwise_conv_s8(&ctx,
+                                   &dw_conv_params,
+                                   &quant_params,
+                                   &input_dims,
+                                   input_data,
+                                   &filter_dims,
+                                   kernel_data,
+                                   &bias_dims,
+                                   bias_data,
+                                   &output_dims,
+                                   output);
+
+    free(ctx.buf);
+    TEST_ASSERT_EQUAL(expected, result);
+    TEST_ASSERT_TRUE(validate(output, depthwise_out_activation_output_ref, DEPTHWISE_OUT_ACTIVATION_DST_SIZE));
 }
 
 void depthwise_mult_batches_arm_depthwise_conv_s8(void)
@@ -319,6 +395,25 @@ void depthwise_mult_batches_arm_depthwise_conv_s8(void)
                                               bias_data,
                                               &output_dims,
                                               output);
+
+    free(ctx.buf);
+    TEST_ASSERT_EQUAL(expected, result);
+    TEST_ASSERT_TRUE(validate(output, depthwise_mult_batches_output_ref, DEPTHWISE_MULT_BATCHES_DST_SIZE));
+
+    ctx.buf = NULL;
+    ctx.size = 0;
+
+    result = arm_depthwise_conv_s8(&ctx,
+                                   &dw_conv_params,
+                                   &quant_params,
+                                   &input_dims,
+                                   input_data,
+                                   &filter_dims,
+                                   kernel_data,
+                                   &bias_dims,
+                                   bias_data,
+                                   &output_dims,
+                                   output);
 
     free(ctx.buf);
     TEST_ASSERT_EQUAL(expected, result);

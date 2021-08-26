@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -83,6 +83,25 @@ void depthwise_kernel_3x3_arm_depthwise_conv_3x3_s8(void)
     free(ctx.buf);
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, depthwise_kernel_3x3_output_ref, DEPTHWISE_KERNEL_3X3_DST_SIZE));
+
+    ctx.buf = NULL;
+    ctx.size = 0;
+
+    result = arm_depthwise_conv_wrapper_s8(&ctx,
+                                           &dw_conv_params,
+                                           &quant_params,
+                                           &input_dims,
+                                           input_data,
+                                           &filter_dims,
+                                           kernel_data,
+                                           &bias_dims,
+                                           bias_data,
+                                           &output_dims,
+                                           output);
+
+    free(ctx.buf);
+    TEST_ASSERT_EQUAL(expected, result);
+    TEST_ASSERT_TRUE(validate(output, depthwise_kernel_3x3_output_ref, DEPTHWISE_KERNEL_3X3_DST_SIZE));
 }
 
 void depthwise_kernel_3x3_arm_depthwise_conv_3x3_1_s8(void)
@@ -142,6 +161,32 @@ void depthwise_kernel_3x3_arm_depthwise_conv_3x3_1_s8(void)
 
     free(ctx.buf);
     TEST_ASSERT_EQUAL(expected, result);
+
+    // The wrapper calls different functions for Cortex-M55 and Cortex-M7. Hence
+    // the different expected status.
+#if defined(ARM_MATH_MVEI)
+    const arm_status expected_wrapper = ARM_MATH_SUCCESS;
+#else
+    const arm_status expected_wrapper = ARM_MATH_ARGUMENT_ERROR;
+#endif
+
+    ctx.buf = NULL;
+    ctx.size = 0;
+
+    result = arm_depthwise_conv_wrapper_s8(&ctx,
+                                           &dw_conv_params,
+                                           &quant_params,
+                                           &input_dims,
+                                           input_data,
+                                           &filter_dims,
+                                           kernel_data,
+                                           &bias_dims,
+                                           bias_data,
+                                           &output_dims,
+                                           output);
+
+    free(ctx.buf);
+    TEST_ASSERT_EQUAL(expected_wrapper, result);
 }
 
 void depthwise_kernel_3x3_arm_depthwise_conv_3x3_2_s8(void)
@@ -201,4 +246,27 @@ void depthwise_kernel_3x3_arm_depthwise_conv_3x3_2_s8(void)
 
     free(ctx.buf);
     TEST_ASSERT_EQUAL(expected, result);
+
+    ctx.buf = NULL;
+    ctx.size = 0;
+
+    // When calling the wrapper the arm_depthwise_conv_3x3_s8 will
+    // not be called. arm_depthwise_conv_s8_opt will be called and
+    // exit with success.
+    const arm_status expected_wrapper = ARM_MATH_SUCCESS;
+
+    result = arm_depthwise_conv_wrapper_s8(&ctx,
+                                           &dw_conv_params,
+                                           &quant_params,
+                                           &input_dims,
+                                           input_data,
+                                           &filter_dims,
+                                           kernel_data,
+                                           &bias_dims,
+                                           bias_data,
+                                           &output_dims,
+                                           output);
+
+    free(ctx.buf);
+    TEST_ASSERT_EQUAL(expected_wrapper, result);
 }
