@@ -13934,7 +13934,7 @@ cmsis_arm_cmplx_mag_squared_f32(PyObject *obj, PyObject *args)
 
 
     arm_cmplx_mag_squared_f32(pSrc_converted,pDst,numSamples);
- FLOATARRAY1(pDstOBJ,2*numSamples,pDst);
+ FLOATARRAY1(pDstOBJ,numSamples,pDst);
 
     PyObject *pythonResult = Py_BuildValue("O",pDstOBJ);
 
@@ -13967,7 +13967,7 @@ cmsis_arm_cmplx_mag_squared_q31(PyObject *obj, PyObject *args)
 
 
     arm_cmplx_mag_squared_q31(pSrc_converted,pDst,numSamples);
- INT32ARRAY1(pDstOBJ,2*numSamples,pDst);
+ INT32ARRAY1(pDstOBJ,numSamples,pDst);
 
     PyObject *pythonResult = Py_BuildValue("O",pDstOBJ);
 
@@ -14000,7 +14000,7 @@ cmsis_arm_cmplx_mag_squared_q15(PyObject *obj, PyObject *args)
 
 
     arm_cmplx_mag_squared_q15(pSrc_converted,pDst,numSamples);
- INT16ARRAY1(pDstOBJ,2*numSamples,pDst);
+ INT16ARRAY1(pDstOBJ,numSamples,pDst);
 
     PyObject *pythonResult = Py_BuildValue("O",pDstOBJ);
 
