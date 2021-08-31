@@ -106,13 +106,13 @@ a double precision computation.
       int rows,internal;                      \
       int i;
 
-#define PREPAREVECDATA2()                                                   \
-      in1.numRows=rows;                                                  \
-      in1.numCols=internal;                                               \
-      memcpy((void*)ap,(const void*)inp1,2*sizeof(q15_t)*rows*internal);\
-      in1.pData = ap;                                                    \
-                                                                         \
-      memcpy((void*)bp,(const void*)inp2,2*sizeof(q15_t)*internal);
+#define PREPAREVECDATA2()                                             \
+      in1.numRows=rows;                                               \
+      in1.numCols=internal;                                           \
+      memcpy((void*)ap,(const void*)inp1,sizeof(q15_t)*rows*internal);\
+      in1.pData = ap;                                                 \
+                                                                      \
+      memcpy((void*)bp,(const void*)inp2,sizeof(q15_t)*internal);
 
 
     void UnaryTestsQ15::test_mat_vec_mult_q15()

@@ -134,13 +134,13 @@ Comparison for Cholesky
       int rows,internal;                      \
       int i;
 
-#define PREPAREVECDATA2()                                                   \
-      in1.numRows=rows;                                                  \
+#define PREPAREVECDATA2()                                                 \
+      in1.numRows=rows;                                                   \
       in1.numCols=internal;                                               \
-      memcpy((void*)ap,(const void*)inp1,2*sizeof(float32_t)*rows*internal);\
-      in1.pData = ap;                                                    \
-                                                                         \
-      memcpy((void*)bp,(const void*)inp2,2*sizeof(float32_t)*internal);
+      memcpy((void*)ap,(const void*)inp1,sizeof(float32_t)*rows*internal);\
+      in1.pData = ap;                                                     \
+                                                                          \
+      memcpy((void*)bp,(const void*)inp2,sizeof(float32_t)*internal);
                             
 #define PREPAREDATALL1()                                                 \
       in1.numRows=rows;                                                  \
