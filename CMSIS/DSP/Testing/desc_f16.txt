@@ -797,6 +797,13 @@ group Root {
                 Pattern REF_LTINV_DPO_F16_ID : Ref_LTINV_DPO1_f16.txt
                 Pattern REF_CHOLINV_DPO_F16_ID : Ref_CHOLINV_DPO1_f16.txt
 
+                Pattern DIM_LTSOLVE_F16_ID : DimsLTSolve1_s16.txt
+                Pattern INPUT_MAT_LTSOLVE_F16_ID : InputMatrixLTSolve1_f16.txt
+                Pattern INPUT_MAT_UTSOLVE_F16_ID : InputMatrixUTSolve1_f16.txt
+                Pattern INPUT_VEC_LTSOLVE_F16_ID : InputVectorLTSolve1_f16.txt
+                Pattern REF_LT_SOLVE_F16_ID : RefLTSolve1_f16.txt
+                Pattern REF_UT_SOLVE_F16_ID : RefUTSolve1_f16.txt
+
                 Output  D_F16_ID : Output
                 Output  LL_F16_ID : Output
                 Output  PERM_S16_ID : Output

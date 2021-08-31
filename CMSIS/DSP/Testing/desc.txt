@@ -2585,6 +2585,13 @@ group Root {
                 Pattern REF_LTINV_DPO_F32_ID : Ref_LTINV_DPO1_f32.txt
                 Pattern REF_CHOLINV_DPO_F32_ID : Ref_CHOLINV_DPO1_f32.txt
 
+                Pattern DIM_LTSOLVE_F32_ID : DimsLTSolve1_s16.txt
+                Pattern INPUT_MAT_LTSOLVE_F32_ID : InputMatrixLTSolve1_f32.txt
+                Pattern INPUT_MAT_UTSOLVE_F32_ID : InputMatrixUTSolve1_f32.txt
+                Pattern INPUT_VEC_LTSOLVE_F32_ID : InputVectorLTSolve1_f32.txt
+                Pattern REF_LT_SOLVE_F32_ID : RefLTSolve1_f32.txt
+                Pattern REF_UT_SOLVE_F32_ID : RefUTSolve1_f32.txt
+
 
                 Output  D_F32_ID : Output
                 Output  LL_F32_ID : Output
@@ -2761,6 +2768,13 @@ group Root {
                 Pattern REF_UTINV_DPO_F64_ID : Ref_UTINV_DPO1_f64.txt
                 Pattern REF_LTINV_DPO_F64_ID : Ref_LTINV_DPO1_f64.txt
                 Pattern REF_CHOLINV_DPO_F64_ID : Ref_CHOLINV_DPO1_f64.txt
+
+                Pattern DIM_LTSOLVE_F64_ID : DimsLTSolve1_s16.txt
+                Pattern INPUT_MAT_LTSOLVE_F64_ID : InputMatrixLTSolve1_f64.txt
+                Pattern INPUT_MAT_UTSOLVE_F64_ID : InputMatrixUTSolve1_f64.txt
+                Pattern INPUT_VEC_LTSOLVE_F64_ID : InputVectorLTSolve1_f64.txt
+                Pattern REF_LT_SOLVE_F64_ID : RefLTSolve1_f64.txt
+                Pattern REF_UT_SOLVE_F64_ID : RefUTSolve1_f64.txt
 
                 Output  D_F64_ID : Output
                 Output  LL_F64_ID : Output
