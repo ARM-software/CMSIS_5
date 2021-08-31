@@ -51,7 +51,7 @@
    * This function can support maximum of table size 2^12.
    */
   q7_t arm_linear_interp_q7(
-  q7_t * pYData,
+  const q7_t * pYData,
   q31_t x,
   uint32_t nValues)
   {
