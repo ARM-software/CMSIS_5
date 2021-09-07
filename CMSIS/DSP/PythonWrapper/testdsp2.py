@@ -2,7 +2,7 @@ import cmsisdsp as dsp
 import numpy as np
 from scipy import signal
 from scipy.fftpack import dct 
-import fixedpoint as f
+import cmsisdsp.fixedpoint as f
 from pyquaternion import Quaternion
 
 import colorama

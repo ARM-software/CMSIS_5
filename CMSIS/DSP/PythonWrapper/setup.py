@@ -97,6 +97,7 @@ module1 = Extension(config.extensionName,
 
 setup (name = config.setupName,
        version = '1.0.0',
+       packages=['cmsisdsp'],
        description = config.setupDescription,
        ext_modules = [module1],
        author = 'Copyright (C) 2010-2021 ARM Limited or its affiliates. All rights reserved.',

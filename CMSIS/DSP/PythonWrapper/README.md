@@ -219,6 +219,17 @@ Goldberger AL, Amaral LAN, Glass L, Hausdorff JM, Ivanov PCh, Mark RG, Mietus JE
 
 Note that the example file
 
+## Submodules
+
+The Python wrapper is containing two submodules : fixedpoint and mfcc
+
+fixedpoint is proving some tools to help generating the fixedpoint values expected
+by CMSIS-DSP.
+
+mfcc is generating some tools to generate the MEL filters, DCT and window coefficients
+expected by the CMSIS-DSP MFCC implemetation.
+
+MEL filters are represented as 3 arrays to encode a sparse array.
 
 # LIMITATIONS
 

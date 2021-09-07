@@ -82,7 +82,7 @@ static uint16_t arm_scalar_log_q15(uint16_t src)
    int32_t tmp;
 
 
-   /* Normalize and convert to q314 format */
+   /* Normalize and convert to q14 format */
    x = src;
    if ((c-1) < 0)
    {

@@ -5676,6 +5676,90 @@ static PyMethodDef arm_fir_sparse_instance_q7_methods[] = {
 
 MLTYPE(arm_fir_sparse_instance_q7,arm_fir_sparse_instance_q7_new,arm_fir_sparse_instance_q7_dealloc,arm_fir_sparse_instance_q7_init,arm_fir_sparse_instance_q7_methods);
 
+typedef struct {
+    PyObject_HEAD
+    arm_mfcc_instance_f32 *instance;
+} ml_arm_mfcc_instance_f32Object;
+
+
+static void
+arm_mfcc_instance_f32_dealloc(ml_arm_mfcc_instance_f32Object* self)
+{
+    //printf("Dealloc called\n");
+    if (self->instance)
+    {
+
+
+       PyMem_Free(self->instance);
+    }
+
+    Py_TYPE(self)->tp_free((PyObject*)self);
+}
+
+
+static PyObject *
+arm_mfcc_instance_f32_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
+{
+    ml_arm_mfcc_instance_f32Object *self;
+    //printf("New called\n");
+
+    self = (ml_arm_mfcc_instance_f32Object *)type->tp_alloc(type, 0);
+    //printf("alloc called\n");
+
+    if (self != NULL) {
+
+        self->instance = PyMem_Malloc(sizeof(arm_mfcc_instance_f32));
+
+        self->instance->dctCoefs = NULL;
+        self->instance->filterCoefs = NULL;
+        self->instance->windowCoefs = NULL;
+        self->instance->filterPos = NULL;
+        self->instance->filterLengths = NULL;
+
+    }
+
+
+    return (PyObject *)self;
+}
+
+static int
+arm_mfcc_instance_f32_init(ml_arm_mfcc_instance_f32Object *self, PyObject *args, PyObject *kwds)
+{
+
+    PyObject *pTwiddle=NULL;
+    PyObject *pBitRevTable=NULL;
+char *kwlist[] = {
+"fftLen","nbMelFilters","nbDctOutputs",NULL
+};
+
+if (PyArg_ParseTupleAndKeywords(args, kwds, "|iii", kwlist,&self->instance->fftLen
+,&self->instance->nbMelFilters,&self->instance->nbDctOutputs
+))
+    {
+
+
+    }
+    return 0;
+}
+
+GETFIELD(arm_mfcc_instance_f32,fftLen,"i");
+GETFIELD(arm_mfcc_instance_f32,nbMelFilters,"i");
+GETFIELD(arm_mfcc_instance_f32,nbDctOutputs,"i");
+
+
+static PyMethodDef arm_mfcc_instance_f32_methods[] = {
+
+    {"fftLen", (PyCFunction) Method_arm_mfcc_instance_f32_fftLen,METH_NOARGS,"fftLen"},
+    {"nbMelFilters", (PyCFunction) Method_arm_mfcc_instance_f32_nbMelFilters,METH_NOARGS,"nbMelFilters"},
+    {"nbDctOutputs", (PyCFunction) Method_arm_mfcc_instance_f32_nbDctOutputs,METH_NOARGS,"nbDctOutputs"},
+
+    {NULL}  /* Sentinel */
+};
+
+
+MLTYPE(arm_mfcc_instance_f32,arm_mfcc_instance_f32_new,arm_mfcc_instance_f32_dealloc,arm_mfcc_instance_f32_init,arm_mfcc_instance_f32_methods);
+
+
 
 void typeRegistration(PyObject *module) {
 
@@ -5740,7 +5824,7 @@ void typeRegistration(PyObject *module) {
   ADDTYPE(arm_fir_sparse_instance_q31);
   ADDTYPE(arm_fir_sparse_instance_q15);
   ADDTYPE(arm_fir_sparse_instance_q7);
-
+  ADDTYPE(arm_mfcc_instance_f32);
 }
 
 
@@ -14803,6 +14887,33 @@ cmsis_arm_sqrt_q31(PyObject *obj, PyObject *args)
   return(NULL);
 }
 
+static PyObject *
+cmsis_arm_divide_q15(PyObject *obj, PyObject *args)
+{
+
+  q15_t num,den; // input
+  q15_t pOut,shift; // output
+
+  if (PyArg_ParseTuple(args,"hh",&num,&den))
+  {
+
+
+
+    arm_status returnValue = arm_divide_q15(num,den,&pOut,&shift);
+    PyObject* theReturnOBJ=Py_BuildValue("i",returnValue);
+    PyObject* pOutOBJ=Py_BuildValue("h",pOut);
+    PyObject* pShiftOBJ=Py_BuildValue("i",shift);
+
+    PyObject *pythonResult = Py_BuildValue("OOO",theReturnOBJ,pOutOBJ,pShiftOBJ);
+
+    Py_DECREF(theReturnOBJ);
+    Py_DECREF(pOutOBJ);
+    Py_DECREF(pShiftOBJ);
+    return(pythonResult);
+
+  }
+  return(NULL);
+}
 
 static PyObject *
 cmsis_arm_sqrt_q15(PyObject *obj, PyObject *args)
@@ -16884,6 +16995,102 @@ cmsis_arm_bilinear_interp_q7(PyObject *obj, PyObject *args)
   return(NULL);
 }
 
+/*
+
+MFCC
+
+*/
+
+static PyObject *
+cmsis_arm_mfcc_init_f32(PyObject *obj, PyObject *args)
+{
+
+  PyObject *S=NULL; // input
+  uint32_t fftLen,nbMelFilters,nbDctOutputs; // input
+
+  PyObject *pdctCoefs=NULL; // input
+  float32_t *pdctCoefs_converted=NULL; // input
+
+  PyObject *pfilterCoefs=NULL; // input
+  float32_t *pfilterCoefs_converted=NULL; // input
+
+  PyObject *pwindowCoefs=NULL; // input
+  float32_t *pwindowCoefs_converted=NULL; // input
+
+  PyObject *pfilterPos=NULL; // input
+  uint32_t *pfilterPos_converted=NULL; // input
+
+  PyObject *pfilterLengths=NULL; // input
+  uint32_t *pfilterLengths_converted=NULL; // input
+
+  if (PyArg_ParseTuple(args,"OiiiOOOOO",&S,&fftLen,&nbMelFilters,&nbDctOutputs,
+    &pdctCoefs,&pfilterPos,&pfilterLengths,&pfilterCoefs,&pwindowCoefs))
+  {
+
+    ml_arm_mfcc_instance_f32Object *selfS = (ml_arm_mfcc_instance_f32Object *)S;
+
+    GETARGUMENT(pdctCoefs,NPY_DOUBLE,double,float32_t);
+    GETARGUMENT(pfilterPos,NPY_UINT32,uint32_t,uint32_t);
+    GETARGUMENT(pfilterLengths,NPY_UINT32,uint32_t,uint32_t);
+    GETARGUMENT(pfilterCoefs,NPY_DOUBLE,double,float32_t);
+    GETARGUMENT(pwindowCoefs,NPY_DOUBLE,double,float32_t);
+
+
+    arm_status returnValue = arm_mfcc_init_f32(selfS->instance,
+        fftLen,nbMelFilters,nbDctOutputs,
+        pdctCoefs_converted,
+        pfilterPos_converted,pfilterLengths_converted,pfilterCoefs_converted,
+        pwindowCoefs_converted);
+    PyObject* theReturnOBJ=Py_BuildValue("i",returnValue);
+
+    PyObject *pythonResult = Py_BuildValue("O",theReturnOBJ);
+
+    Py_DECREF(theReturnOBJ);
+    return(pythonResult);
+
+  }
+  return(NULL);
+}
+
+static PyObject *
+cmsis_arm_mfcc_f32(PyObject *obj, PyObject *args)
+{
+
+  PyObject *S=NULL; // input
+  PyObject *p1=NULL; // input
+  float32_t *p1_converted=NULL; // input
+
+  PyObject *tmp=NULL; // input
+  float32_t *tmp_converted=NULL; // input
+
+  float32_t *pDst;
+  if (PyArg_ParseTuple(args,"OOO",&S,&p1,&tmp))
+  {
+
+    ml_arm_mfcc_instance_f32Object *selfS = (ml_arm_mfcc_instance_f32Object *)S;
+    GETARGUMENT(p1,NPY_DOUBLE,double,float32_t);
+    GETARGUMENT(tmp,NPY_DOUBLE,double,float32_t);
+
+    pDst=PyMem_Malloc(sizeof(float32_t)*selfS->instance->nbDctOutputs);
+
+    arm_mfcc_f32(selfS->instance,p1_converted,pDst,tmp_converted);
+
+    FLOATARRAY1(pDstOBJ,selfS->instance->nbDctOutputs,pDst);
+
+    PyObject *pythonResult = Py_BuildValue("O",pDstOBJ);
+    Py_DECREF(pDstOBJ);
+
+    FREEARGUMENT(p1_converted);
+    FREEARGUMENT(tmp_converted);
+
+    
+
+
+    return(pythonResult);
+
+  }
+  return(NULL);
+}
 
 static PyMethodDef CMSISMLMethods[] = {
 
@@ -17139,6 +17346,7 @@ static PyMethodDef CMSISMLMethods[] = {
 {"arm_sqrt_f32",  cmsis_arm_sqrt_f32, METH_VARARGS,""},
 {"arm_sqrt_q31",  cmsis_arm_sqrt_q31, METH_VARARGS,""},
 {"arm_sqrt_q15",  cmsis_arm_sqrt_q15, METH_VARARGS,""},
+{"arm_divide_q15",  cmsis_arm_divide_q15, METH_VARARGS,""},
 {"arm_circularWrite_f32",  cmsis_arm_circularWrite_f32, METH_VARARGS,""},
 {"arm_circularWrite_q15",  cmsis_arm_circularWrite_q15, METH_VARARGS,""},
 {"arm_circularWrite_q7",  cmsis_arm_circularWrite_q7, METH_VARARGS,""},
@@ -17247,6 +17455,8 @@ static PyMethodDef CMSISMLMethods[] = {
 {"arm_jensenshannon_distance_f32",cmsis_arm_jensenshannon_distance_f32, METH_VARARGS,""},
 {"arm_minkowski_distance_f32",cmsis_arm_minkowski_distance_f32, METH_VARARGS,""},
 #endif
+    {"arm_mfcc_init_f32",  cmsis_arm_mfcc_init_f32, METH_VARARGS,""},
+    {"arm_mfcc_f32",  cmsis_arm_mfcc_f32, METH_VARARGS,""},
 
     {"error_out", (PyCFunction)error_out, METH_NOARGS, NULL},
     {NULL, NULL, 0, NULL}        /* Sentinel */

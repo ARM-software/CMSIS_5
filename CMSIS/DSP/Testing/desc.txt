@@ -2949,6 +2949,32 @@ group Root {
            class = TransformTests
            folder = Transform 
 
+           suite MFCC F32 {
+              class = MFCCF32
+              folder = MFCCF32
+
+              Pattern INPUTS_MFCC_256_F32_ID : MFCCInput_256_1_f32.txt 
+              Pattern REF_MFCC_256_F32_ID : MFCCRef_256_1_f32.txt 
+
+              Pattern INPUTS_MFCC_512_F32_ID : MFCCInput_512_1_f32.txt 
+              Pattern REF_MFCC_512_F32_ID : MFCCRef_512_1_f32.txt 
+
+              Pattern INPUTS_MFCC_1024_F32_ID : MFCCInput_1024_1_f32.txt 
+              Pattern REF_MFCC_1024_F32_ID : MFCCRef_1024_1_f32.txt 
+
+              
+              Output  OUTPUT_MFCC_F32_ID : MFCCOutputs
+              Output  TMP_MFCC_F32_ID : MFCCTmp
+              Output  TMPIN_MFCC_F32_ID : MFCCTmpIn
+
+              Functions {
+                 mfcc_256_f32:test_mfcc_f32
+                 mfcc_512_f32:test_mfcc_f32
+                 mfcc_1024_f32:test_mfcc_f32
+              }
+
+            }
+
            suite Transform Complex F64 {
               class = TransformCF64
               folder = TransformF64

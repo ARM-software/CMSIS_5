@@ -1,6 +1,6 @@
 import cmsisdsp as dsp
 import numpy as np
-import fixedpoint as f
+import cmsisdsp.fixedpoint as f
 
 # Test vlog q31 and q15
 x = np.array([0.9,0.5,2**-16])
