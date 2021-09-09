@@ -11,6 +11,16 @@
     <td>
       Float promotion issues:
       - Removed remaining issues of implicit float promotion (mainly in f16 code)
+
+      Scalar versions of arm_vlog_q31 and arm_vlog_q15
+
+      Synchronous Data Flow 
+
+      MFCC F32 and F16
+
+      Remarks:
+      - MFCC F16 is not very accurate
+      - Accuracy issues remain with the vlog f16, q31 and q15.
     </td>
   </tr>
   <tr>

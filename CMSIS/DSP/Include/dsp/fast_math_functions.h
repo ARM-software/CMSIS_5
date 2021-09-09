@@ -220,7 +220,7 @@ extern "C"
                    - \ref ARM_MATH_ARGUMENT_ERROR : input value is negative; *pOut is set to 0
  */
 __STATIC_FORCEINLINE arm_status arm_sqrt_f32(
-  float32_t in,
+  const float32_t in,
   float32_t * pOut)
   {
     if (in >= 0.0f)

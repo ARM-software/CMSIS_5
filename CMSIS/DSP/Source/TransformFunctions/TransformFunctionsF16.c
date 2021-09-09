@@ -36,6 +36,9 @@
 
 #include "arm_bitreversal_f16.c"
 
+#include "arm_mfcc_init_f16.c"
+#include "arm_mfcc_f16.c"
+
 /* Deprecated */
 #include "arm_cfft_radix2_init_f16.c"
 #include "arm_cfft_radix4_init_f16.c"

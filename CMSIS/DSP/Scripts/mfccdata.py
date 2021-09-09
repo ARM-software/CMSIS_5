@@ -48,7 +48,7 @@ def to_q15(v):
     return ("0x%s" % format(struct.unpack('<H', struct.pack('<h', r))[0],'04X'))
 
 def to_f16(v):
-     return("(float16_t)%f" % struct.unpack('<e',struct.pack('<e',v)))
+    return("(float16_t)%ff" % struct.unpack('<f',struct.pack('<f',v)))
 
 def to_f32(v):
      return("%ff" % struct.unpack('<f',struct.pack('<f',v)))
@@ -213,6 +213,28 @@ def prepareDctconfig(configs):
         c["dctMatrix"]=cvt.getArrayContent(dctMat)
 
     #print(configs)
+
+def checkF16(configs):
+    hasF16 = False
+    for config in configs["dct"]:
+        c=configs["dct"][config]
+        if c["type"]=="f16":
+           hasF16 = True
+           c["hasF16"]=True
+
+    for config in configs["melfilter"]:
+        c=configs["melfilter"][config]
+        if c["type"]=="f16":
+           hasF16 = True
+           c["hasF16"]=True
+
+    for config in configs["window"]:
+        c=configs["window"][config]
+        if c["type"]=="f16":
+           hasF16 = True
+           c["hasF16"]=True
+
+    configs["hasF16"]=hasF16
 
 env = Environment(
        loader=PackageLoader("mfccdata","mfcctemplates"),

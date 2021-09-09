@@ -400,6 +400,8 @@ set(TESTSRC16
   Source/Tests/DistanceTestsF16.cpp
   Source/Tests/SVMF16.cpp
   Source/Tests/BayesF16.cpp
+  Source/Tests/MFCCF16.cpp
+  Source/Tests/mfccdata_f16.c
   )
 endif()
 endif() 

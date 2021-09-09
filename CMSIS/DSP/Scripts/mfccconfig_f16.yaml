@@ -1,0 +1,46 @@
+dct:
+  config1_f16: 
+    melFilters: 20 
+    dctOutputs: 13
+    type: "f16"
+  
+melfilter:
+  config1_f16: 
+    fftlength: 1024 
+    fmin: 64 
+    fmax: 8000 
+    samplingRate : 16000 
+    melFilters: 20 
+    type: "f16"
+  
+  config2_f16: 
+    fftlength: 512 
+    fmin: 64 
+    fmax: 8000 
+    samplingRate : 16000 
+    melFilters: 20 
+    type: "f16"
+  
+  config3_f16 : 
+    fftlength: 256 
+    fmin: 64 
+    fmax: 8000 
+    samplingRate : 16000 
+    melFilters: 20 
+    type: "f16"  
+
+window:
+  config1_f16:
+    fftlength: 1024 
+    type: "f16"  
+    win: "hamming"
+
+  config2_f16:
+    fftlength: 512 
+    type: "f16"  
+    win: "hamming"
+
+  config3_f16:
+    fftlength: 256 
+    type: "f16"  
+    win: "hamming"

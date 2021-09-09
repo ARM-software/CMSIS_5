@@ -57,6 +57,7 @@ if args.n and args.d and args.others:
 
    with open(args.others[0],"r") as f:
      configs=yaml.safe_load(f) 
+     mfccdata.checkF16(configs)
      mfccdata.prepareDctconfig(configs["dct"])
      mfccdata.prepareMelconfig(configs["melfilter"])
      mfccdata.prepareWindowConfig(configs["window"])

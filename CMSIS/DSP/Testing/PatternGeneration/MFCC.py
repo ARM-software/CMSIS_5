@@ -229,7 +229,7 @@ def generatePatterns():
     PARAMDIR = os.path.join("Parameters","DSP","Transform","MFCC")
     
     configf32=Tools.Config(PATTERNDIR,PARAMDIR,"f32")
-    #configf16=Tools.Config(PATTERNDIR,PARAMDIR,"f16")
+    configf16=Tools.Config(PATTERNDIR,PARAMDIR,"f16")
     #configq31=Tools.Config(PATTERNDIR,PARAMDIR,"q31")
     #configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
     #configq7=Tools.Config(PATTERNDIR,PARAMDIR,"q7")
@@ -239,6 +239,7 @@ def generatePatterns():
 
    
     writeTests(configf32,0)
+    writeTests(configf16,Tools.F16)
    
 if __name__ == '__main__':
   generatePatterns()
