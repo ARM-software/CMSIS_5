@@ -12,7 +12,7 @@ configDsp(CMSISDSPComplexMath ${ROOT})
 
 
 include(interpol)
-interpol(CMSISDSPFastMath)
+interpol(CMSISDSPComplexMath)
 
 
 if (CONFIGTABLE AND ALLFAST)
