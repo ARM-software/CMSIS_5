@@ -22,6 +22,7 @@ var searchData=
   ['refindex',['refIndex',['../arm__fft__bin__example__f32_8c.html#aec50b0f697fd9e7e7e244487a4bd57e4',1,'arm_fft_bin_example_f32.c']]],
   ['refoutput',['refOutput',['../arm__fir__data_8c.html#aa7570f8c2e7a3c929d9d32a14a51389f',1,'refOutput():&#160;arm_fir_data.c'],['../arm__fir__example__f32_8c.html#a12d0acaa028f1dcd964d2d188e7df331',1,'refOutput():&#160;arm_fir_data.c']]],
   ['refvarianceout',['refVarianceOut',['../arm__variance__example__f32_8c.html#a26cbbfe2a7905669e8440159465050df',1,'arm_variance_example_f32.c']]],
+  ['rfft',['rfft',['../structarm__mfcc__instance__f32.html#a489f76388c886ac258175e4d27970b0c',1,'arm_mfcc_instance_f32::rfft()'],['../structarm__mfcc__instance__f16.html#a47d443febad23272d9aaf97f91f788b9',1,'arm_mfcc_instance_f16::rfft()']]],
   ['ri',['RI',['../arm__rotation2quaternion__f32_8c.html#a0671bc9d0dfb2fb2926884f1d70c4673',1,'arm_rotation2quaternion_f32.c']]],
   ['root_20mean_20square_20_28rms_29',['Root mean square (RMS)',['../group__RMS.html',1,'']]],
   ['rotation_20to_20quaternion',['Rotation to Quaternion',['../group__RotQuat.html',1,'']]],

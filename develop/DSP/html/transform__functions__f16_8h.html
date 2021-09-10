@@ -130,6 +130,9 @@ Data Structures</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__rfft__fast__instance__f16.html">arm_rfft_fast_instance_f16</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Instance structure for the floating-point RFFT/RIFFT function.  <a href="structarm__rfft__fast__instance__f16.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structarm__mfcc__instance__f16.html">arm_mfcc_instance_f16</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Instance structure for the Floating-point MFCC function.  <a href="structarm__mfcc__instance__f16.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -157,6 +160,12 @@ Functions</h2></td></tr>
 <tr class="memitem:gaad799b60792f7ffa0ff971b5d9827eb9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ComplexFFT.html#gaad799b60792f7ffa0ff971b5d9827eb9">arm_cfft_radix2_f16</a> (const <a class="el" href="structarm__cfft__radix2__instance__f16.html">arm_cfft_radix2_instance_f16</a> *<a class="el" href="arm__bayes__example__f32_8c.html#ad5af783c9e1eb1514dec0a59dac35eb7">S</a>, float16_t *pSrc)</td></tr>
 <tr class="memdesc:gaad799b60792f7ffa0ff971b5d9827eb9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Radix-2 CFFT/CIFFT.  <a href="group__ComplexFFT.html#gaad799b60792f7ffa0ff971b5d9827eb9">More...</a><br/></td></tr>
 <tr class="separator:gaad799b60792f7ffa0ff971b5d9827eb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae6a307eafd0bb6534369d239e76ef766"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__math__types_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6">arm_status</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MFCC.html#gae6a307eafd0bb6534369d239e76ef766">arm_mfcc_init_f16</a> (<a class="el" href="structarm__mfcc__instance__f16.html">arm_mfcc_instance_f16</a> *<a class="el" href="arm__bayes__example__f32_8c.html#ad5af783c9e1eb1514dec0a59dac35eb7">S</a>, uint32_t fftLen, uint32_t nbMelFilters, uint32_t nbDctOutputs, const float16_t *dctCoefs, const uint32_t *filterPos, const uint32_t *filterLengths, const float16_t *filterCoefs, const float16_t *windowCoefs)</td></tr>
+<tr class="memdesc:gae6a307eafd0bb6534369d239e76ef766"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialization of the MFCC F16 instance structure.  <a href="group__MFCC.html#gae6a307eafd0bb6534369d239e76ef766">More...</a><br/></td></tr>
+<tr class="separator:gae6a307eafd0bb6534369d239e76ef766"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabd9cd57cbb2e179c78c4fb02cdcdb63c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MFCC.html#gabd9cd57cbb2e179c78c4fb02cdcdb63c">arm_mfcc_f16</a> (<a class="el" href="structarm__mfcc__instance__f16.html">arm_mfcc_instance_f16</a> *<a class="el" href="arm__bayes__example__f32_8c.html#ad5af783c9e1eb1514dec0a59dac35eb7">S</a>, float16_t *pSrc, float16_t *pDst, float16_t *pTmp)</td></tr>
+<tr class="memdesc:gabd9cd57cbb2e179c78c4fb02cdcdb63c"><td class="mdescLeft">&#160;</td><td class="mdescRight">MFCC F16.  <a href="group__MFCC.html#gabd9cd57cbb2e179c78c4fb02cdcdb63c">More...</a><br/></td></tr>
+<tr class="separator:gabd9cd57cbb2e179c78c4fb02cdcdb63c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->

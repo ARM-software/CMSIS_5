@@ -24,6 +24,7 @@ var searchData=
   ['merge_5frfft_5ff16',['merge_rfft_f16',['../arm__rfft__fast__f16_8c.html#a59f5e8584fdecac35a6f86ae91f99e3d',1,'arm_rfft_fast_f16.c']]],
   ['merge_5frfft_5ff32',['merge_rfft_f32',['../arm__rfft__fast__f32_8c.html#a7b48b01d0ec30d8d206d99d5dbf5f946',1,'arm_rfft_fast_f32.c']]],
   ['merge_5frfft_5ff64',['merge_rfft_f64',['../arm__rfft__fast__f64_8c.html#ad1bcd7791594175de8d2dab31c069e55',1,'arm_rfft_fast_f64.c']]],
+  ['mfcc',['MFCC',['../group__MFCC.html',1,'']]],
   ['minimum',['Minimum',['../group__Min.html',1,'']]],
   ['min_5fmarks',['min_marks',['../arm__class__marks__example__f32_8c.html#abb7687fa07ec54d8e792cfcbfe2ca809',1,'arm_class_marks_example_f32.c']]],
   ['minkowski_20distance',['Minkowski distance',['../group__Minkowski.html',1,'']]],

@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['dctcoefs',['dctCoefs',['../structarm__mfcc__instance__f32.html#a8026013bc0810af2b1db606041228cca',1,'arm_mfcc_instance_f32::dctCoefs()'],['../structarm__mfcc__instance__f16.html#a42d2ba7cf9c1d3606860005eb5de8026',1,'arm_mfcc_instance_f16::dctCoefs()']]],
   ['degree',['degree',['../structarm__svm__polynomial__instance__f32.html#a192432a474907a70b37aa10ddabc0c97',1,'arm_svm_polynomial_instance_f32::degree()'],['../structarm__svm__polynomial__instance__f16.html#a192432a474907a70b37aa10ddabc0c97',1,'arm_svm_polynomial_instance_f16::degree()']]],
   ['dir',['dir',['../structarm__sort__instance__f32.html#ac6f3976ef6b482e4c2b4a865bb362518',1,'arm_sort_instance_f32::dir()'],['../structarm__merge__sort__instance__f32.html#ac6f3976ef6b482e4c2b4a865bb362518',1,'arm_merge_sort_instance_f32::dir()']]],
   ['dobitreverse',['doBitReverse',['../arm__fft__bin__example__f32_8c.html#a4d2e31c38e8172505e0a369a6898657d',1,'arm_fft_bin_example_f32.c']]],

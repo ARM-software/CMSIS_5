@@ -116,8 +116,17 @@ $(document).ready(function(){initNavTree('ChangeLog_pg.html','');});
 <tr>
 <th>Version </th><th>Description  </th></tr>
 <tr>
-<td>V1.10.0 </td><td>Float promotion issues:<ul>
-<li>Removed remaining issues of implicit float promotion (mainly in f16 code)   </li>
+<td>V1.10.0 </td><td><p class="starttd">Float promotion issues:</p>
+<ul>
+<li>Removed remaining issues of implicit float promotion (mainly in f16 code)</li>
+</ul>
+<p>Scalar versions of arm_vlog_q31 and arm_vlog_q15</p>
+<p>Synchronous Data Flow</p>
+<p>MFCC F32 and F16</p>
+<p class="endtd">Remarks:</p>
+<ul>
+<li>MFCC F16 is not very accurate</li>
+<li>Accuracy issues remain with the vlog f16, q31 and q15.   </li>
 </ul>
 </td></tr>
 <tr>
@@ -363,7 +372,7 @@ $(document).ready(function(){initNavTree('ChangeLog_pg.html','');});
 </td></tr>
 <tr>
 <td>V1.4.6 (no source code change [still labeled 1.4.5]) 2015/08/26 </td><td>Modified <a class="el" href="arm__math_8h.html">arm_math.h</a><ul>
-<li>Updated function <a class="el" href="group__SQRT.html#ga5f37f479666ee8ff9711b334286c60ed">arm_sqrt_f32</a> for use with IAR.   </li>
+<li>Updated function <a class="el" href="group__SQRT.html#gaa37d8b017ef0c8d356dc98fd78e2d96b">arm_sqrt_f32</a> for use with IAR.   </li>
 </ul>
 </td></tr>
 <tr>
