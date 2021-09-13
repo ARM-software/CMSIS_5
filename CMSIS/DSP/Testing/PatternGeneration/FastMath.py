@@ -49,6 +49,8 @@ def divide(f,r):
 def initLogValues(format):
     if format == Tools.Q15:
        exps = -np.linspace(0,15,num=125)
+    elif format == Tools.F16:
+       exps = -np.linspace(0,10,num=125)
     else:
        exps = -np.linspace(0,31,num=125)
     basis=2.0*np.ones(exps.size)

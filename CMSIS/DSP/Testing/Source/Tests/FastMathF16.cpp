@@ -5,7 +5,6 @@
 
 
 #define SNR_THRESHOLD 60
-#define SNR_LOG_THRESHOLD 40
 
 /* 
 
@@ -16,8 +15,6 @@ a double precision computation.
 #define REL_ERROR (1.0e-3)
 #define ABS_ERROR (1.0e-3)
 
-#define REL_LOG_ERROR (3.0e-2)
-#define ABS_LOG_ERROR (3.0e-2)
 
 #if 0
     void FastMathF16::test_cos_f16()
@@ -74,15 +71,16 @@ a double precision computation.
 
     }
 
+
     void FastMathF16::test_vlog_f16()
     {
         const float16_t *inp  = input.ptr();
         float16_t *outp  = output.ptr();
 
         arm_vlog_f16(inp,outp,ref.nbSamples());
-    
-        ASSERT_SNR(ref,output,(float16_t)SNR_LOG_THRESHOLD);
-        ASSERT_CLOSE_ERROR(ref,output,ABS_LOG_ERROR,REL_LOG_ERROR);
+
+        //ASSERT_SNR(ref,output,(float16_t)SNR_THRESHOLD);
+        ASSERT_CLOSE_ERROR(ref,output,ABS_ERROR,REL_ERROR);
         ASSERT_EMPTY_TAIL(output);
 
     }

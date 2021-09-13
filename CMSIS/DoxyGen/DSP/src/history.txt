@@ -18,9 +18,10 @@
 
       MFCC F32 and F16
 
+      Typecasting functions for converting between f16 and s16 in scalar.
+
       Remarks:
-      - MFCC F16 is not very accurate
-      - Accuracy issues remain with the vlog f16, q31 and q15.
+      - Accuracy issues remain with the vlog q31 and q15.
     </td>
   </tr>
   <tr>

@@ -4,7 +4,7 @@
 
 #include "mfccdata_f16.h"
 
-#define SNR_THRESHOLD 50
+#define SNR_THRESHOLD 60
 
 /* 
 
@@ -12,8 +12,8 @@ Reference patterns are generated with
 a double precision computation.
 
 */
-#define REL_ERROR (2.0e-2)
-#define ABS_ERROR (2.0e-2)
+#define REL_ERROR (4.0e-3)
+#define ABS_ERROR (4.0e-3)
 
 
     void MFCCF16::test_mfcc_f16()
