@@ -310,10 +310,10 @@ void arm_mat_vec_mult_f16(const arm_matrix_instance_f16 *pSrcMat, const float16_
         pInVec = pVec;
 
         /* Initialize accumulators */
-        float16_t sum1 = 0.0f;
-        float16_t sum2 = 0.0f;
-        float16_t sum3 = 0.0f;
-        float16_t sum4 = 0.0f;
+        float16_t sum1 = 0.0f16;
+        float16_t sum2 = 0.0f16;
+        float16_t sum3 = 0.0f16;
+        float16_t sum4 = 0.0f16;
 
         /* Loop unrolling: process 2 columns per iteration */
         colCnt = numCols;
@@ -331,13 +331,13 @@ void arm_mat_vec_mult_f16(const arm_matrix_instance_f16 *pSrcMat, const float16_
             vecData = *(pInVec)++;
             // Read 8 values from the matrix - 2 values from each of 4 rows, and do multiply accumulate
             matData = *(pInA1)++;
-            sum1 += matData * vecData;
+            sum1 += (_Float16)matData * (_Float16)vecData;
             matData = *(pInA2)++;
-            sum2 += matData * vecData;
+            sum2 += (_Float16)matData * (_Float16)vecData;
             matData = *(pInA3)++;
-            sum3 += matData * vecData;
+            sum3 += (_Float16)matData * (_Float16)vecData;
             matData = *(pInA4)++;
-            sum4 += matData * vecData;
+            sum4 += (_Float16)matData * (_Float16)vecData;
 
             // Decrement the loop counter
             colCnt--;
@@ -359,7 +359,7 @@ void arm_mat_vec_mult_f16(const arm_matrix_instance_f16 *pSrcMat, const float16_
     row = numRows & 3u;
     while (row > 0) {
 
-        float16_t sum = 0.0f;
+        float16_t sum = 0.0f16;
         pInVec = pVec;
         pInA1 = pSrcA + i;
 
@@ -370,14 +370,14 @@ void arm_mat_vec_mult_f16(const arm_matrix_instance_f16 *pSrcMat, const float16_
             vecData2 = *(pInVec)++;
             matData = *(pInA1)++;
             matData2 = *(pInA1)++;
-            sum += matData * vecData;
-            sum += matData2 * vecData2;
+            sum += (_Float16)matData * (_Float16)vecData;
+            sum += (_Float16)matData2 * (_Float16)vecData2;
             colCnt--;
         }
         // process remainder of row
         colCnt = numCols & 1u;
         while (colCnt > 0) {
-            sum += *pInA1++ * *pInVec++;
+            sum += (_Float16)*pInA1++ * (_Float16)*pInVec++;
             colCnt--;
         }
 

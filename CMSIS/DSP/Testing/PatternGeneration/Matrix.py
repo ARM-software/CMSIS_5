@@ -678,6 +678,12 @@ def getSemidefinitePositiveMatrix(d,k=3):
    p = getInvertibleMatrix(d)
    return(np.matmul(p,np.matmul(a,np.transpose(p))))
 
+def notnull(x):
+    if x == 0:
+        return(0.2)
+    else:
+        return(x)
+
 def writeUnaryTests(config,format):
     config.setOverwrite(False)
     # For benchmarks
@@ -908,6 +914,55 @@ def writeUnaryTests(config,format):
     config.writeReference(1, llvals,"RefLDLT_LL_SDPO")
     config.writeReference(1, dvals,"RefLDLT_D_SDPO")
     config.writeReferenceS16(1, permvals,"RefLDLT_PERM_SDPO")
+
+    # Lower and upper triangular
+    config.setOverwrite(True)
+    thedims=[]
+    theltmatrix=[] 
+    theutmatrix=[] 
+    thevectors=[]
+    theltinvs=[]
+    theutinvs=[]
+    nb = 0
+    for matrixDim in dims:
+        for cols in range(1,matrixDim):
+            thedims.append((matrixDim,cols))
+            nb = nb + 1
+            matrix=np.random.randn(matrixDim * matrixDim).reshape(matrixDim,matrixDim)
+            matrix = Tools.normalize(matrix)
+            # LT
+            matrixLT = np.tril(matrix)
+            diagvalues=[notnull(x) for x in np.diagonal(matrixLT)]
+            np.fill_diagonal(matrixLT, diagvalues)
+            #UP
+            matrixUT = np.triu(matrix)
+            diagvalues=[notnull(x) for x in np.diagonal(matrixUT)]
+            np.fill_diagonal(matrixUT, diagvalues)
+
+            
+            theltmatrix = theltmatrix + list(matrixLT.reshape(matrixDim*matrixDim))
+            theutmatrix = theutmatrix + list(matrixUT.reshape(matrixDim*matrixDim))
+
+            vector=np.random.randn(matrixDim * cols)
+            vector = Tools.normalize(vector)
+            vector = [notnull(x) for x in vector]
+            vector = np.array(vector).reshape(matrixDim,cols)
+            thevectors = thevectors + list(vector.reshape(matrixDim*cols))
+
+            refLT=np.linalg.solve(matrixLT,vector)
+            theltinvs = theltinvs + list(refLT.reshape(matrixDim*cols))
+
+            refUT=np.linalg.solve(matrixUT,vector)
+            theutinvs = theutinvs + list(refUT.reshape(matrixDim*cols))
+
+    thedims=list(np.array(thedims).reshape(2*nb))
+    config.writeInput(1, theltmatrix,"InputMatrixLTSolve")
+    config.writeInput(1, theutmatrix,"InputMatrixUTSolve")
+    config.writeInput(1, thevectors,"InputVectorLTSolve")
+    config.writeReference(1, theltinvs,"RefLTSolve")
+    config.writeReference(1, theutinvs,"RefUTSolve")
+    config.writeInputS16(1, thedims,"DimsLTSolve")
+    config.setOverwrite(False)
 
 
 def generatePatterns():

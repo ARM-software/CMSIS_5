@@ -22,6 +22,12 @@ project(cmsis_nn_unit_tests VERSION 0.0.1)
 
 set(CMSIS_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../../../..")
 
+add_compile_options(-Werror
+                    -Wimplicit-function-declaration
+                    -Wunused-variable
+                    -Wunused-function
+                    -Wno-redundant-decls)
+
 option(BUILD_CMSIS_NN_UNIT "If building the unit tests from another project, i.e. \
 platform dependencies need to be provided externally." OFF)
 
@@ -38,7 +44,6 @@ if(BUILD_CMSIS_NN_UNIT_TESTS_FOR_FVP_BASED_CORSTONE_300)
 endif()
 
 # Build the functions to be tested.
-set(BUILD_CMSIS_NN_FUNCTIONS ON)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../.. cmsis-nn)
 
 # Target for all unit tests.
@@ -62,10 +67,13 @@ endfunction(add_cmsis_nn_unit_test_executable)
 add_subdirectory(TestCases/test_arm_avgpool_s8)
 add_subdirectory(TestCases/test_arm_convolve_1x1_s8_fast)
 add_subdirectory(TestCases/test_arm_convolve_s8)
+add_subdirectory(TestCases/test_arm_convolve_s16)
+add_subdirectory(TestCases/test_arm_convolve_fast_s16)
 add_subdirectory(TestCases/test_arm_depthwise_conv_3x3_s8)
 add_subdirectory(TestCases/test_arm_depthwise_conv_s8)
 add_subdirectory(TestCases/test_arm_depthwise_conv_s8_opt)
 add_subdirectory(TestCases/test_arm_fully_connected_s8)
+add_subdirectory(TestCases/test_arm_fully_connected_s16)
 add_subdirectory(TestCases/test_arm_max_pool_s8)
 add_subdirectory(TestCases/test_arm_softmax_s8)
 add_subdirectory(TestCases/test_arm_svdf_s8)
@@ -83,7 +91,7 @@ get_property(executables GLOBAL PROPERTY cmsis_nn_unit_test_executables)
 string(REPLACE " " ";" cmsis_nn_unit_test_list_of_executables ${executables})
 foreach(target ${cmsis_nn_unit_test_list_of_executables})
     target_link_libraries(${target} LINK_PUBLIC unity)
-    target_link_libraries(${target} LINK_PUBLIC CMSISNN)
+    target_link_libraries(${target} LINK_PUBLIC cmsis-nn)
 endforeach()
 
 if(BUILD_CMSIS_NN_UNIT_TESTS_FOR_FVP_BASED_CORSTONE_300)
@@ -125,7 +133,7 @@ if(BUILD_CMSIS_NN_UNIT_TESTS_FOR_FVP_BASED_CORSTONE_300)
         set(LINK_ENTRY_OPTION "")
         set(LINK_ENTRY "")
     endif()
- 
+
     # Link in FVP dependencies to every unit test.
     get_property(executables GLOBAL PROPERTY cmsis_nn_unit_test_executables)
     string(REPLACE " " ";" cmsis_nn_unit_test_list_of_executables ${executables})

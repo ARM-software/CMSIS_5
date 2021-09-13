@@ -16,11 +16,8 @@ For command line build with software packs, the following tools and utilities ar
 | \subpage cp_init "cp_init.sh"               | Create an empty directory for storing software packs in CMSIS-Pack format |
 | \subpage cbuild "cbuild.sh"                 | Start the overall command line build process                              |
 | \subpage cbuildgen "cbuildgen"              | Create Make or CMakeLists.txt file and manage software layers             |
-| \subpage make "Make"                        | GNU Make utility to generate binary images and update configuration files |
 | \subpage cmake "CMake"                      | CMake utility to generate binary images                                   |
 | \subpage cp_install "cp_install.sh"         | Download and install software packs                                       |
-| \subpage ccmerge "ccmerge"                  | Merge project specific setup to a new version of a configuration file     |
-| \subpage cbuild_uv "cbuild_uv.sh"           | Export MDK project targets and run a command line build process           |
 
 \note
 - For the above command line build tools and scripts  a
@@ -28,8 +25,7 @@ For command line build with software packs, the following tools and utilities ar
   Windows, install for example <a href="https://gitforwindows.org/" target="_blank"><b>git for Windows</b></a> which includes
   <b>Git Bash</b>. 
 - All Bash scripts show a reference implementation and can be easily adopted to the user's needs. They can also be replaced
-  by other scripts written in Python for example. The only tools you still require are \ref cbuildgen "cbuildgen" and
-  \ref ccmerge "ccmerge".
+  by other scripts written in Python for example. The only tool you still require is \ref cbuildgen "cbuildgen".
 */
 
 
@@ -95,20 +91,20 @@ $ source ./cbuild/etc/setup
 
 \section cbuild_compiler_config Compiler Configuration
 
-\ref cbuildgen "cbuildgen" uses toolchain specific <b>.mak files</b> that map the CMSIS project
-settings to the toolchain. For each supported toolchain a <b>.mak files</b> is provided in
+\ref cbuildgen "cbuildgen" uses toolchain specific <b>.cmake files</b> that map the CMSIS project
+settings to the toolchain. For each supported toolchain a <b>.cmake file</b> is provided in
 the directory <b>./cbuild/etc</b> and specifies the base directory of the toolchain installation(\c TOOLCHAIN_ROOT).
 In addition other toolchain specific environment variables may be setup here (e.g. license file and
 product variant). The user is required to update the these settings after installation to reflect the actual installation.
 
-<b>Example file: ./cbuild/etc/ARMCC.6.13.1.mak</b>
+<b>Example file: ./cbuild/etc/ARMCC.6.16.0.cmake</b>
 
 \code
 # Version: 0.10.0
 # Date: 2020-09-30
 # This file maps the CMSIS project options to toolchain settings.
 #
-#   - Applies to toolchain: ARMCC 6.14.0
+#   - Applies to toolchain: ARMCC 6.16.0
 #
 ############### EDIT BELOW ###############
 # Set base directory of toolchain
@@ -118,8 +114,8 @@ TOOLCHAIN_ROOT:=C:/Keil_v5/ARM/ARMCLANG
 \endcode
 
 The toolchain for compilation is defined in project file <b>*.cprj</b> and used by \ref cbuildgen "cbuildgen". 
-\ref cbuildgen "cbuildgen" first searches for the toolchain specific <b>.mak file</b> in the project directory.
-If the toolchain specific <b>.mak file</b> is not present there, it uses the directory that is specified
+\ref cbuildgen "cbuildgen" first searches for the toolchain specific <b>.cmake file</b> in the project directory.
+If the toolchain specific <b>.cmake file</b> is not present there, it uses the directory that is specified
 by the \b $CMSIS_BUILD_ROOT environment variable.
 
 \section libxml libxml (optional for Windows)
@@ -234,17 +230,14 @@ Please setup environment variable CMSIS_PACK_ROOT to:
 /**
 \page cbuild cbuild.sh: Build Invocation
 
-\b cbuild.sh implements the build flow by chaining the utilities \ref cbuildgen "cbuildgen", \ref ccmerge "ccmerge", and
-<b>Make</b>. It replicates the build steps of CMSIS-Pack aware IDEs and also updates configuration files if necessary. The
+\b cbuild.sh implements the build flow by chaining the utilities \ref cbuildgen "cbuildgen" and
+<b>CMake</b>. It replicates the build steps of CMSIS-Pack aware IDEs and also copies configuration files from packs if necessary. The
 script can be adopted to project specific requirements or replaced by a custom implementation (for example a Python script).
 
 The build flow of the \b cbuild.sh script is:
  - Call \ref cbuildgen "cbuildgen" with command \c packlist to list the URLs of missing software packs.
  - Call \ref cp_install "cp_install.sh" to download and install missing software packs.
- - Call \ref cbuildgen "cbuildgen" with command \c make to generate make files \a or
  - Call \ref cbuildgen "cbuildgen" with command \c cmake to generate a CMakeLists.txt file (if \c \--cmake is specified).
- - Call \ref make "Make" to update configuration files using \ref ccmerge "ccmerge" (not supported for \c \--cmake).
- - Call \ref make "Make" to compile the project source code into the binary image \a or
  - Call \ref cmake "cmake" to compile the project source code into the binary image using the specified \c \<BuildSystem>.
  
 
@@ -253,7 +246,7 @@ The build flow of the \b cbuild.sh script is:
 It is called from the \b Bash command line with the following syntax:
 
 \code
-$ cbuild.sh <ProjectFile>.cprj [--toolchain=<Toolchain> --outdir=<OutDir> --intdir=<IntDir> --update=<CprjFile> --jobs=<N> --log=<LogFile> --quiet --merge <MakefileTarget>]
+$ cbuild.sh <ProjectFile>.cprj [--toolchain=<Toolchain> --outdir=<OutDir> --intdir=<IntDir> --update=<CprjFile> --jobs=<N> --log=<LogFile> --quiet <CMakeTarget>]
 \endcode
 
 \b Where:
@@ -264,7 +257,7 @@ $ cbuild.sh <ProjectFile>.cprj [--toolchain=<Toolchain> --outdir=<OutDir> --intd
 
 \b Operation
 
-<table class="cmtable" summary="ccmerge Arguments">
+<table class="cmtable" summary="cbuild Arguments">
   <tr>
     <th style="min-width:210px">Option</th>
     <th>Description</th>
@@ -283,16 +276,16 @@ $ cbuild.sh <ProjectFile>.cprj [--toolchain=<Toolchain> --outdir=<OutDir> --intd
   (\c cpinstall), command files, object files, and dependency files).</td>
   </tr>
   <tr>
-    <td>\<MakefileTarget></td>
-    <td>Specifies the <\c target> option for \ref make "Make".</td>
+    <td>\<CMakeTarget></td>
+    <td>Specifies the <\c target> option for \ref cmake "CMake".</td>
   </tr>
   <tr>
     <td>\--quiet</td>
     <td>Suppresses output messages except build invocations.</td>
   </tr>
   <tr>
-    <td>\--merge</td>
-    <td>Updates configuration files with the \ref ccmerge utility. \b Note: not supported when used with \c \--cmake.</td>
+    <td>\--clean</td>
+    <td>Removes intermediate and output directories.</td>
   </tr>
   <tr>
     <td>\--update=\<CprjFile></td>
@@ -308,37 +301,16 @@ $ cbuild.sh <ProjectFile>.cprj [--toolchain=<Toolchain> --outdir=<OutDir> --intd
   </tr>
   <tr>
     <td>\--jobs=\<N></td>
-    <td>Specifies the number of job slots for \ref make "Make" parallel execution. Minimum 1.</td>
+    <td>Specifies the number of job slots for the underlying build system parallel execution. Minimum 1.</td>
   </tr>
   <tr>
-    <td>\--cmake[=\<BuildSystem>]</td>
-    <td>Generates CMakeLists.txt file [and invokes \ref cmake with the specified \c \<BuildSystem>].</td>
+    <td>\[--cmake=\<BuildSystem>]</td>
+    <td>Selects the build system, default <b>Ninja</b>.</td>
   </tr>
 </table>
 
 
 \section cbuild_example Usage Example
-
-<b>Make based build</b>
-
-\verbatim
-$ cbuild.sh Simulation.cprj
-(cbuild.sh): Build Invocation 0.10.0 (C) 2020 ARM
-Simulation.cprj validates
-(cbuildgen): Build Process Manager 0.10.0 (C) 2020 ARM
-M650: Command completed successfully.
-(cbuildgen): Build Process Manager 0.10.0 (C) 2020 ARM
-M652: Generated makefile for project build: 'C:/Examples/Blinky/IntDir/Simulation.mak'
-[1/7] Compiling C:/Examples/Blinky/RTE/CMSIS/RTX_Config.c
-[2/7] Compiling C:/Users/danbro01/AppData/Local/Arm/Packs/ARM/CMSIS/5.7.0/CMSIS/RTOS2/RTX/Source/rtx_lib.c
-[3/7] Compiling C:/Users/danbro01/AppData/Local/Arm/Packs/Keil/ARM_Compiler/1.6.3/Source/retarget_io.c
-[4/7] Compiling C:/Examples/Blinky/Blinky.c
-[5/7] Compiling C:/Examples/Blinky/RTE/Device/ARMCM3/startup_ARMCM3.c
-[6/7] Compiling C:/Examples/Blinky/RTE/Device/ARMCM3/system_ARMCM3.c
-[7/7] Linking to C:/Examples/Blinky/OutDir/Blinky_AC6.axf
-Program Size: Code=7468 RO-data=1264 RW-data=168 ZI-data=9084
-cbuild.sh finished successfully!
-\endverbatim
 
 <b>CMake based build</b>
 
@@ -390,13 +362,8 @@ cbuild.sh finished successfully!
   </tr>
   <tr>
     <td>ERROR</td>
-    <td>make ${output}${project}_cfg.mak failed!</td>
-    <td>Check make error messages.</td>
-  </tr>
-  <tr>
-    <td>ERROR</td>
-    <td>make ${output}${project}.mak failed!</td>
-    <td>Check make error messages.</td>
+    <td>cmake ${output}${project}.cprj failed!</td>
+    <td>Check CMake error messages.</td>
   </tr>
   <tr>
     <td>INFO</td>
@@ -420,13 +387,9 @@ and environment variables.
    with the environment variable \c $CMSIS_PACK_ROOT.
  - The version of configuration files is specified in project file *.cprj and related software packs are used to update it.
  - Device information is read from the device family pack (DFP) that defines the device.
- - Command line options for a toolchain is used from the <b>\<name>.\<version>.mak</b> file, if not present in the project
+ - Command line options for a toolchain is used from the <b>\<name>.\<version>.cmake</b> file, if not present in the project
    file directory, the \c $CMSIS_COMPILER_ROOT is used.
 
-The \c \<ProjectFile>.mak file includes two additional makefiles:
- - include <tt>${CMSIS_BUILD_ROOT}/etc/Whitespace.mak</tt> for handling of white space characters in filenames.
- - include <tt>${CMSIS_COMPILER_ROOT}/\<name>.\<version>.mak</tt> that specifies default options for the toolchain.
- 
 
  \section cbuildgen_invocation Invocation
 
@@ -478,25 +441,10 @@ cbuildgen <ProjectFile>.cprj <command> [<args>]
     <td>Suppresses all tool messages except build progress and result information.</td>
   </tr>
   <tr>
-    <td>make</td>
-    <td></td>
-    <td>Generate makefile(s).</td>    
-    <td>Generates <tt>\<ProjectFile\>.mak</tt> for \ref make "Make" required to build the project. 
-        This command also generates a ASCII log file <tt>\<ProjectFile\>.clog</tt> recording location and version of the selected toolchain,
-        packs, components and config files.
-    </td>
-  </tr>
-  <tr>
     <td rowspan="6"></td>
     <td>\--toolchain=&lt;Toolchain></td>
     <td>Select the toolchain.</td>    
     <td>For projects that can be built with multiple toolchains, it defines the toolchain for the build.</td>
-  </tr>
-  <tr>
-    <td>\--merge=&lt;MergeTool></td>
-    <td>Update configuration files.</td>    
-    <td>When used with the command \c make, it generates also <tt>\<ProjectFile>_cfg.mak</tt> for \ref make "Make" to update configuration
-        files using \ref ccmerge.</td>
   </tr>
   <tr>
     <td>\--update=&lt;CprjFile></td>
@@ -511,7 +459,7 @@ cbuildgen <ProjectFile>.cprj <command> [<args>]
   <tr>
     <td>\--intdir=&lt;IntDir></td>
     <td>Intermediate files output directory.</td>
-    <td>Output directory for generated make files, list of missing packs (cpinstall), command files, object files, and dependency files.</td>    
+    <td>Output directory for generated CMakeLists, list of missing packs (cpinstall), command files, object files, and dependency files.</td>    
   </tr>
   <tr>
     <td>\--quiet</td>
@@ -546,7 +494,7 @@ cbuildgen <ProjectFile>.cprj <command> [<args>]
   <tr>
     <td>\--intdir=&lt;IntDir></td>
     <td>Intermediate files output directory.</td>
-    <td>Output directory for generated make files, list of missing packs (cpinstall), command files, object files, and dependency files.</td>    
+    <td>Output directory for generated CMakeLists, list of missing packs (cpinstall), command files, object files, and dependency files.</td>    
   </tr>
   <tr>
     <td>\--quiet</td>
@@ -637,8 +585,7 @@ cbuildgen <ProjectFile>.cprj <command> [<args>]
   </tr>
 </table>
 
-Note: \b cbuildgen does not update the *.cprj for commands \c packlist, \c make and \c extract. The merge tool updates the
-outdated configuration files with new merged data, keeping a copy of the original file.
+Note: \b cbuildgen does not update the *.cprj for commands \c packlist, \c cmake and \c extract.
 
 
 \section cbuildgen_example Usage Examples
@@ -651,15 +598,6 @@ $ cbuildgen Simulation.cprj packlist
 M654: URL 'http://www.keil.com/pack/ARM.CMSIS.5.6.0.pack' was added to the list of missing packages.
 M654: URL 'http://www.keil.com/pack/Keil.ARM_Compiler.1.6.1.pack' was added to the list of missing packages.
 M650: Command completed successfully.
-\endverbatim
-
-<b>Generate make file for building the project</b>
-
-\verbatim
-$ cbuildgen Simulation.cprj make
-(cbuildgen): Build Process Manager 0.9.1 (C) 2020 ARM
-M651: Generated makefile for merging config files: 'Simulation_cfg.mak'
-M652: Generated makefile for project build:'Simulation.mak'
 \endverbatim
 
 <b>Extract a specific layer from the CPRJ file</b>
@@ -710,7 +648,7 @@ M650: Command completed successfully.
   <td>The tool requires the environment variable $CMSIS_PACK_ROOT to locate the CMSIS Packs.</td>
 </tr>
 <tr><td>M206</td> <td>ERROR</td> <td>No command was specified!</td>
-  <td>The tool requires a command. See usage information for available commands (e.g. config, make)</td>
+  <td>The tool requires a command. See usage information for available commands (e.g. packlist, cmake)</td>
 </tr>
 <tr><td>M207</td> <td>ERROR</td> <td>Multiple commands were specified!</td>
   <td>More than one command was provided in arguments. A single command is required.</td>
@@ -769,10 +707,7 @@ M650: Command completed successfully.
 <tr><td>M650</td> <td>INFO</td> <td>Setup run successfully</td>
   <td>For information only.</td>
 </tr>
-<tr><td>M651</td> <td>INFO</td> <td>Generated makefile for merging config files: ... </td>
-  <td>For information only.</td>
-</tr>
-<tr><td>M652</td> <td>INFO</td> <td>Generated makefile for project build:'%NAME%.mak'</td>
+<tr><td>M652</td> <td>INFO</td> <td>Generated file for project build:'%NAME%'</td>
   <td>For information only.</td>
 </tr>
 <tr><td>M653</td> <td>INFO</td> <td>Local config file ... was not found. Copying default file from package.</td> 
@@ -787,162 +722,6 @@ M650: Command completed successfully.
 <tr><td>M656</td> <td>INFO</td> <td>Package 'VENDOR.NAME.VER' was found in local repository 'PATH'!</td>
   <td>For information only.</td>
 </tr>
-</table>
-*/
-
-
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/**
-\page ccmerge ccmerge: Config File Updater
-
-\b ccmerge supports the update process for configuration files that use 
-<a href="../../Pack/html/configWizard.html"><b>Configuration Wizard Annotations</b></a>. The tool takes the configuration
-file located in the CMSIS-Pack (\c pfile) and merges the configuration information extracted from the configuration file
-located in the current project (\c cfile). If the merge succeeds, the result is written to 'cfile' after a copy of 'cfile'
-has been stored as 'cfile.nnnn'.
-
-\note \b ccmerge currently only works with \ref make "Make".
-
-\section ccmerge_invocation Invocation
-
-\b ccmerge is called from the \b Bash command line with the following syntax:
-
-\code
-ccmerge -pfile <name_of_pack_cfgfile> -cfile <name_of_current_cfgfile> [-merge] [-details]
-\endcode 
-
-\b Operation
-
-<table class="cmtable" summary="ccmerge Arguments">
-  <tr>
-    <th style="min-width:210px">Option</th>
-    <th>Description</th>
-  </tr>
-  <tr>
-    <td>-pfile &lt;name_of_pack_cfgfile></td>
-    <td>File path of the configuration file from a pack</td>    
-  </tr>
-  <tr>
-    <td>-cfile &lt;name_of_current_cfgfile></td>
-    <td>File path of the current config file in a project</td>    
-  </tr>
-  <tr>
-    <td>-merge</td>
-    <td>Execute merge: the current 'cfile' will be saved as 'cfile.nnnn' then 'cfile' will be updated and overwritten.</td>
-  </tr>
-  <tr>
-    <td>-details</td>
-    <td>Create a log file: the name will be that of 'cfile' with an extension '.mlog' added to 'cfile'. The log file will contain info about merged items and their location or warning and error messages when processing fails.</td>
-  </tr>
-</table>
-
-When \c -details is specified without \c -merge, then an \c .mlog file will be created that shows the differences of the
-config values but no actual merge takes place.
-
-When \b ccmerge detects that \c 'cfile' and \c 'pfile' are incompatible, then an error message is shown and the merge is
-aborted.
-
-\note
-A file's path name can be specified without surrounding " characters as long as it does not contain any spaces or other
-special characters. It must be enclosed by " characters when the path name contains one or more spaces or other special
-characters.
-
-
-\section ccmerge_examples Usage Example
-
-\code
-ccmerge -pfile $CMSIS_PACK_ROOT/ARM/CMSIS/5.6.0/CMSIS/RTOS2/RTX/Config/RTX_Config.h -cfile RTE/CMSIS/RTX_Config.h -merge
-\endcode
-
-
-\section ccmerge_errors Error Messages
-
-<table class="cmtable" summary="ccmerge messages">
-  <tr>
-    <th>Type</th>
-    <th>Message</th>
-    <th>Action</th>
-  </tr>
-  <tr>
-    <td>ERROR</td>
-    <td>-cfile - missing filename</td>
-    <td>See usage and correct the argument.</td>
-  </tr>
-  <tr>
-    <td>ERROR</td>
-    <td>-cfile: duplicate specification</td>
-    <td>See usage and correct the argument.</td>
-  </tr>
-  <tr>
-    <td>ERROR</td>
-    <td>-pfile - missing filename</td>
-    <td>See usage and correct the argument.</td>
-  </tr>
-  <tr>
-    <td>ERROR</td>
-    <td>-pfile: duplicate specification</td>
-    <td>See usage and correct the argument.</td>
-  </tr>
-  <tr>
-    <td>ERROR</td>
-    <td>unknown command option</td>
-    <td>See usage and correct the argument.</td>
-  </tr>
-  <tr>
-    <td>ERROR</td>
-    <td>Error - cannot open %s file</td>
-    <td>Check input files.</td>
-  </tr>
-  <tr>
-    <td>ERROR</td>
-    <td>Error - different types of configuration options</td>
-    <td>Check input files.</td>
-  </tr>
-  <tr>
-    <td>ERROR</td>
-    <td>Error: vector.AddCitem() failed - out of memory.</td>
-    <td>Ensure you have enough memory available.</td>
-  </tr>
-  <tr>
-    <td>ERROR</td>
-    <td>FATAL-ERROR: Out of Memory</td>
-    <td>Ensure you have enough memory available.</td>
-  </tr>
-  <tr>
-    <td>ERROR</td>
-    <td>ccmerge failed, %d Error(s) found.</td>
-    <td>Check log file.</td>
-  </tr>
-  <tr>
-    <td>WARNING</td>
-    <td>ccmerge command line warning: duplicate '-%s' ignored</td>
-    <td>See usage and correct the argument.</td>
-  </tr>
-  <tr>
-    <td>INFO</td>
-    <td>Note: '-merge' not specified, checking files only.</td>
-    <td>For information only.</td>
-  </tr>
-  <tr>
-    <td>INFO</td>
-    <td>Note: no config annotations in pfile</td>
-    <td>For information only.</td>
-  </tr>
-  <tr>
-    <td>INFO</td>
-    <td>Note: no config annotations in cfile</td>
-    <td>For information only.</td>
-  </tr>
-  <tr>
-    <td>INFO</td>
-    <td>ccmerge completed, 0 Error(s), 0 Warning(s), 'cfile' left unchanged.</td>
-    <td>For information only.</td>
-  </tr>
-  <tr>
-    <td>INFO</td>
-    <td>ccmerge completed, %d Error(s), %d Warning(s), %d items merged.</td>
-    <td>For information only.</td>
-  </tr>
 </table>
 */
 
@@ -1077,81 +856,6 @@ pack installation completed successfully
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\page make Make: GNU Make
-
-The \b make utility automatically determines which pieces of a large program need to be recompiled, and issues commands to
-recompile them. For Windows, the \ref cp_install installs GNU Make version 4.2 compiled for Win32. For full documentation,
-visit: https://www.gnu.org/software/make/manual/make.html#Options-Summary.
-
-
-\section make_invocation Invocation
-
-\b make is called from the \b Bash command line with the following syntax:
-
-\code
-make [<options>] [<target>] ...
-\endcode 
-
-The \ref cbuild "cbuild.sh" script uses only the following subset of the \ref make "Make" options:
-
-\b Operation
-
-<br>
-<table class="cmtable" summary="make options">
-  <tr>
-    <th>\[\<options>]</th>
-    <th>Short Name</th>
-    <th>Description</th>
-  </tr>
-  <tr>
-    <td>-f FILE</td>
-    <td>Specify makefile</td>    
-    <td>Run make for the makefile specified by FILE</td>
-  </tr>
-  <tr>
-    <td>-j [N]</td>
-    <td>Run parallel jobs.</td>    
-    <td>Speed up builds by allowing N jobs at once; infinite jobs with no arg.</td>
-  </tr>
-  <tr>
-    <td>-r</td>
-    <td>Run make without built-in rules</td>    
-    <td>Disable the implicit rules built into make.</td>
-  </tr>
-  <tr>
-    <td>-s</td>
-    <td>Run make in silent mode</td>    
-    <td>Don't echo recipes.</td
-  </tr>
-  <tr>
-    <th>[\<target>]</th>
-    <th>Short Name</th>
-    <th>Description</th>
-  </tr>
-  <tr>
-    <td>clean</td>
-    <td>Cleanup build</td>    
-    <td>Requests to remove intermediate build output files</td>
-  </tr>
-</table>
-
-
-\section Make_example Usage Example
-
-Build a project:
-\code
-$ make -j -f MyProject.mak
-\endcode
-
-Cleanup the project build directories:
-\code
-$ make -f MyProject.mak clean
-\endcode
-*/
-
-
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/**
 \page cmake CMake
 
 \b CMake is an open-source, cross-platform family of tools designed to build, test and package software. As it is not
@@ -1218,59 +922,4 @@ The \ref cbuild "cbuild.sh" script calls \ref cmake "CMake" twice with these opt
   <a href="https://github.com/ninja-build/ninja" target="_blank">Ninja</a> is used. As a Windows user, copy the Ninja binary
   available from <a href="https://github.com/ninja-build/ninja/releases" target="_blank">Releases</a> to the installation
   directory of CMSIS-Build: <tt>./cbuild/bin</tt> where it is invoked automatically.
-*/
-
-
-/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/**
-\page cbuild_uv cbuild_uv.sh: Export MDK projects to CMSIS-Build
-
-The \b cbuild_uv.sh script calls µVision and exports all targets of a Keil MDK project to the \ref cprjFormat_pg "CPRJ"
-format. The script then invokes the \ref cbuild "cbuild.sh" script for each exported project target.
-
-
-\section cbuild_uv_invocation Invocation
-
-It is called from the \b Bash command line with the following syntax:
-
-\code
-cbuild_uv.sh <project-file>.uvprojx
-\endcode
-
-<b>Where:</b>
-
-\c cbuild_uv.sh is the name of the script.
-
-<\c project-file> is the filename of a µVision project.
-
-\note
-- The environment variable \c $MDK_ROOT must refer to the base directory of the Keil MDK installation.
-- Some MDK features are not converted as not all build features of µVision are available in command line build process. For
-  example:
-  - User commands pre and post build
-  - <a href="https://www.keil.com/support/man/docs/uv4/uv4_ut_fcarmuv.htm" target="_blank">fcarm</a> code generator
-  - Linker script generation. Instead, the linker script generated by MDK is used by CMSIS-Build.
-
-
-\section cbuild_uv_example Usage Example
-
-\verbatim
-$ cbuild_uv.sh FTP_Server.uvprojx
-(cbuild_uv.sh): Build MDK Project 0.10.0 (C) 2020 ARM
-uVision has created CPRJ files for the following targets:
-FTP_Server.Debug.cprj
-FTP_Server.Release.cprj
- --------------------------------------------------------------------
- calling cbuild.sh for FTP_Server.Debug.cprj
- --------------------------------------------------------------------
- ...
- --------------------------------------------------------------------
- calling cbuild.sh for FTP_Server.Release.cprj
- --------------------------------------------------------------------
- ...
-builds completed for:
-FTP_Server.Debug.cprj
-FTP_Server.Release.cprj
-total: 2 failed: 0
-\endverbatim
 */

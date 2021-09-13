@@ -178,6 +178,8 @@
       <xs:enumeration value="e-peas:167" />
       <xs:enumeration value="EtaCompute:157" />
       <xs:enumeration value="Evatronix:64" />
+      <xs:enumeration value="FMD:169" />
+      <xs:enumeration value="FMSH:159" />
       <xs:enumeration value="Geehy:163" />
       <xs:enumeration value="Generic:5" />
       <xs:enumeration value="Generalplus:151" />
@@ -216,6 +218,7 @@
       <xs:enumeration value="RelChip:146" />
       <xs:enumeration value="Renesas:117" />
       <xs:enumeration value="ROHM:103" />
+      <xs:enumeration value="RPi:170" />
       <xs:enumeration value="Samsung:47" />
       <xs:enumeration value="SILAN:164" />
       <xs:enumeration value="Silergy Corp:139" />
@@ -223,6 +226,7 @@
       <xs:enumeration value="Sinowealth:149" />
       <xs:enumeration value="SmartChip:156" />
       <xs:enumeration value="SONiX:110" />
+      <xs:enumeration value="Socionext:171" />
       <xs:enumeration value="Spansion:100" />
       <xs:enumeration value="STMicroelectronics:13" />
       <xs:enumeration value="Sunrise Micro Devices:121" />

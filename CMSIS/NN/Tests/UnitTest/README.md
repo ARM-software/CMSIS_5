@@ -9,6 +9,8 @@ The [Unity test framework](http://www.throwtheswitch.org/unity) is used for runn
 Python3 is required.
 It has been tested with Python 3.6 and it has been tested on Ubuntu 16 and 18.
 
+Make sure to use a `pip` version > 19.0 (or >20.3 for macOS), otherwise tensorflow 2 packages are not available.
+
 There is a requirement file that can be used to install the dependencies.
 
 ```
@@ -53,7 +55,7 @@ Clone Arm Ethos-U Core Platform project and build:
 ```
 mkdir build
 cd build
-cmake .. -DCMAKE_TOOLCHAIN_FILE=</path/to/Ethos-u-core-platform>/cmake/toolchain/arm-none-eabi-gcc.cmake -DTARGET_CPU=cortex-m55
+cmake .. -DCMAKE_TOOLCHAIN_FILE=</path/to/ethos-u-core-platform>/cmake/toolchain/arm-none-eabi-gcc.cmake -DTARGET_CPU=cortex-m55
 make
 ```
 

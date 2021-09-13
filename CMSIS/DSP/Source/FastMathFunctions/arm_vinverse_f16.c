@@ -68,7 +68,7 @@ void arm_vinverse_f16(
    while (blkCnt > 0U)
    {
       
-      *pDst++ = 1.0 / *pSrc++;
+      *pDst++ = 1.0f16 / (_Float16)*pSrc++;
   
       /* Decrement loop counter */
       blkCnt--;

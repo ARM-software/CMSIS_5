@@ -192,6 +192,14 @@ if ((NOT ARMAC5) AND (NOT DISABLEFLOAT16))
 endif()
 endif()
 
+target_sources(CMSISDSPTransform PRIVATE arm_mfcc_init_f32.c)
+target_sources(CMSISDSPTransform PRIVATE arm_mfcc_f32.c)
+
+if ((NOT ARMAC5) AND (NOT DISABLEFLOAT16))
+target_sources(CMSISDSPTransform PRIVATE arm_mfcc_init_f16.c)
+target_sources(CMSISDSPTransform PRIVATE arm_mfcc_f16.c)
+endif()
+
 ### Includes
 target_include_directories(CMSISDSPTransform PUBLIC "${DSP}/Include")
 

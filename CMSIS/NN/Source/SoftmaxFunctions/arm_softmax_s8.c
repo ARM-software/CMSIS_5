@@ -21,8 +21,8 @@
  * Title:        arm_softmax_s8.c
  * Description:  S8 softmax function
  *
- * $Date:        01. March 2021
- * $Revision:    V.2.0.2
+ * $Date:        17. August 2021
+ * $Revision:    V.2.0.3
  *
  * Target Processor:  Cortex-M cores
  *
@@ -69,7 +69,7 @@ static int32x4_t arm_exp_on_negative_values_mve_32x4(int32x4_t val)
     mve_pred16_t p = vcmpeqq_n_s32(val, 0);
     mask = vmvnq_m_s32(vdupq_n_s32(0), vdupq_n_s32(0), p);
 
-    result = SELECT_USING_MASK(mask, vdupq_n_s32(Q31_MAX), result);
+    result = SELECT_USING_MASK(mask, vdupq_n_s32(NN_Q31_MAX), result);
     return result;
 }
 #endif
@@ -93,8 +93,8 @@ void arm_softmax_s8(const int8_t *input,
 {
 #ifdef ARM_MATH_MVEI
 
-#define ACT_MIN ((int8_t)Q7_MIN)
-#define ACT_MAX ((int8_t)Q7_MAX)
+#define ACT_MIN ((int8_t)NN_Q7_MIN)
+#define ACT_MAX ((int8_t)NN_Q7_MAX)
 
     const int32_t mask = (1 << shift);
 

@@ -116,7 +116,8 @@ void arm_clip_q15(const q15_t * pSrc,
   q15_t high, 
   uint32_t numSamples)
 {
-    for (uint32_t i = 0; i < numSamples; i++)
+    uint32_t i;
+    for (i = 0; i < numSamples; i++)
     {                                        
         if (pSrc[i] > high)                  
             pDst[i] = high;                  

@@ -21,8 +21,8 @@
  * Title:        arm_convolve_s8.c
  * Description:  s8 version of convolution using symmetric quantization.
  *
- * $Date:        January 26, 2021
- * $Revision:    V.2.0.4
+ * $Date:        June 23, 2021
+ * $Revision:    V.2.0.5
  *
  * Target Processor:  Cortex-M cores
  *
@@ -63,7 +63,7 @@ arm_status arm_convolve_s8(const cmsis_nn_context *ctx,
     (void)bias_dims;
     q15_t *buffer_a = (q15_t *)ctx->buf;
 
-    const uint16_t input_batches = input_dims->n;
+    const int32_t input_batches = input_dims->n;
     const uint16_t input_x = input_dims->w;
     const uint16_t input_y = input_dims->h;
     const uint16_t input_ch = input_dims->c;

@@ -111,12 +111,12 @@ float16_t arm_logsumexp_f16(const float16_t *in, uint32_t blockSize)
     while(blkCnt > 0)
     {
        tmp = *pIn++;
-       accum += expf(tmp - maxVal);
+       accum += (_Float16)expf((float32_t)((_Float16)tmp - (_Float16)maxVal));
        blkCnt--;
     
     }
 
-    accum = maxVal + logf(accum);
+    accum = (_Float16)maxVal + (_Float16)logf((float32_t)accum);
 
     return (accum);
 }
@@ -154,11 +154,11 @@ float16_t arm_logsumexp_f16(const float16_t *in, uint32_t blockSize)
     while(blkCnt > 0)
     {
        tmp = *pIn++;
-       accum += expf(tmp - maxVal);
+       accum += (_Float16)expf((float32_t)((_Float16)tmp - (_Float16)maxVal));
        blkCnt--;
     
     }
-    accum = maxVal + logf(accum);
+    accum = (_Float16)maxVal + (_Float16)logf((float32_t)accum);
 
     return(accum);
 }

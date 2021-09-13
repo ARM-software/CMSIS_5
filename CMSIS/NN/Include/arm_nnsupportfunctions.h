@@ -21,8 +21,8 @@
  * Title:        arm_nnsupportfunctions.h
  * Description:  Public header file of support functions for CMSIS NN Library
  *
- * $Date:        15. April 2021
- * $Revision:    V.5.5.0
+ * $Date:        24. Aug 2021
+ * $Revision:    V.5.10.0
  *
  * Target Processor:  Cortex-M CPUs
  * -------------------------------------------------------------------- */
@@ -30,8 +30,7 @@
 #ifndef _ARM_NNSUPPORTFUNCTIONS_H_
 #define _ARM_NNSUPPORTFUNCTIONS_H_
 
-#include "arm_common_tables.h"
-#include "arm_math_types.h"
+#include "arm_nn_math_types.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -46,6 +45,14 @@ extern "C" {
 #define MAX(A, B) ((A) > (B) ? (A) : (B))
 #define MIN(A, B) ((A) < (B) ? (A) : (B))
 #define CLAMP(x, h, l) MAX(MIN((x), (h)), (l))
+#define REDUCE_MULTIPLIER(_mult) ((_mult < 0x7FFF0000) ? ((_mult + (1 << 15)) >> 16) : 0x7FFF)
+
+/**
+ * @brief definition to pack four 8 bit values.
+ */
+#define PACK_Q7x4_32x1(v0, v1, v2, v3)                                                                                 \
+    ((((int32_t)(v0) << 0) & (int32_t)0x000000FF) | (((int32_t)(v1) << 8) & (int32_t)0x0000FF00) |                     \
+     (((int32_t)(v2) << 16) & (int32_t)0x00FF0000) | (((int32_t)(v3) << 24) & (int32_t)0xFF000000))
 
 /**
  * @brief Union for SIMD access of q31/q15/q7 types
@@ -236,7 +243,37 @@ q7_t *arm_nn_mat_mult_s8(const q7_t *input_row,
                          const uint16_t row_len,
                          const int32_t *const bias,
                          q7_t *out);
-
+/**
+ * @brief Matrix-multiplication function for convolution with per-channel requantization for 16 bits convolution.
+ * @param[in]       input_a     pointer to operand A
+ * @param[in]       input_b     pointer to operand B, always consists of 2 vectors.
+ * @param[in]       output_ch   number of rows of A
+ * @param[in]       out_shift  pointer to per output channel requantization shift parameter.
+ * @param[in]       out_mult   pointer to per output channel requantization multiplier parameter.
+ * @param[in]       activation_min   minimum value to clamp the output to. Range : int16
+ * @param[in]       activation_max   maximum value to clamp the output to. Range : int16
+ * @param[in]       num_col_a   number of columns of A
+ * @param[in]       output_bias per output channel bias. Range : int64
+ * @param[in,out]   out_0       pointer to output
+ * @return     The function returns one of the two
+ *              1. The incremented output pointer for a successful operation or
+ *              2. NULL if implementation is not available.
+ *
+ * @details   This function does the matrix multiplication of weight matrix for all output channels
+ *            with 2 columns from im2col and produces two elements/output_channel. The outputs are
+ *            clamped in the range provided by activation min and max.
+ *            Supported framework: TensorFlow Lite micro.
+ */
+q15_t *arm_nn_mat_mult_kernel_s16(const q7_t *input_a,
+                                  const q15_t *input_b,
+                                  const int32_t output_ch,
+                                  const int32_t *out_shift,
+                                  const int32_t *out_mult,
+                                  const int16_t activation_min,
+                                  const int16_t activation_max,
+                                  const int32_t num_col_a,
+                                  const int64_t *const output_bias,
+                                  q15_t *out_0);
 /**
  * @brief General Matrix-multiplication without requantization for one row & one column
  * @param[in]       row_elements  number of row elements
@@ -366,6 +403,34 @@ arm_status arm_nn_vec_mat_mult_t_s8(const q7_t *lhs,
                                     const int32_t rhs_rows,
                                     const int32_t activation_min,
                                     const int32_t activation_max);
+
+/**
+ * @brief s16 Vector by Matrix (transposed) multiplication
+ *
+ * @param[in]      lhs             Input left-hand side vector
+ * @param[in]      rhs             Input right-hand side matrix (transposed)
+ * @param[in]      bias            Input bias
+ * @param[out]     dst             Output vector
+ * @param[in]      dst_multiplier  Output multiplier
+ * @param[in]      dst_shift       Output shift
+ * @param[in]      rhs_cols        Number of columns in the right-hand side input matrix
+ * @param[in]      rhs_rows        Number of rows in the right-hand side input matrix
+ * @param[in]      activation_min  Minimum value to clamp the output to. Range: int16
+ * @param[in]      activation_max  Maximum value to clamp the output to. Range: int16
+ *
+ * @return         The function returns <code>ARM_MATH_SUCCESS</code>
+ *
+ */
+arm_status arm_nn_vec_mat_mult_t_s16(const q15_t *lhs,
+                                     const q7_t *rhs,
+                                     const q63_t *bias,
+                                     q15_t *dst,
+                                     const int32_t dst_multiplier,
+                                     const int32_t dst_shift,
+                                     const int32_t rhs_cols,
+                                     const int32_t rhs_rows,
+                                     const int32_t activation_min,
+                                     const int32_t activation_max);
 
 /**
  * @brief s8 Vector by Matrix (transposed) multiplication with s16 output
@@ -539,6 +604,18 @@ __STATIC_FORCEINLINE q31_t arm_nn_read_q7x4(const q7_t *in_q7)
 }
 
 /**
+  @brief         Write four q7 to q7 pointer and increment pointer afterwards.
+  @param[in]     in       Double pointer to input value
+  @param[in]     value    Four bytes to copy
+  @return        none
+ */
+__STATIC_FORCEINLINE void arm_nn_write_q7x4_ia(q7_t **in, q31_t value)
+{
+    memcpy(*in, &value, 4);
+    *in += 4;
+}
+
+/**
  * @brief           memset optimized for MVE
  * @param[in, out]  dst         Destination pointer
  * @param[in]       val         Value to set
@@ -571,7 +648,7 @@ __STATIC_FORCEINLINE void arm_memset_q7(q7_t *dst, const q7_t val, uint32_t bloc
 __STATIC_FORCEINLINE const q7_t *read_and_pad(const q7_t *source, q31_t *out1, q31_t *out2)
 {
     q31_t inA = arm_nn_read_q7x4_ia(&source);
-    q31_t inAbuf1 = __SXTB16(__ROR((uint32_t)inA, 8));
+    q31_t inAbuf1 = __SXTB16_RORn((uint32_t)inA, 8);
     q31_t inAbuf2 = __SXTB16(inA);
 
 #ifndef ARM_MATH_BIG_ENDIAN
@@ -690,8 +767,8 @@ void arm_nn_mult_q7(q7_t *pSrcA, q7_t *pSrcB, q7_t *pDst, const uint16_t out_shi
 /**
  * @brief           Saturating doubling high multiply. Result matches
  *                  NEON instruction VQRDMULH.
- * @param[in]       m1        Multiplicand. Range: {Q31_MIN, Q31_MAX}
- * @param[in]       m2        Multiplier. Range: {Q31_MIN, Q31_MAX}
+ * @param[in]       m1        Multiplicand. Range: {NN_Q31_MIN, NN_Q31_MAX}
+ * @param[in]       m2        Multiplier. Range: {NN_Q31_MIN, NN_Q31_MAX}
  * @return          Result of multiplication.
  *
  */
@@ -712,9 +789,9 @@ __STATIC_FORCEINLINE q31_t arm_nn_doubling_high_mult(const q31_t m1, const q31_t
     // as well.
     result = (int32_t)(mult / (1ll << 31));
 
-    if ((m1 == m2) && (m1 == (int32_t)Q31_MIN))
+    if ((m1 == m2) && (m1 == (int32_t)NN_Q31_MIN))
     {
-        result = Q31_MAX;
+        result = NN_Q31_MAX;
     }
     return result;
 }
@@ -723,13 +800,13 @@ __STATIC_FORCEINLINE q31_t arm_nn_doubling_high_mult(const q31_t m1, const q31_t
  * @brief           Doubling high multiply without saturation. This is intended
  *                  for requantization where the scale is a positive integer
  *
- * @param[in]       m1        Multiplicand. Range: {Q31_MIN, Q31_MAX}
- * @param[in]       m2        Multiplier Range: {Q31_MIN, Q31_MAX}
+ * @param[in]       m1        Multiplicand. Range: {NN_Q31_MIN, NN_Q31_MAX}
+ * @param[in]       m2        Multiplier Range: {NN_Q31_MIN, NN_Q31_MAX}
  * @return          Result of multiplication.
  * @note            The result of this matches that of neon instruction
- *                  VQRDMULH for m1 in range {Q31_MIN, Q31_MAX} and m2 in
- *                  range {Q31_MIN + 1, Q31_MAX}. Saturation occurs when
- *                  m1 equals m2 equals Q31_MIN and that is not handled by
+ *                  VQRDMULH for m1 in range {NN_Q31_MIN, NN_Q31_MAX} and m2 in
+ *                  range {NN_Q31_MIN + 1, NN_Q31_MAX}. Saturation occurs when
+ *                  m1 equals m2 equals NN_Q31_MIN and that is not handled by
  *                  this function.
  *
  */
@@ -786,7 +863,7 @@ __STATIC_FORCEINLINE q31_t arm_nn_divide_by_power_of_two(const q31_t dividend, c
 /**
  * @brief           Requantize a given value.
  * @param[in]       val         Value to be requantized
- * @param[in]       multiplier  multiplier. Range {Q31_MIN + 1, Q32_MAX}
+ * @param[in]       multiplier  multiplier. Range {NN_Q31_MIN + 1, Q32_MAX}
  * @param[in]       shift       left or right shift for 'val * multiplier'
  *
  * @return          Returns (val * multiplier)/(2 ^ shift)
@@ -796,6 +873,27 @@ __STATIC_FORCEINLINE q31_t arm_nn_requantize(const q31_t val, const q31_t multip
 {
     return arm_nn_divide_by_power_of_two(arm_nn_doubling_high_mult_no_sat(val * (1 << LEFT_SHIFT(shift)), multiplier),
                                          RIGHT_SHIFT(shift));
+}
+
+/**
+ * @brief           Requantize a given 64 bit value.
+ * @param[in]       val                 Value to be requantized
+ * @param[in]       reduced_multiplier  Reduced multiplier from range {NN_Q31_MIN + 1, Q32_MAX} to {Q16_MIN + 1,
+ * Q16_MAX}
+ * @param[in]       shift               left or right shift for 'val * multiplier'
+ *
+ * @return          Returns (val * multiplier)/(2 ^ shift)
+ *
+ */
+__STATIC_FORCEINLINE q31_t arm_nn_requantize_s64(const q63_t val, const q31_t reduced_multiplier, const q31_t shift)
+{
+    q31_t result = 0;
+    q63_t new_val = val * reduced_multiplier;
+
+    result = new_val >> (14 - shift); // 64->32 bit reduction
+    result = (result + 1) >> 1;       // Last shift position and insert round
+
+    return result;
 }
 
 /**
@@ -926,21 +1024,21 @@ __STATIC_FORCEINLINE int32_t arm_nn_exp_on_negative_values(int32_t val)
 #undef SELECT_IF_NON_ZERO
 
     mask = MASK_IF_ZERO(val);
-    return SELECT_USING_MASK(mask, Q31_MAX, result);
+    return SELECT_USING_MASK(mask, NN_Q31_MAX, result);
 }
 
 __STATIC_FORCEINLINE q31_t arm_nn_mult_by_power_of_two(const int32_t val, const int32_t exp)
 {
     const int32_t thresh = ((1 << (31 - exp)) - 1);
     int32_t result = val << exp;
-    result = SELECT_USING_MASK(MASK_IF_NON_ZERO(val > thresh), Q31_MAX, result);
-    result = SELECT_USING_MASK(MASK_IF_NON_ZERO(val < -thresh), Q31_MIN, result);
+    result = SELECT_USING_MASK(MASK_IF_NON_ZERO(val > thresh), NN_Q31_MAX, result);
+    result = SELECT_USING_MASK(MASK_IF_NON_ZERO(val < -thresh), NN_Q31_MIN, result);
     return result;
 }
 
 __STATIC_FORCEINLINE int32_t arm_nn_one_over_one_plus_x_for_x_in_0_1(int32_t val)
 {
-    const int64_t sum = (int64_t)val + (int64_t)Q31_MAX;
+    const int64_t sum = (int64_t)val + (int64_t)NN_Q31_MAX;
     const int32_t half_denominator = (int32_t)((sum + (sum >= 0 ? 1 : -1)) / 2L);
     int32_t x = 1515870810 + MUL_SAT(half_denominator, -1010580540);
 

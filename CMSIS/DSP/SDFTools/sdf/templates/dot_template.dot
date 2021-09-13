@@ -1,0 +1,108 @@
+{% macro io(node,theio) -%}
+{% if not node.hasManyIOs %}{{node.nodeID}}:i{% else %}{{node.nodeID}}:{{theio.name}}{% endif %}
+{%- endmacro %}
+
+{% macro constdst(theID) -%}
+{{constEdges[theID][1].owner.nodeID}}:{{constEdges[theID][1].name}}
+{% endmacro -%}
+
+{% macro delayBoxID(id) -%}{{fifos[id].src.owner.nodeID}}Delay{%- endmacro %}
+
+{% macro delayBox(edge) -%}
+{% if fifos[edge].hasDelay %}
+{{delayBoxID(edge)}} [label=<
+<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+  <TR>
+    <TD ALIGN="CENTER" PORT="i">{{fifos[edge].delay}}</TD>
+  </TR>
+</TABLE>>];
+{% endif %}
+{%- endmacro %}
+
+digraph structs {
+    node [shape=plaintext]
+    rankdir=LR
+    edge [arrowsize=0.5]
+    fontname="times"
+
+{% for item in nodes %}
+
+{% if not item.hasManyIOs %}
+{{item.nodeID}} [label=<
+<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+  <TR>
+    <TD ALIGN="CENTER" PORT="i">{{item.graphvizName}}</TD>
+  </TR>
+</TABLE>>];
+{% else %}
+
+{{item.nodeID}} [label=<
+<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+  <TR>
+{% if item.inputNames[0] is defined %}
+    <TD PORT="{{item.inputNames[0]}}"><FONT POINT-SIZE="9.0">{{item.inputNames[0]}}</FONT></TD>
+{% else %}
+    <TD></TD>
+{% endif %}
+    <TD ALIGN="CENTER" ROWSPAN="{{item.maxNbIOs}}">{{ item.graphvizName }}</TD>
+{% if item.outputNames[0] is defined %}
+    <TD PORT="{{item.outputNames[0]}}"><FONT POINT-SIZE="9.0">{{item.outputNames[0]}}</FONT></TD>
+{% else %}
+    <TD></TD>
+{% endif %}
+  </TR>
+  <TR>
+{% if item.hasManyInputs %}
+{% for input in item.inputNames[1:] -%}
+   <TD PORT="{{input}}"><FONT POINT-SIZE="9.0">{{input}}</FONT></TD>
+{% endfor -%}
+{% for output in range(item.nbEmptyInputs) %}
+<TD></TD>
+{% endfor %}
+{% else %}
+<TD></TD>
+{% endif %}
+{% if item.hasManyOutputs %}
+{% for output in item.outputNames[1:] -%}
+<TD PORT="{{output}}"><FONT POINT-SIZE="9.0">{{output}}</FONT></TD>
+{% endfor -%}
+{% for output in range(item.nbEmptyOutputs) %}
+<TD></TD>
+{% endfor %}
+{% else %}
+<TD></TD>
+{% endif %}
+</TR>
+
+</TABLE>>];
+
+{% endif %}
+{% endfor %}
+
+
+{% for id in range(nbFifos) %}
+{{delayBox(id)}}
+{% if fifos[id].hasDelay %}
+
+{{io(fifos[id].src.owner,fifos[id].src)}} -> {{delayBoxID(id)}}:i [taillabel=<<FONT COLOR="blue" POINT-SIZE="12.0" >{{fifos[id].src.nbSamples}}</FONT>>]
+
+{{delayBoxID(id)}}:i -> {{io(fifos[id].dst.owner,fifos[id].dst)}} [headlabel=<<FONT COLOR="blue" POINT-SIZE="12.0" >{{fifos[id].dst.nbSamples}}</FONT>>,label="{{fifos[id].theType.graphViztype}}({{fifos[id].length}})"]
+
+{% else %}
+{{io(fifos[id].src.owner,fifos[id].src)}} -> {{io(fifos[id].dst.owner,fifos[id].dst)}} [headlabel=<<FONT COLOR="blue" POINT-SIZE="12.0" >{{fifos[id].dst.nbSamples}}</FONT>>,taillabel=<<FONT COLOR="blue" POINT-SIZE="12.0" >{{fifos[id].src.nbSamples}}</FONT>>,label="{{fifos[id].theType.graphViztype}}({{fifos[id].length}})"]
+{% endif %}
+{% endfor %}
+
+{% for c in constObjs %}
+{{c.name}} [label=<
+<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+  <TR>
+    <TD ALIGN="CENTER" PORT="i">{{c.name}}</TD>
+  </TR>
+</TABLE>>];
+{% endfor %}
+
+{% for edgeID in range(nbConstEdges) %}
+{{constEdges[edgeID][0].name}}:i -> {{constdst(edgeID)}}
+{% endfor %}
+}

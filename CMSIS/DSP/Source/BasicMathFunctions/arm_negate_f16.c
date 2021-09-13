@@ -124,13 +124,13 @@ void arm_negate_f16(
     /* C = -A */
 
     /* Negate and store result in destination buffer. */
-    *pDst++ = -*pSrc++;
+    *pDst++ = -(_Float16)*pSrc++;
 
-    *pDst++ = -*pSrc++;
+    *pDst++ = -(_Float16)*pSrc++;
 
-    *pDst++ = -*pSrc++;
+    *pDst++ = -(_Float16)*pSrc++;
 
-    *pDst++ = -*pSrc++;
+    *pDst++ = -(_Float16)*pSrc++;
 
     /* Decrement loop counter */
     blkCnt--;
@@ -151,7 +151,7 @@ void arm_negate_f16(
     /* C = -A */
 
     /* Negate and store result in destination buffer. */
-    *pDst++ = -*pSrc++;
+    *pDst++ = -(_Float16)*pSrc++;
 
     /* Decrement loop counter */
     blkCnt--;

@@ -60,6 +60,7 @@ The following sections explain:
 - \ref zoneToolUsage describes the tool features and explains the usage on several examples.
 - \ref zoneFormat (XML based) that stores resource (*.rzone) and assignment (*.azone) information.
 - \ref GenDataModel which is used to create tool set-up files and hardware configuration files.
+- \ref ErrorMessages explains the output messages issued by CMSIS-Zone utility.
 
 \section mainIntroVideo Introduction Video
 
@@ -220,35 +221,7 @@ family pcks for your target device need to be installed on your computer.
 
 The CMSIS-Zone utility is part of the <a href="https://github.com/ARM-software/cmsis-pack-eclipse/releases/latest" target="_blank"><b>CMSIS-Pack Eclipse Plug-ins</b></a>.
 
-The following steps explain the setup of an Eclipse enviornment with CMSIS-Zone:
-
-  1. Download and install Java SE version 13.0.2 or later on your machine. You can use one of the following installers:
-  - Oracle SE JDK (note the license terms for commercial usage)
-  - OpenJDK
-  .
-     Make sure that the path to the \\bin folder in the Java installation is added to the \c PATH environment variable.
-
-  2. <a href="https://github.com/ARM-software/cmsis-pack-eclipse/releases/latest" target="_blank"><b>Download</b></a> the latest <b>CmsisPackPlugIn#.#.#.zip</b> file, for example CmsisPackPlugIn2.5.0.zip
-
-  3. Get <a href="https://www.eclipse.org/downloads/" target="_blank"><b>Eclipse IDE (Download 64 bit)</b></a>  and install <b>Eclipse IDE for C/C++ Developers</b>
-
-<b>Launch Eclipse</b> and
-  - Open the dialog <b>Help - Install New Software...</b>.
-  - Choose \b Add and click \b Archive. The \b Open the file <b>CmsisPackPlugIn#.#.#.zip</b> and click \b Add.
-  - In the dialog <b>Available Software</b> select the <b>CMSIS Eclipse plug-ins</b> as shown below.  The click \b Next and accept the license agreement.
-
-    \image html InstallPlugIns.png
-
-  - \b Restart Eclipse.
-
-Setup <b>CMSIS Pack root folder</b> in Eclipse
-  - Open the dialog <b>Window - Preferences</b> and select directory for the <b>CMSIS Packs</b> repository on your computer:
-
-    \image html CMSISPacksPreferences.png
-
-    The standard setting is \c C:\\users\\username\\AppData\\Local\\Arm\\Packs, but you may use the same directory as for MDK and select: \c C:\\Keil_v5\\MDK\\ARM\\PACK.
-
-  - Click <b>Apply and Close</b>. This concludes the setup of the Eclipse environment.
+Follow the instructions on the release page to install the tool.
 */
 
 

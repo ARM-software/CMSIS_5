@@ -21,8 +21,8 @@
  * Title:        arm_fully_connected_mat_q7_vec_q15.c
  * Description:  Mixed Q15-Q7 fully-connected layer function
  *
- * $Date:        09. October 2020
- * $Revision:    V.1.0.1
+ * $Date:        20. July 2021
+ * $Revision:    V.1.1.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -76,7 +76,7 @@ arm_status arm_fully_connected_mat_q7_vec_q15(const q15_t *pV,
                                               q15_t *vec_buffer)
 {
     (void)vec_buffer;
-#if defined(ARM_MATH_DSP)
+#if defined(ARM_MATH_DSP) && !defined(ARM_MATH_MVEI)
     /* Run the following code for Cortex-M4 and Cortex-M7 */
 
     const q7_t *pB = pM;

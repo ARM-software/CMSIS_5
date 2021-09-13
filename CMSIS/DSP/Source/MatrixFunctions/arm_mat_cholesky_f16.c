@@ -158,15 +158,15 @@ arm_status arm_mat_cholesky_f16(
           pG[j * n + i] = vecAddAcrossF16Mve(acc);
        }
 
-       if (pG[i * n + i] <= 0.0f16)
+       if ((_Float16)pG[i * n + i] <= 0.0f16)
        {
          return(ARM_MATH_DECOMPOSITION_FAILURE);
        }
 
-       invSqrtVj = (_Float16)1.0f/sqrtf(pG[i * n + i]);
+       invSqrtVj = 1.0f16/(_Float16)sqrtf((float32_t)pG[i * n + i]);
        for(j=i; j < n ; j++)
        {
-         pG[j * n + i] = (_Float16)pG[j * n + i] * invSqrtVj ;
+         pG[j * n + i] = (_Float16)pG[j * n + i] * (_Float16)invSqrtVj ;
        }
     }
 
@@ -220,19 +220,22 @@ arm_status arm_mat_cholesky_f16(
 
           for(k=0; k < i ; k++)
           {
-             pG[j * n + i] = pG[j * n + i] - pG[i * n + k] * pG[j * n + k];
+             pG[j * n + i] = (_Float16)pG[j * n + i] - (_Float16)pG[i * n + k] * (_Float16)pG[j * n + k];
           }
        }
 
-       if (pG[i * n + i] <= 0.0f)
+       if ((_Float16)pG[i * n + i] <= 0.0f16)
        {
          return(ARM_MATH_DECOMPOSITION_FAILURE);
        }
 
-       invSqrtVj = 1.0f/sqrtf(pG[i * n + i]);
+       /* The division is done in float32 for accuracy reason and
+       because doing it in f16 would not have any impact on the performances.
+       */
+       invSqrtVj = 1.0f/sqrtf((float32_t)pG[i * n + i]);
        for(j=i ; j < n ; j++)
        {
-         pG[j * n + i] = pG[j * n + i] * invSqrtVj ;
+         pG[j * n + i] = (_Float16)pG[j * n + i] * (_Float16)invSqrtVj ;
        }
     }
 

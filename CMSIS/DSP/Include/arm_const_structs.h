@@ -4,8 +4,8 @@
  * Description:  Constant structs that are initialized for user convenience.
  *               For example, some can be given as arguments to the arm_cfft_f32() function.
  *
- * @version  V1.9.0
- * @date     23 April 2021
+ * @version  V1.10.0
+ * @date     08 July 2021
  *
  * Target Processor: Cortex-M and Cortex-A cores
  * -------------------------------------------------------------------- */

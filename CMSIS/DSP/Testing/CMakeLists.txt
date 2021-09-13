@@ -333,7 +333,10 @@ if (TRANSFORM)
   Source/Tests/TransformCQ31.cpp
   Source/Tests/TransformRQ31.cpp
   Source/Tests/TransformCQ15.cpp
-  Source/Tests/TransformRQ15.cpp)
+  Source/Tests/TransformRQ15.cpp
+  Source/Tests/MFCCF32.cpp
+  Source/Tests/mfccdata.c
+  )
 endif()
 
 if (SVM)
@@ -397,6 +400,8 @@ set(TESTSRC16
   Source/Tests/DistanceTestsF16.cpp
   Source/Tests/SVMF16.cpp
   Source/Tests/BayesF16.cpp
+  Source/Tests/MFCCF16.cpp
+  Source/Tests/mfccdata_f16.c
   )
 endif()
 endif() 

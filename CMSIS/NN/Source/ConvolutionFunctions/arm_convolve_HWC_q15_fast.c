@@ -21,8 +21,8 @@
  * Title:        arm_convolve_HWC_q15_fast.c
  * Description:  Fast Q15 version of convolution
  *
- * $Date:        January 26, 2021
- * $Revision:    V.1.0.2
+ * $Date:        July 20, 2021
+ * $Revision:    V.1.1.2
  *
  * Target Processor:  Cortex-M cores
  *
@@ -74,6 +74,8 @@
  *
  * ch_im_out is multiple of 2
  *
+ * dim_im_out is a multiple of 2
+ *
  */
 
 arm_status arm_convolve_HWC_q15_fast(const q15_t *Im_in,
@@ -93,14 +95,14 @@ arm_status arm_convolve_HWC_q15_fast(const q15_t *Im_in,
                                      q7_t *bufferB)
 {
     (void)bufferB;
-#if defined(ARM_MATH_DSP)
+#if defined(ARM_MATH_DSP) && !defined(ARM_MATH_MVEI)
     int16_t i_out_y, i_out_x, i_ker_y, i_ker_x;
 
     q15_t *pBuffer = bufferA;
     q15_t *im_buffer = bufferA;
     q15_t *pOut = Im_out;
 
-    if (ch_im_in % 2 != 0 || ch_im_out % 2 != 0)
+    if (ch_im_in % 2 != 0 || ch_im_out % 2 != 0 || dim_im_out & 0x1)
     {
         /* check if the input dimension meets the constraints */
         return ARM_MATH_SIZE_MISMATCH;

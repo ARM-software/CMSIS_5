@@ -415,8 +415,8 @@ if ((pSrcA->numCols != pSrcB->numRows) ||
     {
         if (numRowsA == 1)
         {
-            pOut[0] = pInA[0] * pInB[0] - pInA[1] * pInB[1];
-            pOut[1] = pInA[0] * pInB[1] + pInA[1] * pInB[0];
+            pOut[0] = (_Float16)pInA[0] * (_Float16)pInB[0] - (_Float16)pInA[1] * (_Float16)pInB[1];
+            pOut[1] = (_Float16)pInA[0] * (_Float16)pInB[1] + (_Float16)pInA[1] * (_Float16)pInB[0];
             return (ARM_MATH_SUCCESS);
         }
         else if  (numRowsA == 2)

@@ -68,6 +68,21 @@ Comparison for Cholesky
       out.numCols=columns;                                               \
       out.pData = outp;
 
+#define PREPAREDATALT()                                                  \
+      in1.numRows=rows;                                                  \
+      in1.numCols=rows;                                                  \
+      memcpy((void*)ap,(const void*)inp1,sizeof(float64_t)*rows*rows);   \
+      in1.pData = ap;                                                    \
+                                                                         \
+      in2.numRows=rows;                                                  \
+      in2.numCols=columns;                                               \
+      memcpy((void*)bp,(const void*)inp2,sizeof(float64_t)*rows*columns);\
+      in2.pData = bp;                                                    \
+                                                                         \
+      out.numRows=rows;                                                  \
+      out.numCols=columns;                                               \
+      out.pData = outp;
+
 #define PREPAREDATA1(TRANSPOSED)                                         \
       in1.numRows=rows;                                                  \
       in1.numCols=columns;                                               \
@@ -275,7 +290,7 @@ void UnaryTestsF64::test_mat_inverse_f64()
                                              
       float64_t *outp=output.ptr();     
       int16_t *dimsp = dims.ptr();           
-      int nbMatrixes = dims.nbSamples();
+      int nbMatrixes = dims.nbSamples()>>1;
 
       int rows,columns;                      
       int i;
@@ -284,15 +299,15 @@ void UnaryTestsF64::test_mat_inverse_f64()
       for(i=0;i < nbMatrixes ; i ++)
       {
           rows = *dimsp++;
-          columns = rows;
+          columns = *dimsp++;
 
-          PREPAREDATA2();
+          PREPAREDATALT();
 
           status=arm_mat_solve_upper_triangular_f64(&this->in1,&this->in2,&this->out);
           ASSERT_TRUE(status==ARM_MATH_SUCCESS);
 
           outp += (rows * columns);
-          inp1 += (rows * columns);
+          inp1 += (rows * rows);
           inp2 += (rows * columns);
 
       }
@@ -315,7 +330,7 @@ void UnaryTestsF64::test_mat_inverse_f64()
                                              
       float64_t *outp=output.ptr();     
       int16_t *dimsp = dims.ptr();           
-      int nbMatrixes = dims.nbSamples();
+      int nbMatrixes = dims.nbSamples()>>1;
 
       int rows,columns;                      
       int i;
@@ -324,15 +339,15 @@ void UnaryTestsF64::test_mat_inverse_f64()
       for(i=0;i < nbMatrixes ; i ++)
       {
           rows = *dimsp++;
-          columns = rows;
+          columns = *dimsp++;
 
-          PREPAREDATA2();
+          PREPAREDATALT();
 
           status=arm_mat_solve_lower_triangular_f64(&this->in1,&this->in2,&this->out);
           ASSERT_TRUE(status==ARM_MATH_SUCCESS);
 
           outp += (rows * columns);
-          inp1 += (rows * columns);
+          inp1 += (rows * rows);
           inp2 += (rows * columns);
 
       }
@@ -537,11 +552,11 @@ void UnaryTestsF64::test_mat_inverse_f64()
          break;
 
          case TEST_SOLVE_UPPER_TRIANGULAR_F64_7:
-            input1.reload(UnaryTestsF64::INPUT_UT_DPO_F64_ID,mgr);
-            dims.reload(UnaryTestsF64::DIMSCHOLESKY1_DPO_S16_ID,mgr);
-            input2.reload(UnaryTestsF64::INPUT_RNDA_DPO_F64_ID,mgr);
+            input1.reload(UnaryTestsF64::INPUT_MAT_UTSOLVE_F64_ID,mgr);
+            input2.reload(UnaryTestsF64::INPUT_VEC_LTSOLVE_F64_ID,mgr);
+            dims.reload(UnaryTestsF64::DIM_LTSOLVE_F64_ID,mgr);
 
-            ref.reload(UnaryTestsF64::REF_UTINV_DPO_F64_ID,mgr);
+            ref.reload(UnaryTestsF64::REF_UT_SOLVE_F64_ID,mgr);
 
             output.create(ref.nbSamples(),UnaryTestsF64::OUT_F64_ID,mgr);
             a.create(MAXMATRIXDIM*MAXMATRIXDIM,UnaryTestsF64::TMPA_F64_ID,mgr);
@@ -549,11 +564,11 @@ void UnaryTestsF64::test_mat_inverse_f64()
          break;
 
          case TEST_SOLVE_LOWER_TRIANGULAR_F64_8:
-            input1.reload(UnaryTestsF64::INPUT_LT_DPO_F64_ID,mgr);
-            dims.reload(UnaryTestsF64::DIMSCHOLESKY1_DPO_S16_ID,mgr);
-            input2.reload(UnaryTestsF64::INPUT_RNDA_DPO_F64_ID,mgr);
+            input1.reload(UnaryTestsF64::INPUT_MAT_LTSOLVE_F64_ID,mgr);
+            input2.reload(UnaryTestsF64::INPUT_VEC_LTSOLVE_F64_ID,mgr);
+            dims.reload(UnaryTestsF64::DIM_LTSOLVE_F64_ID,mgr);
 
-            ref.reload(UnaryTestsF64::REF_LTINV_DPO_F64_ID,mgr);
+            ref.reload(UnaryTestsF64::REF_LT_SOLVE_F64_ID,mgr);
 
             output.create(ref.nbSamples(),UnaryTestsF64::OUT_F64_ID,mgr);
             a.create(MAXMATRIXDIM*MAXMATRIXDIM,UnaryTestsF64::TMPA_F64_ID,mgr);

@@ -793,7 +793,7 @@ void arm_cfft_f16(
         pSrc = p1 + 1;
         for(l=0; l<L; l++)
         {
-            *pSrc = -*pSrc;
+            *pSrc = -(_Float16)*pSrc;
             pSrc += 2;
         }
     }
@@ -823,13 +823,13 @@ void arm_cfft_f16(
 
     if (ifftFlag == 1U)
     {
-        invL = 1.0f/(float16_t)L;
+        invL = 1.0f16/(_Float16)L;
         /*  Conjugate and scale output data */
         pSrc = p1;
         for(l=0; l<L; l++)
         {
-            *pSrc++ *=   invL ;
-            *pSrc  = -(*pSrc) * invL;
+            *pSrc++ *=   (_Float16)invL ;
+            *pSrc  = -(_Float16)(*pSrc) * (_Float16)invL;
             pSrc++;
         }
     }

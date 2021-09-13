@@ -37,6 +37,110 @@
   @{
  */
 
+
+
+#if defined(ARM_MATH_NEON) 
+/**
+  @brief         Compute new coefficient arrays for use in vectorized filter (Neon only).
+  @param[in]     numStages         number of 2nd order stages in the filter.
+  @param[in]     pCoeffs           points to the original filter coefficients.
+  @param[in]     pComputedCoeffs   points to the new computed coefficients for the vectorized Neon version.
+  @return        none
+
+  @par   Size of coefficient arrays:
+            pCoeffs has size 5 * numStages 
+
+            pComputedCoeffs has size 8 * numStages
+
+            pComputedCoeffs is the array to be used in arm_biquad_cascade_df2T_init_f32.
+
+*/
+void arm_biquad_cascade_df2T_compute_coefs_f32(
+  uint8_t numStages,
+  const float32_t * pCoeffs,
+  float32_t * pComputedCoeffs)
+{
+   uint8_t cnt;
+   float32_t b0[4],b1[4],b2[4],a1[4],a2[4];
+
+   cnt = numStages >> 2; 
+   while(cnt > 0)
+   {
+      for(int i=0;i<4;i++)
+      {
+        b0[i] = pCoeffs[0];
+        b1[i] = pCoeffs[1];
+        b2[i] = pCoeffs[2];
+        a1[i] = pCoeffs[3];
+        a2[i] = pCoeffs[4];
+        pCoeffs += 5;
+      }
+
+      /* Vec 1 */
+      *pComputedCoeffs++ = 0;
+      *pComputedCoeffs++ = b0[1];
+      *pComputedCoeffs++ = b0[2];
+      *pComputedCoeffs++ = b0[3];
+
+      /* Vec 2 */
+      *pComputedCoeffs++ = 0;
+      *pComputedCoeffs++ = 0;
+      *pComputedCoeffs++ = b0[1] * b0[2];
+      *pComputedCoeffs++ = b0[2] * b0[3];
+
+      /* Vec 3 */
+      *pComputedCoeffs++ = 0;
+      *pComputedCoeffs++ = 0;
+      *pComputedCoeffs++ = 0;
+      *pComputedCoeffs++ = b0[1] * b0[2] * b0[3];
+      
+      /* Vec 4 */
+      *pComputedCoeffs++ = b0[0];
+      *pComputedCoeffs++ = b0[0] * b0[1];
+      *pComputedCoeffs++ = b0[0] * b0[1] * b0[2];
+      *pComputedCoeffs++ = b0[0] * b0[1] * b0[2] * b0[3];
+
+      /* Vec 5 */
+      *pComputedCoeffs++ = b1[0];
+      *pComputedCoeffs++ = b1[1];
+      *pComputedCoeffs++ = b1[2];
+      *pComputedCoeffs++ = b1[3];
+
+      /* Vec 6 */
+      *pComputedCoeffs++ = b2[0];
+      *pComputedCoeffs++ = b2[1];
+      *pComputedCoeffs++ = b2[2];
+      *pComputedCoeffs++ = b2[3];
+
+      /* Vec 7 */
+      *pComputedCoeffs++ = a1[0];
+      *pComputedCoeffs++ = a1[1];
+      *pComputedCoeffs++ = a1[2];
+      *pComputedCoeffs++ = a1[3];
+
+      /* Vec 8 */
+      *pComputedCoeffs++ = a2[0];
+      *pComputedCoeffs++ = a2[1];
+      *pComputedCoeffs++ = a2[2];
+      *pComputedCoeffs++ = a2[3];
+
+      cnt--;
+   }
+
+   cnt = numStages & 0x3;
+   while(cnt > 0)
+   {
+      *pComputedCoeffs++ = *pCoeffs++;
+      *pComputedCoeffs++ = *pCoeffs++;
+      *pComputedCoeffs++ = *pCoeffs++;
+      *pComputedCoeffs++ = *pCoeffs++;
+      *pComputedCoeffs++ = *pCoeffs++;
+      cnt--;
+   }
+
+}
+#endif 
+
 /**
   @brief         Initialization function for the floating-point transposed direct form II Biquad cascade filter.
   @param[in,out] S           points to an instance of the filter data structure.
@@ -67,11 +171,11 @@
 
                    Then, the initialization can be done with:
   <pre>
-                   arm_biquad_cascade_df2T_init_f32(&SNeon, nbCascade, neonCoefs, stateNeon);
-                   arm_biquad_cascade_df2T_compute_coefs_f32(&SNeon,nbCascade,coefs);
+                   arm_biquad_cascade_df2T_compute_coefs_f32(nbCascade,coefs,computedCoefs);
+                   arm_biquad_cascade_df2T_init_f32(&SNeon, nbCascade, computedCoefs, stateNeon);
   </pre>
 
-  @par             In this example, neonCoefs is a bigger array of size 8 * numStages.
+  @par             In this example, computedCoefs is a bigger array of size 8 * numStages.
                    coefs is the standard array:
 
   <pre>
@@ -86,107 +190,6 @@
                    The state array has a total length of <code>2*numStages</code> values.
                    The state variables are updated after each block of data is processed; the coefficients are untouched.
  */
-
-#if defined(ARM_MATH_NEON) 
-/*
-
-Must be called after initializing the biquad instance.
-pCoeffs has size 5 * nbCascade
-Whereas the pCoeffs for the init has size (4*4 + 4*4)* nbCascade 
-
-So this pCoeffs is the one which would be used for the not Neon version.
-The pCoeffs passed in init is bigger than the one for the not Neon version.
-
-*/
-void arm_biquad_cascade_df2T_compute_coefs_f32(
-  arm_biquad_cascade_df2T_instance_f32 * S,
-  uint8_t numStages,
-  float32_t * pCoeffs)
-{
-   uint8_t cnt;
-   float32_t *pDstCoeffs;
-   float32_t b0[4],b1[4],b2[4],a1[4],a2[4];
-
-   pDstCoeffs = (float32_t*)S->pCoeffs;
-
-   cnt = numStages >> 2; 
-   while(cnt > 0)
-   {
-      for(int i=0;i<4;i++)
-      {
-        b0[i] = pCoeffs[0];
-        b1[i] = pCoeffs[1];
-        b2[i] = pCoeffs[2];
-        a1[i] = pCoeffs[3];
-        a2[i] = pCoeffs[4];
-        pCoeffs += 5;
-      }
-
-      /* Vec 1 */
-      *pDstCoeffs++ = 0;
-      *pDstCoeffs++ = b0[1];
-      *pDstCoeffs++ = b0[2];
-      *pDstCoeffs++ = b0[3];
-
-      /* Vec 2 */
-      *pDstCoeffs++ = 0;
-      *pDstCoeffs++ = 0;
-      *pDstCoeffs++ = b0[1] * b0[2];
-      *pDstCoeffs++ = b0[2] * b0[3];
-
-      /* Vec 3 */
-      *pDstCoeffs++ = 0;
-      *pDstCoeffs++ = 0;
-      *pDstCoeffs++ = 0;
-      *pDstCoeffs++ = b0[1] * b0[2] * b0[3];
-      
-      /* Vec 4 */
-      *pDstCoeffs++ = b0[0];
-      *pDstCoeffs++ = b0[0] * b0[1];
-      *pDstCoeffs++ = b0[0] * b0[1] * b0[2];
-      *pDstCoeffs++ = b0[0] * b0[1] * b0[2] * b0[3];
-
-      /* Vec 5 */
-      *pDstCoeffs++ = b1[0];
-      *pDstCoeffs++ = b1[1];
-      *pDstCoeffs++ = b1[2];
-      *pDstCoeffs++ = b1[3];
-
-      /* Vec 6 */
-      *pDstCoeffs++ = b2[0];
-      *pDstCoeffs++ = b2[1];
-      *pDstCoeffs++ = b2[2];
-      *pDstCoeffs++ = b2[3];
-
-      /* Vec 7 */
-      *pDstCoeffs++ = a1[0];
-      *pDstCoeffs++ = a1[1];
-      *pDstCoeffs++ = a1[2];
-      *pDstCoeffs++ = a1[3];
-
-      /* Vec 8 */
-      *pDstCoeffs++ = a2[0];
-      *pDstCoeffs++ = a2[1];
-      *pDstCoeffs++ = a2[2];
-      *pDstCoeffs++ = a2[3];
-
-      cnt--;
-   }
-
-   cnt = numStages & 0x3;
-   while(cnt > 0)
-   {
-      *pDstCoeffs++ = *pCoeffs++;
-      *pDstCoeffs++ = *pCoeffs++;
-      *pDstCoeffs++ = *pCoeffs++;
-      *pDstCoeffs++ = *pCoeffs++;
-      *pDstCoeffs++ = *pCoeffs++;
-      cnt--;
-   }
-
-}
-#endif 
-
 void arm_biquad_cascade_df2T_init_f32(
         arm_biquad_cascade_df2T_instance_f32 * S,
         uint8_t numStages,

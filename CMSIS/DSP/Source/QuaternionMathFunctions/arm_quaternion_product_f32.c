@@ -132,7 +132,8 @@ void arm_quaternion_product_f32(const float32_t *qa,
     float32_t *qr,
     uint32_t nbQuaternions)
 {
-   for(uint32_t i=0; i < nbQuaternions; i++)
+   uint32_t i;
+   for(i=0; i < nbQuaternions; i++)
    {
      arm_quaternion_product_single_f32(qa, qb, qr);
 

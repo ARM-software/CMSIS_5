@@ -1402,9 +1402,11 @@ group Root {
 
               Pattern ANGLES1_Q31_ID : Angles1_q31.txt
               Pattern SQRTINPUT1_Q31_ID : SqrtInput1_q31.txt
+              Pattern LOGINPUT1_Q31_ID : LogInput1_q31.txt
               Pattern COS1_Q31_ID : Cos1_q31.txt 
               Pattern SIN1_Q31_ID : Sin1_q31.txt 
               Pattern SQRT1_Q31_ID : Sqrt1_q31.txt 
+              Pattern LOG1_Q31_ID : Log1_q31.txt 
               
 
               Output  OUT_Q31_ID : Output
@@ -1413,6 +1415,10 @@ group Root {
                 test_cos_q31:test_cos_q31
                 test_sin_q31:test_sin_q31
                 test_sqrt_q31:test_sqrt_q31
+                test_vlog_q31:test_vlog_q31
+                test_vlog_q31 nb=3:test_vlog_q31
+                test_vlog_q31 nb=4n:test_vlog_q31
+                test_vlog_q31 nb=4n+1:test_vlog_q31
               }
           }
 
@@ -1422,9 +1428,11 @@ group Root {
 
               Pattern ANGLES1_Q15_ID : Angles1_q15.txt
               Pattern SQRTINPUT1_Q15_ID : SqrtInput1_q15.txt
+              Pattern LOGINPUT1_Q15_ID : LogInput1_q15.txt
               Pattern COS1_Q15_ID : Cos1_q15.txt 
               Pattern SIN1_Q15_ID : Sin1_q15.txt 
               Pattern SQRT1_Q15_ID : Sqrt1_q15.txt 
+              Pattern LOG1_Q15_ID : Log1_q15.txt 
 
               Pattern NUMERATOR_Q15_ID : Numerator1_q15.txt
               Pattern DENOMINATOR_Q15_ID : Denominator1_q15.txt
@@ -1440,6 +1448,10 @@ group Root {
                 test_sin_q15:test_sin_q15
                 test_sqrt_q15:test_sqrt_q15
                 test_division_q15:test_division_q15
+                test_vlog_q15:test_vlog_q15
+                test_vlog_q15 nb=3:test_vlog_q15
+                test_vlog_q15 nb=4n:test_vlog_q15
+                test_vlog_q15 nb=4n+1:test_vlog_q15
               }
           }
         }
@@ -2573,6 +2585,13 @@ group Root {
                 Pattern REF_LTINV_DPO_F32_ID : Ref_LTINV_DPO1_f32.txt
                 Pattern REF_CHOLINV_DPO_F32_ID : Ref_CHOLINV_DPO1_f32.txt
 
+                Pattern DIM_LTSOLVE_F32_ID : DimsLTSolve1_s16.txt
+                Pattern INPUT_MAT_LTSOLVE_F32_ID : InputMatrixLTSolve1_f32.txt
+                Pattern INPUT_MAT_UTSOLVE_F32_ID : InputMatrixUTSolve1_f32.txt
+                Pattern INPUT_VEC_LTSOLVE_F32_ID : InputVectorLTSolve1_f32.txt
+                Pattern REF_LT_SOLVE_F32_ID : RefLTSolve1_f32.txt
+                Pattern REF_UT_SOLVE_F32_ID : RefUTSolve1_f32.txt
+
 
                 Output  D_F32_ID : Output
                 Output  LL_F32_ID : Output
@@ -2750,6 +2769,13 @@ group Root {
                 Pattern REF_LTINV_DPO_F64_ID : Ref_LTINV_DPO1_f64.txt
                 Pattern REF_CHOLINV_DPO_F64_ID : Ref_CHOLINV_DPO1_f64.txt
 
+                Pattern DIM_LTSOLVE_F64_ID : DimsLTSolve1_s16.txt
+                Pattern INPUT_MAT_LTSOLVE_F64_ID : InputMatrixLTSolve1_f64.txt
+                Pattern INPUT_MAT_UTSOLVE_F64_ID : InputMatrixUTSolve1_f64.txt
+                Pattern INPUT_VEC_LTSOLVE_F64_ID : InputVectorLTSolve1_f64.txt
+                Pattern REF_LT_SOLVE_F64_ID : RefLTSolve1_f64.txt
+                Pattern REF_UT_SOLVE_F64_ID : RefUTSolve1_f64.txt
+
                 Output  D_F64_ID : Output
                 Output  LL_F64_ID : Output
                 Output  PERM_S16_ID : Output
@@ -2922,6 +2948,32 @@ group Root {
         group Transform Tests {
            class = TransformTests
            folder = Transform 
+
+           suite MFCC F32 {
+              class = MFCCF32
+              folder = MFCCF32
+
+              Pattern INPUTS_MFCC_256_F32_ID : MFCCInput_256_1_f32.txt 
+              Pattern REF_MFCC_256_F32_ID : MFCCRef_256_1_f32.txt 
+
+              Pattern INPUTS_MFCC_512_F32_ID : MFCCInput_512_1_f32.txt 
+              Pattern REF_MFCC_512_F32_ID : MFCCRef_512_1_f32.txt 
+
+              Pattern INPUTS_MFCC_1024_F32_ID : MFCCInput_1024_1_f32.txt 
+              Pattern REF_MFCC_1024_F32_ID : MFCCRef_1024_1_f32.txt 
+
+              
+              Output  OUTPUT_MFCC_F32_ID : MFCCOutputs
+              Output  TMP_MFCC_F32_ID : MFCCTmp
+              Output  TMPIN_MFCC_F32_ID : MFCCTmpIn
+
+              Functions {
+                 mfcc_256_f32:test_mfcc_f32
+                 mfcc_512_f32:test_mfcc_f32
+                 mfcc_1024_f32:test_mfcc_f32
+              }
+
+            }
 
            suite Transform Complex F64 {
               class = TransformCF64

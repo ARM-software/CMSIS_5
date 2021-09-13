@@ -47,6 +47,8 @@
  * @param[in]    blockSize  vector length
  * @return distance
  *
+ * @par           Description
+ *                  cosine_distance(u,v) is 1 - u . v / (Norm(u) Norm(v))
  */
 
 float32_t arm_cosine_distance_f32(const float32_t *pA,const float32_t *pB, uint32_t blockSize)

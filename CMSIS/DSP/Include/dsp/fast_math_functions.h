@@ -1,8 +1,8 @@
 /******************************************************************************
  * @file     fast_math_functions.h
  * @brief    Public header file for CMSIS DSP Library
- * @version  V1.9.0
- * @date     23 April 2021
+ * @version  V1.10.0
+ * @date     08 July 2021
  * Target Processor: Cortex-M and Cortex-A cores
  ******************************************************************************/
 /*
@@ -149,7 +149,6 @@ extern "C"
         uint32_t blockSize);
 
 
-
 /**
   @brief         Floating-point vector of log values.
   @param[in]     pSrc       points to the input vector
@@ -161,6 +160,28 @@ extern "C"
   const float64_t * pSrc,
 		float64_t * pDst,
 		uint32_t blockSize);
+
+  /**
+   * @brief  q31 vector of log values.
+   * @param[in]     pSrc       points to the input vector in q31
+   * @param[out]    pDst       points to the output vector in q5.26
+   * @param[in]     blockSize  number of samples in each vector
+   * @return        none
+   */
+  void arm_vlog_q31(const q31_t * pSrc,
+        q31_t * pDst,
+        uint32_t blockSize);
+
+  /**
+   * @brief  q15 vector of log values.
+   * @param[in]     pSrc       points to the input vector in q15
+   * @param[out]    pDst       points to the output vector in q4.11
+   * @param[in]     blockSize  number of samples in each vector
+   * @return        none
+   */
+  void arm_vlog_q15(const q15_t * pSrc,
+        q15_t * pDst,
+        uint32_t blockSize);
 
 
 
@@ -227,7 +248,7 @@ extern "C"
                    - \ref ARM_MATH_ARGUMENT_ERROR : input value is negative; *pOut is set to 0
  */
 __STATIC_FORCEINLINE arm_status arm_sqrt_f32(
-  float32_t in,
+  const float32_t in,
   float32_t * pOut)
   {
     if (in >= 0.0f)

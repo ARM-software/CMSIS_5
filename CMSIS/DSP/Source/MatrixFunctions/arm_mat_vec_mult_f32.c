@@ -310,15 +310,15 @@ void arm_mat_vec_mult_f32(const arm_matrix_instance_f32 *pSrcMat, const float32_
     /* The following loop performs the dot-product of each row in pSrcA with the vector */
     /* row loop */
     while (row > 0) {
-        /* For every row wise process, the pInVec pointer is set
-         ** to the starting address of the vector */
-        pInVec = pVec;
-
         /* Initialize accumulators */
         float32_t sum1 = 0.0f;
         float32_t sum2 = 0.0f;
         float32_t sum3 = 0.0f;
         float32_t sum4 = 0.0f;
+
+        /* For every row wise process, the pInVec pointer is set
+         ** to the starting address of the vector */
+        pInVec = pVec;
 
         /* Loop unrolling: process 2 columns per iteration */
         colCnt = numCols;

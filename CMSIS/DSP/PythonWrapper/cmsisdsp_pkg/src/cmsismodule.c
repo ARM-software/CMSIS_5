@@ -41,8 +41,8 @@
 
 #ifdef CMSISDSP
 #include "arm_math.h"
-#define MODNAME "cmsisdsp"
-#define MODINITNAME cmsisdsp
+#define MODNAME "internal"
+#define MODINITNAME internal
 #endif 
 
 #include <numpy/arrayobject.h>

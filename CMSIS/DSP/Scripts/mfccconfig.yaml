@@ -1,0 +1,46 @@
+dct:
+  config1: 
+    melFilters: 20 
+    dctOutputs: 13
+    type: "f32"
+  
+melfilter:
+  config1: 
+    fftlength: 1024 
+    fmin: 64 
+    fmax: 8000 
+    samplingRate : 16000 
+    melFilters: 20 
+    type: "f32"
+  
+  config2: 
+    fftlength: 512 
+    fmin: 64 
+    fmax: 8000 
+    samplingRate : 16000 
+    melFilters: 20 
+    type: "f32"
+  
+  config3 : 
+    fftlength: 256 
+    fmin: 64 
+    fmax: 8000 
+    samplingRate : 16000 
+    melFilters: 20 
+    type: "f32"  
+
+window:
+  config1:
+    fftlength: 1024 
+    type: "f32"  
+    win: "hamming"
+
+  config2:
+    fftlength: 512 
+    type: "f32"  
+    win: "hamming"
+
+  config3:
+    fftlength: 256 
+    type: "f32"  
+    win: "hamming"

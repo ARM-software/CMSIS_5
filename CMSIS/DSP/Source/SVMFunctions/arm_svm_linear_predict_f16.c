@@ -298,9 +298,9 @@ void arm_svm_linear_predict_f16(
         dot=0;
         for(j=0; j < S->vectorDimension; j++)
         {
-            dot = dot + in[j]* *pSupport++;
+            dot = (_Float16)dot + (_Float16)in[j]* (_Float16)*pSupport++;
         }
-        sum += S->dualCoefficients[i] * dot;
+        sum += (_Float16)S->dualCoefficients[i] * (_Float16)dot;
     }
     *pResult=S->classes[STEP(sum)];
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_max_pool_s8.c
  * Description:  Pooling function implementations
  *
- * $Date:        19. Februari 2021
- * $Revision:    V.2.0.2
+ * $Date:        20. July 2021
+ * $Revision:    V.2.0.3
  *
  * Target Processor:  Cortex-M CPUs
  *
@@ -75,7 +75,7 @@ static void compare_and_replace_if_larger_q7(q7_t *base, const q7_t *target, int
             ref_max.bytes[3] = comp_max.bytes[3];
         }
 
-        write_q7x4_ia(&dst, ref_max.word);
+        arm_nn_write_q7x4_ia(&dst, ref_max.word);
 
         cnt--;
     }
@@ -127,7 +127,7 @@ static void clamp_output(q7_t *source, int32_t length, const int32_t act_min, co
         in.bytes[3] = MAX(in.bytes[3], act_min);
         in.bytes[3] = MIN(in.bytes[3], act_max);
 
-        write_q7x4_ia(&source, in.word);
+        arm_nn_write_q7x4_ia(&source, in.word);
         cnt--;
     }
 

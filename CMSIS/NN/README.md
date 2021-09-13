@@ -54,5 +54,31 @@ Group | API | Base Operator | Input Constraints | Additional memory required for
 ||arm_concatenation_s8_z() | CONCAT | None | None | No| No||
 
 
+## Building CMSIS-NN as a library
+It is recommended to use toolchain files from [Arm Ethos-U Core Platform](https://review.mlplatform.org/admin/repos/ml/ethos-u/ethos-u-core-platform) project. These are supporting TARGET_CPU, which is a required argument. Note that if not specifying TARGET_CPU, these toolchains will set some default. The format must be TARGET_CPU=cortex-mXX, see examples below.
+Clone Arm Ethos-U Core Platform project and build, for example:
+
+```
+cd </path/to/CMSIS_5>/CMSIS/NN
+mkdir build
+cd build
+cmake .. -DCMAKE_TOOLCHAIN_FILE=</path/to/ethos-u-core-platform>/cmake/toolchain/arm-none-eabi-gcc.cmake -DTARGET_CPU=cortex-m55
+make
+```
+
+Some more examples, assuming Ethos-u-core-platform is cloned into your home directory:
+
+```
+cmake .. -DCMAKE_TOOLCHAIN_FILE=~/ethos-u-core-platform/cmake/toolchain/arm-none-eabi-gcc.cmake -DTARGET_CPU=cortex-m55
+cmake .. -DCMAKE_TOOLCHAIN_FILE=~/ethos-u-core-platform/cmake/toolchain/arm-none-eabi-gcc.cmake -DTARGET_CPU=cortex-m7
+cmake .. -DCMAKE_TOOLCHAIN_FILE=~/ethos-u-core-platform/cmake/toolchain/armclang.cmake -DTARGET_CPU=cortex-m3
+```
+
+### Compiler options
+Default optimization level is Ofast. Please change according to project needs. Just bear in mind it will impact performance.
+
+The compiler option '-fno-builtin' does not utilize optimized implementations of e.g. memcpy and memset, which are heavily used by CMSIS-NN. It can significantly downgrade performance. So this should be avoided.
+The compiler option '-ffreestanding' should also be avoided as it enables '-fno-builtin' implicitly.
+
 ## Reference
 [1] Legacy CMSIS-NN and how to use it https://developer.arm.com/solutions/machine-learning-on-arm/developer-material/how-to-guides/converting-a-neural-network-for-arm-cortex-m-with-cmsis-nn/single-page

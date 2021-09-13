@@ -105,7 +105,7 @@ void arm_barycenter_f16(const float16_t *in,
         w2 = *pW++;
         w3 = *pW++;
         w4 = *pW++;
-        accum += w1 + w2 + w3 + w4;
+        accum += (_Float16)w1 + (_Float16)w2 + (_Float16)w3 + (_Float16)w4;
 
         blkCntSample = vecDim >> 3;
         while (blkCntSample > 0) {
@@ -131,10 +131,10 @@ void arm_barycenter_f16(const float16_t *in,
 
         blkCntSample = vecDim & 7;
         while (blkCntSample > 0) {
-            *pOut = *pOut + *pIn1++ * w1;
-            *pOut = *pOut + *pIn2++ * w2;
-            *pOut = *pOut + *pIn3++ * w3;
-            *pOut = *pOut + *pIn4++ * w4;
+            *pOut = (_Float16)*pOut + (_Float16)*pIn1++ * (_Float16)w1;
+            *pOut = (_Float16)*pOut + (_Float16)*pIn2++ * (_Float16)w2;
+            *pOut = (_Float16)*pOut + (_Float16)*pIn3++ * (_Float16)w3;
+            *pOut = (_Float16)*pOut + (_Float16)*pIn4++ * (_Float16)w4;
             pOut++;
             blkCntSample--;
         }
@@ -156,7 +156,7 @@ void arm_barycenter_f16(const float16_t *in,
 
         pOut = out;
         w = *pW++;
-        accum += w;
+        accum += (_Float16)w;
 
         blkCntSample = vecDim >> 3;
         while (blkCntSample > 0) 
@@ -174,7 +174,7 @@ void arm_barycenter_f16(const float16_t *in,
         blkCntSample = vecDim & 7;
         while (blkCntSample > 0) 
         {
-            *pOut = *pOut + *pIn++ * w;
+            *pOut = (_Float16)*pOut + (_Float16)*pIn++ * (_Float16)w;
             pOut++;
             blkCntSample--;
         }
@@ -184,7 +184,7 @@ void arm_barycenter_f16(const float16_t *in,
 
     /* Normalize */
     pOut = out;
-    accum = 1.0f / accum;
+    accum = 1.0f16 / (_Float16)accum;
 
     blkCntSample = vecDim >> 3;
     while (blkCntSample > 0) 
@@ -201,7 +201,7 @@ void arm_barycenter_f16(const float16_t *in,
     blkCntSample = vecDim & 7;
     while (blkCntSample > 0) 
     {
-        *pOut = *pOut * accum;
+        *pOut = (_Float16)*pOut * (_Float16)accum;
         pOut++;
         blkCntSample--;
     }
@@ -218,7 +218,7 @@ void arm_barycenter_f16(const float16_t *in, const float16_t *weights, float16_t
    blkCntVector = nbVectors;
    blkCntSample = vecDim;
 
-   accum = 0.0f;
+   accum = 0.0f16;
 
    pW = weights;
    pIn = in;
@@ -229,7 +229,7 @@ void arm_barycenter_f16(const float16_t *in, const float16_t *weights, float16_t
 
    while(blkCntSample > 0)
    {
-         *pOut = 0.0f;
+         *pOut = 0.0f16;
          pOut++;
          blkCntSample--;
    }
@@ -239,12 +239,12 @@ void arm_barycenter_f16(const float16_t *in, const float16_t *weights, float16_t
    {
       pOut = out;
       w = *pW++;
-      accum += w;
+      accum += (_Float16)w;
 
       blkCntSample = vecDim;
       while(blkCntSample > 0)
       {
-          *pOut = *pOut + *pIn++ * w;
+          *pOut = (_Float16)*pOut + (_Float16)*pIn++ * (_Float16)w;
           pOut++;
           blkCntSample--;
       }
@@ -258,7 +258,7 @@ void arm_barycenter_f16(const float16_t *in, const float16_t *weights, float16_t
 
    while(blkCntSample > 0)
    {
-         *pOut = *pOut / accum;
+         *pOut = (_Float16)*pOut / (_Float16)accum;
          pOut++;
          blkCntSample--;
    }

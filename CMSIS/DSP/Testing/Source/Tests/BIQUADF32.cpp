@@ -92,11 +92,8 @@ a double precision computation.
 
         float32_t *statep = state.ptr();
 
-#if !defined(ARM_MATH_NEON) 
         const float32_t *coefsp = coefs.ptr();
-#else
-        float32_t *coefsp = coefs.ptr();
-#endif
+
         
         const float32_t *inputp = inputs.ptr();
         float32_t *outp = output.ptr();
@@ -126,13 +123,15 @@ a double precision computation.
 #else
            float32_t *vecCoefsPtr = vecCoefs.ptr();
 
+           // Those Neon coefs must be computed from original coefs
+           arm_biquad_cascade_df2T_compute_coefs_f32(3,coefsp,vecCoefsPtr);
+
            arm_biquad_cascade_df2T_init_f32(&this->Sdf2T,
                     3,
                     vecCoefsPtr,
                     statep);
 
-           // Those Neon coefs must be computed from original coefs
-           arm_biquad_cascade_df2T_compute_coefs_f32(&this->Sdf2T,3,coefsp);
+           
 #endif
 
            /*
@@ -290,13 +289,15 @@ a double precision computation.
 #else
            float32_t *vecCoefsPtr = vecCoefs.ptr();
 
+           // Those Neon coefs must be computed from original coefs
+           arm_biquad_cascade_df2T_compute_coefs_f32(numStages,coefsp,vecCoefsPtr);
+
            arm_biquad_cascade_df2T_init_f32(&this->Sdf2T,
                     numStages,
                     vecCoefsPtr,
                     statep);
 
-           // Those Neon coefs must be computed from original coefs
-           arm_biquad_cascade_df2T_compute_coefs_f32(&this->Sdf2T,numStages,coefsp);
+           
 #endif
            coefsp += numStages * 5;
 

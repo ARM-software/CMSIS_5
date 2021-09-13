@@ -141,13 +141,13 @@ void arm_scale_f16(
     /* C = A * scale */
 
     /* Scale input and store result in destination buffer. */
-    *pDst++ = (*pSrc++) * scale;
+    *pDst++ = (_Float16)(*pSrc++) * (_Float16)scale;
 
-    *pDst++ = (*pSrc++) * scale;
+    *pDst++ = (_Float16)(*pSrc++) * (_Float16)scale;
 
-    *pDst++ = (*pSrc++) * scale;
+    *pDst++ = (_Float16)(*pSrc++) * (_Float16)scale;
 
-    *pDst++ = (*pSrc++) * scale;
+    *pDst++ = (_Float16)(*pSrc++) * (_Float16)scale;
 
     /* Decrement loop counter */
     blkCnt--;
@@ -168,7 +168,7 @@ void arm_scale_f16(
     /* C = A * scale */
 
     /* Scale input and store result in destination buffer. */
-    *pDst++ = (*pSrc++) * scale;
+    *pDst++ = (_Float16)(*pSrc++) * (_Float16)scale;
 
     /* Decrement loop counter */
     blkCnt--;

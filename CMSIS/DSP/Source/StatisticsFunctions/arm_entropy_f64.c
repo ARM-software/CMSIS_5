@@ -53,7 +53,7 @@ float64_t arm_entropy_f64(const float64_t * pSrcA, uint32_t blockSize)
     pIn = pSrcA;
     blkCnt = blockSize;
 
-    accum = 0.0f;
+    accum = 0.0;
 
     while(blkCnt > 0)
     {

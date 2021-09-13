@@ -120,7 +120,7 @@ void arm_max_f16(
       tmp = *pSrc++;
 
       /* compare for the maximum value */
-      if (maxValue < tmp)
+      if ((_Float16)maxValue < (_Float16)tmp)
       {
         /* Update the maximum value and it's index */
         maxValue = tmp;
@@ -171,7 +171,7 @@ void arm_max_f16(
     maxVal = *pSrc++;
 
     /* compare for the maximum value */
-    if (out < maxVal)
+    if ((_Float16)out < (_Float16)maxVal)
     {
       /* Update the maximum value and it's index */
       out = maxVal;
@@ -179,21 +179,21 @@ void arm_max_f16(
     }
 
     maxVal = *pSrc++;
-    if (out < maxVal)
+    if ((_Float16)out < (_Float16)maxVal)
     {
       out = maxVal;
       outIndex = index + 2U;
     }
 
     maxVal = *pSrc++;
-    if (out < maxVal)
+    if ((_Float16)out < (_Float16)maxVal)
     {
       out = maxVal;
       outIndex = index + 3U;
     }
 
     maxVal = *pSrc++;
-    if (out < maxVal)
+    if ((_Float16)out < (_Float16)maxVal)
     {
       out = maxVal;
       outIndex = index + 4U;
@@ -221,7 +221,7 @@ void arm_max_f16(
     maxVal = *pSrc++;
 
     /* compare for the maximum value */
-    if (out < maxVal)
+    if ((_Float16)out < (_Float16)maxVal)
     {
       /* Update the maximum value and it's index */
       out = maxVal;
