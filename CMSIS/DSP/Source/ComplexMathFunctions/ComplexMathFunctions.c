@@ -33,6 +33,7 @@
 #include "arm_cmplx_dot_prod_q15.c"
 #include "arm_cmplx_dot_prod_q31.c"
 #include "arm_cmplx_mag_f32.c"
+#include "arm_cmplx_mag_f64.c"
 
 #if (defined (ARM_MATH_HELIUM) || defined(ARM_MATH_MVEI))  && !defined(ARM_MATH_AUTOVECTORIZE)
   #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FAST_TABLES) || defined(ARM_TABLE_FAST_SQRT_Q15_MVE)
@@ -48,9 +49,11 @@
 #endif
 
 #include "arm_cmplx_mag_squared_f32.c"
+#include "arm_cmplx_mag_squared_f64.c"
 #include "arm_cmplx_mag_squared_q15.c"
 #include "arm_cmplx_mag_squared_q31.c"
 #include "arm_cmplx_mult_cmplx_f32.c"
+#include "arm_cmplx_mult_cmplx_f64.c"
 #include "arm_cmplx_mult_cmplx_q15.c"
 #include "arm_cmplx_mult_cmplx_q31.c"
 #include "arm_cmplx_mult_real_f32.c"

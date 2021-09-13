@@ -171,6 +171,18 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
 
 
   /**
+   * @brief  Sum of the squares of the elements of a floating-point vector.
+   * @param[in]  pSrc       is input pointer
+   * @param[in]  blockSize  is the number of samples to process
+   * @param[out] pResult    is output value.
+   */
+  void arm_power_f64(
+  const float64_t * pSrc,
+        uint32_t blockSize,
+        float64_t * pResult);
+
+
+  /**
    * @brief  Sum of the squares of the elements of a Q15 vector.
    * @param[in]  pSrc       is input pointer
    * @param[in]  blockSize  is the number of samples to process
@@ -243,6 +255,18 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
 
 
   /**
+   * @brief  Mean value of a floating-point vector.
+   * @param[in]  pSrc       is input pointer
+   * @param[in]  blockSize  is the number of samples to process
+   * @param[out] pResult    is output value.
+   */
+  void arm_mean_f64(
+  const float64_t * pSrc,
+        uint32_t blockSize,
+        float64_t * pResult);
+
+
+  /**
    * @brief  Variance of the elements of a floating-point vector.
    * @param[in]  pSrc       is input pointer
    * @param[in]  blockSize  is the number of samples to process
@@ -252,6 +276,18 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
   const float32_t * pSrc,
         uint32_t blockSize,
         float32_t * pResult);
+
+
+  /**
+   * @brief  Variance of the elements of a floating-point vector.
+   * @param[in]  pSrc       is input pointer
+   * @param[in]  blockSize  is the number of samples to process
+   * @param[out] pResult    is output value.
+   */
+  void arm_var_f64(
+  const float64_t * pSrc,
+        uint32_t blockSize,
+        float64_t * pResult);
 
 
   /**
@@ -324,6 +360,18 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
   const float32_t * pSrc,
         uint32_t blockSize,
         float32_t * pResult);
+
+
+  /**
+   * @brief  Standard deviation of the elements of a floating-point vector.
+   * @param[in]  pSrc       is input pointer
+   * @param[in]  blockSize  is the number of samples to process
+   * @param[out] pResult    is output value.
+   */
+  void arm_std_f64(
+  const float64_t * pSrc,
+        uint32_t blockSize,
+        float64_t * pResult);
 
 
   /**
@@ -459,6 +507,33 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
         uint32_t * pIndex);
 
 
+  /**
+   * @brief  Minimum value of a floating-point vector.
+   * @param[in]  pSrc       is input pointer
+   * @param[in]  blockSize  is the number of samples to process
+   * @param[out] pResult    is output pointer
+   * @param[out] pIndex     is the array index of the minimum value in the input buffer.
+   */
+  void arm_min_f64(
+  const float64_t * pSrc,
+        uint32_t blockSize,
+        float64_t * pResult,
+        uint32_t * pIndex);
+
+  /**
+   * @brief  Minimum value of absolute values of a floating-point vector.
+   * @param[in]  pSrc       is input pointer
+   * @param[in]  blockSize  is the number of samples to process
+   * @param[out] pResult    is output pointer
+   * @param[out] pIndex     is the array index of the minimum value in the input buffer.
+   */
+  void arm_absmin_f64(
+  const float64_t * pSrc,
+        uint32_t blockSize,
+        float64_t * pResult,
+        uint32_t * pIndex);
+
+
 /**
  * @brief Maximum value of a Q7 vector.
  * @param[in]  pSrc       points to the input buffer
@@ -564,6 +639,32 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
         float32_t * pResult,
         uint32_t * pIndex);
 
+/**
+ * @brief Maximum value of a floating-point vector.
+ * @param[in]  pSrc       points to the input buffer
+ * @param[in]  blockSize  length of the input vector
+ * @param[out] pResult    maximum value returned here
+ * @param[out] pIndex     index of maximum value returned here
+ */
+  void arm_max_f64(
+  const float64_t * pSrc,
+        uint32_t blockSize,
+        float64_t * pResult,
+        uint32_t * pIndex);
+
+/**
+ * @brief Maximum value of absolute values of a floating-point vector.
+ * @param[in]  pSrc       points to the input buffer
+ * @param[in]  blockSize  length of the input vector
+ * @param[out] pResult    maximum value returned here
+ * @param[out] pIndex     index of maximum value returned here
+ */
+  void arm_absmax_f64(
+  const float64_t * pSrc,
+        uint32_t blockSize,
+        float64_t * pResult,
+        uint32_t * pIndex);
+
   /**
     @brief         Maximum value of a floating-point vector.
     @param[in]     pSrc       points to the input vector
@@ -576,6 +677,17 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
       uint32_t   blockSize,
       float32_t *pResult);
 
+  /**
+    @brief         Maximum value of a floating-point vector.
+    @param[in]     pSrc       points to the input vector
+    @param[in]     blockSize  number of samples in input vector
+    @param[out]    pResult    maximum value returned here
+    @return        none
+   */
+  void arm_max_no_idx_f64(
+      const float64_t *pSrc,
+      uint32_t   blockSize,
+      float64_t *pResult);
 
 
 
