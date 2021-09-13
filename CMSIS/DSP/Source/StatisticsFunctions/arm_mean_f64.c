@@ -51,7 +51,7 @@ void arm_mean_f64(
         float64_t * pResult)
 {
         uint32_t blkCnt;                               /* Loop counter */
-        float64_t sum = 0.0f;                          /* Temporary result storage */
+        float64_t sum = 0.;                            /* Temporary result storage */
 
   /* Initialize blkCnt with number of samples */
   blkCnt = blockSize;

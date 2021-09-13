@@ -33,23 +33,6 @@
  */
 
 /**
-  @defgroup power Power
-
-  Calculates the sum of the squares of the elements in the input vector.
-  The underlying algorithm is used:
-
-  <pre>
-      Result = pSrc[0] * pSrc[0] + pSrc[1] * pSrc[1] + pSrc[2] * pSrc[2] + ... + pSrc[blockSize-1] * pSrc[blockSize-1];
-  </pre>
-
-  There are separate functions for floating point, Q31, Q15, and Q7 data types.
-
-  Since the result is not divided by the length, those functions are in fact computing
-  something which is more an energy than a power.
-
- */
-
-/**
   @addtogroup power
   @{
  */
@@ -67,7 +50,7 @@ void arm_power_f64(
         float64_t * pResult)
 {
         uint32_t blkCnt;                               /* Loop counter */
-        float64_t sum = 0.0f;                          /* Temporary result storage */
+        float64_t sum = 0.;                          /* Temporary result storage */
         float64_t in;                                  /* Temporary variable to store input value */
 
   /* Initialize blkCnt with number of samples */

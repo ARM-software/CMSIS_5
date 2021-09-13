@@ -33,21 +33,6 @@
  */
 
 /**
-  @defgroup variance  Variance
-
-  Calculates the variance of the elements in the input vector.
-  The underlying algorithm used is the direct method sometimes referred to as the two-pass method:
-
-  <pre>
-      Result = sum(element - meanOfElements)^2) / numElement - 1
-
-      meanOfElements = ( pSrc[0] * pSrc[0] + pSrc[1] * pSrc[1] + ... + pSrc[blockSize-1] ) / blockSize
-  </pre>
-
-  There are separate functions for floating point, Q31, and Q15 data types.
- */
-
-/**
   @addtogroup variance
   @{
  */
@@ -65,8 +50,8 @@ void arm_var_f64(
         float64_t * pResult)
 {
         uint32_t blkCnt;                               /* Loop counter */
-        float64_t sum = 0.0f;                          /* Temporary result storage */
-        float64_t fSum = 0.0f;
+        float64_t sum = 0.;                          /* Temporary result storage */
+        float64_t fSum = 0.;
         float64_t fMean, fValue;
   const float64_t * pInput = pSrc;
 
@@ -107,7 +92,7 @@ void arm_var_f64(
   }
 
   /* Variance */
-  *pResult = fSum / (float64_t)(blockSize - 1.0f);
+  *pResult = fSum / (float64_t)(blockSize - 1.);
 }
 
 /**

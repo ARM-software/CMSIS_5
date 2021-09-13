@@ -74,7 +74,7 @@ void arm_fir_f64(
     *pStateCurnt++ = *pSrc++;
 
     /* Set the accumulator to zero */
-    acc0 = 0.0f;
+    acc0 = 0.;
 
     /* Initialize state pointer */
     px = pState;

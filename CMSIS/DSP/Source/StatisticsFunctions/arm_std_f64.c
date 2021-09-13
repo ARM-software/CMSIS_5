@@ -33,30 +33,6 @@
  */
 
 /**
-  @defgroup STD Standard deviation
-
-  Calculates the standard deviation of the elements in the input vector.
-
-  The float implementation is relying on arm_var_f32 which is using a two-pass algorithm
-  to avoid problem of numerical instabilities and cancellation errors.
-
-  Fixed point versions are using the standard textbook algorithm since the fixed point
-  numerical behavior is different from the float one.
-
-  Algorithm for fixed point versions is summarized below:
-
-
-  <pre>
-      Result = sqrt((sumOfSquares - sum<sup>2</sup> / blockSize) / (blockSize - 1))
-
-      sumOfSquares = pSrc[0] * pSrc[0] + pSrc[1] * pSrc[1] + ... + pSrc[blockSize-1] * pSrc[blockSize-1]
-      sum = pSrc[0] + pSrc[1] + pSrc[2] + ... + pSrc[blockSize-1]
-  </pre>
-
-  There are separate functions for floating point, Q31, and Q15 data types.
- */
-
-/**
   @addtogroup STD
   @{
  */

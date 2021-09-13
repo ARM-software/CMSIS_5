@@ -33,14 +33,6 @@
  */
 
 /**
-  @defgroup Min Minimum
-
-  Computes the minimum value of an array of data.
-  The function returns both the minimum value and its position within the array.
-  There are separate functions for floating-point, Q31, Q15, and Q7 data types.
- */
-
-/**
   @addtogroup Min
   @{
  */

@@ -33,14 +33,6 @@
  */
 
 /**
-  @defgroup AbsMax Absolute Maximum
-
-  Computes the maximum value of absolute values of an array of data.
-  The function returns both the maximum value and its position within the array.
-  There are separate functions for floating-point, Q31, Q15, and Q7 data types.
- */
-
-/**
   @addtogroup AbsMax
   @{
  */
