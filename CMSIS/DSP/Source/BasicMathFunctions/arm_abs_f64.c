@@ -34,20 +34,6 @@
  */
 
 /**
-  @defgroup BasicAbs Vector Absolute Value
-
-  Computes the absolute value of a vector on an element-by-element basis.
-
-  <pre>
-      pDst[n] = abs(pSrc[n]),   0 <= n < blockSize.
-  </pre>
-
-  The functions support in-place computation allowing the source and
-  destination pointers to reference the same memory buffer.
-  There are separate functions for floating-point, Q7, Q15, and Q31 data types.
- */
-
-/**
   @addtogroup BasicAbs
   @{
  */

@@ -33,18 +33,6 @@
  */
 
 /**
-  @defgroup Fill Vector Fill
-
-  Fills the destination vector with a constant value.
-
-  <pre>
-      pDst[n] = value;   0 <= n < blockSize.
-  </pre>
-
-  There are separate functions for floating point, Q31, Q15, and Q7 data types.
- */
-
-/**
   @addtogroup Fill
   @{
  */

@@ -33,28 +33,6 @@
  */
 
 /**
-  @defgroup CmplxByCmplxMult Complex-by-Complex Multiplication
-
-  Multiplies a complex vector by another complex vector and generates a complex result.
-  The data in the complex arrays is stored in an interleaved fashion
-  (real, imag, real, imag, ...).
-  The parameter <code>numSamples</code> represents the number of complex
-  samples processed.  The complex arrays have a total of <code>2*numSamples</code>
-  real values.
-
-  The underlying algorithm is used:
-
-  <pre>
-  for (n = 0; n < numSamples; n++) {
-      pDst[(2*n)+0] = pSrcA[(2*n)+0] * pSrcB[(2*n)+0] - pSrcA[(2*n)+1] * pSrcB[(2*n)+1];
-      pDst[(2*n)+1] = pSrcA[(2*n)+0] * pSrcB[(2*n)+1] + pSrcA[(2*n)+1] * pSrcB[(2*n)+0];
-  }
-  </pre>
-
-  There are separate functions for floating-point, Q15, and Q31 data types.
- */
-
-/**
   @addtogroup CmplxByCmplxMult
   @{
  */
