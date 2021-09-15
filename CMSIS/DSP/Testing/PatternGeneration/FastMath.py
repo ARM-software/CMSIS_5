@@ -67,8 +67,6 @@ def initLogValues(format):
 
 def writeTests(config,format):
     
-    config.setOverwrite(False)
-
     a1=np.array([0,math.pi/4,math.pi/2,3*math.pi/4,math.pi,5*math.pi/4,3*math.pi/2,2*math.pi-1e-6])
     a2=np.array([-math.pi/4,-math.pi/2,-3*math.pi/4,-math.pi,-5*math.pi/4,-3*math.pi/2,-2*math.pi-1e-6])
     a3 = a1 + 2*math.pi  
@@ -84,7 +82,7 @@ def writeTests(config,format):
     vals[0] = -0.4
     sqrtvals[0] = 0.0
     
-    if format != 0 and format != 16:
+    if format != Tools.F64 and format != 0 and format != 16:
         angles=np.concatenate((a1,a2,a1))
         angles = angles / (2*math.pi)
     config.writeInput(1, angles,"Angles")
@@ -165,11 +163,18 @@ def generatePatterns():
     PATTERNDIR = os.path.join("Patterns","DSP","FastMath","FastMath")
     PARAMDIR = os.path.join("Parameters","DSP","FastMath","FastMath")
     
+    configf64=Tools.Config(PATTERNDIR,PARAMDIR,"f64")
     configf32=Tools.Config(PATTERNDIR,PARAMDIR,"f32")
     configf16=Tools.Config(PATTERNDIR,PARAMDIR,"f16")
     configq31=Tools.Config(PATTERNDIR,PARAMDIR,"q31")
     configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
     
+    configf32.setOverwrite(False)
+    configf16.setOverwrite(False)
+    configq31.setOverwrite(False)
+    configq15.setOverwrite(False)
+
+    writeTestsFloat(configf64,Tools.F64)
     writeTestsFloat(configf32,0)
     writeTestsFloat(configf16,16)
     writeTests(configq31,31)

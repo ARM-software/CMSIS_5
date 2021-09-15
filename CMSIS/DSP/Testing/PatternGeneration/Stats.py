@@ -132,7 +132,9 @@ def writeF32OnlyTests(config,nb):
 
 def writeF64OnlyTests(config,nb):
     entropyTest(config,nb)
+    logsumexpTest(config,nb+1)
     klTest(config,nb+2)
+    logSumExpDotTest(config,nb+3)
     return(nb+4)
 
 # For index in min and max we need to ensure that the difference between values
@@ -446,7 +448,6 @@ def writeTests(config,nb,format):
 # We don't want to change ID number of existing tests.
 # So new tests have to be added after existing ones
 def writeNewsTests(config,nb,format):
-    config.setOverwrite(True)
     NBSAMPLES = 300
     data1=np.random.randn(NBSAMPLES)
     
@@ -456,7 +457,6 @@ def writeNewsTests(config,nb,format):
     nb=generateMaxAbsTests(config,nb,format,data1)
     nb=generateMinAbsTests(config,nb,format,data1)
 
-    config.setOverwrite(False)
 
 def generateBenchmark(config,format):
     NBSAMPLES = 256
@@ -483,38 +483,39 @@ def generatePatterns():
     PATTERNDIR = os.path.join("Patterns","DSP","Stats","Stats")
     PARAMDIR = os.path.join("Parameters","DSP","Stats","Stats")
     
+    configf64=Tools.Config(PATTERNDIR,PARAMDIR,"f64")
     configf32=Tools.Config(PATTERNDIR,PARAMDIR,"f32")
     configf16=Tools.Config(PATTERNDIR,PARAMDIR,"f16")
-    configf64=Tools.Config(PATTERNDIR,PARAMDIR,"f64")
     configq31=Tools.Config(PATTERNDIR,PARAMDIR,"q31")
     configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
     configq7 =Tools.Config(PATTERNDIR,PARAMDIR,"q7")
     
     configf32.setOverwrite(False)
     configf16.setOverwrite(False)
-    configf64.setOverwrite(False)
     configq31.setOverwrite(False)
     configq15.setOverwrite(False)
     configq7.setOverwrite(False)
 
-    nb=writeTests(configf32,1,0)
-    nb=writeF32OnlyTests(configf32,22)
-    writeNewsTests(configf32,nb,Tools.F32)
+    #nb=writeTests(configf32,1,0)
+    #nb=writeF32OnlyTests(configf32,22)
+    #writeNewsTests(configf32,nb,Tools.F32)
 
-    writeF64OnlyTests(configf64,22)
+    nb=writeTests(configf64,1,Tools.F64)
+    nb=writeF64OnlyTests(configf64,22)
+    writeNewsTests(configf64,nb,Tools.F64)
 
-    nb=writeTests(configq31,1,31)
-    writeNewsTests(configq31,nb,Tools.Q31)
-
-    nb=writeTests(configq15,1,15)
-    writeNewsTests(configq15,nb,Tools.Q15)
-
-    nb=writeTests(configq7,1,7)
-    writeNewsTests(configq7,nb,Tools.Q7)
-
-    nb=writeTests(configf16,1,16)
-    nb=writeF16OnlyTests(configf16,22)
-    writeNewsTests(configf16,nb,Tools.F16)
+    #nb=writeTests(configq31,1,31)
+    #writeNewsTests(configq31,nb,Tools.Q31)
+#
+    #nb=writeTests(configq15,1,15)
+    #writeNewsTests(configq15,nb,Tools.Q15)
+#
+    #nb=writeTests(configq7,1,7)
+    #writeNewsTests(configq7,nb,Tools.Q7)
+#
+    #nb=writeTests(configf16,1,16)
+    #nb=writeF16OnlyTests(configf16,22)
+    #writeNewsTests(configf16,nb,Tools.F16)
 
     generateBenchmark(configf64, Tools.F64)
     generateBenchmark(configf32, Tools.F32)

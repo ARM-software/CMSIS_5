@@ -837,6 +837,22 @@ void assert_snr_error(unsigned long nb,AnyPattern<float64_t> &pa,AnyPattern<floa
    }
 }
 
+void assert_snr_error(unsigned long nb,float64_t a,float64_t b, float64_t threshold)
+{
+   float64_t snr;
+
+   snr = arm_snr_f64(&a, &b, 1);
+
+   //printf("SNR = %f\n",snr);
+   
+   if (snr < threshold)
+   {
+     char details[200];
+     sprintf(details,"SNR %g < %g",snr,threshold);
+     throw (Error(SNR_ERROR,nb,details));
+   }
+}
+
 void assert_snr_error(unsigned long nb,AnyPattern<q63_t> &pa,AnyPattern<q63_t> &pb, float32_t threshold)
 {
    float32_t snr;

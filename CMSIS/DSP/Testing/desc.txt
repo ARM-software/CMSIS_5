@@ -9,6 +9,112 @@ group Root {
            class = StatsTests
            folder = Stats
 
+
+           suite Statistics Tests F64 {
+              class = StatsTestsF64
+              folder = StatsF64
+
+              Pattern INPUT1_F64_ID : Input1_f64.txt 
+              Pattern INPUTNEW1_F64_ID : InputNew1_f64.txt 
+
+              Pattern INPUT2_F64_ID : Input2_f64.txt 
+              Pattern MAXINDEXES_S16_ID : MaxIndexes1_s16.txt
+              Pattern MAXVALS_F64_ID : MaxVals1_f64.txt
+              Pattern MEANVALS_F64_ID : MeanVals2_f64.txt
+              Pattern MININDEXES_S16_ID : MinIndexes3_s16.txt
+              Pattern MINVALS_F64_ID : MinVals3_f64.txt
+              Pattern POWERVALS_F64_ID : PowerVals4_f64.txt
+              Pattern RMSVALS_F64_ID : RmsVals5_f64.txt
+              Pattern STDVALS_F64_ID : StdVals6_f64.txt
+              Pattern VARVALS_F64_ID : VarVals7_f64.txt
+
+              Pattern INPUT22_F64_ID : Input22_f64.txt 
+              Pattern DIM22_S16_ID : Dims22_s16.txt 
+              Pattern REF22_ENTROPY_F64_ID : RefEntropy22_f64.txt
+
+              Pattern INPUT23_F64_ID : Input23_f64.txt 
+              Pattern DIM23_S16_ID : Dims23_s16.txt 
+              Pattern REF23_LOGSUMEXP_F64_ID : RefLogSumExp23_f64.txt
+
+              Pattern INPUTA24_F64_ID : InputA24_f64.txt 
+              Pattern INPUTB24_F64_ID : InputB24_f64.txt
+              Pattern DIM24_S16_ID : Dims24_s16.txt 
+              Pattern REF24_KL_F64_ID : RefKL24_f64.txt
+
+              Pattern INPUTA25_F64_ID : InputA25_f64.txt 
+              Pattern INPUTB25_F64_ID : InputB25_f64.txt
+              Pattern DIM25_S16_ID : Dims25_s16.txt 
+              Pattern REF25_LOGSUMEXP_DOT_F64_ID : RefLogSumExpDot25_f64.txt
+
+              Pattern ABSMAXINDEXES_S16_ID : AbsMaxIndexes26_s16.txt
+              Pattern ABSMAXVALS_F64_ID : AbsMaxVals26_f64.txt
+
+              Pattern ABSMININDEXES_S16_ID : AbsMinIndexes27_s16.txt
+              Pattern ABSMINVALS_F64_ID : AbsMinVals27_f64.txt
+
+
+              Output  OUT_F64_ID : Output
+              Output  OUT_S16_ID : Index
+              Output  TMP_F64_ID : Temp
+
+              Functions {
+                Test nb=2    arm_max_f64:test_max_f64
+                Test nb=2n   arm_max_f64:test_max_f64
+                Test nb=2n+1 arm_max_f64:test_max_f64
+
+                Test nb=2    arm_mean_f64:test_mean_f64
+                Test nb=2n   arm_mean_f64:test_mean_f64
+                Test nb=2n+1 arm_mean_f64:test_mean_f64
+
+                Test nb=2    arm_min_f64:test_min_f64
+                Test nb=2n   arm_min_f64:test_min_f64
+                Test nb=2n+1 arm_min_f64:test_min_f64
+
+                Test nb=2    arm_power_f64:test_power_f64
+                Test nb=2n   arm_power_f64:test_power_f64
+                Test nb=2n+1 arm_power_f64:test_power_f64
+
+                disabled{Test nb=2    arm_rms_f64:test_rms_f64}
+                disabled{Test nb=2n   arm_rms_f64:test_rms_f64}
+                disabled{Test nb=2n+1 arm_rms_f64:test_rms_f64}
+
+                Test nb=2    arm_std_f64:test_std_f64
+                Test nb=2n   arm_std_f64:test_std_f64
+                Test nb=2n+1 arm_std_f64:test_std_f64
+
+                Test nb=2    arm_var_f64:test_var_f64
+                Test nb=2n   arm_var_f64:test_var_f64
+                Test nb=2n+1 arm_var_f64:test_var_f64
+
+                arm_entropy_f64:test_entropy_f64
+                disabled{arm_logsumexp_f64:test_logsumexp_f64}
+                arm_kullback_leibler_f64:test_kullback_leibler_f64
+                disabled{arm_logsumexp_dot_prod_f64:test_logsumexp_dot_prod_f64}
+
+                Test nb=2    arm_max_no_idx_f64:test_max_no_idx_f64
+                Test nb=2n   arm_max_no_idx_f64:test_max_no_idx_f64
+                Test nb=2n+1 arm_max_no_idx_f64:test_max_no_idx_f64
+
+                Test long  arm_mean_f64:test_mean_f64
+                disabled{Test long  arm_rms_f64:test_rms_f64}
+                Test long  arm_std_f64:test_std_f64
+                Test long  arm_var_f64:test_var_f64
+
+                Test stability  arm_std_f64:test_std_stability_f64
+
+                Test nb=2    arm_absmax_f64:test_absmax_f64
+                Test nb=2n   arm_absmax_f64:test_absmax_f64
+                Test nb=2n+1 arm_absmax_f64:test_absmax_f64
+
+                Test nb=2    arm_absmin_f64:test_absmin_f64
+                Test nb=2n   arm_absmin_f64:test_absmin_f64
+                Test nb=2n+1 arm_absmin_f64:test_absmin_f64
+
+
+              }
+
+           }
+
            suite Statistics Tests F32 {
               class = StatsTestsF32
               folder = StatsF32
@@ -114,29 +220,7 @@ group Root {
 
            }
 
-           suite Statistics Tests F64 {
-              class = StatsTestsF64
-              folder = StatsF64
 
-              Pattern INPUT22_F64_ID : Input22_f64.txt 
-              Pattern DIM22_S16_ID : Dims22_s16.txt 
-              Pattern REF22_ENTROPY_F64_ID : RefEntropy22_f64.txt
-
-              Pattern INPUTA24_F64_ID : InputA24_f64.txt 
-              Pattern INPUTB24_F64_ID : InputB24_f64.txt
-              Pattern DIM24_S16_ID : Dims24_s16.txt 
-              Pattern REF24_KL_F64_ID : RefKL24_f64.txt
-
-              Output  OUT_F64_ID : Output
-              Output  OUT_S16_ID : Index
-              Output  TMP_F64_ID : Temp
-
-              Functions {
-                arm_entropy_f64:test_entropy_f64
-                arm_kullback_leibler_f64:test_kullback_leibler_f64
-              }
-
-           }
 
            suite Statistics Tests Q31 {
               class = StatsTestsQ31
@@ -355,6 +439,63 @@ group Root {
         group Support Tests {
            class = SupportTests
            folder = Support
+
+           suite Support Tests F64 {
+              class = SupportTestsF64
+              folder = SupportF64
+
+
+              Pattern SAMPLES_F64_ID : Samples1_f64.txt 
+             
+
+              Output  OUT_F64_ID : Output
+             
+              Functions {
+                disabled{test_weighted_sum_f64 nb=3:test_weighted_sum_f64}
+                disabled{test_weighted_sum_f64 nb=4n:test_weighted_sum_f64}
+                disabled{test_weighted_sum_f64 nb=4n+1:test_weighted_sum_f64}
+                test_copy_f64 nb=2:test_copy_f64
+                test_copy_f64 nb=2n:test_copy_f64
+                test_copy_f64 nb=2n+1:test_copy_f64
+                test_fill_f64 nb=2:test_fill_f64
+                test_fill_f64 nb=2n:test_fill_f64
+                test_fill_f64 nb=2n+1:test_fill_f64
+                disabled{test_float_q15 nb=7:test_float_to_q15}
+                disabled{test_float_q15 nb=8n:test_float_to_q15}
+                disabled{test_float_q15 nb=8n+1:test_float_to_q15}
+                disabled{test_float_q31 nb=3:test_float_to_q31}
+                disabled{test_float_q31 nb=4n:test_float_to_q31}
+                disabled{test_float_q31 nb=4n+1:test_float_to_q31}
+                disabled{test_float_q7 nb=15:test_float_to_q7}
+                disabled{test_float_q7 nb=16n:test_float_to_q7}
+                disabled{test_float_q7 nb=16n+1:test_float_to_q7}
+
+                disabled{test_bitonic_sort_f64 nb=16 outofoplace:test_bitonic_sort_out_f64   }
+                disabled{test_bitonic_sort_f64 nb=32 outofplace:test_bitonic_sort_out_f64}
+                disabled{test_bitonic_sort_f64 nb=32 inplace:test_bitonic_sort_in_f64}
+                disabled{test_bitonic_sort_f64 nb=16 const:test_bitonic_sort_const_f64}
+                disabled{test_bubble_sort_f64 nb=11 outofplace:test_bubble_sort_out_f64}
+                disabled{test_bubble_sort_f64 nb=11 inplace:test_bubble_sort_in_f64}
+                disabled{test_bubble_sort_f64 nb=16 const:test_bubble_sort_const_f64}
+                disabled{test_heap_sort_f64 nb=11 outofplace:test_heap_sort_out_f64}
+                disabled{test_heap_sort_f64 nb=11 inplace:test_heap_sort_in_f64}
+                disabled{test_heap_sort_f64 nb=16 const:test_heap_sort_const_f64}
+                disabled{test_insertion_sort_f64 nb=11 outofplace:test_insertion_sort_out_f64 }
+                disabled{test_insertion_sort_f64 nb=11 inplace:test_insertion_sort_in_f64 }
+                disabled{test_insertion_sort_f64 nb=16 const:test_insertion_sort_const_f64 }
+                disabled{test_merge_sort_f64 nb=11 outofplace:test_merge_sort_out_f64 }
+                disabled{test_merge_sort_f64 nb=16 const:test_merge_sort_const_f64 }
+                disabled{test_quick_sort_f64 nb=11 outofplace:test_quick_sort_out_f64}
+                disabled{test_quick_sort_f64 nb=11 inplace:test_quick_sort_in_f64 }
+                disabled{test_quick_sort_f64 nb=16 const:test_quick_sort_const_f64}
+                disabled{test_selection_sort_f64 nb=11 outofplace:test_selection_sort_out_f64 }
+                disabled{test_selection_sort_f64 nb=11 inplace:test_selection_sort_in_f64}
+                disabled{test_selection_sort_f64 nb=16 const:test_selection_sort_const_f64}
+
+                
+              }
+
+           }
 
            suite Support Tests F32 {
               class = SupportTestsF32
@@ -700,6 +841,81 @@ group Root {
         group Basic Tests {
            class = BasicTests
            folder = BasicMaths
+
+           suite Basic Tests F64{
+              class = BasicTestsF64
+              folder = BasicMathsF64
+   
+              Pattern INPUT1_F64_ID : Input1_f64.txt 
+              Pattern INPUT2_F64_ID : Input2_f64.txt 
+
+              Pattern INPUT_CLIP_F64_ID : Input12_f64.txt 
+              
+              Pattern REF_ADD_F64_ID : Reference1_f64.txt
+              Pattern REF_SUB_F64_ID : Reference2_f64.txt
+              Pattern REF_MULT_F64_ID : Reference3_f64.txt
+              Pattern REF_NEGATE_F64_ID : Reference4_f64.txt
+              Pattern REF_OFFSET_F64_ID : Reference5_f64.txt
+              Pattern REF_SCALE_F64_ID : Reference6_f64.txt
+              Pattern REF_DOT_3_F64_ID : Reference7_f64.txt
+              Pattern REF_DOT_4N_F64_ID : Reference8_f64.txt
+              Pattern REF_DOT_4N1_F64_ID : Reference9_f64.txt
+              Pattern REF_ABS_F64_ID : Reference10_f64.txt
+              Pattern REF_DOT_LONG_F64_ID : Reference11_f64.txt
+
+              Pattern REF_CLIP1_F64_ID : Reference12_f64.txt
+              Pattern REF_CLIP2_F64_ID : Reference13_f64.txt
+              Pattern REF_CLIP3_F64_ID : Reference14_f64.txt
+   
+              Output  OUT_SAMPLES_F64_ID : Output
+              Output  OUT_STATE_F64_ID : State
+   
+              Functions {
+                Test nb=2    arm_add_f64:test_add_f64
+                Test nb=2n   arm_add_f64:test_add_f64
+                Test nb=2n+1 arm_add_f64:test_add_f64
+         
+                Test nb=2    arm_sub_f64:test_sub_f64
+                Test nb=2n   arm_sub_f64:test_sub_f64
+                Test nb=2n+1 arm_sub_f64:test_sub_f64
+         
+                Test nb=2    arm_mult_f64:test_mult_f64
+                Test nb=2n   arm_mult_f64:test_mult_f64
+                Test nb=2n+1 arm_mult_f64:test_mult_f64
+         
+                Test nb=2    arm_negate_f64:test_negate_f64
+                Test nb=2n   arm_negate_f64:test_negate_f64
+                Test nb=2n+1 arm_negate_f64:test_negate_f64
+         
+                Test nb=2    arm_offset_f64:test_offset_f64
+                Test nb=2n   arm_offset_f64:test_offset_f64
+                Test nb=2n+1 arm_offset_f64:test_offset_f64
+         
+                Test nb=2    arm_scale_f64:test_scale_f64
+                Test nb=2n   arm_scale_f64:test_scale_f64
+                Test nb=2n+1 arm_scale_f64:test_scale_f64
+         
+                Test nb=2    arm_dot_prod_f64:test_dot_prod_f64
+                Test nb=2n   arm_dot_prod_f64:test_dot_prod_f64
+                Test nb=2n+1 arm_dot_prod_f64:test_dot_prod_f64
+         
+                Test nb=2    arm_abs_f64:test_abs_f64
+                Test nb=2n   arm_abs_f64:test_abs_f64
+                Test nb=2n+1 arm_abs_f64:test_abs_f64
+
+                Test long    arm_add_f64:test_add_f64
+                Test long    arm_sub_f64:test_sub_f64
+                Test long    arm_mult_f64:test_mult_f64
+                Test long    arm_negate_f64:test_negate_f64
+                Test long    arm_offset_f64:test_offset_f64
+                Test long    arm_scale_f64:test_scale_f64
+                Test long    arm_dot_prod_f64:test_dot_prod_f64
+                Test long    arm_abs_f64:test_abs_f64
+                disabled{Test 1       arm_clip_f64:test_clip_f64}
+                disabled{Test 2       arm_clip_f64:test_clip_f64}
+                disabled{Test 3       arm_clip_f64:test_clip_f64}
+              }
+           }
 
            suite Basic Tests F32{
               class = BasicTestsF32
@@ -1193,6 +1409,63 @@ group Root {
            class = ComplexTests
            folder = ComplexMaths
 
+           suite Complex Tests F64{
+              class = ComplexTestsF64
+              folder = ComplexMathsF64
+
+              Pattern INPUT1_F64_ID : Input1_f64.txt 
+              Pattern INPUT2_F64_ID : Input2_f64.txt 
+              Pattern INPUT3_F64_ID : Input3_f64.txt 
+
+              Pattern REF_CONJ_F64_ID : Reference1_f64.txt
+              Pattern REF_DOT_PROD_3_F64_ID : Reference2_f64.txt
+              Pattern REF_DOT_PROD_4N_F64_ID : Reference3_f64.txt
+              Pattern REF_DOT_PROD_4N1_F64_ID : Reference4_f64.txt
+              Pattern REF_MAG_F64_ID : Reference5_f64.txt
+              Pattern REF_MAG_SQUARED_F64_ID : Reference6_f64.txt
+              Pattern REF_CMPLX_MULT_CMPLX_F64_ID : Reference7_f64.txt
+              Pattern REF_CMPLX_MULT_REAL_F64_ID : Reference8_f64.txt
+              Pattern REF_DOT_PROD_LONG_F64_ID : Reference9_f64.txt
+
+              Output  OUT_SAMPLES_F64_ID : Output
+              Output  OUT_STATE_F64_ID : State
+
+              Functions {
+                disabled{Test nb=2    arm_cmplx_conj_f64:test_cmplx_conj_f64}
+                disabled{Test nb=2n   arm_cmplx_conj_f64:test_cmplx_conj_f64}
+                disabled{Test nb=2n+1 arm_cmplx_conj_f64:test_cmplx_conj_f64}
+
+                disabled{Test nb=2    arm_cmplx_dot_prod_f64:test_cmplx_dot_prod_f64}
+                disabled{Test nb=2n   arm_cmplx_dot_prod_f64:test_cmplx_dot_prod_f64}
+                disabled{Test nb=2n+1 arm_cmplx_dot_prod_f64:test_cmplx_dot_prod_f64}
+
+                Test nb=2    arm_cmplx_mag_f64:test_cmplx_mag_f64
+                Test nb=2n   arm_cmplx_mag_f64:test_cmplx_mag_f64
+                Test nb=2n+1 arm_cmplx_mag_f64:test_cmplx_mag_f64
+
+                Test nb=2    arm_cmplx_mag_squared_f64:test_cmplx_mag_squared_f64
+                Test nb=2n   arm_cmplx_mag_squared_f64:test_cmplx_mag_squared_f64
+                Test nb=2n+1 arm_cmplx_mag_squared_f64:test_cmplx_mag_squared_f64
+
+                Test nb=2    arm_cmplx_mult_cmplx_f64:test_cmplx_mult_cmplx_f64
+                Test nb=2n   arm_cmplx_mult_cmplx_f64:test_cmplx_mult_cmplx_f64
+                Test nb=2n+1 arm_cmplx_mult_cmplx_f64:test_cmplx_mult_cmplx_f64
+
+                disabled{Test nb=2    arm_cmplx_mult_real_f64:test_cmplx_mult_real_f64}
+                disabled{Test nb=2n   arm_cmplx_mult_real_f64:test_cmplx_mult_real_f64}
+                disabled{Test nb=2n+1 arm_cmplx_mult_real_f64:test_cmplx_mult_real_f64}
+
+                disabled{Test long    arm_cmplx_conj_f64:test_cmplx_conj_f64}
+                disabled{Test long    arm_cmplx_dot_prod_f64:test_cmplx_dot_prod_f64}
+                Test long    arm_cmplx_mag_f64:test_cmplx_mag_f64
+                Test long    arm_cmplx_mag_squared_f64:test_cmplx_mag_squared_f64
+                Test long    arm_cmplx_mult_cmplx_f64:test_cmplx_mult_cmplx_f64
+                disabled{Test long    arm_cmplx_mult_real_f64:test_cmplx_mult_real_f64}
+
+              }
+
+           }
+
            suite Complex Tests F32{
               class = ComplexTestsF32
               folder = ComplexMathsF32
@@ -1364,6 +1637,38 @@ group Root {
           class = FastMath
           folder = FastMath 
 
+          suite Fast Maths F64 {
+              class = FastMathF64
+              folder = FastMathF64
+
+              Pattern ANGLES1_F64_ID : Angles1_f64.txt
+              Pattern SQRTINPUT1_F64_ID : SqrtInput1_f64.txt
+              Pattern LOGINPUT1_F64_ID : LogInput1_f64.txt
+              Pattern EXPINPUT1_F64_ID : ExpInput1_f64.txt
+              
+              Pattern COS1_F64_ID : Cos1_f64.txt 
+              Pattern SIN1_F64_ID : Sin1_f64.txt 
+              Pattern SQRT1_F64_ID : Sqrt1_f64.txt 
+              Pattern LOG1_F64_ID : Log1_f64.txt 
+              Pattern EXP1_F64_ID : Exp1_f64.txt 
+
+              Output  OUT_F64_ID : Output
+
+              Functions {
+                disabled{test_cos_f64:test_cos_f64}
+                disabled{test_sin_f64:test_sin_f64}
+                disabled{test_sqrt_f64:test_sqrt_f64}
+                test_vlog_f64:test_vlog_f64
+                test_vlog_f64 nb=2:test_vlog_f64
+                test_vlog_f64 nb=2n:test_vlog_f64
+                test_vlog_f64 nb=2n+1:test_vlog_f64
+                test_vexp_f64:test_vexp_f64
+                test_vexp_f64 nb=2:test_vexp_f64
+                test_vexp_f64 nb=2n:test_vexp_f64
+                test_vexp_f64 nb=2n+1:test_vexp_f64
+              }
+          }
+
           suite Fast Maths F32 {
               class = FastMathF32
               folder = FastMathF32
@@ -1528,6 +1833,46 @@ group Root {
            class = DistanceTests
            folder = Distance
 
+           suite Distance Tests F64 {
+              class = DistanceTestsF64
+              folder = DistanceF64
+
+              Pattern DIMS_S16_ID : Dims1_s16.txt 
+              Pattern DIMS_MINKOWSKI_S16_ID : Dims9_s16.txt 
+
+              Pattern INPUTA_F64_ID : InputA1_f64.txt
+              Pattern INPUTB_F64_ID : InputB1_f64.txt
+
+              Pattern INPUTA_JEN_F64_ID : InputA8_f64.txt
+              Pattern INPUTB_JEN_F64_ID : InputB8_f64.txt
+
+              Pattern REF1_F64_ID : Ref1_f64.txt
+              Pattern REF2_F64_ID : Ref2_f64.txt
+              Pattern REF3_F64_ID : Ref3_f64.txt
+              Pattern REF4_F64_ID : Ref4_f64.txt
+              Pattern REF5_F64_ID : Ref5_f64.txt
+              Pattern REF6_F64_ID : Ref6_f64.txt
+              Pattern REF7_F64_ID : Ref7_f64.txt
+              Pattern REF8_F64_ID : Ref8_f64.txt
+              Pattern REF9_F64_ID : Ref9_f64.txt
+
+              Output  OUT_F64_ID : Output
+              Output  TMPA_F64_ID : TmpA
+              Output  TMPB_F64_ID : TmpB
+
+              Functions {
+                 disabled{arm_braycurtis_distance_f64:test_braycurtis_distance_f64}
+                 disabled{arm_canberra_distance_f64:test_canberra_distance_f64}
+                 arm_chebyshev_distance_f64:test_chebyshev_distance_f64
+                 arm_cityblock_distance_f64:test_cityblock_distance_f64
+                 disabled{arm_correlation_distance_f64:test_correlation_distance_f64}
+                 arm_cosine_distance_f64:test_cosine_distance_f64
+                 arm_euclidean_distance_f64:test_euclidean_distance_f64
+                 disabled{arm_jensenshannon_distance_f64:test_jensenshannon_distance_f64}
+                 disabled{arm_minkowski_distance_f64:test_minkowski_distance_f64}
+              }
+           }
+
            suite Distance Tests F32 {
               class = DistanceTestsF32
               folder = DistanceF32
@@ -1687,6 +2032,205 @@ group Root {
            group MISC {
              class = MISC 
              folder = MISC
+
+             suite MISC F64 {
+                class = MISCF64 
+                folder = MISCF64
+
+                Pattern INPUTA_F64_ID : InputsA1_f64.txt
+                Pattern INPUTB_F64_ID : InputsB1_f64.txt
+
+                Pattern INPUTA2_F64_ID : InputsA2_f64.txt
+                Pattern INPUTB2_F64_ID : InputsB2_f64.txt
+
+                Pattern INPUTPHI_A_F64_ID : InputPhi81_f64.txt
+                Pattern INPUTPHI_B_F64_ID : InputPhi82_f64.txt
+                Pattern INPUTPHI_C_F64_ID : InputPhi83_f64.txt
+
+                Pattern INPUT_ERRORS_F64_ID : LDErrors81_f64.txt
+
+                Pattern REF1_F64_ID : Reference1_f64.txt
+                Pattern REF2_F64_ID : Reference2_f64.txt
+                Pattern REF3_F64_ID : Reference3_f64.txt
+                Pattern REF4_F64_ID : Reference4_f64.txt
+                Pattern REF5_F64_ID : Reference5_f64.txt
+                Pattern REF6_F64_ID : Reference6_f64.txt
+                Pattern REF7_F64_ID : Reference7_f64.txt
+                Pattern REF8_F64_ID : Reference8_f64.txt
+                Pattern REF9_F64_ID : Reference9_f64.txt
+                Pattern REF10_F64_ID : Reference10_f64.txt
+                Pattern REF11_F64_ID : Reference11_f64.txt
+                Pattern REF12_F64_ID : Reference12_f64.txt
+                Pattern REF13_F64_ID : Reference13_f64.txt
+                Pattern REF14_F64_ID : Reference14_f64.txt
+                Pattern REF15_F64_ID : Reference15_f64.txt
+                Pattern REF16_F64_ID : Reference16_f64.txt
+                Pattern REF17_F64_ID : Reference17_f64.txt
+                Pattern REF18_F64_ID : Reference18_f64.txt
+                Pattern REF19_F64_ID : Reference19_f64.txt
+                Pattern REF20_F64_ID : Reference20_f64.txt
+                Pattern REF21_F64_ID : Reference21_f64.txt
+                Pattern REF22_F64_ID : Reference22_f64.txt
+                Pattern REF23_F64_ID : Reference23_f64.txt
+                Pattern REF24_F64_ID : Reference24_f64.txt
+                Pattern REF25_F64_ID : Reference25_f64.txt
+                Pattern REF26_F64_ID : Reference26_f64.txt
+                Pattern REF27_F64_ID : Reference27_f64.txt
+                Pattern REF28_F64_ID : Reference28_f64.txt
+                Pattern REF29_F64_ID : Reference29_f64.txt
+                Pattern REF30_F64_ID : Reference30_f64.txt
+                Pattern REF31_F64_ID : Reference31_f64.txt
+                Pattern REF32_F64_ID : Reference32_f64.txt
+                Pattern REF33_F64_ID : Reference33_f64.txt
+                Pattern REF34_F64_ID : Reference34_f64.txt
+                Pattern REF35_F64_ID : Reference35_f64.txt
+                Pattern REF36_F64_ID : Reference36_f64.txt
+                Pattern REF37_F64_ID : Reference37_f64.txt
+                Pattern REF38_F64_ID : Reference38_f64.txt
+                Pattern REF39_F64_ID : Reference39_f64.txt
+                Pattern REF40_F64_ID : Reference40_f64.txt
+                Pattern REF41_F64_ID : Reference41_f64.txt
+                Pattern REF42_F64_ID : Reference42_f64.txt
+                Pattern REF43_F64_ID : Reference43_f64.txt
+                Pattern REF44_F64_ID : Reference44_f64.txt
+                Pattern REF45_F64_ID : Reference45_f64.txt
+                Pattern REF46_F64_ID : Reference46_f64.txt
+                Pattern REF47_F64_ID : Reference47_f64.txt
+                Pattern REF48_F64_ID : Reference48_f64.txt
+                Pattern REF49_F64_ID : Reference49_f64.txt
+                Pattern REF50_F64_ID : Reference50_f64.txt
+                Pattern REF51_F64_ID : Reference51_f64.txt
+                Pattern REF52_F64_ID : Reference52_f64.txt
+                Pattern REF53_F64_ID : Reference53_f64.txt
+                Pattern REF54_F64_ID : Reference54_f64.txt
+                Pattern REF55_F64_ID : Reference55_f64.txt
+                Pattern REF56_F64_ID : Reference56_f64.txt
+                Pattern REF57_F64_ID : Reference57_f64.txt
+                Pattern REF58_F64_ID : Reference58_f64.txt
+                Pattern REF59_F64_ID : Reference59_f64.txt
+                Pattern REF60_F64_ID : Reference60_f64.txt
+                Pattern REF61_F64_ID : Reference61_f64.txt
+                Pattern REF62_F64_ID : Reference62_f64.txt
+                Pattern REF63_F64_ID : Reference63_f64.txt
+                Pattern REF64_F64_ID : Reference64_f64.txt
+                Pattern REF65_F64_ID : Reference65_f64.txt
+                Pattern REF66_F64_ID : Reference66_f64.txt
+                Pattern REF67_F64_ID : Reference67_f64.txt
+                Pattern REF68_F64_ID : Reference68_f64.txt
+                Pattern REF69_F64_ID : Reference69_f64.txt
+                Pattern REF70_F64_ID : Reference70_f64.txt
+                Pattern REF71_F64_ID : Reference71_f64.txt
+                Pattern REF72_F64_ID : Reference72_f64.txt
+                Pattern REF73_F64_ID : Reference73_f64.txt
+                Pattern REF74_F64_ID : Reference74_f64.txt
+                Pattern REF75_F64_ID : Reference75_f64.txt
+                Pattern REF76_F64_ID : Reference76_f64.txt
+                Pattern REF77_F64_ID : Reference77_f64.txt
+                Pattern REF78_F64_ID : Reference78_f64.txt
+                Pattern REF79_F64_ID : Reference79_f64.txt
+                Pattern REF80_F64_ID : Reference80_f64.txt
+                Pattern REF81_F64_ID : Reference81_f64.txt
+                Pattern REF82_F64_ID : Reference82_f64.txt
+                Pattern REF83_F64_ID : Reference83_f64.txt
+
+                Pattern REF84_F64_ID : Reference84_f64.txt
+                Pattern REF85_F64_ID : Reference85_f64.txt
+                Pattern REF86_F64_ID : Reference86_f64.txt
+
+
+                Output  OUT_F64_ID : Output
+                Output  TMP_F64_ID : Temp
+
+                Functions {
+                  arm_correlate_f64 nba=4 nbb=1:test_correlate_f64
+                  arm_correlate_f64 nba=4 nbb=2:test_correlate_f64
+                  arm_correlate_f64 nba=4 nbb=3:test_correlate_f64
+                  arm_correlate_f64 nba=4 nbb=8:test_correlate_f64
+                  arm_correlate_f64 nba=4 nbb=11:test_correlate_f64
+                  arm_correlate_f64 nba=5 nbb=1:test_correlate_f64
+                  arm_correlate_f64 nba=5 nbb=2:test_correlate_f64
+                  arm_correlate_f64 nba=5 nbb=3:test_correlate_f64
+                  arm_correlate_f64 nba=5 nbb=8:test_correlate_f64
+                  arm_correlate_f64 nba=5 nbb=11:test_correlate_f64
+                  arm_correlate_f64 nba=6 nbb=1:test_correlate_f64
+                  arm_correlate_f64 nba=6 nbb=2:test_correlate_f64
+                  arm_correlate_f64 nba=6 nbb=3:test_correlate_f64
+                  arm_correlate_f64 nba=6 nbb=8:test_correlate_f64
+                  arm_correlate_f64 nba=6 nbb=11:test_correlate_f64
+                  arm_correlate_f64 nba=9 nbb=1:test_correlate_f64
+                  arm_correlate_f64 nba=9 nbb=2:test_correlate_f64
+                  arm_correlate_f64 nba=9 nbb=3:test_correlate_f64
+                  arm_correlate_f64 nba=9 nbb=8:test_correlate_f64
+                  arm_correlate_f64 nba=9 nbb=11:test_correlate_f64
+                  arm_correlate_f64 nba=10 nbb=1:test_correlate_f64
+                  arm_correlate_f64 nba=10 nbb=2:test_correlate_f64
+                  arm_correlate_f64 nba=10 nbb=3:test_correlate_f64
+                  arm_correlate_f64 nba=10 nbb=8:test_correlate_f64
+                  arm_correlate_f64 nba=10 nbb=11:test_correlate_f64
+                  arm_correlate_f64 nba=11 nbb=1:test_correlate_f64
+                  arm_correlate_f64 nba=11 nbb=2:test_correlate_f64
+                  arm_correlate_f64 nba=11 nbb=3:test_correlate_f64
+                  arm_correlate_f64 nba=11 nbb=8:test_correlate_f64
+                  arm_correlate_f64 nba=11 nbb=11:test_correlate_f64
+                  arm_correlate_f64 nba=12 nbb=1:test_correlate_f64
+                  arm_correlate_f64 nba=12 nbb=2:test_correlate_f64
+                  arm_correlate_f64 nba=12 nbb=3:test_correlate_f64
+                  arm_correlate_f64 nba=12 nbb=8:test_correlate_f64
+                  arm_correlate_f64 nba=12 nbb=11:test_correlate_f64
+                  arm_correlate_f64 nba=13 nbb=1:test_correlate_f64
+                  arm_correlate_f64 nba=13 nbb=2:test_correlate_f64
+                  arm_correlate_f64 nba=13 nbb=3:test_correlate_f64
+                  arm_correlate_f64 nba=13 nbb=8:test_correlate_f64
+                  arm_correlate_f64 nba=13 nbb=11:test_correlate_f64
+                  disabled{arm_conv_f64 nba=4 nbb=1:test_conv_f64}
+                  disabled{arm_conv_f64 nba=4 nbb=2:test_conv_f64}
+                  disabled{arm_conv_f64 nba=4 nbb=3:test_conv_f64}
+                  disabled{arm_conv_f64 nba=4 nbb=8:test_conv_f64}
+                  disabled{arm_conv_f64 nba=4 nbb=11:test_conv_f64}
+                  disabled{arm_conv_f64 nba=5 nbb=1:test_conv_f64}
+                  disabled{arm_conv_f64 nba=5 nbb=2:test_conv_f64}
+                  disabled{arm_conv_f64 nba=5 nbb=3:test_conv_f64}
+                  disabled{arm_conv_f64 nba=5 nbb=8:test_conv_f64}
+                  disabled{arm_conv_f64 nba=5 nbb=11:test_conv_f64}
+                  disabled{arm_conv_f64 nba=6 nbb=1:test_conv_f64}
+                  disabled{arm_conv_f64 nba=6 nbb=2:test_conv_f64}
+                  disabled{arm_conv_f64 nba=6 nbb=3:test_conv_f64}
+                  disabled{arm_conv_f64 nba=6 nbb=8:test_conv_f64}
+                  disabled{arm_conv_f64 nba=6 nbb=11:test_conv_f64}
+                  disabled{arm_conv_f64 nba=9 nbb=1:test_conv_f64}
+                  disabled{arm_conv_f64 nba=9 nbb=2:test_conv_f64}
+                  disabled{arm_conv_f64 nba=9 nbb=3:test_conv_f64}
+                  disabled{arm_conv_f64 nba=9 nbb=8:test_conv_f64}
+                  disabled{arm_conv_f64 nba=9 nbb=11:test_conv_f64}
+                  disabled{arm_conv_f64 nba=10 nbb=1:test_conv_f64}
+                  disabled{arm_conv_f64 nba=10 nbb=2:test_conv_f64}
+                  disabled{arm_conv_f64 nba=10 nbb=3:test_conv_f64}
+                  disabled{arm_conv_f64 nba=10 nbb=8:test_conv_f64}
+                  disabled{arm_conv_f64 nba=10 nbb=11:test_conv_f64}
+                  disabled{arm_conv_f64 nba=11 nbb=1:test_conv_f64}
+                  disabled{arm_conv_f64 nba=11 nbb=2:test_conv_f64}
+                  disabled{arm_conv_f64 nba=11 nbb=3:test_conv_f64}
+                  disabled{arm_conv_f64 nba=11 nbb=8:test_conv_f64}
+                  disabled{arm_conv_f64 nba=11 nbb=11:test_conv_f64}
+                  disabled{arm_conv_f64 nba=12 nbb=1:test_conv_f64}
+                  disabled{arm_conv_f64 nba=12 nbb=2:test_conv_f64}
+                  disabled{arm_conv_f64 nba=12 nbb=3:test_conv_f64}
+                  disabled{arm_conv_f64 nba=12 nbb=8:test_conv_f64}
+                  disabled{arm_conv_f64 nba=12 nbb=11:test_conv_f64}
+                  disabled{arm_conv_f64 nba=13 nbb=1:test_conv_f64}
+                  disabled{arm_conv_f64 nba=13 nbb=2:test_conv_f64}
+                  disabled{arm_conv_f64 nba=13 nbb=3:test_conv_f64}
+                  disabled{arm_conv_f64 nba=13 nbb=8:test_conv_f64}
+                  disabled{arm_conv_f64 nba=13 nbb=11:test_conv_f64}
+                  disabled{arm_levinson_durbin_f64 n=3:test_levinson_durbin_f64}
+                  disabled{arm_levinson_durbin_f64 n=8:test_levinson_durbin_f64}
+                  disabled{arm_levinson_durbin_f64 n=11:test_levinson_durbin_f64}
+                  disabled{arm_conv_partial_f64 nba=6 nbb=8 first=3:test_conv_partial_f64}
+                  disabled{arm_conv_partial_f64 nba=6 nbb=8 first=9:test_conv_partial_f64}
+                  disabled{arm_conv_partial_f64 nba=6 nbb=8 first=7:test_conv_partial_f64}
+                }
+
+             }
 
              suite MISC F32 {
                 class = MISCF32 
@@ -2364,6 +2908,24 @@ group Root {
            group FIR {
              class = FIR 
              folder = FIR
+
+             suite FIR F64 {
+                class = FIRF64 
+                folder = FIRF64
+
+                Pattern FIRINPUTS_F64_ID : FirInput1_f64.txt
+                Pattern FIRCOEFS_F64_ID : FirCoefs1_f64.txt
+                Pattern FIRCONFIGS_S16_ID : FirConfigs1_s16.txt 
+
+                Pattern FIRREFS_F64_ID : FirRefs1_f64.txt
+
+                Output  OUT_F64_ID : Output
+
+                Functions {
+                  arm_fir_f64:test_fir_f64
+                }
+
+             }
 
              suite FIR F32 {
                 class = FIRF32 

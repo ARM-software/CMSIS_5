@@ -20,6 +20,8 @@
 
       Typecasting functions for converting between f16 and s16 in scalar.
 
+      More f64 functions
+
       Remarks:
       - Accuracy issues remain with the vlog q31 and q15.
     </td>

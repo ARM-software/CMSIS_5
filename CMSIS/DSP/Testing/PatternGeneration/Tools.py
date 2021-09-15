@@ -21,7 +21,7 @@ def loopnb(format,loopkind):
     nb = 0
     if loopkind == TAILONLY:
         if format == 64:
-            nb = 1 
+            nb = 2 
         if format == 0 or format == 31:
             nb = 3 
         if format == 15 or format == 16:

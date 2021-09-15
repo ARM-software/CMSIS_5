@@ -79,6 +79,13 @@ def genBarycenter(config,nb,nbTests,nbVecsArray,vecDimArray):
     config.writeInput(nb, weights,"Weights")
     config.writeReference(nb, output,"Ref")
 
+def writeTestsF64(config):
+    NBSAMPLES=256
+
+    va = np.random.rand(NBSAMPLES)
+    va = Tools.normalize(va)
+    config.writeInput(1,va,"Samples")
+
 def writeTestsF32(config):
     NBSAMPLES=256
 
@@ -183,12 +190,21 @@ def generatePatterns():
     PATTERNDIR = os.path.join("Patterns","DSP","Support","Support")
     PARAMDIR = os.path.join("Parameters","DSP","Support","Support")
     
+    configf64=Tools.Config(PATTERNDIR,PARAMDIR,"f64")
     configf32=Tools.Config(PATTERNDIR,PARAMDIR,"f32")
     configf16=Tools.Config(PATTERNDIR,PARAMDIR,"f16")
     configq31=Tools.Config(PATTERNDIR,PARAMDIR,"q31")
     configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
     configq7=Tools.Config(PATTERNDIR,PARAMDIR,"q7")
     
+    configf32.setOverwrite(False)
+    configf16.setOverwrite(False)
+    configq31.setOverwrite(False)
+    configq15.setOverwrite(False)
+    configq7.setOverwrite(False)
+
+
+    writeTestsF64(configf64)
     writeTestsF32(configf32)
     writeTestsF16(configf16)
     writeTestsQ31(configq31)
