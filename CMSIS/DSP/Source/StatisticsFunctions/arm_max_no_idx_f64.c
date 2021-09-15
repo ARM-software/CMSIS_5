@@ -50,7 +50,7 @@ void arm_max_no_idx_f64(
     uint32_t   blockSize,
     float64_t *pResult)
 {
-   float64_t   maxValue = F32_MIN;
+   float64_t   maxValue = F64_MIN;
    float64_t   newVal;
 
    while (blockSize > 0U)
