@@ -1,5 +1,8 @@
 var searchData=
 [
+  ['nb_5fdeg_5flogf16',['NB_DEG_LOGF16',['../arm__vlog__f16_8c.html#ab76c3684187aec1e171c2c1792b440f8',1,'arm_vlog_f16.c']]],
+  ['nb_5fdiv_5flogf16',['NB_DIV_LOGF16',['../arm__vlog__f16_8c.html#a68262dda9a6712af4a8207977a7433a9',1,'arm_vlog_f16.c']]],
+  ['nb_5flut_5flogf16',['NB_LUT_LOGF16',['../arm__vlog__f16_8c.html#ad9f43dc6b85ff9be8ed00abef60a9670',1,'arm_vlog_f16.c']]],
   ['nb_5fof_5fclasses',['NB_OF_CLASSES',['../arm__bayes__example__f32_8c.html#a29d34219689e613d2e2cf860c62b3061',1,'arm_bayes_example_f32.c']]],
   ['nb_5fsupport_5fvectors',['NB_SUPPORT_VECTORS',['../arm__svm__example__f32_8c.html#a991d9a139527d1a747541de078ca21c7',1,'arm_svm_example_f32.c']]],
   ['num_5ftaps',['NUM_TAPS',['../arm__fir__example__f32_8c.html#a7579d94e0a80fb9d376ea6c7897f73b0',1,'arm_fir_example_f32.c']]],

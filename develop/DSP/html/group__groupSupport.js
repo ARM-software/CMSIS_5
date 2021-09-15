@@ -1,5 +1,6 @@
 var group__groupSupport =
 [
+    [ "Typecasting", "group__typecast.html", "group__typecast" ],
     [ "Barycenter", "group__barycenter.html", "group__barycenter" ],
     [ "Vector sorting algorithms", "group__Sorting.html", "group__Sorting" ],
     [ "Vector Copy", "group__copy.html", "group__copy" ],

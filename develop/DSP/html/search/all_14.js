@@ -101,5 +101,6 @@ var searchData=
   ['twiddlecoeff64_5frfft_5f512',['twiddleCoefF64_rfft_512',['../arm__common__tables_8h.html#a95bf8fb3fb42bdc3f0bba7bcdad4e3c1',1,'twiddleCoefF64_rfft_512():&#160;arm_common_tables.c'],['../arm__common__tables_8c.html#a95bf8fb3fb42bdc3f0bba7bcdad4e3c1',1,'twiddleCoefF64_rfft_512():&#160;arm_common_tables.c']]],
   ['twiddlecoeff64_5frfft_5f64',['twiddleCoefF64_rfft_64',['../arm__common__tables_8h.html#a9249087a0b9317ebb150ae8e1834e35e',1,'twiddleCoefF64_rfft_64():&#160;arm_common_tables.c'],['../arm__common__tables_8c.html#a9249087a0b9317ebb150ae8e1834e35e',1,'twiddleCoefF64_rfft_64():&#160;arm_common_tables.c']]],
   ['two_5fq30',['TWO_Q30',['../arm__levinson__durbin__q31_8c.html#af35c7c610f1f282933a3d418ae5659b9',1,'arm_levinson_durbin_q31.c']]],
-  ['type',['type',['../structarm__spline__instance__f32.html#a0ba30157b3b00a2e132c50481a0aeb05',1,'arm_spline_instance_f32']]]
+  ['type',['type',['../structarm__spline__instance__f32.html#a0ba30157b3b00a2e132c50481a0aeb05',1,'arm_spline_instance_f32']]],
+  ['typecasting',['Typecasting',['../group__typecast.html',1,'']]]
 ];
