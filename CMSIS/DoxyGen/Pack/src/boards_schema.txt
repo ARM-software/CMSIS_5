@@ -437,7 +437,7 @@ Two different picture types (\token{small} and \token{large}) can be specified f
 
 \b Example:
 \code
-<image small="Images\board_image_small.png" large="Images\board_image.png"/>
+<image small="Images/board_image_small.png" large="Images/board_image.png"/>
 \endcode
 <p>&nbsp;</p>		
 
@@ -458,13 +458,13 @@ Two different picture types (\token{small} and \token{large}) can be specified f
   </tr>
   <tr>
     <td>small</td>
-    <td>Specifies the path to a small image. The path is relative to the Pack base directory.</td>
+    <td>Specifies the path to a small image. The path is relative to the pack base directory or a link to an image on an external web site.</td>
     <td>xs:string</td>
     <td>optional</td>
   </tr>
   <tr>
     <td>large</td>
-    <td>Specifies the path to a large image. The path is relative to the Pack base directory.</td>
+    <td>Specifies the path to a large image. The path is relative to the pack base directory or a link to an image on an external web site.</td>
     <td>xs:string</td>
     <td>optional</td>
   </tr>
