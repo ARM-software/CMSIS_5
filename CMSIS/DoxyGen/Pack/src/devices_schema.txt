@@ -3234,7 +3234,7 @@ An <b>accessportV2</b> must be later selected via <b>__apid</b>. It is not possi
     <td>
       The address to select this access port in its parent's address space for a target access.
     </td>
-    <td>xs:unsignedInt</td>
+    <td>NonNegativeInteger</td>
     <td>required</td>
   </tr>
   <tr>
