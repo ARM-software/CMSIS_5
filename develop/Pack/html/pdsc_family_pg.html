@@ -1775,7 +1775,7 @@ $(document).ready(function(){initNavTree('pdsc_family_pg.html','');});
 <tr>
 <td>__dp </td><td>Unique ID of the <b>debugport</b> used to access this access port. Optional if exactly one <b>debugport</b> exists.  </td><td>xs:unsignedInt </td><td>optional  </td></tr>
 <tr>
-<td>address </td><td>The address to select this access port in its parent's address space for a target access.  </td><td>xs:unsignedInt </td><td>required  </td></tr>
+<td>address </td><td>The address to select this access port in its parent's address space for a target access.  </td><td>NonNegativeInteger </td><td>required  </td></tr>
 <tr>
 <td>parent </td><td>Reference to the <b>__apid</b> of the parent access port if the system contains nested APv2 access ports.<br/>
  <b>parent</b> must not be specified if the access port is directly connected to the <b>debugport</b>.  </td><td>xs:unsignedInt </td><td>optional  </td></tr>
