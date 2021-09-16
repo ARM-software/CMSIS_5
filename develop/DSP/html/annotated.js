@@ -39,6 +39,7 @@ var annotated =
     [ "arm_fir_decimate_instance_q31", "structarm__fir__decimate__instance__q31.html", "structarm__fir__decimate__instance__q31" ],
     [ "arm_fir_instance_f16", "structarm__fir__instance__f16.html", "structarm__fir__instance__f16" ],
     [ "arm_fir_instance_f32", "structarm__fir__instance__f32.html", "structarm__fir__instance__f32" ],
+    [ "arm_fir_instance_f64", "structarm__fir__instance__f64.html", "structarm__fir__instance__f64" ],
     [ "arm_fir_instance_q15", "structarm__fir__instance__q15.html", "structarm__fir__instance__q15" ],
     [ "arm_fir_instance_q31", "structarm__fir__instance__q31.html", "structarm__fir__instance__q31" ],
     [ "arm_fir_instance_q7", "structarm__fir__instance__q7.html", "structarm__fir__instance__q7" ],

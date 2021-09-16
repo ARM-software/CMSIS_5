@@ -123,6 +123,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga4ea8c9e1829e3b4d297f87e4a40478ad"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__BasicOffset.html#ga4ea8c9e1829e3b4d297f87e4a40478ad">arm_offset_f32</a> (const <a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *pSrc, <a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> offset, <a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *pDst, uint32_t <a class="el" href="arm__variance__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>)</td></tr>
 <tr class="memdesc:ga4ea8c9e1829e3b4d297f87e4a40478ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a constant offset to a floating-point vector.  <a href="#ga4ea8c9e1829e3b4d297f87e4a40478ad">More...</a><br/></td></tr>
 <tr class="separator:ga4ea8c9e1829e3b4d297f87e4a40478ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadba534be134467772c62e7ac5c1fcf2a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__BasicOffset.html#gadba534be134467772c62e7ac5c1fcf2a">arm_offset_f64</a> (const <a class="el" href="arm__math__types_8h.html#ac55f3ae81b5bc9053760baacf57e47f4">float64_t</a> *pSrc, <a class="el" href="arm__math__types_8h.html#ac55f3ae81b5bc9053760baacf57e47f4">float64_t</a> offset, <a class="el" href="arm__math__types_8h.html#ac55f3ae81b5bc9053760baacf57e47f4">float64_t</a> *pDst, uint32_t <a class="el" href="arm__variance__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>)</td></tr>
+<tr class="memdesc:gadba534be134467772c62e7ac5c1fcf2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a constant offset to a floating-point vector.  <a href="#gadba534be134467772c62e7ac5c1fcf2a">More...</a><br/></td></tr>
+<tr class="separator:gadba534be134467772c62e7ac5c1fcf2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaffc78c4cda3e39b518d79cef293532b7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__BasicOffset.html#gaffc78c4cda3e39b518d79cef293532b7">arm_offset_q15</a> (const <a class="el" href="arm__math__types_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *pSrc, <a class="el" href="arm__math__types_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> offset, <a class="el" href="arm__math__types_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *pDst, uint32_t <a class="el" href="arm__variance__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>)</td></tr>
 <tr class="memdesc:gaffc78c4cda3e39b518d79cef293532b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a constant offset to a Q15 vector.  <a href="#gaffc78c4cda3e39b518d79cef293532b7">More...</a><br/></td></tr>
 <tr class="separator:gaffc78c4cda3e39b518d79cef293532b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -207,6 +210,54 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *&#160;</td>
+          <td class="paramname"><em>pDst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>blockSize</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">pSrc</td><td>points to the input vector </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">offset</td><td>is the offset to be added </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pDst</td><td>points to the output vector </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">blockSize</td><td>number of samples in each vector </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>none </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gadba534be134467772c62e7ac5c1fcf2a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void arm_offset_f64 </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="arm__math__types_8h.html#ac55f3ae81b5bc9053760baacf57e47f4">float64_t</a> *&#160;</td>
+          <td class="paramname"><em>pSrc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="arm__math__types_8h.html#ac55f3ae81b5bc9053760baacf57e47f4">float64_t</a>&#160;</td>
+          <td class="paramname"><em>offset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="arm__math__types_8h.html#ac55f3ae81b5bc9053760baacf57e47f4">float64_t</a> *&#160;</td>
           <td class="paramname"><em>pDst</em>, </td>
         </tr>
         <tr>

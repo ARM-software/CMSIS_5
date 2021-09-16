@@ -168,6 +168,10 @@ $(document).ready(function(){initNavTree('globals_f.html','');});
 : <a class="el" href="group__Fill.html#ga2248e8d3901b4afb7827163132baad94">support_functions.h</a>
 , <a class="el" href="group__Fill.html#ga2248e8d3901b4afb7827163132baad94">arm_fill_f32.c</a>
 </li>
+<li>arm_fill_f64()
+: <a class="el" href="group__Fill.html#ga5d5d1f8aca80792eaf1db0765220fe2d">support_functions.h</a>
+, <a class="el" href="group__Fill.html#ga5d5d1f8aca80792eaf1db0765220fe2d">arm_fill_f64.c</a>
+</li>
 <li>arm_fill_q15()
 : <a class="el" href="group__Fill.html#ga76b21c32a3783a2b3334d930a646e5d8">support_functions.h</a>
 , <a class="el" href="group__Fill.html#ga76b21c32a3783a2b3334d930a646e5d8">arm_fill_q15.c</a>
@@ -213,12 +217,16 @@ $(document).ready(function(){initNavTree('globals_f.html','');});
 , <a class="el" href="group__FIR__decimate.html#ga27c05d7892f8a327aab86fbfee9b0f29">arm_fir_decimate_q31.c</a>
 </li>
 <li>arm_fir_f16()
-: <a class="el" href="group__FIR.html#ga9b5e4d748609deea033ce74fade70f78">filtering_functions_f16.h</a>
-, <a class="el" href="group__FIR.html#ga9b5e4d748609deea033ce74fade70f78">arm_fir_f16.c</a>
+: <a class="el" href="group__FIR.html#ga9b5e4d748609deea033ce74fade70f78">arm_fir_f16.c</a>
+, <a class="el" href="group__FIR.html#ga9b5e4d748609deea033ce74fade70f78">filtering_functions_f16.h</a>
 </li>
 <li>arm_fir_f32()
-: <a class="el" href="group__FIR.html#ga0cf008f650a75f5e2cf82d10691b64d9">arm_fir_f32.c</a>
-, <a class="el" href="group__FIR.html#ga0cf008f650a75f5e2cf82d10691b64d9">filtering_functions.h</a>
+: <a class="el" href="group__FIR.html#ga0cf008f650a75f5e2cf82d10691b64d9">filtering_functions.h</a>
+, <a class="el" href="group__FIR.html#ga0cf008f650a75f5e2cf82d10691b64d9">arm_fir_f32.c</a>
+</li>
+<li>arm_fir_f64()
+: <a class="el" href="group__FIR.html#ga5dc62ca436f6f9c26377e284a2ff025f">filtering_functions.h</a>
+, <a class="el" href="group__FIR.html#ga5dc62ca436f6f9c26377e284a2ff025f">arm_fir_f64.c</a>
 </li>
 <li>arm_fir_fast_q15()
 : <a class="el" href="group__FIR.html#gaf58eee6c38f0b666897b24ca02f9d58d">filtering_functions.h</a>
@@ -235,6 +243,10 @@ $(document).ready(function(){initNavTree('globals_f.html','');});
 <li>arm_fir_init_f32()
 : <a class="el" href="group__FIR.html#ga5afaa7b8e6735bbc19e582aa9755b0e1">filtering_functions.h</a>
 , <a class="el" href="group__FIR.html#ga5afaa7b8e6735bbc19e582aa9755b0e1">arm_fir_init_f32.c</a>
+</li>
+<li>arm_fir_init_f64()
+: <a class="el" href="group__FIR.html#ga68c4b5e8b6503553250d1dc8a6bedc72">filtering_functions.h</a>
+, <a class="el" href="group__FIR.html#ga68c4b5e8b6503553250d1dc8a6bedc72">arm_fir_init_f64.c</a>
 </li>
 <li>arm_fir_init_q15()
 : <a class="el" href="group__FIR.html#gaf4bfa7e20520f3b6e9f03a52ad6d0e41">filtering_functions.h</a>
@@ -333,8 +345,8 @@ $(document).ready(function(){initNavTree('globals_f.html','');});
 , <a class="el" href="group__FIR__Sparse.html#gac3e43b06bff38ac8e62e145f88e9dbc7">arm_fir_sparse_q15.c</a>
 </li>
 <li>arm_fir_sparse_q31()
-: <a class="el" href="group__FIR__Sparse.html#gaba9f7ef4acf293034af42baa2fd3df52">filtering_functions.h</a>
-, <a class="el" href="group__FIR__Sparse.html#gaba9f7ef4acf293034af42baa2fd3df52">arm_fir_sparse_q31.c</a>
+: <a class="el" href="group__FIR__Sparse.html#gaba9f7ef4acf293034af42baa2fd3df52">arm_fir_sparse_q31.c</a>
+, <a class="el" href="group__FIR__Sparse.html#gaba9f7ef4acf293034af42baa2fd3df52">filtering_functions.h</a>
 </li>
 <li>arm_fir_sparse_q7()
 : <a class="el" href="group__FIR__Sparse.html#ga319b3d9032ba723a8efb819b9d2a3676">filtering_functions.h</a>
@@ -349,78 +361,78 @@ $(document).ready(function(){initNavTree('globals_f.html','');});
 , <a class="el" href="arm__convolution__example_2math__helper_8h.html#a23f94b0fbfed6d620f38e26bc64cf2f8">arm_convolution_example/math_helper.h</a>
 , <a class="el" href="arm__fir__example_2math__helper_8c.html#a23f94b0fbfed6d620f38e26bc64cf2f8">arm_fir_example/math_helper.c</a>
 , <a class="el" href="arm__fir__example_2math__helper_8h.html#a23f94b0fbfed6d620f38e26bc64cf2f8">arm_fir_example/math_helper.h</a>
-, <a class="el" href="arm__graphic__equalizer__example_2math__helper_8c.html#a23f94b0fbfed6d620f38e26bc64cf2f8">arm_graphic_equalizer_example/math_helper.c</a>
 , <a class="el" href="arm__graphic__equalizer__example_2math__helper_8h.html#a23f94b0fbfed6d620f38e26bc64cf2f8">arm_graphic_equalizer_example/math_helper.h</a>
+, <a class="el" href="arm__linear__interp__example_2math__helper_8c.html#a23f94b0fbfed6d620f38e26bc64cf2f8">arm_linear_interp_example/math_helper.c</a>
 , <a class="el" href="arm__linear__interp__example_2math__helper_8h.html#a23f94b0fbfed6d620f38e26bc64cf2f8">arm_linear_interp_example/math_helper.h</a>
 , <a class="el" href="arm__matrix__example_2math__helper_8c.html#a23f94b0fbfed6d620f38e26bc64cf2f8">arm_matrix_example/math_helper.c</a>
 , <a class="el" href="arm__matrix__example_2math__helper_8h.html#a23f94b0fbfed6d620f38e26bc64cf2f8">arm_matrix_example/math_helper.h</a>
-, <a class="el" href="arm__signal__converge__example_2math__helper_8h.html#a23f94b0fbfed6d620f38e26bc64cf2f8">arm_signal_converge_example/math_helper.h</a>
 , <a class="el" href="arm__signal__converge__example_2math__helper_8c.html#a23f94b0fbfed6d620f38e26bc64cf2f8">arm_signal_converge_example/math_helper.c</a>
-, <a class="el" href="arm__linear__interp__example_2math__helper_8c.html#a23f94b0fbfed6d620f38e26bc64cf2f8">arm_linear_interp_example/math_helper.c</a>
+, <a class="el" href="arm__signal__converge__example_2math__helper_8h.html#a23f94b0fbfed6d620f38e26bc64cf2f8">arm_signal_converge_example/math_helper.h</a>
+, <a class="el" href="arm__graphic__equalizer__example_2math__helper_8c.html#a23f94b0fbfed6d620f38e26bc64cf2f8">arm_graphic_equalizer_example/math_helper.c</a>
 </li>
 <li>arm_float_to_q14()
-: <a class="el" href="arm__convolution__example_2math__helper_8c.html#a23cdb5202efd9233f4e92b5f22287eac">arm_convolution_example/math_helper.c</a>
-, <a class="el" href="arm__convolution__example_2math__helper_8h.html#a23cdb5202efd9233f4e92b5f22287eac">arm_convolution_example/math_helper.h</a>
+: <a class="el" href="arm__convolution__example_2math__helper_8h.html#a23cdb5202efd9233f4e92b5f22287eac">arm_convolution_example/math_helper.h</a>
 , <a class="el" href="arm__fir__example_2math__helper_8c.html#a23cdb5202efd9233f4e92b5f22287eac">arm_fir_example/math_helper.c</a>
 , <a class="el" href="arm__fir__example_2math__helper_8h.html#a23cdb5202efd9233f4e92b5f22287eac">arm_fir_example/math_helper.h</a>
-, <a class="el" href="arm__graphic__equalizer__example_2math__helper_8c.html#a23cdb5202efd9233f4e92b5f22287eac">arm_graphic_equalizer_example/math_helper.c</a>
 , <a class="el" href="arm__graphic__equalizer__example_2math__helper_8h.html#a23cdb5202efd9233f4e92b5f22287eac">arm_graphic_equalizer_example/math_helper.h</a>
+, <a class="el" href="arm__linear__interp__example_2math__helper_8c.html#a23cdb5202efd9233f4e92b5f22287eac">arm_linear_interp_example/math_helper.c</a>
 , <a class="el" href="arm__linear__interp__example_2math__helper_8h.html#a23cdb5202efd9233f4e92b5f22287eac">arm_linear_interp_example/math_helper.h</a>
-, <a class="el" href="arm__matrix__example_2math__helper_8c.html#a23cdb5202efd9233f4e92b5f22287eac">arm_matrix_example/math_helper.c</a>
+, <a class="el" href="arm__convolution__example_2math__helper_8c.html#a23cdb5202efd9233f4e92b5f22287eac">arm_convolution_example/math_helper.c</a>
 , <a class="el" href="arm__matrix__example_2math__helper_8h.html#a23cdb5202efd9233f4e92b5f22287eac">arm_matrix_example/math_helper.h</a>
 , <a class="el" href="arm__signal__converge__example_2math__helper_8c.html#a23cdb5202efd9233f4e92b5f22287eac">arm_signal_converge_example/math_helper.c</a>
 , <a class="el" href="arm__signal__converge__example_2math__helper_8h.html#a23cdb5202efd9233f4e92b5f22287eac">arm_signal_converge_example/math_helper.h</a>
-, <a class="el" href="arm__linear__interp__example_2math__helper_8c.html#a23cdb5202efd9233f4e92b5f22287eac">arm_linear_interp_example/math_helper.c</a>
+, <a class="el" href="arm__graphic__equalizer__example_2math__helper_8c.html#a23cdb5202efd9233f4e92b5f22287eac">arm_graphic_equalizer_example/math_helper.c</a>
+, <a class="el" href="arm__matrix__example_2math__helper_8c.html#a23cdb5202efd9233f4e92b5f22287eac">arm_matrix_example/math_helper.c</a>
 </li>
 <li>arm_float_to_q15()
-: <a class="el" href="group__float__to__x.html#gac7696e64963e5051ebb950c88c6ba186">arm_float_to_q15.c</a>
-, <a class="el" href="group__float__to__x.html#gac7696e64963e5051ebb950c88c6ba186">support_functions.h</a>
+: <a class="el" href="group__float__to__x.html#gac7696e64963e5051ebb950c88c6ba186">support_functions.h</a>
+, <a class="el" href="group__float__to__x.html#gac7696e64963e5051ebb950c88c6ba186">arm_float_to_q15.c</a>
 </li>
 <li>arm_float_to_q28()
-: <a class="el" href="arm__matrix__example_2math__helper_8c.html#aa1049b3adb14331612bb762237391625">arm_matrix_example/math_helper.c</a>
+: <a class="el" href="arm__graphic__equalizer__example_2math__helper_8c.html#aa1049b3adb14331612bb762237391625">arm_graphic_equalizer_example/math_helper.c</a>
+, <a class="el" href="arm__matrix__example_2math__helper_8c.html#aa1049b3adb14331612bb762237391625">arm_matrix_example/math_helper.c</a>
+, <a class="el" href="arm__fir__example_2math__helper_8c.html#aa1049b3adb14331612bb762237391625">arm_fir_example/math_helper.c</a>
 , <a class="el" href="arm__linear__interp__example_2math__helper_8c.html#aa1049b3adb14331612bb762237391625">arm_linear_interp_example/math_helper.c</a>
+, <a class="el" href="arm__convolution__example_2math__helper_8h.html#aa1049b3adb14331612bb762237391625">arm_convolution_example/math_helper.h</a>
+, <a class="el" href="arm__graphic__equalizer__example_2math__helper_8h.html#aa1049b3adb14331612bb762237391625">arm_graphic_equalizer_example/math_helper.h</a>
+, <a class="el" href="arm__fir__example_2math__helper_8h.html#aa1049b3adb14331612bb762237391625">arm_fir_example/math_helper.h</a>
 , <a class="el" href="arm__linear__interp__example_2math__helper_8h.html#aa1049b3adb14331612bb762237391625">arm_linear_interp_example/math_helper.h</a>
 , <a class="el" href="arm__signal__converge__example_2math__helper_8h.html#aa1049b3adb14331612bb762237391625">arm_signal_converge_example/math_helper.h</a>
-, <a class="el" href="arm__convolution__example_2math__helper_8h.html#aa1049b3adb14331612bb762237391625">arm_convolution_example/math_helper.h</a>
-, <a class="el" href="arm__fir__example_2math__helper_8c.html#aa1049b3adb14331612bb762237391625">arm_fir_example/math_helper.c</a>
-, <a class="el" href="arm__fir__example_2math__helper_8h.html#aa1049b3adb14331612bb762237391625">arm_fir_example/math_helper.h</a>
-, <a class="el" href="arm__graphic__equalizer__example_2math__helper_8h.html#aa1049b3adb14331612bb762237391625">arm_graphic_equalizer_example/math_helper.h</a>
 , <a class="el" href="arm__convolution__example_2math__helper_8c.html#aa1049b3adb14331612bb762237391625">arm_convolution_example/math_helper.c</a>
 , <a class="el" href="arm__matrix__example_2math__helper_8h.html#aa1049b3adb14331612bb762237391625">arm_matrix_example/math_helper.h</a>
-, <a class="el" href="arm__graphic__equalizer__example_2math__helper_8c.html#aa1049b3adb14331612bb762237391625">arm_graphic_equalizer_example/math_helper.c</a>
 , <a class="el" href="arm__signal__converge__example_2math__helper_8c.html#aa1049b3adb14331612bb762237391625">arm_signal_converge_example/math_helper.c</a>
 </li>
 <li>arm_float_to_q29()
-: <a class="el" href="arm__linear__interp__example_2math__helper_8h.html#a098c587b93469a7a6bcc521d42fdf6f9">arm_linear_interp_example/math_helper.h</a>
-, <a class="el" href="arm__convolution__example_2math__helper_8h.html#a098c587b93469a7a6bcc521d42fdf6f9">arm_convolution_example/math_helper.h</a>
+: <a class="el" href="arm__convolution__example_2math__helper_8h.html#a098c587b93469a7a6bcc521d42fdf6f9">arm_convolution_example/math_helper.h</a>
+, <a class="el" href="arm__fir__example_2math__helper_8h.html#a098c587b93469a7a6bcc521d42fdf6f9">arm_fir_example/math_helper.h</a>
+, <a class="el" href="arm__convolution__example_2math__helper_8c.html#a098c587b93469a7a6bcc521d42fdf6f9">arm_convolution_example/math_helper.c</a>
+, <a class="el" href="arm__linear__interp__example_2math__helper_8h.html#a098c587b93469a7a6bcc521d42fdf6f9">arm_linear_interp_example/math_helper.h</a>
+, <a class="el" href="arm__matrix__example_2math__helper_8h.html#a098c587b93469a7a6bcc521d42fdf6f9">arm_matrix_example/math_helper.h</a>
+, <a class="el" href="arm__signal__converge__example_2math__helper_8h.html#a098c587b93469a7a6bcc521d42fdf6f9">arm_signal_converge_example/math_helper.h</a>
+, <a class="el" href="arm__signal__converge__example_2math__helper_8c.html#a098c587b93469a7a6bcc521d42fdf6f9">arm_signal_converge_example/math_helper.c</a>
 , <a class="el" href="arm__graphic__equalizer__example_2math__helper_8h.html#a098c587b93469a7a6bcc521d42fdf6f9">arm_graphic_equalizer_example/math_helper.h</a>
 , <a class="el" href="arm__linear__interp__example_2math__helper_8c.html#a098c587b93469a7a6bcc521d42fdf6f9">arm_linear_interp_example/math_helper.c</a>
-, <a class="el" href="arm__matrix__example_2math__helper_8h.html#a098c587b93469a7a6bcc521d42fdf6f9">arm_matrix_example/math_helper.h</a>
-, <a class="el" href="arm__signal__converge__example_2math__helper_8c.html#a098c587b93469a7a6bcc521d42fdf6f9">arm_signal_converge_example/math_helper.c</a>
-, <a class="el" href="arm__signal__converge__example_2math__helper_8h.html#a098c587b93469a7a6bcc521d42fdf6f9">arm_signal_converge_example/math_helper.h</a>
 , <a class="el" href="arm__matrix__example_2math__helper_8c.html#a098c587b93469a7a6bcc521d42fdf6f9">arm_matrix_example/math_helper.c</a>
 , <a class="el" href="arm__fir__example_2math__helper_8c.html#a098c587b93469a7a6bcc521d42fdf6f9">arm_fir_example/math_helper.c</a>
 , <a class="el" href="arm__graphic__equalizer__example_2math__helper_8c.html#a098c587b93469a7a6bcc521d42fdf6f9">arm_graphic_equalizer_example/math_helper.c</a>
-, <a class="el" href="arm__fir__example_2math__helper_8h.html#a098c587b93469a7a6bcc521d42fdf6f9">arm_fir_example/math_helper.h</a>
-, <a class="el" href="arm__convolution__example_2math__helper_8c.html#a098c587b93469a7a6bcc521d42fdf6f9">arm_convolution_example/math_helper.c</a>
 </li>
 <li>arm_float_to_q30()
-: <a class="el" href="arm__linear__interp__example_2math__helper_8c.html#a16764fdbc174a79f04b07032cf902079">arm_linear_interp_example/math_helper.c</a>
-, <a class="el" href="arm__signal__converge__example_2math__helper_8c.html#a16764fdbc174a79f04b07032cf902079">arm_signal_converge_example/math_helper.c</a>
-, <a class="el" href="arm__convolution__example_2math__helper_8h.html#a16764fdbc174a79f04b07032cf902079">arm_convolution_example/math_helper.h</a>
-, <a class="el" href="arm__fir__example_2math__helper_8h.html#a16764fdbc174a79f04b07032cf902079">arm_fir_example/math_helper.h</a>
-, <a class="el" href="arm__graphic__equalizer__example_2math__helper_8c.html#a16764fdbc174a79f04b07032cf902079">arm_graphic_equalizer_example/math_helper.c</a>
+: <a class="el" href="arm__convolution__example_2math__helper_8c.html#a16764fdbc174a79f04b07032cf902079">arm_convolution_example/math_helper.c</a>
 , <a class="el" href="arm__matrix__example_2math__helper_8h.html#a16764fdbc174a79f04b07032cf902079">arm_matrix_example/math_helper.h</a>
-, <a class="el" href="arm__signal__converge__example_2math__helper_8h.html#a16764fdbc174a79f04b07032cf902079">arm_signal_converge_example/math_helper.h</a>
-, <a class="el" href="arm__convolution__example_2math__helper_8c.html#a16764fdbc174a79f04b07032cf902079">arm_convolution_example/math_helper.c</a>
-, <a class="el" href="arm__fir__example_2math__helper_8c.html#a16764fdbc174a79f04b07032cf902079">arm_fir_example/math_helper.c</a>
-, <a class="el" href="arm__graphic__equalizer__example_2math__helper_8h.html#a16764fdbc174a79f04b07032cf902079">arm_graphic_equalizer_example/math_helper.h</a>
+, <a class="el" href="arm__signal__converge__example_2math__helper_8c.html#a16764fdbc174a79f04b07032cf902079">arm_signal_converge_example/math_helper.c</a>
+, <a class="el" href="arm__graphic__equalizer__example_2math__helper_8c.html#a16764fdbc174a79f04b07032cf902079">arm_graphic_equalizer_example/math_helper.c</a>
 , <a class="el" href="arm__matrix__example_2math__helper_8c.html#a16764fdbc174a79f04b07032cf902079">arm_matrix_example/math_helper.c</a>
+, <a class="el" href="arm__convolution__example_2math__helper_8h.html#a16764fdbc174a79f04b07032cf902079">arm_convolution_example/math_helper.h</a>
+, <a class="el" href="arm__linear__interp__example_2math__helper_8c.html#a16764fdbc174a79f04b07032cf902079">arm_linear_interp_example/math_helper.c</a>
+, <a class="el" href="arm__fir__example_2math__helper_8h.html#a16764fdbc174a79f04b07032cf902079">arm_fir_example/math_helper.h</a>
+, <a class="el" href="arm__graphic__equalizer__example_2math__helper_8h.html#a16764fdbc174a79f04b07032cf902079">arm_graphic_equalizer_example/math_helper.h</a>
 , <a class="el" href="arm__linear__interp__example_2math__helper_8h.html#a16764fdbc174a79f04b07032cf902079">arm_linear_interp_example/math_helper.h</a>
+, <a class="el" href="arm__signal__converge__example_2math__helper_8h.html#a16764fdbc174a79f04b07032cf902079">arm_signal_converge_example/math_helper.h</a>
+, <a class="el" href="arm__fir__example_2math__helper_8c.html#a16764fdbc174a79f04b07032cf902079">arm_fir_example/math_helper.c</a>
 </li>
 <li>arm_float_to_q31()
-: <a class="el" href="group__float__to__x.html#gaae21be47db707e79552f3e8221a48fb0">support_functions.h</a>
-, <a class="el" href="group__float__to__x.html#gaae21be47db707e79552f3e8221a48fb0">arm_float_to_q31.c</a>
+: <a class="el" href="group__float__to__x.html#gaae21be47db707e79552f3e8221a48fb0">arm_float_to_q31.c</a>
+, <a class="el" href="group__float__to__x.html#gaae21be47db707e79552f3e8221a48fb0">support_functions.h</a>
 </li>
 <li>arm_float_to_q7()
 : <a class="el" href="group__float__to__x.html#ga63b7cef42a242f0be43376ba3380988d">support_functions.h</a>
@@ -499,18 +511,18 @@ $(document).ready(function(){initNavTree('globals_f.html','');});
 : <a class="el" href="fast__math__functions_8h.html#afcb9147c96853bea484cfc2dde07463d">fast_math_functions.h</a>
 </li>
 <li>FFTINIT
-: <a class="el" href="arm__cfft__init__q15_8c.html#a683e50ab6ad88d46aa763d21bf48ee96">arm_cfft_init_q15.c</a>
+: <a class="el" href="arm__cfft__init__f32_8c.html#a683e50ab6ad88d46aa763d21bf48ee96">arm_cfft_init_f32.c</a>
+, <a class="el" href="arm__cfft__init__f64_8c.html#a683e50ab6ad88d46aa763d21bf48ee96">arm_cfft_init_f64.c</a>
 , <a class="el" href="arm__cfft__init__q31_8c.html#a683e50ab6ad88d46aa763d21bf48ee96">arm_cfft_init_q31.c</a>
 , <a class="el" href="arm__cfft__init__f16_8c.html#a683e50ab6ad88d46aa763d21bf48ee96">arm_cfft_init_f16.c</a>
-, <a class="el" href="arm__cfft__init__f64_8c.html#a683e50ab6ad88d46aa763d21bf48ee96">arm_cfft_init_f64.c</a>
-, <a class="el" href="arm__cfft__init__f32_8c.html#a683e50ab6ad88d46aa763d21bf48ee96">arm_cfft_init_f32.c</a>
+, <a class="el" href="arm__cfft__init__q15_8c.html#a683e50ab6ad88d46aa763d21bf48ee96">arm_cfft_init_q15.c</a>
 </li>
 <li>fftSize
 : <a class="el" href="arm__fft__bin__example__f32_8c.html#a9b500899c581f6df3ffc0a9f3a9ef6aa">arm_fft_bin_example_f32.c</a>
 </li>
 <li>FIRCoeff_f32
-: <a class="el" href="arm__signal__converge__example__f32_8c.html#aede8780f021b7f5c33df0c5ee2183ee6">arm_signal_converge_example_f32.c</a>
-, <a class="el" href="arm__signal__converge__data_8c.html#aede8780f021b7f5c33df0c5ee2183ee6">arm_signal_converge_data.c</a>
+: <a class="el" href="arm__signal__converge__data_8c.html#aede8780f021b7f5c33df0c5ee2183ee6">arm_signal_converge_data.c</a>
+, <a class="el" href="arm__signal__converge__example__f32_8c.html#aede8780f021b7f5c33df0c5ee2183ee6">arm_signal_converge_example_f32.c</a>
 </li>
 <li>firCoeffs32
 : <a class="el" href="arm__fir__example__f32_8c.html#ac6106184a48e7c487033547c7bb47ceb">arm_fir_example_f32.c</a>

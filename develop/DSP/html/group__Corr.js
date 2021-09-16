@@ -2,6 +2,7 @@ var group__Corr =
 [
     [ "arm_correlate_f16", "group__Corr.html#ga15c05c2024f43817e8a79f1b9dc1f409", null ],
     [ "arm_correlate_f32", "group__Corr.html#ga371054f6e5fd78bec668908251f1b2f2", null ],
+    [ "arm_correlate_f64", "group__Corr.html#ga60b0d48a0247d7cc9148d9021844222b", null ],
     [ "arm_correlate_fast_opt_q15", "group__Corr.html#ga3fc8d680844a3d24af25e45df96c82f3", null ],
     [ "arm_correlate_fast_q15", "group__Corr.html#gab4dea2049c8a26118ee4de9b90f1b9bd", null ],
     [ "arm_correlate_fast_q31", "group__Corr.html#ga1e85a8ceac5c0f27007e6ba2c8f20686", null ],

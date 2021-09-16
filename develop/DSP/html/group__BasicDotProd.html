@@ -123,6 +123,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gadf26f6bc62d6416528663ad3e46fbf67"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__BasicDotProd.html#gadf26f6bc62d6416528663ad3e46fbf67">arm_dot_prod_f32</a> (const <a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *pSrcA, const <a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *pSrcB, uint32_t <a class="el" href="arm__variance__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>, <a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *result)</td></tr>
 <tr class="memdesc:gadf26f6bc62d6416528663ad3e46fbf67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dot product of floating-point vectors.  <a href="#gadf26f6bc62d6416528663ad3e46fbf67">More...</a><br/></td></tr>
 <tr class="separator:gadf26f6bc62d6416528663ad3e46fbf67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa923ad5a22eb55e10009a88c396a36ad"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__BasicDotProd.html#gaa923ad5a22eb55e10009a88c396a36ad">arm_dot_prod_f64</a> (const <a class="el" href="arm__math__types_8h.html#ac55f3ae81b5bc9053760baacf57e47f4">float64_t</a> *pSrcA, const <a class="el" href="arm__math__types_8h.html#ac55f3ae81b5bc9053760baacf57e47f4">float64_t</a> *pSrcB, uint32_t <a class="el" href="arm__variance__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>, <a class="el" href="arm__math__types_8h.html#ac55f3ae81b5bc9053760baacf57e47f4">float64_t</a> *result)</td></tr>
+<tr class="memdesc:gaa923ad5a22eb55e10009a88c396a36ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dot product of floating-point vectors.  <a href="#gaa923ad5a22eb55e10009a88c396a36ad">More...</a><br/></td></tr>
+<tr class="separator:gaa923ad5a22eb55e10009a88c396a36ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac2314012fbbf73bfd95ce8c57bc9ba69"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__BasicDotProd.html#gac2314012fbbf73bfd95ce8c57bc9ba69">arm_dot_prod_q15</a> (const <a class="el" href="arm__math__types_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *pSrcA, const <a class="el" href="arm__math__types_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *pSrcB, uint32_t <a class="el" href="arm__variance__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>, <a class="el" href="arm__math__types_8h.html#a5aea1cb12fc02d9d44c8abf217eaa5c6">q63_t</a> *result)</td></tr>
 <tr class="memdesc:gac2314012fbbf73bfd95ce8c57bc9ba69"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dot product of Q15 vectors.  <a href="#gac2314012fbbf73bfd95ce8c57bc9ba69">More...</a><br/></td></tr>
 <tr class="separator:gac2314012fbbf73bfd95ce8c57bc9ba69"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -213,6 +216,54 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *&#160;</td>
+          <td class="paramname"><em>result</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">pSrcA</td><td>points to the first input vector. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pSrcB</td><td>points to the second input vector. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">blockSize</td><td>number of samples in each vector. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">result</td><td>output result returned here. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>none </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gaa923ad5a22eb55e10009a88c396a36ad"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void arm_dot_prod_f64 </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="arm__math__types_8h.html#ac55f3ae81b5bc9053760baacf57e47f4">float64_t</a> *&#160;</td>
+          <td class="paramname"><em>pSrcA</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="arm__math__types_8h.html#ac55f3ae81b5bc9053760baacf57e47f4">float64_t</a> *&#160;</td>
+          <td class="paramname"><em>pSrcB</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>blockSize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="arm__math__types_8h.html#ac55f3ae81b5bc9053760baacf57e47f4">float64_t</a> *&#160;</td>
           <td class="paramname"><em>result</em>&#160;</td>
         </tr>
         <tr>

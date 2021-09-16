@@ -413,7 +413,7 @@ $(document).ready(function(){initNavTree('pdsc_boards_pg.html','');});
 /package/boards/board/image</h1>
 <p>This element specifies the picture of a development board. Maximum one image element can be specified. None must be specified. Two different picture types (<span class="XML-Token">small</span> and <span class="XML-Token">large</span>) can be specified for the same image element at the same time.</p>
 <p><b>Example:</b> </p>
-<div class="fragment"><div class="line">&lt;image small=<span class="stringliteral">&quot;Images\board_image_small.png&quot;</span> large=<span class="stringliteral">&quot;Images\board_image.png&quot;</span>/&gt;</div>
+<div class="fragment"><div class="line">&lt;image small=<span class="stringliteral">&quot;Images/board_image_small.png&quot;</span> large=<span class="stringliteral">&quot;Images/board_image.png&quot;</span>/&gt;</div>
 </div><!-- fragment --> <p>&#160;</p>
 <table  class="cmtable" summary="Element: Board Image">
 <tr>
@@ -423,9 +423,9 @@ $(document).ready(function(){initNavTree('pdsc_boards_pg.html','');});
 <tr>
 <th>Attributes </th><th>Description </th><th>Type </th><th>Use  </th></tr>
 <tr>
-<td>small </td><td>Specifies the path to a small image. The path is relative to the Pack base directory. </td><td>xs:string </td><td>optional  </td></tr>
+<td>small </td><td>Specifies the path to a small image. The path is relative to the pack base directory or a link to an image on an external web site. </td><td>xs:string </td><td>optional  </td></tr>
 <tr>
-<td>large </td><td>Specifies the path to a large image. The path is relative to the Pack base directory. </td><td>xs:string </td><td>optional  </td></tr>
+<td>large </td><td>Specifies the path to a large image. The path is relative to the pack base directory or a link to an image on an external web site. </td><td>xs:string </td><td>optional  </td></tr>
 <tr>
 <td>public </td><td>Set publishing permissions for the documentation. If <em>&lt;public&gt;</em> is <span class="XML-Token">true</span>, then the vendor gives permission to extract the documentation from the Pack and publish it on a web-page. Links to web pages are assumed to be public. The default value is <span class="XML-Token">false</span>. </td><td>xs:boolean </td><td>optional  </td></tr>
 </table>

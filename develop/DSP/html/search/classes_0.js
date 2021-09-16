@@ -38,6 +38,7 @@ var searchData=
   ['arm_5ffir_5fdecimate_5finstance_5fq31',['arm_fir_decimate_instance_q31',['../structarm__fir__decimate__instance__q31.html',1,'']]],
   ['arm_5ffir_5finstance_5ff16',['arm_fir_instance_f16',['../structarm__fir__instance__f16.html',1,'']]],
   ['arm_5ffir_5finstance_5ff32',['arm_fir_instance_f32',['../structarm__fir__instance__f32.html',1,'']]],
+  ['arm_5ffir_5finstance_5ff64',['arm_fir_instance_f64',['../structarm__fir__instance__f64.html',1,'']]],
   ['arm_5ffir_5finstance_5fq15',['arm_fir_instance_q15',['../structarm__fir__instance__q15.html',1,'']]],
   ['arm_5ffir_5finstance_5fq31',['arm_fir_instance_q31',['../structarm__fir__instance__q31.html',1,'']]],
   ['arm_5ffir_5finstance_5fq7',['arm_fir_instance_q7',['../structarm__fir__instance__q7.html',1,'']]],

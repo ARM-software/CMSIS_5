@@ -123,6 +123,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga925ef5458a384f63d06f1c6997d1fb7d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cmplx__mag__squared.html#ga925ef5458a384f63d06f1c6997d1fb7d">arm_cmplx_mag_squared_f32</a> (const <a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *pSrc, <a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *pDst, uint32_t numSamples)</td></tr>
 <tr class="memdesc:ga925ef5458a384f63d06f1c6997d1fb7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Floating-point complex magnitude squared.  <a href="#ga925ef5458a384f63d06f1c6997d1fb7d">More...</a><br/></td></tr>
 <tr class="separator:ga925ef5458a384f63d06f1c6997d1fb7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadf908e98be7417c5ad91050e60fd3ad4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cmplx__mag__squared.html#gadf908e98be7417c5ad91050e60fd3ad4">arm_cmplx_mag_squared_f64</a> (const <a class="el" href="arm__math__types_8h.html#ac55f3ae81b5bc9053760baacf57e47f4">float64_t</a> *pSrc, <a class="el" href="arm__math__types_8h.html#ac55f3ae81b5bc9053760baacf57e47f4">float64_t</a> *pDst, uint32_t numSamples)</td></tr>
+<tr class="memdesc:gadf908e98be7417c5ad91050e60fd3ad4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Floating-point complex magnitude squared.  <a href="#gadf908e98be7417c5ad91050e60fd3ad4">More...</a><br/></td></tr>
+<tr class="separator:gadf908e98be7417c5ad91050e60fd3ad4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafdd1e838db0aef7ec201611883bd444c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__cmplx__mag__squared.html#gafdd1e838db0aef7ec201611883bd444c">arm_cmplx_mag_squared_q15</a> (const <a class="el" href="arm__math__types_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *pSrc, <a class="el" href="arm__math__types_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *pDst, uint32_t numSamples)</td></tr>
 <tr class="memdesc:gafdd1e838db0aef7ec201611883bd444c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Q15 complex magnitude squared.  <a href="#gafdd1e838db0aef7ec201611883bd444c">More...</a><br/></td></tr>
 <tr class="separator:gafdd1e838db0aef7ec201611883bd444c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -195,6 +198,47 @@ for (n = 0; n &lt; numSamples; n++) {
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *&#160;</td>
+          <td class="paramname"><em>pDst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>numSamples</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">pSrc</td><td>points to input vector </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pDst</td><td>points to output vector </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">numSamples</td><td>number of samples in each vector </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>none </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gadf908e98be7417c5ad91050e60fd3ad4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void arm_cmplx_mag_squared_f64 </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="arm__math__types_8h.html#ac55f3ae81b5bc9053760baacf57e47f4">float64_t</a> *&#160;</td>
+          <td class="paramname"><em>pSrc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="arm__math__types_8h.html#ac55f3ae81b5bc9053760baacf57e47f4">float64_t</a> *&#160;</td>
           <td class="paramname"><em>pDst</em>, </td>
         </tr>
         <tr>

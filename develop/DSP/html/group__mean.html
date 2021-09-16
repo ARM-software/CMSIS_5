@@ -123,6 +123,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gae4fb7698771d7c24f536ed24347c1488"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__mean.html#gae4fb7698771d7c24f536ed24347c1488">arm_mean_f32</a> (const <a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *pSrc, uint32_t <a class="el" href="arm__variance__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>, <a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *pResult)</td></tr>
 <tr class="memdesc:gae4fb7698771d7c24f536ed24347c1488"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mean value of a floating-point vector.  <a href="#gae4fb7698771d7c24f536ed24347c1488">More...</a><br/></td></tr>
 <tr class="separator:gae4fb7698771d7c24f536ed24347c1488"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga239755cadcf3eebddfb287f6c920f96d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__mean.html#ga239755cadcf3eebddfb287f6c920f96d">arm_mean_f64</a> (const <a class="el" href="arm__math__types_8h.html#ac55f3ae81b5bc9053760baacf57e47f4">float64_t</a> *pSrc, uint32_t <a class="el" href="arm__variance__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>, <a class="el" href="arm__math__types_8h.html#ac55f3ae81b5bc9053760baacf57e47f4">float64_t</a> *pResult)</td></tr>
+<tr class="memdesc:ga239755cadcf3eebddfb287f6c920f96d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mean value of a floating-point vector.  <a href="#ga239755cadcf3eebddfb287f6c920f96d">More...</a><br/></td></tr>
+<tr class="separator:ga239755cadcf3eebddfb287f6c920f96d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga55fc43607651123ffe3b967e30305734"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__mean.html#ga55fc43607651123ffe3b967e30305734">arm_mean_q15</a> (const <a class="el" href="arm__math__types_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *pSrc, uint32_t <a class="el" href="arm__variance__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>, <a class="el" href="arm__math__types_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *pResult)</td></tr>
 <tr class="memdesc:ga55fc43607651123ffe3b967e30305734"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mean value of a Q15 vector.  <a href="#ga55fc43607651123ffe3b967e30305734">More...</a><br/></td></tr>
 <tr class="separator:ga55fc43607651123ffe3b967e30305734"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -200,6 +203,47 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *&#160;</td>
+          <td class="paramname"><em>pResult</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">pSrc</td><td>points to the input vector. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">blockSize</td><td>number of samples in input vector. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pResult</td><td>mean value returned here. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>none </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga239755cadcf3eebddfb287f6c920f96d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void arm_mean_f64 </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="arm__math__types_8h.html#ac55f3ae81b5bc9053760baacf57e47f4">float64_t</a> *&#160;</td>
+          <td class="paramname"><em>pSrc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>blockSize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="arm__math__types_8h.html#ac55f3ae81b5bc9053760baacf57e47f4">float64_t</a> *&#160;</td>
           <td class="paramname"><em>pResult</em>&#160;</td>
         </tr>
         <tr>

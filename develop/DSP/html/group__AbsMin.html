@@ -123,6 +123,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga8f2559cadfc72b164e403d226d52b85d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__AbsMin.html#ga8f2559cadfc72b164e403d226d52b85d">arm_absmin_f32</a> (const <a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *pSrc, uint32_t <a class="el" href="arm__variance__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>, <a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *pResult, uint32_t *pIndex)</td></tr>
 <tr class="memdesc:ga8f2559cadfc72b164e403d226d52b85d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Minimum value of absolute values of a floating-point vector.  <a href="#ga8f2559cadfc72b164e403d226d52b85d">More...</a><br/></td></tr>
 <tr class="separator:ga8f2559cadfc72b164e403d226d52b85d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga143de85a2785ea75a2669608ac8599b9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__AbsMin.html#ga143de85a2785ea75a2669608ac8599b9">arm_absmin_f64</a> (const <a class="el" href="arm__math__types_8h.html#ac55f3ae81b5bc9053760baacf57e47f4">float64_t</a> *pSrc, uint32_t <a class="el" href="arm__variance__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>, <a class="el" href="arm__math__types_8h.html#ac55f3ae81b5bc9053760baacf57e47f4">float64_t</a> *pResult, uint32_t *pIndex)</td></tr>
+<tr class="memdesc:ga143de85a2785ea75a2669608ac8599b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Minimum value of absolute values of a floating-point vector.  <a href="#ga143de85a2785ea75a2669608ac8599b9">More...</a><br/></td></tr>
+<tr class="separator:ga143de85a2785ea75a2669608ac8599b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga953e9c24ef899d9c57453937a8f11da6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__AbsMin.html#ga953e9c24ef899d9c57453937a8f11da6">arm_absmin_q15</a> (const <a class="el" href="arm__math__types_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *pSrc, uint32_t <a class="el" href="arm__variance__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>, <a class="el" href="arm__math__types_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *pResult, uint32_t *pIndex)</td></tr>
 <tr class="memdesc:ga953e9c24ef899d9c57453937a8f11da6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Minimum value of absolute values of a Q15 vector.  <a href="#ga953e9c24ef899d9c57453937a8f11da6">More...</a><br/></td></tr>
 <tr class="separator:ga953e9c24ef899d9c57453937a8f11da6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -204,6 +207,54 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *&#160;</td>
+          <td class="paramname"><em>pResult</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t *&#160;</td>
+          <td class="paramname"><em>pIndex</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">pSrc</td><td>points to the input vector </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">blockSize</td><td>number of samples in input vector </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pResult</td><td>minimum value returned here </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pIndex</td><td>index of minimum value returned here </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>none </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga143de85a2785ea75a2669608ac8599b9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void arm_absmin_f64 </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="arm__math__types_8h.html#ac55f3ae81b5bc9053760baacf57e47f4">float64_t</a> *&#160;</td>
+          <td class="paramname"><em>pSrc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>blockSize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="arm__math__types_8h.html#ac55f3ae81b5bc9053760baacf57e47f4">float64_t</a> *&#160;</td>
           <td class="paramname"><em>pResult</em>, </td>
         </tr>
         <tr>
