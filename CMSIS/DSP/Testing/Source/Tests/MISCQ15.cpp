@@ -5,7 +5,7 @@
 #include "Error.h"
 #include "Test.h"
 
-#define SNR_THRESHOLD 70
+#define SNR_THRESHOLD 65
 /* 
 
 Reference patterns are generated with
