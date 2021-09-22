@@ -6,8 +6,10 @@ import cmsisdsp.fixedpoint as f
 x = np.array([0.9,0.5,2**-16])
 
 r=dsp.arm_vlog_q15(f.toQ15(x))
-
 print(f.Q15toF32(r)*16.0)
+
+r=dsp.arm_vlog_q31(f.toQ31(x))
+print(f.Q31toF32(r)*32.0)
 
 print(np.log(x))
 

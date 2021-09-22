@@ -26,17 +26,9 @@
  * limitations under the License.
  */
 
-/*
-
-This is a first attempt at implement a log in Q15
-without using an interpolation table since there are
-already too many tables in CMSIS-DSP.
-
-But the accuracy is not that great for very small values ...
-
-*/
 
 #include "dsp/fast_math_functions.h"
+
 
 #define LOG_Q15_ACCURACY 15
 
@@ -50,36 +42,37 @@ But the accuracy is not that great for very small values ...
 */
 #define LOG_Q15_INTEGER_PART 4
 
-/* 2.0 in Q14 or 0.5 in Q16 */
+/* 2.0 in q14 */
 #define LOQ_Q15_THRESHOLD (1u << LOG_Q15_ACCURACY)
+
+/* HALF */
 #define LOQ_Q15_Q16_HALF LOQ_Q15_THRESHOLD
 #define LOQ_Q15_Q14_HALF (LOQ_Q15_Q16_HALF >> 2)
 
 
-/* 1.0 / Log2[Exp[1]] in Q15 */
+/* 1.0 / Log2[Exp[1]] in q15 */
 #define LOG_Q15_INVLOG2EXP 0x58b9u
+
 
 /* Clay Turner algorithm */
 static uint16_t arm_scalar_log_q15(uint16_t src)
 {
    int i;
 
-   int32_t c = __CLZ(src)-16;
+   int16_t c = __CLZ(src)-16;
    int16_t normalization=0;
 
-   //printf("x q15 = %08X, c = %d\n",src,c);
-
-   /* 0.5 in q16 */
-   uint16_t inc = LOQ_Q15_Q16_HALF;
+   /* 0.5 in q11 */
+   uint16_t inc = LOQ_Q15_Q16_HALF >> (LOG_Q15_INTEGER_PART + 1);
 
    /* Will compute y = log2(x) for 1 <= x < 2.0 */
-   uint32_t x;
+   uint16_t x;
 
-   /* q16 */
+   /* q11 */
    uint16_t y=0;
 
-   /* q4.24 */
-   int32_t tmp;
+   /* q11 */
+   int16_t tmp;
 
 
    /* Normalize and convert to q14 format */
@@ -93,17 +86,19 @@ static uint16_t arm_scalar_log_q15(uint16_t src)
      x = x << (c-1);
    }
    normalization = c;
-   //printf("normalization = %d\n",normalization);
-   //printf("x normalized q14 = %08X\n",x);
 
 
 
-   /* Compute the Log2. Result is in Q16 
-      because we know 0 <= y < 1.0
+   /* Compute the Log2. Result is in q11 instead of q16
+      because we know 0 <= y < 1.0 but 
+      we want a result allowing to do a
+      product on int16 rather than having to go
+      through int32
    */
    for(i = 0; i < LOG_Q15_ACCURACY ; i++)
    {
-      x = ((x*x) + LOQ_Q15_Q14_HALF) >> (LOG_Q15_ACCURACY - 1);
+      x = (((int32_t)x*x)) >> (LOG_Q15_ACCURACY - 1);
+    
       if (x >= LOQ_Q15_THRESHOLD)
       {
          y += inc ;
@@ -112,7 +107,78 @@ static uint16_t arm_scalar_log_q15(uint16_t src)
       inc = inc >> 1;
    }
 
-   //printf("Log2 q16 = %04X\n",y);
+
+   /* 
+      Convert the Log2 to Log and apply normalization.
+      We compute (y - normalisation) * (1 / Log2[e]).
+      
+   */
+
+   /* q11 */
+   //tmp = y - ((int32_t)normalization << (LOG_Q15_ACCURACY + 1));
+   tmp = (int16_t)y - (normalization << (LOG_Q15_ACCURACY - LOG_Q15_INTEGER_PART));
+
+   /* q4.11 */
+   y = ((int32_t)tmp * LOG_Q15_INVLOG2EXP) >> 15;
+  
+   return(y);
+
+}
+
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
+
+
+q15x8_t vlogq_q15(q15x8_t src)
+{
+
+   int i;
+
+   int16x8_t c = vclzq_s16(src);
+   int16x8_t normalization = c;
+
+
+   /* 0.5 in q11 */
+   uint16_t inc  = LOQ_Q15_Q16_HALF >> (LOG_Q15_INTEGER_PART + 1);
+
+   /* Will compute y = log2(x) for 1 <= x < 2.0 */
+   uint16x8_t x;
+
+
+   /* q11 */
+   uint16x8_t y = vdupq_n_u16(0);
+   
+
+   /* q11 */
+   int16x8_t vtmp;
+  
+
+   mve_pred16_t p;
+
+   /* Normalize and convert to q14 format */
+
+
+   vtmp = vsubq_n_s16(c,1);
+   x = vshlq_u16(src,vtmp);
+
+
+   /* Compute the Log2. Result is in q11 instead of q16
+      because we know 0 <= y < 1.0 but 
+      we want a result allowing to do a
+      product on int16 rather than having to go
+      through int32
+   */
+   for(i = 0; i < LOG_Q15_ACCURACY ; i++)
+   {
+      x = vmulhq_u16(x,x);
+      x = vshlq_n_u16(x,2);
+
+      
+      p = vcmphiq_u16(x,vdupq_n_u16(LOQ_Q15_THRESHOLD));
+      y = vaddq_m_n_u16(y, y,inc,p);
+      x = vshrq_m_n_u16(x,x,1,p);
+
+      inc = inc >> 1;
+   }
 
 
    /* 
@@ -121,22 +187,20 @@ static uint16_t arm_scalar_log_q15(uint16_t src)
       
    */
 
-   /* q16 */
-   tmp = y - ((int32_t)normalization << (LOG_Q15_ACCURACY + 1));
-   //printf("Log2 q16 with normalization = %08X\n",tmp);
+   /* q11 */
+   // tmp = (int16_t)y - (normalization << (LOG_Q15_ACCURACY - LOG_Q15_INTEGER_PART));
+   vtmp = vshlq_n_s16(normalization,LOG_Q15_ACCURACY - LOG_Q15_INTEGER_PART);
+   vtmp = vsubq_s16(y,vtmp);
 
-   /* q12 * q15 -> q27 */
-   tmp = (tmp>>LOG_Q15_INTEGER_PART) * (int32_t)LOG_Q15_INVLOG2EXP ;
-   //printf("Log10 q27 = %08X\n",tmp);
-
-   /* q4.11 */
-   y = tmp >> 16;
-   //printf("Log10 q11 = %04X\n",y);
+   
   
+   /* q4.11 */
+   // y = ((int32_t)tmp * LOG_Q15_INVLOG2EXP) >> 15;
+   vtmp = vqdmulhq_n_s16(vtmp,LOG_Q15_INVLOG2EXP);
 
-   return(y);
-
+   return(vtmp);
 }
+#endif 
 
 /**
   @ingroup groupFastMath
@@ -155,15 +219,43 @@ static uint16_t arm_scalar_log_q15(uint16_t src)
   @return        none
 
  */
+
 void arm_vlog_q15(
   const q15_t * pSrc,
         q15_t * pDst,
         uint32_t blockSize)
 {
-  uint32_t i;
-  for(i=0;i < blockSize; i++)
+  uint32_t  blkCnt;           /* loop counters */
+
+  #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
+  q15x8_t src;
+  q15x8_t dst;
+
+  blkCnt = blockSize >> 3;
+
+  while (blkCnt > 0U)
   {
-     pDst[i]=arm_scalar_log_q15(pSrc[i]);
+      src = vld1q(pSrc);
+      dst = vlogq_q15(src);
+      vst1q(pDst, dst);
+
+      pSrc += 8;
+      pDst += 8;
+      /* Decrement loop counter */
+      blkCnt--;
+  }
+
+  blkCnt = blockSize & 7;
+  #else
+  blkCnt = blockSize;
+  #endif 
+
+  while (blkCnt > 0U)
+  {
+     *pDst++ = arm_scalar_log_q15(*pSrc++);
+
+     /* Decrement loop counter */
+     blkCnt--;
   }
 }
 

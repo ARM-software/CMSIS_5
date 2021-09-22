@@ -4,6 +4,7 @@ import numpy
 import config
 import sys
 import os
+import os.path
 from config import ROOT
 import re
 
@@ -73,6 +74,97 @@ allsrcs = support + fastmath + filtering + matrix + statistics + complexf + basi
 allsrcs = allsrcs + controller + transform + modulesrc + common+ interpolation
 allsrcs = allsrcs + quaternion
 
+missing=set(["arm_abs_f64"
+,"arm_absmax_f64"
+,"arm_absmin_f64"
+,"arm_add_f64"
+,"arm_barycenter_f32"
+,"arm_braycurtis_distance_f32"
+,"arm_canberra_distance_f32"
+,"arm_chebyshev_distance_f32"
+,"arm_chebyshev_distance_f64"
+,"arm_circularRead_f32"
+,"arm_cityblock_distance_f32"
+,"arm_cityblock_distance_f64"
+,"arm_cmplx_mag_f64"
+,"arm_cmplx_mag_squared_f64"
+,"arm_cmplx_mult_cmplx_f64"
+,"arm_copy_f64"
+,"arm_correlate_f64"
+,"arm_correlation_distance_f32"
+,"arm_cosine_distance_f32"
+,"arm_cosine_distance_f64"
+,"arm_dot_prod_f64"
+,"arm_entropy_f32"
+,"arm_entropy_f64"
+,"arm_euclidean_distance_f32"
+,"arm_euclidean_distance_f64"
+,"arm_exponent_f32"
+,"arm_fill_f64"
+,"arm_fir_f64"
+,"arm_fir_init_f64"
+,"arm_gaussian_naive_bayes_predict_f32"
+,"arm_jensenshannon_distance_f32"
+,"arm_kullback_leibler_f32"
+,"arm_kullback_leibler_f64"
+,"arm_logsumexp_dot_prod_f32"
+,"arm_logsumexp_f32"
+,"arm_mat_cholesky_f32"
+,"arm_mat_cholesky_f64"
+,"arm_mat_init_f32"
+,"arm_mat_ldlt_f32"
+,"arm_mat_ldlt_f64"
+,"arm_mat_mult_f64"
+,"arm_mat_solve_lower_triangular_f32"
+,"arm_mat_solve_lower_triangular_f64"
+,"arm_mat_solve_upper_triangular_f32"
+,"arm_mat_solve_upper_triangular_f64"
+,"arm_mat_sub_f64"
+,"arm_mat_trans_f64"
+,"arm_max_f64"
+,"arm_max_no_idx_f32"
+,"arm_max_no_idx_f64"
+,"arm_mean_f64"
+,"arm_merge_sort_f32"
+,"arm_merge_sort_init_f32"
+,"arm_min_f64"
+,"arm_minkowski_distance_f32"
+,"arm_mult_f64"
+,"arm_negate_f64"
+,"arm_offset_f64"
+,"arm_power_f64"
+,"arm_scale_f64"
+,"arm_sort_f32"
+,"arm_sort_init_f32"
+,"arm_spline_f32"
+,"arm_spline_init_f32"
+,"arm_std_f64"
+,"arm_sub_f64"
+,"arm_svm_linear_init_f32"
+,"arm_svm_linear_predict_f32"
+,"arm_svm_polynomial_init_f32"
+,"arm_svm_polynomial_predict_f32"
+,"arm_svm_rbf_init_f32"
+,"arm_svm_rbf_predict_f32"
+,"arm_svm_sigmoid_init_f32"
+,"arm_svm_sigmoid_predict_f32"
+,"arm_var_f64"
+,"arm_vexp_f32"
+,"arm_vexp_f64"
+,"arm_vlog_f64"
+,"arm_vsqrt_f32"
+,"arm_weighted_sum_f32"
+,"arm_circularRead_q15"
+,"arm_circularRead_q7"
+,"arm_div_q63_to_q31"
+,"arm_fir_sparse_q15"
+,"arm_fir_sparse_q31"
+,"arm_fir_sparse_q7"
+,"arm_mat_init_q15"
+,"arm_mat_init_q31"
+,"arm_vsqrt_q15"
+,"arm_vsqrt_q31"])
+
 def notf16(number):
   if re.search(r'f16',number):
      return(False)
@@ -80,11 +172,16 @@ def notf16(number):
      return(False)
   return(True)
 
+def isnotmissing(src):
+  name=os.path.splitext(os.path.basename(src))[0]
+  return(not (name in missing))
+
 # If there are too many files, the linker command is failing on Windows.
 # So f16 functions are removed since they are not currently available in the wrapper.
 # A next version will have to structure this wrapper more cleanly so that the
 # build can work even with more functions
-srcs = list(filter(notf16, allsrcs))
+srcs = list(filter(isnotmissing,list(filter(notf16, allsrcs))))
+
 
 module1 = Extension(config.extensionName,
                     sources = (srcs

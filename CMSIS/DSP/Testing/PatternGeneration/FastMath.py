@@ -48,13 +48,13 @@ def divide(f,r):
 
 def initLogValues(format):
     if format == Tools.Q15:
-       exps = -np.linspace(0,15,num=125)
+        vals=np.linspace(np.float_power(2,-15),1.0,num=125)
     elif format == Tools.F16:
-       exps = -np.linspace(0,10,num=125)
+        vals=np.linspace(np.float_power(2,-10),1.0,num=125)
     else:
-       exps = -np.linspace(0,31,num=125)
-    basis=2.0*np.ones(exps.size)
-    vals=np.float_power(basis,exps)
+        vals=np.linspace(np.float_power(2,-31),1.0,num=125)
+
+
     ref=np.log(vals)
     if format==Tools.Q31 :
         # Format must be Q5.26
@@ -132,13 +132,6 @@ def writeTestsFloat(config,format):
     data1 = data1 + 1e-3 # To avoid zero values
     data1 = Tools.normalize(data1)
 
-    config.setOverwrite(True)
-
-    samples,v=initLogValues(format)
-    config.writeInput(1, samples,"LogInput")
-    config.writeReference(1, v,"Log")
-
-    config.setOverwrite(False)
 
     samples=np.concatenate((np.array([0.0,1.0]),np.linspace(-0.4,0.4)))
     config.writeInput(1, samples,"ExpInput")
@@ -169,6 +162,7 @@ def generatePatterns():
     configq31=Tools.Config(PATTERNDIR,PARAMDIR,"q31")
     configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
     
+    configf64.setOverwrite(False)
     configf32.setOverwrite(False)
     configf16.setOverwrite(False)
     configq31.setOverwrite(False)

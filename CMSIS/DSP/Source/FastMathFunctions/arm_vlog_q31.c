@@ -26,16 +26,6 @@
  * limitations under the License.
  */
 
-/*
-
-This is a first attempt at implement a log in Q31
-without using an interpolation table since there are
-already too many tables in CMSIS-DSP.
-
-But the accuracy is not that great for very small values ...
-
-*/
-
 #include "dsp/fast_math_functions.h"
 
 #define LOG_Q31_ACCURACY 31
@@ -50,8 +40,10 @@ But the accuracy is not that great for very small values ...
 */
 #define LOG_Q31_INTEGER_PART 5
 
-/* 2.0 in Q30 or 0.5 in Q32 */
+/* 2.0 in Q30 */
 #define LOQ_Q31_THRESHOLD (1u << LOG_Q31_ACCURACY)
+
+/* HALF */
 #define LOQ_Q31_Q32_HALF LOQ_Q31_THRESHOLD
 #define LOQ_Q31_Q30_HALF (LOQ_Q31_Q32_HALF >> 2)
 
@@ -62,24 +54,22 @@ But the accuracy is not that great for very small values ...
 /* Clay Turner algorithm */
 static uint32_t arm_scalar_log_q31(uint32_t src)
 {
-   int i;
+   int32_t i;
    
    int32_t c = __CLZ(src);
    int32_t normalization=0;
 
-   //printf("x q31 = %08X\n",src);
-
-   /* 0.5 in q32 */
-   uint32_t inc = LOQ_Q31_Q32_HALF;
+   /* 0.5 in q26 */
+   uint32_t inc = LOQ_Q31_Q32_HALF >> (LOG_Q31_INTEGER_PART + 1);
 
    /* Will compute y = log2(x) for 1 <= x < 2.0 */
-   uint64_t x;
+   uint32_t x;
 
-   /* q32 */
+   /* q26 */
    uint32_t y=0;
 
-   /* q5.58 */
-   int64_t tmp;
+   /* q26 */
+   int32_t tmp;
 
 
    /* Normalize and convert to q30 format */
@@ -93,17 +83,16 @@ static uint32_t arm_scalar_log_q31(uint32_t src)
      x = x << (c-1);
    }
    normalization = c;
-   //printf("normalization = %d\n",normalization);
-   //printf("x normalized q30 = %08llX\n",x);
 
-
-
-   /* Compute the Log2. Result is in Q32 
-      because we know 0 <= y < 1.0
+   /* Compute the Log2. Result is in q26 
+      because we know 0 <= y < 1.0 but
+      do not want to use q32 to allow
+      following computation with less instructions.
    */
    for(i = 0; i < LOG_Q31_ACCURACY ; i++)
    {
-      x = ((x*x) + LOQ_Q31_Q30_HALF) >> (LOG_Q31_ACCURACY - 1);
+      x = ((int64_t)x*x)  >> (LOG_Q31_ACCURACY - 1);
+
       if (x >= LOQ_Q31_THRESHOLD)
       {
          y += inc ;
@@ -112,7 +101,78 @@ static uint32_t arm_scalar_log_q31(uint32_t src)
       inc = inc >> 1;
    }
 
-   //printf("Log2 q32 = %08X\n",y);
+   /* 
+      Convert the Log2 to Log and apply normalization.
+      We compute (y - normalisation) * (1 / Log2[e]).
+      
+   */
+
+   /* q26 */
+   tmp = (int32_t)y - (normalization << (LOG_Q31_ACCURACY - LOG_Q31_INTEGER_PART));
+
+
+   /* q5.26 */
+   y = ((int64_t)tmp * LOG_Q31_INVLOG2EXP) >> 31;
+
+  
+
+   return(y);
+
+}
+
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
+
+
+q31x4_t vlogq_q31(q31x4_t src)
+{
+    
+   int32_t i;
+
+   int32x4_t c = vclzq_s32(src);
+   int32x4_t normalization = c;
+
+
+   /* 0.5 in q11 */
+   uint32_t inc  = LOQ_Q31_Q32_HALF >> (LOG_Q31_INTEGER_PART + 1);
+
+   /* Will compute y = log2(x) for 1 <= x < 2.0 */
+   uint32x4_t x;
+
+
+   /* q11 */
+   uint32x4_t y = vdupq_n_u32(0);
+   
+
+   /* q11 */
+   int32x4_t vtmp;
+  
+
+   mve_pred16_t p;
+
+   /* Normalize and convert to q14 format */
+
+
+   vtmp = vsubq_n_s32(c,1);
+   x = vshlq_u32(src,vtmp);
+
+
+    /* Compute the Log2. Result is in Q26 
+      because we know 0 <= y < 1.0 but
+      do not want to use Q32 to allow
+      following computation with less instructions.
+   */
+   for(i = 0; i < LOG_Q31_ACCURACY ; i++)
+   {
+      x = vmulhq_u32(x,x);
+      x = vshlq_n_u32(x,2);
+
+      
+      p = vcmphiq_u32(x,vdupq_n_u32(LOQ_Q31_THRESHOLD));
+      y = vaddq_m_n_u32(y, y,inc,p);
+      x = vshrq_m_n_u32(x,x,1,p);
+
+      inc = inc >> 1;
+   }
 
 
    /* 
@@ -121,22 +181,20 @@ static uint32_t arm_scalar_log_q31(uint32_t src)
       
    */
 
-   /* q32 */
-   tmp = y - ((int64_t)normalization << (LOG_Q31_ACCURACY + 1));
-   //printf("Log2 q32 with normalization = %016llX\n",tmp);
+   /* q11 */
+   // tmp = (int16_t)y - (normalization << (LOG_Q15_ACCURACY - LOG_Q15_INTEGER_PART));
+   vtmp = vshlq_n_s32(normalization,LOG_Q31_ACCURACY - LOG_Q31_INTEGER_PART);
+   vtmp = vsubq_s32(y,vtmp);
 
-   /* q27 * q31 -> q58 */
-   tmp = (tmp>>LOG_Q31_INTEGER_PART) * (int64_t)LOG_Q31_INVLOG2EXP ;
-   //printf("Log10 q58 = %016llX\n",tmp);
-
-   /* q5.26 */
-   y = tmp >> 32;
-   //printf("Log10 q25 = %08X\n",y);
+   
   
+   /* q4.11 */
+   // y = ((int32_t)tmp * LOG_Q15_INVLOG2EXP) >> 15;
+   vtmp = vqdmulhq_n_s32(vtmp,LOG_Q31_INVLOG2EXP);
 
-   return(y);
-
+   return(vtmp);
 }
+#endif
 
 /**
   @ingroup groupFastMath
@@ -160,10 +218,37 @@ void arm_vlog_q31(
         q31_t * pDst,
         uint32_t blockSize)
 {
-  uint32_t i;
-  for(i=0;i < blockSize; i++)
+  uint32_t  blkCnt;           /* loop counters */
+
+  #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
+
+  q31x4_t src;
+  q31x4_t dst;
+
+  blkCnt = blockSize >> 2;
+
+  while (blkCnt > 0U)
   {
-     pDst[i]=arm_scalar_log_q31(pSrc[i]);
+      src = vld1q(pSrc);
+      dst = vlogq_q31(src);
+      vst1q(pDst, dst);
+
+      pSrc += 4;
+      pDst += 4;
+      /* Decrement loop counter */
+      blkCnt--;
+  }
+
+  blkCnt = blockSize & 3;
+  #else
+  blkCnt = blockSize;
+  #endif 
+
+  while (blkCnt > 0U)
+  {
+     *pDst++=arm_scalar_log_q31(*pSrc++);
+
+     blkCnt--;
   }
  
 }

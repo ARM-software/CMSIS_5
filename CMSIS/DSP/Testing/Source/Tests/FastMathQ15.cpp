@@ -5,7 +5,7 @@
 
 
 
-#define SNR_THRESHOLD 70
+#define SNR_THRESHOLD 69
 /* 
 
 Reference patterns are generated with
@@ -14,20 +14,17 @@ a double precision computation.
 */
 #define ABS_ERROR ((q15_t)10)
 
-#define LOG_ABS_ERROR ((q15_t)1000)
+#define LOG_ABS_ERROR ((q15_t)3)
+
 
     void FastMathQ15::test_vlog_q15()
     {
         const q15_t *inp  = input.ptr();
         q15_t *outp  = output.ptr();
 
-        //printf("Nb samples = %lu\n",ref.nbSamples());
         arm_vlog_q15(inp,outp,ref.nbSamples());
-        //arm_vlog_q15(inp,outp,1);
-        //printf("in = %08X\n",inp[124]);
-        //printf("out = %08X\n",outp[124]);
-    
-        //ASSERT_SNR(ref,output,(float32_t)SNR_THRESHOLD);
+        
+        ASSERT_SNR(ref,output,(float32_t)SNR_THRESHOLD);
         ASSERT_NEAR_EQ(ref,output,LOG_ABS_ERROR);
         ASSERT_EMPTY_TAIL(output);
 

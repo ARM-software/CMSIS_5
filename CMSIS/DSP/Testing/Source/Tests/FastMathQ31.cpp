@@ -13,32 +13,19 @@ a double precision computation.
 */
 #define ABS_ERROR ((q31_t)2200)
 
-/*
 
-The error bounds is 0.014 and it is big
-but the test is really extreme with input values as small
-as 2^-31 !
+#define LOG_ABS_ERROR ((q31_t)2)
 
-The error is clearly diverging for the very small values.
-
-So, we have an error converging to 0.014 for outputs around -21.
-
-
-*/
-#define LOG_ABS_ERROR ((q31_t)30000000)
 
     void FastMathQ31::test_vlog_q31()
     {
         const q31_t *inp  = input.ptr();
         q31_t *outp  = output.ptr();
 
-        //printf("Nb samples = %lu\n",ref.nbSamples());
         arm_vlog_q31(inp,outp,ref.nbSamples());
-        //arm_vlog_q31(inp+124,outp+124,1);
-        //printf("in = %08X\n",inp[124]);
-        //printf("out = %08X\n",outp[124]);
-    
-        //ASSERT_SNR(ref,output,(float32_t)SNR_THRESHOLD);
+        
+        
+        ASSERT_SNR(ref,output,(float32_t)SNR_THRESHOLD);
         ASSERT_NEAR_EQ(ref,output,LOG_ABS_ERROR);
         ASSERT_EMPTY_TAIL(output);
 
