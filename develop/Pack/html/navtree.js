@@ -44,7 +44,12 @@ var NAVTREE =
       ] ],
       [ "Pack with Board Support", "cp_PackTutorial.html#createPackBoard", [
         [ "Specify a Development Board", "cp_PackTutorial.html#cp_SpecDevBoard", null ],
-        [ "Create a BSP Bundle", "cp_PackTutorial.html#cp_BundleExample", null ]
+        [ "Create a BSP Bundle", "cp_PackTutorial.html#cp_BundleExample", null ],
+        [ "Add CMSIS-Drivers VIO", "cp_PackTutorial.html#cp_BSPVIO", null ],
+        [ "Add Example Projects", "cp_PackTutorial.html#cp_BSPExamples", [
+          [ "Platform example", "cp_PackTutorial.html#cp_BSPExPlatform", null ],
+          [ "Blinky example", "cp_PackTutorial.html#cp_BSPExBlinky", null ]
+        ] ]
       ] ]
     ] ],
     [ "Utilities for Creating Packs", "createPackUtil.html", "createPackUtil" ],
@@ -95,7 +100,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "algorithmFunc.html",
-"sdf_pg.html#sdf_element_device_info_items"
+"sdf_pg.html#sdf_element_debug"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

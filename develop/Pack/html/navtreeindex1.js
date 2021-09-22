@@ -1,5 +1,9 @@
 var NAVTREEINDEX1 =
 {
+"sdf_pg.html#sdf_element_debug":[10,3],
+"sdf_pg.html#sdf_element_debug_and_trace_config":[10,2],
+"sdf_pg.html#sdf_element_device":[10,10],
+"sdf_pg.html#sdf_element_device_info_item":[10,13],
 "sdf_pg.html#sdf_element_device_info_items":[10,12],
 "sdf_pg.html#sdf_element_platform":[10,7],
 "sdf_pg.html#sdf_element_scanchain":[10,8],

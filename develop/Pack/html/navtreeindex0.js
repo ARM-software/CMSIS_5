@@ -20,6 +20,10 @@ var NAVTREEINDEX0 =
 "cp_Editors.html#cp_validationPI":[4,1,2],
 "cp_PackTutorial.html":[3],
 "cp_PackTutorial.html#cp_API":[3,1,8],
+"cp_PackTutorial.html#cp_BSPExBlinky":[3,3,3,1],
+"cp_PackTutorial.html#cp_BSPExPlatform":[3,3,3,0],
+"cp_PackTutorial.html#cp_BSPExamples":[3,3,3],
+"cp_PackTutorial.html#cp_BSPVIO":[3,3,2],
 "cp_PackTutorial.html#cp_BasicDFP":[3,2,0],
 "cp_PackTutorial.html#cp_BundleExample":[3,3,1],
 "cp_PackTutorial.html#cp_Bundles":[3,1,6],
@@ -245,9 +249,5 @@ var NAVTREEINDEX0 =
 "sdf_pg.html#sdf_element_clusters":[10,16],
 "sdf_pg.html#sdf_element_config_item":[10,4],
 "sdf_pg.html#sdf_element_config_items":[10,11],
-"sdf_pg.html#sdf_element_dap":[10,9],
-"sdf_pg.html#sdf_element_debug":[10,3],
-"sdf_pg.html#sdf_element_debug_and_trace_config":[10,2],
-"sdf_pg.html#sdf_element_device":[10,10],
-"sdf_pg.html#sdf_element_device_info_item":[10,13]
+"sdf_pg.html#sdf_element_dap":[10,9]
 };
