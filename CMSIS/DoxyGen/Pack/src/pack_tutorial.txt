@@ -42,13 +42,10 @@ software component. Then, it is extended to show the various features for descri
 
 <b>Preparations</b>
 -# Create a working directory on you PC, for example <b>C:\\temp\\working</b>.
--# Go to the directory <b>\\CMSIS\\Pack\\Tutorials</b> available in the \b ARM::CMSIS Pack installation. Please
-   consult your development tool's documentation for more information on the Pack installation directory structure. In a
-   standard µVision installation, you will find it below <b>\%localappdata\%\\Arm\\Packs\\ARM\\CMSIS\\<i>version</i></b>.
--# Unzip the file \b Pack_with_Software_Components.zip.
+-# Download the file <a class=el href="https://github.com/ARM-software/CMSIS_5/raw/develop/CMSIS/Pack/Tutorials/Pack_with_Software_Components.zip" download>Pack_with_Software_Components.zip</a>.
 -# Copy the <i>content</i> of the ZIP file's \b 01_Create_PDSC directory into your working directory.
--# Copy the \ref bash_script "gen_pack.sh" script from your CMSIS-Pack installation's <b>\\CMSIS\\Pack\\Bash</b> directory
-   to the working directory.
+-# Download the file <a class=el href="https://github.com/ARM-software/CMSIS_5/raw/develop/CMSIS/Pack/Bash/gen_pack.sh">gen_pack.sh</a>
+   (right-click and select "Save (page) as..."). Copy the shell script to your working directory.
 -# Make sure that files/directories are not write protected (remove read-only flag).
 
 
@@ -313,7 +310,7 @@ Add a \ref pdsc_conditions_pg "<conditions>" section with the following:
       <require Cclass="CMSIS" Cgroup="RTOS2"/>
     </condition>
   </conditions>
-  \endcode
+\endcode
 </li>
 <li>
 Change the first line of the already existing <b>component</b> by adding the condition and increasing the version number of
@@ -658,14 +655,11 @@ the MVCM3 family is as follows:
 
 <b>Preparations</b>
 -# Create a working directory on you PC, for example <b>C:\\temp\\working_dfp</b>.
--# Go to the directory <b>\\CMSIS\\Pack\\Tutorials</b> available in the \b ARM::CMSIS Pack installation. Please
-   consult your development tool's documentation for more information on the Pack installation directory structure. In a
-   standard µVision installation, you will find it below <b>\%localappdata\%\\Arm\\Packs\\ARM\\CMSIS\\<i>version</i></b>.
--# Open the file \b Pack_with_Device_Support.zip.
+-# Download the file <a class=el href="https://github.com/ARM-software/CMSIS_5/raw/develop/CMSIS/Pack/Tutorials/Pack_with_Device_Support.zip" download>Pack_with_Device_Support.zip</a>.
 -# Copy the file \b MyVendor.MVCM3.pdsc of the ZIP file's \b 01_Basic_Pack directory into your working directory.
+-# Download the file <a class=el href="https://github.com/ARM-software/CMSIS_5/raw/develop/CMSIS/Pack/Bash/gen_pack.sh">gen_pack.sh</a>
+   (right-click and select "Save (page) as..."). Copy the shell script to your working directory.
 -# Make sure that file are not write protected (remove read-only flag).
--# Copy the \ref bash_script "gen_pack.sh" script from your CMSIS-Pack installation's <b>\\CMSIS\\Pack\\Bash</b> directory
-   to the working directory.
 -# Open the \b MyVendor.MVCM3.pdsc file in an editor.
 
 <b>Code Example</b>
@@ -1094,6 +1088,7 @@ Add the following lines to the PDSC file in the \elem{components} section:
   </files>
 </component>
 \endcode
+
 \note The first two software components are added to <b>Device\::HAL</b> because they are specific to the device family and
 are not using a published API. The drivers for I2C and UART are adhering to the
 <a class=el href="https://www.keil.com/cmsis/driver" target="_blank">CMSIS-Driver</a> specification. Thus, they are added to
@@ -1141,16 +1136,17 @@ A BSP may contain additional <b>Software Components</b>, <b>Example Projects</b>
 content of a BSP is:
 - Source code, libraries, header/configuration files for the underlying hardware and documentation
   (for example user manuals, getting started guides, and schematics).
-- \ref cp_Examples "Example Projects" that show the usage of the development board and its peripherals.
+- \ref cp_BSPExamples "BSP Example projects" that show the usage of the development board and its peripherals.
 - \ref cp_CodeTemplates "User Code Templates" that can be used as a starting point for using the development board or the
   mounted device.
 
-This section is a tutorial that explains how to create a BSP. 
-Initially the PDSC file in the BSP only describes an evaluation board.
-This BSP is then extended to contain also software components that interface with the hardware of the board.
-Example projects and code templates may be added as described in the section \ref cp_SWComponents.
-  
-  
+This section is a tutorial that explains how to create a stand-alone BSP. Initially the PDSC file in the BSP only describes
+an evaluation board. This BSP is then extended to contain also software components that interface with the hardware of the
+board. Finally, meaningful example projects are added.
+
+Of course, the sections for \c boards and \examples can also be added to a \ref createPack_DFP. Having separate BSP packs
+is an advantage, if you have more than one board for a given device (family) for maintenance reasons. 
+
 BSP Use Cases
 -------------
 A BSP is typically provided by a Board Vendor and is used to
@@ -1169,15 +1165,11 @@ BSPs can also be used to provide information for the display on <b>web sites</b>
    <a class=el href="https://www.keil.com/dd2/arm/armcm3/" target="_blank">Keil::ARMCortex_DFP</a> as this
    will be required for the BSP to function properly.
 -# Create a working directory on your PC, for example <b>C:\\temp\\working_bsp</b>.
--# Go to the directory <b>\\CMSIS\\Pack\\Tutorials</b> available in the \b ARM::CMSIS Pack installation. Please
-   consult your development tool's documentation for more information on the Pack installation directory structure. In a
-   standard µVision installation, you will find it below <b>\%localappdata\%\\Arm\\Packs\\ARM\\CMSIS\\<i>version</i></b>.
--# Unzip the file \b Pack_with_Board_Support.zip.
+-# Download the file <a class=el href="https://github.com/ARM-software/CMSIS_5/raw/develop/CMSIS/Pack/Tutorials/Pack_with_Board_Support.zip" download>Pack_with_Board_Support.zip</a>.
 -# Copy the \e content of the ZIP file's \b 01_Specify_Dev_Board directory into your working directory.
--# Copy the \ref bash_script "gen_pack.sh" script from your CMSIS-Pack installation's <b>\\CMSIS\\Pack\\Bash</b> directory
-   to the working directory.
--# Make sure that files/directories are not write protected (remove read-only flag).
--# Open the \b MyVendor.MyBSP.pdsc file in an editor.
+-# Download the file <a class=el href="https://github.com/ARM-software/CMSIS_5/raw/develop/CMSIS/Pack/Bash/gen_pack.sh">gen_pack.sh</a>
+   (right-click and select "Save (page) as..."). Copy the shell script to your working directory.
+-# From the working directory, open the \b MyVendor.MyBSP.pdsc file in an editor.
 
 <b>Code Example</b>
 <ol>
@@ -1185,7 +1177,7 @@ BSPs can also be used to provide information for the display on <b>web sites</b>
 Add a \ref element_boards "<boards>" section in the PDSC file with the following:
 \code{.xml}
 <boards>
-  <board vendor="MyVendor" name="MyDevBoard" revision="V1" salesContact="sales@keil.com" orderForm="http://www.keil.com">
+  <board vendor="MyVendor" name="MyDevBoard" revision="V1" salesContact="https://www.arm.com/company/contact-us" orderForm="https://store.developer.arm.com/">
     <description>MyVendor MyDevBoard Board Description</description>
     <image small="Images/MyDevBoard_small.png" large="Images/MyDevBoard_large.png"/>
     <book category="setup"     name="Docs/MyDevBoard/MyDevBoard_setup.pdf"      title="Getting Started"/>
@@ -1227,11 +1219,10 @@ This is because this BSP does neither contain a download URL nor an example proj
 
 \subsection cp_BundleExample Create a BSP Bundle
 
-A bundle is basically a variant on the \c Cclass level. It specifies the attributes \c Cclass, \c Cversion and optionally
-\c Cgroup and \c Cvendor for a collection of interdependent components. Components within a bundle inherit the attributes
-set by the bundle and must not set these attributes again. Bundles ensure consistency of attributes across multiple
-interworking components and restrict the mix and match of components within a \c Cclass from different solutions.
-In addition to components, a bundle has the mandatory elements \c description and \c doc (for documentation).
+In the list of predefined Cclasses, "Board Support" is one of them. If you want to create an entry for your particular
+development board, you need to use a bundle. A <a class="el" href="https://arm-software.github.io/CMSIS_5/develop/Pack/html/pdsc_components_pg.html#Component_Bundle">
+bundle</a> is basically a variant on the \c Cclass level. <a class="el" href="https://arm-software.github.io/CMSIS_5/develop/Pack/html/pdsc_conditions_pg.html">
+Conditions</a> ensure the the "board Support" bundle is only shown if the right device is selected.  
 
 Copy the \e content of the <b>02_BSP_Bundle</b> directory of the \b Pack_with_Board_Support.zip file to the current working
 directory:
@@ -1266,24 +1257,6 @@ provides more information on this step):
           <file category="source" name="MySWComp/Source/setup.c"/>
         </files>
       </component>
-      <component Cgroup="I/O" Csub="LED" condition="MyDevBoard Board Setup">
-        <description>LED code for custom board</description>
-        <files>
-          <file category="doc" name="Docs/BSP/LED.htm"/>
-          <file category="header" name="MySWComp/Include/led.h"/>
-          <file category="header" name="MySWComp/Include/config_led.h" attr="config" version="1.0.0"/>
-          <file category="source" name="MySWComp/Source/led.c"/>
-        </files>
-      </component>
-      <component Cgroup="I/O" Csub="GPIO" condition="MyDevBoard Board Setup">
-        <description>GPIO code for custom board</description>
-        <files>
-          <file category="doc" name="Docs/BSP/GPIO.htm"/>
-          <file category="header" name="MySWComp/Include/gpio.h"/>
-          <file category="header" name="MySWComp/Include/config_gpio.h" attr="config" version="1.0.0"/>
-          <file category="source" name="MySWComp/Source/gpio.c"/>
-        </files>
-      </component>
     </bundle>
 \endcode
 </li>
@@ -1302,5 +1275,164 @@ install the Pack in your development tool and observe the differences to version
 \image html BSPBundleDisplay.png "BSP bundle display in development tools"
 </li>
 </ol>
-*/
 
+\note
+If you create more than one "Board Support" bundle (in case you have different boards using the same device), the IDE will
+let you select the "variant" so that the right components are available for the target hardware.
+
+
+\subsection cp_BSPVIO Add CMSIS-Drivers VIO
+
+The <a class="el" href="https://arm-software.github.io/CMSIS_5/develop/Driver/html/group__vio__interface__gr.html">
+VIO software component</a> is a virtual I/O abstraction for peripherals that are typically used in example projects. For
+example, It enables developers to move from an evaluation kit to custom hardware. Thus, you should create CMSIS-Drivers for
+VIO to enable such easy porting. This driver will be used in the next section to create meaningful examples for the
+development board.
+
+Copy the \e content of the <b>03_VIO_Drivers</b> directory of the \b Pack_with_Board_Support.zip file to the current working
+directory:
+<ol>
+<li>
+In the \c \<conditions\> section of your PDSC, add the following:
+\code{.xml}
+<condition id="MyDevBoard VIO">
+  <description>Virtual I/O MyDevBoard</description>
+  <require condition="ARM Cortex M3 Series"/>
+</condition>
+\endcode
+</li>
+<li>
+In the \c \<components\> section of your PDSC, add the following component:
+\code{.xml}
+<component Cclass="CMSIS Driver" Cgroup="VIO" Csub="Board" Cvariant="MyDevBoard" Cversion="1.0.0" Capiversion="0.1.0" condition="MyDevBoard VIO">
+  <description>Virtual I/O implementation for MyDevBoard</description>
+  <RTE_Components_h>
+        #define RTE_VIO_BOARD
+        #define RTE_VIO_MYDEVBOARD
+  </RTE_Components_h>
+  <files>
+    <file category="source" name="Drivers/Platform/vio_MyDevBoard.c"/>
+  </files>
+</component>
+\endcode
+</li>
+<li>
+Add a new version number:
+\code{.xml}
+<release version="1.0.2" date="2020-12-02">
+      CMSIS-Driver VIO added.
+</release>
+\endcode
+</li>
+<li>
+Finally, save the PDSC file and regenerate the Pack file using the \ref cp_GeneratePack "gen_pack.sh" script. Afterwards,
+install the Pack in your development tool and observe the differences to version 1.0.1.
+
+\image html CMSISDriverVIO.png "CMSIS-Driver VIO display in development tools"
+</li>
+</ol>
+
+\note
+The driver in this example is an empty reference that you can easily adapt to the needs of your hardware.
+
+
+\subsection cp_BSPExamples Add Example Projects
+
+Example projects are a good way to introduce hardware to developers and to give them a well-defined starting point. It is
+recommended to add at least two examples: a \ref cp_BSPExPlatform "Platform" project and a simple
+\ref cp_BSPExBlinky "Blinky" project.
+
+\note
+- As example projects need the software components of the target device, you can only start to create examples once you
+  have a first iteration of the \ref createPack_DFP "device support pack" available. 
+- This section's example projects are not functional.
+
+\subsubsection cp_BSPExPlatform Platform example
+
+<a class="el" href="https://arm-software.github.io/CMSIS_5/develop/Build/html/index.html">CMSIS-Build</a> uses project
+layers to compose multiple examples for many different boards. To facilitate this, a basic "Platform" project 
+example is required that carries the information about the \b Board layer. By definition, the \b Board layer incorporates
+CMSIS-Drivers, an RTOS, and the board related configuration using third-party tools (such as pin/clock
+configuration used on the specific development board). It should offer all interfaces that are available on the board so
+that different examples can make use of them.
+
+\note For more information about the Platform project and how to compose it, refer to the
+<a class="el" href="https://github.com/MDK-Packs/CB_Lab4Layer/blob/master/docs/platform_project.md">documentation</a>.
+
+Layers are part of a
+<a class="el" href="https://arm-software.github.io/CMSIS_5/develop/Build/html/cprjFormat_pg.html">CPRJ</a>
+file, a new common project format that is standardized in CMSIS. CPRJ is an XML based format that can either be created by
+hand or exported from other tools. Currently, Keil MDK offers an export option from its native project format. The \b Blinky
+project is using the \b Platform project and adds the actual application on top of it.
+
+Copy the \e content of the <b>04_Add_Examples</b> directory of the \b Pack_with_Board_Support.zip file to the current
+working directory:
+<ul>
+<li>
+Add an \ref element_examples "<examples>" section in the PDSC file with the following:
+\code{.xml}
+  <examples>
+    <example name="Platform" doc="README.md" folder="Projects/Platform">
+      <description>CMSIS-RTOS2 Platform example with VIO</description>
+      <board name="MyDevBoard" vendor="MyVendor"/>
+      <project>
+        <environment name="uv" load="Platform.MyDevBoard.cprj"/>
+      </project>
+      <attributes>
+        <component Cclass="CMSIS" Cgroup="CORE"/>
+        <component Cclass="Device" Cgroup="Startup"/>
+        <component Cclass="CMSIS" Cgroup="RTOS"/>
+        <component Cclass="CMSIS Driver" Cgroup="VIO"/>
+      </attributes>
+    </example>
+  </examples>
+\endcode
+</li>
+</ul>
+
+Before building the pack, add the \ref cp_BSPExBlinky to the PDSC file.
+
+
+\subsubsection cp_BSPExBlinky Blinky example
+
+The "Blinky" example is normally used to check if the connetion between the development board and the IDE is working
+correctly and that the baord is working as expected. Using the \ref cp_BSPVIO "VIO driver" and a simple
+<a class="el" href="https://github.com/MDK-Packs/CB_Lab4Layer/blob/master/layer/App/Blinky/Blinky.c">Blinky.c</a> file
+available on GitHub, you can quickly create such an example.
+
+<ol>
+<li>
+In the \ref element_examples "<examples>" section of the PDSC file, add the following:
+\code{.xml}
+    <example name="Blinky" doc="README.md" folder="Projects/Blinky">
+      <description>CMSIS-RTOS2 Blinky example with VIO</description>
+      <board name="MyDevBoard" vendor="MyVendor"/>
+      <project>
+        <environment name="uv" load="Blinky.MyDevBoard.cprj"/>
+      </project>
+      <attributes>
+        <component Cclass="Device" Cgroup="Startup"/>
+        <component Cclass="CMSIS"  Cgroup="RTOS"/>
+        <component Cclass="CMSIS Driver" Cgroup="VIO"/>
+        <category>Getting Started</category>
+      </attributes>
+    </example>
+\endcode
+</li>
+<li>
+Add a new version number:
+\code{.xml}
+<release version="1.0.3" date="2020-12-03">
+      Example projects added.
+</release>
+\endcode
+</li>
+</ol>
+
+Finally, save the PDSC file and regenerate the Pack file using the \ref cp_GeneratePack "gen_pack.sh" script. Afterwards,
+install the Pack in your development tool and observe the differences to version 1.0.2:
+
+\image html ExampleDisplayBSP.png  "Display of BSP example projects (Blinky and Platform)"
+
+This concludes the BSP tutorial. The BSP is now ready to be \ref createPackPublish "published".
+*/
