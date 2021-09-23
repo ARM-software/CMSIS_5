@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 Arm Limited or its affiliates.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -205,7 +205,7 @@ arm_status arm_max_pool_s8(const cmsis_nn_context *ctx,
 
                     if (count == 0)
                     {
-                        memcpy(dst, start, channel_in);
+                        arm_memcpy_q7(dst, start, channel_in);
                         count++;
                     }
                     else

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 Arm Limited or its affiliates.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -84,8 +84,9 @@ void basic_arm_depthwise_conv_s8(void)
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, basic_output_ref, BASIC_DST_SIZE));
 
-    ctx.buf = NULL;
-    ctx.size = 0;
+    const int32_t buf_size =
+        arm_depthwise_conv_wrapper_s8_get_buffer_size(&dw_conv_params, &input_dims, &filter_dims, &output_dims);
+    ctx.buf = malloc(buf_size);
 
     result = arm_depthwise_conv_wrapper_s8(&ctx,
                                            &dw_conv_params,
@@ -163,9 +164,10 @@ void stride2pad1_arm_depthwise_conv_s8(void)
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, stride2pad1_output_ref, STRIDE2PAD1_DST_SIZE));
 
-    ctx.buf = NULL;
+    const int32_t buf_size =
+        arm_depthwise_conv_wrapper_s8_get_buffer_size(&dw_conv_params, &input_dims, &filter_dims, &output_dims);
+    ctx.buf = malloc(buf_size);
     ctx.size = 0;
-
     result = arm_depthwise_conv_wrapper_s8(&ctx,
                                            &dw_conv_params,
                                            &quant_params,

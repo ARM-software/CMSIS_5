@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2019 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 Arm Limited or its affiliates.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -29,6 +29,7 @@
  * -------------------------------------------------------------------- */
 
 #include "arm_nnfunctions.h"
+#include "arm_nnsupportfunctions.h"
 
 /**
  *  @ingroup groupNN
@@ -57,7 +58,7 @@ void arm_concatenation_s8_w(const int8_t *input,
 
     output += offset_w * (input_x * input_y * input_z);
 
-    memcpy(output, input, input_copy_size);
+    arm_memcpy_q7(output, input, input_copy_size);
 }
 
 /**
