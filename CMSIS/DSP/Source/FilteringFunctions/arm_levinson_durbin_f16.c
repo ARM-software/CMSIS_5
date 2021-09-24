@@ -135,7 +135,7 @@ void arm_levinson_durbin_f16(const float16_t *phi,
       uint16x8_t offset,offsetInc,vecTmp;
 
 
-      offset = vld1q(orgOffsetArray);
+      offset = vld1q_u16(orgOffsetArray);
       vecTmp = vdupq_n_u16(p);
 
       offset = vaddq_m_u16(offset,offset,vecTmp,LANE4567_MASK);
