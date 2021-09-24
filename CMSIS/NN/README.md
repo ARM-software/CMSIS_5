@@ -77,6 +77,8 @@ cmake .. -DCMAKE_TOOLCHAIN_FILE=~/ethos-u-core-platform/cmake/toolchain/armclang
 ### Compiler options
 Default optimization level is Ofast. Please change according to project needs. Just bear in mind it will impact performance.
 
+The compiler option '-fomit-frame-pointer' is enabled by default at -O and higher. With no optimization level you may need to specifiy '-fomit-frame-pointer' as a minimum.
+
 The compiler option '-fno-builtin' does not utilize optimized implementations of e.g. memcpy and memset, which are heavily used by CMSIS-NN. It can significantly downgrade performance. So this should be avoided.
 The compiler option '-ffreestanding' should also be avoided as it enables '-fno-builtin' implicitly.
 
