@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2019-2021 Arm Limited. All rights reserved.
+# Copyright (c) 2019-2021 Arm Limited.
 #
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -22,7 +22,9 @@ project(cmsis_nn_unit_tests VERSION 0.0.1)
 
 set(CMSIS_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../../../..")
 
-add_compile_options(-Werror
+add_compile_options(-Ofast
+                    -fomit-frame-pointer
+                    -Werror
                     -Wimplicit-function-declaration
                     -Wunused-variable
                     -Wunused-function
