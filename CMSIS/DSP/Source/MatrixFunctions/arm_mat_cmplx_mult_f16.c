@@ -67,7 +67,7 @@ __STATIC_FORCEINLINE arm_status arm_mat_cmplx_mult_f16_2x2_mve(
     const arm_matrix_instance_f16 * pSrcB,
     arm_matrix_instance_f16 * pDst)
 {
-    const uint16_t   MATRIX_DIM = 2;
+#define MATRIX_DIM 2
     float16_t const *pInB = pSrcB->pData;  /* input data matrix pointer B */
     float16_t       *pInA = pSrcA->pData;  /* input data matrix pointer A */
     float16_t       *pOut = pDst->pData;   /* output data matrix pointer */
@@ -131,6 +131,7 @@ __STATIC_FORCEINLINE arm_status arm_mat_cmplx_mult_f16_2x2_mve(
      * Return to application
      */
     return (ARM_MATH_SUCCESS);
+#undef MATRIX_DIM
 }
 
 
@@ -140,7 +141,7 @@ __STATIC_FORCEINLINE arm_status arm_mat_cmplx_mult_f16_3x3_mve(
     const arm_matrix_instance_f16 * pSrcB,
     arm_matrix_instance_f16 * pDst)
 {
-    const uint16_t   MATRIX_DIM = 3;
+#define MATRIX_DIM 3
     float16_t const *pInB = pSrcB->pData;  /* input data matrix pointer B */
     float16_t       *pInA = pSrcA->pData;  /* input data matrix pointer A */
     float16_t       *pOut = pDst->pData;   /* output data matrix pointer */
@@ -226,6 +227,7 @@ __STATIC_FORCEINLINE arm_status arm_mat_cmplx_mult_f16_3x3_mve(
      * Return to application
      */
     return (ARM_MATH_SUCCESS);
+#undef MATRIX_DIM
 }
 
 
@@ -236,7 +238,7 @@ __STATIC_FORCEINLINE arm_status arm_mat_cmplx_mult_f16_4x4_mve(
     const arm_matrix_instance_f16 * pSrcB,
     arm_matrix_instance_f16 * pDst)
 {
-    const uint16_t   MATRIX_DIM = 4;
+#define MATRIX_DIM 4
     float16_t const *pInB = pSrcB->pData;  /* input data matrix pointer B */
     float16_t       *pInA = pSrcA->pData;  /* input data matrix pointer A */
     float16_t       *pOut = pDst->pData;   /* output data matrix pointer */
@@ -371,6 +373,7 @@ __STATIC_FORCEINLINE arm_status arm_mat_cmplx_mult_f16_4x4_mve(
      * Return to application
      */
     return (ARM_MATH_SUCCESS);
+#undef MATRIX_DIM
 }
 
 

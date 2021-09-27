@@ -181,7 +181,8 @@ void arm_split_rfft_q31(
 #if defined(__CMSIS_GCC_H)
         q31x4_t         out = vhaddq_s32(MVE_CMPLX_MULT_FX_AxB_S32(in1, coefA),MVE_CMPLX_MULT_FX_AxConjB_S32(coefB, in2));
 #else
-        q31x4_t         out = vhaddq_s32(MVE_CMPLX_MULT_FX_AxB(in1, coefA),MVE_CMPLX_MULT_FX_AxConjB(coefB, in2));
+        q31x4_t         out = vhaddq_s32(MVE_CMPLX_MULT_FX_AxB(in1, coefA, q31x4_t),
+                                         MVE_CMPLX_MULT_FX_AxConjB(coefB, in2, q31x4_t));
 #endif
         vst1q(pOut1, out);
         pOut1 += 4;
@@ -340,8 +341,8 @@ void arm_split_rifft_q31(
         q31x4_t         out = vhaddq_s32(MVE_CMPLX_MULT_FX_AxConjB_S32(in1, coefA),
                                      vmulq_s32(conj, MVE_CMPLX_MULT_FX_AxB_S32(in2, coefB)));
 #else
-        q31x4_t         out = vhaddq_s32(MVE_CMPLX_MULT_FX_AxConjB(in1, coefA),
-                                     vmulq_s32(conj, MVE_CMPLX_MULT_FX_AxB(in2, coefB)));
+        q31x4_t         out = vhaddq_s32(MVE_CMPLX_MULT_FX_AxConjB(in1, coefA, q31x4_t),
+                                         vmulq_s32(conj, MVE_CMPLX_MULT_FX_AxB(in2, coefB, q31x4_t)));
 #endif
         vst1q_s32(pDst, out);
         pDst += 4;
