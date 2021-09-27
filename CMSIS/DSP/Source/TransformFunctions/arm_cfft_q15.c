@@ -112,7 +112,7 @@ static void _arm_radix4_butterfly_q15_mve(
                  */
                 vecW = vld1q(pW2);
                 pW2 += 8;
-                vecTmp1 = MVE_CMPLX_MULT_FX_AxB(vecW, vecTmp0);
+                vecTmp1 = MVE_CMPLX_MULT_FX_AxB(vecW, vecTmp0, q15x8_t);
 
                 vst1q(inB, vecTmp1);
                 inB += 8;
@@ -125,7 +125,7 @@ static void _arm_radix4_butterfly_q15_mve(
                  */
                 vecW = vld1q(pW1);
                 pW1 += 8;
-                vecTmp1 = MVE_CMPLX_MULT_FX_AxB(vecW, vecTmp0);
+                vecTmp1 = MVE_CMPLX_MULT_FX_AxB(vecW, vecTmp0, q15x8_t);
                 vst1q(inC, vecTmp1);
                 inC += 8;
 
@@ -138,7 +138,7 @@ static void _arm_radix4_butterfly_q15_mve(
                  */
                 vecW = vld1q(pW3);
                 pW3 += 8;
-                vecTmp1 = MVE_CMPLX_MULT_FX_AxB(vecW, vecTmp0);
+                vecTmp1 = MVE_CMPLX_MULT_FX_AxB(vecW, vecTmp0, q15x8_t);
                 vst1q(inD, vecTmp1);
                 inD += 8;
 
@@ -234,7 +234,7 @@ static void arm_cfft_radix4by2_q15_mve(const arm_cfft_instance_q15 *S, q15_t *pS
         pCoefVec += 8;
 
         vecDiff = vhsubq(vecIn0, vecIn1);
-        vecCmplxTmp = MVE_CMPLX_MULT_FX_AxConjB(vecDiff, vecTw);
+        vecCmplxTmp = MVE_CMPLX_MULT_FX_AxConjB(vecDiff, vecTw, q15x8_t);
         vst1q(pIn1, vecCmplxTmp);
         pIn1 += 8;
 
@@ -348,7 +348,7 @@ static void _arm_radix4_butterfly_inverse_q15_mve(const arm_cfft_instance_q15 *S
                  */
                 vecW = vld1q(pW2);
                 pW2 += 8;
-                vecTmp1 = MVE_CMPLX_MULT_FX_AxConjB(vecTmp0, vecW);
+                vecTmp1 = MVE_CMPLX_MULT_FX_AxConjB(vecTmp0, vecW, q15x8_t);
 
                 vst1q(inB, vecTmp1);
                 inB += 8;
@@ -361,7 +361,7 @@ static void _arm_radix4_butterfly_inverse_q15_mve(const arm_cfft_instance_q15 *S
                  */
                 vecW = vld1q(pW1);
                 pW1 += 8;
-                vecTmp1 = MVE_CMPLX_MULT_FX_AxConjB(vecTmp0, vecW);
+                vecTmp1 = MVE_CMPLX_MULT_FX_AxConjB(vecTmp0, vecW, q15x8_t);
                 vst1q(inC, vecTmp1);
                 inC += 8;
                 /*
@@ -373,7 +373,7 @@ static void _arm_radix4_butterfly_inverse_q15_mve(const arm_cfft_instance_q15 *S
                  */
                 vecW = vld1q(pW3);
                 pW3 += 8;
-                vecTmp1 = MVE_CMPLX_MULT_FX_AxConjB(vecTmp0, vecW);
+                vecTmp1 = MVE_CMPLX_MULT_FX_AxConjB(vecTmp0, vecW, q15x8_t);
                 vst1q(inD, vecTmp1);
                 inD += 8;
 
