@@ -11,7 +11,7 @@ def q31sat(x):
 q31satV=np.vectorize(q31sat)
 
 def toQ31(x):
-     return(q31satV(np.round(x * (1<<31))))
+     return(q31satV(np.round(np.array(x) * (1<<31))))
 
 def q15sat(x):
      if x > 0x7FFF:
@@ -24,7 +24,7 @@ def q15sat(x):
 q15satV=np.vectorize(q15sat)
 
 def toQ15(x):
-     return(q15satV(np.round(x * (1<<15))))
+     return(q15satV(np.round(np.array(x) * (1<<15))))
 
 def q7sat(x):
      if x > 0x7F:
@@ -37,13 +37,13 @@ def q7sat(x):
 q7satV=np.vectorize(q7sat)
 
 def toQ7(x):
-     return(q7satV(np.round(x * (1<<7))))
+     return(q7satV(np.round(np.array(x) * (1<<7))))
 
 def Q31toF32(x):
-     return(1.0*x / 2**31)
+     return(1.0*np.array(x) / 2**31)
 
 def Q15toF32(x):
-     return(1.0*x / 2**15)
+     return(1.0*np.array(x) / 2**15)
 
 def Q7toF32(x):
-     return(1.0*x / 2**7)
+     return(1.0*np.array(x) / 2**7)

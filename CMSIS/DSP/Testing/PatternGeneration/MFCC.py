@@ -33,7 +33,6 @@ import scipy
 import scipy.signal as sig
 import scipy.fftpack
 
-
 ################################
 #
 # Gives the same results as the tensorflow lite
@@ -184,6 +183,18 @@ debug=np.array([ 0.65507051 ,-0.94647589 ,0.00627239 ,0.14151286 ,-0.10863318 ,-
  ,-0.34768682 ,0.09108447 ,0.61234556 ,0.1854931 ,0.19680502 ,0.27617564
  ,0.33381827 ,-0.47358967 ,0.28714328 ,-0.27495982])
 
+def noiseSignal(nb):
+    return(2.0*np.random.rand(nb)-1.0)
+
+def sineSignal(freqRatio,nb):
+    fc = nb / 2.0
+    f = freqRatio*fc 
+    time = np.arange(0,nb)
+    return(np.sin(2 * np.pi * f *  time/nb))
+
+def noisySineSignal(noiseAmp,r,nb):
+    return(noiseAmp*noiseSignal(nb) + r*sineSignal(r,nb))
+
 def writeTests(config,format):
     NBSAMPLES=[256,512,1024]
     if DEBUG:
@@ -199,28 +210,59 @@ def writeTests(config,format):
     numOfMelFilters = 20
 
     for nb in NBSAMPLES:
-        inputs=[] 
-        outputs=[] 
-        inlengths=[]
-        outlengths=[]
+        inputsNoise=[] 
+        inputsSine=[] 
+        outputsNoise=[] 
+        outputsSine=[] 
+        inNoiselengths=[]
+        outNoiselengths=[]
+        inSinelengths=[]
+        outSinelengths=[]
 
+        
+        FFTSize=nb
+        mfccConfig=MFCCConfig(freq_min,freq_high,numOfMelFilters,numOfDctOutputs,FFTSize,sample_rate)
+        
+        # Add noise
         audio=np.random.randn(nb)
         audio = Tools.normalize(audio)
         if DEBUG:
            audio=debug
-        inputs += list(audio)
-        FFTSize=nb
-        mfccConfig=MFCCConfig(freq_min,freq_high,numOfMelFilters,numOfDctOutputs,FFTSize,sample_rate)
-        ref=mfccConfig.mfcc(audio)
+        inputsNoise += list(audio)
+        refNoise=mfccConfig.mfcc(audio)
+        if format == Tools.Q15:
+            refNoise = refNoise / (1<<8)
+        if format == Tools.Q31:
+            refNoise = refNoise / (1<<8)
         #print(audio)
         if DEBUG:
-           print(ref)
-        outputs+=list(ref)
-        inlengths+=[nb]
-        outlengths+=[numOfDctOutputs]
+           print(refNoise)
+        outputsNoise+=list(refNoise)
+        inNoiselengths+=[nb]
+        outNoiselengths+=[numOfDctOutputs]
+
         
-        config.writeInput(1, inputs,"MFCCInput_%d_" % nb)
-        config.writeReference(1, outputs,"MFCCRef_%d_" % nb)
+        config.writeInput(1, inputsNoise,"MFCCNoiseInput_%d_" % nb)
+        config.writeReference(1, outputsNoise,"MFCCNoiseRef_%d_" % nb)
+
+        # Sine
+        audio=noisySineSignal(0.1,0.8,nb)
+        #audio = Tools.normalize(audio)
+        inputsSine += list(audio)
+        refSine=mfccConfig.mfcc(audio)
+        if format == Tools.Q15:
+            refSine = refSine / (1<<8)
+        if format == Tools.Q31:
+            refSine = refSine / (1<<8)
+        #print(audio)
+        outputsSine+=list(refSine)
+        inSinelengths+=[nb]
+        outSinelengths+=[numOfDctOutputs]
+
+        
+        config.writeInput(1, inputsSine,"MFCCSineInput_%d_" % nb)
+        config.writeReference(1, outputsSine,"MFCCSineRef_%d_" % nb)
+
     
    
 
@@ -230,16 +272,21 @@ def generatePatterns():
     
     configf32=Tools.Config(PATTERNDIR,PARAMDIR,"f32")
     configf16=Tools.Config(PATTERNDIR,PARAMDIR,"f16")
-    #configq31=Tools.Config(PATTERNDIR,PARAMDIR,"q31")
-    #configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
+    configq31=Tools.Config(PATTERNDIR,PARAMDIR,"q31")
+    configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
     #configq7=Tools.Config(PATTERNDIR,PARAMDIR,"q7")
 
     configf32.setOverwrite(False)
-
+    configf16.setOverwrite(False)
+    configq31.setOverwrite(False)
+    configq15.setOverwrite(False)
 
    
     writeTests(configf32,0)
     writeTests(configf16,Tools.F16)
+
+    writeTests(configq31,Tools.Q31)
+    writeTests(configq15,Tools.Q15)
    
 if __name__ == '__main__':
   generatePatterns()

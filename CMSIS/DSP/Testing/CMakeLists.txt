@@ -341,6 +341,8 @@ if (TRANSFORM)
   Source/Tests/TransformCQ15.cpp
   Source/Tests/TransformRQ15.cpp
   Source/Tests/MFCCF32.cpp
+  Source/Tests/MFCCQ31.cpp
+  Source/Tests/MFCCQ15.cpp
   Source/Tests/mfccdata.c
   )
 endif()

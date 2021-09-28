@@ -1,4 +1,5 @@
 import numpy as np
+import cmsisdsp.datatype as dt
 
 def frequencyToMelSpace(freq):
     return 1127.0 * np.log(1.0 + freq / 700.0)
@@ -6,7 +7,7 @@ def frequencyToMelSpace(freq):
 def melSpaceToFrequency(mels):
     return 700.0 * (np.exp(mels / 1127.0) - 1.0)
 
-def melFilterMatrix(fmin, fmax, numOfMelFilters,fs,FFTSize):
+def melFilterMatrix(dtype,fmin, fmax, numOfMelFilters,fs,FFTSize):
 
     filters = np.zeros((numOfMelFilters,int(FFTSize/2+1)))
     zeros = np.zeros(int(FFTSize // 2 ))
@@ -49,10 +50,10 @@ def melFilterMatrix(fmin, fmax, numOfMelFilters,fs,FFTSize):
       filtPos.append(startPos)
       packedFilters += list(filters[n, startPos:endPos+1])
 
-    return filtLen,filtPos,totalLen,packedFilters,filters
+    return filtLen,filtPos,dt.convert(packedFilters,dtype)
 
 
-def dctMatrix(numOfDctOutputs, numOfMelFilters):
+def dctMatrix(dtype,numOfDctOutputs, numOfMelFilters):
    
     result = np.zeros((numOfDctOutputs,numOfMelFilters))
     s=(np.linspace(1,numOfMelFilters,numOfMelFilters) - 0.5)/numOfMelFilters
@@ -60,6 +61,6 @@ def dctMatrix(numOfDctOutputs, numOfMelFilters):
     for i in range(0, numOfDctOutputs):
         result[i,:]=np.cos(i * np.pi*s) * np.sqrt(2.0/numOfMelFilters)
         
-    return result.reshape(numOfDctOutputs*numOfMelFilters)
+    return dt.convert(result.reshape(numOfDctOutputs*numOfMelFilters),dtype)
 
 

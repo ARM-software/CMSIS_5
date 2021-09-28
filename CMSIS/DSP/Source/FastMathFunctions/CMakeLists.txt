@@ -59,6 +59,7 @@ target_sources(CMSISDSPFastMath PRIVATE arm_vinverse_f16.c)
 endif()
 
 target_sources(CMSISDSPFastMath PRIVATE arm_divide_q15.c)
+target_sources(CMSISDSPFastMath PRIVATE arm_divide_q31.c)
 
 
 ### Includes

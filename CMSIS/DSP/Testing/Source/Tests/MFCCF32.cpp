@@ -4,7 +4,7 @@
 
 #include "mfccdata.h"
 
-#define SNR_THRESHOLD 120
+#define SNR_THRESHOLD 115
 
 /* 
 
@@ -12,7 +12,7 @@ Reference patterns are generated with
 a double precision computation.
 
 */
-#define REL_ERROR (9.2e-5)
+#define REL_ERROR (1.2e-3)
 
 
 
@@ -50,13 +50,13 @@ a double precision computation.
         {  
             nb = 256;
             this->fftLen = nb;
-            ref.reload(MFCCF32::REF_MFCC_256_F32_ID,mgr,nb);
-            input1.reload(MFCCF32::INPUTS_MFCC_256_F32_ID,mgr,nb);
+            ref.reload(MFCCF32::REF_MFCC_NOISE_256_F32_ID,mgr,nb);
+            input1.reload(MFCCF32::INPUTS_MFCC_NOISE_256_F32_ID,mgr,nb);
             arm_mfcc_init_f32(&mfcc,
-                    nb,20,13,mfcc_dct_coefs_config1,
-                    mfcc_filter_pos_config3,mfcc_filter_len_config3,
-                    mfcc_filter_coefs_config3,
-                    mfcc_window_coefs_config3);
+                    nb,20,13,mfcc_dct_coefs_config1_f32,
+                    mfcc_filter_pos_config3_f32,mfcc_filter_len_config3_f32,
+                    mfcc_filter_coefs_config3_f32,
+                    mfcc_window_coefs_config3_f32);
             tmp.create(2*nb,MFCCF32::TMP_MFCC_F32_ID,mgr);
             tmpin.create(nb,MFCCF32::TMPIN_MFCC_F32_ID,mgr);
           }
@@ -66,13 +66,13 @@ a double precision computation.
           {
             nb = 512;
             this->fftLen = nb;
-            ref.reload(MFCCF32::REF_MFCC_512_F32_ID,mgr,nb);
-            input1.reload(MFCCF32::INPUTS_MFCC_512_F32_ID,mgr,nb);
+            ref.reload(MFCCF32::REF_MFCC_NOISE_512_F32_ID,mgr,nb);
+            input1.reload(MFCCF32::INPUTS_MFCC_NOISE_512_F32_ID,mgr,nb);
             arm_mfcc_init_f32(&mfcc,
-                      nb,20,13,mfcc_dct_coefs_config1,
-                      mfcc_filter_pos_config2,mfcc_filter_len_config2,
-                      mfcc_filter_coefs_config2,
-                      mfcc_window_coefs_config2);
+                      nb,20,13,mfcc_dct_coefs_config1_f32,
+                      mfcc_filter_pos_config2_f32,mfcc_filter_len_config2_f32,
+                      mfcc_filter_coefs_config2_f32,
+                      mfcc_window_coefs_config2_f32);
             tmp.create(2*nb,MFCCF32::TMP_MFCC_F32_ID,mgr);
             tmpin.create(nb,MFCCF32::TMPIN_MFCC_F32_ID,mgr);
           }
@@ -81,13 +81,61 @@ a double precision computation.
           {
             nb = 1024;
             this->fftLen = nb;
-            ref.reload(MFCCF32::REF_MFCC_1024_F32_ID,mgr,nb);
-            input1.reload(MFCCF32::INPUTS_MFCC_1024_F32_ID,mgr,nb);
+            ref.reload(MFCCF32::REF_MFCC_NOISE_1024_F32_ID,mgr,nb);
+            input1.reload(MFCCF32::INPUTS_MFCC_NOISE_1024_F32_ID,mgr,nb);
             arm_mfcc_init_f32(&mfcc,
-                      nb,20,13,mfcc_dct_coefs_config1,
-                      mfcc_filter_pos_config1,mfcc_filter_len_config1,
-                      mfcc_filter_coefs_config1,
-                      mfcc_window_coefs_config1);
+                      nb,20,13,mfcc_dct_coefs_config1_f32,
+                      mfcc_filter_pos_config1_f32,mfcc_filter_len_config1_f32,
+                      mfcc_filter_coefs_config1_f32,
+                      mfcc_window_coefs_config1_f32);
+            tmp.create(2*nb,MFCCF32::TMP_MFCC_F32_ID,mgr);
+            tmpin.create(nb,MFCCF32::TMPIN_MFCC_F32_ID,mgr);
+
+          }
+          break;
+
+        case MFCCF32::TEST_MFCC_F32_4:
+        {  
+            nb = 256;
+            this->fftLen = nb;
+            ref.reload(MFCCF32::REF_MFCC_SINE_256_F32_ID,mgr,nb);
+            input1.reload(MFCCF32::INPUTS_MFCC_SINE_256_F32_ID,mgr,nb);
+            arm_mfcc_init_f32(&mfcc,
+                    nb,20,13,mfcc_dct_coefs_config1_f32,
+                    mfcc_filter_pos_config3_f32,mfcc_filter_len_config3_f32,
+                    mfcc_filter_coefs_config3_f32,
+                    mfcc_window_coefs_config3_f32);
+            tmp.create(2*nb,MFCCF32::TMP_MFCC_F32_ID,mgr);
+            tmpin.create(nb,MFCCF32::TMPIN_MFCC_F32_ID,mgr);
+          }
+          break;
+
+        case MFCCF32::TEST_MFCC_F32_5:
+          {
+            nb = 512;
+            this->fftLen = nb;
+            ref.reload(MFCCF32::REF_MFCC_SINE_512_F32_ID,mgr,nb);
+            input1.reload(MFCCF32::INPUTS_MFCC_SINE_512_F32_ID,mgr,nb);
+            arm_mfcc_init_f32(&mfcc,
+                      nb,20,13,mfcc_dct_coefs_config1_f32,
+                      mfcc_filter_pos_config2_f32,mfcc_filter_len_config2_f32,
+                      mfcc_filter_coefs_config2_f32,
+                      mfcc_window_coefs_config2_f32);
+            tmp.create(2*nb,MFCCF32::TMP_MFCC_F32_ID,mgr);
+            tmpin.create(nb,MFCCF32::TMPIN_MFCC_F32_ID,mgr);
+          }
+          break;
+        case MFCCF32::TEST_MFCC_F32_6:
+          {
+            nb = 1024;
+            this->fftLen = nb;
+            ref.reload(MFCCF32::REF_MFCC_SINE_1024_F32_ID,mgr,nb);
+            input1.reload(MFCCF32::INPUTS_MFCC_SINE_1024_F32_ID,mgr,nb);
+            arm_mfcc_init_f32(&mfcc,
+                      nb,20,13,mfcc_dct_coefs_config1_f32,
+                      mfcc_filter_pos_config1_f32,mfcc_filter_len_config1_f32,
+                      mfcc_filter_coefs_config1_f32,
+                      mfcc_window_coefs_config1_f32);
             tmp.create(2*nb,MFCCF32::TMP_MFCC_F32_ID,mgr);
             tmpin.create(nb,MFCCF32::TMPIN_MFCC_F32_ID,mgr);
 

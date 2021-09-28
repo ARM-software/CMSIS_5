@@ -12,6 +12,7 @@ a double precision computation.
 
 */
 #define ABS_ERROR ((q31_t)2200)
+#define ABS_DIV_ERROR ((q31_t)1)
 
 
 #define LOG_ABS_ERROR ((q31_t)2)
@@ -28,6 +29,29 @@ a double precision computation.
         ASSERT_SNR(ref,output,(float32_t)SNR_THRESHOLD);
         ASSERT_NEAR_EQ(ref,output,LOG_ABS_ERROR);
         ASSERT_EMPTY_TAIL(output);
+
+    }
+
+    void FastMathQ31::test_division_q31()
+    {
+        const q31_t *nump  = numerator.ptr();
+        const q31_t *denp  = denominator.ptr();
+        q31_t *outp  = output.ptr();
+        int16_t *shiftp  = shift.ptr();
+        arm_status status;
+
+      
+        for(unsigned long i=0; i < ref.nbSamples(); i++)
+        {
+
+          status = arm_divide_q31(nump[i],denp[i],&outp[i],&shiftp[i]);
+        }
+
+        (void)status;
+
+        ASSERT_SNR(ref,output,(float32_t)SNR_THRESHOLD);
+        ASSERT_NEAR_EQ(ref,output,ABS_DIV_ERROR);
+        ASSERT_EQ(refShift,shift);
 
     }
 
@@ -114,7 +138,21 @@ a double precision computation.
             }
             break;
 
-            case FastMathQ31::TEST_VLOG_Q31_4:
+            case FastMathQ31::TEST_DIVISION_Q31_4:
+            {
+               numerator.reload(FastMathQ31::NUMERATOR_Q31_ID,mgr);
+               denominator.reload(FastMathQ31::DENOMINATOR_Q31_ID,mgr);
+
+               ref.reload(FastMathQ31::DIVISION_VALUE_Q31_ID,mgr);
+               refShift.reload(FastMathQ31::DIVISION_SHIFT_S16_ID,mgr);
+
+               output.create(ref.nbSamples(),FastMathQ31::OUT_Q31_ID,mgr);
+               shift.create(ref.nbSamples(),FastMathQ31::SHIFT_S16_ID,mgr);
+
+            }
+            break;
+
+            case FastMathQ31::TEST_VLOG_Q31_5:
             {
                input.reload(FastMathQ31::LOGINPUT1_Q31_ID,mgr);
                ref.reload(FastMathQ31::LOG1_Q31_ID,mgr);
@@ -123,7 +161,7 @@ a double precision computation.
             }
             break;
 
-            case FastMathQ31::TEST_VLOG_Q31_5:
+            case FastMathQ31::TEST_VLOG_Q31_6:
             {
                input.reload(FastMathQ31::LOGINPUT1_Q31_ID,mgr,3);
                ref.reload(FastMathQ31::LOG1_Q31_ID,mgr,3);
@@ -132,7 +170,7 @@ a double precision computation.
             }
             break;
 
-            case FastMathQ31::TEST_VLOG_Q31_6:
+            case FastMathQ31::TEST_VLOG_Q31_7:
             {
                input.reload(FastMathQ31::LOGINPUT1_Q31_ID,mgr,8);
                ref.reload(FastMathQ31::LOG1_Q31_ID,mgr,8);
@@ -141,7 +179,7 @@ a double precision computation.
             }
             break;
 
-            case FastMathQ31::TEST_VLOG_Q31_7:
+            case FastMathQ31::TEST_VLOG_Q31_8:
             {
                input.reload(FastMathQ31::LOGINPUT1_Q31_ID,mgr,11);
                ref.reload(FastMathQ31::LOG1_Q31_ID,mgr,11);

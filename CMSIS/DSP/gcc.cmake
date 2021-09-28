@@ -58,6 +58,12 @@ SET(CMAKE_ASM_FLAGS "-march=armv8.1-m.main+mve.fp+fp.dp" CACHE INTERNAL "ASM com
 SET(CMAKE_EXE_LINKER_FLAGS "-fno-use-linker-plugin -march=armv8.1-m.main+mve.fp+fp.dp"  CACHE INTERNAL "linker flags")
 elseif (ARM_CPU STREQUAL "cortex-m55+nomve.fp+nofp")
 # This case is not tested nor supported
+SET(CMAKE_C_FLAGS "-ffunction-sections -fdata-sections -march=armv8.1-m.main+dsp+nofp" CACHE INTERNAL "C compiler common flags")
+SET(CMAKE_CXX_FLAGS "-ffunction-sections -fdata-sections -march=armv8.1-m.main+dsp+nofp" CACHE INTERNAL "C compiler common flags")
+SET(CMAKE_ASM_FLAGS "-march=armv8.1-m.main+dsp+nofp" CACHE INTERNAL "ASM compiler common flags")
+SET(CMAKE_EXE_LINKER_FLAGS "-fno-use-linker-plugin -march=armv8.1-m.main+dsp+nofp"  CACHE INTERNAL "linker flags")
+elseif (ARM_CPU STREQUAL "cortex-m55+nomve.fp+fp.dp")
+# This case is not tested nor supported
 SET(CMAKE_C_FLAGS "-ffunction-sections -fdata-sections -march=armv8.1-m.main+dsp+fp.dp" CACHE INTERNAL "C compiler common flags")
 SET(CMAKE_CXX_FLAGS "-ffunction-sections -fdata-sections -march=armv8.1-m.main+dsp+fp.dp" CACHE INTERNAL "C compiler common flags")
 SET(CMAKE_ASM_FLAGS "-march=armv8.1-m.main+dsp+fp.dp" CACHE INTERNAL "ASM compiler common flags")

@@ -16,14 +16,14 @@
 
       Synchronous Data Flow 
 
-      MFCC F32 and F16
+      MFCC F32, F16, Q31 and Q15
 
       Typecasting functions for converting between f16 and s16 in scalar.
 
       More f64 functions
 
-      Remarks:
-      - Accuracy issues remain with the vlog q31 and q15.
+      arm_cmplx_mag_fast_q15:
+      The original arm_cmplx_mag_q15 is now more accurate but slower.
     </td>
   </tr>
   <tr>

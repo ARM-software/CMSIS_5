@@ -192,7 +192,7 @@ arm_status arm_mfcc_init_f16(
   @return        none
  */
   void arm_mfcc_f16(
-  arm_mfcc_instance_f16 * S,
+  const arm_mfcc_instance_f16 * S,
   float16_t *pSrc,
   float16_t *pDst,
   float16_t *pTmp

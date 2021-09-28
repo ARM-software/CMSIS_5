@@ -161,9 +161,7 @@ missing=set(["arm_abs_f64"
 ,"arm_fir_sparse_q31"
 ,"arm_fir_sparse_q7"
 ,"arm_mat_init_q15"
-,"arm_mat_init_q31"
-,"arm_vsqrt_q15"
-,"arm_vsqrt_q31"])
+,"arm_mat_init_q31"])
 
 def notf16(number):
   if re.search(r'f16',number):

@@ -4,7 +4,7 @@
 
 #include "mfccdata_f16.h"
 
-#define SNR_THRESHOLD 60
+#define SNR_THRESHOLD 45
 
 /* 
 
@@ -12,8 +12,8 @@ Reference patterns are generated with
 a double precision computation.
 
 */
-#define REL_ERROR (4.0e-3)
-#define ABS_ERROR (4.0e-3)
+#define REL_ERROR (2.0e-2)
+#define ABS_ERROR (2.0e-2)
 
 
     void MFCCF16::test_mfcc_f16()
@@ -50,8 +50,8 @@ a double precision computation.
         {  
             nb = 256;
             this->fftLen = nb;
-            ref.reload(MFCCF16::REF_MFCC_256_F16_ID,mgr,nb);
-            input1.reload(MFCCF16::INPUTS_MFCC_256_F16_ID,mgr,nb);
+            ref.reload(MFCCF16::REF_MFCC_NOISE_256_F16_ID,mgr,nb);
+            input1.reload(MFCCF16::INPUTS_MFCC_NOISE_256_F16_ID,mgr,nb);
             arm_mfcc_init_f16(&mfcc,
                     nb,20,13,mfcc_dct_coefs_config1_f16,
                     mfcc_filter_pos_config3_f16,mfcc_filter_len_config3_f16,
@@ -66,8 +66,8 @@ a double precision computation.
           {
             nb = 512;
             this->fftLen = nb;
-            ref.reload(MFCCF16::REF_MFCC_512_F16_ID,mgr,nb);
-            input1.reload(MFCCF16::INPUTS_MFCC_512_F16_ID,mgr,nb);
+            ref.reload(MFCCF16::REF_MFCC_NOISE_512_F16_ID,mgr,nb);
+            input1.reload(MFCCF16::INPUTS_MFCC_NOISE_512_F16_ID,mgr,nb);
             arm_mfcc_init_f16(&mfcc,
                       nb,20,13,mfcc_dct_coefs_config1_f16,
                       mfcc_filter_pos_config2_f16,mfcc_filter_len_config2_f16,
@@ -81,8 +81,56 @@ a double precision computation.
           {
             nb = 1024;
             this->fftLen = nb;
-            ref.reload(MFCCF16::REF_MFCC_1024_F16_ID,mgr,nb);
-            input1.reload(MFCCF16::INPUTS_MFCC_1024_F16_ID,mgr,nb);
+            ref.reload(MFCCF16::REF_MFCC_NOISE_1024_F16_ID,mgr,nb);
+            input1.reload(MFCCF16::INPUTS_MFCC_NOISE_1024_F16_ID,mgr,nb);
+            arm_mfcc_init_f16(&mfcc,
+                      nb,20,13,mfcc_dct_coefs_config1_f16,
+                      mfcc_filter_pos_config1_f16,mfcc_filter_len_config1_f16,
+                      mfcc_filter_coefs_config1_f16,
+                      mfcc_window_coefs_config1_f16);
+            tmp.create(2*nb,MFCCF16::TMP_MFCC_F16_ID,mgr);
+            tmpin.create(nb,MFCCF16::TMPIN_MFCC_F16_ID,mgr);
+
+          }
+          break;
+
+        case MFCCF16::TEST_MFCC_F16_4:
+        {  
+            nb = 256;
+            this->fftLen = nb;
+            ref.reload(MFCCF16::REF_MFCC_SINE_256_F16_ID,mgr,nb);
+            input1.reload(MFCCF16::INPUTS_MFCC_SINE_256_F16_ID,mgr,nb);
+            arm_mfcc_init_f16(&mfcc,
+                    nb,20,13,mfcc_dct_coefs_config1_f16,
+                    mfcc_filter_pos_config3_f16,mfcc_filter_len_config3_f16,
+                    mfcc_filter_coefs_config3_f16,
+                    mfcc_window_coefs_config3_f16);
+            tmp.create(2*nb,MFCCF16::TMP_MFCC_F16_ID,mgr);
+            tmpin.create(nb,MFCCF16::TMPIN_MFCC_F16_ID,mgr);
+          }
+          break;
+
+        case MFCCF16::TEST_MFCC_F16_5:
+          {
+            nb = 512;
+            this->fftLen = nb;
+            ref.reload(MFCCF16::REF_MFCC_SINE_512_F16_ID,mgr,nb);
+            input1.reload(MFCCF16::INPUTS_MFCC_SINE_512_F16_ID,mgr,nb);
+            arm_mfcc_init_f16(&mfcc,
+                      nb,20,13,mfcc_dct_coefs_config1_f16,
+                      mfcc_filter_pos_config2_f16,mfcc_filter_len_config2_f16,
+                      mfcc_filter_coefs_config2_f16,
+                      mfcc_window_coefs_config2_f16);
+            tmp.create(2*nb,MFCCF16::TMP_MFCC_F16_ID,mgr);
+            tmpin.create(nb,MFCCF16::TMPIN_MFCC_F16_ID,mgr);
+          }
+          break;
+        case MFCCF16::TEST_MFCC_F16_6:
+          {
+            nb = 1024;
+            this->fftLen = nb;
+            ref.reload(MFCCF16::REF_MFCC_SINE_1024_F16_ID,mgr,nb);
+            input1.reload(MFCCF16::INPUTS_MFCC_SINE_1024_F16_ID,mgr,nb);
             arm_mfcc_init_f16(&mfcc,
                       nb,20,13,mfcc_dct_coefs_config1_f16,
                       mfcc_filter_pos_config1_f16,mfcc_filter_len_config1_f16,

@@ -4,6 +4,26 @@ import itertools
 import Tools
 import math
 
+import numpy as np
+
+def q31accuracy(x):
+     return(np.round(1.0*x * (1<<31)))
+
+def q15accuracy(x):
+     return(np.round(1.0*x * (1<<15)))
+
+def q7accuracy(x):
+     return(np.round(1.0*x * (1<<7)))
+
+def Q31toF32(x):
+     return(1.0*x / 2**31)
+
+def Q15toF32(x):
+     return(1.0*x / 2**15)
+
+def Q7toF32(x):
+     return(1.0*x / 2**7)
+
 # Those patterns are used for tests and benchmarks.
 # For tests, there is the need to add tests for saturation
 
@@ -20,19 +40,27 @@ def cartesian(*somelists):
 # But if it is, it should return a saturated result.
 def divide(f,r):
     e = 0
+    a,b=r
+
     if f == Tools.Q31:
         e = 1.0 / (1<<31)
+        a = 1.0*q31accuracy(a) / (2**31)
+        b = 1.0*q31accuracy(b) / (2**31)
     if f == Tools.Q15:
         e = 1.0 / (1<<15)
+        a = 1.0*q15accuracy(a) / (2**15)
+        b = 1.0*q15accuracy(b) / (2**15)
     if f == Tools.Q7:
         e = 1.0 / (1<<7)
-    a,b=r
+        a = 1.0*q7accuracy(a) / (2**7)
+        b = 1.0*q7accuracy(b) / (2**7)
+
     if b == 0.0:
         if a >= 0.0:
            return(1.0,0)
         else:
            return(-1.0,0)
-    
+        
     k = 0
     while abs(a) > abs(b):
        a = a / 2.0
@@ -44,6 +72,7 @@ def divide(f,r):
     if abs(a/b) > 1 - e:
        a = a / 2.0
        k = k + 1 
+
     return(a/b,k)
 
 def initLogValues(format):
@@ -102,6 +131,7 @@ def writeTests(config,format):
     samples=cartesian(numerator,denominator)
     numerator=[x[0] for x in samples]
     denominator=[x[1] for x in samples]
+    config.setOverwrite(True)
     result=[divide(format,x) for x in samples]
 
     resultValue=[x[0] for x in result]
@@ -111,19 +141,17 @@ def writeTests(config,format):
     config.writeInput(1, denominator,"Denominator")
     config.writeReference(1, resultValue,"DivisionValue")
     config.writeReferenceS16(1, resultShift,"DivisionShift")
+    config.setOverwrite(False)
 
-    config.setOverwrite(True)
     vals,ref=initLogValues(format)
     config.writeInput(1, vals,"LogInput")
     config.writeReference(1, ref,"Log")
-    config.setOverwrite(False)
 
 
 
 
 
 def writeTestsFloat(config,format):
-    config.setOverwrite(False)
 
     writeTests(config,format)
 
@@ -146,7 +174,6 @@ def writeTestsFloat(config,format):
     v = 1.0 / samples
     config.writeReference(1, v,"Inverse")
 
-    config.setOverwrite(False)
 
 
 
@@ -168,11 +195,11 @@ def generatePatterns():
     configq31.setOverwrite(False)
     configq15.setOverwrite(False)
 
-    writeTestsFloat(configf64,Tools.F64)
-    writeTestsFloat(configf32,0)
-    writeTestsFloat(configf16,16)
+    #writeTestsFloat(configf64,Tools.F64)
+    #writeTestsFloat(configf32,0)
+    #writeTestsFloat(configf16,16)
     writeTests(configq31,31)
-    writeTests(configq15,15)
+    #writeTests(configq15,15)
 
 
 if __name__ == '__main__':

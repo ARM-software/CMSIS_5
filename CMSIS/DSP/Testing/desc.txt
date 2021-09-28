@@ -1627,6 +1627,12 @@ group Root {
                 Test long    arm_cmplx_mag_squared_q15:test_cmplx_mag_squared_q15
                 Test long    arm_cmplx_mult_cmplx_q15:test_cmplx_mult_cmplx_q15
                 Test long    arm_cmplx_mult_real_q15:test_cmplx_mult_real_q15
+
+                Test nb=3    arm_cmplx_mag_fast_q15:test_cmplx_mag_fast_q15
+                Test nb=4n   arm_cmplx_mag_fast_q15:test_cmplx_mag_fast_q15
+                Test nb=4n+1 arm_cmplx_mag_fast_q15:test_cmplx_mag_fast_q15
+                Test long    arm_cmplx_mag_fast_q15:test_cmplx_mag_fast_q15
+
               }
 
            }
@@ -1712,14 +1718,22 @@ group Root {
               Pattern SIN1_Q31_ID : Sin1_q31.txt 
               Pattern SQRT1_Q31_ID : Sqrt1_q31.txt 
               Pattern LOG1_Q31_ID : Log1_q31.txt 
+
+              Pattern NUMERATOR_Q31_ID : Numerator1_q31.txt
+              Pattern DENOMINATOR_Q31_ID : Denominator1_q31.txt
+
+              Pattern DIVISION_VALUE_Q31_ID : DivisionValue1_q31.txt
+              Pattern DIVISION_SHIFT_S16_ID : DivisionShift1_s16.txt
               
 
               Output  OUT_Q31_ID : Output
+              Output  SHIFT_S16_ID : Output
 
               Functions {
                 test_cos_q31:test_cos_q31
                 test_sin_q31:test_sin_q31
                 test_sqrt_q31:test_sqrt_q31
+                test_division_q31:test_division_q31
                 test_vlog_q31:test_vlog_q31
                 test_vlog_q31 nb=3:test_vlog_q31
                 test_vlog_q31 nb=4n:test_vlog_q31
@@ -3515,14 +3529,24 @@ group Root {
               class = MFCCF32
               folder = MFCCF32
 
-              Pattern INPUTS_MFCC_256_F32_ID : MFCCInput_256_1_f32.txt 
-              Pattern REF_MFCC_256_F32_ID : MFCCRef_256_1_f32.txt 
+              Pattern INPUTS_MFCC_NOISE_256_F32_ID : MFCCNoiseInput_256_1_f32.txt 
+              Pattern REF_MFCC_NOISE_256_F32_ID : MFCCNoiseRef_256_1_f32.txt 
 
-              Pattern INPUTS_MFCC_512_F32_ID : MFCCInput_512_1_f32.txt 
-              Pattern REF_MFCC_512_F32_ID : MFCCRef_512_1_f32.txt 
+              Pattern INPUTS_MFCC_NOISE_512_F32_ID : MFCCNoiseInput_512_1_f32.txt 
+              Pattern REF_MFCC_NOISE_512_F32_ID : MFCCNoiseRef_512_1_f32.txt 
 
-              Pattern INPUTS_MFCC_1024_F32_ID : MFCCInput_1024_1_f32.txt 
-              Pattern REF_MFCC_1024_F32_ID : MFCCRef_1024_1_f32.txt 
+              Pattern INPUTS_MFCC_NOISE_1024_F32_ID : MFCCNoiseInput_1024_1_f32.txt 
+              Pattern REF_MFCC_NOISE_1024_F32_ID : MFCCNoiseRef_1024_1_f32.txt 
+
+              Pattern INPUTS_MFCC_SINE_256_F32_ID : MFCCSineInput_256_1_f32.txt 
+              Pattern REF_MFCC_SINE_256_F32_ID : MFCCSineRef_256_1_f32.txt 
+
+              Pattern INPUTS_MFCC_SINE_512_F32_ID : MFCCSineInput_512_1_f32.txt 
+              Pattern REF_MFCC_SINE_512_F32_ID : MFCCSineRef_512_1_f32.txt 
+
+              Pattern INPUTS_MFCC_SINE_1024_F32_ID : MFCCSineInput_1024_1_f32.txt 
+              Pattern REF_MFCC_SINE_1024_F32_ID : MFCCSineRef_1024_1_f32.txt 
+
 
               
               Output  OUTPUT_MFCC_F32_ID : MFCCOutputs
@@ -3530,9 +3554,88 @@ group Root {
               Output  TMPIN_MFCC_F32_ID : MFCCTmpIn
 
               Functions {
-                 mfcc_256_f32:test_mfcc_f32
-                 mfcc_512_f32:test_mfcc_f32
-                 mfcc_1024_f32:test_mfcc_f32
+                 mfcc_noise_256_f32:test_mfcc_f32
+                 mfcc_noise_512_f32:test_mfcc_f32
+                 mfcc_noise_1024_f32:test_mfcc_f32
+                 mfcc_sine_256_f32:test_mfcc_f32
+                 mfcc_sine_512_f32:test_mfcc_f32
+                 mfcc_sine_1024_f32:test_mfcc_f32
+              }
+
+            }
+
+           suite MFCC Q31 {
+              class = MFCCQ31
+              folder = MFCCQ31
+
+              Pattern INPUTS_MFCC_NOISE_256_Q31_ID : MFCCNoiseInput_256_1_q31.txt 
+              Pattern REF_MFCC_NOISE_256_Q31_ID : MFCCNoiseRef_256_1_q31.txt 
+
+              Pattern INPUTS_MFCC_NOISE_512_Q31_ID : MFCCNoiseInput_512_1_q31.txt 
+              Pattern REF_MFCC_NOISE_512_Q31_ID : MFCCNoiseRef_512_1_q31.txt 
+
+              Pattern INPUTS_MFCC_NOISE_1024_Q31_ID : MFCCNoiseInput_1024_1_q31.txt 
+              Pattern REF_MFCC_NOISE_1024_Q31_ID : MFCCNoiseRef_1024_1_q31.txt 
+
+              Pattern INPUTS_MFCC_SINE_256_Q31_ID : MFCCSineInput_256_1_q31.txt 
+              Pattern REF_MFCC_SINE_256_Q31_ID : MFCCSineRef_256_1_q31.txt 
+
+              Pattern INPUTS_MFCC_SINE_512_Q31_ID : MFCCSineInput_512_1_q31.txt 
+              Pattern REF_MFCC_SINE_512_Q31_ID : MFCCSineRef_512_1_q31.txt 
+
+              Pattern INPUTS_MFCC_SINE_1024_Q31_ID : MFCCSineInput_1024_1_q31.txt 
+              Pattern REF_MFCC_SINE_1024_Q31_ID : MFCCSineRef_1024_1_q31.txt 
+
+              
+              Output  OUTPUT_MFCC_Q31_ID : MFCCOutputs
+              Output  TMP_MFCC_Q31_ID : MFCCTmp
+              Output  TMPIN_MFCC_Q31_ID : MFCCTmpIn
+
+              Functions {
+                 mfcc_noise_256_q31:test_mfcc_q31
+                 mfcc_noise_512_q31:test_mfcc_q31
+                 mfcc_noise_1024_q31:test_mfcc_q31
+                 mfcc_sine_256_q31:test_mfcc_q31
+                 mfcc_sine_512_q31:test_mfcc_q31
+                 mfcc_sine_1024_q31:test_mfcc_q31
+              }
+
+            }
+
+           suite MFCC Q15 {
+              class = MFCCQ15
+              folder = MFCCQ15
+
+              Pattern INPUTS_MFCC_NOISE_256_Q15_ID : MFCCNoiseInput_256_1_q15.txt 
+              Pattern REF_MFCC_NOISE_256_Q15_ID : MFCCNoiseRef_256_1_q15.txt 
+
+              Pattern INPUTS_MFCC_NOISE_512_Q15_ID : MFCCNoiseInput_512_1_q15.txt 
+              Pattern REF_MFCC_NOISE_512_Q15_ID : MFCCNoiseRef_512_1_q15.txt 
+
+              Pattern INPUTS_MFCC_NOISE_1024_Q15_ID : MFCCNoiseInput_1024_1_q15.txt 
+              Pattern REF_MFCC_NOISE_1024_Q15_ID : MFCCNoiseRef_1024_1_q15.txt 
+
+              Pattern INPUTS_MFCC_SINE_256_Q15_ID : MFCCSineInput_256_1_q15.txt 
+              Pattern REF_MFCC_SINE_256_Q15_ID : MFCCSineRef_256_1_q15.txt 
+
+              Pattern INPUTS_MFCC_SINE_512_Q15_ID : MFCCSineInput_512_1_q15.txt 
+              Pattern REF_MFCC_SINE_512_Q15_ID : MFCCSineRef_512_1_q15.txt 
+
+              Pattern INPUTS_MFCC_SINE_1024_Q15_ID : MFCCSineInput_1024_1_q15.txt 
+              Pattern REF_MFCC_SINE_1024_Q15_ID : MFCCSineRef_1024_1_q15.txt 
+
+              
+              Output  OUTPUT_MFCC_Q15_ID : MFCCOutputs
+              Output  TMP_MFCC_Q15_ID : MFCCTmp
+              Output  TMPIN_MFCC_Q15_ID : MFCCTmpIn
+
+              Functions {
+                 mfcc_noise_256_q15:test_mfcc_q15
+                 mfcc_noise_512_q15:test_mfcc_q15
+                 mfcc_noise_1024_q15:test_mfcc_q15
+                 mfcc_sine_256_q15:test_mfcc_q15
+                 mfcc_sine_512_q15:test_mfcc_q15
+                 mfcc_sine_1024_q15:test_mfcc_q15
               }
 
             }

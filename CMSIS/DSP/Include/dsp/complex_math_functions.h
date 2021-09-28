@@ -179,6 +179,17 @@ extern "C"
         q15_t * pDst,
         uint32_t numSamples);
 
+  /**
+   * @brief  Q15 complex magnitude
+   * @param[in]  pSrc        points to the complex input vector
+   * @param[out] pDst        points to the real output vector
+   * @param[in]  numSamples  number of complex samples in the input vector
+   */
+  void arm_cmplx_mag_fast_q15(
+  const q15_t * pSrc,
+        q15_t * pDst,
+        uint32_t numSamples);
+
 
   /**
    * @brief  Q15 complex dot product
