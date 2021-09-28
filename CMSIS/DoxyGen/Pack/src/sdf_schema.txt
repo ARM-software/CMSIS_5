@@ -331,6 +331,8 @@ that are child elements of another device or DAP):
 |------------------------|-------------|-----|
 | CORESIGHT_BASE_ADDRESS | the 4K aligned base address of a CoreSight device | Required |
 | CORESIGHT_AP_INDEX     | the access port index of the device | Required |
+| CORESIGHT_AP_ADDRESS   | the memory-mapped access port address of the device | Required for ADIv6 APv2 devices, otherwise ignored |
+| PARENT_AP_INDEX        | the parent access port index of this access port | Required for ADIv6 APv2 devices if accessed via a parent access port, otherwise ignored |
 
 Trace element
 -----------
@@ -851,13 +853,13 @@ Depending on the context, a device type can be one of the following types:
    be a vendor-specific core type, or an older JTAG ARM core. Current cores are: \n
    "Cortex-A5", "Cortex-A7", "Cortex-A8", "Cortex-A9", "Cortex-A12", "Cortex-A15", "Cortex-A17", "Cortex-A32", "Cortex-A35",
    "Cortex-A53", "Cortex-A57", "Cortex-A72", "Cortex-A73", "Cortex-M0", "Cortex-M0+", "Cortex-M0+_JTAG-AP", "Cortex-M1",
-   "Cortex-M23", "Cortex-M3", "Cortex-M33", "Cortex-M35P", "Cortex-M3_JTAG-AP", "Cortex-M4", "Cortex-M7", "Cortex-R4", "Cortex-R5",
-   "Cortex-R7", "Cortex-R8", "Cortex-R52", "SC000", "SC100D", "SC200D", "SC300", "ThunderX", "ThunderX-r2", "ARMV8MBL",
-   "ARMV8MML", "88FR101", "88FR111", "88FR331", "88SV581x-v7_PJ4", "88SV581x-v7_PJ4_TZ", "ARM1136JF-S",
-   "ARM1136JF-S_JTAG-AP", "ARM1156T2F-S", "ARM1156T2F-S_JTAG-AP", "ARM1176JZF-S", "ARM1176JZF-S_JTAG-AP", "ARM11MPCore",
-   "ARM11MPCore_JTAG-AP", "ARM710T", "ARM720T", "ARM720T_r4", "ARM740T", "ARM7EJ-S", "ARM7EJ-S_JTAG-AP", "ARM7TDMI",
-   "ARM7TDMI_JTAG-AP", "ARM7TDMI_r4", "ARM7TDMI_r4_JTAG-AP", "ARM920T", "ARM922T", "ARM925T", "ARM926EJ-S",
-   "ARM926EJ-S_JTAG-AP", "ARM940T", "ARM946E-S", "ARM946E-S_JTAG-AP", "ARM966E-S", "ARM966E-S_JTAG-AP", "ARM968E-S",
+   "Cortex-M3", "Cortex-M3_JTAG-AP", "Cortex-M4", "Cortex-M7", "Cortex-M23", "Cortex-M33", "Cortex-M35P", "Cortex-M55",
+   "Cortex-R4", "Cortex-R5", "Cortex-R7", "Cortex-R8", "Cortex-R52", "SC000", "SC100D", "SC200D", "SC300",
+   "ThunderX", "ThunderX-r2", "ARMV8MBL", "ARMV8MML", "ARMV81MML", "88FR101", "88FR111", "88FR331", "88SV581x-v7_PJ4",
+   "88SV581x-v7_PJ4_TZ", "ARM1136JF-S", "ARM1136JF-S_JTAG-AP", "ARM1156T2F-S", "ARM1156T2F-S_JTAG-AP", "ARM1176JZF-S",
+   "ARM1176JZF-S_JTAG-AP", "ARM11MPCore", "ARM11MPCore_JTAG-AP", "ARM710T", "ARM720T", "ARM720T_r4", "ARM740T", "ARM7EJ-S",
+   "ARM7EJ-S_JTAG-AP", "ARM7TDMI", "ARM7TDMI_JTAG-AP", "ARM7TDMI_r4", "ARM7TDMI_r4_JTAG-AP", "ARM920T", "ARM922T", "ARM925T",
+   "ARM926EJ-S", "ARM926EJ-S_JTAG-AP", "ARM940T", "ARM946E-S", "ARM946E-S_JTAG-AP", "ARM966E-S", "ARM966E-S_JTAG-AP", "ARM968E-S",
    "ARM968E-S_JTAG-AP", "ARM968E-Srd", "ARM996HS", "ARM9E-S", "ARM9EJ-S", "ARM9EJ-S_JTAG-AP", "ARM9TDMI", "V7A-Generic",
    "V8-Generic", "V8M-Generic", "V8R-Generic", "V8_1-Generic", "V8_2-Generic".
 -# An Access Port (AP) type such as "CSAUTHAP", "CSJTAGAP" or "CSMEMAP".
@@ -987,8 +989,9 @@ The following device information items are applicable for each type of "device":
 
 | Device     | Device Information Item           | Description |
 |------------|-----------------------------------|-------------|
-| \b CSMEMAP | AP_TYPE                           | Access port type is one of AHB-AP, APB-AP-M, APB-AP and AXI-AP |
+| \b CSMEMAP | AP_TYPE                           | Access port type is one of AHB-AP, APB-AP-M, APB-AP, APB4-AP and AXI-AP |
 |            | ROM_TABLE_BASE_ADDRESS            | The ROM table base address (in hex) |
+|            | AP_VERSION                        | AP architecture version is one of APv1 and APv2 (Default Value: APv1) |
 | \b CSETM   | VERSION                           | The ETM Version (e.g. 4.0 - required) |
 |            | SUPPORTS_CONTEXT_IDS              | Supports Context ID Tracing (True/False - Default Value:False) |
 |            | SUPPORTS_VIRTUAL_CONTEXT_IDS      | Supports Virtual Context ID Tracing (True/False - Default Value:False) |
