@@ -360,6 +360,10 @@ SDF top level structure</h1>
 <td>CORESIGHT_BASE_ADDRESS </td><td>the 4K aligned base address of a CoreSight device </td><td>Required </td></tr>
 <tr>
 <td>CORESIGHT_AP_INDEX </td><td>the access port index of the device </td><td>Required </td></tr>
+<tr>
+<td>CORESIGHT_AP_ADDRESS </td><td>the memory-mapped access port address of the device </td><td>Required for ADIv6 APv2 devices, otherwise ignored </td></tr>
+<tr>
+<td>PARENT_AP_INDEX </td><td>the parent access port index of this access port </td><td>Required for ADIv6 APv2 devices if accessed via a parent access port, otherwise ignored </td></tr>
 </table>
 <h2>Trace element </h2>
 <p>The <b>config_items</b> applicable to the <a class="el" href="sdf_pg.html#sdf_element_trace">trace</a> element are the following:</p>
@@ -712,7 +716,7 @@ SDF top level structure</h1>
 <p>Depending on the context, a device type can be one of the following types:</p>
 <ol type="1">
 <li>A core device, where the type is usually specified as "Cortex-xx" (such as Cortex-A72,Cortex-M0+, Cortex-R5). It can also be a vendor-specific core type, or an older JTAG ARM core. Current cores are: <br/>
- "Cortex-A5", "Cortex-A7", "Cortex-A8", "Cortex-A9", "Cortex-A12", "Cortex-A15", "Cortex-A17", "Cortex-A32", "Cortex-A35", "Cortex-A53", "Cortex-A57", "Cortex-A72", "Cortex-A73", "Cortex-M0", "Cortex-M0+", "Cortex-M0+_JTAG-AP", "Cortex-M1", "Cortex-M23", "Cortex-M3", "Cortex-M33", "Cortex-M35P", "Cortex-M3_JTAG-AP", "Cortex-M4", "Cortex-M7", "Cortex-R4", "Cortex-R5", "Cortex-R7", "Cortex-R8", "Cortex-R52", "SC000", "SC100D", "SC200D", "SC300", "ThunderX", "ThunderX-r2", "ARMV8MBL", "ARMV8MML", "88FR101", "88FR111", "88FR331", "88SV581x-v7_PJ4", "88SV581x-v7_PJ4_TZ", "ARM1136JF-S", "ARM1136JF-S_JTAG-AP", "ARM1156T2F-S", "ARM1156T2F-S_JTAG-AP", "ARM1176JZF-S", "ARM1176JZF-S_JTAG-AP", "ARM11MPCore", "ARM11MPCore_JTAG-AP", "ARM710T", "ARM720T", "ARM720T_r4", "ARM740T", "ARM7EJ-S", "ARM7EJ-S_JTAG-AP", "ARM7TDMI", "ARM7TDMI_JTAG-AP", "ARM7TDMI_r4", "ARM7TDMI_r4_JTAG-AP", "ARM920T", "ARM922T", "ARM925T", "ARM926EJ-S", "ARM926EJ-S_JTAG-AP", "ARM940T", "ARM946E-S", "ARM946E-S_JTAG-AP", "ARM966E-S", "ARM966E-S_JTAG-AP", "ARM968E-S", "ARM968E-S_JTAG-AP", "ARM968E-Srd", "ARM996HS", "ARM9E-S", "ARM9EJ-S", "ARM9EJ-S_JTAG-AP", "ARM9TDMI", "V7A-Generic", "V8-Generic", "V8M-Generic", "V8R-Generic", "V8_1-Generic", "V8_2-Generic".</li>
+ "Cortex-A5", "Cortex-A7", "Cortex-A8", "Cortex-A9", "Cortex-A12", "Cortex-A15", "Cortex-A17", "Cortex-A32", "Cortex-A35", "Cortex-A53", "Cortex-A57", "Cortex-A72", "Cortex-A73", "Cortex-M0", "Cortex-M0+", "Cortex-M0+_JTAG-AP", "Cortex-M1", "Cortex-M3", "Cortex-M3_JTAG-AP", "Cortex-M4", "Cortex-M7", "Cortex-M23", "Cortex-M33", "Cortex-M35P", "Cortex-M55", "Cortex-R4", "Cortex-R5", "Cortex-R7", "Cortex-R8", "Cortex-R52", "SC000", "SC100D", "SC200D", "SC300", "ThunderX", "ThunderX-r2", "ARMV8MBL", "ARMV8MML", "ARMV81MML", "88FR101", "88FR111", "88FR331", "88SV581x-v7_PJ4", "88SV581x-v7_PJ4_TZ", "ARM1136JF-S", "ARM1136JF-S_JTAG-AP", "ARM1156T2F-S", "ARM1156T2F-S_JTAG-AP", "ARM1176JZF-S", "ARM1176JZF-S_JTAG-AP", "ARM11MPCore", "ARM11MPCore_JTAG-AP", "ARM710T", "ARM720T", "ARM720T_r4", "ARM740T", "ARM7EJ-S", "ARM7EJ-S_JTAG-AP", "ARM7TDMI", "ARM7TDMI_JTAG-AP", "ARM7TDMI_r4", "ARM7TDMI_r4_JTAG-AP", "ARM920T", "ARM922T", "ARM925T", "ARM926EJ-S", "ARM926EJ-S_JTAG-AP", "ARM940T", "ARM946E-S", "ARM946E-S_JTAG-AP", "ARM966E-S", "ARM966E-S_JTAG-AP", "ARM968E-S", "ARM968E-S_JTAG-AP", "ARM968E-Srd", "ARM996HS", "ARM9E-S", "ARM9EJ-S", "ARM9EJ-S_JTAG-AP", "ARM9TDMI", "V7A-Generic", "V8-Generic", "V8M-Generic", "V8R-Generic", "V8_1-Generic", "V8_2-Generic".</li>
 <li>An Access Port (AP) type such as "CSAUTHAP", "CSJTAGAP" or "CSMEMAP".</li>
 <li>A CoreSight device type that can be one of "CSCTI", "CSETM", "CSITM", "CSMTB", "CSPMU", "CSPTM", "CSTFunnel", "CSTMC", "CSTPIU","CSSTM", "CSSWO", "CSELA", "CSATBReplicator", "CSGPR", "CSETB", "CSDWT", "CSETB", "CSTSGEN", "CSHTM", "CSFPB"</li>
 <li>A JTAG device, which is directly on the scanchain (e.g. ARM11).</li>
@@ -788,9 +792,11 @@ SDF top level structure</h1>
 <tr>
 <th>Device </th><th>Device Information Item </th><th>Description  </th></tr>
 <tr>
-<td><b>CSMEMAP</b> </td><td>AP_TYPE </td><td>Access port type is one of AHB-AP, APB-AP-M, APB-AP and AXI-AP </td></tr>
+<td><b>CSMEMAP</b> </td><td>AP_TYPE </td><td>Access port type is one of AHB-AP, APB-AP-M, APB-AP, APB4-AP and AXI-AP </td></tr>
 <tr>
 <td></td><td>ROM_TABLE_BASE_ADDRESS </td><td>The ROM table base address (in hex) </td></tr>
+<tr>
+<td></td><td>AP_VERSION </td><td>AP architecture version is one of APv1 and APv2 (Default Value: APv1) </td></tr>
 <tr>
 <td><b>CSETM</b> </td><td>VERSION </td><td>The ETM Version (e.g. 4.0 - required) </td></tr>
 <tr>
