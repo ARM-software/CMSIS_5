@@ -120,6 +120,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga3d5bc8179cdfb12288d58d99d635e4cb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__math__types_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6">arm_status</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__divide.html#ga3d5bc8179cdfb12288d58d99d635e4cb">arm_divide_q15</a> (<a class="el" href="arm__math__types_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> numerator, <a class="el" href="arm__math__types_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> denominator, <a class="el" href="arm__math__types_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *quotient, int16_t *shift)</td></tr>
 <tr class="memdesc:ga3d5bc8179cdfb12288d58d99d635e4cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fixed point division.  <a href="#ga3d5bc8179cdfb12288d58d99d635e4cb">More...</a><br/></td></tr>
 <tr class="separator:ga3d5bc8179cdfb12288d58d99d635e4cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga250c0a49bd2e42282f3296d51138a5cb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__math__types_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6">arm_status</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__divide.html#ga250c0a49bd2e42282f3296d51138a5cb">arm_divide_q31</a> (<a class="el" href="arm__math__types_8h.html#adc89a3547f5324b7b3b95adec3806bc0">q31_t</a> numerator, <a class="el" href="arm__math__types_8h.html#adc89a3547f5324b7b3b95adec3806bc0">q31_t</a> denominator, <a class="el" href="arm__math__types_8h.html#adc89a3547f5324b7b3b95adec3806bc0">q31_t</a> *quotient, int16_t *shift)</td></tr>
+<tr class="memdesc:ga250c0a49bd2e42282f3296d51138a5cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fixed point division.  <a href="#ga250c0a49bd2e42282f3296d51138a5cb">More...</a><br/></td></tr>
+<tr class="separator:ga250c0a49bd2e42282f3296d51138a5cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <h2 class="groupheader">Function Documentation</h2>
@@ -143,6 +146,55 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="arm__math__types_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *&#160;</td>
+          <td class="paramname"><em>quotient</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int16_t *&#160;</td>
+          <td class="paramname"><em>shift</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">numerator</td><td>Numerator </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">denominator</td><td>Denominator </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">quotient</td><td>Quotient value normalized between -1.0 and 1.0 </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">shift</td><td>Shift left value to get the unnormalized quotient </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>error status</dd></dl>
+<p>When dividing by 0, an error ARM_MATH_NANINF is returned. And the quotient is forced to the saturated negative or positive value. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga250c0a49bd2e42282f3296d51138a5cb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="arm__math__types_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6">arm_status</a> arm_divide_q31 </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="arm__math__types_8h.html#adc89a3547f5324b7b3b95adec3806bc0">q31_t</a>&#160;</td>
+          <td class="paramname"><em>numerator</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="arm__math__types_8h.html#adc89a3547f5324b7b3b95adec3806bc0">q31_t</a>&#160;</td>
+          <td class="paramname"><em>denominator</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="arm__math__types_8h.html#adc89a3547f5324b7b3b95adec3806bc0">q31_t</a> *&#160;</td>
           <td class="paramname"><em>quotient</em>, </td>
         </tr>
         <tr>

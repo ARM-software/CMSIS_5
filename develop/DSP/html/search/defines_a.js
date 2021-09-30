@@ -1,6 +1,8 @@
 var searchData=
 [
   ['max_5fblocksize',['MAX_BLOCKSIZE',['../arm__convolution__example__f32_8c.html#af8a1d2ed31f7c9a00fec46a798edb61b',1,'MAX_BLOCKSIZE():&#160;arm_convolution_example_f32.c'],['../arm__dotproduct__example__f32_8c.html#af8a1d2ed31f7c9a00fec46a798edb61b',1,'MAX_BLOCKSIZE():&#160;arm_dotproduct_example_f32.c'],['../arm__sin__cos__example__f32_8c.html#af8a1d2ed31f7c9a00fec46a798edb61b',1,'MAX_BLOCKSIZE():&#160;arm_sin_cos_example_f32.c'],['../arm__variance__example__f32_8c.html#af8a1d2ed31f7c9a00fec46a798edb61b',1,'MAX_BLOCKSIZE():&#160;arm_variance_example_f32.c']]],
+  ['micro_5fq15',['MICRO_Q15',['../arm__mfcc__q15_8c.html#ab6ba741f32f368445cbd1e1b2caf1518',1,'arm_mfcc_q15.c']]],
+  ['micro_5fq31',['MICRO_Q31',['../arm__mfcc__q31_8c.html#a6ad4ed99d48aab17f1d5d0f5e68f7e50',1,'arm_mfcc_q31.c']]],
   ['mu',['MU',['../arm__signal__converge__example__f32_8c.html#a09bc9e6a44f0291cfcf578f2efcddfab',1,'arm_signal_converge_example_f32.c']]],
   ['mult_5f32x32_5fkeep32',['mult_32x32_keep32',['../none_8h.html#abb4baa0192bbb6fabc9251af4b4cb322',1,'none.h']]],
   ['mult_5f32x32_5fkeep32_5fr',['mult_32x32_keep32_R',['../none_8h.html#a960f210642058d2b3d5368729a6e8375',1,'none.h']]],

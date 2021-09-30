@@ -75,6 +75,8 @@ var annotated =
     [ "arm_merge_sort_instance_f32", "structarm__merge__sort__instance__f32.html", "structarm__merge__sort__instance__f32" ],
     [ "arm_mfcc_instance_f16", "structarm__mfcc__instance__f16.html", "structarm__mfcc__instance__f16" ],
     [ "arm_mfcc_instance_f32", "structarm__mfcc__instance__f32.html", "structarm__mfcc__instance__f32" ],
+    [ "arm_mfcc_instance_q15", "structarm__mfcc__instance__q15.html", "structarm__mfcc__instance__q15" ],
+    [ "arm_mfcc_instance_q31", "structarm__mfcc__instance__q31.html", "structarm__mfcc__instance__q31" ],
     [ "arm_pid_instance_f32", "structarm__pid__instance__f32.html", "structarm__pid__instance__f32" ],
     [ "arm_pid_instance_q15", "structarm__pid__instance__q15.html", "structarm__pid__instance__q15" ],
     [ "arm_pid_instance_q31", "structarm__pid__instance__q31.html", "structarm__pid__instance__q31" ],

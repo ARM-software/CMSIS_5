@@ -12,6 +12,8 @@ var searchData=
   ['lmsnorm_5finstance',['lmsNorm_instance',['../arm__signal__converge__example__f32_8c.html#a519f9b4db839245f3bf2075ff4c17605',1,'arm_signal_converge_example_f32.c']]],
   ['lmsnormcoeff_5ff32',['lmsNormCoeff_f32',['../arm__signal__converge__data_8c.html#aad7c60c30c5af397bb75e603f250f9d3',1,'lmsNormCoeff_f32():&#160;arm_signal_converge_data.c'],['../arm__signal__converge__example__f32_8c.html#aad7c60c30c5af397bb75e603f250f9d3',1,'lmsNormCoeff_f32():&#160;arm_signal_converge_data.c']]],
   ['lmsstatef32',['lmsStateF32',['../arm__signal__converge__example__f32_8c.html#a706980f6f654d199c61e08e7814bd0a1',1,'arm_signal_converge_example_f32.c']]],
+  ['log2tolog_5fq15',['LOG2TOLOG_Q15',['../arm__mfcc__q15_8c.html#a0df3b4c07d7097d42be304aa16f294e0',1,'arm_mfcc_q15.c']]],
+  ['log2tolog_5fq31',['LOG2TOLOG_Q31',['../arm__mfcc__q31_8c.html#a528cc4ec4bb5c03060972c439690f648',1,'arm_mfcc_q31.c']]],
   ['log_5fq15_5faccuracy',['LOG_Q15_ACCURACY',['../arm__vlog__q15_8c.html#a5e612f413a9b2018360d71193ef5aea8',1,'arm_vlog_q15.c']]],
   ['log_5fq15_5finteger_5fpart',['LOG_Q15_INTEGER_PART',['../arm__vlog__q15_8c.html#a41f00f32df20acf2fa74adef37f522f0',1,'arm_vlog_q15.c']]],
   ['log_5fq15_5finvlog2exp',['LOG_Q15_INVLOG2EXP',['../arm__vlog__q15_8c.html#ad39f1455e940583cfff05f93b2613cb3',1,'arm_vlog_q15.c']]],

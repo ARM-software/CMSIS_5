@@ -129,10 +129,6 @@ Functions</h2></td></tr>
 <tr class="memitem:gaa9b8a2bea8a22489bfd968eb4687a7bd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SQRT.html#gaa9b8a2bea8a22489bfd968eb4687a7bd">arm_vsqrt_f32</a> (<a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *pIn, <a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *pOut, uint16_t len)</td></tr>
 <tr class="memdesc:gaa9b8a2bea8a22489bfd968eb4687a7bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vector Floating-point square root function.  <a href="#gaa9b8a2bea8a22489bfd968eb4687a7bd">More...</a><br/></td></tr>
 <tr class="separator:gaa9b8a2bea8a22489bfd968eb4687a7bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5955b76f2a60c1636ff507182000193d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SQRT.html#ga5955b76f2a60c1636ff507182000193d">arm_vsqrt_q31</a> (<a class="el" href="arm__math__types_8h.html#adc89a3547f5324b7b3b95adec3806bc0">q31_t</a> *pIn, <a class="el" href="arm__math__types_8h.html#adc89a3547f5324b7b3b95adec3806bc0">q31_t</a> *pOut, uint16_t len)</td></tr>
-<tr class="separator:ga5955b76f2a60c1636ff507182000193d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga793f913a2b3a8f45577db36136954cdc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SQRT.html#ga793f913a2b3a8f45577db36136954cdc">arm_vsqrt_q15</a> (<a class="el" href="arm__math__types_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *pIn, <a class="el" href="arm__math__types_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *pOut, uint16_t len)</td></tr>
-<tr class="separator:ga793f913a2b3a8f45577db36136954cdc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga534098da4bd86e2a5abed863d0dbd8ea"><td class="memItemLeft" align="right" valign="top">__STATIC_FORCEINLINE <a class="el" href="arm__math__types_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6">arm_status</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SQRT.html#ga534098da4bd86e2a5abed863d0dbd8ea">arm_sqrt_f16</a> (float16_t in, float16_t *pOut)</td></tr>
 <tr class="memdesc:ga534098da4bd86e2a5abed863d0dbd8ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Floating-point square root function.  <a href="#ga534098da4bd86e2a5abed863d0dbd8ea">More...</a><br/></td></tr>
 <tr class="separator:ga534098da4bd86e2a5abed863d0dbd8ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -336,70 +332,6 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The function returns ARM_MATH_SUCCESS if input value is positive value or ARM_MATH_ARGUMENT_ERROR if <code>in</code> is negative value and returns zero output for negative values. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga793f913a2b3a8f45577db36136954cdc"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void arm_vsqrt_q15 </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="arm__math__types_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *&#160;</td>
-          <td class="paramname"><em>pIn</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="arm__math__types_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *&#160;</td>
-          <td class="paramname"><em>pOut</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>len</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="ga5955b76f2a60c1636ff507182000193d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void arm_vsqrt_q31 </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="arm__math__types_8h.html#adc89a3547f5324b7b3b95adec3806bc0">q31_t</a> *&#160;</td>
-          <td class="paramname"><em>pIn</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="arm__math__types_8h.html#adc89a3547f5324b7b3b95adec3806bc0">q31_t</a> *&#160;</td>
-          <td class="paramname"><em>pOut</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>len</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
 
 </div>
 </div>
