@@ -98,6 +98,10 @@ extern "C"
 
 #if !defined(ARM_MATH_AUTOVECTORIZE)
 
+#if !defined(__ARM_FEATURE_MVE)
+#define __ARM_FEATURE_MVE 0
+#endif
+
 #if __ARM_FEATURE_MVE
   #if !defined(ARM_MATH_MVEI)
     #define ARM_MATH_MVEI
@@ -157,6 +161,12 @@ extern "C"
   #define IAR_ONLY_LOW_OPTIMIZATION_EXIT
 
 #elif defined (__ARMCC_VERSION ) && ( __ARMCC_VERSION >= 6010050 )
+  #define LOW_OPTIMIZATION_ENTER
+  #define LOW_OPTIMIZATION_EXIT
+  #define IAR_ONLY_LOW_OPTIMIZATION_ENTER
+  #define IAR_ONLY_LOW_OPTIMIZATION_EXIT
+  
+#elif defined ( __APPLE_CC__ )
   #define LOW_OPTIMIZATION_ENTER
   #define LOW_OPTIMIZATION_EXIT
   #define IAR_ONLY_LOW_OPTIMIZATION_ENTER
