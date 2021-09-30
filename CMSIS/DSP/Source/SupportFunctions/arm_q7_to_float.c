@@ -33,7 +33,7 @@
  */
 
 /**
- * @defgroup q7_to_x  Convert 8-bit Integer value
+ * @defgroup q7_to_x  Convert 8-bit fixed point value
  */
 
 /**

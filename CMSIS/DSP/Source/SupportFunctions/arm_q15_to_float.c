@@ -33,7 +33,7 @@
  */
 
 /**
- * @defgroup q15_to_x  Convert 16-bit Integer value
+ * @defgroup q15_to_x  Convert 16-bit fixed point value
  */
 
 /**
