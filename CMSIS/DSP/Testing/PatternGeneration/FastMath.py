@@ -131,7 +131,7 @@ def writeTests(config,format):
     samples=cartesian(numerator,denominator)
     numerator=[x[0] for x in samples]
     denominator=[x[1] for x in samples]
-    config.setOverwrite(True)
+
     result=[divide(format,x) for x in samples]
 
     resultValue=[x[0] for x in result]
@@ -141,7 +141,7 @@ def writeTests(config,format):
     config.writeInput(1, denominator,"Denominator")
     config.writeReference(1, resultValue,"DivisionValue")
     config.writeReferenceS16(1, resultShift,"DivisionShift")
-    config.setOverwrite(False)
+
 
     vals,ref=initLogValues(format)
     config.writeInput(1, vals,"LogInput")
@@ -199,7 +199,7 @@ def generatePatterns():
     #writeTestsFloat(configf32,0)
     #writeTestsFloat(configf16,16)
     writeTests(configq31,31)
-    #writeTests(configq15,15)
+    writeTests(configq15,15)
 
 
 if __name__ == '__main__':
