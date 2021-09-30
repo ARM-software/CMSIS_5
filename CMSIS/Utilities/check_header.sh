@@ -15,11 +15,11 @@ fi
 
 FILE_VERSION=$(grep -E '@version\s+V?([0-9]+\.[0-9]+(\.[0-9]+)?)' ${FILE} | sed -E 's/^.*@version\s+V?([0-9]+\.[0-9]+(\.[0-9]+)?).*/\1/')
 if [[ ! -z $FILE_VERSION ]]; then
-  AUTHOR_REV=$(git log -1 --pretty="format:%h")
-  PARENT_REV=$(git log -1 --pretty="format:%p")
-  VERSION_BLAME=$(git blame ${PARENT_REV}..${AUTHOR_REV} -L ${FILE_VERSION_LINE},${FILE_VERSION_LINE} ${FILE} | sed -E 's/^\^([[:alnum:]]+).*/\1/')
+  FILE_VERSION_LINE=$(grep -En "@version.*${FILE_VERSION}" ${FILE} | cut -f1 -d:)
+  AUTHOR_REV=$(git log -1 --pretty="format:%H")
+  PARENT_REV=$(git log -1 --pretty="format:%P")
+  VERSION_BLAME=$(git blame ${PARENT_REV}..${AUTHOR_REV} -l -L ${FILE_VERSION_LINE},${FILE_VERSION_LINE} ${FILE} | sed -E 's/^([[:alnum:]]+).*/\1/')
   if [[ $AUTHOR_REV != $VERSION_BLAME ]]; then
-    FILE_VERSION_LINE=$(grep -En "@version.*${FILE_VERSION}" ${FILE} | cut -f1 -d:)
     echo "${FILE}:${FILE_VERSION_LINE}:Please increment file version." >&2
     RESULT=1
   fi
