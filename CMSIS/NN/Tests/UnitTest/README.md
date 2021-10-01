@@ -33,7 +33,7 @@ Other required python packages are mbed-cli and and mbed-ls. It should not matte
 
 ### Generating new test data
 
-For generating new data, the python3 packages tensorflow, numpy and packaging are required. Tensorflow version 2 is required as a minimum.
+For generating new data, the python3 packages tensorflow, numpy and packaging are required. Tensorflow version 2.5 is required as a minimum.
 
 ## Getting started
 
