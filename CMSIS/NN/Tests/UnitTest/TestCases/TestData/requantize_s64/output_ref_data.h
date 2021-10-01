@@ -20,4 +20,4 @@
 #pragma once
 #include <stdint.h>
 
-const q15_t requantize_s64_output_ref[4] = {28258, 32767, 28258, 32767};
+const q15_t requantize_s64_output_ref[4] = {-899, 32636, -900, 32634};

@@ -20,4 +20,4 @@
 #pragma once
 #include <stdint.h>
 
-const int32_t requantize_s64_output_mult[2] = {1851897752, 2147418044};
+const int32_t requantize_s64_output_mult[2] = {1451496532, 2138792311};

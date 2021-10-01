@@ -492,12 +492,12 @@ class ConvSettings(TestSettings):
 
     def __init__(self, dataset, testtype, args, in_ch=1, out_ch=1, x_in=7, y_in=7, w_x=3, w_y=3, stride_x=2, stride_y=2,
                  pad=True, randmin=INT8_MIN, randmax=INT8_MAX, batches=1, generate_bias=True, relu6=False,
-                 out_activation_min=None, out_activation_max=None, int16xint8=False, input_scale=None, bias_min=None,
+                 out_activation_min=None, out_activation_max=None, int16xint8=False, bias_min=None,
                  bias_max=None):
         super().__init__(dataset, testtype, args, in_ch, out_ch, x_in, y_in, w_x, w_y, stride_x, stride_y, pad,
                          randmin, randmax, batches, generate_bias=generate_bias, relu6=relu6,
                          out_activation_min=out_activation_min, out_activation_max=out_activation_max,
-                         int16xint8=int16xint8, input_scale=input_scale, bias_min=bias_min, bias_max=bias_max)
+                         int16xint8=int16xint8, bias_min=bias_min, bias_max=bias_max)
 
         self.scaling_factors = []
 
@@ -1094,7 +1094,7 @@ def load_all_testdatasets():
     ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=2, out_ch=2, x_in=3,
                                               y_in=2, w_x=2, w_y=2, stride_x=1, stride_y=1, pad=False,
                                               out_activation_min=INT16_MIN, out_activation_max=INT16_MAX,
-                                              int16xint8=True, input_scale=0.5, bias_min=-0x300, bias_max=0x9fffffff)
+                                              int16xint8=True, bias_min=-0x300, bias_max=0x9fff)
 
     type_of_test = 'depthwise_conv'
     dataset = 'depthwise_2'

@@ -20,4 +20,4 @@
 #pragma once
 #include <stdint.h>
 
-const q7_t requantize_s64_weights[16] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+const q7_t requantize_s64_weights[16] = {-23, 101, 3, -55, -120, 127, -120, 6, 103, 103, -95, 60, 102, 9, -60, -90};

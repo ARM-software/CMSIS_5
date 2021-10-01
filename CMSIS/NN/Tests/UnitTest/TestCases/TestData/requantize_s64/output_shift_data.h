@@ -20,4 +20,4 @@
 #pragma once
 #include <stdint.h>
 
-const int32_t requantize_s64_output_shift[2] = {-15, -15};
+const int32_t requantize_s64_output_shift[2] = {-14, -15};

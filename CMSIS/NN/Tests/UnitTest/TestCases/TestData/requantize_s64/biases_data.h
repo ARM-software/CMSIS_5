@@ -20,4 +20,4 @@
 #pragma once
 #include <stdint.h>
 
-const int64_t requantize_s64_biases[2] = {1073741824, 1073741824};
+const int64_t requantize_s64_biases[2] = {-21812718, 1073741952};
