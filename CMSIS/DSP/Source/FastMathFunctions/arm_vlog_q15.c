@@ -32,9 +32,9 @@
 
 #define LOG_Q15_ACCURACY 15
 
-/* Bit to represent the normalization factor 
+/* Bit to represent the normalization factor
    It is Ceiling[Log2[LOG_Q15_ACCURACY]] of the previous value.
-   The Log2 algorithm is assuming that the value x is 
+   The Log2 algorithm is assuming that the value x is
    1 <= x < 2.
 
    But input value could be as small a 2^-LOG_Q15_ACCURACY
@@ -90,7 +90,7 @@ static uint16_t arm_scalar_log_q15(uint16_t src)
 
 
    /* Compute the Log2. Result is in q11 instead of q16
-      because we know 0 <= y < 1.0 but 
+      because we know 0 <= y < 1.0 but
       we want a result allowing to do a
       product on int16 rather than having to go
       through int32
@@ -98,7 +98,7 @@ static uint16_t arm_scalar_log_q15(uint16_t src)
    for(i = 0; i < LOG_Q15_ACCURACY ; i++)
    {
       x = (((int32_t)x*x)) >> (LOG_Q15_ACCURACY - 1);
-    
+
       if (x >= LOQ_Q15_THRESHOLD)
       {
          y += inc ;
@@ -108,10 +108,10 @@ static uint16_t arm_scalar_log_q15(uint16_t src)
    }
 
 
-   /* 
+   /*
       Convert the Log2 to Log and apply normalization.
       We compute (y - normalisation) * (1 / Log2[e]).
-      
+
    */
 
    /* q11 */
@@ -120,7 +120,7 @@ static uint16_t arm_scalar_log_q15(uint16_t src)
 
    /* q4.11 */
    y = ((int32_t)tmp * LOG_Q15_INVLOG2EXP) >> 15;
-  
+
    return(y);
 
 }
@@ -146,11 +146,11 @@ q15x8_t vlogq_q15(q15x8_t src)
 
    /* q11 */
    uint16x8_t y = vdupq_n_u16(0);
-   
+
 
    /* q11 */
    int16x8_t vtmp;
-  
+
 
    mve_pred16_t p;
 
@@ -158,11 +158,11 @@ q15x8_t vlogq_q15(q15x8_t src)
 
 
    vtmp = vsubq_n_s16(c,1);
-   x = vshlq_u16(src,vtmp);
+   x = vshlq_u16((uint16x8_t)src,vtmp);
 
 
    /* Compute the Log2. Result is in q11 instead of q16
-      because we know 0 <= y < 1.0 but 
+      because we know 0 <= y < 1.0 but
       we want a result allowing to do a
       product on int16 rather than having to go
       through int32
@@ -172,7 +172,7 @@ q15x8_t vlogq_q15(q15x8_t src)
       x = vmulhq_u16(x,x);
       x = vshlq_n_u16(x,2);
 
-      
+
       p = vcmphiq_u16(x,vdupq_n_u16(LOQ_Q15_THRESHOLD));
       y = vaddq_m_n_u16(y, y,inc,p);
       x = vshrq_m_n_u16(x,x,1,p);
@@ -181,26 +181,26 @@ q15x8_t vlogq_q15(q15x8_t src)
    }
 
 
-   /* 
+   /*
       Convert the Log2 to Log and apply normalization.
       We compute (y - normalisation) * (1 / Log2[e]).
-      
+
    */
 
    /* q11 */
    // tmp = (int16_t)y - (normalization << (LOG_Q15_ACCURACY - LOG_Q15_INTEGER_PART));
    vtmp = vshlq_n_s16(normalization,LOG_Q15_ACCURACY - LOG_Q15_INTEGER_PART);
-   vtmp = vsubq_s16(y,vtmp);
+   vtmp = vsubq_s16((int16x8_t)y,vtmp);
 
-   
-  
+
+
    /* q4.11 */
    // y = ((int32_t)tmp * LOG_Q15_INVLOG2EXP) >> 15;
    vtmp = vqdmulhq_n_s16(vtmp,LOG_Q15_INVLOG2EXP);
 
    return(vtmp);
 }
-#endif 
+#endif
 
 /**
   @ingroup groupFastMath
@@ -248,7 +248,7 @@ void arm_vlog_q15(
   blkCnt = blockSize & 7;
   #else
   blkCnt = blockSize;
-  #endif 
+  #endif
 
   while (blkCnt > 0U)
   {
