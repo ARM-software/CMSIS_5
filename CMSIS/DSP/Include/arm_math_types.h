@@ -37,6 +37,8 @@ extern "C"
 
 #elif defined ( __ARMCC_VERSION ) && ( __ARMCC_VERSION >= 6010050 )
 
+#elif defined ( __APPLE_CC__ )
+
 #elif defined ( __GNUC__ )
   #pragma GCC diagnostic push
   #pragma GCC diagnostic ignored "-Wsign-conversion"
@@ -89,7 +91,7 @@ extern "C"
 
 #if defined(ARM_MATH_NEON)
 #include <arm_neon.h>
-#if __ARM_FEATURE_FP16_VECTOR_ARITHMETIC
+#if defined(__ARM_FEATURE_FP16_VECTOR_ARITHMETIC) && __ARM_FEATURE_FP16_VECTOR_ARITHMETIC
   #if !defined(ARM_MATH_NEON_FLOAT16)
   #define ARM_MATH_NEON_FLOAT16
   #endif
@@ -98,10 +100,8 @@ extern "C"
 
 #if !defined(ARM_MATH_AUTOVECTORIZE)
 
-#if !defined(__ARM_FEATURE_MVE)
-#define __ARM_FEATURE_MVE 0
-#endif
 
+#if defined(__ARM_FEATURE_MVE)
 #if __ARM_FEATURE_MVE
   #if !defined(ARM_MATH_MVEI)
     #define ARM_MATH_MVEI
@@ -117,6 +117,7 @@ extern "C"
   #endif
 #endif
 
+#endif /*defined(__ARM_FEATURE_MVE)*/
 #endif /*!defined(ARM_MATH_AUTOVECTORIZE)*/
 
 
@@ -234,6 +235,8 @@ extern "C"
 
 #elif defined ( __ARMCC_VERSION ) && ( __ARMCC_VERSION >= 6010050 )
 
+#elif defined ( __APPLE_CC__ )
+
 #elif defined ( __GNUC__ )
 #pragma GCC diagnostic pop
 
@@ -255,7 +258,7 @@ extern "C"
 }
 #endif
 
-#if __ARM_FEATURE_MVE
+#if defined(__ARM_FEATURE_MVE) && __ARM_FEATURE_MVE
 #include <arm_mve.h>
 #endif
 
