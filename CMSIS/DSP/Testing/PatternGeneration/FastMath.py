@@ -195,9 +195,9 @@ def generatePatterns():
     configq31.setOverwrite(False)
     configq15.setOverwrite(False)
 
-    #writeTestsFloat(configf64,Tools.F64)
-    #writeTestsFloat(configf32,0)
-    #writeTestsFloat(configf16,16)
+    writeTestsFloat(configf64,Tools.F64)
+    writeTestsFloat(configf32,0)
+    writeTestsFloat(configf16,16)
     writeTests(configq31,31)
     writeTests(configq15,15)
 
