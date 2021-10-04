@@ -184,16 +184,16 @@ static void _arm_radix4_butterfly_q15_mve(
         vecC = (q15x8_t) vldrwq_gather_base_s32(vecScGathAddr, 8);
 
         vecTmp0 = vhaddq(vecSum0, vecSum1);
-        vstrwq_scatter_base_s32(vecScGathAddr, -64, (q15x8_t) vecTmp0);
+        vstrwq_scatter_base_s32(vecScGathAddr, -64, (int32x4_t) vecTmp0);
 
         vecTmp0 = vhsubq(vecSum0, vecSum1);
-        vstrwq_scatter_base_s32(vecScGathAddr, -64 + 4, (q15x8_t) vecTmp0);
+        vstrwq_scatter_base_s32(vecScGathAddr, -64 + 4, (int32x4_t) vecTmp0);
 
         vecTmp0 = MVE_CMPLX_SUB_FX_A_ixB(vecDiff0, vecDiff1);
-        vstrwq_scatter_base_s32(vecScGathAddr, -64 + 8, (q15x8_t) vecTmp0);
+        vstrwq_scatter_base_s32(vecScGathAddr, -64 + 8, (int32x4_t) vecTmp0);
 
         vecTmp0 = MVE_CMPLX_ADD_FX_A_ixB(vecDiff0, vecDiff1);
-        vstrwq_scatter_base_s32(vecScGathAddr, -64 + 12, (q15x8_t) vecTmp0);
+        vstrwq_scatter_base_s32(vecScGathAddr, -64 + 12, (int32x4_t) vecTmp0);
 
         blkCnt--;
     }
@@ -419,16 +419,16 @@ static void _arm_radix4_butterfly_inverse_q15_mve(const arm_cfft_instance_q15 *S
         vecC = (q15x8_t) vldrwq_gather_base_s32(vecScGathAddr, 8);
 
         vecTmp0 = vhaddq(vecSum0, vecSum1);
-        vstrwq_scatter_base_s32(vecScGathAddr, -64, (q15x8_t) vecTmp0);
+        vstrwq_scatter_base_s32(vecScGathAddr, -64, (int32x4_t) vecTmp0);
 
         vecTmp0 = vhsubq(vecSum0, vecSum1);
-        vstrwq_scatter_base_s32(vecScGathAddr, -64 + 4, (q15x8_t) vecTmp0);
+        vstrwq_scatter_base_s32(vecScGathAddr, -64 + 4, (int32x4_t) vecTmp0);
 
         vecTmp0 = MVE_CMPLX_ADD_FX_A_ixB(vecDiff0, vecDiff1);
-        vstrwq_scatter_base_s32(vecScGathAddr, -64 + 8, (q15x8_t) vecTmp0);
+        vstrwq_scatter_base_s32(vecScGathAddr, -64 + 8, (int32x4_t) vecTmp0);
 
         vecTmp0 = MVE_CMPLX_SUB_FX_A_ixB(vecDiff0, vecDiff1);
-        vstrwq_scatter_base_s32(vecScGathAddr, -64 + 12, (q15x8_t) vecTmp0);
+        vstrwq_scatter_base_s32(vecScGathAddr, -64 + 12, (int32x4_t) vecTmp0);
 
         blkCnt--;
     }

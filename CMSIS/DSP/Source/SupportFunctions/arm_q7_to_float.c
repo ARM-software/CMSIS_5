@@ -72,7 +72,7 @@ void arm_q7_to_float(
         /* convert from q7 to float and then store the results in the destination buffer */
         vecDst = vldrbq_s32(pSrcVec);    
         pSrcVec += 4;
-        vstrwq(pDst, vcvtq_n_f32_s32(vecDst, 7));   
+        vstrwq(pDst, vcvtq_n_f32_s32((int32x4_t)vecDst, 7));   
         pDst += 4;
         /*
          * Decrement the blockSize loop counter

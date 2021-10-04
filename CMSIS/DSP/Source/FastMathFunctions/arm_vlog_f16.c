@@ -32,9 +32,9 @@
 #if defined(ARM_FLOAT16_SUPPORTED)
 
 /* Degree of the polynomial approximation */
-#define NB_DEG_LOGF16 3 
+#define NB_DEG_LOGF16 3
 
-/* 
+/*
 Related to the Log2 of the number of approximations.
 For instance, with 3 there are 1 + 2^3 polynomials
 */
@@ -55,7 +55,7 @@ nb = 3;
 deg = 3;
 lut = Table[
    MiniMaxApproximation[
-     Log[x/2^nb + i], {x, {10^-6, 1.0/2^nb}, deg, 0}, 
+     Log[x/2^nb + i], {x, {10^-6, 1.0/2^nb}, deg, 0},
      MaxIterations -> 1000][[2, 1]], {i, 1, 2, (1.0/2^nb)}];
 coefs = Chop@Flatten[CoefficientList[lut, x]];
 
@@ -75,8 +75,8 @@ static float16_t lut_logf16[NB_LUT_LOGF16]={
 float16_t logf16_scalar(float16_t x)
 {
     int16_t i =  arm_typecast_s16_f16(x);
-     
-    int32_t vecExpUnBiased = (i >> 10) - 15;  
+
+    int32_t vecExpUnBiased = (i >> 10) - 15;
     i = i - (vecExpUnBiased << 10);
     float16_t vecTmpFlt1 = arm_typecast_f16_s16(i);
 
@@ -85,7 +85,7 @@ float16_t logf16_scalar(float16_t x)
     float16_t tmp,v;
 
     tmp = ((_Float16)vecTmpFlt1 - 1.0f16) * (1 << NB_DIV_LOGF16);
-    n = floor((double)tmp);
+    n = (int)floor((double)tmp);
     v = (_Float16)tmp - (_Float16)n;
 
     lut = lut_logf16 + n * (1+NB_DEG_LOGF16);
@@ -110,9 +110,9 @@ float16_t logf16_scalar(float16_t x)
 
 float16x8_t vlogq_lut_f16(float16x8_t vecIn)
 {
-    int16x8_t i =  vreinterpretq_s16_f16(vecIn);      
-     
-    int16x8_t vecExpUnBiased = vsubq_n_s16(vshrq_n_s16(i,10), 15); 
+    int16x8_t i =  vreinterpretq_s16_f16(vecIn);
+
+    int16x8_t vecExpUnBiased = vsubq_n_s16(vshrq_n_s16(i,10), 15);
     i = vsubq_s16(i,vshlq_n_s16(vecExpUnBiased,10));
     float16x8_t vecTmpFlt1 = vreinterpretq_f16_s16(i);
 
@@ -132,12 +132,12 @@ float16x8_t vlogq_lut_f16(float16x8_t vecIn)
     offset = vmulq_n_s16(n,(1+NB_DEG_LOGF16));
     offset = vaddq_n_s16(offset,NB_DEG_LOGF16-1);
 
-    res = vldrhq_gather_shifted_offset_f16(lut_logf16,offset);
+    res = vldrhq_gather_shifted_offset_f16(lut_logf16,(uint16x8_t)offset);
     offset = vsubq_n_s16(offset,1);
 
     for(int j=NB_DEG_LOGF16-2; j >=0 ; j--)
     {
-       lutV = vldrhq_gather_shifted_offset_f16(lut_logf16,offset);
+       lutV = vldrhq_gather_shifted_offset_f16(lut_logf16,(uint16x8_t)offset);
        res = vfmaq_f16(lutV,v,res);
        offset = vsubq_n_s16(offset,1);
 
@@ -150,7 +150,7 @@ float16x8_t vlogq_lut_f16(float16x8_t vecIn)
 
 }
 
-#endif 
+#endif
 
 /**
   @ingroup groupFastMath
@@ -175,9 +175,9 @@ void arm_vlog_f16(
         float16_t * pDst,
         uint32_t blockSize)
 {
-   uint32_t blkCnt; 
+   uint32_t blkCnt;
 
-#if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)   
+#if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
    f16x8_t src;
    f16x8_t dst;
 
@@ -203,10 +203,10 @@ void arm_vlog_f16(
    while (blkCnt > 0U)
    {
       /* C = log(A) */
-  
+
       /* Calculate log and store result in destination buffer. */
       *pDst++ = logf16_scalar(*pSrc++);
-  
+
       /* Decrement loop counter */
       blkCnt--;
    }
@@ -219,4 +219,4 @@ void arm_vlog_f16(
  */
 
 
-#endif /* #if defined(ARM_FLOAT16_SUPPORTED) */ 
+#endif /* #if defined(ARM_FLOAT16_SUPPORTED) */

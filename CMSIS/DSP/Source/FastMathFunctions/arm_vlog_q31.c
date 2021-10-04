@@ -30,9 +30,9 @@
 
 #define LOG_Q31_ACCURACY 31
 
-/* Bit to represent the normalization factor 
+/* Bit to represent the normalization factor
    It is Ceiling[Log2[LOG_Q31_ACCURACY]] of the previous value.
-   The Log2 algorithm is assuming that the value x is 
+   The Log2 algorithm is assuming that the value x is
    1 <= x < 2.
 
    But input value could be as small a 2^-LOG_Q31_ACCURACY
@@ -55,7 +55,7 @@
 static uint32_t arm_scalar_log_q31(uint32_t src)
 {
    int32_t i;
-   
+
    int32_t c = __CLZ(src);
    int32_t normalization=0;
 
@@ -84,7 +84,7 @@ static uint32_t arm_scalar_log_q31(uint32_t src)
    }
    normalization = c;
 
-   /* Compute the Log2. Result is in q26 
+   /* Compute the Log2. Result is in q26
       because we know 0 <= y < 1.0 but
       do not want to use q32 to allow
       following computation with less instructions.
@@ -101,10 +101,10 @@ static uint32_t arm_scalar_log_q31(uint32_t src)
       inc = inc >> 1;
    }
 
-   /* 
+   /*
       Convert the Log2 to Log and apply normalization.
       We compute (y - normalisation) * (1 / Log2[e]).
-      
+
    */
 
    /* q26 */
@@ -114,7 +114,7 @@ static uint32_t arm_scalar_log_q31(uint32_t src)
    /* q5.26 */
    y = ((int64_t)tmp * LOG_Q31_INVLOG2EXP) >> 31;
 
-  
+
 
    return(y);
 
@@ -125,7 +125,7 @@ static uint32_t arm_scalar_log_q31(uint32_t src)
 
 q31x4_t vlogq_q31(q31x4_t src)
 {
-    
+
    int32_t i;
 
    int32x4_t c = vclzq_s32(src);
@@ -141,11 +141,11 @@ q31x4_t vlogq_q31(q31x4_t src)
 
    /* q11 */
    uint32x4_t y = vdupq_n_u32(0);
-   
+
 
    /* q11 */
    int32x4_t vtmp;
-  
+
 
    mve_pred16_t p;
 
@@ -153,10 +153,10 @@ q31x4_t vlogq_q31(q31x4_t src)
 
 
    vtmp = vsubq_n_s32(c,1);
-   x = vshlq_u32(src,vtmp);
+   x = vshlq_u32((uint32x4_t)src,vtmp);
 
 
-    /* Compute the Log2. Result is in Q26 
+    /* Compute the Log2. Result is in Q26
       because we know 0 <= y < 1.0 but
       do not want to use Q32 to allow
       following computation with less instructions.
@@ -166,7 +166,7 @@ q31x4_t vlogq_q31(q31x4_t src)
       x = vmulhq_u32(x,x);
       x = vshlq_n_u32(x,2);
 
-      
+
       p = vcmphiq_u32(x,vdupq_n_u32(LOQ_Q31_THRESHOLD));
       y = vaddq_m_n_u32(y, y,inc,p);
       x = vshrq_m_n_u32(x,x,1,p);
@@ -175,19 +175,19 @@ q31x4_t vlogq_q31(q31x4_t src)
    }
 
 
-   /* 
+   /*
       Convert the Log2 to Log and apply normalization.
       We compute (y - normalisation) * (1 / Log2[e]).
-      
+
    */
 
    /* q11 */
    // tmp = (int16_t)y - (normalization << (LOG_Q15_ACCURACY - LOG_Q15_INTEGER_PART));
    vtmp = vshlq_n_s32(normalization,LOG_Q31_ACCURACY - LOG_Q31_INTEGER_PART);
-   vtmp = vsubq_s32(y,vtmp);
+   vtmp = vsubq_s32((int32x4_t)y,vtmp);
 
-   
-  
+
+
    /* q4.11 */
    // y = ((int32_t)tmp * LOG_Q15_INVLOG2EXP) >> 15;
    vtmp = vqdmulhq_n_s32(vtmp,LOG_Q31_INVLOG2EXP);
@@ -242,7 +242,7 @@ void arm_vlog_q31(
   blkCnt = blockSize & 3;
   #else
   blkCnt = blockSize;
-  #endif 
+  #endif
 
   while (blkCnt > 0U)
   {
@@ -250,7 +250,7 @@ void arm_vlog_q31(
 
      blkCnt--;
   }
- 
+
 }
 
 /**
