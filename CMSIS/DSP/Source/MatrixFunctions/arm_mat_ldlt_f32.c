@@ -96,7 +96,7 @@ arm_status arm_mat_ldlt_f32(
 {
 
   arm_status status;                             /* status of matrix inverse */
- 
+
 
 #ifdef ARM_MATH_MATRIX_CHECK
 
@@ -142,7 +142,7 @@ arm_status arm_mat_ldlt_f32(
     {
         /* Find pivot */
         float32_t m=F32_MIN,a;
-        int j=k; 
+        int j=k;
 
 
         for(int r=k;r<n;r++)
@@ -204,25 +204,25 @@ arm_status arm_mat_ldlt_f32(
              //pA[w*n+x] = pA[w*n+x] - pA[w*n+k] * (pA[x*n+k] * invA);
 
 
-             vecX = vldrwq_gather_shifted_offset_z_f32(&pA[x*n+k], vecOffs, p0);
+             vecX = vldrwq_gather_shifted_offset_z_f32(&pA[x*n+k], (uint32x4_t)vecOffs, p0);
              vecX = vmulq_m_n_f32(vuninitializedq_f32(),vecX,invA,p0);
 
-             
+
              vecA = vldrwq_z_f32(&pA[(w + 0)*n+x],p0);
              vecA = vfmsq_m(vecA, vecW0, vecX, p0);
-             vstrwq_p(&pA[(w + 0)*n+x], vecA, p0);  
+             vstrwq_p(&pA[(w + 0)*n+x], vecA, p0);
 
              vecA = vldrwq_z_f32(&pA[(w + 1)*n+x],p0);
              vecA = vfmsq_m(vecA, vecW1, vecX, p0);
-             vstrwq_p(&pA[(w + 1)*n+x], vecA, p0);  
+             vstrwq_p(&pA[(w + 1)*n+x], vecA, p0);
 
              vecA = vldrwq_z_f32(&pA[(w + 2)*n+x],p0);
              vecA = vfmsq_m(vecA, vecW2, vecX, p0);
-             vstrwq_p(&pA[(w + 2)*n+x], vecA, p0);  
+             vstrwq_p(&pA[(w + 2)*n+x], vecA, p0);
 
              vecA = vldrwq_z_f32(&pA[(w + 3)*n+x],p0);
              vecA = vfmsq_m(vecA, vecW3, vecX, p0);
-             vstrwq_p(&pA[(w + 3)*n+x], vecA, p0);  
+             vstrwq_p(&pA[(w + 3)*n+x], vecA, p0);
 
              cnt -= 4;
           }
@@ -246,13 +246,13 @@ arm_status arm_mat_ldlt_f32(
              //pA[w*n+x] = pA[w*n+x] - pA[w*n+k] * (pA[x*n+k] * invA);
 
              vecA = vldrwq_z_f32(&pA[w*n+x],p0);
-             
-             vecX = vldrwq_gather_shifted_offset_z_f32(&pA[x*n+k], vecOffs, p0);
+
+             vecX = vldrwq_gather_shifted_offset_z_f32(&pA[x*n+k], (uint32x4_t)vecOffs, p0);
              vecX = vmulq_m_n_f32(vuninitializedq_f32(),vecX,invA,p0);
 
              vecA = vfmsq_m(vecA, vecW, vecX, p0);
 
-             vstrwq_p(&pA[w*n+x], vecA, p0);  
+             vstrwq_p(&pA[w*n+x], vecA, p0);
 
              cnt -= 4;
           }
@@ -263,7 +263,7 @@ arm_status arm_mat_ldlt_f32(
                pA[w*n+k] = pA[w*n+k] * invA;
         }
 
-        
+
 
     }
 
@@ -275,15 +275,15 @@ arm_status arm_mat_ldlt_f32(
       diag--;
       for(int row=0; row < n;row++)
       {
-        mve_pred16_t p0; 
+        mve_pred16_t p0;
         int cnt= n-k;
         f32x4_t zero=vdupq_n_f32(0.0f);
 
         for(int col=k; col < n;col += 4)
         {
            p0 = vctp32q(cnt);
-         
-           vstrwq_p(&pl->pData[row*n+col], zero, p0);  
+
+           vstrwq_p(&pl->pData[row*n+col], zero, p0);
 
            cnt -= 4;
         }
@@ -292,15 +292,15 @@ arm_status arm_mat_ldlt_f32(
 
     for(int row=0; row < n;row++)
     {
-       mve_pred16_t p0; 
+       mve_pred16_t p0;
        int cnt= n-row-1;
        f32x4_t zero=vdupq_n_f32(0.0f);
-       
+
        for(int col=row+1; col < n;col+=4)
        {
          p0 = vctp32q(cnt);
-         
-         vstrwq_p(&pl->pData[row*n+col], zero, p0);  
+
+         vstrwq_p(&pl->pData[row*n+col], zero, p0);
 
          cnt -= 4;
        }
@@ -311,12 +311,12 @@ arm_status arm_mat_ldlt_f32(
       pd->pData[d*n+d] = pl->pData[d*n+d];
       pl->pData[d*n+d] = 1.0;
     }
-  
+
     status = ARM_MATH_SUCCESS;
 
   }
 
-  
+
   /* Return to application */
   return (status);
 }
@@ -350,7 +350,7 @@ arm_status arm_mat_ldlt_f32(
   @addtogroup MatrixChol
   @{
  */
-  
+
 /**
    * @brief Floating-point LDL^t decomposition of positive semi-definite matrix.
    * @param[in]  pSrc   points to the instance of the input floating-point matrix structure.
@@ -373,7 +373,7 @@ arm_status arm_mat_ldlt_f32(
 {
 
   arm_status status;                             /* status of matrix inverse */
- 
+
 
 #ifdef ARM_MATH_MATRIX_CHECK
 
@@ -410,7 +410,7 @@ arm_status arm_mat_ldlt_f32(
     {
         /* Find pivot */
         float32_t m=F32_MIN,a;
-        int j=k; 
+        int j=k;
 
 
         int r;
@@ -457,7 +457,7 @@ arm_status arm_mat_ldlt_f32(
                pA[w*n+k] = pA[w*n+k] / a;
         }
 
-        
+
 
     }
 
@@ -491,12 +491,12 @@ arm_status arm_mat_ldlt_f32(
       pd->pData[d*n+d] = pl->pData[d*n+d];
       pl->pData[d*n+d] = 1.0;
     }
-  
+
     status = ARM_MATH_SUCCESS;
 
   }
 
-  
+
   /* Return to application */
   return (status);
 }
