@@ -135,27 +135,29 @@ void osRtxTick_Handler (void) {
   // Check Round Robin timeout
   if (osRtxInfo.thread.robin.timeout != 0U) {
     thread = osRtxInfo.thread.run.next;
-    if (thread != osRtxInfo.thread.robin.thread) {
-      osRtxInfo.thread.robin.thread = thread;
-      if (thread->delay == 0U) {
-        // Reset Round Robin
-        thread->delay = osRtxInfo.thread.robin.timeout;
-      }
-    }
-    if (thread->delay != 0U) {
-      thread->delay--;
-    }
-    if (thread->delay == 0U) {
-      // Round Robin Timeout
-      if (osRtxKernelGetState() == osRtxKernelRunning) {
-        thread = osRtxInfo.thread.ready.thread_list;
-        if ((thread != NULL) && (thread->priority == osRtxInfo.thread.robin.thread->priority)) {
-          osRtxThreadListRemove(thread);
-          osRtxThreadReadyPut(osRtxInfo.thread.robin.thread);
-          EvrRtxThreadPreempted(osRtxInfo.thread.robin.thread);
-          osRtxThreadSwitch(thread);
-          osRtxInfo.thread.robin.thread = thread;
+    if(thread != NULL) {
+      if (thread != osRtxInfo.thread.robin.thread) {
+        osRtxInfo.thread.robin.thread = thread;
+        if (thread->delay == 0U) {
+          // Reset Round Robin
           thread->delay = osRtxInfo.thread.robin.timeout;
+        }
+      }
+      if (thread->delay != 0U) {
+        thread->delay--;
+      }
+      if (thread->delay == 0U) {
+        // Round Robin Timeout
+        if (osRtxKernelGetState() == osRtxKernelRunning) {
+          thread = osRtxInfo.thread.ready.thread_list;
+          if ((thread != NULL) && (thread->priority == osRtxInfo.thread.robin.thread->priority)) {
+            osRtxThreadListRemove(thread);
+            osRtxThreadReadyPut(osRtxInfo.thread.robin.thread);
+            EvrRtxThreadPreempted(osRtxInfo.thread.robin.thread);
+            osRtxThreadSwitch(thread);
+            osRtxInfo.thread.robin.thread = thread;
+            thread->delay = osRtxInfo.thread.robin.timeout;
+          }
         }
       }
     }
