@@ -33,10 +33,12 @@
 #include <rt_sys.h>
 #else
 #define GCCCOMPILER
+#if !defined(__ICCARM__)
 struct __FILE {int handle;};
 FILE __stdout;
 FILE __stdin;
 FILE __stderr;
+#endif
 #endif
 
 
@@ -263,7 +265,11 @@ void stop_ipss_measurement()
 
 int stdout_putchar(char txchar)
 {
+#if defined(__ICCARM__)
+    putchar(txchar);
+#else
     SERIAL_DATA = txchar; 
+#endif
     return(txchar);                    
 }
 
@@ -311,7 +317,9 @@ void SystemInit (void)
 
 }
 
+#if !defined(__ICCARM__)
 __attribute__((constructor(255)))
+#endif
 void platform_init(void)
 {
     printf("\n_[TEST START]____________________________________________________\n");
@@ -325,6 +333,7 @@ __asm(".global __ARM_use_no_argv\n\t");
 #   endif
 #endif
 
+#if !defined(__ICCARM__)
 /**
    Writes the character specified by c (converted to an unsigned char) to
    the output stream pointed to by stream, at the position indicated by the
@@ -351,6 +360,7 @@ int fputc (int c, FILE * stream)
 
     return (-1);
 }
+#endif
 
 #ifndef GCCCOMPILER
 /* IO device file handles. */
