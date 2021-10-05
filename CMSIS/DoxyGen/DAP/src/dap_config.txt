@@ -35,10 +35,11 @@ and may be used as starting point for the firmware deployment to a new Debug Uni
 The folder <b> .\\Firmware\\Config</b> contains a template of the \b DAP_config.h configuration file.
 Various adaptations for different target hardware are provided.
 
-Folders and Files                       | Description
---------------------------------------- | ----------------------------------------------------------------------------------------------------------------
-.\\Firmware\\Examples\\LPC-Link-II\\V1  | CMSIS-DAP Firmware using USB HID adapted to the NXP LPC-Link-II Debug Unit that is part of the LPCxpresso-II platform.
-.\\Firmware\\Examples\\LPC-Link-II\\V2  | CMSIS-DAP Firmware using WinUSB adapted to the NXP LPC-Link-II Debug Unit that is part of the LPCxpresso-II platform.
+Folders and Files                     | Description
+------------------------------------- | -----------------------------------------------------------------------
+.\\Firmware\\Examples\\LPC-Link2\\V1  | CMSIS-DAP Firmware using USB HID adapted to the NXP LPC-Link2 Debug Unit.
+.\\Firmware\\Examples\\LPC-Link2\\V2  | CMSIS-DAP Firmware using WinUSB adapted to the NXP LPC-Link2 Debug Unit.
+.\\Firmware\\Examples\\MCU-LINK       | CMSIS-DAP Firmware using WinUSB adapted to the NXP MCU-LINK Debug Unit.
 
 The CMSIS-DAP Firmware is designed to execute on a Debug Unit that is using a Cortex-M0, Cortex-M0+, Cortex-M3, or Cortex-M4 
 processor-based microcontroller. To deploy the firmware to a new Debug Unit copy an existing firmware adaptation to a new folder.
