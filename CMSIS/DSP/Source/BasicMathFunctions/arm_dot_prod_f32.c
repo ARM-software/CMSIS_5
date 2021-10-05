@@ -132,7 +132,9 @@ void arm_dot_prod_f32(
     f32x4_t vec1;
     f32x4_t vec2;
     f32x4_t accum = vdupq_n_f32(0);   
-    f32x2_t tmp = vdup_n_f32(0);    
+#if !defined(__aarch64__)
+    f32x2_t tmp = vdup_n_f32(0); 
+#endif   
 
     /* Compute 4 outputs at a time */
     blkCnt = blockSize >> 2U;

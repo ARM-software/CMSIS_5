@@ -221,7 +221,9 @@ arm_status arm_mat_cholesky_f32(
     f32x4_t acc, acc0, acc1, acc2, acc3;
     f32x4_t vecGi;
     f32x4_t vecGj,vecGj0,vecGj1,vecGj2,vecGj3;
-    f32x2_t tmp = vdup_n_f32(0);    
+#if !defined(__aarch64__)
+    f32x2_t tmp = vdup_n_f32(0);   
+#endif    
     float32_t sum=0.0f;
     float32_t sum0=0.0f,sum1=0.0f,sum2=0.0f,sum3=0.0f;
 
