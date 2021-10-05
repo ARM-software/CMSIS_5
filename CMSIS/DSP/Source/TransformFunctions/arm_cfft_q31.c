@@ -49,8 +49,10 @@ static void _arm_radix4_butterfly_q31_mve(
     uint32_t  stage = 0;
     int32_t  iter = 1;
     static const int32_t strides[4] = {
-        (0 - 16) * sizeof(q31_t *), (1 - 16) * sizeof(q31_t *),
-        (8 - 16) * sizeof(q31_t *), (9 - 16) * sizeof(q31_t *)
+        (0 - 16) * (int32_t)sizeof(q31_t *),
+        (1 - 16) * (int32_t)sizeof(q31_t *),
+        (8 - 16) * (int32_t)sizeof(q31_t *),
+        (9 - 16) * (int32_t)sizeof(q31_t *)
     };
 
 
@@ -299,8 +301,10 @@ static void _arm_radix4_butterfly_inverse_q31_mve(
     uint32_t  stage = 0;
     int32_t  iter = 1;
     static const int32_t strides[4] = {
-        (0 - 16) * sizeof(q31_t *), (1 - 16) * sizeof(q31_t *),
-        (8 - 16) * sizeof(q31_t *), (9 - 16) * sizeof(q31_t *)
+        (0 - 16) * (int32_t)sizeof(q31_t *),
+        (1 - 16) * (int32_t)sizeof(q31_t *),
+        (8 - 16) * (int32_t)sizeof(q31_t *),
+        (9 - 16) * (int32_t)sizeof(q31_t *)
     };
 
     /*
