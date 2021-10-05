@@ -98,7 +98,7 @@ static void _arm_radix4_butterfly_f32_mve(const arm_cfft_instance_f32 * S,float3
     uint32_t  n1, n2;
     uint32_t  stage = 0;
     int32_t  iter = 1;
-    static const uint32_t strides[4] = {
+    static const int32_t strides[4] = {
         (0 - 16) * sizeof(q31_t *),
         (1 - 16) * sizeof(q31_t *),
         (8 - 16) * sizeof(q31_t *),
@@ -210,7 +210,7 @@ static void _arm_radix4_butterfly_f32_mve(const arm_cfft_instance_f32 * S,float3
     /*
      * start of Last stage process
      */
-    uint32x4_t vecScGathAddr = vld1q_u32(strides);
+    uint32x4_t vecScGathAddr = vld1q_u32((uint32_t*)strides);
     vecScGathAddr = vecScGathAddr + (uint32_t) pSrc;
 
     /* load scheduling */
@@ -307,7 +307,7 @@ static void _arm_radix4_butterfly_inverse_f32_mve(const arm_cfft_instance_f32 * 
     uint32_t  n1, n2;
     uint32_t  stage = 0;
     int32_t  iter = 1;
-    static const uint32_t strides[4] = {
+    static const int32_t strides[4] = {
         (0 - 16) * sizeof(q31_t *),
         (1 - 16) * sizeof(q31_t *),
         (8 - 16) * sizeof(q31_t *),
@@ -416,7 +416,7 @@ static void _arm_radix4_butterfly_inverse_f32_mve(const arm_cfft_instance_f32 * 
     /*
      * start of Last stage process
      */
-    uint32x4_t vecScGathAddr = vld1q_u32 (strides);
+    uint32x4_t vecScGathAddr = vld1q_u32 ((uint32_t*)strides);
     vecScGathAddr = vecScGathAddr + (uint32_t) pSrc;
 
     /*

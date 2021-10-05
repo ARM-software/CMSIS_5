@@ -129,17 +129,17 @@ void arm_levinson_durbin_f32(const float32_t *phi,
       k = (phi[p+1] - suma)/(phi[0] - sumb);
 
       f32x4_t vecRevA,tmp;
-      static uint32_t orgOffsetArray[4]={0,1,-1,-2};
-      static const uint32_t offsetIncArray[4]={2,2,-2,-2};
+      static int32_t orgOffsetArray[4]={0,1,-1,-2};
+      static const int32_t offsetIncArray[4]={2,2,-2,-2};
 
       uint32x4_t offset,offsetInc,vecTmp;
 
 
-      offset = vld1q(orgOffsetArray);
+      offset = vld1q_u32((uint32_t*)orgOffsetArray);
       vecTmp = vdupq_n_u32(p);
 
       offset = vaddq_m_u32(offset,offset,vecTmp,LANE23_MASK);
-      offsetInc = vld1q(offsetIncArray);
+      offsetInc = vld1q_u32((uint32_t*)offsetIncArray);
 
       nb = p >> 2;
       j=0;
