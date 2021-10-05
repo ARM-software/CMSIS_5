@@ -38,6 +38,7 @@ extern "C"
 #elif defined ( __ARMCC_VERSION ) && ( __ARMCC_VERSION >= 6010050 )
 
 #elif defined ( __APPLE_CC__ )
+  #pragma GCC diagnostic ignored "-Wold-style-cast"
 
 #elif defined ( __GNUC__ )
   #pragma GCC diagnostic push
