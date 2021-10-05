@@ -2,7 +2,7 @@
  * @file     cmsis_applecc.h
  * @brief    CMSIS compiler Apple C header file
  * @version  V5.8.1
- * @date     05. Oct 2021
+ * @date     05. October 2021
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2021 Arm Limited. All rights reserved.
