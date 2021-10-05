@@ -25,8 +25,8 @@ var searchData=
   ['cityblock_20_28manhattan_29_20distance',['Cityblock (Manhattan) distance',['../group__Manhattan.html',1,'']]],
   ['cholesky_20and_20ldlt_20decompositions',['Cholesky and LDLT decompositions',['../group__MatrixChol.html',1,'']]],
   ['complex_20matrix_20transpose',['Complex Matrix Transpose',['../group__MatrixComplexTrans.html',1,'']]],
-  ['convert_2016_2dbit_20integer_20value',['Convert 16-bit Integer value',['../group__q15__to__x.html',1,'']]],
-  ['convert_2032_2dbit_20integer_20value',['Convert 32-bit Integer value',['../group__q31__to__x.html',1,'']]],
-  ['convert_208_2dbit_20integer_20value',['Convert 8-bit Integer value',['../group__q7__to__x.html',1,'']]],
+  ['convert_2016_2dbit_20fixed_20point_20value',['Convert 16-bit fixed point value',['../group__q15__to__x.html',1,'']]],
+  ['convert_2032_2dbit_20fixed_20point_20value',['Convert 32-bit fixed point value',['../group__q31__to__x.html',1,'']]],
+  ['convert_208_2dbit_20fixed_20point_20value',['Convert 8-bit fixed point value',['../group__q7__to__x.html',1,'']]],
   ['cubic_20spline_20interpolation',['Cubic Spline Interpolation',['../group__SplineInterpolate.html',1,'']]]
 ];
