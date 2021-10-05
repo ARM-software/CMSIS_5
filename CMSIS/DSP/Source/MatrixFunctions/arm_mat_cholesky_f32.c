@@ -3,8 +3,8 @@
  * Title:        arm_mat_cholesky_f32.c
  * Description:  Floating-point Cholesky decomposition
  *
- * $Date:        23 April 2021
- * $Revision:    V1.9.0
+ * $Date:        05 October 2021
+ * $Revision:    V1.9.1
  *
  * Target Processor: Cortex-M and Cortex-A cores
  * -------------------------------------------------------------------- */
