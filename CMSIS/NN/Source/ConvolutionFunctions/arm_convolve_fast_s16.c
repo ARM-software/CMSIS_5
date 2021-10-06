@@ -194,6 +194,8 @@ arm_status arm_convolve_fast_s16(const cmsis_nn_context *ctx,
             }
         }
 #else
+        (void)input_data;
+        (void)output_data;
         (void)bias_data;
         (void)filter_data;
         (void)buffer_a;
