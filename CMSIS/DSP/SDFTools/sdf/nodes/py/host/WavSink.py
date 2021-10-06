@@ -44,10 +44,10 @@ class WavSink(GenericSink):
     def run(self):
         b=self.getReadBuffer()
         nextPos = self._bufPos + self._inputSize 
-        if (nextPos < self._buffer.size):
+        if (nextPos <= self._buffer.size):
             # Save output to buffer defined in custom.py 
             # and used to display result with matplotlib
-            self._buffer[self._bufPos:nextPos]=b
+            self._buffer[self._bufPos:self._inputSize]=b[:]
             self._bufPos = nextPos
 
         for sample in b:

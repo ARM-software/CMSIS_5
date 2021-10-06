@@ -141,7 +141,7 @@ class SlidingBuffer(GenericNode):
         a=self.getReadBuffer()
         b=self.getWriteBuffer()
         b[:self._overlap] = self._memory 
-        b[self._overlap:self._windowSize]=a 
+        b[self._overlap:self._windowSize]=a[:self._windowSize-self._overlap] 
         self._memory[:self._overlap] = a[self._windowSize-(self._overlap<<1):self._windowSize-self._overlap]
         
         return(0)

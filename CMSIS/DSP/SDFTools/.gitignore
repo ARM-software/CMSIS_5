@@ -9,4 +9,10 @@ examples/build/bin_example2
 examples/build/bin_dsp/
 examples/build/bin_example3/
 *.pyd
+examples/build/localcreate.bat
+examples/build/input_example3.txt
+examples/build/bin_example6/
+examples/build/input_example6.txt
+examples/build/output_example3.txt
+examples/build/output_example6.txt
 

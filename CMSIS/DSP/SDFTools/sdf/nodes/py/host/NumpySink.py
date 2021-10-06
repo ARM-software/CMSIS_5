@@ -1,9 +1,9 @@
 ###########################################
 # Project:      CMSIS DSP Library
-# Title:        ICFFT.py
-# Description:  Node for CMSIS-DSP icfft f32
+# Title:        NumpySink.py
+# Description:  Sink node for displaying a buffer in scipy
 # 
-# $Date:        30 July 2021
+# $Date:        06 August 2021
 # $Revision:    V1.10.0
 # 
 # Target Processor: Cortex-M and Cortex-A cores
@@ -25,27 +25,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ############################################
-from sdf.schedule.simu import *
-import cmsisdsp as dsp 
 
-# CMSIS-DSP ICFFT
-class ICFFT(GenericNode):
-    def __init__(self,inputSize,outSize,fifoin,fifoout):
-        GenericNode.__init__(self,inputSize,outSize,fifoin,fifoout)
-        if fifoin.type == np.dtype(np.float):
-           self._icfft=dsp.arm_cfft_instance_f32()
-           status=dsp.arm_cfft_init_f32(self._icfft,inputSize>>1)
-        if fifoin.type == np.dtype(np.int16):
-           self._icfft=dsp.arm_cfft_instance_q15()
-           status=dsp.arm_cfft_init_q15(self._icfft,inputSize>>1)
+from sdf.schedule.simu import *
+
+# Add each new received buffer to a list of buffers
+class NumpySink(GenericSink):
+    def __init__(self,inputSize,fifoin,matplotlibBuffer):
+        GenericSink.__init__(self,inputSize,fifoin)
+        self._bufPos=0
+        self._buffer=matplotlibBuffer
 
     def run(self):
-        a=self.getReadBuffer()
-        b=self.getWriteBuffer()
-        # Copy arrays (not just assign references)
-        b[:]=a[:]
-        if self._src.type == np.dtype(np.float):
-           dsp.arm_cfft_f32(self._icfft,b,1,1)
-        if self._src.type == np.dtype(np.int16):
-           dsp.arm_cfft_q15(self._icfft,b,1,1)
+        b=self.getReadBuffer()
+        buf = np.zeros(self._inputSize)
+        buf[:] = b[:]
+        self._buffer.append(buf)
+       
         return(0)
+
+    

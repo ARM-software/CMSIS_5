@@ -1,7 +1,7 @@
 ###########################################
 # Project:      CMSIS DSP Library
-# Title:        StereoToMono.py
-# Description:  Stereo to mono in Q15
+# Title:        WavSource.py
+# Description:  Source node for reading wave files
 # 
 # $Date:        06 August 2021
 # $Revision:    V1.10.0
@@ -26,18 +26,32 @@
 # limitations under the License.
 ############################################
 from sdf.schedule.simu import *
-import numpy as np 
-import cmsisdsp as dsp
+import wave
 
-class StereoToMonoQ15(GenericNode):
-    def __init__(self,inputSize,outputSize,fifoin,fifoout):
-        GenericNode.__init__(self,inputSize,outputSize,fifoin,fifoout)
+# It is assuming the input is a stereo file
+# It is not yet customizable in this version
+# Pad with zero when end of file is reached
+class WavSource(GenericSource):
+    "Read a stereo wav with 16 bits encoding"
+    def __init__(self,outputSize,fifoout,name):
+        GenericSource.__init__(self,outputSize,fifoout)
+        self._file=wave.open(name, 'rb')
+        #print(self._file.getnchannels())
+        #print(self._file.getnframes())
 
 
     def run(self):
-        i=self.getReadBuffer()
-        o=self.getWriteBuffer()
+        a=self.getWriteBuffer()
 
-        # Scaling to avoid saturation
-        o[:] = (i[::2]) // 2 + (i[1::2] // 2)
-        return(0)
+        # Stereo file so chunk must be divided by 2
+        frame=np.frombuffer(self._file.readframes(self._outputSize//2),dtype=np.int16)
+        if frame.size > 0:
+           a[:frame.size] = frame
+           a[frame.size:] = 0
+           return(0)
+        else:
+           a[:]=0
+           return(0)
+
+    def __del__(self):
+        self._file.close()

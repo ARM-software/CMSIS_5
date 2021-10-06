@@ -41,7 +41,7 @@ def {{config.schedName}}({{optionalargs()}}):
     sdfError=0
     nbSchedule=0
 {% if config.debug %}
-    debugCounter={{config.debugLimit}};
+    debugCounter={{config.debugLimit}}
 {% endif %}
 
     #

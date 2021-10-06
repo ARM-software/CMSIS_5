@@ -35,8 +35,8 @@ using namespace std;
 #include <cstdio>
 #include "arm_math.h"
 
-#include "FileSink.h"
-#include "FileSource.h"
+#include "host/FileSink.h"
+#include "host/FileSource.h"
 #include "CFFT.h"
 #include "ICFFT.h"
 

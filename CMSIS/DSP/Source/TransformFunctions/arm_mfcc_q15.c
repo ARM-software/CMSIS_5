@@ -69,12 +69,16 @@
   @return        none
 
   @par           Description
-                   The number of input samples if the FFT length used
+                   The number of input samples is the FFT length used
                    when initializing the instance data structure.
 
                    The temporary buffer has a 2*fft length.
 
                    The source buffer is modified by this function.
+
+                   The function may saturate. If the FFT length is too
+                   big and the number of MEL filters too small then the fixed
+                   point computations may saturate.
 
  */
 

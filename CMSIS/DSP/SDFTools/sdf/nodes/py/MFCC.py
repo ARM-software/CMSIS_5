@@ -1,7 +1,7 @@
 ###########################################
 # Project:      CMSIS DSP Library
-# Title:        CFFTF.py
-# Description:  Node for CMSIS-DSP cfft
+# Title:        MFCC.py
+# Description:  Node for CMSIS-DSP MFCC
 # 
 # $Date:        30 July 2021
 # $Revision:    V1.10.0
@@ -30,24 +30,23 @@ import cmsisdsp as dsp
 
 
 
-# The CMSIS-DSP CFFT
-class CFFT(GenericNode):
-    def __init__(self,inputSize,outSize,fifoin,fifoout):
+# The CMSIS-DSP MFCC
+class MFCC(GenericNode):
+    def __init__(self,inputSize,outSize,fifoin,fifoout,mfccConfig):
         GenericNode.__init__(self,inputSize,outSize,fifoin,fifoout)
-        if fifoin.type == np.dtype(np.float):
-           self._cfft=dsp.arm_cfft_instance_f32()
-           status=dsp.arm_cfft_init_f32(self._cfft,inputSize>>1)
-        if fifoin.type == np.dtype(np.int16):
-           self._cfft=dsp.arm_cfft_instance_q15()
-           status=dsp.arm_cfft_init_q15(self._cfft,inputSize>>1)
+        self._config=mfccConfig
+        self._tmp=np.zeros(2*inputSize,dtype=np.int32)
+
 
     def run(self):
         a=self.getReadBuffer()
         b=self.getWriteBuffer()
-        # Copy arrays (not just assign references)
-        b[:]=a[:]
         if self._src.type == np.dtype(np.float):
-           dsp.arm_cfft_f32(self._cfft,b,0,1)
+           res=dsp.arm_mfcc_f32(self._config,a,self._tmp)
+           errorStatus = 0
+        if self._src.type == np.dtype(np.int32):
+           errorStatus,res=dsp.arm_mfcc_q31(self._config,a,self._tmp)
         if self._src.type == np.dtype(np.int16):
-           dsp.arm_cfft_q15(self._cfft,b,0,1)
-        return(0)
+           errorStatus,res=dsp.arm_mfcc_q15(self._config,a,self._tmp)
+        b[:] = res[:]
+        return(errorStatus)

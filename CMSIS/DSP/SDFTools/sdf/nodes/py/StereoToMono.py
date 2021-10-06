@@ -1,9 +1,9 @@
 ###########################################
 # Project:      CMSIS DSP Library
-# Title:        CFFTF.py
-# Description:  Node for CMSIS-DSP cfft
+# Title:        StereoToMono.py
+# Description:  Stereo to mono in Q15
 # 
-# $Date:        30 July 2021
+# $Date:        06 August 2021
 # $Revision:    V1.10.0
 # 
 # Target Processor: Cortex-M and Cortex-A cores
@@ -26,28 +26,24 @@
 # limitations under the License.
 ############################################
 from sdf.schedule.simu import *
-import cmsisdsp as dsp 
+import numpy as np 
+import cmsisdsp as dsp
 
-
-
-# The CMSIS-DSP CFFT
-class CFFT(GenericNode):
-    def __init__(self,inputSize,outSize,fifoin,fifoout):
-        GenericNode.__init__(self,inputSize,outSize,fifoin,fifoout)
+class StereoToMono(GenericNode):
+    def __init__(self,inputSize,outputSize,fifoin,fifoout):
+        GenericNode.__init__(self,inputSize,outputSize,fifoin,fifoout)
         if fifoin.type == np.dtype(np.float):
-           self._cfft=dsp.arm_cfft_instance_f32()
-           status=dsp.arm_cfft_init_f32(self._cfft,inputSize>>1)
-        if fifoin.type == np.dtype(np.int16):
-           self._cfft=dsp.arm_cfft_instance_q15()
-           status=dsp.arm_cfft_init_q15(self._cfft,inputSize>>1)
+            self._isFloat=True 
+        else:
+            self._isFloat=False
+
 
     def run(self):
-        a=self.getReadBuffer()
-        b=self.getWriteBuffer()
-        # Copy arrays (not just assign references)
-        b[:]=a[:]
-        if self._src.type == np.dtype(np.float):
-           dsp.arm_cfft_f32(self._cfft,b,0,1)
-        if self._src.type == np.dtype(np.int16):
-           dsp.arm_cfft_q15(self._cfft,b,0,1)
+        i=self.getReadBuffer()
+        o=self.getWriteBuffer()
+
+        if self._isFloat:
+           o[:] = 0.5 * (i[::2] + i[1::2])
+        else:
+           o[:] = (i[::2]) // 2 + (i[1::2] // 2)
         return(0)

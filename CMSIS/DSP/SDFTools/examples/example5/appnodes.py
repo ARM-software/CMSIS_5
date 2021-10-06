@@ -1,9 +1,9 @@
 ###########################################
 # Project:      CMSIS DSP Library
-# Title:        WavSource.py
-# Description:  Source node for reading wave files
+# Title:        appnodes.py
+# Description:  Application nodes for Example 4
 # 
-# $Date:        06 August 2021
+# $Date:        29 July 2021
 # $Revision:    V1.10.0
 # 
 # Target Processor: Cortex-M and Cortex-A cores
@@ -26,29 +26,20 @@
 # limitations under the License.
 ############################################
 from sdf.schedule.simu import *
-import wave
+from custom import *
 
-# It is assuming the input is a stereo file
-# It is not yet customizable in this version
-class WavSource(GenericSource):
-    "Read a stereo wav with 16 bits encoding"
-    def __init__(self,outputSize,fifoout,name):
-        GenericSource.__init__(self,outputSize,fifoout)
-        self._file=wave.open(name, 'rb')
+# Host only nodes
+from sdf.nodes.py.host.NumpySink import *
+from sdf.nodes.py.host.WavSource import *
+
+# Embedded nodes
+from sdf.nodes.py.StereoToMono import *
+from sdf.nodes.py.MFCC import *
 
 
-    def run(self):
-        a=self.getWriteBuffer()
 
-        # Stereo file so chunk must be divided by 2
-        frame=np.frombuffer(self._file.readframes(self._outputSize//2),dtype=np.int16)
 
-        if frame.size > 0:
-           a[:frame.size] = frame
-           a[frame.size:] = 0
-           return(0)
-        else:
-           return(-1)
 
-    def __del__(self):
-        self._file.close()
+
+
+

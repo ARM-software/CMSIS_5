@@ -45,7 +45,7 @@ parser = argparse.ArgumentParser(description='Generate MFCC Data for CPP')
 parser.add_argument('-n', nargs='?',type = str, default="mfccdata", help="mfcc file name")
 parser.add_argument('-d', nargs='?',type = str, default="Testing/Source/Tests", help="mfcc c file directory")
 parser.add_argument('-i', nargs='?',type = str, default="Testing/Include/Tests", help="mfcc h file directory")
-parser.add_argument('others', nargs=argparse.REMAINDER)
+parser.add_argument('others', help="yaml configuration file", nargs=argparse.REMAINDER)
 
 args = parser.parse_args()
 

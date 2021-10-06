@@ -104,6 +104,43 @@ class ToReal(GenericNode):
     def typeName(self):
         return "ToReal"
 
+
+class NullSink(GenericSink):
+    def __init__(self,name,theType,inLength):
+        GenericSink.__init__(self,name)
+        self.addInput("i",theType,inLength)
+
+    @property
+    def typeName(self):
+        return "NullSink"
+
+class StereoToMono(GenericNode):
+    def __init__(self,name,theType,outLength):
+        GenericNode.__init__(self,name)
+        self.addInput("i",theType,2*outLength)
+        self.addOutput("o",theType,outLength)
+
+    @property
+    def typeName(self):
+        return "StereoToMono"
+
+
+class MFCC(GenericNode):
+    def __init__(self,name,theType,inLength,outLength):
+        GenericNode.__init__(self,name)
+
+        self.addInput("i",theType,inLength)
+        self.addOutput("o",theType,outLength)
+
+    @property
+    def typeName(self):
+        return "MFCC"
+
+#############################
+#
+# Host only Nodes
+#
+
 class FileSource(GenericSource):
     def __init__(self,name,inLength):
         GenericSource.__init__(self,name)
@@ -124,29 +161,9 @@ class FileSink(GenericSink):
     def typeName(self):
         return "FileSink"
 
-class NullSink(GenericSink):
-    def __init__(self,name,theType,inLength):
-        GenericSink.__init__(self,name)
-        self.addInput("i",theType,inLength)
-
-    @property
-    def typeName(self):
-        return "NullSink"
-
-class StereoToMonoQ15(GenericNode):
-    def __init__(self,name,outLength):
-        GenericNode.__init__(self,name)
-        q15Type=CType(Q15)
-        self.addInput("i",q15Type,2*outLength)
-        self.addOutput("o",q15Type,outLength)
-
-    @property
-    def typeName(self):
-        return "StereoToMonoQ15"
-
 #############################
 #
-# Python only Nodes
+# Python and host only Nodes
 #
 
 
@@ -169,4 +186,13 @@ class WavSink(GenericSink):
     @property
     def typeName(self):
         return "WavSink"
+
+class NumpySink(GenericSink):
+    def __init__(self,name,theType,inLength):
+        GenericSink.__init__(self,name)
+        self.addInput("i",theType,inLength)
+
+    @property
+    def typeName(self):
+        return "NumpySink"
 

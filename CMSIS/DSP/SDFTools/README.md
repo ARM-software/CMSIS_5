@@ -173,3 +173,23 @@ Here is a list of the nodes supported by default. More can be easily added:
 - [Example 3 : Working example with CMSIS-DSP and FFT](documentation/example3.md)
 - [Example 4 : Same as example 3 but with the CMSIS-DSP Python wrapper](documentation/example4.md)
 
+Examples 5 and 6 are showing how to use the CMSIS-DSP MFCC with a synchronous data flow.
+
+## Building the examples
+
+The script `create.bat` or `create.sh` in folder `examples/build` must be changed to use the path to the root CMSIS-DSP folder.
+
+Then, those scripts can be used to create a make using cmake.
+
+After those steps, typing `make` will build the C examples.
+
+To run the first one for example you'll have to type (from `build` folder): `bin_example1\example1`
+
+For the python examples, you need to go to the example folder (for instance `example4`). In the folder, type `python main.py`.
+
+
+
+If the dataflow is changed for any Python example, from the corresponding example folder you'll have to type `python graph.py` to regenerate the schedule. And you'll have to type `dot -Tpdf -o test.pdf test.dot` in the Python examples to regenerate the graph picture.
+
+For the C++ examples, the make is taking care of regenerating the schedule and the dot graph when `graph.py` is edited.
+

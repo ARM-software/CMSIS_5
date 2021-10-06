@@ -28,8 +28,8 @@
 from sdf.schedule.simu import *
 from custom import *
 
-from sdf.nodes.py.FileSink import *
-from sdf.nodes.py.FileSource import *
+from sdf.nodes.py.host.FileSink import *
+from sdf.nodes.py.host.FileSource import *
 from sdf.nodes.py.CFFT import *
 from sdf.nodes.py.ICFFT import *
 from sdf.nodes.py.ToComplex import *

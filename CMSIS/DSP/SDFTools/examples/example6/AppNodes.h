@@ -1,9 +1,9 @@
 /* ----------------------------------------------------------------------
  * Project:      CMSIS DSP Library
- * Title:        StereoToMonoQ15.h
- * Description:  Stereo to mno stream in Q15
+ * Title:        AppNodes.h
+ * Description:  Application nodes for Example 6
  *
- * $Date:        06 August 2021
+ * $Date:        29 July 2021
  * $Revision:    V1.10.0
  *
  * Target Processor: Cortex-M and Cortex-A cores
@@ -25,32 +25,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+#ifndef _APPNODES_H_
+#define _APPNODES_H_
 
-#ifndef _STEREOTOMONOQ15_H_
-#define _STEREOTOMONOQ15_H_ 
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+#include <cstdio>
+#include "arm_math.h"
+
+#include "host/FileSink.h"
+#include "host/FileSource.h"
+#include "MFCC.h"
 
 
-template<typename IN, int inputSize,typename OUT,int outputSize>
-class StereoToMonoQ15;
-
-template<int inputSize,int outputSize>
-class StereoToMonoQ15<q15_t,inputSize,q15_t,outputSize>: public GenericNode<q15_t,inputSize,q15_t,outputSize>
-{
-public:
-    StereoToMonoQ15(FIFOBase<q15_t> &src,FIFOBase<q15_t> &dst):
-    GenericNode<q15_t,inputSize,q15_t,outputSize>(src,dst){};
-
-   
-    int run(){
-        q15_t *a=this->getReadBuffer();
-        q15_t *b=this->getWriteBuffer();
-        for(int i = 0; i<outputSize; i++)
-        {
-           b[i] = (a[2*i]>>1) + (a[2*i+1]>>1);
-        }
-        return(0);
-    };
-
-};
 
 #endif

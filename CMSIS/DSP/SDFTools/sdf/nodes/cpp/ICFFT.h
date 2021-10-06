@@ -57,6 +57,34 @@ public:
 
 };
 
+#if defined(ARM_FLOAT16_SUPPORTED)
+/*
+
+The CMSIS-DSP ICFFT F32
+
+*/
+template<int inputSize>
+class ICFFT<float16_t,inputSize,float16_t,inputSize>: public GenericNode<float16_t,inputSize,float16_t,inputSize>
+{
+public:
+    ICFFT(FIFOBase<float16_t> &src,FIFOBase<float16_t> &dst):GenericNode<float16_t,inputSize,float16_t,inputSize>(src,dst){
+         arm_status status;
+         status=arm_cfft_init_f16(&sifft,inputSize>>1);
+    };
+
+    int run(){
+        float16_t *a=this->getReadBuffer();
+        float16_t *b=this->getWriteBuffer();
+        memcpy((void*)b,(void*)a,inputSize*sizeof(float16_t));
+        arm_cfft_f16(&sifft,b,1,1);
+        return(0);
+    };
+
+    arm_cfft_instance_f16 sifft;
+
+};
+#endif
+
 /*
 
 The CMSIS-DSP ICFFT Q15

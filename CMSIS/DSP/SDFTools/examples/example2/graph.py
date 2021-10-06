@@ -32,6 +32,7 @@ class StereoSource(GenericSource):
     def typeName(self):
         return "StereoSource"
 
+# This is a fake TFLite node just for illustration
 class TFLite(GenericSink):
     def __init__(self,name):
         GenericSink.__init__(self,name)
@@ -41,6 +42,8 @@ class TFLite(GenericSink):
     def typeName(self):
         return "TFLite"
 
+# This is a fake MFCC just to illustrate how it could be used in a graph.
+# For a real MFCC example, look at example5
 class MFCC(GenericNode):
     def __init__(self,name,inLength):
         GenericNode.__init__(self,name)

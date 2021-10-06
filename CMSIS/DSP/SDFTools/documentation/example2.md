@@ -20,11 +20,13 @@ It is much more complex:
 - The node HALF representing a constant is introduced (constant arrays are also supported)
 - The two streams are added using a CMSIS-DSP function
 - Then we have a sliding buffer 
-- A block representing a MFCC
+- A block representing a MFCC (a fake MFCC)
 - Another sliding buffer
-- An a block representing TensorFlow Lite for Micro
+- An a block representing TensorFlow Lite for Micro (a fake TFLite node)
 
 Note that those blocks (MFCC, TFLite) are doing nothing in this example. It is just to illustrate a more complex example that someone may want to experiment with for keyword spotting.
+
+Examples 5 and 6 are showing how to use the CMSIS-DSP MFCC.
 
 The new features compared to `example1` are:
 
