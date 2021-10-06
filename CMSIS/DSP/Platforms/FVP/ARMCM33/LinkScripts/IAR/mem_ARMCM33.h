@@ -1,9 +1,11 @@
 /**************************************************************************//**
- * @file     system_ARMCM4.h
- * @brief    CMSIS Device System Header File for
- *           ARMCM4 Device
- * @version  V5.3.2
- * @date     15. November 2019
+ * @file     mem_ARMCM7.h
+ * @brief    Memory base and size definitions (used in scatter file)
+ * @version  V1.1.0
+ * @date     15. May 2019
+ *
+ * @note
+ *
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
@@ -23,40 +25,14 @@
  * limitations under the License.
  */
 
-#ifndef SYSTEM_ARMCM4_H
-#define SYSTEM_ARMCM4_H
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-/**
-  \brief Exception / Interrupt Handler Function Prototype
-*/
-typedef void(*VECTOR_TABLE_Type)(void);
-
-/**
-  \brief System Clock Frequency (Core Clock)
-*/
-extern uint32_t SystemCoreClock;
-
-/**
-  \brief Setup the microcontroller system.
-
-   Initialize the System and update the SystemCoreClock variable.
- */
-extern void SystemInit (void);
+#ifndef __MEM_ARMCM33_H
+#define __MEM_ARMCM33_H
 
 
-/**
-  \brief  Update SystemCoreClock variable.
 
-   Updates the SystemCoreClock with current core Clock retrieved from cpu registers.
- */
-extern void SystemCoreClockUpdate (void);
+#define STACK_SIZE     0x00003000
+#define HEAP_SIZE      0x00100000
 
-#ifdef __cplusplus
-}
-#endif
 
-#endif /* SYSTEM_ARMCM4_H */
+
+#endif /* __MEM_ARMCM33_H */
