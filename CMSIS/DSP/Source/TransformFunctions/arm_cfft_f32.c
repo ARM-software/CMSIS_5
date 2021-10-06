@@ -99,10 +99,10 @@ static void _arm_radix4_butterfly_f32_mve(const arm_cfft_instance_f32 * S,float3
     uint32_t  stage = 0;
     int32_t  iter = 1;
     static const int32_t strides[4] = {
-        (0 - 16) * sizeof(q31_t *),
-        (1 - 16) * sizeof(q31_t *),
-        (8 - 16) * sizeof(q31_t *),
-        (9 - 16) * sizeof(q31_t *)
+        (0 - 16) * (int32_t)sizeof(q31_t *),
+        (1 - 16) * (int32_t)sizeof(q31_t *),
+        (8 - 16) * (int32_t)sizeof(q31_t *),
+        (9 - 16) * (int32_t)sizeof(q31_t *)
     };
 
     n2 = fftLen;
@@ -308,10 +308,10 @@ static void _arm_radix4_butterfly_inverse_f32_mve(const arm_cfft_instance_f32 * 
     uint32_t  stage = 0;
     int32_t  iter = 1;
     static const int32_t strides[4] = {
-        (0 - 16) * sizeof(q31_t *),
-        (1 - 16) * sizeof(q31_t *),
-        (8 - 16) * sizeof(q31_t *),
-        (9 - 16) * sizeof(q31_t *)
+        (0 - 16) * (int32_t)sizeof(q31_t *),
+        (1 - 16) * (int32_t)sizeof(q31_t *),
+        (8 - 16) * (int32_t)sizeof(q31_t *),
+        (9 - 16) * (int32_t)sizeof(q31_t *)
     };
 
     n2 = fftLen;
