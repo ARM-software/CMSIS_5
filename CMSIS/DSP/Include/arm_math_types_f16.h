@@ -33,13 +33,13 @@ extern "C"
 {
 #endif
 
-#if !defined( __CC_ARM )
+#if !defined( __CC_ARM ) && !defined( __ICCARM__ )
 
 /**
  * @brief 16-bit floating-point type definition.
  * This is already defined in arm_mve.h
  *
- * This is not fully supported on ARM AC5.
+ * This is not fully supported on ARM AC5 or IAR.
  */
 
 /*
