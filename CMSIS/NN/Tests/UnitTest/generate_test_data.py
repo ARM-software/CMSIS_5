@@ -289,8 +289,6 @@ class TestSettings(ABC):
         f.write("#define {}_PAD_Y {}\n".format(prefix, self.pad_y))
         f.write("#define {}_OUTPUT_W {}\n".format(prefix, self.x_output))
         f.write("#define {}_OUTPUT_H {}\n".format(prefix, self.y_output))
-        f.write("#define {}_INPUT_OFFSET {}\n".format(prefix, -self.input_zero_point))
-        f.write("#define {}_OUTPUT_OFFSET {}\n".format(prefix, self.output_zero_point))
 
     def write_c_common_header(self, f):
         f.write(self.tensor_flow_reference_version)
@@ -459,6 +457,8 @@ class ConvSettings(TestSettings):
             self.write_common_config(f, prefix)
             if self.test_type == 'depthwise_conv':
                 f.write("#define {}_CH_MULT {}\n".format(prefix, self.channel_multiplier))
+            f.write("#define {}_INPUT_OFFSET {}\n".format(prefix, -self.input_zero_point))
+            f.write("#define {}_OUTPUT_OFFSET {}\n".format(prefix, self.output_zero_point))
 
     def generate_quantize_per_channel_multiplier(self):
         num_channels = self.output_ch
