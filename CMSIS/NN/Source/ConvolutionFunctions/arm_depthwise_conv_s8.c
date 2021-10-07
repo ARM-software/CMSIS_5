@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -84,7 +84,9 @@ static void depthwise_conv_s8_mult_4(const int8_t *input,
                     {
                         int32_t ker_idx = ker_h * (output_ch * kernel_x) + ker_w_start * output_ch + out_ch;
                         int32_t in_idx = (in_h + ker_h) * (input_ch * input_x) + in_w * input_ch + in_ch;
-
+#if defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
+#pragma clang loop unroll(disable)
+#endif
                         for (int32_t ker_w = ker_w_start; ker_w < MIN(kernel_x, input_x - in_w);
                              ++ker_w, ker_idx += output_ch)
                         {
