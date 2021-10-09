@@ -371,9 +371,10 @@ This status information may be displayed on the Debug Unit. Therefore a Debug Un
 - \b Type: specifies the type of the information that is sent in \b Status:
   - \b 0 = Connect: Status indicates that the debugger is connected to the Debug Unit.
   - \b 1 = Running: Status indicates that the target hardware is executing application code.
+  - \b 2 = Error: Status indicates that the debugger has encountered an error.
 - \b Status: contains the actual status information:
-  - \b 0 = False: may be used to turn off a status LED (Connect or Running) on the Debug Unit.
-  - \b 1 = True: may be used to turn on a status LED (Connect or Running) on the Debug Unit.
+  - \b 0 = False: may be used to turn off a status LED (Connect, Running or Error) on the Debug Unit.
+  - \b 1 = True: may be used to turn on a status LED (Connect, Running or Error) on the Debug Unit.
 
 <b>DAP_HostStatus Response:</b>
 \code
