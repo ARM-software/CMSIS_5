@@ -96,7 +96,8 @@ void SystemInit (void)
 
   /* Enable Loop and branch info cache */
   SCB->CCR |= SCB_CCR_LOB_Msk;
-__ISB();
+  __DSB();
+  __ISB();
 
 #if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
   TZ_SAU_Setup();
