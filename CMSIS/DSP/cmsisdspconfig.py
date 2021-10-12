@@ -40,6 +40,7 @@ config["SIN_Q31"]=False
 config["SIN_Q15"]=False
 config["SIN_COS_F32"]=False
 config["SIN_COS_Q31"]=False
+config["SQRT_Q31"]=False
 config["LMS_NORM_Q31"]=False
 config["LMS_NORM_Q15"]=False
 config["CMPLX_MAG_Q31"]=False
@@ -82,6 +83,7 @@ realname["SIN_Q31"]="ARM_SIN_Q31"
 realname["SIN_Q15"]="ARM_SIN_Q15"
 realname["SIN_COS_F32"]="ARM_SIN_COS_F32"
 realname["SIN_COS_Q31"]="ARM_SIN_COS_Q31"
+realname["SQRT_Q31"]="ARM_SQRT_Q31"
 realname["LMS_NORM_Q31"]="ARM_LMS_NORM_Q31"
 realname["LMS_NORM_Q15"]="ARM_LMS_NORM_Q15"
 realname["CMPLX_MAG_Q31"]="ARM_CMPLX_MAG_Q31"
@@ -361,6 +363,9 @@ def interpretCmakeOptions(cmake):
         r.append("-DARM_TABLE_SIN_F32")
     if test(cmake,"ARM_SIN_COS_Q31"):
         r.append("-DARM_TABLE_SIN_Q31")
+
+    if test(cmake,"ARM_SQRT_Q31"):
+        r.append("-DARM_TABLE_SQRT_Q31")
 
     if test(cmake,"ARM_LMS_NORM_Q31"):
         r.append("-DARM_TABLE_RECIP_Q31")

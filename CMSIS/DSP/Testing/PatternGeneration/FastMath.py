@@ -104,7 +104,7 @@ def writeTests(config,format):
     refsin = np.sin(angles)
 
 
-    vals=np.array([0.0, 0.0, 0.1,1.0,2.0,3.0,3.5,3.6])
+    vals=np.linspace(0.0,1.0,1024)
     sqrtvals=np.sqrt(vals)
 
     # Negative values in CMSIS are giving 0
@@ -115,10 +115,15 @@ def writeTests(config,format):
         angles=np.concatenate((a1,a2,a1))
         angles = angles / (2*math.pi)
     config.writeInput(1, angles,"Angles")
+    
+    config.setOverwrite(True)
     config.writeInput(1, vals,"SqrtInput")
+    config.writeReference(1, sqrtvals,"Sqrt")
+    config.setOverwrite(False)
+
     config.writeReference(1, refcos,"Cos")
     config.writeReference(1, refsin,"Sin")
-    config.writeReference(1, sqrtvals,"Sqrt")
+
 
     # For benchmarks
     samples=np.random.randn(NBSAMPLES)

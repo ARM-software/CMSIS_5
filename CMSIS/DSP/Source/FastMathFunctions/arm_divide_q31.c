@@ -57,7 +57,6 @@
   to the saturated negative or positive value.
  */
 
-#include <stdio.h>
 arm_status arm_divide_q31(q31_t numerator,
   q31_t denominator,
   q31_t *quotient,

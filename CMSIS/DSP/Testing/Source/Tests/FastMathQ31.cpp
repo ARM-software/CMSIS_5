@@ -11,6 +11,8 @@ Reference patterns are generated with
 a double precision computation.
 
 */
+#define ABS_SQRT_ERROR ((q31_t)7)
+
 #define ABS_ERROR ((q31_t)2200)
 #define ABS_DIV_ERROR ((q31_t)1)
 
@@ -100,8 +102,8 @@ a double precision computation.
            ASSERT_TRUE((status == ARM_MATH_SUCCESS) || ((inp[i] <= 0) && (status == ARM_MATH_ARGUMENT_ERROR)));
         }
 
-        ASSERT_SNR(ref,output,(float32_t)SNR_THRESHOLD);
-        ASSERT_NEAR_EQ(ref,output,ABS_ERROR);
+        //ASSERT_SNR(ref,output,(float32_t)SNR_THRESHOLD);
+        ASSERT_NEAR_EQ(ref,output,ABS_SQRT_ERROR);
 
     }
 

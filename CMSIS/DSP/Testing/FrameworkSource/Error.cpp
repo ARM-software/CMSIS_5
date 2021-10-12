@@ -89,7 +89,7 @@ void assert_near_equal(unsigned long nb,q63_t pa, q63_t pb, q63_t threshold)
     if (abs(pa - pb) > threshold)
     {
          char details[200];
-         sprintf(details,"diff %lld > %lld (%016llX,%016llX)",abs(pa - pb) , threshold,pa,pb);
+         sprintf(details,"diff %lld > %lld (0x%016llX,0x%016llX)",abs(pa - pb) , threshold,pa,pb);
          throw (Error(EQUAL_ERROR,nb,details));
     }
 };
@@ -100,7 +100,7 @@ void assert_near_equal(unsigned long nb,q31_t pa, q31_t pb, q31_t threshold)
     if (abs(pa - pb) > threshold)
     {
          char details[200];
-         sprintf(details,"diff %d > %d (%08X,%08X)",abs(pa - pb) , threshold,pa,pb);
+         sprintf(details,"diff %d > %d (0x%08X,0x%08X)",abs(pa - pb) , threshold,pa,pb);
          throw (Error(EQUAL_ERROR,nb,details));
     }
 };
@@ -111,7 +111,7 @@ void assert_near_equal(unsigned long nb,q15_t pa, q15_t pb, q15_t threshold)
     if (abs(pa - pb) > threshold)
     {
          char details[200];
-         sprintf(details,"diff %d > %d (%04X,%04X)",abs(pa - pb) , threshold,pa,pb);
+         sprintf(details,"diff %d > %d (0x%04X,0x%04X)",abs(pa - pb) , threshold,pa,pb);
          throw (Error(EQUAL_ERROR,nb,details));
     }
 };
@@ -122,7 +122,7 @@ void assert_near_equal(unsigned long nb,q7_t pa, q7_t pb, q7_t threshold)
     if (abs(pa - pb) > threshold)
     {
          char details[200];
-         sprintf(details,"diff %d > %d (%02X,%02X)",abs(pa - pb) , threshold,pa,pb);
+         sprintf(details,"diff %d > %d (0x%02X,0x%02X)",abs(pa - pb) , threshold,pa,pb);
          throw (Error(EQUAL_ERROR,nb,details));
     }
 };

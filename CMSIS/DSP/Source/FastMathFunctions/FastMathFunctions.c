@@ -52,10 +52,16 @@
 #include "arm_sin_q31.c"
 #endif 
 
+#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FAST_TABLES) || defined(ARM_TABLE_SQRT_Q31)
+#include "arm_sqrt_q31.c"
+#endif 
+
+#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FAST_TABLES) || defined(ARM_TABLE_SQRT_Q15)
+#include "arm_sqrt_q15.c"
+#endif 
+
 #endif
 
-#include "arm_sqrt_q15.c"
-#include "arm_sqrt_q31.c"
 #include "arm_vexp_f32.c"
 #include "arm_vexp_f64.c"
 #include "arm_vlog_f32.c"

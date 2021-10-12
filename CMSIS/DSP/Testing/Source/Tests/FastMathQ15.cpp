@@ -12,6 +12,8 @@ Reference patterns are generated with
 a double precision computation.
 
 */
+#define ABS_SQRT_ERROR ((q15_t)6)
+
 #define ABS_ERROR ((q15_t)10)
 
 #define LOG_ABS_ERROR ((q15_t)3)
@@ -92,14 +94,16 @@ a double precision computation.
         arm_status status;
         unsigned long i;
 
+
         for(i=0; i < ref.nbSamples(); i++)
         {
+            
            status=arm_sqrt_q15(inp[i],&outp[i]);
            ASSERT_TRUE((status == ARM_MATH_SUCCESS) || ((inp[i] <= 0) && (status == ARM_MATH_ARGUMENT_ERROR)));
         }
 
         ASSERT_SNR(ref,output,(float32_t)SNR_THRESHOLD);
-        ASSERT_NEAR_EQ(ref,output,ABS_ERROR);
+        ASSERT_NEAR_EQ(ref,output,ABS_SQRT_ERROR);
 
     }
 

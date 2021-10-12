@@ -1,5 +1,13 @@
 function(interpol PROJECT)
 
+if (CONFIGTABLE AND ARM_SQRT_Q31) 
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_SQRT_Q31)
+endif()
+
+if (CONFIGTABLE AND ARM_SQRT_Q15) 
+    target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_SQRT_Q15)
+endif()
+
 if (CONFIGTABLE AND ARM_COS_F32)
     target_compile_definitions(${PROJECT} PUBLIC ARM_TABLE_SIN_F32)
 endif()
