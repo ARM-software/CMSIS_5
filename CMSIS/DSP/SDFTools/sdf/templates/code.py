@@ -60,7 +60,7 @@ def {{config.schedName}}({{optionalargs()}}):
     #
 {% for node in nodes %}
 {% if node.hasState %}
-    {{node.nodeName}} = {{node.typeName}}({{node.pythonIoTemplate()}},{{node.args}});
+    {{node.nodeName}} = {{node.typeName}}({{node.pythonIoTemplate()}},{{node.args}})
 {% endif %}
 {% endfor %}
 

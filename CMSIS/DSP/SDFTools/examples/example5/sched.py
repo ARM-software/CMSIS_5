@@ -56,12 +56,12 @@ def scheduler(mfccConfig,dispbuf):
     # 
     #  Create node objects
     #
-    audioWin = SlidingBuffer(1024,256,fifo1,fifo2);
-    mfcc = MFCC(1024,13,fifo2,fifo3,mfccConfig);
-    mfccWin = SlidingBuffer(754,377,fifo3,fifo4);
-    sink = NumpySink(754,fifo4,dispbuf);
-    src = WavSource(384,fifo0,"test_stereo.wav");
-    toMono = StereoToMono(384,192,fifo0,fifo1);
+    audioWin = SlidingBuffer(1024,256,fifo1,fifo2)
+    mfcc = MFCC(1024,13,fifo2,fifo3,mfccConfig)
+    mfccWin = SlidingBuffer(754,377,fifo3,fifo4)
+    sink = NumpySink(754,fifo4,dispbuf)
+    src = WavSource(384,fifo0,"test_stereo.wav",True)
+    toMono = StereoToMono(384,192,fifo0,fifo1)
 
     while((sdfError==0) and (debugCounter > 0)):
        nbSchedule = nbSchedule + 1

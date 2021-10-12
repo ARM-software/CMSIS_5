@@ -18,6 +18,7 @@ q15Type = CType(Q15)
 ### each time (half number of MFCCs)
 src=WavSource("src",NBCHANNELS*AUDIO_INTERRUPT_LENGTH)
 src.addLiteralArg("test_stereo.wav")
+src.addLiteralArg(True)
 
 toMono=StereoToMono("toMono",q15Type,AUDIO_INTERRUPT_LENGTH)
 

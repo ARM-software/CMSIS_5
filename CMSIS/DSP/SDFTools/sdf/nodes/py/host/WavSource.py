@@ -33,9 +33,10 @@ import wave
 # Pad with zero when end of file is reached
 class WavSource(GenericSource):
     "Read a stereo wav with 16 bits encoding"
-    def __init__(self,outputSize,fifoout,name):
+    def __init__(self,outputSize,fifoout,name,stereo=True):
         GenericSource.__init__(self,outputSize,fifoout)
         self._file=wave.open(name, 'rb')
+        self._stereo=stereo
         #print(self._file.getnchannels())
         #print(self._file.getnframes())
 
@@ -43,8 +44,11 @@ class WavSource(GenericSource):
     def run(self):
         a=self.getWriteBuffer()
 
-        # Stereo file so chunk must be divided by 2
-        frame=np.frombuffer(self._file.readframes(self._outputSize//2),dtype=np.int16)
+        if self._stereo:
+           # Stereo file so chunk must be divided by 2
+           frame=np.frombuffer(self._file.readframes(self._outputSize//2),dtype=np.int16)
+        else:
+           frame=np.frombuffer(self._file.readframes(self._outputSize),dtype=np.int16)
         if frame.size > 0:
            a[:frame.size] = frame
            a[frame.size:] = 0
