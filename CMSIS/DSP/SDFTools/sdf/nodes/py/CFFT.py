@@ -34,7 +34,7 @@ import cmsisdsp as dsp
 class CFFT(GenericNode):
     def __init__(self,inputSize,outSize,fifoin,fifoout):
         GenericNode.__init__(self,inputSize,outSize,fifoin,fifoout)
-        if fifoin.type == np.dtype(np.float):
+        if fifoin.type == np.dtype(np.float32):
            self._cfft=dsp.arm_cfft_instance_f32()
            status=dsp.arm_cfft_init_f32(self._cfft,inputSize>>1)
         if fifoin.type == np.dtype(np.int16):
@@ -46,7 +46,7 @@ class CFFT(GenericNode):
         b=self.getWriteBuffer()
         # Copy arrays (not just assign references)
         b[:]=a[:]
-        if self._src.type == np.dtype(np.float):
+        if self._src.type == np.dtype(np.float32):
            dsp.arm_cfft_f32(self._cfft,b,0,1)
         if self._src.type == np.dtype(np.int16):
            dsp.arm_cfft_q15(self._cfft,b,0,1)

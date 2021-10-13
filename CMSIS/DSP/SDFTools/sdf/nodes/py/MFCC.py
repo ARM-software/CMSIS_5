@@ -35,13 +35,16 @@ class MFCC(GenericNode):
     def __init__(self,inputSize,outSize,fifoin,fifoout,mfccConfig):
         GenericNode.__init__(self,inputSize,outSize,fifoin,fifoout)
         self._config=mfccConfig
-        self._tmp=np.zeros(2*inputSize,dtype=np.int32)
+        if self._src.type == np.dtype(np.float32):
+           self._tmp=np.zeros(2*inputSize,dtype=np.float32)
+        else:
+           self._tmp=np.zeros(2*inputSize,dtype=np.int32)
 
 
     def run(self):
         a=self.getReadBuffer()
         b=self.getWriteBuffer()
-        if self._src.type == np.dtype(np.float):
+        if self._src.type == np.dtype(np.float32):
            res=dsp.arm_mfcc_f32(self._config,a,self._tmp)
            errorStatus = 0
         if self._src.type == np.dtype(np.int32):

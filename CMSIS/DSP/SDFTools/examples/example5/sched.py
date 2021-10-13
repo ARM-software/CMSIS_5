@@ -60,7 +60,7 @@ def scheduler(mfccConfig,dispbuf):
     mfcc = MFCC(1024,13,fifo2,fifo3,mfccConfig)
     mfccWin = SlidingBuffer(754,377,fifo3,fifo4)
     sink = NumpySink(754,fifo4,dispbuf)
-    src = WavSource(384,fifo0,"test_stereo.wav",True)
+    src = WavSource(384,fifo0,True,"test_stereo.wav")
     toMono = StereoToMono(384,192,fifo0,fifo1)
 
     while((sdfError==0) and (debugCounter > 0)):

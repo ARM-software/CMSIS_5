@@ -32,7 +32,7 @@ import cmsisdsp as dsp
 class StereoToMono(GenericNode):
     def __init__(self,inputSize,outputSize,fifoin,fifoout):
         GenericNode.__init__(self,inputSize,outputSize,fifoin,fifoout)
-        if fifoin.type == np.dtype(np.float):
+        if fifoin.type == np.dtype(np.float32):
             self._isFloat=True 
         else:
             self._isFloat=False

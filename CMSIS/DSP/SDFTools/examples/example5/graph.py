@@ -17,8 +17,8 @@ q15Type = CType(Q15)
 ### Because the MFCC slising window is sliding by half a second
 ### each time (half number of MFCCs)
 src=WavSource("src",NBCHANNELS*AUDIO_INTERRUPT_LENGTH)
-src.addLiteralArg("test_stereo.wav")
 src.addLiteralArg(True)
+src.addLiteralArg("test_stereo.wav")
 
 toMono=StereoToMono("toMono",q15Type,AUDIO_INTERRUPT_LENGTH)
 

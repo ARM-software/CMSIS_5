@@ -130,7 +130,32 @@ class Constant:
         return True
     
     
+class SchedArg:
+    """Class for arguments of the scheduler functions.
+       They can either be a literal arg like string, boolean
+       or number or they can be a variable name"""
+    
+    def __init__(self,name):
+          self._name=name 
 
+class ArgLiteral(SchedArg):
+     def __init__(self,name):
+        super().__init__(name)
+
+     @property
+     def arg(self):
+        if isinstance(self._name,str):
+             return("\"%s\"" % self._name) 
+        else:
+             return(str(self._name))
+
+class VarLiteral(SchedArg):
+     def __init__(self,name):
+        super().__init__(name)
+
+     @property 
+     def arg(self):
+        return(self._name)
 
 class BaseNode:
     """Root class for all Nodes of a dataflow graph.
@@ -149,8 +174,7 @@ class BaseNode:
         # The fifo args
         self._args=""
         # Literal arguments
-        self.literalArgs=None 
-        self.variableArguments=None
+        self.schedArgs=None 
 
     def __getattr__(self,name):
         """Present inputs / outputs as attributes"""
@@ -169,16 +193,16 @@ class BaseNode:
         raise IndexError 
 
     def addLiteralArg(self,l):
-        if self.literalArgs:
-            self.literalArgs.append(l)
+        if self.schedArgs:
+            self.schedArgs.append(ArgLiteral(l))
         else:
-            self.literalArgs=[l]
+            self.schedArgs=[ArgLiteral(l)]
 
     def addVariableArg(self,l):
-        if self.variableArguments:
-            self.variableArguments.append(l)
+        if self.schedArgs:
+            self.schedArgs.append(VarLiteral(l))
         else:
-            self.variableArguments=[l]
+            self.schedArgs=[VarLiteral(l)]
 
     @property
     def isConstantNode(self):
@@ -291,14 +315,9 @@ class BaseNode:
         """String of fifo args for object initialization
             with literal argument and variable arguments"""
         allArgs=self.listOfargs
-        if self.literalArgs:
-            for lit in self.literalArgs:
-                if isinstance(lit,str):
-                    allArgs.append("\"%s\"" % lit) 
-                else:
-                    allArgs.append(str(lit))
-        if self.variableArguments:
-            allArgs += self.variableArguments
+        if self.schedArgs:
+            for lit in self.schedArgs:
+                allArgs.append(lit.arg)
         return "".join(joinit(allArgs,","))
     
     @args.setter

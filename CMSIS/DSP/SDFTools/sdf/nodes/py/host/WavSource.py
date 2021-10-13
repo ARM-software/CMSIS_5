@@ -33,7 +33,7 @@ import wave
 # Pad with zero when end of file is reached
 class WavSource(GenericSource):
     "Read a stereo wav with 16 bits encoding"
-    def __init__(self,outputSize,fifoout,name,stereo=True):
+    def __init__(self,outputSize,fifoout,stereo,name):
         GenericSource.__init__(self,outputSize,fifoout)
         self._file=wave.open(name, 'rb')
         self._stereo=stereo
