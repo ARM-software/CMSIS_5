@@ -2,8 +2,8 @@
  * @file     system_ARMCM55.c
  * @brief    CMSIS Device System Source File for
  *           ARMCM55 Device
- * @version  V1.0.1
- * @date     4. May 2021
+ * @version  V1.0.2
+ * @date     13. Oct 2021
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2021 Arm Limited. All rights reserved.
@@ -96,7 +96,8 @@ void SystemInit (void)
 
   /* Enable Loop and branch info cache */
   SCB->CCR |= SCB_CCR_LOB_Msk;
-__ISB();
+  __DSB();
+  __ISB();
 
 #if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
   TZ_SAU_Setup();
