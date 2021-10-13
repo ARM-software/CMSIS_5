@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     core_cm33.h
  * @brief    CMSIS Cortex-M33 Core Peripheral Access Layer Header File
- * @version  V5.2.2
- * @date     04. June 2021
+ * @version  V5.2.3
+ * @date     13. October 2021
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2021 Arm Limited. All rights reserved.
