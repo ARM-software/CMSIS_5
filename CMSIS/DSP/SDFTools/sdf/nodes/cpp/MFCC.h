@@ -147,7 +147,7 @@ public:
     };
 
     const arm_mfcc_instance_q15 *mfccConfig;
-    std::vector<q15_t> memory;
+    std::vector<q31_t> memory;
 };
 
 
