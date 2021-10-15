@@ -233,6 +233,7 @@
       <xs:enumeration value="Synwit:144" />
       <xs:enumeration value="TI:16" />
       <xs:enumeration value="Texas Instruments:16" />
+      <xs:enumeration value="ThinkTech:172" />
       <xs:enumeration value="Toshiba:92" />
       <xs:enumeration value="Triad Semiconductor:104" />
       <xs:enumeration value="Unisoc:152" />
