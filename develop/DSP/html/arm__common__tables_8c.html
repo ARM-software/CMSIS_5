@@ -355,6 +355,10 @@ Variables</h2></td></tr>
 <tr class="separator:a8bfccee9e1c0042cf4a765f4b19d097d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9cbcfe313f61add745ebfeddb4fecd55"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="arm__math__types_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__common__tables_8c.html#a9cbcfe313f61add745ebfeddb4fecd55">sinTable_q15</a> [<a class="el" href="fast__math__functions_8h.html#afcb9147c96853bea484cfc2dde07463d">FAST_MATH_TABLE_SIZE</a>+1]</td></tr>
 <tr class="separator:a9cbcfe313f61add745ebfeddb4fecd55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae8bba6627dbb8785881b7377776bbf15"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="arm__math__types_8h.html#adc89a3547f5324b7b3b95adec3806bc0">q31_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__common__tables_8c.html#ae8bba6627dbb8785881b7377776bbf15">sqrt_initial_lut_q31</a> [32]</td></tr>
+<tr class="separator:ae8bba6627dbb8785881b7377776bbf15"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d1282eb408522891c8e023631962e86"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="arm__math__types_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__common__tables_8c.html#a1d1282eb408522891c8e023631962e86">sqrt_initial_lut_q15</a> [16]</td></tr>
+<tr class="separator:a1d1282eb408522891c8e023631962e86"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Variable Documentation</h2>
 <a class="anchor" id="a08dd0b98fa4cc50cad0f48ce752f8149"></a>
@@ -763,6 +767,30 @@ Variables</h2></td></tr>
  } </pre> where PI value is 3.14159265358979 </dd></dl>
 <dl class="section user"><dt></dt><dd>Second, convert floating-point to Q31 (Fixed point): (sinTable[i] * pow(2, 31)) </dd></dl>
 <dl class="section user"><dt></dt><dd>Finally, round to the nearest integer value: sinTable[i] += (sinTable[i] &gt; 0 ? 0.5 : -0.5); </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a1d1282eb408522891c8e023631962e86"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="arm__math__types_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> sqrt_initial_lut_q15[16]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ae8bba6627dbb8785881b7377776bbf15"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="arm__math__types_8h.html#adc89a3547f5324b7b3b95adec3806bc0">q31_t</a> sqrt_initial_lut_q31[32]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>

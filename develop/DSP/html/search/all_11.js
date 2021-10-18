@@ -1,6 +1,7 @@
 var searchData=
 [
   ['quaternion_20math_20functions',['Quaternion Math Functions',['../group__groupQuaternionMath.html',1,'']]],
+  ['q12quarter',['Q12QUARTER',['../group__SQRT.html#gaf6719bb18280f9c76077432e7445f2f5',1,'arm_sqrt_q15.c']]],
   ['q15_5fabsmax',['Q15_ABSMAX',['../arm__math__types_8h.html#aaa2166e8debedfbdb729cf6183d3e18b',1,'arm_math_types.h']]],
   ['q15_5fabsmin',['Q15_ABSMIN',['../arm__math__types_8h.html#a79ef9d10fc976018e1362b48ee245660',1,'arm_math_types.h']]],
   ['q15_5fmax',['Q15_MAX',['../arm__math__types_8h.html#adabd7fb7c7917aed16729b365c3f900b',1,'arm_math_types.h']]],
@@ -16,6 +17,7 @@ var searchData=
   ['q15x8x4_5ft',['q15x8x4_t',['../arm__math__types_8h.html#aaa2f4c37777c944e348dd28b92c64c26',1,'arm_math_types.h']]],
   ['q23_5ft',['q23_t',['../arm__math__types_8h.html#a5c6fe896b23b8bcdf05c98051207da6c',1,'arm_math_types.h']]],
   ['q23x4_5ft',['q23x4_t',['../arm__math__types_8h.html#a41062b2fa31a08ab7c5bb1d6b60b2924',1,'arm_math_types.h']]],
+  ['q28quarter',['Q28QUARTER',['../group__SQRT.html#ga897a7cd07e490b404fd5dcad307fe119',1,'arm_sqrt_q31.c']]],
   ['q31_5fabsmax',['Q31_ABSMAX',['../arm__math__types_8h.html#a091e2f8f50b02dcfef556446a69626ff',1,'arm_math_types.h']]],
   ['q31_5fabsmin',['Q31_ABSMIN',['../arm__math__types_8h.html#ae4632cfdefcb6ec8f70717a28624ff25',1,'arm_math_types.h']]],
   ['q31_5fmax',['Q31_MAX',['../arm__math__types_8h.html#a468734b237f1c95a31715aa2b60a576e',1,'arm_math_types.h']]],

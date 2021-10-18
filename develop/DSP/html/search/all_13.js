@@ -42,6 +42,8 @@ var searchData=
   ['snr_5fthreshold_5ff32',['SNR_THRESHOLD_F32',['../arm__fir__example__f32_8c.html#af7d1dd4deffa8e7ed6429e5dd0fe1812',1,'SNR_THRESHOLD_F32():&#160;arm_fir_example_f32.c'],['../arm__graphic__equalizer__example__q31_8c.html#af7d1dd4deffa8e7ed6429e5dd0fe1812',1,'SNR_THRESHOLD_F32():&#160;arm_graphic_equalizer_example_q31.c']]],
   ['sq',['SQ',['../utils_8h.html#ac3644f84794a8bfdacf39c4b2c2495fc',1,'utils.h']]],
   ['square_20root',['Square Root',['../group__SQRT.html',1,'']]],
+  ['sqrt_5finitial_5flut_5fq15',['sqrt_initial_lut_q15',['../arm__common__tables_8h.html#a1d1282eb408522891c8e023631962e86',1,'sqrt_initial_lut_q15():&#160;arm_common_tables.c'],['../arm__common__tables_8c.html#a1d1282eb408522891c8e023631962e86',1,'sqrt_initial_lut_q15():&#160;arm_common_tables.c']]],
+  ['sqrt_5finitial_5flut_5fq31',['sqrt_initial_lut_q31',['../arm__common__tables_8h.html#ae8bba6627dbb8785881b7377776bbf15',1,'sqrt_initial_lut_q31():&#160;arm_common_tables.c'],['../arm__common__tables_8c.html#ae8bba6627dbb8785881b7377776bbf15',1,'sqrt_initial_lut_q31():&#160;arm_common_tables.c']]],
   ['srca_5fbuf_5ff32',['srcA_buf_f32',['../arm__dotproduct__example__f32_8c.html#a0c248a472fdc0507e4ab7d693e4876b6',1,'arm_dotproduct_example_f32.c']]],
   ['srcalen',['srcALen',['../arm__convolution__example__f32_8c.html#ace48ed566e2cd6a680f0681192e6af28',1,'arm_convolution_example_f32.c']]],
   ['srcb_5fbuf_5ff32',['srcB_buf_f32',['../arm__dotproduct__example__f32_8c.html#a67d9082c1585d4854ae9ca38db170ff5',1,'arm_dotproduct_example_f32.c']]],

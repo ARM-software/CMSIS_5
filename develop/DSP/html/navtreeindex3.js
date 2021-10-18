@@ -1,5 +1,7 @@
 var NAVTREEINDEX3 =
 {
+"group__polysvm.html#ga6dcdfd9ae4e94b8e2239fdd22ddf10bd":[3,13,1,0],
+"group__polysvm.html#gad004464aae8fdecfc985a02a0de6b0af":[3,13,1,1],
 "group__polysvm.html#gafd022241fbd983b4184a9edfa813044e":[3,13,1,2],
 "group__power.html":[3,11,8],
 "group__power.html#ga6b87986c6a3617d4fc32c0572a07706c":[3,11,8,3],
@@ -247,7 +249,5 @@ var NAVTREEINDEX3 =
 "structarm__fir__decimate__instance__f32.html":[4,34],
 "structarm__fir__decimate__instance__f32.html#a335c87e6fdc4b96601d95a5de8b9c463":[4,34,3],
 "structarm__fir__decimate__instance__f32.html#a39230f04a29d8321948e339633780442":[4,34,2],
-"structarm__fir__decimate__instance__f32.html#a751941891e47f522a7f5375fe8990aac":[4,34,1],
-"structarm__fir__decimate__instance__f32.html#ae2c8107d00d3c9942e7a20fc598edecf":[4,34,0],
-"structarm__fir__decimate__instance__q15.html":[4,35]
+"structarm__fir__decimate__instance__f32.html#a751941891e47f522a7f5375fe8990aac":[4,34,1]
 };

@@ -641,9 +641,10 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>none</dd></dl>
-<dl class="section user"><dt>Description</dt><dd>The number of input samples if the FFT length used when initializing the instance data structure.</dd></dl>
+<dl class="section user"><dt>Description</dt><dd>The number of input samples is the FFT length used when initializing the instance data structure.</dd></dl>
 <p>The temporary buffer has a 2*fft length.</p>
-<p>The source buffer is modified by this function. </p>
+<p>The source buffer is modified by this function.</p>
+<p>The function may saturate. If the FFT length is too big and the number of MEL filters too small then the fixed point computations may saturate. </p>
 
 </div>
 </div>
@@ -692,9 +693,10 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>none</dd></dl>
-<dl class="section user"><dt>Description</dt><dd>The number of input samples if the FFT length used when initializing the instance data structure.</dd></dl>
+<dl class="section user"><dt>Description</dt><dd>The number of input samples is the FFT length used when initializing the instance data structure.</dd></dl>
 <p>The temporary buffer has a 2*fft length.</p>
-<p>The source buffer is modified by this function. </p>
+<p>The source buffer is modified by this function.</p>
+<p>The function may saturate. If the FFT length is too big and the number of MEL filters too small then the fixed point computations may saturate. </p>
 
 </div>
 </div>
