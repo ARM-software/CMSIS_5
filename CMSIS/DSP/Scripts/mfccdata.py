@@ -237,6 +237,8 @@ def checkF16(configs):
     configs["hasF16"]=hasF16
 
 env = Environment(
+       # For 3.0 version of jinja2, replace with
+       # loader=PackageLoader("mfcctemplates",""),
        loader=PackageLoader("mfccdata","mfcctemplates"),
        autoescape=select_autoescape(),
        trim_blocks=True

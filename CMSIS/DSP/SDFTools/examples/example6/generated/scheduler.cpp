@@ -60,9 +60,10 @@ uint32_t scheduler(int *error,arm_mfcc_instance_f32 *mfccConfig)
     FileSink<float32_t,13> sink(fifo3,"output_example6.txt");
     FileSource<float32_t,192> src(fifo0,"input_example6.txt");
 
+    /* Run several schedule iterations */
     while((sdfError==0) && (debugCounter > 0))
     {
-
+       /* Run a schedule iteration */
        sdfError = src.run();
        CHECKERROR;
        sdfError = audioWin.run();

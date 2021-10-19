@@ -36,7 +36,19 @@ def gencode(sched,directory,config):
        trim_blocks=True
     )
     
-    ctemplate = env.get_template("code.cpp")
+    schedDescription=""
+
+    if config.codeArray:
+       ctemplate = env.get_template("codeArray.cpp")
+       nb = 0
+       for s in sched.schedule:
+         schedDescription = schedDescription + ("%d," % sched.nodes[s].codeID)
+         nb = nb + 1
+         if nb == 40:
+            nb=0 
+            schedDescription = schedDescription + "\n"
+    else:
+       ctemplate = env.get_template("code.cpp")
     htemplate = env.get_template("code.h")
 
 
@@ -48,10 +60,14 @@ def gencode(sched,directory,config):
     with open(cfile,"w") as f:
          print(ctemplate.render(fifos=sched._graph._allFIFOs,
             nbFifos=nbFifos,
+            nbNodes=len(sched.nodes),
             nodes=sched.nodes,
+            pureNodes=sched.pureNodes,
             schedule=sched.schedule,
+            schedLen=len(sched.schedule),
             config=config,
-            sched=sched
+            sched=sched,
+            schedDescription=schedDescription
             ),file=f)
 
     with open(hfile,"w") as f:

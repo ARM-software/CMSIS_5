@@ -60,6 +60,11 @@ class Configuration:
         # Path to SDF module for Python simu 
         self.pathToSDFModule="../.."
 
+        # When codeArray  is true, instead of using
+        # function calls we parse un array giving
+        # the index of functions to call in another array
+        self.codeArray = False
+
     @property
     def debug(self):
         return (self.debugLimit > 0)

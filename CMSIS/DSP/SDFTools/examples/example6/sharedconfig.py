@@ -22,4 +22,4 @@ nbMFCCOutputs = int(np.floor(sample_rate / (FFTSize >> 1)))
 if nbMFCCOutputs%2 == 1:
     nbMFCCOutputs = nbMFCCOutputs + 1 
     
-print(nbMFCCOutputs)
+print("nbMFCCOutputs = %d " % nbMFCCOutputs)

@@ -48,9 +48,10 @@ uint32_t scheduler(int *error,int someVariable)
     Sink<float32_t,5> sink(fifo1);
     Source<float32_t,5> source(fifo0);
 
+    /* Run several schedule iterations */
     while((sdfError==0) && (debugCounter > 0))
     {
-
+       /* Run a schedule iteration */
        sdfError = source.run();
        CHECKERROR;
        sdfError = source.run();

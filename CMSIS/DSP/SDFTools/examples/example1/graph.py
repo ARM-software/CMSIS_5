@@ -68,7 +68,7 @@ print("Schedule length = %d" % sched.scheduleLength)
 print("Memory usage %d bytes" % sched.memory)
 #
 
-
+#conf.codeArray=True
 sched.ccode("generated",conf)
 
 with open("test.dot","w") as f:

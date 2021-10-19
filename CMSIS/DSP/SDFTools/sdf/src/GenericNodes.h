@@ -124,8 +124,14 @@ class FIFO: public FIFOBase<T>
 
 // GENERIC NODES 
 
+class NodeBase
+{
+public:
+    virtual int run()=0;
+};
+
 template<typename IN, int inputSize,typename OUT, int outputSize>
-class GenericNode
+class GenericNode:public NodeBase
 {
 public:
      GenericNode(FIFOBase<IN> &src,FIFOBase<OUT> &dst):mSrc(src),mDst(dst){};
@@ -140,7 +146,7 @@ private:
 };
 
 template<typename IN, int inputSize,typename OUT1, int output1Size,typename OUT2, int output2Size>
-class GenericNode12
+class GenericNode12:public NodeBase
 {
 public:
      GenericNode12(FIFOBase<IN> &src,FIFOBase<OUT1> &dst1,FIFOBase<OUT2> &dst2):mSrc(src),
@@ -158,7 +164,7 @@ private:
 };
 
 template<typename IN1, int input1Size,typename IN2, int input2Size,typename OUT, int outputSize>
-class GenericNode21
+class GenericNode21:public NodeBase
 {
 public:
      GenericNode21(FIFOBase<IN1> &src1,FIFOBase<IN2> &src2,FIFOBase<OUT> &dst):mSrc1(src1),
@@ -179,7 +185,7 @@ private:
 
 
 template<typename OUT, int outputSize>
-class GenericSource
+class GenericSource:public NodeBase
 {
 public:
      GenericSource(FIFOBase<OUT> &dst):mDst(dst){};
@@ -192,7 +198,7 @@ private:
 };
 
 template<typename IN,int inputSize>
-class GenericSink
+class GenericSink:public NodeBase
 {
 public:
      GenericSink(FIFOBase<IN> &src):mSrc(src){};

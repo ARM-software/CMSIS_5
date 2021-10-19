@@ -32,7 +32,7 @@
 
 
 template<typename OUT,int outputSize>
-class AudioSource: GenericSource<OUT,outputSize>
+class AudioSource: public GenericSource<OUT,outputSize>
 {
 public:
     AudioSource(FIFOBase<OUT> &dst,ring_config_t *config):

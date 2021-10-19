@@ -1144,7 +1144,7 @@ This section is a tutorial that explains how to create a stand-alone BSP. Initia
 an evaluation board. This BSP is then extended to contain also software components that interface with the hardware of the
 board. Finally, meaningful example projects are added.
 
-Of course, the sections for \c boards and \examples can also be added to a \ref createPack_DFP. Having separate BSP packs
+Of course, the sections for \c boards and \c examples can also be added to a \ref createPack_DFP. Having separate BSP packs
 is an advantage, if you have more than one board for a given device (family) for maintenance reasons. 
 
 BSP Use Cases
