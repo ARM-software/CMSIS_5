@@ -83,9 +83,10 @@ uint32_t scheduler(int *error)
     ToComplex<float32_t,256,float32_t,512> toCmplx(fifo2,fifo3);
     ToReal<float32_t,512,float32_t,256> toReal(fifo5,fifo6);
 
+    /* Run several schedule iterations */
     while((sdfError==0) && (debugCounter > 0))
     {
-
+       /* Run a schedule iteration */
        sdfError = src.run();
        CHECKERROR;
        sdfError = audioWin.run();

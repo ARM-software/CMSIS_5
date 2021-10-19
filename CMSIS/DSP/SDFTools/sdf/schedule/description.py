@@ -541,28 +541,66 @@ class Schedule:
         self._sortedEdges=sortedEdges
         self._schedule = schedule 
         self._graph = g
+        # Nodes containing pure functions (no state) like some
+        # CMSIS-DSP functions.
+        # When scheduling is using the option codeArray, the
+        # schedule is encoded as an array.
+        # Function calls cannot be inlined anymore and we need
+        # to create new nodes for those function calls.
+        # The pureNode structure is done for this.
+        # It is a record because we want to reuse nodes for same
+        # types.
+        self._pureNodes={}
+        nodeCodeID = 0
+        pureClassID = 1
         for n in self.nodes:
+            n.codeID = nodeCodeID
+            nodeCodeID = nodeCodeID + 1
             # Constant nodes are ignored since they have
             # no arcs, and are connected to no FIFOs
             theArgs=[] 
+            theArgTypes=[]
             i,o=n.allIOs()
             for io in i:
                 # An io connected to a constant node has no fifo 
                 if not io.fifo is None:
                    theArgs.append(self.fifoID(io.fifo))
+                   theArgTypes.append(io.ctype)
                 else:
                 # Instead the arg is the name of a constant node
                 # instead of being a fifo ID
                    theArgs.append(io.constantNode.name)
+                   theArgTypes.append(io.constantNode.name)
             for io in o:
                 theArgs.append(self.fifoID(io.fifo))
+                theArgTypes.append(io.ctype)
             n.args=theArgs
+
+            # Analyze the nature of arguments for pure functions
+            # The information created during this analysis
+            # is useful when generating a class containing the
+            # pure function
+            if not n.hasState:
+               theType=(n.nodeName,tuple(theArgTypes))
+               if not theType in self._pureNodes:
+                  self._pureNodes[theType]=n
+                  n.pureClassID = pureClassID 
+                  pureClassID = pureClassID + 1
+               else:
+                  n.pureClassID = self._pureNodes[theType].pureClassID
+               n.pureNodeType=theType
+               n.analyzeArgs()
 
     def hasDelay(self,edge):
         return(self._graph.hasDelay(edge))
 
     def getDelay(self,edge):
         return(self._graph.getDelay(edge))
+
+    @property
+    def pureNodes(self):
+        return self._pureNodes
+    
 
     @property
     def constantEdges(self):

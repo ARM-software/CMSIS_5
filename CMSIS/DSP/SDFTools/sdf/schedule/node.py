@@ -28,6 +28,10 @@
 """Description of the basic types used to build a dataflow graph"""
 from jinja2 import Environment, PackageLoader, select_autoescape
 
+class NoFunctionArrayInPython(Exception):
+    pass
+
+
 def camelCase(st):
     output = ''.join(x for x in st.title() if x.isalnum())
     return output[0].lower() + output[1:]
@@ -254,6 +258,10 @@ class BaseNode:
         
         return(ins,outs)
 
+
+
+    
+
     def ioTemplate(self):
         """Template arguments for C
            input type, input size ...
@@ -303,6 +311,16 @@ class BaseNode:
            return ("sdfError = %s.run();" % self.nodeName)
         else:
            return ("sdfError = %s.run()" % self.nodeName)
+
+    def cFunc(self,ctemplate=True):
+        """Function call for code array scheduler
+
+           Some nodes may customize it
+        """
+        if ctemplate:
+           return ("(runNode)&%s<%s>::run" % (self.typeName,self.ioTemplate()))
+        else:
+           raise NoFunctionArrayInPython
     
     
     @property
@@ -310,11 +328,13 @@ class BaseNode:
         """List of fifos args for object initialization"""
         return self._args
 
+
     @property
     def args(self):
         """String of fifo args for object initialization
             with literal argument and variable arguments"""
         allArgs=self.listOfargs
+        # Add specific argrs after FIFOs
         if self.schedArgs:
             for lit in self.schedArgs:
                 allArgs.append(lit.arg)
@@ -323,15 +343,23 @@ class BaseNode:
     @args.setter
     def args(self,fifoIDs):
        res=[]
+       # Template args is used only for code array
+       # scheduler when we create on the fly a new class
+       # for a function.
+       # In this case, the arguments of the template must only be
+       # fifos and not constant.
+       templateargs=[]
        for x in fifoIDs:
          # If args is a FIFO we generate a name using fifo ids
          if isinstance(x,int):
             res.append("fifo%d" % x)
+            templateargs.append("fifo%d" % x)
          # If args is a constant node, we just use the constant node name
          # (Defined in C code)
          else:
             res.append(x)
        self._args=res
+       self._templateargs=templateargs
 
     # For graphviz generation
 
@@ -491,9 +519,10 @@ class GenericFunction(GenericNode):
     # Used to generate unique ID and names when
     # unique names are required
     # like for creating the graph where each call to
-    # the same functiion must be identified as a
+    # the same function must be identified as a
     # separate node
     NODEID={}
+    PUREID=1
 
     ENV = Environment(
        loader=PackageLoader("sdf"),
@@ -503,19 +532,147 @@ class GenericFunction(GenericNode):
     )
     
     CTEMPLATE = ENV.get_template("cmsis.cpp")
+    CNODETEMPLATE = ENV.get_template("cmsisNode.cpp")
+
     PYTEMPLATE = ENV.get_template("cmsis.py")
 
     def __init__(self,funcname,theType,length):
-        if not (funcname in Dsp.NODEID):
-            Dsp.NODEID[funcname]=1 
+        if not (funcname in GenericFunction.NODEID):
+            GenericFunction.NODEID[funcname]=1 
 
-        GenericNode.__init__(self,"%s%d" % (funcname,Dsp.NODEID[funcname]))
+        self._pureNodeID = GenericFunction.PUREID
+        GenericFunction.PUREID = GenericFunction.PUREID + 1
+        GenericNode.__init__(self,"%s%d" % (funcname,GenericFunction.NODEID[funcname]))
 
         self._hasState = False
         self._length = length 
         self._nodeName = funcname
 
-        Dsp.NODEID[funcname]=Dsp.NODEID[funcname]+1
+        GenericFunction.NODEID[funcname]=GenericFunction.NODEID[funcname]+1
+
+
+    # For class generated on the fly to contain a function call
+    # Analyze which args are constant instead of being FIFOs
+    def analyzeArgs(self):
+        inputid=0 
+        outputid=0
+        # Arguments to use when calling the constructor
+        ios=[]
+        # Template params
+        temptypes=[]
+        specializedtemptypes=[]
+        # template args
+        tempargs=[]
+        # Template params for the generic node
+        tempgen=[]
+        # Datatypes for the constructor
+        constructortypes=[]
+        # Args for the generic constructor
+        genericconstructorargs=[]
+
+        typenameID = 1
+        # Use ordered io names
+        for io in self.inputNames:
+            x = self._inputs[io]
+            if not x.constantNode:
+               inputid = inputid + 1
+               temptypes.append("typename T%d, int input%dSize" % (typenameID,inputid))
+               specializedtemptypes.append("int input%dSize" % (inputid))
+               tempargs.append("%s,input%dSize" % (x.ctype,inputid))
+               tempgen.append("%s,input%dSize" % (x.ctype,inputid))
+               constructortypes.append("FIFOBase<%s> &src%d" % (x.ctype,inputid))
+               genericconstructorargs.append("src%d" % inputid)
+               ios.append("%s,%d" % (x.ctype,x.nbSamples))
+               typenameID = typenameID + 1
+
+        for io in self.outputNames:
+            x = self._outputs[io]
+            if not x.constantNode:
+               outputid = outputid + 1
+               temptypes.append("typename T%d,int output%dSize" % (typenameID,outputid))
+               specializedtemptypes.append("int output%dSize" % (outputid))
+               tempargs.append("%s,output%dSize" % (x.ctype,outputid))
+               tempgen.append("%s,output%dSize" % (x.ctype,outputid))
+               constructortypes.append("FIFOBase<%s> &dst%d" % (x.ctype,outputid))
+               genericconstructorargs.append("dst%d" % outputid)
+               ios.append("%s,%d" % (x.ctype,x.nbSamples))
+               typenameID = typenameID + 1
+
+        self._realInputs = inputid
+        self._realOutputs = outputid
+        # Arguments to use when calling the constructor
+        self._constructorTypes = "".join(joinit(ios,","))
+        # Argument 
+        self._constructorArguments = "".join(joinit(self._templateargs,",")) 
+        # Template parameters to use when defining the template
+        self._templateParameters = "".join(joinit(temptypes,","))
+        # Template parameters to use when defining the template
+        self._specializedTemplateParameters = "".join(joinit(specializedtemptypes,","))
+        # Template parameters to use when defining the template
+        self._templateArguments = "".join(joinit(tempargs,","))
+        # Template parameters to use when defining the template
+        self._templateParametersForGeneric = "".join(joinit(tempgen,","))
+        # Datatypes for the constructors 
+        self._datatypeForConstructor = "".join(joinit(constructortypes,","))
+        # Args for the generic constructor
+        self._genericConstructorArgs = "".join(joinit(genericconstructorargs,","))
+
+    @property
+    def pureNodeID(self):
+        return self._pureNodeID
+    
+
+    @property
+    def realInputs(self):
+        return self._realInputs
+    
+    @property
+    def realOutputs(self):
+        return self._realOutputs
+    
+    @property
+    def constructorTypes(self):
+        return self._constructorTypes
+
+    @property
+    def constructorArguments(self):
+        return self._constructorArguments
+    
+    @property
+    def templateParameters(self):
+        return self._templateParameters
+
+    @property
+    def specializedTemplateParameters(self):
+        return self._specializedTemplateParameters
+    
+
+    @property
+    def templateArguments(self):
+        return self._templateArguments
+    
+
+    @property
+    def templateParametersForGeneric(self):
+        return self._templateParametersForGeneric
+
+    @property
+    def datatypeForConstructor(self):
+        return self._datatypeForConstructor
+
+    @property
+    def genericConstructorArgs(self):
+        return self._genericConstructorArgs
+    
+    
+    
+    
+    @property 
+    def nodeKind(self):
+        if (self._realInputs + self._realOutputs) == 2:
+           return "GenericNode"
+        else:
+           return "GenericNode21"
 
 
     @property
@@ -528,7 +685,7 @@ class GenericFunction(GenericNode):
         return "Function"
 
     # To clean
-    def cRun(self,ctemplate=True):
+    def cRun(self,ctemplate=True,codeArray=False):
        if ctemplate:
          theType=self._inputs[self.inputNames[0]].ctype
        else:
@@ -549,6 +706,8 @@ class GenericFunction(GenericNode):
        argsStr=""
        inArgsStr=""
        outArgsStr=""
+       inputId=1
+       outputId=1
        for io in self.inputNames:
             ioObj = self._inputs[io] 
             if ioObj.constantNode:
@@ -561,15 +720,23 @@ class GenericFunction(GenericNode):
                ptrs.append(buf)
                args.append(buf)
                inargs.append(buf)
+               if self.realInputs == 1:
+                  readFuncName="getReadBuffer"
+               else:
+                  readFuncName="getReadBuffer%d"%inputId
                # Buffer and fifo
-               inputs.append((buf,self.listOfargs[theId]))
+               inputs.append((buf,self.listOfargs[theId],readFuncName))
+               inputId = inputId + 1
             theId = theId + 1
        for io in self.outputNames:
             buf = "o%d" % theId
             ptrs.append(buf)
             args.append(buf)
             outargs.append(buf)
-            outputs.append((buf,self.listOfargs[theId]))
+            writeFuncName="getWriteBuffer"
+
+            outputs.append((buf,self.listOfargs[theId],writeFuncName))
+            outputId = outputId + 1
             theId = theId + 1
 
        argsStr="".join(joinit(args,","))
@@ -577,15 +744,26 @@ class GenericFunction(GenericNode):
        outArgsStr="".join(joinit(outargs,","))
 
        if ctemplate:
-           result=Dsp.CTEMPLATE.render(func=self._nodeName,
-            theType = theType,
-            nb = theLen,
-            ptrs = ptrs,
-            args = argsStr,
-            inputs=inputs, 
-            outputs=outputs,
-            node=self
-            )
+           if codeArray:
+              result=Dsp.CNODETEMPLATE.render(func=self._nodeName,
+               theType = theType,
+               nb = theLen,
+               ptrs = ptrs,
+               args = argsStr,
+               inputs=inputs, 
+               outputs=outputs,
+               node=self
+               )
+           else:
+              result=Dsp.CTEMPLATE.render(func=self._nodeName,
+               theType = theType,
+               nb = theLen,
+               ptrs = ptrs,
+               args = argsStr,
+               inputs=inputs, 
+               outputs=outputs,
+               node=self
+               )
        else:
            result=Dsp.PYTEMPLATE.render(func=self._nodeName,
             theType = theType,
@@ -600,12 +778,17 @@ class GenericFunction(GenericNode):
             )
        return(result)
 
+    def codeArrayRun(self):
+        return(self.cRun(codeArray=True))
+
+
 class Unary(GenericFunction):
     def __init__(self,funcname,theType,length):
         GenericFunction.__init__(self,funcname,theType,length)
 
         self.addInput("i",theType,length)
         self.addOutput("o",theType,length)
+
 
 class Binary(GenericFunction):
     def __init__(self,funcname,theType,length):
@@ -615,6 +798,9 @@ class Binary(GenericFunction):
         self.addInput("ib",theType,length)
         
         self.addOutput("o",theType,length)
+
+
+    
 
 
 BINARYOP=["scale","add","and","mult","not","or","sub","xor","cmplx_mult_cmplx","cmplx_mult_real"
@@ -629,14 +815,18 @@ class Dsp(GenericFunction):
         
         cmsisname = "arm_%s_%s" % (name,theType.dspExtension)
         GenericFunction.__init__(self, cmsisname,theType,length)
+        self._binary=True
         
         if name in BINARYOP:
             self.addInput("ia",theType,length)
             self.addInput("ib",theType,length)
+            self._binary=True
         else:
            self.addInput("i",theType,length)
+           self._binary=False
         
         self.addOutput("o",theType,length)
+
     
 
     @property

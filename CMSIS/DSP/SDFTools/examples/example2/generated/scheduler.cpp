@@ -86,9 +86,10 @@ uint32_t scheduler(int *error,int opt1,int opt2)
     StereoSource<float32_t,320> src(fifo0);
     Unzip<float32_t,320,float32_t,160,float32_t,160> toMono(fifo0,fifo1,fifo2);
 
+    /* Run several schedule iterations */
     while((sdfError==0) && (debugCounter > 0))
     {
-
+       /* Run a schedule iteration */
        sdfError = src.run();
        CHECKERROR;
        sdfError = toMono.run();

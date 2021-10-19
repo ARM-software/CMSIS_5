@@ -21,6 +21,20 @@ The support classes and code is covered by CMSIS-DSP license.
 {% if config.cOptionalArgs %},{{config.cOptionalArgs}}{% endif %}
 {% endmacro -%}
 
+/* List of nodes */
+static NodeBase *nodeArray[{{nbNodes}}]={0};
+
+/*
+
+Description of the scheduling. It is a list of nodes to call.
+The values are indexes in the previous array.
+
+*/
+static unsigned int schedule[{{schedLen}}]=
+{ 
+{{schedDescription}}
+};
+
 /***********
 
 FIFO buffers
@@ -34,6 +48,30 @@ FIFO buffers
 #define BUFFERSIZE{{buf._bufferID}} {{buf._length}}
 {{buf._theType.ctype}} {{config.prefix}}buf{{buf._bufferID}}[BUFFERSIZE{{buf._bufferID}}]={0};
 
+{% endfor %}
+
+/**************
+ 
+ Classes created for pure function calls (like some CMSIS-DSP functions)
+
+***************/
+
+{% for p in pureNodes %}
+{% set node = pureNodes[p] %}
+template<{{node.templateParameters}}> class Func{{node.pureClassID}};
+
+template<{{node.specializedTemplateParameters}}>
+class Func{{node.pureClassID}}<{{node.templateArguments}}>: public {{node.nodeKind}}<{{node.templateParametersForGeneric}}>
+{
+public:
+    Func{{node.pureClassID}}({{node.datatypeForConstructor}}):
+    {{node.nodeKind}}<{{node.templateParametersForGeneric}}>({{node.genericConstructorArgs}}){};
+
+   int run(){
+     {{node.codeArrayRun()}}
+   };
+
+};
 {% endfor %}
 
 uint32_t {{config.schedName}}(int *error{{optionalargs()}})
@@ -56,11 +94,17 @@ uint32_t {{config.schedName}}(int *error{{optionalargs()}})
 {% endfor %}
 
     /* 
-    Create node objects
+    Create node objects 
     */
 {% for node in nodes %}
 {% if node.hasState %}
+
     {{node.typeName}}<{{node.ioTemplate()}}> {{node.nodeName}}({{node.args}});
+    nodeArray[{{node.codeID}}]=(NodeBase*)&{{node.nodeName}};
+{% else %}
+
+    Func{{node.pureClassID}}<{{node.constructorTypes}}> func{{node.pureNodeID}}({{node.constructorArguments}});
+    nodeArray[{{node.codeID}}]=(NodeBase*)&func{{node.pureNodeID}};
 {% endif %}
 {% endfor %}
 
@@ -71,23 +115,19 @@ uint32_t {{config.schedName}}(int *error{{optionalargs()}})
     while(sdfError==0)
 {% endif %}
     {
-       /* Run a schedule iteration */
-{% for s in schedule %}
-       {{nodes[s].cRun()}}
-       CHECKERROR;
-{% if config.dumpFIFO %}
-{% for fifoID in sched.outputFIFOs(nodes[s]) %}
-       std::cout << "{{nodes[s].nodeName}}:{{fifoID[1]}}" << std::endl;
-       fifo{{fifoID[0]}}.dump();
-{% endfor %}
-{% endif %}
-{% endfor %}
-
+        /* Run a schedule iteration */
+        for(unsigned long id=0 ; id < {{schedLen}}; id++)
+        {
+            unsigned int nodeId = schedule[id];
+            sdfError = nodeArray[nodeId]->run();
+            CHECKERROR;
+        }
 {% if config.debug %}
        debugCounter--;
 {% endif %}
        nbSchedule++;
     }
+
     *error=sdfError;
     return(nbSchedule);
 }

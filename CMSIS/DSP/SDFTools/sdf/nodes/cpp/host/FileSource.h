@@ -37,7 +37,7 @@ file is reached.
 
 */
 template<int outputSize>
-class FileSource<float32_t,outputSize>: GenericSource<float32_t,outputSize>
+class FileSource<float32_t,outputSize>: public GenericSource<float32_t,outputSize>
 {
 public:
     FileSource(FIFOBase<float32_t> &dst,std::string name):GenericSource<float32_t,outputSize>(dst),

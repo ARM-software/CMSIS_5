@@ -37,7 +37,7 @@ template<int inputSize,int outputSize>
 class StereoToMono<q15_t,inputSize,q15_t,outputSize>: public GenericNode<q15_t,inputSize,q15_t,outputSize>
 {
 public:
-    StereoToMonoQ15(FIFOBase<q15_t> &src,FIFOBase<q15_t> &dst):
+    StereoToMono(FIFOBase<q15_t> &src,FIFOBase<q15_t> &dst):
     GenericNode<q15_t,inputSize,q15_t,outputSize>(src,dst){};
 
    
