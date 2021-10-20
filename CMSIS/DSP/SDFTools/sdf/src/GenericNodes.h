@@ -270,10 +270,11 @@ protected:
 
 };
 
-
+#if !defined(CHECKERROR)
 #define CHECKERROR       if (sdfError < 0) \
        {\
          break;\
        }
 
+#endif
 #endif
