@@ -44,19 +44,14 @@ Implementation for RTX + Keil MDK Event logger
 
 #include "cmsis_os2.h"
 
-#ifndef AudioIn_IRQn
-#define AudioIn_IRQn    ((IRQn_Type)0)           /* Audio Input Interrupt number */
-#endif 
-
 #include "SchedEvents.h"
 /*
 
 RTX dependent definition
 
 */
-#define RING_BEGINCRITICALSECTION()  NVIC_DisableIRQ (AudioIn_IRQn) 
-
-#define RING_ENDCRITICALSECTION() NVIC_EnableIRQ (AudioIn_IRQn) 
+#define RING_BEGINCRITICALSECTION()  NVIC_DisableIRQ ((IRQn_Type)config->interruptID); 
+#define RING_ENDCRITICALSECTION() NVIC_EnableIRQ ((IRQn_Type)config->interruptID);
 
 #define RING_WAIT_BUFFER(TIMEOUT) osThreadFlagsWait(1,osFlagsWaitAny,(TIMEOUT))
 #define RING_HASWAITERROR(F) (F < 0)
@@ -64,17 +59,17 @@ RTX dependent definition
 #define RING_RELEASE_BUFFER(THREADID) osThreadFlagsSet((osThreadId_t)(THREADID),1)
 
 /* Debug trace using Event Recorder */
-#define RING_DBG_USER_RESERVE_BUFFER(ID) EventRecord2 (Evt_UsrReserve, (ID), 0)
-#define RING_DBG_USER_RELEASE_BUFFER(ID) EventRecord2 (Evt_UsrRelease, (ID), 0)
-#define RING_DBG_USER_WAIT_BUFFER(ID) EventRecord2 (Evt_UsrWait, (ID), 0)
-#define RING_DBG_USER_BUFFER_RELEASED(ID) EventRecord2 (Evt_UsrFree, (ID), 0)
-#define RING_DBG_USER_STATUS(SA,SB) EventRecord2 (Evt_UsrStatus, config->SA,config->SB)
+#define RING_DBG_USER_RESERVE_BUFFER(ID,CONF) EventRecord2 (Evt_UsrReserve, (ID), (uint32_t)(CONF))
+#define RING_DBG_USER_RELEASE_BUFFER(ID,CONF) EventRecord2 (Evt_UsrRelease, (ID), (uint32_t)(CONF))
+#define RING_DBG_USER_WAIT_BUFFER(ID,CONF) EventRecord2 (Evt_UsrWait, (ID), (uint32_t)(CONF))
+#define RING_DBG_USER_BUFFER_RELEASED(ID,CONF) EventRecord2 (Evt_UsrFree, (ID), (uint32_t)(CONF))
+#define RING_DBG_USER_STATUS(SA,SB,CONF) EventRecord4 (Evt_UsrStatus, config->SA,config->SB,(uint32_t)(CONF),0)
 
-#define RING_DBG_INT_RESERVE_BUFFER(ID) EventRecord2 (Evt_IntReserve, (ID), 0)
-#define RING_DBG_INT_RELEASE_BUFFER(ID) EventRecord2 (Evt_IntRelease, (ID), 0)
-#define RING_DBG_INT_RELEASE_USER() EventRecord2 (Evt_IntReleaseUser, 0, 0)
-#define RING_DBG_INT_STATUS(SA,SB) EventRecord2 (Evt_IntStatus, config->SA,config->SB)
+#define RING_DBG_INT_RESERVE_BUFFER(ID,CONF) EventRecord2 (Evt_IntReserve, (ID), (uint32_t)(CONF))
+#define RING_DBG_INT_RELEASE_BUFFER(ID,CONF) EventRecord2 (Evt_IntRelease, (ID), (uint32_t)(CONF))
+#define RING_DBG_INT_RELEASE_USER(CONF) EventRecord2 (Evt_IntReleaseUser, (uint32_t)(CONF), 0)
+#define RING_DBG_INT_STATUS(SA,SB,CONF) EventRecord4 (Evt_IntStatus, config->SA,config->SB,(uint32_t)(CONF),0)
 
-#define RING_DBG_ERROR(ERROR) EventRecord2 (Evt_Error, (ERROR), 0)
+#define RING_DBG_ERROR(ERROR,CONF) EventRecord2 (Evt_Error, (ERROR), (uint32_t)(CONF))
 
 #endif

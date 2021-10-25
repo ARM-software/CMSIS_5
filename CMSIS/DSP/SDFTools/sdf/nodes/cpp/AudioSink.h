@@ -30,6 +30,7 @@
 
 #include "RingBuffer.h"
 
+
 template<typename IN, int inputSize>
 class AudioSink: public GenericSink<IN, inputSize>
 {

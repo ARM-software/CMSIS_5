@@ -47,19 +47,19 @@
       
 
 
-      <event id="0x100" level="Op" property="Reserve" value="ID=%d[val1]" info="Reserve buffer" />
-      <event id="0x101" level="Op" property="Release" value="ID=%d[val1]" info="Release buffer" />
-      <event id="0x102" level="Op" property="Wait" value="ID=%d[val1]" info="Wait buffer" />
-      <event id="0x103" level="Op" property="Unblocked" value="ID=%d[val1]" info="Free buffer" />
-      <event id="0x104" level="Op" property="Status" value="USR=%x[val1] INT=%x[val2]" info="Reservation status" />
+      <event id="0x100" level="Op" property="Reserve" value="ID=%d[val1] CONF=%x[val2]" info="Reserve buffer" />
+      <event id="0x101" level="Op" property="Release" value="ID=%d[val1] CONF=%x[val2]" info="Release buffer" />
+      <event id="0x102" level="Op" property="Wait" value="ID=%d[val1] CONF=%x[val2]" info="Wait buffer" />
+      <event id="0x103" level="Op" property="Unblocked" value="ID=%d[val1] CONF=%x[val2]" info="Free buffer" />
+      <event id="0x104" level="Detail" property="Status" value="USR=%x[val1] INT=%x[val2] CONF=%x[val3]" info="Reservation status" />
 
-      <event id="0x200" level="Op" property="Reserve" value="ID=%d[val1]" info="Reserve buffer" />
-      <event id="0x201" level="Op" property="Release" value="ID=%d[val1]" info="Release buffer" />
-      <event id="0x202" level="Op" property="Release USR" info="Release user" />
-      <event id="0x203" level="Op" property="Status" value="USR=%x[val1] INT=%x[val2]" info="Reservation status" />
+      <event id="0x200" level="Op" property="Reserve" value="ID=%d[val1] CONF=%x[val2]" info="Reserve buffer" />
+      <event id="0x201" level="Op" property="Release" value="ID=%d[val1] CONF=%x[val2]" info="Release buffer" />
+      <event id="0x202" level="Op" property="Release USR" value="CONF=%x[val1]" info="Release user" />
+      <event id="0x203" level="Detail" property="Status" value="USR=%x[val1] INT=%x[val2] CONF=%x[val3]" info="Reservation status" />
       
       
-      <event id="0x300" level="Error" property="Error" value="err=%d[val1]" info="Release buffer" />
+      <event id="0x300" level="Error" property="Error" value="err=%d[val1] CONF=%x[val2]" info="Release buffer" />
 
     </events>
  

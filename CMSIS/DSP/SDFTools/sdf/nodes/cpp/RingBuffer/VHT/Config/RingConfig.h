@@ -10,10 +10,10 @@
 #define AUDIO_SAMPLINGFREQUENCY 16000
 #endif
 
-// <o>Number of samples <100-3000>
+// <o>Number of samples <256=> 256 <512=> 512 <1024=> 1024 <2048=> 2048  
 // <i> Must be consistent with the settings of the Audio source
 #ifndef AUDIO_NBSAMPLES
-#define AUDIO_NBSAMPLES 1600
+#define AUDIO_NBSAMPLES 2048
 #endif
 
 // <o>Number of channels <1=>   Mono <2=>   Stereo
@@ -32,12 +32,15 @@
 // <q> TX_ENABLED: Enable TX 
 #define TX_ENABLED 1
 
+// <q> SDF_VHT_TX_RX_ORDERING: Force TX RX ordering
+#define SDF_VHT_TX_RX_ORDERING 0
+
 // </h>
 
 // <h>Ring Buffer Configuration
-// <o>Number of buffers <2-32>
+// <o>Number of buffers <2=> 2 <4=> 4 <8=> 8 <16=> 16 <32=> 32  
 #ifndef RING_NBBUFS
-#define RING_NBBUFS 2
+#define RING_NBBUFS 4
 #endif
 // </h>
 

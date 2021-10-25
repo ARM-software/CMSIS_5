@@ -31,28 +31,25 @@
 #include "RingBuffer.h"
 
 
-/* Memory to use for the ring buffer.
-ALIGNED in case it may be used directly by the HW
-Each subbuffer must also be 4 bytes aligned.
 
-The sizes should be defined in a RingConfig.h header.
-*/
-__ALIGNED(16) uint8_t ringBufferRX[RING_BUFSIZE*RING_NBBUFS];
-__ALIGNED(16) uint8_t ringBufferTX[RING_BUFSIZE*RING_NBBUFS];
 
-extern int32_t AudioDrv_Setup(void);
-
-int initRingAndAudio(ring_config_t *ringConfigRX,ring_config_t *ringConfigTX, int timeOut)
+int initRingAndAudio(ring_config_t *ringConfigRX,
+    uint8_t *rxBuffer,
+    int rxInterruptID,
+    ring_config_t *ringConfigTX, 
+    uint8_t *txBuffer,
+    int txInterruptID,
+    int timeOut)
 {
   /* Initialization of the ring buffer data structure */
   if (ringConfigRX != NULL)
   {
-     ringInit(ringConfigRX,RING_NBBUFS,RING_BUFSIZE,ringBufferRX,timeOut);
+     ringInit(ringConfigRX,RING_NBBUFS,RING_BUFSIZE,rxBuffer,rxInterruptID,timeOut);
   }
 
   if (ringConfigTX != NULL)
   {
-     ringInit(ringConfigTX,RING_NBBUFS,RING_BUFSIZE,ringBufferTX,timeOut);
+     ringInit(ringConfigTX,RING_NBBUFS,RING_BUFSIZE,txBuffer,txInterruptID,timeOut);
   }
 
   /* Initialization of the audio HW and reservation of first buffer from the

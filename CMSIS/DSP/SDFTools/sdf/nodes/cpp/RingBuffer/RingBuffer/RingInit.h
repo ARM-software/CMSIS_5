@@ -37,7 +37,20 @@ extern "C"
 {
 #endif
 
-int initRingAndAudio(ring_config_t *ringConfigRX,ring_config_t *ringConfigTX, int timeOut);
+extern int32_t AudioDrv_Setup(void);
+extern ring_config_t ringConfigRX;
+extern ring_config_t ringConfigTX;
+extern uint8_t* AudioRXBuffer();
+extern uint8_t* AudioTXBuffer();
+
+
+int initRingAndAudio(ring_config_t *ringConfigRX,
+    uint8_t *rxBuffer,
+    int rxInterruptID,
+    ring_config_t *ringConfigTX, 
+    uint8_t *txBuffer,
+    int txInterruptID,
+    int timeOut);
 
 #ifdef   __cplusplus
 }

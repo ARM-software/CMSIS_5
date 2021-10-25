@@ -67,43 +67,43 @@ Debug integration
 */
 
 #ifndef RING_DBG_USER_RESERVE_BUFFER
-#define RING_DBG_USER_RESERVE_BUFFER(ID)
+#define RING_DBG_USER_RESERVE_BUFFER(ID,CONF)
 #endif 
 
 #ifndef RING_DBG_USER_RELEASE_BUFFER
-#define RING_DBG_USER_RELEASE_BUFFER(ID)
+#define RING_DBG_USER_RELEASE_BUFFER(ID,CONF)
 #endif
 
 #ifndef RING_DBG_USER_WAIT_BUFFER
-#define RING_DBG_USER_WAIT_BUFFER(ID)
+#define RING_DBG_USER_WAIT_BUFFER(ID,CONF)
 #endif
 
 #ifndef RING_DBG_USER_BUFFER_RELEASED
-#define RING_DBG_USER_BUFFER_RELEASED(ID)
+#define RING_DBG_USER_BUFFER_RELEASED(ID,CONF)
 #endif
 
 #ifndef RING_DBG_USER_STATUS
-#define RING_DBG_USER_STATUS(SA,SB)
+#define RING_DBG_USER_STATUS(SA,SB,CONF)
 #endif
 
 #ifndef RING_DBG_INT_RESERVE_BUFFER
-#define RING_DBG_INT_RESERVE_BUFFER(ID)
+#define RING_DBG_INT_RESERVE_BUFFER(ID,CONF)
 #endif
 
 #ifndef RING_DBG_INT_RELEASE_BUFFER
-#define RING_DBG_INT_RELEASE_BUFFER(ID)
+#define RING_DBG_INT_RELEASE_BUFFER(ID,CONF)
 #endif
 
 #ifndef RING_DBG_INT_RELEASE_USER
-#define RING_DBG_INT_RELEASE_USER()
+#define RING_DBG_INT_RELEASE_USER(CONF)
 #endif
 
 #ifndef RING_DBG_INT_STATUS
-#define RING_DBG_INT_STATUS(SA,SB) 
+#define RING_DBG_INT_STATUS(SA,SB,CONF) 
 #endif
 
 #ifndef RING_DBG_ERROR
-#define RING_DBG_ERROR(ERROR)
+#define RING_DBG_ERROR(ERROR,CONF)
 #endif
 
 /*
@@ -127,7 +127,12 @@ Implementation
   (RING_TEST(userBufferStatus,ID) || RING_TEST(intBufferStatus,ID))
 
 
-void ringInit(ring_config_t *config,uint32_t nbBuffers,uint32_t bufferSize,uint8_t *buffer,int timeout)
+void ringInit(ring_config_t *config,
+    uint32_t nbBuffers,
+    uint32_t bufferSize,
+    uint8_t *buffer,
+    int interruptID,
+    int timeout)
 {
   
   config->buffer=buffer;
@@ -141,7 +146,7 @@ void ringInit(ring_config_t *config,uint32_t nbBuffers,uint32_t bufferSize,uint8
   config->waiting=0;
   config->timeout=timeout;
 
-  
+  config->interruptID = interruptID;
   config->userBufferStatus = 0;
   config->intBufferStatus = 0;
   
@@ -165,7 +170,7 @@ uint8_t *ringGetBufferAddress(ring_config_t *config,int id)
 
 int ringInterruptReserveBuffer(ring_config_t *config)
 {
-   RING_DBG_INT_STATUS(userBufferStatus,intBufferStatus);
+   RING_DBG_INT_STATUS(userBufferStatus,intBufferStatus,config);
    if (config->error)
    {
      return(-1);
@@ -176,14 +181,14 @@ int ringInterruptReserveBuffer(ring_config_t *config)
    {
        /* If buffer is already used then kErrorOverflowUnderflow*/
        config->error=kErrorOverflowUnderflow;
-       RING_DBG_ERROR(config->error);
+       RING_DBG_ERROR(config->error,config);
        return(-1);
    }
    else 
    {
-        RING_DBG_INT_RESERVE_BUFFER(config->interruptBufferIDStop);
+        RING_DBG_INT_RESERVE_BUFFER(config->interruptBufferIDStop,config);
         RING_SET(intBufferStatus,interruptBufferIDStop);
-        RING_DBG_INT_STATUS(userBufferStatus,intBufferStatus);
+        RING_DBG_INT_STATUS(userBufferStatus,intBufferStatus,config);
         int id=config->interruptBufferIDStop;
         RING_INC(interruptBufferIDStop);
         return(id);
@@ -192,21 +197,21 @@ int ringInterruptReserveBuffer(ring_config_t *config)
 
 void ringInterruptReleaseBuffer(ring_config_t *config,void *threadId)
 {
-     RING_DBG_INT_STATUS(userBufferStatus,intBufferStatus);
+     RING_DBG_INT_STATUS(userBufferStatus,intBufferStatus,config);
      if (config->error)
      {
         return;
      }
      if (config->interruptBufferIDStart != config->interruptBufferIDStop)
      {
-         RING_DBG_INT_RELEASE_BUFFER(config->interruptBufferIDStart);
+         RING_DBG_INT_RELEASE_BUFFER(config->interruptBufferIDStart,config);
          RING_CLEAR(intBufferStatus,interruptBufferIDStart);
          /* Send release message in case the thread may be waiting */
          if (config->interruptBufferIDStart == config->userBufferIDStop)
          {
             if (config->waiting)
             {
-                RING_DBG_INT_RELEASE_USER();
+                RING_DBG_INT_RELEASE_USER(config);
                 RING_RELEASE_BUFFER(threadId);
             }
          }
@@ -217,7 +222,7 @@ void ringInterruptReleaseBuffer(ring_config_t *config,void *threadId)
 int ringUserReserveBuffer(ring_config_t *config)
 {
    RING_BEGINCRITICALSECTION();
-   RING_DBG_USER_STATUS(userBufferStatus,intBufferStatus);
+   RING_DBG_USER_STATUS(userBufferStatus,intBufferStatus,config);
    if (config->error)
    {
         RING_ENDCRITICALSECTION();
@@ -227,23 +232,23 @@ int ringUserReserveBuffer(ring_config_t *config)
    if (RING_BUSY(userBufferIDStop))
    {
             config->waiting=1;
-            RING_DBG_USER_WAIT_BUFFER(config->userBufferIDStop);
+            RING_DBG_USER_WAIT_BUFFER(config->userBufferIDStop,config);
             RING_ENDCRITICALSECTION();
 
             int err = RING_WAIT_BUFFER(config->timeout);
 
             RING_BEGINCRITICALSECTION();
-            RING_DBG_USER_BUFFER_RELEASED(config->userBufferIDStop);
+            RING_DBG_USER_BUFFER_RELEASED(config->userBufferIDStop,config);
             if (RING_HASWAITERROR(err))
             {
-                RING_DBG_ERROR(err);
+                RING_DBG_ERROR(err,config);
                 config->error=kTimeout; 
                 return(-1);
             }
     
    }
    
-   RING_DBG_USER_RESERVE_BUFFER(config->userBufferIDStop);
+   RING_DBG_USER_RESERVE_BUFFER(config->userBufferIDStop,config);
    RING_SET(userBufferStatus,userBufferIDStop);
    int id=config->userBufferIDStop;
    RING_INC(userBufferIDStop);
@@ -256,7 +261,7 @@ int ringUserReserveBuffer(ring_config_t *config)
 void ringUserReleaseBuffer(ring_config_t *config)
 {
      RING_BEGINCRITICALSECTION();
-     RING_DBG_USER_STATUS(userBufferStatus,intBufferStatus);
+     RING_DBG_USER_STATUS(userBufferStatus,intBufferStatus,config);
      if (config->error)
      {
         RING_ENDCRITICALSECTION();
@@ -264,7 +269,7 @@ void ringUserReleaseBuffer(ring_config_t *config)
      }
      if (config->userBufferIDStart != config->userBufferIDStop)
      {
-         RING_DBG_USER_RELEASE_BUFFER(config->userBufferIDStart);
+         RING_DBG_USER_RELEASE_BUFFER(config->userBufferIDStart,config);
          RING_CLEAR(userBufferStatus,userBufferIDStart);
          RING_INC(userBufferIDStart);
      }

@@ -56,22 +56,25 @@ typedef struct {
   int32_t waiting;
   int timeout;
   ring_error_t error;
+  int interruptID;
 } ring_config_t;
 
 
   /**
    * @brief  Ring buffer initialization
-   * @param[in, out] buf        ring buffer configuration.
-   * @param[in]      nbBuffers  number of buffers (max 32)
-   * @param[in]      bufferSize size of each buffer in bytes
-   * @param[in]      buffer     array for the buffer storage (bufferSize*nbBuffers)
-   * @param[in]      timeout    timeout (meaning is RTOS dependent)
+   * @param[in, out] buf         ring buffer configuration.
+   * @param[in]      nbBuffers   number of buffers (max 32)
+   * @param[in]      bufferSize  size of each buffer in bytes
+   * @param[in]      buffer      array for the buffer storage (bufferSize*nbBuffers)
+   * @param[in]      interruptID interrupt ID
+   * @param[in]      timeout     timeout (meaning is RTOS dependent)
    * @return  Nothing
    */
   void ringInit(ring_config_t *buf,
     uint32_t nbBuffers,
     uint32_t bufferSize,
     uint8_t *buffer,
+    int interruptID,
     int timeout);
 
 
