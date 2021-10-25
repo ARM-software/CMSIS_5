@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020-2021 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2020-2021 Arm Limited or its affiliates.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_nn_vec_mat_mult_t_s16
  * Description:  s16 vector by matrix (transposed) multiplication
  *
- * $Date:        23. August 2021
- * $Revision:    V.1.1.0
+ * $Date:        25. October 2021
+ * $Revision:    V.1.1.1
  *
  * Target Processor:  Cortex-M
  *
@@ -55,9 +55,8 @@ arm_status arm_nn_vec_mat_mult_t_s16(const q15_t *lhs,
                                      const int32_t activation_min,
                                      const int32_t activation_max)
 {
-    const int32_t row_loop_cnt = rhs_rows / 2;
-
 #if defined(ARM_MATH_DSP) && !defined(ARM_MATH_MVEI)
+    const int32_t row_loop_cnt = rhs_rows / 2;
 
     for (int32_t i = 0; i < row_loop_cnt; i++)
     {
@@ -163,83 +162,36 @@ arm_status arm_nn_vec_mat_mult_t_s16(const q15_t *lhs,
     }
 
 #else
-
-    for (int i_row_loop_cnt = 0; i_row_loop_cnt < row_loop_cnt; i_row_loop_cnt++)
+    for (int i_row_loop_cnt = 0; i_row_loop_cnt < rhs_rows; i_row_loop_cnt++)
     {
         const q15_t *lhs_ptr = lhs;
         const q7_t *rhs_ptr_0 = &rhs[0];
-        const q7_t *rhs_ptr_1 = &rhs[rhs_cols];
 
-        q63_t res00 = 0;
-        q63_t res01 = 0;
+        q63_t result = 0;
 
         if (bias)
         {
-            res00 = *bias++;
-            res01 = *bias++;
+            result = *bias++;
         }
         for (int32_t rhs_cols_idx = 0; rhs_cols_idx < rhs_cols; ++rhs_cols_idx)
         {
             const q63_t rhs_value0 = (int8_t)*rhs_ptr_0;
-            const q63_t rhs_value1 = (int8_t)*rhs_ptr_1;
             const q63_t lhs_value = *lhs_ptr;
 
-            res00 += lhs_value * rhs_value0;
-            res01 += lhs_value * rhs_value1;
+            result += lhs_value * rhs_value0;
 
             ++rhs_ptr_0;
-            ++rhs_ptr_1;
             ++lhs_ptr;
         }
 
         // Quantize down
-        res00 = arm_nn_requantize_s64(res00, dst_multiplier, dst_shift);
-        res01 = arm_nn_requantize_s64(res01, dst_multiplier, dst_shift);
+        result = arm_nn_requantize_s64(result, dst_multiplier, dst_shift);
 
         // Clamp the result
-        res00 = MAX(res00, activation_min);
-        res00 = MIN(res00, activation_max);
-        res01 = MAX(res01, activation_min);
-        res01 = MIN(res01, activation_max);
+        result = ((result) > (activation_min) ? (result) : (activation_min));
+        result = ((result) < (activation_max) ? (result) : (activation_max));
 
-        *dst++ = (q15_t)res00;
-        *dst++ = (q15_t)res01;
-
-        rhs += 2 * rhs_cols;
-    }
-
-    const int loop_cnt = rhs_rows % 2;
-
-    for (int i_loop_cnt = 0; i_loop_cnt < loop_cnt; i_loop_cnt++)
-    {
-        const q15_t *lhs_ptr = &lhs[0];
-        const q7_t *rhs_ptr = &rhs[0];
-
-        q63_t res00 = 0;
-        if (bias)
-        {
-            res00 = *bias++;
-        }
-
-        for (int32_t rhs_cols_idx = 0; rhs_cols_idx < rhs_cols; ++rhs_cols_idx)
-        {
-            q31_t rhs_value0 = (int8_t)rhs_ptr[0];
-            q31_t lhs_value = (int16_t)lhs_ptr[0];
-
-            res00 += lhs_value * rhs_value0;
-
-            ++rhs_ptr;
-            ++lhs_ptr;
-        }
-
-        // Quantize down
-        res00 = arm_nn_requantize_s64(res00, dst_multiplier, dst_shift);
-
-        // Clamp the result
-        res00 = MAX(res00, activation_min);
-        res00 = MIN(res00, activation_max);
-
-        *dst++ = (q15_t)res00;
+        *dst++ = (q15_t)result;
         rhs += rhs_cols;
     }
 #endif
