@@ -19,7 +19,7 @@ if [[ ! -z $FILE_VERSION ]]; then
   AUTHOR_REV=$(git log -1 --pretty="format:%H")
   PARENT_REV=$(git log -1 --pretty="format:%P")
   VERSION_BLAME=$(git blame ${PARENT_REV}..${AUTHOR_REV} -l -L ${FILE_VERSION_LINE},${FILE_VERSION_LINE} ${FILE} | sed -E 's/^([[:alnum:]]+).*/\1/')
-  if [[ $AUTHOR_REV != $VERSION_BLAME ]]; then
+  if [[ $FILE_VERSION != $VERSION_BLAME ]]; then
     echo "${FILE}:${FILE_VERSION_LINE}:Please increment file version." >&2
     RESULT=1
   fi
