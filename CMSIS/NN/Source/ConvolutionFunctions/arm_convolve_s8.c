@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 Arm Limited or its affiliates.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_convolve_s8.c
  * Description:  s8 version of convolution using symmetric quantization.
  *
- * $Date:        June 23, 2021
- * $Revision:    V.2.0.5
+ * $Date:        October 27, 2021
+ * $Revision:    V.2.0.7
  *
  * Target Processor:  Cortex-M cores
  *
@@ -366,7 +366,14 @@ arm_status arm_convolve_s8(const cmsis_nn_context *ctx,
 
 int32_t arm_convolve_s8_get_buffer_size(const cmsis_nn_dims *input_dims, const cmsis_nn_dims *filter_dims)
 {
-#if defined(ARM_MATH_DSP)
+#if defined(ARM_MATH_MVEI)
+    int32_t col_length = input_dims->c * filter_dims->w * filter_dims->h;
+    // Get number of complete int16 lanes(multiple of 8) for given col_length. This is dependent on
+    // implementation of  arm_nn_mat_mult_s8
+    col_length = (col_length + 7) / 8;
+    // 4 -> number of im2col buffers, 8 -> 8 elements per Q register
+    return 4 * col_length * 8 * (int32_t)sizeof(int8_t);
+#elif defined(ARM_MATH_DSP)
     return (2 * input_dims->c * filter_dims->w * filter_dims->h) * (int32_t)sizeof(int16_t);
 #else
     (void)input_dims;
