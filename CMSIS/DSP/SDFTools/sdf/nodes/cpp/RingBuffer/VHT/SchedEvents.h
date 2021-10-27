@@ -43,21 +43,22 @@ Definition of Event IDs for Keil MDK EventRecorder
 /* Node events */
 
 #define Evt_Sink         EventID (EventLevelAPI,   EvtNodes, 0x00)
-#define Evt_Source       EventID (EventLevelAPI,   EvtNodes, 0x01)
+#define Evt_SinkVal      EventID (EventLevelOp,   EvtNodes, 0x01)
+#define Evt_Source       EventID (EventLevelAPI,   EvtNodes, 0x02)
 
 /* User Ring Events */
-#define Evt_UsrReserve      EventID (EventLevelAPI,   EvtRing_User, 0x00)
-#define Evt_UsrRelease      EventID (EventLevelAPI,   EvtRing_User, 0x01)
-#define Evt_UsrWait      EventID (EventLevelAPI,   EvtRing_User, 0x02)
-#define Evt_UsrFree      EventID (EventLevelAPI,   EvtRing_User, 0x03)
-#define Evt_UsrStatus      EventID (EventLevelAPI,   EvtRing_User, 0x04)
+#define Evt_UsrReserve      EventID (EventLevelOp,   EvtRing_User, 0x00)
+#define Evt_UsrRelease      EventID (EventLevelOp,   EvtRing_User, 0x01)
+#define Evt_UsrWait      EventID (EventLevelOp,   EvtRing_User, 0x02)
+#define Evt_UsrFree      EventID (EventLevelOp,   EvtRing_User, 0x03)
+#define Evt_UsrStatus      EventID (EventLevelDetail,   EvtRing_User, 0x04)
 
 
 /* Interrupt Ring Events */
-#define Evt_IntReserve      EventID (EventLevelAPI,   EvtRing_Int, 0x00)
-#define Evt_IntRelease      EventID (EventLevelAPI,   EvtRing_Int, 0x01)
-#define Evt_IntReleaseUser      EventID (EventLevelAPI,   EvtRing_Int, 0x02)
-#define Evt_IntStatus      EventID (EventLevelAPI,   EvtRing_Int, 0x03)
+#define Evt_IntReserve      EventID (EventLevelOp,   EvtRing_Int, 0x00)
+#define Evt_IntRelease      EventID (EventLevelOp,   EvtRing_Int, 0x01)
+#define Evt_IntReleaseUser      EventID (EventLevelOp,   EvtRing_Int, 0x02)
+#define Evt_IntStatus      EventID (EventLevelDetail,   EvtRing_Int, 0x03)
 
 
 /* Other Ring Events */
