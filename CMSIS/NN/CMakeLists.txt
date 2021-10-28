@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2019-2021 Arm Limited. All rights reserved.
+# Copyright (c) 2019-2021 Arm Limited.
 #
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -23,8 +23,6 @@ project(CMSISNN)
 set(CMSIS_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../..")
 
 option(BUILD_CMSIS_NN_FUNCTIONS "Build CMSIS-NN Source." ON)
-
-add_compile_options(-Ofast)
 
 if(BUILD_CMSIS_NN_FUNCTIONS)
     add_subdirectory(Source)

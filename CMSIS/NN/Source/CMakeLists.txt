@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2019-2021 Arm Limited. All rights reserved.
+# Copyright (c) 2019-2021 Arm Limited.
 #
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -48,6 +48,8 @@ SET(NN ${ROOT}/CMSIS/NN)
 list(APPEND CMAKE_MODULE_PATH ${NN}/Source)
 
 add_library(cmsis-nn STATIC)
+
+target_compile_options(cmsis-nn PRIVATE -Ofast)
 
 ### Includes
 target_include_directories(cmsis-nn PUBLIC "${NN}/Include")
