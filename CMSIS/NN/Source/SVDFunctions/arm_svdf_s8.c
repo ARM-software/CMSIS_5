@@ -92,7 +92,7 @@ arm_status arm_svdf_s8(const cmsis_nn_context *input_ctx,
 
     memmove((q15_t *)state_data,
             (q15_t *)state_data + 1,
-            (size_t)(input_batches * feature_batches * time_batches * (int32_t)sizeof(int16_t)));
+            (size_t)((input_batches * feature_batches * time_batches - 1) * (int32_t)sizeof(int16_t)));
 
     for (int i_batch = 0; i_batch < input_batches; i_batch++)
     {
