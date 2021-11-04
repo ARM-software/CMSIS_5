@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 Arm Limited or its affiliates.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -61,7 +61,7 @@ arm_status arm_convolve_s16(const cmsis_nn_context *ctx,
                             q15_t *output_data)
 {
     (void)bias_dims;
-    q15_t *buffer_a = (q15_t *)ctx->buf;
+    (void)ctx;
 
     const int32_t input_batches = input_dims->n;
     const int32_t input_x = input_dims->w;
@@ -86,8 +86,6 @@ arm_status arm_convolve_s16(const cmsis_nn_context *ctx,
     for (int i_batch = 0; i_batch < input_batches; i_batch++)
     {
         /* Run the following code as reference implementation for Cortex-M0 and Cortex-M3 */
-        (void)buffer_a;
-
         for (int32_t i_out_ch = 0; i_out_ch < output_ch; i_out_ch++)
         {
             const q31_t reduced_multiplier = REDUCE_MULTIPLIER(output_mult[i_out_ch]);

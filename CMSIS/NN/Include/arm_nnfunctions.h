@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 Arm Limited or its affiliates.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -1884,7 +1884,8 @@ int32_t arm_avgpool_s8_get_buffer_size(const int dim_dst_width, const int ch_src
  * @param[in]      pool_params    Pooling parameters
  * @param[in]      input_dims     Input (activation) tensor dimensions. Format: [H, W, C_IN]
  *                                Argument 'N' is not used.
- * @param[in]      input_data     Input (activation) data pointer. Data type: int8
+ * @param[in]      input_data     Input (activation) data pointer. The input tensor must not
+ *                                overlap with the output tensor. Data type: int8
  * @param[in]      filter_dims    Filter tensor dimensions. Format: [H, W]
  *                                Argument N and C are not used.
  * @param[in]      output_dims    Output tensor dimensions. Format: [H, W, C_OUT]
@@ -2102,12 +2103,14 @@ void arm_reshape_s8(const int8_t *input, int8_t *output, const uint32_t total_si
  * @note This function, data layout independent, can be used to concatenate either int8 or uint8 tensors because it
  *      does not involve any arithmetic operation
  *
- * @param[in]  input    Pointer to input tensor
+ * @param[in]  input    Pointer to input tensor. Input tensor must not overlap with the output tensor.
  * @param[in]  input_x  Width of input tensor
  * @param[in]  input_y  Height of input tensor
  * @param[in]  input_z  Channels in input tensor
  * @param[in]  input_w  Batch size in input tensor
- * @param[out] output   Pointer to output tensor
+ * @param[out] output   Pointer to output tensor. Expected to be at least
+ *                          (input_x * input_y * input_z * input_w) + offset_x
+ *                      bytes.
  * @param[in]  output_x Width of output tensor
  * @param[in]  offset_x The offset (in number of elements) on the X axis to start concatenating the input tensor
  *                      It is user responsibility to provide the correct value
@@ -2147,12 +2150,14 @@ void arm_concatenation_s8_x(const int8_t *input,
  * @note This function, data layout independent, can be used to concatenate either int8 or uint8 tensors because it
  *       does not involve any arithmetic operation
  *
- * @param[in]  input    Pointer to input tensor
+ * @param[in]  input    Pointer to input tensor. Input tensor must not overlap with the output tensor.
  * @param[in]  input_x  Width of input tensor
  * @param[in]  input_y  Height of input tensor
  * @param[in]  input_z  Channels in input tensor
  * @param[in]  input_w  Batch size in input tensor
- * @param[out] output   Pointer to output tensor
+ * @param[out] output   Pointer to output tensor. Expected to be at least
+ *                          (input_z * input_w * input_x * input_y) + offset_y
+ *                      bytes.
  * @param[in]  output_y Height of output tensor
  * @param[in]  offset_y The offset on the Y axis to start concatenating the input tensor
  *                      It is user responsibility to provide the correct value
@@ -2192,12 +2197,14 @@ void arm_concatenation_s8_y(const int8_t *input,
  * @note This function, data layout independent, can be used to concatenate either int8 or uint8 tensors because it
  *       does not involve any arithmetic operation
  *
- * @param[in]  input    Pointer to input tensor
+ * @param[in]  input    Pointer to input tensor. Input tensor must not overlap with output tensor.
  * @param[in]  input_x  Width of input tensor
  * @param[in]  input_y  Height of input tensor
  * @param[in]  input_z  Channels in input tensor
  * @param[in]  input_w  Batch size in input tensor
- * @param[out] output   Pointer to output tensor
+ * @param[out] output   Pointer to output tensor. Expected to be at least
+ *                          (input_x * input_y * input_z * input_w) + offset_z
+ *                      bytes.
  * @param[in]  output_z Channels in output tensor
  * @param[in]  offset_z The offset on the Z axis to start concatenating the input tensor
  *                      It is user responsibility to provide the correct value
@@ -2242,7 +2249,9 @@ void arm_concatenation_s8_z(const int8_t *input,
  * @param[in]  input_y  Height of input tensor
  * @param[in]  input_z  Channels in input tensor
  * @param[in]  input_w  Batch size in input tensor
- * @param[out] output   Pointer to output tensor
+ * @param[out] output   Pointer to output tensor. Expected to be at least
+ *                          input_x * input_y * input_z * input_w
+ *                      bytes.
  * @param[in]  offset_w The offset on the W axis to start concatenating the input tensor
  *                      It is user responsibility to provide the correct value
  *

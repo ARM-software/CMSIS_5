@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 Arm Limited or its affiliates.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -62,7 +62,8 @@ arm_status arm_depthwise_conv_wrapper_s8(const cmsis_nn_context *ctx,
     if (1 == dw_conv_params->ch_mult && input_dims->n == 1)
     {
 #if !defined(ARM_MATH_MVEI)
-        if ((filter_dims->w == 3) && (filter_dims->h == 3) && (dw_conv_params->padding.h <= 1))
+        if ((filter_dims->w == 3) && (filter_dims->h == 3) && (dw_conv_params->padding.h <= 1) &&
+            (dw_conv_params->padding.w <= 1))
         {
             status = arm_depthwise_conv_3x3_s8(ctx,
                                                dw_conv_params,

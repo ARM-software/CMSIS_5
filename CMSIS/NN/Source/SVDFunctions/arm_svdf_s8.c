@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 Arm Limited or its affiliates.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -87,7 +87,16 @@ arm_status arm_svdf_s8(const cmsis_nn_context *input_ctx,
     const int32_t time_batches = weights_time_dims->h;
     const int32_t unit_count = feature_batches / rank;
 
+    if (input_ctx->buf == NULL)
+    {
+        return ARM_MATH_ARGUMENT_ERROR;
+    }
     q31_t *buffer_a = (q31_t *)input_ctx->buf;
+
+    if (output_ctx->buf == NULL)
+    {
+        return ARM_MATH_ARGUMENT_ERROR;
+    }
     q31_t *buffer_b = (q31_t *)output_ctx->buf;
 
     memmove((q15_t *)state_data,

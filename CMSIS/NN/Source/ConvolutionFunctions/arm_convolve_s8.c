@@ -61,6 +61,11 @@ arm_status arm_convolve_s8(const cmsis_nn_context *ctx,
                            q7_t *output_data)
 {
     (void)bias_dims;
+
+    if (ctx->buf == NULL && arm_convolve_s8_get_buffer_size(input_dims, filter_dims) > 0)
+    {
+        return ARM_MATH_ARGUMENT_ERROR;
+    }
     q15_t *buffer_a = (q15_t *)ctx->buf;
 
     const int32_t input_batches = input_dims->n;
