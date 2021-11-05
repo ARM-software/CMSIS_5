@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 Arm Limited or its affiliates.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_nn_mat_mult_kernel_s8_s16.c
  * Description:  Matrix-multiplication function for convolution
  *
- * $Date:        09. October 2020
- * $Revision:    V.1.0.3
+ * $Date:        08. November 2021
+ * $Revision:    V.1.1.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -40,8 +40,8 @@
 q7_t *arm_nn_mat_mult_kernel_s8_s16(const q7_t *input_a,
                                     const q15_t *input_b,
                                     const uint16_t output_ch,
-                                    const int32_t *out_shift,
-                                    const int32_t *out_mult,
+                                    const int32_t *__restrict__ out_shift,
+                                    const int32_t *__restrict__ out_mult,
                                     const int32_t out_offset,
                                     const int16_t activation_min,
                                     const int16_t activation_max,
