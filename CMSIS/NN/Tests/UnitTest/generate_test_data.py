@@ -1055,7 +1055,14 @@ def load_all_testdatasets():
     ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=3, out_ch=3, x_in=3, y_in=5, w_x=2,
                                               w_y=4, stride_x=2, stride_y=2, pad=True,
                                               batches=2)
-
+    dataset = 'depthwise_null_bias_0'
+    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=2, out_ch=2, x_in=4, y_in=5, w_x=2,
+                                              w_y=2, stride_x=1, stride_y=1, pad=True, generate_bias=False,
+                                              batches=1)
+    dataset = 'depthwise_null_bias_1'
+    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=2, out_ch=8, x_in=4, y_in=5, w_x=2,
+                                              w_y=2, stride_x=1, stride_y=1, pad=True, generate_bias=False,
+                                              batches=1)                                                                                         
     type_of_test = 'fully_connected'
     dataset = 'fully_connected'
     ALL_TESTDATA_SETS[dataset] = FullyConnectedSettings(dataset, type_of_test, args, in_ch=10, out_ch=6, x_in=2, y_in=1,

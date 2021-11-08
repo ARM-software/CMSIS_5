@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 Arm Limited or its affiliates.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_depthwise_conv_s8.c
  * Description:  s8 version of depthwise convolution.
  *
- * $Date:        11. May 2021
- * $Revision:    V.2.5.0
+ * $Date:        05. Nov 2021
+ * $Revision:    V.2.6.0
  *
  * Target Processor:  Cortex-M CPUs
  *
@@ -73,12 +73,14 @@ static void depthwise_conv_s8_mult_4(const int8_t *input,
             {
                 for (int mult_tile = 0; mult_tile < ch_mult; mult_tile += 4)
                 {
-                    int32_t out_buff[4];
-
-                    out_buff[0] = bias[out_ch + 0 + mult_tile];
-                    out_buff[1] = bias[out_ch + 1 + mult_tile];
-                    out_buff[2] = bias[out_ch + 2 + mult_tile];
-                    out_buff[3] = bias[out_ch + 3 + mult_tile];
+                    int32_t out_buff[4] = {0, 0, 0, 0};
+                    if (bias)
+                    {
+                        out_buff[0] = bias[out_ch + 0 + mult_tile];
+                        out_buff[1] = bias[out_ch + 1 + mult_tile];
+                        out_buff[2] = bias[out_ch + 2 + mult_tile];
+                        out_buff[3] = bias[out_ch + 3 + mult_tile];
+                    }
 
                     for (int32_t ker_h = ker_h_start; ker_h < MIN(kernel_y, input_y - in_h); ++ker_h)
                     {
@@ -183,14 +185,17 @@ static void depthwise_conv_s8_generic(const q7_t *input,
                     for (int i_ch_mult = 0; i_ch_mult < ch_mult; i_ch_mult++)
                     {
                         const int idx_out_ch = i_ch_mult + i_input_ch * ch_mult;
-                        int32_t acc_0;
+                        int32_t acc_0 = 0;
                         /* Condition for kernel start dimension: (base_idx_<x,y> + ker_<x,y>_start) >= 0 */
                         const int ker_y_start = MAX(0, -base_idx_y);
                         const int ker_x_start = MAX(0, -base_idx_x);
                         /* Condition for kernel end dimension: (base_idx_<x,y> + ker_<x,y>_end) < input_<x,y> */
                         const int ker_y_end = MIN(kernel_y, input_y - base_idx_y);
                         const int ker_x_end = MIN(kernel_x, input_x - base_idx_x);
-                        acc_0 = bias[idx_out_ch];
+                        if (bias)
+                        {
+                            acc_0 = bias[idx_out_ch];
+                        }
 
                         for (int i_ker_y = ker_y_start; i_ker_y < ker_y_end; i_ker_y++)
                         {

@@ -22,9 +22,25 @@
 #include "../TestData/basic/test_data.h"
 #include "../TestData/depthwise_2/test_data.h"
 #include "../TestData/depthwise_mult_batches/test_data.h"
+#include "../TestData/depthwise_null_bias_0/test_data.h"
+#include "../TestData/depthwise_null_bias_1/test_data.h"
 #include "../TestData/depthwise_out_activation/test_data.h"
 #include "../TestData/stride2pad1/test_data.h"
 #include "../Utils/validate.h"
+
+const int32_t *get_bias_address(const int32_t *bias, int32_t size)
+{
+    const int32_t *return_bias = NULL;
+    for (int i = 0; i < size; i++)
+    {
+        if (bias[i] != 0)
+        {
+            return_bias = bias;
+            break;
+        }
+    }
+    return return_bias;
+}
 
 void basic_arm_depthwise_conv_s8(void)
 {
@@ -39,7 +55,7 @@ void basic_arm_depthwise_conv_s8(void)
     cmsis_nn_dims bias_dims;
     cmsis_nn_dims output_dims;
 
-    const q31_t *bias_data = basic_biases;
+    const q31_t *bias_data = get_bias_address(basic_biases, BASIC_OUT_CH);
     const q7_t *input_data = basic_input;
 
     input_dims.n = BASIC_INPUT_BATCHES;
@@ -118,7 +134,7 @@ void stride2pad1_arm_depthwise_conv_s8(void)
     cmsis_nn_dims bias_dims;
     cmsis_nn_dims output_dims;
 
-    const q31_t *bias_data = stride2pad1_biases;
+    const q31_t *bias_data = get_bias_address(stride2pad1_biases, STRIDE2PAD1_OUT_CH);
     const q7_t *kernel_data = stride2pad1_weights;
     const q7_t *input_data = stride2pad1_input;
 
@@ -198,7 +214,7 @@ void depthwise_2_arm_depthwise_conv_s8(void)
     cmsis_nn_dims bias_dims;
     cmsis_nn_dims output_dims;
 
-    const q31_t *bias_data = depthwise_2_biases;
+    const q31_t *bias_data = get_bias_address(depthwise_2_biases, DEPTHWISE_2_OUT_CH);
     const q7_t *kernel_data = depthwise_2_weights;
     const q7_t *input_data = depthwise_2_input;
 
@@ -244,20 +260,22 @@ void depthwise_2_arm_depthwise_conv_s8(void)
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, depthwise_2_output_ref, DEPTHWISE_2_DST_SIZE));
 
-    ctx.buf = NULL;
+    const int32_t buf_size =
+        arm_depthwise_conv_wrapper_s8_get_buffer_size(&dw_conv_params, &input_dims, &filter_dims, &output_dims);
+    ctx.buf = malloc(buf_size);
     ctx.size = 0;
 
-    result = arm_depthwise_conv_s8(&ctx,
-                                   &dw_conv_params,
-                                   &quant_params,
-                                   &input_dims,
-                                   input_data,
-                                   &filter_dims,
-                                   kernel_data,
-                                   &bias_dims,
-                                   bias_data,
-                                   &output_dims,
-                                   output);
+    result = arm_depthwise_conv_wrapper_s8(&ctx,
+                                           &dw_conv_params,
+                                           &quant_params,
+                                           &input_dims,
+                                           input_data,
+                                           &filter_dims,
+                                           kernel_data,
+                                           &bias_dims,
+                                           bias_data,
+                                           &output_dims,
+                                           output);
 
     free(ctx.buf);
     TEST_ASSERT_EQUAL(expected, result);
@@ -277,7 +295,7 @@ void depthwise_out_activation_arm_depthwise_conv_s8(void)
     cmsis_nn_dims bias_dims;
     cmsis_nn_dims output_dims;
 
-    const q31_t *bias_data = depthwise_out_activation_biases;
+    const q31_t *bias_data = get_bias_address(depthwise_out_activation_biases, DEPTHWISE_OUT_ACTIVATION_OUT_CH);
     const q7_t *kernel_data = depthwise_out_activation_weights;
     const q7_t *input_data = depthwise_out_activation_input;
 
@@ -356,7 +374,7 @@ void depthwise_mult_batches_arm_depthwise_conv_s8(void)
     cmsis_nn_dims bias_dims;
     cmsis_nn_dims output_dims;
 
-    const q31_t *bias_data = depthwise_mult_batches_biases;
+    const q31_t *bias_data = get_bias_address(depthwise_mult_batches_biases, DEPTHWISE_MULT_BATCHES_OUT_CH);
     const q7_t *kernel_data = depthwise_mult_batches_weights;
     const q7_t *input_data = depthwise_mult_batches_input;
 
@@ -420,4 +438,124 @@ void depthwise_mult_batches_arm_depthwise_conv_s8(void)
     free(ctx.buf);
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, depthwise_mult_batches_output_ref, DEPTHWISE_MULT_BATCHES_DST_SIZE));
+}
+
+void depthwise_null_bias_0_arm_depthwise_conv_s8(void)
+{
+    const arm_status expected = ARM_MATH_SUCCESS;
+    q7_t output[DEPTHWISE_NULL_BIAS_0_DST_SIZE] = {0};
+
+    cmsis_nn_context ctx;
+    cmsis_nn_dw_conv_params dw_conv_params;
+    cmsis_nn_per_channel_quant_params quant_params;
+    cmsis_nn_dims input_dims;
+    cmsis_nn_dims filter_dims;
+    cmsis_nn_dims bias_dims;
+    cmsis_nn_dims output_dims;
+
+    const q31_t *bias_data = get_bias_address(depthwise_null_bias_0_biases, DEPTHWISE_NULL_BIAS_0_OUT_CH);
+    const q7_t *kernel_data = depthwise_null_bias_0_weights;
+    const q7_t *input_data = depthwise_null_bias_0_input;
+
+    input_dims.n = DEPTHWISE_NULL_BIAS_0_INPUT_BATCHES;
+    input_dims.w = DEPTHWISE_NULL_BIAS_0_INPUT_W;
+    input_dims.h = DEPTHWISE_NULL_BIAS_0_INPUT_H;
+    input_dims.c = DEPTHWISE_NULL_BIAS_0_IN_CH;
+    filter_dims.w = DEPTHWISE_NULL_BIAS_0_FILTER_X;
+    filter_dims.h = DEPTHWISE_NULL_BIAS_0_FILTER_Y;
+    output_dims.w = DEPTHWISE_NULL_BIAS_0_OUTPUT_W;
+    output_dims.h = DEPTHWISE_NULL_BIAS_0_OUTPUT_H;
+    output_dims.c = DEPTHWISE_NULL_BIAS_0_OUT_CH;
+
+    dw_conv_params.padding.w = DEPTHWISE_NULL_BIAS_0_PAD_X;
+    dw_conv_params.padding.h = DEPTHWISE_NULL_BIAS_0_PAD_Y;
+    dw_conv_params.stride.w = DEPTHWISE_NULL_BIAS_0_STRIDE_X;
+    dw_conv_params.stride.h = DEPTHWISE_NULL_BIAS_0_STRIDE_Y;
+    dw_conv_params.ch_mult = DEPTHWISE_NULL_BIAS_0_CH_MULT;
+
+    dw_conv_params.input_offset = DEPTHWISE_NULL_BIAS_0_INPUT_OFFSET;
+    dw_conv_params.output_offset = DEPTHWISE_NULL_BIAS_0_OUTPUT_OFFSET;
+    dw_conv_params.activation.min = DEPTHWISE_NULL_BIAS_0_OUT_ACTIVATION_MIN;
+    dw_conv_params.activation.max = DEPTHWISE_NULL_BIAS_0_OUT_ACTIVATION_MAX;
+    quant_params.multiplier = (int32_t *)depthwise_null_bias_0_output_mult;
+    quant_params.shift = (int32_t *)depthwise_null_bias_0_output_shift;
+
+    ctx.buf = NULL;
+    ctx.size = 0;
+
+    arm_status result = arm_depthwise_conv_s8(&ctx,
+                                              &dw_conv_params,
+                                              &quant_params,
+                                              &input_dims,
+                                              input_data,
+                                              &filter_dims,
+                                              kernel_data,
+                                              &bias_dims,
+                                              bias_data,
+                                              &output_dims,
+                                              output);
+
+    free(ctx.buf);
+    TEST_ASSERT_EQUAL(expected, result);
+    TEST_ASSERT_TRUE(validate(output, depthwise_null_bias_0_output_ref, DEPTHWISE_NULL_BIAS_0_DST_SIZE));
+}
+
+void depthwise_null_bias_1_arm_depthwise_conv_s8(void)
+{
+    const arm_status expected = ARM_MATH_SUCCESS;
+    q7_t output[DEPTHWISE_NULL_BIAS_1_DST_SIZE] = {0};
+
+    cmsis_nn_context ctx;
+    cmsis_nn_dw_conv_params dw_conv_params;
+    cmsis_nn_per_channel_quant_params quant_params;
+    cmsis_nn_dims input_dims;
+    cmsis_nn_dims filter_dims;
+    cmsis_nn_dims bias_dims;
+    cmsis_nn_dims output_dims;
+
+    const q31_t *bias_data = get_bias_address(depthwise_null_bias_1_biases, DEPTHWISE_NULL_BIAS_1_OUT_CH);
+    const q7_t *kernel_data = depthwise_null_bias_1_weights;
+    const q7_t *input_data = depthwise_null_bias_1_input;
+
+    input_dims.n = DEPTHWISE_NULL_BIAS_1_INPUT_BATCHES;
+    input_dims.w = DEPTHWISE_NULL_BIAS_1_INPUT_W;
+    input_dims.h = DEPTHWISE_NULL_BIAS_1_INPUT_H;
+    input_dims.c = DEPTHWISE_NULL_BIAS_1_IN_CH;
+    filter_dims.w = DEPTHWISE_NULL_BIAS_1_FILTER_X;
+    filter_dims.h = DEPTHWISE_NULL_BIAS_1_FILTER_Y;
+    output_dims.w = DEPTHWISE_NULL_BIAS_1_OUTPUT_W;
+    output_dims.h = DEPTHWISE_NULL_BIAS_1_OUTPUT_H;
+    output_dims.c = DEPTHWISE_NULL_BIAS_1_OUT_CH;
+
+    dw_conv_params.padding.w = DEPTHWISE_NULL_BIAS_1_PAD_X;
+    dw_conv_params.padding.h = DEPTHWISE_NULL_BIAS_1_PAD_Y;
+    dw_conv_params.stride.w = DEPTHWISE_NULL_BIAS_1_STRIDE_X;
+    dw_conv_params.stride.h = DEPTHWISE_NULL_BIAS_1_STRIDE_Y;
+    dw_conv_params.ch_mult = DEPTHWISE_NULL_BIAS_1_CH_MULT;
+
+    dw_conv_params.input_offset = DEPTHWISE_NULL_BIAS_1_INPUT_OFFSET;
+    dw_conv_params.output_offset = DEPTHWISE_NULL_BIAS_1_OUTPUT_OFFSET;
+    dw_conv_params.activation.min = DEPTHWISE_NULL_BIAS_1_OUT_ACTIVATION_MIN;
+    dw_conv_params.activation.max = DEPTHWISE_NULL_BIAS_1_OUT_ACTIVATION_MAX;
+    quant_params.multiplier = (int32_t *)depthwise_null_bias_1_output_mult;
+    quant_params.shift = (int32_t *)depthwise_null_bias_1_output_shift;
+
+    ctx.buf = NULL;
+    ctx.size = 0;
+
+    arm_status result = arm_depthwise_conv_s8(&ctx,
+                                              &dw_conv_params,
+                                              &quant_params,
+                                              &input_dims,
+                                              input_data,
+                                              &filter_dims,
+                                              kernel_data,
+                                              &bias_dims,
+                                              bias_data,
+                                              &output_dims,
+                                              output);
+
+    free(ctx.buf);
+    TEST_ASSERT_EQUAL(expected, result);
+    TEST_ASSERT_TRUE(validate(output, depthwise_null_bias_1_output_ref, DEPTHWISE_NULL_BIAS_1_DST_SIZE));
 }
