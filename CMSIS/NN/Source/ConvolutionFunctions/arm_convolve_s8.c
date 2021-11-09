@@ -297,6 +297,9 @@ arm_status arm_convolve_s8(const cmsis_nn_context *ctx,
         int32_t i_out_ch, i_out_y, i_out_x, i_input_ch, i_ker_y, i_ker_x;
         int32_t conv_out;
 
+        const uint16_t dilation_x = conv_params->dilation.w;
+        const uint16_t dilation_y = conv_params->dilation.h;
+
         for (i_out_ch = 0; i_out_ch < output_ch; i_out_ch++)
         {
             for (i_out_y = 0; i_out_y < output_y; i_out_y++)
@@ -308,18 +311,22 @@ arm_status arm_convolve_s8(const cmsis_nn_context *ctx,
                     const int32_t base_idx_y = stride_y * i_out_y - pad_y;
                     const int32_t base_idx_x = stride_x * i_out_x - pad_x;
 
-                    const int32_t ker_y_start = MAX(0, -base_idx_y);
-                    const int32_t ker_x_start = MAX(0, -base_idx_x);
+                    const int32_t start_y_max = (-base_idx_y + dilation_y - 1) / dilation_y;
+                    const int32_t ker_y_start = MAX(0, start_y_max);
+                    const int32_t start_x_max = (-base_idx_x + dilation_x - 1) / dilation_x;
+                    const int32_t ker_x_start = MAX(0, start_x_max);
 
-                    const int32_t ker_y_end = MIN(kernel_y, input_y - base_idx_y);
-                    const int32_t ker_x_end = MIN(kernel_x, input_x - base_idx_x);
+                    const int32_t end_min_y = (input_y - base_idx_y + dilation_y - 1) / dilation_y;
+                    const int32_t ker_y_end = MIN(kernel_y, end_min_y);
+                    const int32_t end_min_x = (input_x - base_idx_x + dilation_x - 1) / dilation_x;
+                    const int32_t ker_x_end = MIN(kernel_x, end_min_x);
 
                     for (i_ker_y = ker_y_start; i_ker_y < ker_y_end; i_ker_y++)
                     {
                         for (i_ker_x = ker_x_start; i_ker_x < ker_x_end; i_ker_x++)
                         {
-                            const int32_t in_row = base_idx_y + i_ker_y;
-                            const int32_t in_col = base_idx_x + i_ker_x;
+                            const int32_t in_row = base_idx_y + dilation_y * i_ker_y;
+                            const int32_t in_col = base_idx_x + dilation_x * i_ker_x;
                             for (i_input_ch = 0; i_input_ch < input_ch; i_input_ch++)
                             {
                                 conv_out +=
