@@ -7,74 +7,64 @@
 
   void DistanceU32::test_dice_distance_u32()
     {
-       uint32_t outp;
        
-       outp = arm_dice_distance(inpA, inpB,this->vecDim);
+       (void)arm_dice_distance(inpA, inpB,this->vecDim);
        
     } 
 
     void DistanceU32::test_hamming_distance_u32()
     {
-       uint32_t outp;
 
-       outp = arm_hamming_distance(inpA, inpB,this->vecDim);
+       (void)arm_hamming_distance(inpA, inpB,this->vecDim);
 
     } 
 
     void DistanceU32::test_jaccard_distance_u32()
     {
-       uint32_t outp;
        
-       outp = arm_jaccard_distance(inpA, inpB,this->vecDim);
+       (void)arm_jaccard_distance(inpA, inpB,this->vecDim);
     
     } 
 
     void DistanceU32::test_kulsinski_distance_u32()
     {
-       uint32_t outp;
        
-       outp = arm_kulsinski_distance(inpA, inpB,this->vecDim);
+       (void)arm_kulsinski_distance(inpA, inpB,this->vecDim);
          
 
     }
 
     void DistanceU32::test_rogerstanimoto_distance_u32()
-    {
-       uint32_t outp;
-       
-       outp = arm_rogerstanimoto_distance(inpA, inpB,this->vecDim);
+    {       
+       (void)arm_rogerstanimoto_distance(inpA, inpB,this->vecDim);
       
     }
 
     void DistanceU32::test_russellrao_distance_u32()
     {
-       uint32_t outp;
        
-       outp = arm_russellrao_distance(inpA, inpB,this->vecDim);
+       (void)arm_russellrao_distance(inpA, inpB,this->vecDim);
      
     }
 
     void DistanceU32::test_sokalmichener_distance_u32()
     {
-       uint32_t outp;
        
-       outp = arm_sokalmichener_distance(inpA, inpB,this->vecDim);
+       (void)arm_sokalmichener_distance(inpA, inpB,this->vecDim);
          
     
     }
 
     void DistanceU32::test_sokalsneath_distance_u32()
     {
-       uint32_t outp;
-       outp = arm_sokalsneath_distance(inpA, inpB,this->vecDim);
+       (void)arm_sokalsneath_distance(inpA, inpB,this->vecDim);
       
     }
 
     void DistanceU32::test_yule_distance_u32()
     {
-       uint32_t outp;
        
-       outp = arm_yule_distance(inpA, inpB,this->vecDim);
+       (void)arm_yule_distance(inpA, inpB,this->vecDim);
       
     }
 

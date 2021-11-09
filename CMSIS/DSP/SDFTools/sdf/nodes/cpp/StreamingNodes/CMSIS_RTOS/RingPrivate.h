@@ -35,7 +35,6 @@ Implementation for RTX + Keil MDK Event logger
 */
 
 #include <stddef.h>
-#include "audio_drv.h"
 #include "arm_vsi.h"
 #ifdef _RTE_
 #include "RTE_Components.h"

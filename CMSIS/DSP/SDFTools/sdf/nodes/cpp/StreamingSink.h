@@ -1,7 +1,7 @@
 /* ----------------------------------------------------------------------
  * Project:      CMSIS DSP Library
- * Title:        AudioSource.h
- * Description:  Audio source working with the Ring buffer
+ * Title:        StreamingSink.h
+ * Description:  Streaming Sink working with the RingBuffer
  *
  * $Date:        30 July 2021
  * $Revision:    V1.10.0
@@ -25,38 +25,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#ifndef _AUDIO_SOURCE_H_ 
-#define _AUDIO_SOURCE_H_ 
+#ifndef _STREAMING_SINK_H_ 
+#define _STREAMING_SINK_H_ 
 
 #include "RingBuffer.h"
 
 
-template<typename OUT,int outputSize>
-class AudioSource: public GenericSource<OUT,outputSize>
+template<typename IN, int inputSize>
+class StreamingSink: public GenericSink<IN, inputSize>
 {
 public:
-    AudioSource(FIFOBase<OUT> &dst,ring_config_t *config):
-    GenericSource<OUT,outputSize>(dst),mConfig(config){};
+    StreamingSink(FIFOBase<IN> &src,ring_config_t *config):
+    GenericSink<IN,inputSize>(src),mConfig(config){};
 
-    int run(){
-        OUT *b=this->getWriteBuffer();
-        /* 
-           Try to reserve a buffer. If no buffer is available, the task running
-           this node will sleep.
+    int run()
+    {
+        IN *b=this->getReadBuffer();
 
-           If there is a timeout (configured when the ring buffer was initialized)
-           the function will return a NULL pointer.
-
-        */
         int bufID=ringUserReserveBuffer(mConfig);
         uint8_t *buf=ringGetBufferAddress(mConfig,bufID);
-
 
         if (buf != NULL)
         {
            /* If a buffer is available we copy the data to the FIFO
            */
-           memcpy((void*)b,buf,outputSize*sizeof(OUT));
+           memcpy(buf,(void*)b,inputSize*sizeof(IN));
 
            /* We release the buffer so than it can be used by the interrupt */
            ringUserReleaseBuffer(mConfig);
@@ -66,11 +59,11 @@ public:
         {
             return(mConfig->error);
         }
-    };
 
+        return(0);
+    }
 protected:
     ring_config_t *mConfig;
-
-
 };
-#endif
+
+#endif /* _STREAMING_SINK_H_ */

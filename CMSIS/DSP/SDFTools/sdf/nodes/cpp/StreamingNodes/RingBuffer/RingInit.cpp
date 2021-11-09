@@ -1,7 +1,7 @@
 /* ----------------------------------------------------------------------
  * Project:      CMSIS DSP Library
- * Title:        RingInit.h
- * Description:  API to initialize the ring buffer
+ * Title:        RingInit.cpp
+ * Description:  Initialization of the ring data structure for an audio source
  *
  * $Date:        30 July 2021
  * $Revision:    V1.10.0
@@ -25,36 +25,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#ifndef _RINGINIT_H 
-#define _RINGINIT_H
-
-
-
+#include "arm_math.h"
+#include "RingConfig.h"
+#include "RingInit.h"
 #include "RingBuffer.h"
 
-#ifdef   __cplusplus
-extern "C"
-{
-#endif
-
-extern int32_t AudioDrv_Setup(void);
-extern ring_config_t ringConfigRX;
-extern ring_config_t ringConfigTX;
-extern uint8_t* AudioRXBuffer();
-extern uint8_t* AudioTXBuffer();
 
 
-int initRingAndAudio(ring_config_t *ringConfigRX,
+
+void initRing(ring_config_t *ringConfigRX,
     uint8_t *rxBuffer,
+    uint32_t bufSizeRX,
     int rxInterruptID,
     ring_config_t *ringConfigTX, 
     uint8_t *txBuffer,
+    uint32_t bufSizeTX,
     int txInterruptID,
-    int timeOut);
+    int timeOut)
+{
+  /* Initialization of the ring buffer data structure */
+  if (ringConfigRX != NULL)
+  {
+     ringInit(ringConfigRX,RING_NBBUFS,bufSizeRX,rxBuffer,rxInterruptID,timeOut);
+  }
 
-#ifdef   __cplusplus
+  if (ringConfigTX != NULL)
+  {
+     ringInit(ringConfigTX,RING_NBBUFS,bufSizeTX,txBuffer,txInterruptID,timeOut);
+  }
+
 }
-
-
-#endif
-#endif 

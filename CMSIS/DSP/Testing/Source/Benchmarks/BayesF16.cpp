@@ -7,9 +7,8 @@
 
     void BayesF16::test_gaussian_naive_bayes_predict_f16()
     {
-       int16_t p;
 
-       p = arm_gaussian_naive_bayes_predict_f16(&bayes, 
+       (void)arm_gaussian_naive_bayes_predict_f16(&bayes, 
                 inp, 
                 bufp,tempp);
 
