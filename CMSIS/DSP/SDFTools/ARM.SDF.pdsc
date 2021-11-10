@@ -34,14 +34,9 @@
         <require Cclass="CMSIS" Cgroup="RTOS2" Capiversion="2.1.3"/>
     </condition>
 
-    <condition id="EventRecorder">
-        <require Cclass="Compiler" Cgroup="EventRecorder"/>
-    </condition>
-
     <condition id="SDFRTOS2">
         <require condition="SDF"/>
         <require condition="RTOS2"/>
-        <require condition="EventRecorder"/>
     </condition>
 
     <condition id="StreamingVHT">
