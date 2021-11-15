@@ -201,11 +201,13 @@ Functions</h2></td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">input_y</td><td>Height of input tensor </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">input_z</td><td>Channels in input tensor </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">input_w</td><td>Batch size in input tensor </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">output</td><td>Pointer to output tensor </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">output</td><td>Pointer to output tensor. Expected to be at least input_x * input_y * input_z * input_w bytes. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">offset_w</td><td>The offset on the W axis to start concatenating the input tensor It is user responsibility to provide the correct value </td></tr>
   </table>
   </dd>
 </dl>
+
+<p>References <a class="el" href="arm__nnsupportfunctions_8h.html#a085459f6280c8f586ddd64998dece532">arm_memcpy_q7()</a>.</p>
 
 </div>
 </div>
@@ -279,18 +281,20 @@ Functions</h2></td></tr>
 <dl class="section note"><dt>Note</dt><dd>This function, data layout independent, can be used to concatenate either int8 or uint8 tensors because it does not involve any arithmetic operation</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">input</td><td>Pointer to input tensor </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">input</td><td>Pointer to input tensor. Input tensor must not overlap with the output tensor. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">input_x</td><td>Width of input tensor </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">input_y</td><td>Height of input tensor </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">input_z</td><td>Channels in input tensor </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">input_w</td><td>Batch size in input tensor </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">output</td><td>Pointer to output tensor </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">output</td><td>Pointer to output tensor. Expected to be at least (input_x * input_y * input_z * input_w) + offset_x bytes. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">output_x</td><td>Width of output tensor </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">offset_x</td><td>The offset (in number of elements) on the X axis to start concatenating the input tensor It is user responsibility to provide the correct value</td></tr>
   </table>
   </dd>
 </dl>
 <p><b> Input constraints</b> offset_x is less than output_x </p>
+
+<p>References <a class="el" href="arm__nnsupportfunctions_8h.html#a085459f6280c8f586ddd64998dece532">arm_memcpy_q7()</a>.</p>
 
 </div>
 </div>
@@ -364,18 +368,20 @@ Functions</h2></td></tr>
 <dl class="section note"><dt>Note</dt><dd>This function, data layout independent, can be used to concatenate either int8 or uint8 tensors because it does not involve any arithmetic operation</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">input</td><td>Pointer to input tensor </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">input</td><td>Pointer to input tensor. Input tensor must not overlap with the output tensor. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">input_x</td><td>Width of input tensor </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">input_y</td><td>Height of input tensor </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">input_z</td><td>Channels in input tensor </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">input_w</td><td>Batch size in input tensor </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">output</td><td>Pointer to output tensor </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">output</td><td>Pointer to output tensor. Expected to be at least (input_z * input_w * input_x * input_y) + offset_y bytes. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">output_y</td><td>Height of output tensor </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">offset_y</td><td>The offset on the Y axis to start concatenating the input tensor It is user responsibility to provide the correct value</td></tr>
   </table>
   </dd>
 </dl>
 <p><b> Input constraints</b> offset_y is less than output_y </p>
+
+<p>References <a class="el" href="arm__nnsupportfunctions_8h.html#a085459f6280c8f586ddd64998dece532">arm_memcpy_q7()</a>.</p>
 
 </div>
 </div>
@@ -449,18 +455,20 @@ Functions</h2></td></tr>
 <dl class="section note"><dt>Note</dt><dd>This function, data layout independent, can be used to concatenate either int8 or uint8 tensors because it does not involve any arithmetic operation</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">input</td><td>Pointer to input tensor </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">input</td><td>Pointer to input tensor. Input tensor must not overlap with output tensor. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">input_x</td><td>Width of input tensor </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">input_y</td><td>Height of input tensor </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">input_z</td><td>Channels in input tensor </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">input_w</td><td>Batch size in input tensor </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">output</td><td>Pointer to output tensor </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">output</td><td>Pointer to output tensor. Expected to be at least (input_x * input_y * input_z * input_w) + offset_z bytes. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">output_z</td><td>Channels in output tensor </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">offset_z</td><td>The offset on the Z axis to start concatenating the input tensor It is user responsibility to provide the correct value</td></tr>
   </table>
   </dd>
 </dl>
 <p><b> Input constraints</b> offset_z is less than output_z </p>
+
+<p>References <a class="el" href="arm__nnsupportfunctions_8h.html#a085459f6280c8f586ddd64998dece532">arm_memcpy_q7()</a>.</p>
 
 </div>
 </div>

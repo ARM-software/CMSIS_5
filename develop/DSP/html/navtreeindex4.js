@@ -1,5 +1,6 @@
 var NAVTREEINDEX4 =
 {
+"structarm__fir__decimate__instance__f32.html#a751941891e47f522a7f5375fe8990aac":[4,34,1],
 "structarm__fir__decimate__instance__f32.html#ae2c8107d00d3c9942e7a20fc598edecf":[4,34,0],
 "structarm__fir__decimate__instance__q15.html":[4,35],
 "structarm__fir__decimate__instance__q15.html#a751941891e47f522a7f5375fe8990aac":[4,35,1],
@@ -248,6 +249,5 @@ var NAVTREEINDEX4 =
 "structarm__pid__instance__f32.html#afc2ed2bf70b7d9d84f49ee9ae7caa004":[4,77,0],
 "structarm__pid__instance__q15.html":[4,78],
 "structarm__pid__instance__q15.html#a06ee5d86e97bf48a15096806b79f299c":[4,78,2],
-"structarm__pid__instance__q15.html#a19d5059baf06dd52266260d096702d0a":[4,78,4],
-"structarm__pid__instance__q15.html#a1aa73268c65cea0c7bc66bb70ff35205":[4,78,0]
+"structarm__pid__instance__q15.html#a19d5059baf06dd52266260d096702d0a":[4,78,4]
 };

@@ -132,6 +132,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga2785e8c1b785348b0c439b56aaf585a3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__math__types_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6">arm_status</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MatrixMult.html#ga2785e8c1b785348b0c439b56aaf585a3">arm_mat_mult_fast_q31</a> (const <a class="el" href="structarm__matrix__instance__q31.html">arm_matrix_instance_q31</a> *pSrcA, const <a class="el" href="structarm__matrix__instance__q31.html">arm_matrix_instance_q31</a> *pSrcB, <a class="el" href="structarm__matrix__instance__q31.html">arm_matrix_instance_q31</a> *pDst)</td></tr>
 <tr class="memdesc:ga2785e8c1b785348b0c439b56aaf585a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Q31 matrix multiplication (fast variant).  <a href="#ga2785e8c1b785348b0c439b56aaf585a3">More...</a><br/></td></tr>
 <tr class="separator:ga2785e8c1b785348b0c439b56aaf585a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae9ef4cf0a04c7c0c6814f5235ecdc14f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__math__types_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6">arm_status</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MatrixMult.html#gae9ef4cf0a04c7c0c6814f5235ecdc14f">arm_mat_mult_opt_q31</a> (const <a class="el" href="structarm__matrix__instance__q31.html">arm_matrix_instance_q31</a> *pSrcA, const <a class="el" href="structarm__matrix__instance__q31.html">arm_matrix_instance_q31</a> *pSrcB, <a class="el" href="structarm__matrix__instance__q31.html">arm_matrix_instance_q31</a> *pDst, <a class="el" href="arm__math__types_8h.html#adc89a3547f5324b7b3b95adec3806bc0">q31_t</a> *pState)</td></tr>
+<tr class="memdesc:gae9ef4cf0a04c7c0c6814f5235ecdc14f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Q31 matrix multiplication.  <a href="#gae9ef4cf0a04c7c0c6814f5235ecdc14f">More...</a><br/></td></tr>
+<tr class="separator:gae9ef4cf0a04c7c0c6814f5235ecdc14f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7521d59196189bb6dde26e8cdfb66e21"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__math__types_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6">arm_status</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MatrixMult.html#ga7521d59196189bb6dde26e8cdfb66e21">arm_mat_mult_q15</a> (const <a class="el" href="structarm__matrix__instance__q15.html">arm_matrix_instance_q15</a> *pSrcA, const <a class="el" href="structarm__matrix__instance__q15.html">arm_matrix_instance_q15</a> *pSrcB, <a class="el" href="structarm__matrix__instance__q15.html">arm_matrix_instance_q15</a> *pDst, <a class="el" href="arm__math__types_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *pState)</td></tr>
 <tr class="memdesc:ga7521d59196189bb6dde26e8cdfb66e21"><td class="mdescLeft">&#160;</td><td class="mdescRight">Q15 matrix multiplication.  <a href="#ga7521d59196189bb6dde26e8cdfb66e21">More...</a><br/></td></tr>
 <tr class="separator:ga7521d59196189bb6dde26e8cdfb66e21"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -378,6 +381,62 @@ Multiplication of two 3 x 3 matrices</div></div>
 
 </div>
 </div>
+<a class="anchor" id="gae9ef4cf0a04c7c0c6814f5235ecdc14f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="arm__math__types_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6">arm_status</a> arm_mat_mult_opt_q31 </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structarm__matrix__instance__q31.html">arm_matrix_instance_q31</a> *&#160;</td>
+          <td class="paramname"><em>pSrcA</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structarm__matrix__instance__q31.html">arm_matrix_instance_q31</a> *&#160;</td>
+          <td class="paramname"><em>pSrcB</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structarm__matrix__instance__q31.html">arm_matrix_instance_q31</a> *&#160;</td>
+          <td class="paramname"><em>pDst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="arm__math__types_8h.html#adc89a3547f5324b7b3b95adec3806bc0">q31_t</a> *&#160;</td>
+          <td class="paramname"><em>pState</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">pSrcA</td><td>points to the first input matrix structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pSrcB</td><td>points to the second input matrix structure </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pDst</td><td>points to output matrix structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pState</td><td>points to the array for storing intermediate results </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>execution status<ul>
+<li><a class="el" href="arm__math__types_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a9f8b2a10bd827fb4600e77d455902eb0">ARM_MATH_SUCCESS</a> : Operation successful</li>
+<li><a class="el" href="arm__math__types_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a7071b92f1f6bc3c5c312a237ea91105b">ARM_MATH_SIZE_MISMATCH</a> : Matrix size check failed</li>
+</ul>
+</dd></dl>
+<dl class="section user"><dt>Scaling and Overflow Behavior</dt><dd>The function is implemented using an internal 64-bit accumulator. The accumulator has a 2.62 format and maintains full precision of the intermediate multiplication results but provides only a single guard bit. There is no saturation on intermediate additions. Thus, if the accumulator overflows it wraps around and distorts the result. The input signals should be scaled down to avoid intermediate overflows. The input is thus scaled down by log2(numColsA) bits to avoid overflows, as a total of numColsA additions are performed internally. The 2.62 accumulator is right shifted by 31 bits and saturated to 1.31 format to yield the final result. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>Refer to <a class="el" href="group__MatrixMult.html#ga2785e8c1b785348b0c439b56aaf585a3">arm_mat_mult_fast_q31()</a> for a faster but less precise implementation of this function. </dd>
+<dd>
+This function is a faster implementation of arm_mat_mult_q31 for MVE but it is requiring additional storage for intermediate results. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="ga7521d59196189bb6dde26e8cdfb66e21"></a>
 <div class="memitem">
 <div class="memproto">
@@ -418,7 +477,7 @@ Multiplication of two 3 x 3 matrices</div></div>
     <tr><td class="paramdir">[in]</td><td class="paramname">pSrcA</td><td>points to the first input matrix structure </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">pSrcB</td><td>points to the second input matrix structure </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">pDst</td><td>points to output matrix structure </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">pState</td><td>points to the array for storing intermediate results (Unused) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pState</td><td>points to the array for storing intermediate results </td></tr>
   </table>
   </dd>
 </dl>
