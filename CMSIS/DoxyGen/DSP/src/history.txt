@@ -24,6 +24,9 @@
 
       arm_cmplx_mag_fast_q15:
       The original arm_cmplx_mag_q15 is now more accurate but slower.
+
+      Added arm_mat_mult_opt_q31 for a faster version of arm_mat_mult_q31
+      when using Helium (but requiring more storage for intermediate results).
     </td>
   </tr>
   <tr>

@@ -162,6 +162,7 @@ print(c[1])
 
 printSubTitle("Fixed point")
 
+printSubTitle(" F32")
 normalizationFactor=2.0*np.sqrt(np.max(np.abs(c[1])))
 a = a / normalizationFactor
 b = b / normalizationFactor
@@ -171,9 +172,16 @@ print(c[1])
 print("")
 af = f.toQ31(a)
 bf = f.toQ31(b)
-c = dsp.arm_mat_mult_q31(af,bf)
-print(f.Q31toF32(c[1]))
+nbSamples = a.size
+tmp=np.zeros(nbSamples)
+c1 = dsp.arm_mat_mult_q31(af,bf)
+c2 = dsp.arm_mat_mult_opt_q31(af,bf,tmp)
+printSubTitle(" Q31")
+print(f.Q31toF32(c1[1]))
+print(f.Q31toF32(c2[1]))
 
+
+printSubTitle(" Q15")
 print("")
 af = f.toQ15(a)
 bf = f.toQ15(b)
@@ -183,6 +191,7 @@ tmp=np.zeros(nb)
 c = dsp.arm_mat_mult_q15(af,bf,tmp)
 print(f.Q15toF32(c[1]))
 
+printSubTitle(" Q7")
 print("")
 af = f.toQ7(a)
 bf = f.toQ7(b)
@@ -304,7 +313,7 @@ NBSAMPLES=10
 printSubTitle("u32")
 su32A=genBitvectors(NBSAMPLES,31)
 su32B=genBitvectors(NBSAMPLES,31)
-ffff = (np.ones(NBSAMPLES)*(-1)).astype(np.int)
+ffff = (np.ones(NBSAMPLES)*(-1)).astype(int)
 
 
 ref=np.bitwise_and(su32A, su32B)
@@ -331,7 +340,7 @@ printSubTitle("u16")
 su16A=genBitvectors(NBSAMPLES,15)
 su16B=genBitvectors(NBSAMPLES,15)
 
-ffff = (np.ones(NBSAMPLES)*(-1)).astype(np.int)
+ffff = (np.ones(NBSAMPLES)*(-1)).astype(int)
 
 
 ref=np.bitwise_and(su16A, su16B)

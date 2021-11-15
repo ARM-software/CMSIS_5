@@ -7400,6 +7400,44 @@ cmsis_arm_mat_mult_q31(PyObject *obj, PyObject *args)
   return(NULL);
 }
 
+static PyObject *
+cmsis_arm_mat_mult_opt_q31(PyObject *obj, PyObject *args)
+{
+
+  PyObject *pSrcA=NULL; // input
+  arm_matrix_instance_q31 *pSrcA_converted=NULL; // input
+  PyObject *pSrcB=NULL; // input
+  arm_matrix_instance_q31 *pSrcB_converted=NULL; // input
+  PyObject *pState=NULL; // input
+  q31_t *pState_converted=NULL; // input
+
+  if (PyArg_ParseTuple(args,"OOO",&pSrcA,&pSrcB,&pState))
+  {
+
+    arm_matrix_instance_q31 *pSrcA_converted = q31MatrixFromNumpy(pSrcA);
+    arm_matrix_instance_q31 *pSrcB_converted = q31MatrixFromNumpy(pSrcB);
+    
+    GETARGUMENT(pState,NPY_INT32,int32_t,int32_t);
+    uint32_t row = pSrcA_converted->numRows ;
+    uint32_t column = pSrcB_converted->numCols ;
+    arm_matrix_instance_q31 *pDst_converted = createq31Matrix(row,column);
+
+    arm_status returnValue = arm_mat_mult_opt_q31(pSrcA_converted,pSrcB_converted,pDst_converted,pState_converted);
+    PyObject* theReturnOBJ=Py_BuildValue("i",returnValue);
+    PyObject* pDstOBJ=NumpyArrayFromq31Matrix(pDst_converted);
+
+    PyObject *pythonResult = Py_BuildValue("OO",theReturnOBJ,pDstOBJ);
+
+    Py_DECREF(theReturnOBJ);
+    FREEARGUMENT(pSrcA_converted);
+    FREEARGUMENT(pSrcB_converted);
+    Py_DECREF(pDstOBJ);
+    FREEARGUMENT(pState_converted);
+    return(pythonResult);
+
+  }
+  return(NULL);
+}
 
 static PyObject *
 cmsis_arm_mat_mult_fast_q31(PyObject *obj, PyObject *args)
@@ -17594,6 +17632,7 @@ static PyMethodDef CMSISMLMethods[] = {
 {"arm_mat_mult_q15",  cmsis_arm_mat_mult_q15, METH_VARARGS,""},
 {"arm_mat_mult_fast_q15",  cmsis_arm_mat_mult_fast_q15, METH_VARARGS,""},
 {"arm_mat_mult_q31",  cmsis_arm_mat_mult_q31, METH_VARARGS,""},
+{"arm_mat_mult_opt_q31",  cmsis_arm_mat_mult_opt_q31, METH_VARARGS,""},
 {"arm_mat_mult_fast_q31",  cmsis_arm_mat_mult_fast_q31, METH_VARARGS,""},
 {"arm_mat_sub_f32",  cmsis_arm_mat_sub_f32, METH_VARARGS,""},
 {"arm_mat_sub_q15",  cmsis_arm_mat_sub_q15, METH_VARARGS,""},

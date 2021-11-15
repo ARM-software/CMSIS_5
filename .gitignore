@@ -16,3 +16,4 @@ CMSIS/RTOS2/RTX/Library/**/*.a
 CMSIS/RTOS2/RTX/Library/**/*.lib
 output
 .DS_Store
+internal.cp310-win_amd64.pyd
