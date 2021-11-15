@@ -21,8 +21,8 @@
  * Title:        arm_convolve_s8.c
  * Description:  s8 version of convolution using symmetric quantization.
  *
- * $Date:        October 27, 2021
- * $Revision:    V.2.0.7
+ * $Date:        November 12, 2021
+ * $Revision:    V.2.0.8
  *
  * Target Processor:  Cortex-M cores
  *
@@ -131,33 +131,15 @@ arm_status arm_convolve_s8(const cmsis_nn_context *ctx,
                 if (buffer_fill_cnt == 4 && (padded == 0))
                 {
                     buffer_fill_cnt = 0;
-                    for (int i_out_ch = 0; i_out_ch < output_ch; i_out_ch++)
-                    {
-                        int32_t sum_row;
-                        int32_t acc[4];
-
-                        (void)arm_nn_mat_mul_core_4x_s8(
-                            num_elem, num_elem, (q7_t *)buffer_a, filter_data + num_elem * i_out_ch, &sum_row, acc);
-                        int32x4_t s_offset = vdupq_n_s32(sum_row);
-
-                        int32x4_t res = vldrwq_s32(acc);
-                        s_offset = vmulq_n_s32(s_offset, input_offset);
-                        if (bias_data)
-                        {
-                            res = vaddq_n_s32(res, bias_data[i_out_ch]);
-                        }
-                        res = vaddq_s32(res, s_offset);
-                        res = arm_requantize_mve(res, output_mult[i_out_ch], output_shift[i_out_ch]);
-                        res = vaddq_n_s32(res, out_offset);
-
-                        res = vmaxq_s32(res, vdupq_n_s32(out_activation_min));
-                        res = vminq_s32(res, vdupq_n_s32(out_activation_max));
-
-                        const uint32x4_t scatter_offset = {0, output_ch, output_ch * 2, output_ch * 3};
-                        vstrbq_scatter_offset_s32(out, scatter_offset, res);
-                        out++;
-                    }
-                    out += (3 * output_ch);
+                    out = arm_nn_mat_mul_core_4x_s8(num_elem,
+                                                    num_elem,
+                                                    (q7_t *)buffer_a,
+                                                    filter_data,
+                                                    output_ch,
+                                                    conv_params,
+                                                    quant_params,
+                                                    bias_data,
+                                                    out);
                     im2col_buf = (q7_t *)buffer_a;
                 }
                 else if (buffer_fill_cnt == 4 && (padded != 0))
