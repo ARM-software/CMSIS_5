@@ -3459,10 +3459,12 @@ group Root {
                 Output  OUT_Q31_ID : Output
                 Output  TMPA_Q31_ID : TmpA
                 Output  TMPB_Q31_ID : TmpB
+                Output  TMPC_Q31_ID : TmpC
 
                 Functions {
                   test mult:test_mat_mult_q31
                   test complex mult:test_mat_cmplx_mult_q31
+                  test mult opt:test_mat_mult_opt_q31
                 }
 
              }

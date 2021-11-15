@@ -18,6 +18,15 @@ a double precision computation.
 /* Upper bound of maximum matrix dimension used by Python */
 #define MAXMATRIXDIM 40
 
+static void checkInnerTail(q31_t *b)
+{
+    ASSERT_TRUE(b[0] == 0);
+    ASSERT_TRUE(b[1] == 0);
+    ASSERT_TRUE(b[2] == 0);
+    ASSERT_TRUE(b[3] == 0);
+}
+
+
 #define LOADDATA2()                          \
       const q31_t *inp1=input1.ptr();    \
       const q31_t *inp2=input2.ptr();    \
@@ -129,6 +138,7 @@ a double precision computation.
           arm_mat_vec_mult_q31(&this->in1, bp, outp);
 
           outp += rows ;
+          checkInnerTail(outp);
 
       }
 
@@ -156,6 +166,7 @@ a double precision computation.
           ASSERT_TRUE(status==ARM_MATH_SUCCESS);
 
           outp += (rows * columns);
+          checkInnerTail(outp);
 
       }
 
@@ -183,6 +194,7 @@ void UnaryTestsQ31::test_mat_sub_q31()
           ASSERT_TRUE(status==ARM_MATH_SUCCESS);
 
           outp += (rows * columns);
+          checkInnerTail(outp);
 
       }
 
@@ -210,6 +222,7 @@ void UnaryTestsQ31::test_mat_scale_q31()
           ASSERT_TRUE(status==ARM_MATH_SUCCESS);
 
           outp += (rows * columns);
+          checkInnerTail(outp);
 
       }
 
@@ -237,6 +250,7 @@ void UnaryTestsQ31::test_mat_trans_q31()
           ASSERT_TRUE(status==ARM_MATH_SUCCESS);
 
           outp += (rows * columns);
+          checkInnerTail(outp);
 
       }
 
@@ -264,6 +278,7 @@ void UnaryTestsQ31::test_mat_cmplx_trans_q31()
           ASSERT_TRUE(status==ARM_MATH_SUCCESS);
 
           outp += 2*(rows * columns);
+          checkInnerTail(outp);
 
       }
 

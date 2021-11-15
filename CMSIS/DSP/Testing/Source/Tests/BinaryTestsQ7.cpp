@@ -19,6 +19,26 @@ a double precision computation.
 /* Upper bound of maximum matrix dimension used by Python */
 #define MAXMATRIXDIM 47
 
+static void checkInnerTail(q7_t *b)
+{
+    ASSERT_TRUE(b[0] == 0);
+    ASSERT_TRUE(b[1] == 0);
+    ASSERT_TRUE(b[2] == 0);
+    ASSERT_TRUE(b[3] == 0);
+    ASSERT_TRUE(b[4] == 0);
+    ASSERT_TRUE(b[5] == 0);
+    ASSERT_TRUE(b[6] == 0);
+    ASSERT_TRUE(b[7] == 0);
+    ASSERT_TRUE(b[8] == 0);
+    ASSERT_TRUE(b[9] == 0);
+    ASSERT_TRUE(b[10] == 0);
+    ASSERT_TRUE(b[11] == 0);
+    ASSERT_TRUE(b[12] == 0);
+    ASSERT_TRUE(b[13] == 0);
+    ASSERT_TRUE(b[14] == 0);
+    ASSERT_TRUE(b[15] == 0);
+
+}
 
 #define LOADDATA2()                         \
       const q7_t *inp1=input1.ptr();       \
@@ -65,12 +85,15 @@ a double precision computation.
           columns = *dimsp++;
 
           PREPAREDATA2();
+          memset(tmpPtr,0,sizeof(q7_t)*internal*columns + 16);
+          checkInnerTail(tmpPtr + internal*columns);
           
           status=arm_mat_mult_q7(&this->in1,&this->in2,&this->out,tmpPtr);
           ASSERT_TRUE(status==ARM_MATH_SUCCESS);
 
           outp += (rows * columns);
-
+          checkInnerTail(outp);
+          checkInnerTail(tmpPtr + internal*columns);
       }
 
       ASSERT_EMPTY_TAIL(output);

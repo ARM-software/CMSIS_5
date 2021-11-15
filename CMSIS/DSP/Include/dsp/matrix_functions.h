@@ -445,6 +445,21 @@ arm_status arm_mat_mult_q31(
         arm_matrix_instance_q31 * pDst);
 
   /**
+   * @brief Q31 matrix multiplication
+   * @param[in]  pSrcA  points to the first input matrix structure
+   * @param[in]  pSrcB  points to the second input matrix structure
+   * @param[out] pDst   points to output matrix structure
+   * @param[in]  pState  points to the array for storing intermediate results
+   * @return     The function returns either
+   * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
+   */
+arm_status arm_mat_mult_opt_q31(
+  const arm_matrix_instance_q31 * pSrcA,
+  const arm_matrix_instance_q31 * pSrcB,
+        arm_matrix_instance_q31 * pDst,
+        q31_t *pState);
+
+  /**
    * @brief Q31 matrix and vector multiplication
    * @param[in]  pSrcMat  points to the input matrix structure
    * @param[in]  pVec     points to vector

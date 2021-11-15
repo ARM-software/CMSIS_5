@@ -42,7 +42,7 @@
   @param[in]     pSrcA      points to the first input matrix structure
   @param[in]     pSrcB      points to the second input matrix structure
   @param[out]    pDst       points to output matrix structure
-  @param[in]     pState     points to the array for storing intermediate results (Unused)
+  @param[in]     pState     points to the array for storing intermediate results
   @return        execution status
                    - \ref ARM_MATH_SUCCESS       : Operation successful
                    - \ref ARM_MATH_SIZE_MISMATCH : Matrix size check failed
@@ -617,7 +617,7 @@ arm_status arm_mat_mult_q15(
     return (status);
 }
 
-#else
+#else 
 arm_status arm_mat_mult_q15(
   const arm_matrix_instance_q15 * pSrcA,
   const arm_matrix_instance_q15 * pSrcB,
@@ -639,8 +639,8 @@ arm_status arm_mat_mult_q15(
         uint32_t col, i = 0U, row = numRowsB, colCnt;  /* Loop counters */
         arm_status status;                             /* Status of matrix multiplication */
 
-        q31_t in;                                      /* Temporary variable to hold the input value */
         q31_t inA1, inB1, inA2, inB2;
+        arm_matrix_instance_q15 BT;
 
 #ifdef ARM_MATH_MATRIX_CHECK
 
@@ -655,89 +655,13 @@ arm_status arm_mat_mult_q15(
   else
 
 #endif /* #ifdef ARM_MATH_MATRIX_CHECK */
-
   {
-    /* Matrix transpose */
-    do
-    {
-      /* The pointer px is set to starting address of column being processed */
-      px = pSrcBT + i;
 
-      /* Apply loop unrolling and exchange columns with row elements */
-      col = numColsB >> 2U;
+    BT.numRows = numColsB;
+    BT.numCols = numRowsB;
+    BT.pData = pSrcBT;
 
-      /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
-       ** a second loop below computes the remaining 1 to 3 samples. */
-      while (col > 0U)
-      {
-        /* Read two elements from row */
-        in = read_q15x2_ia ((q15_t **) &pInB);
-
-        /* Unpack and store one element in destination */
-#ifndef ARM_MATH_BIG_ENDIAN
-        *px = (q15_t) in;
-#else
-        *px = (q15_t) ((in & (q31_t) 0xffff0000) >> 16);
-#endif /* #ifndef ARM_MATH_BIG_ENDIAN */
-
-        /* Update pointer px to point to next row of transposed matrix */
-        px += numRowsB;
-
-        /* Unpack and store second element in destination */
-#ifndef ARM_MATH_BIG_ENDIAN
-        *px = (q15_t) ((in & (q31_t) 0xffff0000) >> 16);
-#else
-        *px = (q15_t) in;
-#endif /* #ifndef ARM_MATH_BIG_ENDIAN */
-
-        /* Update pointer px to point to next row of transposed matrix */
-        px += numRowsB;
-
-        /* Read two elements from row */
-        in = read_q15x2_ia ((q15_t **) &pInB);
-
-        /* Unpack and store one element in destination */
-#ifndef ARM_MATH_BIG_ENDIAN
-        *px = (q15_t) in;
-#else
-        *px = (q15_t) ((in & (q31_t) 0xffff0000) >> 16);
-#endif /* #ifndef ARM_MATH_BIG_ENDIAN */
-        px += numRowsB;
-
-#ifndef ARM_MATH_BIG_ENDIAN
-        *px = (q15_t) ((in & (q31_t) 0xffff0000) >> 16);
-#else
-        *px = (q15_t) in;
-#endif /* #ifndef ARM_MATH_BIG_ENDIAN */
-        px += numRowsB;
-
-        /* Decrement column loop counter */
-        col--;
-      }
-
-      /* If the columns of pSrcB is not a multiple of 4, compute any remaining output samples here.
-       ** No loop unrolling is used. */
-      col = numColsB % 0x4U;
-
-      while (col > 0U)
-      {
-        /* Read and store input element in destination */
-        *px = *pInB++;
-
-        /* Update pointer px to point to next row of transposed matrix */
-        px += numRowsB;
-
-        /* Decrement column loop counter */
-        col--;
-      }
-
-      i++;
-
-      /* Decrement row loop counter */
-      row--;
-
-    } while (row > 0U);
-
+    arm_mat_trans_q15(pSrcB,&BT);
     /* Reset variables for usage in following multiplication process */
     row = numRowsA;
     i = 0U;

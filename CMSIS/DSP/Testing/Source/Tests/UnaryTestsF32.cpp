@@ -46,6 +46,14 @@ Comparison for Cholesky
 /* Upper bound of maximum matrix dimension used by Python */
 #define MAXMATRIXDIM 40
 
+static void checkInnerTailOverflow(float32_t *b)
+{
+    ASSERT_TRUE(b[0] == 0);
+    ASSERT_TRUE(b[1] == 0);
+    ASSERT_TRUE(b[2] == 0);
+    ASSERT_TRUE(b[3] == 0);
+}
+
 #define LOADDATA2()                          \
       const float32_t *inp1=input1.ptr();    \
       const float32_t *inp2=input2.ptr();    \
@@ -192,6 +200,7 @@ void UnaryTestsF32::test_mat_vec_mult_f32()
           arm_mat_vec_mult_f32(&this->in1, bp, outp);
 
           outp += rows ;
+          checkInnerTailOverflow(outp);
 
       }
 
@@ -219,6 +228,7 @@ void UnaryTestsF32::test_mat_vec_mult_f32()
           ASSERT_TRUE(status==ARM_MATH_SUCCESS);
 
           outp += (rows * columns);
+          checkInnerTailOverflow(outp);
 
       }
 
@@ -246,6 +256,7 @@ void UnaryTestsF32::test_mat_sub_f32()
           ASSERT_TRUE(status==ARM_MATH_SUCCESS);
 
           outp += (rows * columns);
+          checkInnerTailOverflow(outp);
 
       }
 
@@ -273,6 +284,7 @@ void UnaryTestsF32::test_mat_scale_f32()
           ASSERT_TRUE(status==ARM_MATH_SUCCESS);
 
           outp += (rows * columns);
+          checkInnerTailOverflow(outp);
 
       }
 
@@ -300,6 +312,7 @@ void UnaryTestsF32::test_mat_trans_f32()
           ASSERT_TRUE(status==ARM_MATH_SUCCESS);
 
           outp += (rows * columns);
+          checkInnerTailOverflow(outp);
 
       }
 
@@ -327,6 +340,7 @@ void UnaryTestsF32::test_mat_cmplx_trans_f32()
           ASSERT_TRUE(status==ARM_MATH_SUCCESS);
 
           outp += 2*(rows * columns);
+          checkInnerTailOverflow(outp);
 
       }
 
@@ -421,6 +435,7 @@ void UnaryTestsF32::test_mat_inverse_f32()
 
           outp += (rows * columns);
           inp1 += (rows * columns);
+          checkInnerTailOverflow(outp);
 
       }
 
@@ -461,6 +476,7 @@ void UnaryTestsF32::test_mat_inverse_f32()
           outp += (rows * columns);
           inp1 += (rows * rows);
           inp2 += (rows * columns);
+          checkInnerTailOverflow(outp);
 
       }
 
@@ -501,6 +517,7 @@ void UnaryTestsF32::test_mat_inverse_f32()
           outp += (rows * columns);
           inp1 += (rows * rows);
           inp2 += (rows * columns);
+          checkInnerTailOverflow(outp);
 
       }
 
@@ -667,6 +684,9 @@ void UnaryTestsF32::test_mat_inverse_f32()
           outb +=(rows * columns);
 
           inp1 += (rows * columns);
+
+          checkInnerTailOverflow(outllp);
+          checkInnerTailOverflow(outdp);
 
 
       }

@@ -44,6 +44,7 @@
 #include "arm_mat_mult_q7.c"
 #include "arm_mat_mult_q15.c"
 #include "arm_mat_mult_q31.c"
+#include "arm_mat_mult_opt_q31.c"
 #include "arm_mat_scale_f32.c"
 #include "arm_mat_scale_q15.c"
 #include "arm_mat_scale_q31.c"

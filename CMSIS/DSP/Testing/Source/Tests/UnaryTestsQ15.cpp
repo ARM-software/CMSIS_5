@@ -18,6 +18,31 @@ a double precision computation.
 /* Upper bound of maximum matrix dimension used by Python */
 #define MAXMATRIXDIM 40
 
+static void refInnerTail(q15_t *b)
+{
+    b[0] = 1;
+    b[1] = -1;
+    b[2] = 2;
+    b[3] = -2;
+    b[4] = 3;
+    b[5] = -3;
+    b[6] = 4;
+    b[7] = -4;
+}
+
+static void checkInnerTail(q15_t *b)
+{
+    ASSERT_TRUE(b[0] == 1);
+    ASSERT_TRUE(b[1] == -1);
+    ASSERT_TRUE(b[2] == 2);
+    ASSERT_TRUE(b[3] == -2);
+    ASSERT_TRUE(b[4] == 3);
+    ASSERT_TRUE(b[5] == -3);
+    ASSERT_TRUE(b[6] == 4);
+    ASSERT_TRUE(b[7] == -4);
+}
+
+
 #define LOADDATA2()                          \
       const q15_t *inp1=input1.ptr();    \
       const q15_t *inp2=input2.ptr();    \
@@ -127,14 +152,14 @@ a double precision computation.
           internal = *dimsp++;
 
           PREPAREVECDATA2();
-
+          refInnerTail(outp + rows);
           arm_mat_vec_mult_q15(&this->in1, bp, outp);
 
           outp += rows ;
+          checkInnerTail(outp);
 
       }
 
-      ASSERT_EMPTY_TAIL(output);
 
       ASSERT_SNR(output,ref,(q15_t)SNR_THRESHOLD);
 
@@ -153,15 +178,15 @@ a double precision computation.
           columns = *dimsp++;
 
           PREPAREDATA2();
-
+          refInnerTail(outp + rows * columns);
           status=arm_mat_add_q15(&this->in1,&this->in2,&this->out);
           ASSERT_TRUE(status==ARM_MATH_SUCCESS);
 
           outp += (rows * columns);
+          checkInnerTail(outp);
 
       }
 
-      ASSERT_EMPTY_TAIL(output);
 
       ASSERT_SNR(output,ref,(q15_t)SNR_THRESHOLD);
 
@@ -180,15 +205,15 @@ void UnaryTestsQ15::test_mat_sub_q15()
           columns = *dimsp++;
 
           PREPAREDATA2();
-
+          refInnerTail(outp + rows * columns);
           status=arm_mat_sub_q15(&this->in1,&this->in2,&this->out);
           ASSERT_TRUE(status==ARM_MATH_SUCCESS);
 
           outp += (rows * columns);
+          checkInnerTail(outp);
 
       }
 
-      ASSERT_EMPTY_TAIL(output);
 
       ASSERT_SNR(output,ref,(q15_t)SNR_THRESHOLD);
 
@@ -207,15 +232,15 @@ void UnaryTestsQ15::test_mat_scale_q15()
           columns = *dimsp++;
 
           PREPAREDATA1(false);
-
+          refInnerTail(outp + rows * columns);
           status=arm_mat_scale_q15(&this->in1,ONEHALF,0,&this->out);
           ASSERT_TRUE(status==ARM_MATH_SUCCESS);
 
           outp += (rows * columns);
+          checkInnerTail(outp);
 
       }
 
-      ASSERT_EMPTY_TAIL(output);
 
       ASSERT_SNR(output,ref,(q15_t)SNR_THRESHOLD);
 
@@ -234,15 +259,14 @@ void UnaryTestsQ15::test_mat_trans_q15()
           columns = *dimsp++;
 
           PREPAREDATA1(true);
-
+          refInnerTail(outp + rows * columns);
           status=arm_mat_trans_q15(&this->in1,&this->out);
           ASSERT_TRUE(status==ARM_MATH_SUCCESS);
 
           outp += (rows * columns);
+          checkInnerTail(outp);
 
       }
-
-      ASSERT_EMPTY_TAIL(output);
 
       ASSERT_SNR(output,ref,(q15_t)SNR_THRESHOLD);
 
@@ -261,15 +285,15 @@ void UnaryTestsQ15::test_mat_cmplx_trans_q15()
           columns = *dimsp++;
 
           PREPAREDATA1C(true);
-
+          refInnerTail(outp + 2*rows * columns);
           status=arm_mat_cmplx_trans_q15(&this->in1,&this->out);
           ASSERT_TRUE(status==ARM_MATH_SUCCESS);
 
           outp += 2*(rows * columns);
+          checkInnerTail(outp);
 
       }
 
-      ASSERT_EMPTY_TAIL(output);
 
       ASSERT_SNR(output,ref,(q15_t)SNR_THRESHOLD);
 
