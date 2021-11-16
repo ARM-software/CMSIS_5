@@ -2490,6 +2490,7 @@ and 8-bit Java bytecodes in Jazelle state.
       <files>
         <!-- include folder / device header file -->
         <file category="include"      name="Device/ARM/ARMCM55/Include/"/>
+        <file category="include"      name="Device/ARM/ARMCM55/Include/Template"/>
         <!-- startup / system file -->
         <file category="sourceC"      name="Device/ARM/ARMCM55/Source/startup_ARMCM55.c"             version="1.1.0" attr="config"/>
         <file category="linkerScript" name="Device/ARM/ARMCM55/Source/ARM/ARMCM55_ac6_s.sct"         version="1.1.0" attr="config" condition="TZ Secure ARMCC6"/>
