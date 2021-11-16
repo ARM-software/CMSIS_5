@@ -58,7 +58,6 @@
                    Use function \ref arm_fir_init_q31() to initialize the filter structure.
  */
 
-IAR_ONLY_LOW_OPTIMIZATION_ENTER
 void arm_fir_fast_q31(
   const arm_fir_instance_q31 * S,
   const q31_t * pSrc,
@@ -318,7 +317,6 @@ void arm_fir_fast_q31(
   }
 
 }
-IAR_ONLY_LOW_OPTIMIZATION_EXIT
 /**
   @} end of FIR group
  */

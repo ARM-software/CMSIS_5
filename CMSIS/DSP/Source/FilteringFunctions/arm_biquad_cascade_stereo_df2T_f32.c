@@ -179,7 +179,7 @@ void arm_biquad_cascade_stereo_df2T_f32(
 }
 
 #else
-LOW_OPTIMIZATION_ENTER
+
 void arm_biquad_cascade_stereo_df2T_f32(
   const arm_biquad_cascade_stereo_df2T_instance_f32 * S,
   const float32_t * pSrc,
@@ -412,7 +412,7 @@ void arm_biquad_cascade_stereo_df2T_f32(
     } while (stage > 0U);
 
 }
-LOW_OPTIMIZATION_EXIT
+
 #endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 /**

@@ -133,7 +133,7 @@
   @return        none
  */
 
-LOW_OPTIMIZATION_ENTER
+
 void arm_biquad_cascade_df2T_f64(
   const arm_biquad_cascade_df2T_instance_f64 * S,
   const float64_t * pSrc,
@@ -436,7 +436,7 @@ void arm_biquad_cascade_df2T_f64(
    } while (stage > 0U);
 
 }
-LOW_OPTIMIZATION_EXIT
+
 
 /**
   @} end of BiquadCascadeDF2T group
