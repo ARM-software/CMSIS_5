@@ -16219,6 +16219,33 @@ cmsis_arm_min_q7(PyObject *obj, PyObject *args)
 }
 
 static PyObject *
+cmsis_arm_min_no_idx_q7(PyObject *obj, PyObject *args)
+{
+  PyObject *pSrc=NULL; // input
+  q7_t *pSrc_converted=NULL; // input
+  uint32_t blockSize; // input
+  q7_t pResult;
+
+  if (PyArg_ParseTuple(args,"O",&pSrc))
+  {
+
+    GETARGUMENT(pSrc,NPY_BYTE,int8_t,q7_t);
+    blockSize = arraySizepSrc ;
+
+
+
+    arm_min_no_idx_q7(pSrc_converted,blockSize,&pResult);
+    PyObject* pResultOBJ=Py_BuildValue("i",pResult);
+
+
+    FREEARGUMENT(pSrc_converted);
+    return(pResultOBJ);
+
+  }
+  return(NULL);
+}
+
+static PyObject *
 cmsis_arm_absmin_q7(PyObject *obj, PyObject *args)
 {
   PyObject *pSrc=NULL; // input
@@ -16249,6 +16276,35 @@ cmsis_arm_absmin_q7(PyObject *obj, PyObject *args)
     Py_DECREF(pResultOBJ);
     Py_DECREF(pIndexOBJ);
     return(pythonResult);
+
+  }
+  return(NULL);
+}
+
+static PyObject *
+cmsis_arm_absmin_no_idx_q7(PyObject *obj, PyObject *args)
+{
+  PyObject *pSrc=NULL; // input
+  q7_t *pSrc_converted=NULL; // input
+  uint32_t blockSize; // input
+  q7_t pResult; // output
+
+  if (PyArg_ParseTuple(args,"O",&pSrc))
+  {
+
+    GETARGUMENT(pSrc,NPY_BYTE,int8_t,q7_t);
+    blockSize = arraySizepSrc ;
+
+
+
+
+
+    arm_absmin_no_idx_q7(pSrc_converted,blockSize,&pResult);
+    PyObject* pResultOBJ=Py_BuildValue("i",pResult);
+
+
+    FREEARGUMENT(pSrc_converted);
+    return(pResultOBJ);
 
   }
   return(NULL);
@@ -16293,6 +16349,36 @@ cmsis_arm_min_q15(PyObject *obj, PyObject *args)
 }
 
 static PyObject *
+cmsis_arm_min_no_idx_q15(PyObject *obj, PyObject *args)
+{
+
+  PyObject *pSrc=NULL; // input
+  q15_t *pSrc_converted=NULL; // input
+  uint32_t blockSize; // input
+  q15_t pResult; // output
+
+  if (PyArg_ParseTuple(args,"O",&pSrc))
+  {
+
+    GETARGUMENT(pSrc,NPY_INT16,int16_t,int16_t);
+    blockSize = arraySizepSrc ;
+
+
+
+
+
+    arm_min_no_idx_q15(pSrc_converted,blockSize,&pResult);
+    PyObject* pResultOBJ=Py_BuildValue("h",pResult);
+
+
+    FREEARGUMENT(pSrc_converted);
+    return(pResultOBJ);
+
+  }
+  return(NULL);
+}
+
+static PyObject *
 cmsis_arm_absmin_q15(PyObject *obj, PyObject *args)
 {
 
@@ -16324,6 +16410,36 @@ cmsis_arm_absmin_q15(PyObject *obj, PyObject *args)
     Py_DECREF(pResultOBJ);
     Py_DECREF(pIndexOBJ);
     return(pythonResult);
+
+  }
+  return(NULL);
+}
+
+static PyObject *
+cmsis_arm_absmin_no_idx_q15(PyObject *obj, PyObject *args)
+{
+
+  PyObject *pSrc=NULL; // input
+  q15_t *pSrc_converted=NULL; // input
+  uint32_t blockSize; // input
+  q15_t pResult; // output
+
+  if (PyArg_ParseTuple(args,"O",&pSrc))
+  {
+
+    GETARGUMENT(pSrc,NPY_INT16,int16_t,int16_t);
+    blockSize = arraySizepSrc ;
+
+
+
+
+
+    arm_absmin_no_idx_q15(pSrc_converted,blockSize,&pResult);
+    PyObject* pResultOBJ=Py_BuildValue("h",pResult);
+
+
+    FREEARGUMENT(pSrc_converted);
+    return(pResultOBJ);
 
   }
   return(NULL);
@@ -16368,6 +16484,36 @@ cmsis_arm_min_q31(PyObject *obj, PyObject *args)
 }
 
 static PyObject *
+cmsis_arm_min_no_idx_q31(PyObject *obj, PyObject *args)
+{
+
+  PyObject *pSrc=NULL; // input
+  q31_t *pSrc_converted=NULL; // input
+  uint32_t blockSize; // input
+  q31_t pResult; // output
+
+  if (PyArg_ParseTuple(args,"O",&pSrc))
+  {
+
+    GETARGUMENT(pSrc,NPY_INT32,int32_t,int32_t);
+    blockSize = arraySizepSrc ;
+
+
+
+
+
+    arm_min_no_idx_q31(pSrc_converted,blockSize,&pResult);
+    PyObject* pResultOBJ=Py_BuildValue("i",pResult);
+
+
+    FREEARGUMENT(pSrc_converted);
+    return(pResultOBJ);
+
+  }
+  return(NULL);
+}
+
+static PyObject *
 cmsis_arm_absmin_q31(PyObject *obj, PyObject *args)
 {
 
@@ -16399,6 +16545,35 @@ cmsis_arm_absmin_q31(PyObject *obj, PyObject *args)
     Py_DECREF(pResultOBJ);
     Py_DECREF(pIndexOBJ);
     return(pythonResult);
+
+  }
+  return(NULL);
+}
+
+static PyObject *
+cmsis_arm_absmin_no_idx_q31(PyObject *obj, PyObject *args)
+{
+
+  PyObject *pSrc=NULL; // input
+  q31_t *pSrc_converted=NULL; // input
+  uint32_t blockSize; // input
+  q31_t pResult; // output
+
+  if (PyArg_ParseTuple(args,"O",&pSrc))
+  {
+
+    GETARGUMENT(pSrc,NPY_INT32,int32_t,int32_t);
+    blockSize = arraySizepSrc ;
+
+
+
+
+    arm_absmin_no_idx_q31(pSrc_converted,blockSize,&pResult);
+    PyObject* pResultOBJ=Py_BuildValue("i",pResult);
+
+
+    FREEARGUMENT(pSrc_converted);
+    return(pResultOBJ);
 
   }
   return(NULL);
@@ -16518,6 +16693,36 @@ cmsis_arm_max_q7(PyObject *obj, PyObject *args)
 }
 
 static PyObject *
+cmsis_arm_max_no_idx_q7(PyObject *obj, PyObject *args)
+{
+
+  PyObject *pSrc=NULL; // input
+  q7_t *pSrc_converted=NULL; // input
+  uint32_t blockSize; // input
+  q7_t pResult; // output
+
+  if (PyArg_ParseTuple(args,"O",&pSrc))
+  {
+
+    GETARGUMENT(pSrc,NPY_BYTE,int8_t,q7_t);
+    blockSize = arraySizepSrc ;
+
+
+
+
+
+    arm_max_no_idx_q7(pSrc_converted,blockSize,&pResult);
+    PyObject* pResultOBJ=Py_BuildValue("i",pResult);
+
+
+    FREEARGUMENT(pSrc_converted);
+    return(pResultOBJ);
+
+  }
+  return(NULL);
+}
+
+static PyObject *
 cmsis_arm_absmax_q7(PyObject *obj, PyObject *args)
 {
 
@@ -16549,6 +16754,36 @@ cmsis_arm_absmax_q7(PyObject *obj, PyObject *args)
     Py_DECREF(pResultOBJ);
     Py_DECREF(pIndexOBJ);
     return(pythonResult);
+
+  }
+  return(NULL);
+}
+
+static PyObject *
+cmsis_arm_absmax_no_idx_q7(PyObject *obj, PyObject *args)
+{
+
+  PyObject *pSrc=NULL; // input
+  q7_t *pSrc_converted=NULL; // input
+  uint32_t blockSize; // input
+  q7_t pResult; // output
+
+  if (PyArg_ParseTuple(args,"O",&pSrc))
+  {
+
+    GETARGUMENT(pSrc,NPY_BYTE,int8_t,q7_t);
+    blockSize = arraySizepSrc ;
+
+
+
+
+
+    arm_absmax_no_idx_q7(pSrc_converted,blockSize,&pResult);
+    PyObject* pResultOBJ=Py_BuildValue("i",pResult);
+
+
+    FREEARGUMENT(pSrc_converted);
+    return(pResultOBJ);
 
   }
   return(NULL);
@@ -16593,6 +16828,36 @@ cmsis_arm_max_q15(PyObject *obj, PyObject *args)
 }
 
 static PyObject *
+cmsis_arm_max_no_idx_q15(PyObject *obj, PyObject *args)
+{
+
+  PyObject *pSrc=NULL; // input
+  q15_t *pSrc_converted=NULL; // input
+  uint32_t blockSize; // input
+  q15_t pResult; // output
+
+  if (PyArg_ParseTuple(args,"O",&pSrc))
+  {
+
+    GETARGUMENT(pSrc,NPY_INT16,int16_t,int16_t);
+    blockSize = arraySizepSrc ;
+
+
+
+
+
+    arm_max_no_idx_q15(pSrc_converted,blockSize,&pResult);
+    PyObject* pResultOBJ=Py_BuildValue("h",pResult);
+
+
+    FREEARGUMENT(pSrc_converted);
+    return(pResultOBJ);
+
+  }
+  return(NULL);
+}
+
+static PyObject *
 cmsis_arm_absmax_q15(PyObject *obj, PyObject *args)
 {
 
@@ -16624,6 +16889,35 @@ cmsis_arm_absmax_q15(PyObject *obj, PyObject *args)
     Py_DECREF(pResultOBJ);
     Py_DECREF(pIndexOBJ);
     return(pythonResult);
+
+  }
+  return(NULL);
+}
+
+static PyObject *
+cmsis_arm_absmax_no_idx_q15(PyObject *obj, PyObject *args)
+{
+
+  PyObject *pSrc=NULL; // input
+  q15_t *pSrc_converted=NULL; // input
+  uint32_t blockSize; // input
+  q15_t pResult; // output
+
+  if (PyArg_ParseTuple(args,"O",&pSrc))
+  {
+
+    GETARGUMENT(pSrc,NPY_INT16,int16_t,int16_t);
+    blockSize = arraySizepSrc ;
+
+
+
+
+    arm_absmax_no_idx_q15(pSrc_converted,blockSize,&pResult);
+    PyObject* pResultOBJ=Py_BuildValue("h",pResult);
+
+
+    FREEARGUMENT(pSrc_converted);
+    return(pResultOBJ);
 
   }
   return(NULL);
@@ -16668,6 +16962,36 @@ cmsis_arm_max_q31(PyObject *obj, PyObject *args)
 }
 
 static PyObject *
+cmsis_arm_max_no_idx_q31(PyObject *obj, PyObject *args)
+{
+
+  PyObject *pSrc=NULL; // input
+  q31_t *pSrc_converted=NULL; // input
+  uint32_t blockSize; // input
+  q31_t pResult; // output
+
+  if (PyArg_ParseTuple(args,"O",&pSrc))
+  {
+
+    GETARGUMENT(pSrc,NPY_INT32,int32_t,int32_t);
+    blockSize = arraySizepSrc ;
+
+
+
+
+
+    arm_max_no_idx_q31(pSrc_converted,blockSize,&pResult);
+    PyObject* pResultOBJ=Py_BuildValue("i",pResult);
+
+
+    FREEARGUMENT(pSrc_converted);
+    return(pResultOBJ);
+
+  }
+  return(NULL);
+}
+
+static PyObject *
 cmsis_arm_absmax_q31(PyObject *obj, PyObject *args)
 {
 
@@ -16699,6 +17023,35 @@ cmsis_arm_absmax_q31(PyObject *obj, PyObject *args)
     Py_DECREF(pResultOBJ);
     Py_DECREF(pIndexOBJ);
     return(pythonResult);
+
+  }
+  return(NULL);
+}
+
+static PyObject *
+cmsis_arm_absmax_no_idx_q31(PyObject *obj, PyObject *args)
+{
+
+  PyObject *pSrc=NULL; // input
+  q31_t *pSrc_converted=NULL; // input
+  uint32_t blockSize; // input
+  q31_t pResult; // output
+
+  if (PyArg_ParseTuple(args,"O",&pSrc))
+  {
+
+    GETARGUMENT(pSrc,NPY_INT32,int32_t,int32_t);
+    blockSize = arraySizepSrc ;
+
+
+
+
+    arm_absmax_no_idx_q31(pSrc_converted,blockSize,&pResult);
+    PyObject* pResultOBJ=Py_BuildValue("i",pResult);
+
+
+    FREEARGUMENT(pSrc_converted);
+    return(pResultOBJ);
 
   }
   return(NULL);
@@ -17876,12 +18229,18 @@ static PyMethodDef CMSISMLMethods[] = {
 {"arm_cmplx_mult_real_q31",  cmsis_arm_cmplx_mult_real_q31, METH_VARARGS,""},
 {"arm_cmplx_mult_real_f32",  cmsis_arm_cmplx_mult_real_f32, METH_VARARGS,""},
 {"arm_min_q7",  cmsis_arm_min_q7, METH_VARARGS,""},
+{"arm_min_no_idx_q7",  cmsis_arm_min_no_idx_q7, METH_VARARGS,""},
+{"arm_min_no_idx_q15",  cmsis_arm_min_no_idx_q15, METH_VARARGS,""},
+{"arm_min_no_idx_q31",  cmsis_arm_min_no_idx_q31, METH_VARARGS,""},
 {"arm_min_q15",  cmsis_arm_min_q15, METH_VARARGS,""},
 {"arm_min_q31",  cmsis_arm_min_q31, METH_VARARGS,""},
 {"arm_min_f32",  cmsis_arm_min_f32, METH_VARARGS,""},
 {"arm_absmin_q7",   cmsis_arm_absmin_q7, METH_VARARGS,""},
 {"arm_absmin_q15",  cmsis_arm_absmin_q15, METH_VARARGS,""},
 {"arm_absmin_q31",  cmsis_arm_absmin_q31, METH_VARARGS,""},
+{"arm_absmin_no_idx_q7",   cmsis_arm_absmin_no_idx_q7, METH_VARARGS,""},
+{"arm_absmin_no_idx_q15",  cmsis_arm_absmin_no_idx_q15, METH_VARARGS,""},
+{"arm_absmin_no_idx_q31",  cmsis_arm_absmin_no_idx_q31, METH_VARARGS,""},
 {"arm_absmin_f32",  cmsis_arm_absmin_f32, METH_VARARGS,""},
 {"arm_max_q7",  cmsis_arm_max_q7, METH_VARARGS,""},
 {"arm_max_q15",  cmsis_arm_max_q15, METH_VARARGS,""},
@@ -17891,6 +18250,12 @@ static PyMethodDef CMSISMLMethods[] = {
 {"arm_absmax_q31", cmsis_arm_absmax_q31, METH_VARARGS,""},
 {"arm_max_f32",  cmsis_arm_max_f32, METH_VARARGS,""},
 {"arm_absmax_f32",  cmsis_arm_absmax_f32, METH_VARARGS,""},
+{"arm_max_no_idx_q7",  cmsis_arm_max_no_idx_q7, METH_VARARGS,""},
+{"arm_max_no_idx_q15",  cmsis_arm_max_no_idx_q15, METH_VARARGS,""},
+{"arm_max_no_idx_q31",  cmsis_arm_max_no_idx_q31, METH_VARARGS,""},
+{"arm_absmax_no_idx_q7",  cmsis_arm_absmax_no_idx_q7, METH_VARARGS,""},
+{"arm_absmax_no_idx_q15", cmsis_arm_absmax_no_idx_q15, METH_VARARGS,""},
+{"arm_absmax_no_idx_q31", cmsis_arm_absmax_no_idx_q31, METH_VARARGS,""},
 {"arm_cmplx_mult_cmplx_q15",  cmsis_arm_cmplx_mult_cmplx_q15, METH_VARARGS,""},
 {"arm_cmplx_mult_cmplx_q31",  cmsis_arm_cmplx_mult_cmplx_q31, METH_VARARGS,""},
 {"arm_cmplx_mult_cmplx_f32",  cmsis_arm_cmplx_mult_cmplx_f32, METH_VARARGS,""},

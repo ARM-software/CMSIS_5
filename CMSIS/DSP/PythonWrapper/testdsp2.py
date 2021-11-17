@@ -57,8 +57,8 @@ a31 = f.toQ31(a)
 i=dsp.arm_absmax_q31(a31)
 print(f.Q31toF32(i[0]),i[1])
 
-a8 = f.toQ15(a)
-i=dsp.arm_absmax_q15(a8)
+a15 = f.toQ15(a)
+i=dsp.arm_absmax_q15(a15)
 print(f.Q15toF32(i[0]),i[1])
 
 a7 = f.toQ7(a)
