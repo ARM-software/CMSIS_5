@@ -27,6 +27,11 @@
 
       Added arm_mat_mult_opt_q31 for a faster version of arm_mat_mult_q31
       when using Helium (but requiring more storage for intermediate results).
+
+      arm_(min|max)_no_idx_(q7|q15|q31|f16|f32|f64)
+      
+      arm_abs(min|max)_no_idx_(q7|q15|q31|f16|f32|f64)
+
     </td>
   </tr>
   <tr>

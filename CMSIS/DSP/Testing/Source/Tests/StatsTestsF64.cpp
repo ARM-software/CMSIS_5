@@ -85,6 +85,66 @@ a double precision computation.
 
     }
 
+    void StatsTestsF64::test_absmax_no_idx_f64()
+    {
+        const float64_t *inp  = inputA.ptr();
+
+        float64_t result;
+
+        float64_t *refp  = ref.ptr();
+
+        float64_t *outp  = output.ptr();
+
+        arm_absmax_no_idx_f64(inp,
+              inputA.nbSamples(),
+              &result);
+
+        outp[0] = result;
+
+        ASSERT_EQ(result,refp[this->refOffset]);
+
+    }
+
+    void StatsTestsF64::test_min_no_idx_f64()
+    {
+        const float64_t *inp  = inputA.ptr();
+
+        float64_t result;
+
+        float64_t *refp  = ref.ptr();
+
+        float64_t *outp  = output.ptr();
+
+        arm_min_no_idx_f64(inp,
+              inputA.nbSamples(),
+              &result);
+
+        outp[0] = result;
+
+        ASSERT_EQ(result,refp[this->refOffset]);
+
+    }
+
+    void StatsTestsF64::test_absmin_no_idx_f64()
+    {
+        const float64_t *inp  = inputA.ptr();
+
+        float64_t result;
+
+        float64_t *refp  = ref.ptr();
+
+        float64_t *outp  = output.ptr();
+
+        arm_absmin_no_idx_f64(inp,
+              inputA.nbSamples(),
+              &result);
+
+        outp[0] = result;
+
+        ASSERT_EQ(result,refp[this->refOffset]);
+
+    }
+
     void StatsTestsF64::test_min_f64()
     {
         const float64_t *inp  = inputA.ptr();
@@ -856,6 +916,115 @@ a double precision computation.
                
                output.create(1,StatsTestsF64::OUT_F64_ID,mgr);
                index.create(1,StatsTestsF64::OUT_S16_ID,mgr);
+
+               refOffset = 2;
+            }
+            break;
+
+            case StatsTestsF64::TEST_MIN_NO_IDX_F64_40:
+            {
+               inputA.reload(StatsTestsF64::INPUT1_F64_ID,mgr,2);
+              
+               ref.reload(StatsTestsF64::MINVALS_F64_ID,mgr);
+               
+               output.create(1,StatsTestsF64::OUT_F64_ID,mgr);
+
+               refOffset = 0;
+            }
+            break;
+
+            case StatsTestsF64::TEST_MIN_NO_IDX_F64_41:
+            {
+               inputA.reload(StatsTestsF64::INPUT1_F64_ID,mgr,4);
+              
+               ref.reload(StatsTestsF64::MINVALS_F64_ID,mgr);
+               
+               output.create(1,StatsTestsF64::OUT_F64_ID,mgr);
+
+               refOffset = 1;
+            }
+            break;
+
+            case StatsTestsF64::TEST_MIN_NO_IDX_F64_42:
+            {
+               inputA.reload(StatsTestsF64::INPUT1_F64_ID,mgr,5);
+              
+               ref.reload(StatsTestsF64::MINVALS_F64_ID,mgr);
+               
+               output.create(1,StatsTestsF64::OUT_F64_ID,mgr);
+
+               refOffset = 2;
+            }
+            break;
+
+
+            case StatsTestsF64::TEST_ABSMAX_NO_IDX_F64_43:
+            {
+               inputA.reload(StatsTestsF64::INPUTNEW1_F64_ID,mgr,2);
+              
+               ref.reload(StatsTestsF64::ABSMAXVALS_F64_ID,mgr);
+               
+               output.create(1,StatsTestsF64::OUT_F64_ID,mgr);
+
+               refOffset = 0;
+            }
+            break;
+
+            case StatsTestsF64::TEST_ABSMAX_NO_IDX_F64_44:
+            {
+               inputA.reload(StatsTestsF64::INPUTNEW1_F64_ID,mgr,4);
+              
+               ref.reload(StatsTestsF64::ABSMAXVALS_F64_ID,mgr);
+               
+               output.create(1,StatsTestsF64::OUT_F64_ID,mgr);
+
+               refOffset = 1;
+            }
+            break;
+
+            case StatsTestsF64::TEST_ABSMAX_NO_IDX_F64_45:
+            {
+               inputA.reload(StatsTestsF64::INPUTNEW1_F64_ID,mgr,5);
+              
+               ref.reload(StatsTestsF64::ABSMAXVALS_F64_ID,mgr);
+               
+               output.create(1,StatsTestsF64::OUT_F64_ID,mgr);
+
+               refOffset = 2;
+            }
+            break;
+
+            case StatsTestsF64::TEST_ABSMIN_NO_IDX_F64_46:
+            {
+               inputA.reload(StatsTestsF64::INPUTNEW1_F64_ID,mgr,2);
+              
+               ref.reload(StatsTestsF64::ABSMINVALS_F64_ID,mgr);
+               
+               output.create(1,StatsTestsF64::OUT_F64_ID,mgr);
+
+               refOffset = 0;
+            }
+            break;
+
+            case StatsTestsF64::TEST_ABSMIN_NO_IDX_F64_47:
+            {
+               inputA.reload(StatsTestsF64::INPUTNEW1_F64_ID,mgr,4);
+              
+               ref.reload(StatsTestsF64::ABSMINVALS_F64_ID,mgr);
+               
+               output.create(1,StatsTestsF64::OUT_F64_ID,mgr);
+
+               refOffset = 1;
+            }
+            break;
+
+            case StatsTestsF64::TEST_ABSMIN_NO_IDX_F64_48:
+            {
+               inputA.reload(StatsTestsF64::INPUTNEW1_F64_ID,mgr,5);
+              
+               ref.reload(StatsTestsF64::ABSMINVALS_F64_ID,mgr);
+               
+               output.create(1,StatsTestsF64::OUT_F64_ID,mgr);
 
                refOffset = 2;
             }

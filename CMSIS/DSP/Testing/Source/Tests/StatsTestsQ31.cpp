@@ -93,6 +93,46 @@ a double precision computation.
 
     }
 
+    void StatsTestsQ31::test_min_no_idx_q31()
+    {
+        const q31_t *inp  = inputA.ptr();
+
+        q31_t result;
+
+        q31_t *refp  = ref.ptr();
+
+        q31_t *outp  = output.ptr();
+
+        arm_min_no_idx_q31(inp,
+              inputA.nbSamples(),
+              &result);
+
+        outp[0] = result;
+
+        ASSERT_EQ(result,refp[this->refOffset]);
+
+    }
+
+    void StatsTestsQ31::test_absmin_no_idx_q31()
+    {
+        const q31_t *inp  = inputA.ptr();
+
+        q31_t result;
+
+        q31_t *refp  = ref.ptr();
+
+        q31_t *outp  = output.ptr();
+
+        arm_absmin_no_idx_q31(inp,
+              inputA.nbSamples(),
+              &result);
+
+        outp[0] = result;
+
+        ASSERT_EQ(result,refp[this->refOffset]);
+
+    }
+
     void StatsTestsQ31::test_absmin_q31()
     {
         const q31_t *inp  = inputA.ptr();
@@ -226,6 +266,46 @@ a double precision computation.
         ASSERT_SNR(result,refp[this->refOffset],(float32_t)SNR_THRESHOLD);
 
         ASSERT_NEAR_EQ(result,refp[this->refOffset],ABS_ERROR_Q31);
+
+    }
+
+    void StatsTestsQ31::test_max_no_idx_q31()
+    {
+        const q31_t *inp  = inputA.ptr();
+
+        q31_t result;
+
+        q31_t *refp  = ref.ptr();
+
+        q31_t *outp  = output.ptr();
+
+        arm_max_no_idx_q31(inp,
+              inputA.nbSamples(),
+              &result);
+
+        outp[0] = result;
+
+        ASSERT_EQ(result,refp[this->refOffset]);
+
+    }
+
+    void StatsTestsQ31::test_absmax_no_idx_q31()
+    {
+        const q31_t *inp  = inputA.ptr();
+
+        q31_t result;
+
+        q31_t *refp  = ref.ptr();
+
+        q31_t *outp  = output.ptr();
+
+        arm_absmax_no_idx_q31(inp,
+              inputA.nbSamples(),
+              &result);
+
+        outp[0] = result;
+
+        ASSERT_EQ(result,refp[this->refOffset]);
 
     }
 
@@ -579,6 +659,150 @@ a double precision computation.
                
                output.create(1,StatsTestsQ31::OUT_Q31_ID,mgr);
                index.create(1,StatsTestsQ31::OUT_S16_ID,mgr);
+
+               refOffset = 2;
+            }
+            break;
+
+            case StatsTestsQ31::TEST_MAX_NO_IDX_Q31_28:
+            {
+               inputA.reload(StatsTestsQ31::INPUT1_Q31_ID,mgr,3);
+              
+               ref.reload(StatsTestsQ31::MAXVALS_Q31_ID,mgr);
+               
+               output.create(1,StatsTestsQ31::OUT_Q31_ID,mgr);
+
+               refOffset = 0;
+            }
+            break;
+
+            case StatsTestsQ31::TEST_MAX_NO_IDX_Q31_29:
+            {
+               inputA.reload(StatsTestsQ31::INPUT1_Q31_ID,mgr,8);
+              
+               ref.reload(StatsTestsQ31::MAXVALS_Q31_ID,mgr);
+               
+               output.create(1,StatsTestsQ31::OUT_Q31_ID,mgr);
+
+               refOffset = 1;
+            }
+            break;
+
+            case StatsTestsQ31::TEST_MAX_NO_IDX_Q31_30:
+            {
+               inputA.reload(StatsTestsQ31::INPUT1_Q31_ID,mgr,11);
+              
+               ref.reload(StatsTestsQ31::MAXVALS_Q31_ID,mgr);
+               
+               output.create(1,StatsTestsQ31::OUT_Q31_ID,mgr);
+
+               refOffset = 2;
+            }
+            break;
+
+            case StatsTestsQ31::TEST_MIN_NO_IDX_Q31_31:
+            {
+               inputA.reload(StatsTestsQ31::INPUT1_Q31_ID,mgr,3);
+              
+               ref.reload(StatsTestsQ31::MINVALS_Q31_ID,mgr);
+               
+               output.create(1,StatsTestsQ31::OUT_Q31_ID,mgr);
+
+               refOffset = 0;
+            }
+            break;
+
+            case StatsTestsQ31::TEST_MIN_NO_IDX_Q31_32:
+            {
+               inputA.reload(StatsTestsQ31::INPUT1_Q31_ID,mgr,8);
+              
+               ref.reload(StatsTestsQ31::MINVALS_Q31_ID,mgr);
+               
+               output.create(1,StatsTestsQ31::OUT_Q31_ID,mgr);
+
+               refOffset = 1;
+            }
+            break;
+
+            case StatsTestsQ31::TEST_MIN_NO_IDX_Q31_33:
+            {
+               inputA.reload(StatsTestsQ31::INPUT1_Q31_ID,mgr,11);
+              
+               ref.reload(StatsTestsQ31::MINVALS_Q31_ID,mgr);
+               
+               output.create(1,StatsTestsQ31::OUT_Q31_ID,mgr);
+
+               refOffset = 2;
+            }
+            break;
+
+            case StatsTestsQ31::TEST_ABSMAX_NO_IDX_Q31_34:
+            {
+               inputA.reload(StatsTestsQ31::INPUTNEW1_Q31_ID,mgr,3);
+              
+               ref.reload(StatsTestsQ31::ABSMAXVALS_Q31_ID,mgr);
+               
+               output.create(1,StatsTestsQ31::OUT_Q31_ID,mgr);
+
+               refOffset = 0;
+            }
+            break;
+
+            case StatsTestsQ31::TEST_ABSMAX_NO_IDX_Q31_35:
+            {
+               inputA.reload(StatsTestsQ31::INPUTNEW1_Q31_ID,mgr,8);
+              
+               ref.reload(StatsTestsQ31::ABSMAXVALS_Q31_ID,mgr);
+               
+               output.create(1,StatsTestsQ31::OUT_Q31_ID,mgr);
+
+               refOffset = 1;
+            }
+            break;
+
+            case StatsTestsQ31::TEST_ABSMAX_NO_IDX_Q31_36:
+            {
+               inputA.reload(StatsTestsQ31::INPUTNEW1_Q31_ID,mgr,11);
+              
+               ref.reload(StatsTestsQ31::ABSMAXVALS_Q31_ID,mgr);
+               
+               output.create(1,StatsTestsQ31::OUT_Q31_ID,mgr);
+
+               refOffset = 2;
+            }
+            break;
+
+            case StatsTestsQ31::TEST_ABSMIN_NO_IDX_Q31_37:
+            {
+               inputA.reload(StatsTestsQ31::INPUTNEW1_Q31_ID,mgr,3);
+              
+               ref.reload(StatsTestsQ31::ABSMINVALS_Q31_ID,mgr);
+               
+               output.create(1,StatsTestsQ31::OUT_Q31_ID,mgr);
+
+               refOffset = 0;
+            }
+            break;
+
+            case StatsTestsQ31::TEST_ABSMIN_NO_IDX_Q31_38:
+            {
+               inputA.reload(StatsTestsQ31::INPUTNEW1_Q31_ID,mgr,8);
+              
+               ref.reload(StatsTestsQ31::ABSMINVALS_Q31_ID,mgr);
+               
+               output.create(1,StatsTestsQ31::OUT_Q31_ID,mgr);
+
+               refOffset = 1;
+            }
+            break;
+
+            case StatsTestsQ31::TEST_ABSMIN_NO_IDX_Q31_39:
+            {
+               inputA.reload(StatsTestsQ31::INPUTNEW1_Q31_ID,mgr,11);
+              
+               ref.reload(StatsTestsQ31::ABSMINVALS_Q31_ID,mgr);
+               
+               output.create(1,StatsTestsQ31::OUT_Q31_ID,mgr);
 
                refOffset = 2;
             }

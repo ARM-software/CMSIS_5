@@ -42,6 +42,46 @@ a double precision computation.
 
     }
 
+    void StatsTestsQ7::test_max_no_idx_q7()
+    {
+        const q7_t *inp  = inputA.ptr();
+
+        q7_t result;
+
+        q7_t *refp  = ref.ptr();
+
+        q7_t *outp  = output.ptr();
+
+        arm_max_no_idx_q7(inp,
+              inputA.nbSamples(),
+              &result);
+
+        outp[0] = result;
+
+        ASSERT_EQ(result,refp[this->refOffset]);
+
+    }
+
+    void StatsTestsQ7::test_absmax_no_idx_q7()
+    {
+        const q7_t *inp  = inputA.ptr();
+
+        q7_t result;
+
+        q7_t *refp  = ref.ptr();
+
+        q7_t *outp  = output.ptr();
+
+        arm_absmax_no_idx_q7(inp,
+              inputA.nbSamples(),
+              &result);
+
+        outp[0] = result;
+
+        ASSERT_EQ(result,refp[this->refOffset]);
+
+    }
+
     void StatsTestsQ7::test_absmax_q7()
     {
         const q7_t *inp  = inputA.ptr();
@@ -101,6 +141,46 @@ Python code must be tuned to change this.
 
         ASSERT_EQ(result,refp[this->refOffset]);
         ASSERT_EQ((int16_t)indexval,refind[this->refOffset]);
+
+    }
+
+    void StatsTestsQ7::test_min_no_idx_q7()
+    {
+        const q7_t *inp  = inputA.ptr();
+
+        q7_t result;
+
+        q7_t *refp  = ref.ptr();
+
+        q7_t *outp  = output.ptr();
+
+        arm_min_no_idx_q7(inp,
+              inputA.nbSamples(),
+              &result);
+
+        outp[0] = result;
+
+        ASSERT_EQ(result,refp[this->refOffset]);
+
+    }
+
+    void StatsTestsQ7::test_absmin_no_idx_q7()
+    {
+        const q7_t *inp  = inputA.ptr();
+
+        q7_t result;
+
+        q7_t *refp  = ref.ptr();
+
+        q7_t *outp  = output.ptr();
+
+        arm_absmin_no_idx_q7(inp,
+              inputA.nbSamples(),
+              &result);
+
+        outp[0] = result;
+
+        ASSERT_EQ(result,refp[this->refOffset]);
 
     }
 
@@ -671,6 +751,150 @@ But the tests are kept for when they will be available.
                index.create(1,StatsTestsQ7::OUT_S16_ID,mgr);
 
                refOffset = 3;
+            }
+            break;
+
+            case StatsTestsQ7::TEST_MAX_NO_IDX_Q7_23:
+            {
+               inputA.reload(StatsTestsQ7::INPUT1_Q7_ID,mgr,15);
+              
+               ref.reload(StatsTestsQ7::MAXVALS_Q7_ID,mgr);
+               
+               output.create(1,StatsTestsQ7::OUT_Q7_ID,mgr);
+
+               refOffset = 0;
+            }
+            break;
+
+            case StatsTestsQ7::TEST_MAX_NO_IDX_Q7_24:
+            {
+               inputA.reload(StatsTestsQ7::INPUT1_Q7_ID,mgr,32);
+              
+               ref.reload(StatsTestsQ7::MAXVALS_Q7_ID,mgr);
+               
+               output.create(1,StatsTestsQ7::OUT_Q7_ID,mgr);
+
+               refOffset = 1;
+            }
+            break;
+
+            case StatsTestsQ7::TEST_MAX_NO_IDX_Q7_25:
+            {
+               inputA.reload(StatsTestsQ7::INPUT1_Q7_ID,mgr,47);
+              
+               ref.reload(StatsTestsQ7::MAXVALS_Q7_ID,mgr);
+               
+               output.create(1,StatsTestsQ7::OUT_Q7_ID,mgr);
+
+               refOffset = 2;
+            }
+            break;
+
+            case StatsTestsQ7::TEST_MIN_NO_IDX_Q7_26:
+            {
+               inputA.reload(StatsTestsQ7::INPUT1_Q7_ID,mgr,15);
+              
+               ref.reload(StatsTestsQ7::MINVALS_Q7_ID,mgr);
+               
+               output.create(1,StatsTestsQ7::OUT_Q7_ID,mgr);
+
+               refOffset = 0;
+            }
+            break;
+
+            case StatsTestsQ7::TEST_MIN_NO_IDX_Q7_27:
+            {
+               inputA.reload(StatsTestsQ7::INPUT1_Q7_ID,mgr,32);
+              
+               ref.reload(StatsTestsQ7::MINVALS_Q7_ID,mgr);
+               
+               output.create(1,StatsTestsQ7::OUT_Q7_ID,mgr);
+
+               refOffset = 1;
+            }
+            break;
+
+            case StatsTestsQ7::TEST_MIN_NO_IDX_Q7_28:
+            {
+               inputA.reload(StatsTestsQ7::INPUT1_Q7_ID,mgr,47);
+              
+               ref.reload(StatsTestsQ7::MINVALS_Q7_ID,mgr);
+               
+               output.create(1,StatsTestsQ7::OUT_Q7_ID,mgr);
+
+               refOffset = 2;
+            }
+            break;
+
+            case StatsTestsQ7::TEST_ABSMAX_NO_IDX_Q7_29:
+            {
+               inputA.reload(StatsTestsQ7::INPUTNEW1_Q7_ID,mgr,15);
+              
+               ref.reload(StatsTestsQ7::ABSMAXVALS_Q7_ID,mgr);
+               
+               output.create(1,StatsTestsQ7::OUT_Q7_ID,mgr);
+
+               refOffset = 0;
+            }
+            break;
+
+            case StatsTestsQ7::TEST_ABSMAX_NO_IDX_Q7_30:
+            {
+               inputA.reload(StatsTestsQ7::INPUTNEW1_Q7_ID,mgr,32);
+              
+               ref.reload(StatsTestsQ7::ABSMAXVALS_Q7_ID,mgr);
+               
+               output.create(1,StatsTestsQ7::OUT_Q7_ID,mgr);
+
+               refOffset = 1;
+            }
+            break;
+
+            case StatsTestsQ7::TEST_ABSMAX_NO_IDX_Q7_31:
+            {
+               inputA.reload(StatsTestsQ7::INPUTNEW1_Q7_ID,mgr,47);
+              
+               ref.reload(StatsTestsQ7::ABSMAXVALS_Q7_ID,mgr);
+               
+               output.create(1,StatsTestsQ7::OUT_Q7_ID,mgr);
+
+               refOffset = 2;
+            }
+            break;
+
+            case StatsTestsQ7::TEST_ABSMIN_NO_IDX_Q7_32:
+            {
+               inputA.reload(StatsTestsQ7::INPUTNEW1_Q7_ID,mgr,15);
+              
+               ref.reload(StatsTestsQ7::ABSMINVALS_Q7_ID,mgr);
+               
+               output.create(1,StatsTestsQ7::OUT_Q7_ID,mgr);
+
+               refOffset = 0;
+            }
+            break;
+
+            case StatsTestsQ7::TEST_ABSMIN_NO_IDX_Q7_33:
+            {
+               inputA.reload(StatsTestsQ7::INPUTNEW1_Q7_ID,mgr,32);
+              
+               ref.reload(StatsTestsQ7::ABSMINVALS_Q7_ID,mgr);
+               
+               output.create(1,StatsTestsQ7::OUT_Q7_ID,mgr);
+
+               refOffset = 1;
+            }
+            break;
+
+            case StatsTestsQ7::TEST_ABSMIN_NO_IDX_Q7_34:
+            {
+               inputA.reload(StatsTestsQ7::INPUTNEW1_Q7_ID,mgr,47);
+              
+               ref.reload(StatsTestsQ7::ABSMINVALS_Q7_ID,mgr);
+               
+               output.create(1,StatsTestsQ7::OUT_Q7_ID,mgr);
+
+               refOffset = 2;
             }
             break;
           
