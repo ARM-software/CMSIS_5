@@ -49,12 +49,12 @@ int32_t  OS_Tick_Setup (uint32_t freq, IRQHandler_t handler) {
   uint32_t load;
 
   if (freq == 0U) {
-    return (-1);
+    return -1;
   }
 
   load = (SystemCoreClock / freq) - 1U;
   if (load > 0x00FFFFFFU) {
-    return (-1);
+    return -1;
   }
 
   NVIC_SetPriority(SysTick_IRQn, SYSTICK_IRQ_PRIORITY);
@@ -65,14 +65,14 @@ int32_t  OS_Tick_Setup (uint32_t freq, IRQHandler_t handler) {
 
   PendST = 0U;
 
-  return (0);
+  return 0;
 }
 \endcode
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\fn int32_t  OS_Tick_Enable (void)
+\fn void  OS_Tick_Enable (void)
 \details 
 Enable OS Tick timer interrupt.
 
@@ -80,7 +80,7 @@ Enable and start the OS Tick timer to generate periodic RTOS Kernel Tick interru
 
 <b>Cortex-M SysTick implementation:</b>
 \code
-int32_t  OS_Tick_Enable (void) {
+void  OS_Tick_Enable (void) {
 
   if (PendST != 0U) {
     PendST = 0U;
@@ -89,14 +89,13 @@ int32_t  OS_Tick_Enable (void) {
 
   SysTick->CTRL |=  SysTick_CTRL_ENABLE_Msk;
 
-  return (0);
 }
 \endcode
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\fn int32_t  OS_Tick_Disable (void)
+\fn void  OS_Tick_Disable (void)
 \details 
 Disable OS Tick timer interrupt.
 
@@ -104,7 +103,7 @@ Stop the OS Tick timer and disable generation of RTOS Kernel Tick interrupts.
 
 <b>Cortex-M SysTick implementation:</b>
 \code
-int32_t  OS_Tick_Disable (void) {
+void  OS_Tick_Disable (void) {
 
   SysTick->CTRL &= ~SysTick_CTRL_ENABLE_Msk;
 
@@ -113,14 +112,13 @@ int32_t  OS_Tick_Disable (void) {
     PendST = 1U;
   }
 
-  return (0);
 }
 \endcode
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\fn int32_t  OS_Tick_AcknowledgeIRQ (void)
+\fn void  OS_Tick_AcknowledgeIRQ (void)
 \details 
 Acknowledge execution of OS Tick timer interrupt.
 
@@ -129,9 +127,10 @@ Acknowledge the execution of the OS Tick timer interrupt function, for example c
 <b>Cortex-M SysTick implementation:</b>
 
 \code
-int32_t  OS_Tick_AcknowledgeIRQ (void) {
+void  OS_Tick_AcknowledgeIRQ (void) {
+
   (void)SysTick->CTRL;
-  return (0);
+
 }
 \endcode
 */
@@ -148,7 +147,7 @@ Return the numeric value that identifies the interrupt called by the OS Tick tim
 
 \code
 int32_t  OS_Tick_GetIRQn (void) {
-  return (SysTick_IRQn);
+  return SysTick_IRQn;
 }
 \endcode
 */
@@ -166,7 +165,7 @@ This function is used to by the function \ref osKernelGetSysTimerFreq.
 
 \code
 uint32_t OS_Tick_GetClock (void) {
-  return (SystemCoreClock);
+  return SystemCoreClock;
 }
 \endcode
 */
@@ -183,7 +182,7 @@ Return the number of counter ticks between to periodic OS Tick timer interrupts.
 
 \code
 uint32_t OS_Tick_GetInterval (void) {
-  return (SysTick->LOAD + 1U);
+  return SysTick->LOAD + 1U;
 }
 \endcode
 */
@@ -203,7 +202,7 @@ The OS Tick timer counter value is used to by the function \ref osKernelGetSysTi
 \code
 uint32_t OS_Tick_GetCount (void) {
   uint32_t load = SysTick->LOAD;
-  return  (load - SysTick->VAL);
+  return load - SysTick->VAL;
 }
 \endcode
 */
@@ -220,7 +219,7 @@ Return the state of OS Tick timer interrupt pending bit that indicates timer ove
 
 \code
 uint32_t OS_Tick_GetOverflow (void) {
-  return ((SCB->ICSR & SCB_ICSR_PENDSTSET_Msk) >> SCB_ICSR_PENDSTSET_Pos);
+  return (SCB->ICSR & SCB_ICSR_PENDSTSET_Msk) >> SCB_ICSR_PENDSTSET_Pos;
 }
 \endcode
 */
