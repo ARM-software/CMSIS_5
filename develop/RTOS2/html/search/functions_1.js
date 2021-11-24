@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['os_5ftick_5facknowledgeirq',['OS_Tick_AcknowledgeIRQ',['../group__CMSIS__RTOS__TickAPI.html#ga57065ec4b281504ad4de13a419870b4f',1,'os_tick.h']]],
-  ['os_5ftick_5fdisable',['OS_Tick_Disable',['../group__CMSIS__RTOS__TickAPI.html#ga5e325c304fef5003b1dc31906f6a3056',1,'os_tick.h']]],
-  ['os_5ftick_5fenable',['OS_Tick_Enable',['../group__CMSIS__RTOS__TickAPI.html#ga3e47971bf3a02599d9ecb32208adafec',1,'os_tick.h']]],
+  ['os_5ftick_5facknowledgeirq',['OS_Tick_AcknowledgeIRQ',['../group__CMSIS__RTOS__TickAPI.html#ga14c430d2b363ebd9f904b0822a9314e7',1,'os_tick.h']]],
+  ['os_5ftick_5fdisable',['OS_Tick_Disable',['../group__CMSIS__RTOS__TickAPI.html#ga50fc040b66fabd1945d2bd1d0d05661d',1,'os_tick.h']]],
+  ['os_5ftick_5fenable',['OS_Tick_Enable',['../group__CMSIS__RTOS__TickAPI.html#gaaa0d6ddef6816e8e5650fde3daf191e7',1,'os_tick.h']]],
   ['os_5ftick_5fgetclock',['OS_Tick_GetClock',['../group__CMSIS__RTOS__TickAPI.html#ga936217ea28236fb57648973e0d8f627a',1,'os_tick.h']]],
   ['os_5ftick_5fgetcount',['OS_Tick_GetCount',['../group__CMSIS__RTOS__TickAPI.html#gaa64a145a554f1e5077848938d7f39c92',1,'os_tick.h']]],
   ['os_5ftick_5fgetinterval',['OS_Tick_GetInterval',['../group__CMSIS__RTOS__TickAPI.html#ga123151dc19d5a94a68f12cdbf61a9bb5',1,'os_tick.h']]],
