@@ -91,13 +91,13 @@ static float32_t arm_inverse_fft_length_f32(uint16_t fftLen)
 
 static void _arm_radix4_butterfly_f32_mve(const arm_cfft_instance_f32 * S,float32_t * pSrc, uint32_t fftLen)
 {
-    f32x4_t vecTmp0, vecTmp1;
-    f32x4_t vecSum0, vecDiff0, vecSum1, vecDiff1;
-    f32x4_t vecA, vecB, vecC, vecD;
-    uint32_t  blkCnt;
-    uint32_t  n1, n2;
-    uint32_t  stage = 0;
-    int32_t  iter = 1;
+    f32x4_t     vecTmp0, vecTmp1;
+    f32x4_t     vecSum0, vecDiff0, vecSum1, vecDiff1;
+    f32x4_t     vecA, vecB, vecC, vecD;
+    uint32_t    blkCnt;
+    uint32_t    n1, n2;
+    uint32_t    stage = 0;
+    int32_t     iter = 1;
     static const int32_t strides[4] = {
         (0 - 16) * (int32_t)sizeof(q31_t *),
         (1 - 16) * (int32_t)sizeof(q31_t *),
@@ -110,28 +110,27 @@ static void _arm_radix4_butterfly_f32_mve(const arm_cfft_instance_f32 * S,float3
     n2 >>= 2u;
     for (int k = fftLen / 4u; k > 1; k >>= 2)
     {
+        float32_t const     *p_rearranged_twiddle_tab_stride1 =
+                            &S->rearranged_twiddle_stride1[
+                            S->rearranged_twiddle_tab_stride1_arr[stage]];
+        float32_t const     *p_rearranged_twiddle_tab_stride2 =
+                            &S->rearranged_twiddle_stride2[
+                            S->rearranged_twiddle_tab_stride2_arr[stage]];
+        float32_t const     *p_rearranged_twiddle_tab_stride3 =
+                            &S->rearranged_twiddle_stride3[
+                            S->rearranged_twiddle_tab_stride3_arr[stage]];
+
+        float32_t * pBase = pSrc;
         for (int i = 0; i < iter; i++)
         {
-            float32_t const     *p_rearranged_twiddle_tab_stride1 =
-                                &S->rearranged_twiddle_stride1[
-                                S->rearranged_twiddle_tab_stride1_arr[stage]];
-            float32_t const     *p_rearranged_twiddle_tab_stride2 =
-                                &S->rearranged_twiddle_stride2[
-                                S->rearranged_twiddle_tab_stride2_arr[stage]];
-            float32_t const     *p_rearranged_twiddle_tab_stride3 =
-                                &S->rearranged_twiddle_stride3[
-                                S->rearranged_twiddle_tab_stride3_arr[stage]];
-            float32_t const    *pW1, *pW2, *pW3;
-            float32_t           *inA = pSrc + CMPLX_DIM * i * n1;
-            float32_t           *inB = inA + n2 * CMPLX_DIM;
-            float32_t           *inC = inB + n2 * CMPLX_DIM;
-            float32_t           *inD = inC + n2 * CMPLX_DIM;
+            float32_t    *inA = pBase;
+            float32_t    *inB = inA + n2 * CMPLX_DIM;
+            float32_t    *inC = inB + n2 * CMPLX_DIM;
+            float32_t    *inD = inC + n2 * CMPLX_DIM;
+            float32_t const *pW1 = p_rearranged_twiddle_tab_stride1;
+            float32_t const *pW2 = p_rearranged_twiddle_tab_stride2;
+            float32_t const *pW3 = p_rearranged_twiddle_tab_stride3;
             f32x4_t            vecW;
-
-
-            pW1 = p_rearranged_twiddle_tab_stride1;
-            pW2 = p_rearranged_twiddle_tab_stride2;
-            pW3 = p_rearranged_twiddle_tab_stride3;
 
             blkCnt = n2 / 2;
             /*
@@ -200,6 +199,7 @@ static void _arm_radix4_butterfly_f32_mve(const arm_cfft_instance_f32 * S,float3
 
                 blkCnt--;
             }
+            pBase +=  CMPLX_DIM * n1;
         }
         n1 = n2;
         n2 >>= 2u;
@@ -302,7 +302,6 @@ static void _arm_radix4_butterfly_inverse_f32_mve(const arm_cfft_instance_f32 * 
     f32x4_t vecTmp0, vecTmp1;
     f32x4_t vecSum0, vecDiff0, vecSum1, vecDiff1;
     f32x4_t vecA, vecB, vecC, vecD;
-    f32x4_t vecW;
     uint32_t  blkCnt;
     uint32_t  n1, n2;
     uint32_t  stage = 0;
@@ -319,26 +318,27 @@ static void _arm_radix4_butterfly_inverse_f32_mve(const arm_cfft_instance_f32 * 
     n2 >>= 2u;
     for (int k = fftLen / 4; k > 1; k >>= 2)
     {
+        float32_t const *p_rearranged_twiddle_tab_stride1 =
+                &S->rearranged_twiddle_stride1[
+                S->rearranged_twiddle_tab_stride1_arr[stage]];
+        float32_t const *p_rearranged_twiddle_tab_stride2 =
+                &S->rearranged_twiddle_stride2[
+                S->rearranged_twiddle_tab_stride2_arr[stage]];
+        float32_t const *p_rearranged_twiddle_tab_stride3 =
+                &S->rearranged_twiddle_stride3[
+                S->rearranged_twiddle_tab_stride3_arr[stage]];
+
+        float32_t * pBase = pSrc;
         for (int i = 0; i < iter; i++)
         {
-            float32_t const *p_rearranged_twiddle_tab_stride1 =
-                    &S->rearranged_twiddle_stride1[
-                    S->rearranged_twiddle_tab_stride1_arr[stage]];
-            float32_t const *p_rearranged_twiddle_tab_stride2 =
-                    &S->rearranged_twiddle_stride2[
-                    S->rearranged_twiddle_tab_stride2_arr[stage]];
-            float32_t const *p_rearranged_twiddle_tab_stride3 =
-                    &S->rearranged_twiddle_stride3[
-                    S->rearranged_twiddle_tab_stride3_arr[stage]];
-            float32_t const *pW1, *pW2, *pW3;
-            float32_t *inA = pSrc + CMPLX_DIM * i * n1;
-            float32_t *inB = inA + n2 * CMPLX_DIM;
-            float32_t *inC = inB + n2 * CMPLX_DIM;
-            float32_t *inD = inC + n2 * CMPLX_DIM;
-
-            pW1 = p_rearranged_twiddle_tab_stride1;
-            pW2 = p_rearranged_twiddle_tab_stride2;
-            pW3 = p_rearranged_twiddle_tab_stride3;
+            float32_t    *inA = pBase;
+            float32_t    *inB = inA + n2 * CMPLX_DIM;
+            float32_t    *inC = inB + n2 * CMPLX_DIM;
+            float32_t    *inD = inC + n2 * CMPLX_DIM;
+            float32_t const *pW1 = p_rearranged_twiddle_tab_stride1;
+            float32_t const *pW2 = p_rearranged_twiddle_tab_stride2;
+            float32_t const *pW3 = p_rearranged_twiddle_tab_stride3;
+            f32x4_t       vecW;
 
             blkCnt = n2 / 2;
             /*
@@ -406,6 +406,7 @@ static void _arm_radix4_butterfly_inverse_f32_mve(const arm_cfft_instance_f32 * 
 
                 blkCnt--;
             }
+            pBase +=  CMPLX_DIM * n1;
         }
         n1 = n2;
         n2 >>= 2u;
