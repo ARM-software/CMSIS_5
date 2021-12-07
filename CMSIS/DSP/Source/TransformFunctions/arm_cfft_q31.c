@@ -43,7 +43,6 @@ static void _arm_radix4_butterfly_q31_mve(
     q31x4_t vecTmp0, vecTmp1;
     q31x4_t vecSum0, vecDiff0, vecSum1, vecDiff1;
     q31x4_t vecA, vecB, vecC, vecD;
-    q31x4_t vecW;
     uint32_t  blkCnt;
     uint32_t  n1, n2;
     uint32_t  stage = 0;
@@ -64,25 +63,27 @@ static void _arm_radix4_butterfly_q31_mve(
 
     for (int k = fftLen / 4u; k > 1; k >>= 2u)
     {
+        q31_t const *p_rearranged_twiddle_tab_stride2 =
+            &S->rearranged_twiddle_stride2[
+            S->rearranged_twiddle_tab_stride2_arr[stage]];
+        q31_t const *p_rearranged_twiddle_tab_stride3 = &S->rearranged_twiddle_stride3[
+            S->rearranged_twiddle_tab_stride3_arr[stage]];
+        q31_t const *p_rearranged_twiddle_tab_stride1 =
+            &S->rearranged_twiddle_stride1[
+            S->rearranged_twiddle_tab_stride1_arr[stage]];
+
+        q31_t * pBase = pSrc;
         for (int i = 0; i < iter; i++)
         {
-            q31_t const *p_rearranged_twiddle_tab_stride2 =
-                &S->rearranged_twiddle_stride2[
-                S->rearranged_twiddle_tab_stride2_arr[stage]];
-            q31_t const *p_rearranged_twiddle_tab_stride3 = &S->rearranged_twiddle_stride3[
-                S->rearranged_twiddle_tab_stride3_arr[stage]];
-            q31_t const *p_rearranged_twiddle_tab_stride1 =
-                &S->rearranged_twiddle_stride1[
-                S->rearranged_twiddle_tab_stride1_arr[stage]];
-            q31_t const *pW1, *pW2, *pW3;
-            q31_t    *inA = pSrc + CMPLX_DIM * i * n1;
+            q31_t    *inA = pBase;
             q31_t    *inB = inA + n2 * CMPLX_DIM;
             q31_t    *inC = inB + n2 * CMPLX_DIM;
             q31_t    *inD = inC + n2 * CMPLX_DIM;
+            q31_t const *pW1 = p_rearranged_twiddle_tab_stride1;
+            q31_t const *pW2 = p_rearranged_twiddle_tab_stride2;
+            q31_t const *pW3 = p_rearranged_twiddle_tab_stride3;
+            q31x4_t    vecW;
 
-            pW1 = p_rearranged_twiddle_tab_stride1;
-            pW2 = p_rearranged_twiddle_tab_stride2;
-            pW3 = p_rearranged_twiddle_tab_stride3;
 
             blkCnt = n2 / 2;
             /*
@@ -149,6 +150,7 @@ static void _arm_radix4_butterfly_q31_mve(
 
                 blkCnt--;
             }
+            pBase +=  CMPLX_DIM * n1;
         }
         n1 = n2;
         n2 >>= 2u;
@@ -293,7 +295,6 @@ static void _arm_radix4_butterfly_inverse_q31_mve(
     q31x4_t vecTmp0, vecTmp1;
     q31x4_t vecSum0, vecDiff0, vecSum1, vecDiff1;
     q31x4_t vecA, vecB, vecC, vecD;
-    q31x4_t vecW;
     uint32_t  blkCnt;
     uint32_t  n1, n2;
     uint32_t  stage = 0;
@@ -313,26 +314,26 @@ static void _arm_radix4_butterfly_inverse_q31_mve(
 
     for (int k = fftLen / 4u; k > 1; k >>= 2u)
     {
+        q31_t const *p_rearranged_twiddle_tab_stride2 =
+            &S->rearranged_twiddle_stride2[
+            S->rearranged_twiddle_tab_stride2_arr[stage]];
+        q31_t const *p_rearranged_twiddle_tab_stride3 = &S->rearranged_twiddle_stride3[
+            S->rearranged_twiddle_tab_stride3_arr[stage]];
+        q31_t const *p_rearranged_twiddle_tab_stride1 =
+            &S->rearranged_twiddle_stride1[
+            S->rearranged_twiddle_tab_stride1_arr[stage]];
+
+        q31_t * pBase = pSrc;
         for (int i = 0; i < iter; i++)
         {
-            q31_t const *p_rearranged_twiddle_tab_stride2 =
-                &S->rearranged_twiddle_stride2[
-                S->rearranged_twiddle_tab_stride2_arr[stage]];
-            q31_t const *p_rearranged_twiddle_tab_stride3 = &S->rearranged_twiddle_stride3[
-                S->rearranged_twiddle_tab_stride3_arr[stage]];
-            q31_t const *p_rearranged_twiddle_tab_stride1 =
-                &S->rearranged_twiddle_stride1[
-                S->rearranged_twiddle_tab_stride1_arr[stage]];
-
-            q31_t const *pW1, *pW2, *pW3;
-            q31_t    *inA = pSrc + CMPLX_DIM * i * n1;
+            q31_t    *inA = pBase;
             q31_t    *inB = inA + n2 * CMPLX_DIM;
             q31_t    *inC = inB + n2 * CMPLX_DIM;
             q31_t    *inD = inC + n2 * CMPLX_DIM;
-
-            pW1 = p_rearranged_twiddle_tab_stride1;
-            pW2 = p_rearranged_twiddle_tab_stride2;
-            pW3 = p_rearranged_twiddle_tab_stride3;
+            q31_t const *pW1 = p_rearranged_twiddle_tab_stride1;
+            q31_t const *pW2 = p_rearranged_twiddle_tab_stride2;
+            q31_t const *pW3 = p_rearranged_twiddle_tab_stride3;
+            q31x4_t    vecW;
 
             blkCnt = n2 / 2;
             /*
@@ -399,6 +400,7 @@ static void _arm_radix4_butterfly_inverse_q31_mve(
 
                 blkCnt--;
             }
+            pBase +=  CMPLX_DIM * n1;
         }
         n1 = n2;
         n2 >>= 2u;

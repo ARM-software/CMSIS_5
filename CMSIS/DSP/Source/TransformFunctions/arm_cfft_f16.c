@@ -108,28 +108,26 @@ static void _arm_radix4_butterfly_f16_mve(const arm_cfft_instance_f16 * S,float1
     n2 >>= 2u;
     for (int k = fftLen / 4u; k > 1; k >>= 2)
     {
+        float16_t const     *p_rearranged_twiddle_tab_stride1 =
+                            &S->rearranged_twiddle_stride1[
+                            S->rearranged_twiddle_tab_stride1_arr[stage]];
+        float16_t const     *p_rearranged_twiddle_tab_stride2 =
+                            &S->rearranged_twiddle_stride2[
+                            S->rearranged_twiddle_tab_stride2_arr[stage]];
+        float16_t const     *p_rearranged_twiddle_tab_stride3 =
+                            &S->rearranged_twiddle_stride3[
+                            S->rearranged_twiddle_tab_stride3_arr[stage]];
+        float16_t * pBase = pSrc;
         for (int i = 0; i < iter; i++)
         {
-            float16_t const     *p_rearranged_twiddle_tab_stride1 =
-                                &S->rearranged_twiddle_stride1[
-                                S->rearranged_twiddle_tab_stride1_arr[stage]];
-            float16_t const     *p_rearranged_twiddle_tab_stride2 =
-                                &S->rearranged_twiddle_stride2[
-                                S->rearranged_twiddle_tab_stride2_arr[stage]];
-            float16_t const     *p_rearranged_twiddle_tab_stride3 =
-                                &S->rearranged_twiddle_stride3[
-                                S->rearranged_twiddle_tab_stride3_arr[stage]];
-            float16_t const    *pW1, *pW2, *pW3;
-            float16_t           *inA = pSrc + CMPLX_DIM * i * n1;
-            float16_t           *inB = inA + n2 * CMPLX_DIM;
-            float16_t           *inC = inB + n2 * CMPLX_DIM;
-            float16_t           *inD = inC + n2 * CMPLX_DIM;
-            f16x8_t            vecW;
-
-
-            pW1 = p_rearranged_twiddle_tab_stride1;
-            pW2 = p_rearranged_twiddle_tab_stride2;
-            pW3 = p_rearranged_twiddle_tab_stride3;
+            float16_t    *inA = pBase;
+            float16_t    *inB = inA + n2 * CMPLX_DIM;
+            float16_t    *inC = inB + n2 * CMPLX_DIM;
+            float16_t    *inD = inC + n2 * CMPLX_DIM;
+            float16_t const *pW1 = p_rearranged_twiddle_tab_stride1;
+            float16_t const *pW2 = p_rearranged_twiddle_tab_stride2;
+            float16_t const *pW3 = p_rearranged_twiddle_tab_stride3;
+            f16x8_t       vecW;
 
             blkCnt = n2 / 4;
             /*
@@ -198,6 +196,7 @@ static void _arm_radix4_butterfly_f16_mve(const arm_cfft_instance_f16 * S,float1
 
                 blkCnt--;
             }
+            pBase +=  CMPLX_DIM * n1;
         }
         n1 = n2;
         n2 >>= 2u;
@@ -300,7 +299,6 @@ static void _arm_radix4_butterfly_inverse_f16_mve(const arm_cfft_instance_f16 * 
     f16x8_t vecTmp0, vecTmp1;
     f16x8_t vecSum0, vecDiff0, vecSum1, vecDiff1;
     f16x8_t vecA, vecB, vecC, vecD;
-    f16x8_t vecW;
     uint32_t  blkCnt;
     uint32_t  n1, n2;
     uint32_t  stage = 0;
@@ -317,26 +315,27 @@ static void _arm_radix4_butterfly_inverse_f16_mve(const arm_cfft_instance_f16 * 
     n2 >>= 2u;
     for (int k = fftLen / 4; k > 1; k >>= 2)
     {
+        float16_t const *p_rearranged_twiddle_tab_stride1 =
+                &S->rearranged_twiddle_stride1[
+                S->rearranged_twiddle_tab_stride1_arr[stage]];
+        float16_t const *p_rearranged_twiddle_tab_stride2 =
+                &S->rearranged_twiddle_stride2[
+                S->rearranged_twiddle_tab_stride2_arr[stage]];
+        float16_t const *p_rearranged_twiddle_tab_stride3 =
+                &S->rearranged_twiddle_stride3[
+                S->rearranged_twiddle_tab_stride3_arr[stage]];
+
+        float16_t * pBase = pSrc;
         for (int i = 0; i < iter; i++)
         {
-            float16_t const *p_rearranged_twiddle_tab_stride1 =
-                    &S->rearranged_twiddle_stride1[
-                    S->rearranged_twiddle_tab_stride1_arr[stage]];
-            float16_t const *p_rearranged_twiddle_tab_stride2 =
-                    &S->rearranged_twiddle_stride2[
-                    S->rearranged_twiddle_tab_stride2_arr[stage]];
-            float16_t const *p_rearranged_twiddle_tab_stride3 =
-                    &S->rearranged_twiddle_stride3[
-                    S->rearranged_twiddle_tab_stride3_arr[stage]];
-            float16_t const *pW1, *pW2, *pW3;
-            float16_t *inA = pSrc + CMPLX_DIM * i * n1;
-            float16_t *inB = inA + n2 * CMPLX_DIM;
-            float16_t *inC = inB + n2 * CMPLX_DIM;
-            float16_t *inD = inC + n2 * CMPLX_DIM;
-
-            pW1 = p_rearranged_twiddle_tab_stride1;
-            pW2 = p_rearranged_twiddle_tab_stride2;
-            pW3 = p_rearranged_twiddle_tab_stride3;
+            float16_t    *inA = pBase;
+            float16_t    *inB = inA + n2 * CMPLX_DIM;
+            float16_t    *inC = inB + n2 * CMPLX_DIM;
+            float16_t    *inD = inC + n2 * CMPLX_DIM;
+            float16_t const *pW1 = p_rearranged_twiddle_tab_stride1;
+            float16_t const *pW2 = p_rearranged_twiddle_tab_stride2;
+            float16_t const *pW3 = p_rearranged_twiddle_tab_stride3;
+            f16x8_t       vecW;
 
             blkCnt = n2 / 4;
             /*
@@ -404,6 +403,7 @@ static void _arm_radix4_butterfly_inverse_f16_mve(const arm_cfft_instance_f16 * 
 
                 blkCnt--;
             }
+            pBase +=  CMPLX_DIM * n1;
         }
         n1 = n2;
         n2 >>= 2u;
