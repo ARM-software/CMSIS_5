@@ -23,6 +23,19 @@ a double precision computation.
 /* Upper bound of maximum matrix dimension used by Python */
 #define MAXMATRIXDIM 40
 
+static void checkInnerTail(q15_t *b)
+{
+    ASSERT_TRUE(b[0] == 0);
+    ASSERT_TRUE(b[1] == 0);
+    ASSERT_TRUE(b[2] == 0);
+    ASSERT_TRUE(b[3] == 0);
+    ASSERT_TRUE(b[4] == 0);
+    ASSERT_TRUE(b[5] == 0);
+    ASSERT_TRUE(b[6] == 0);
+    ASSERT_TRUE(b[7] == 0);
+}
+
+
 
 #define LOADDATA2()                         \
       const q15_t *inp1=input1.ptr();       \
@@ -39,7 +52,7 @@ a double precision computation.
       int i;
 
 
-#define PREPAREDATA2()                                                   \
+#define PREPAREDATA2C()                                                   \
       in1.numRows=rows;                                                  \
       in1.numCols=internal;                                               \
       memcpy((void*)ap,(const void*)inp1,2*sizeof(q15_t)*rows*internal);\
@@ -54,10 +67,26 @@ a double precision computation.
       out.numCols=columns;                                               \
       out.pData = outp;
 
-
+#define PREPAREDATA2R()                                                   \
+      in1.numRows=rows;                                                  \
+      in1.numCols=internal;                                               \
+      memcpy((void*)ap,(const void*)inp1,sizeof(q15_t)*rows*internal);\
+      in1.pData = ap;                                                    \
+                                                                         \
+      in2.numRows=internal;                                                  \
+      in2.numCols=columns;                                               \
+      memcpy((void*)bp,(const void*)inp2,sizeof(q15_t)*internal*columns);\
+      in2.pData = bp;                                                    \
+                                                                         \
+      out.numRows=rows;                                                  \
+      out.numCols=columns;                                               \
+      out.pData = outp;
+      
     void BinaryTestsQ15::test_mat_mult_q15()
     {     
       LOADDATA2();
+      arm_status status;
+
 
       for(i=0;i < nbMatrixes ; i ++)
       {
@@ -65,15 +94,18 @@ a double precision computation.
           internal = *dimsp++;
           columns = *dimsp++;
 
-          PREPAREDATA2();
 
-          arm_mat_mult_q15(&this->in1,&this->in2,&this->out,tmpPtr);
+          PREPAREDATA2R();
+          memset(tmpPtr,0,sizeof(q15_t)*internal*columns + 16);
+          status=arm_mat_mult_q15(&this->in1,&this->in2,&this->out,tmpPtr);
+          ASSERT_TRUE(status==ARM_MATH_SUCCESS);
 
           outp += (rows * columns);
+          checkInnerTail(outp);
+          checkInnerTail(tmpPtr + internal * columns);
 
       }
 
-      ASSERT_EMPTY_TAIL(output);
 
       ASSERT_SNR(output,ref,(q15_t)SNR_LOW_THRESHOLD);
 
@@ -81,9 +113,13 @@ a double precision computation.
 
     } 
 
+
+
+
     void BinaryTestsQ15::test_mat_cmplx_mult_q15()
     {     
       LOADDATA2();
+      arm_status status;
 
       for(i=0;i < nbMatrixes ; i ++)
       {
@@ -92,15 +128,15 @@ a double precision computation.
           columns = *dimsp++;
 
 
-          PREPAREDATA2();
+          PREPAREDATA2C();
 
-          arm_mat_cmplx_mult_q15(&this->in1,&this->in2,&this->out,tmpPtr);
+          status=arm_mat_cmplx_mult_q15(&this->in1,&this->in2,&this->out,tmpPtr);
+          ASSERT_TRUE(status==ARM_MATH_SUCCESS);
 
           outp += (2*rows * columns);
+          checkInnerTail(outp);
 
       }
-
-      ASSERT_EMPTY_TAIL(output);
 
       ASSERT_SNR(output,ref,(q15_t)MULT_SNR_THRESHOLD);
 
@@ -113,7 +149,7 @@ a double precision computation.
     {
 
 
-    
+      (void)params;
       switch(id)
       {
          case TEST_MAT_MULT_Q15_1:
@@ -142,6 +178,8 @@ a double precision computation.
             tmp.create(2*MAXMATRIXDIM*MAXMATRIXDIM,BinaryTestsQ15::TMP_Q15_ID,mgr);
          break;
 
+
+
     
       }
        
@@ -151,5 +189,6 @@ a double precision computation.
 
     void BinaryTestsQ15::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)
     {
+       (void)id;
        output.dump(mgr);
     }

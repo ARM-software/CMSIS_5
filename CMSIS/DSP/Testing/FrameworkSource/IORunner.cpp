@@ -32,22 +32,28 @@
 
 #include <string>
 #include <cstddef>
-#include <stdlib.h>
-#include <stdio.h>
+#include <cstdlib>
+#include <cstdio>
 #include "IORunner.h"
 #include "Error.h"
 #include "Timing.h"
-#include "arm_math.h"
+#include "arm_math_types.h"
 #include "Calibrate.h"
 
+#ifdef CORTEXA
+#define CALIBNB 1
+#else
 #define CALIBNB 20
+#endif
+
+using namespace std;
 
 namespace Client
 {
   
       IORunner::IORunner(IO *io,PatternMgr *mgr,  Testing::RunningMode runningMode):m_io(io), m_mgr(mgr)
       {
-        Testing::cycles_t current;
+        volatile Testing::cycles_t current;
 
         this->m_runningMode = runningMode;
         // Set running mode on PatternMgr.
@@ -76,18 +82,7 @@ a C++ function pointer from the cycle measurements.
         Client::test t = (Client::test)&Calibrate::empty;
         calibration = 0;
         
-/* 
 
-EXTBENCH is set when benchmarking is done through external traces
-instead of using internal counters.
-
-Currently the post-processing scripts are only supporting traces generated from
-fast models.
-
-*/
-#ifdef EXTBENCH
-        startSection();
-#endif
 
 /*
 
@@ -103,6 +98,63 @@ Indeed, in that case the calibration value can only be measured by parsing the t
 Otherwise, the calibration is measured below.
 
 */
+
+/*
+
+We want to ensure that the calibration of the overhead of the
+measurement is the same here and when we do the measurement later.
+
+So to ensure the conditions are always the same, the instruction cache
+and branch predictor are flushed.
+
+*/
+#ifdef CORTEXA
+  __set_BPIALL(0);
+  __DSB();
+  __ISB();
+
+  __set_ICIALLU(0);
+  __DSB();
+  __ISB();
+#endif
+
+/*
+
+We always call the empty function once to ensure it is in the cache
+because it is how the measurement is done.
+
+*/
+        if (!m_mgr->HasMemError())
+        {
+             (s->*t)();
+        }
+
+/*
+
+We measure the cycles required for a measurement,
+The cycleMeasurement starts, getCycles and cycleMeasurementStop
+should not be in the cache.
+
+So, for the overhead we always have the value corresponding to
+the code not in cache.
+
+While for the code itself we have the value for the code in cache.
+
+*/
+
+/* 
+
+EXTBENCH is set when benchmarking is done through external traces
+instead of using internal counters.
+
+Currently the post-processing scripts are only supporting traces generated from
+fast models.
+
+*/
+#if defined(EXTBENCH)  || defined(CACHEANALYSIS)
+        startSection();
+#endif
+        
         for(int i=0;i < CALIBNB;i++)
         {
           cycleMeasurementStart();
@@ -116,14 +168,13 @@ Otherwise, the calibration is measured below.
           calibration += current;
           cycleMeasurementStop();
         }
-#ifdef EXTBENCH
+#if defined(EXTBENCH)  || defined(CACHEANALYSIS)
         stopSection();
 #endif
 
 #ifndef EXTBENCH
         calibration=calibration / CALIBNB;
 #endif
-
       }
 
       // Testing.
@@ -151,7 +202,7 @@ Otherwise, the calibration is measured below.
         Testing::errorID_t error=0;
         unsigned long line = 0;
         char details[200];
-        Testing::cycles_t cycles=0;
+        volatile Testing::cycles_t cycles=0;
         Testing::nbParameters_t nbParams;
 
         // Read node identification (suite)
@@ -179,7 +230,7 @@ Otherwise, the calibration is measured below.
             Testing::nbParameterEntries_t entries=0;
             std::vector<Testing::param_t> params(nbParams);
             bool canExecute=true;
-            int  dataIndex=0;
+            unsigned long  dataIndex=0;
             Testing::ParameterKind paramKind;
 
             // Read test identification (test ID)
@@ -201,7 +252,7 @@ Otherwise, the calibration is measured below.
               if (m_io->hasParam() && paramData)
               {
                 // Load new params
-                for(int j=0; j < nbParams ; j++)
+                for(unsigned long j=0; j < nbParams ; j++)
                 {
                   params[j] = paramData[nbParams*dataIndex+j];
                 }
@@ -218,6 +269,18 @@ Otherwise, the calibration is measured below.
                 
                 // Run the test once to force the code to be in cache.
                 // By default it is disabled in the suite.
+#ifdef CORTEXA
+  __set_BPIALL(0);
+  __DSB();
+  __ISB();
+
+  __set_ICIALLU(0);
+  __DSB();
+  __ISB();
+#endif
+
+/* If cache analysis mode, we don't force the code to be in cache. */
+#if !defined(CACHEANALYSIS)
                 if (s->isForcedInCache())
                 {
                    if (!m_mgr->HasMemError())
@@ -225,19 +288,22 @@ Otherwise, the calibration is measured below.
                       (s->*t)();
                    }
                 }
-
+#endif
                 // Run the test
                 cycleMeasurementStart();
-#ifdef EXTBENCH
+
+#if defined(EXTBENCH) || defined(CACHEANALYSIS)
                 startSection();
 #endif
                 if (!m_mgr->HasMemError())
                 {
                     (s->*t)();
                 }
-#ifdef EXTBENCH
+
+#if defined(EXTBENCH) || defined(CACHEANALYSIS)
                 stopSection();
 #endif
+
 #ifndef EXTBENCH
                 cycles=getCycles();
                 cycles=cycles-calibration;

@@ -15,7 +15,7 @@ char __HeapBase, __HeapLimit;  // make sure to define these symbols in linker co
 #endif
 
 static int totalBytesProvidedBySBRK = 0;
-
+/*
 //! sbrk/_sbrk version supporting reentrant newlib (depends upon above symbols defined by linker control file).
 char * sbrk(int incr) {
     static char *currentHeapEnd = &__HeapBase;
@@ -31,6 +31,7 @@ char * sbrk(int incr) {
 }
 //! Synonym for sbrk.
 char * _sbrk(int incr) { return sbrk(incr); };
+*/
 
 void __malloc_lock()     {       };
 void __malloc_unlock()   {  };

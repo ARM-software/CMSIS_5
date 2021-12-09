@@ -11,7 +11,7 @@ from pathlib import Path
 import sys
 
 DEBUGMODE = False
-KEEPBUILDFOLDER = False
+KEEPBUILDFOLDER = True
 
 DEBUGLIST=[
 "-DBASICMATH=ON",
@@ -38,7 +38,16 @@ def setDebugMode():
   DEBUGMODE=True
 
 def isDebugMode():
+  global DEBUGMODE
   return(DEBUGMODE)
+
+def setNokeepBuildFolder():
+  global KEEPBUILDFOLDER
+  KEEPBUILDFOLDER=False
+
+def isKeepMode():
+  global KEEPBUILDFOLDER
+  return(KEEPBUILDFOLDER)
 
 
 def joinit(iterable, delimiter):
@@ -213,10 +222,9 @@ class BuildConfig:
               cmd += ["-DBENCHMARK=OFF"]
               cmd += ["-DWRAPPER=OFF"]
 
-            cmd += ["-DCONFIGTABLE=OFF",
-                             "-DROOT=%s" % self._rootFolder,
-                             "-DCMAKE_BUILD_TYPE=Release",
-                             "-G", "Unix Makefiles" ,"%s" % self.cmakeFilePath()]
+            cmd += ["-DROOT=%s" % self._rootFolder,
+                    "-DCMAKE_BUILD_TYPE=Release",
+                    "-G", "Unix Makefiles" ,"%s" % self.cmakeFilePath()]
 
             if DEBUGMODE:
                print(cmd)
@@ -250,7 +258,7 @@ class BuildConfig:
     def cleanFolder(self):
         print("Delete %s\n" % self.path())
         #DEBUG
-        if not DEBUGMODE and not KEEPBUILDFOLDER:
+        if not isDebugMode() and not isKeepMode():
            shutil.rmtree(self.path())
 
     # Archive results and currentConfig.csv to another folder
@@ -322,8 +330,18 @@ class Test:
         return(self._test)
 
     # Process a test from the test description file
-    def processTest(self):
-        completed=subprocess.run([sys.executable,"processTests.py","-e",self.testName()],timeout=3600)
+    def processTest(self,patternConfig):
+      if isDebugMode():
+        if patternConfig:
+           completed=subprocess.run([sys.executable,"processTests.py","-p",patternConfig["patterns"],"-d",patternConfig["parameters"],"-e",self.testName(),"1"],timeout=3600)
+        else:
+           completed=subprocess.run([sys.executable,"processTests.py","-e",self.testName(),"1"],timeout=3600)
+        check(completed)
+      else:
+        if patternConfig:
+           completed=subprocess.run([sys.executable,"processTests.py","-p",patternConfig["patterns"],"-d",patternConfig["parameters"],"-e",self.testName()],timeout=3600)
+        else:
+           completed=subprocess.run([sys.executable,"processTests.py","-e",self.testName()],timeout=3600)
         check(completed)
 
     def getResultPath(self):
@@ -345,7 +363,12 @@ class Test:
         with self.buildConfig().buildFolder() as b:
            msg("  Run %s\n" % self.testName() )
            with open(self.resultName(),"w") as results:
-              completed=subprocess.run(fvp.split(),stdout=results,timeout=timeoutVal)
+              if isDebugMode():
+                 print(os.getcwd())
+                 print(fvp.split())
+                 completed=subprocess.run(fvp.split(),timeout=timeoutVal)
+              else:
+                 completed=subprocess.run(fvp.split(),stdout=results,timeout=timeoutVal)
         check(completed)
 
     # Process results of the given tests
@@ -373,9 +396,9 @@ class Test:
         else:
            return(TESTFAILED)
 
-    def runAndProcess(self,compiler,fvp,sim,benchmode,db,regdb,benchid,regid):
+    def runAndProcess(self,patternConfig,compiler,fvp,sim,benchmode,db,regdb,benchid,regid):
         # If we can't parse test description we fail all tests
-        self.processTest()
+        self.processTest(patternConfig)
         # Otherwise if only building or those tests are failing, we continue
         # with other tests
         try:
@@ -388,6 +411,8 @@ class Test:
         # build is done per test suite.
         if sim:
            if fvp is not None:
+              if isDebugMode():
+                 print(fvp)
               self.run(fvp,benchmode)
               error=self.processResult()
               if benchmode and (error == NOTESTFAILED):
@@ -413,9 +438,13 @@ def preprocess(desc):
 
 # Generate all missing C code by using all classes in the
 # test description file
-def generateAllCCode():
+def generateAllCCode(patternConfig):
     msg("Generate all missing C files\n")
-    completed = subprocess.run([sys.executable,"processTests.py", "-e"],timeout=3600)
+    if patternConfig:
+       completed = subprocess.run([sys.executable,"processTests.py",
+        "-p",patternConfig["patterns"],"-d",patternConfig["parameters"],"-e"],timeout=3600)
+    else:
+       completed = subprocess.run([sys.executable,"processTests.py", "-e"],timeout=3600)
     check(completed)
 
 # Create db

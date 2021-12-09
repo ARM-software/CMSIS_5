@@ -27,10 +27,6 @@
  */
 #include "Test.h"
 #include <cstdio>
-#include <iostream>
-#include <queue>
-
-
 
 int testIndex(Testing::testIndex_t i)
 {

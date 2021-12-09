@@ -30,9 +30,9 @@ A development board is described by the following properties:
       <book category="schematic" name="Documents/UM1670.pdf" title="Schematics"/>
       <book category="manual"    name="Documents/UM1670.pdf" title="User Manual"/>
 	   
-      <mountedDevice    deviceIndex="0" Dvendor="STMicroelectronics:13" Dname="STM32F429ZI"/>
+      <mountedDevice    Dvendor="STMicroelectronics:13" Dname="STM32F429ZITx"/>
 	   
-      <compatibleDevice deviceIndex="0" Dvendor="STMicroelectronics:13" Dfamily="STM32F4 Series" DsubFamily="STM32F429 Line"/>
+      <compatibleDevice Dvendor="STMicroelectronics:13" Dfamily="STM32F4 Series" DsubFamily="STM32F429"/>
 	   
       <feature type="ODbg"      n="1"              name="On-board ST-LINK/V2 with selection mode switch to use the kit as a standalone"/>
       <feature type="XTAL"      n="80000000"/>
@@ -49,7 +49,7 @@ A development board is described by the following properties:
       <feature type="GLCD"      n="1"  m="240.320" name="2.4 inch QVGA TFT LCD"/>
 	   
       <debugInterface adapter="ST-Link" connector="Mini-USB"/>
-	   
+      <debugProbe connector="Mini-USB" debugClock="10000000" debugLink="swd" name="ST-Link"/>   
     </board>
   </boards>
 \endcode
@@ -156,7 +156,7 @@ This element provides information to specify the \ref createPackBoard "Board Sup
   </tr>
   <tr>
     <td>\ref element_board_mountedDevice "mountedDevice"</td>
-	<td>Specifies the microcontroller device mounted on the development board.</td>
+	<td>Specifies the specific microcontroller device mounted on the development board.</td>
 	<td>BoardsDeviceType</td>
 	<td>1..* </td>
   </tr>
@@ -310,11 +310,11 @@ The table below lists predefined board features.
 <hr>
 
 \section element_board_mountedDevice /package/boards/board/mountedDevice
-The element specifies the devices mounted on the board. At least one device must be specified.
+The element specifies the devices mounted on the board. Exactly one device must be specified per deviceIndex.
 
 \b Example
 \code
-<mountedDevice deviceIndex="0" Dvendor="STMicroelectronics:13" Dname="STM32F429ZI"/>
+<mountedDevice deviceIndex="0" Dvendor="STMicroelectronics:13" Dname="STM32F429ZITx"/>
 \endcode
 <p>&nbsp;</p>		
 
@@ -346,22 +346,10 @@ The element specifies the devices mounted on the board. At least one device must
     <td>required</td>
   </tr>
   <tr>
-    <td>Dfamily</td>
-	<td>Is the name of the target device family used on the board.</td>
-	<td>xs:string</td>
-	<td>optional</td>
-  </tr>
-  <tr>
-    <td>DsubFamily</td>
-	<td>Is the name of the target device sub family used on the board.</td>
-	<td>xs:string</td>
-	<td>optional</td>
-  </tr>
-  <tr>
     <td>Dname</td>
-	<td>Is the name of the target device used on the board.</td>
+	<td>Is the name of the target device used on the board. If the device is specified Dvariant this string needs to be assigned to the Dname attribute.</td>
 	<td>xs:string</td>
-	<td>optional</td>
+	<td>required</td>
   </tr>
 </table>
 
@@ -375,8 +363,15 @@ means that the user is able to generate code for compatible devices and test it 
 
 \b Example
 \code
-<compatibleDevice deviceIndex="0" Dvendor="STMicroelectronics:13" Dfamily="STM32F4 Series" DsubFamily="STM32F429 Line"/>
+<compatibleDevice Dvendor="STMicroelectronics:13" Dfamily="STM32F4 Series" DsubFamily="STM32F429"/>
 \endcode
+
+Since Dfamily and DsubFamily are volatile, it is recommended to use Dname attribute with wild-cards.
+
+\code
+<compatibleDevice Dvendor="STMicroelectronics:13" Dname="STM32F429*"/>
+\endcode
+
 <p>&nbsp;</p>		
 
 <table class="cmtable" summary="Element: Board compatibleDevice">
@@ -405,7 +400,13 @@ means that the user is able to generate code for compatible devices and test it 
     <td>Vendor name of the target device specified by \b Dname.  Use predefined values as listed in the table \ref DeviceVendorEnum "Device Vendor".
 	This element is required if at least one of the following attributs is defined: \b Dname, \b DsubFamily, \b Dfamily.</td>
     <td>DeviceVendorEnum</td>
-    <td>optional</td>
+    <td>required</td>
+  </tr>
+  <tr>
+    <td>Dname<b>*</b></td>
+	<td>Name of the target device used on the board. Requires \b Dvendor to be specified.</td>
+	<td>xs:string</td>
+	<td>optional</td>
   </tr>
   <tr>
     <td>Dfamily</td>
@@ -419,14 +420,13 @@ means that the user is able to generate code for compatible devices and test it 
 	<td>xs:string</td>
 	<td>optional</td>
   </tr>
-  <tr>
-    <td>Dname</td>
-	<td>Name of the target device used on the board. Requires \b Dvendor to be specified.</td>
-	<td>xs:string</td>
-	<td>optional</td>
-  </tr>
+
 </table>
 
+<b>*)</b> Wild-cards can be used to match names with the following definitions:
+       - '*'  matches any substring
+       - '?'  matches any single character
+       - [abc] matches any character in the set (a,b,c)
 <p>&nbsp;</p>
 <hr>
 
@@ -437,7 +437,7 @@ Two different picture types (\token{small} and \token{large}) can be specified f
 
 \b Example:
 \code
-<image small="Images\board_image_small.png" large="Images\board_image.png"/>
+<image small="Images/board_image_small.png" large="Images/board_image.png"/>
 \endcode
 <p>&nbsp;</p>		
 
@@ -458,13 +458,13 @@ Two different picture types (\token{small} and \token{large}) can be specified f
   </tr>
   <tr>
     <td>small</td>
-    <td>Specifies the path to a small image. The path is relative to the Pack base directory.</td>
+    <td>Specifies the path to a small image. The path is relative to the pack base directory or a link to an image on an external web site.</td>
     <td>xs:string</td>
     <td>optional</td>
   </tr>
   <tr>
     <td>large</td>
-    <td>Specifies the path to a large image. The path is relative to the Pack base directory.</td>
+    <td>Specifies the path to a large image. The path is relative to the pack base directory or a link to an image on an external web site.</td>
     <td>xs:string</td>
     <td>optional</td>
   </tr>

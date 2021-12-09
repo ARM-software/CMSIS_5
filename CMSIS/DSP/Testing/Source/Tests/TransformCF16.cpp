@@ -1,4 +1,3 @@
-#include "arm_math_f16.h"
 #include "TransformCF16.h"
 #include <stdio.h>
 #include "Error.h"
@@ -34,7 +33,8 @@
     void TransformCF16::setUp(Testing::testID_t id,std::vector<Testing::param_t>& paramsArgs,Client::PatternMgr *mgr)
     {
 
-
+       (void)paramsArgs;
+       
        switch(id)
        {
           case TransformCF16::TEST_CFFT_F16_1:
@@ -476,5 +476,6 @@
 
     void TransformCF16::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)
     {
+        (void)id;
         outputfft.dump(mgr);
     }

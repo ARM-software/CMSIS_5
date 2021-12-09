@@ -32,6 +32,15 @@
 #include "arm_pid_reset_f32.c"
 #include "arm_pid_reset_q15.c"
 #include "arm_pid_reset_q31.c"
-#include "arm_sin_cos_f32.c"
-#include "arm_sin_cos_q31.c"
 
+#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_FAST_ALLOW_TABLES)
+
+#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FAST_TABLES) || defined(ARM_TABLE_SIN_F32)
+#include "arm_sin_cos_f32.c"
+#endif 
+
+#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FAST_TABLES) || defined(ARM_TABLE_SIN_Q31)
+#include "arm_sin_cos_q31.c"
+#endif
+
+#endif

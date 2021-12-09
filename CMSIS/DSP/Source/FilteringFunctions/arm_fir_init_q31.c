@@ -3,13 +3,13 @@
  * Title:        arm_fir_init_q31.c
  * Description:  Q31 FIR filter initialization function.
  *
- * $Date:        18. March 2019
- * $Revision:    V1.6.0
+ * $Date:        23 April 2021
+ * $Revision:    V1.9.0
  *
- * Target Processor: Cortex-M cores
+ * Target Processor: Cortex-M and Cortex-A cores
  * -------------------------------------------------------------------- */
 /*
- * Copyright (C) 2010-2019 ARM Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -26,7 +26,7 @@
  * limitations under the License.
  */
 
-#include "arm_math.h"
+#include "dsp/filtering_functions.h"
 
 /**
   @ingroup groupFilters
@@ -52,7 +52,23 @@
       {b[numTaps-1], b[numTaps-2], b[N-2], ..., b[1], b[0]}
   </pre>
                    <code>pState</code> points to the array of state variables.
-                   <code>pState</code> is of length <code>numTaps+blockSize-1</code> samples, where <code>blockSize</code> is the number of input samples processed by each call to <code>arm_fir_q31()</code>.
+                   <code>pState</code> is of length <code>numTaps+blockSize-1</code> samples (except for Helium - see below), where <code>blockSize</code> is the number of input samples processed by each call to <code>arm_fir_q31()</code>.
+
+   @par          Initialization of Helium version
+                   For Helium version the array of coefficients must be a multiple of 4 (4a) even if less
+                   then 4a coefficients are defined in the FIR. The additional coefficients 
+                   (4a - numTaps) must be set to 0.
+                   numTaps is still set to its right value in the init function. It means that
+                   the implementation may require to read more coefficients due to the vectorization and
+                   to avoid having to manage too many different cases in the code.
+  
+    @par          Helium state buffer
+                   The state buffer must contain some additional temporary data
+                   used during the computation but which is not the state of the FIR.
+                   The first 2*4*ceil(blockSize/4) samples are temporary data.
+                   The remaining samples are the state of the FIR filter.
+                   So the state buffer has size <code> numTaps + 8*ceil(blockSize/4) + blockSize - 1 </code>
+  
  */
 
 void arm_fir_init_q31(
@@ -69,7 +85,11 @@ void arm_fir_init_q31(
   S->pCoeffs = pCoeffs;
 
   /* Clear state buffer. The size is always (blockSize + numTaps - 1) */
+  #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
+  memset(pState, 0, (numTaps + (blockSize - 1U) + 2*ROUND_UP(blockSize, 4)) * sizeof(q31_t));
+  #else
   memset(pState, 0, (numTaps + (blockSize - 1U)) * sizeof(q31_t));
+  #endif
 
   /* Assign state pointer */
   S->pState = pState;

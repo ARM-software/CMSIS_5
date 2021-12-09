@@ -61,6 +61,7 @@
 #include "arm_conv_q31.c"
 #include "arm_conv_q7.c"
 #include "arm_correlate_f32.c"
+#include "arm_correlate_f64.c"
 #include "arm_correlate_fast_opt_q15.c"
 #include "arm_correlate_fast_q15.c"
 #include "arm_correlate_fast_q31.c"
@@ -78,9 +79,11 @@
 #include "arm_fir_decimate_q15.c"
 #include "arm_fir_decimate_q31.c"
 #include "arm_fir_f32.c"
+#include "arm_fir_f64.c"
 #include "arm_fir_fast_q15.c"
 #include "arm_fir_fast_q31.c"
 #include "arm_fir_init_f32.c"
+#include "arm_fir_init_f64.c"
 #include "arm_fir_init_q15.c"
 #include "arm_fir_init_q31.c"
 #include "arm_fir_init_q7.c"
@@ -119,9 +122,18 @@
 #include "arm_lms_init_q31.c"
 #include "arm_lms_norm_f32.c"
 #include "arm_lms_norm_init_f32.c"
+#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_FAST_ALLOW_TABLES)
+#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FAST_TABLES) || defined(ARM_TABLE_RECIP_Q15)
 #include "arm_lms_norm_init_q15.c"
+#endif
+#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FAST_TABLES) || defined(ARM_TABLE_RECIP_Q31)
 #include "arm_lms_norm_init_q31.c"
+#endif
+#endif
 #include "arm_lms_norm_q15.c"
 #include "arm_lms_norm_q31.c"
 #include "arm_lms_q15.c"
 #include "arm_lms_q31.c"
+
+#include "arm_levinson_durbin_f32.c"
+#include "arm_levinson_durbin_q31.c"

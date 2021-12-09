@@ -34,11 +34,13 @@
 #include <string>
 #include <cstddef>
 #include "FPGA.h"
-#include <stdio.h>
-#include <string.h>
+#include <cstdio>
+
 #include "Generators.h"
-#include "arm_math.h"
-#include "arm_math_f16.h"
+#include "arm_math_types.h"
+#include "arm_math_types_f16.h"
+
+using namespace std;
 
 namespace Client
 {
@@ -303,7 +305,7 @@ namespace Client
         this->patternSizes->clear();
         std::string tmpstr;
 
-        for(int i=0;i<nbPatterns;i++)
+        for(unsigned long i=0;i<nbPatterns;i++)
         {
            this->read32(&offset);
            this->read32(&nb);
@@ -334,7 +336,7 @@ namespace Client
         this->parameterSizes->clear();
         std::string tmpstr;
 
-        for(int i=0;i<nbValues;i++)
+        for(unsigned long i=0;i<nbValues;i++)
         {
            this->readChar(&paramKind);
            struct offsetOrGen gen;
@@ -363,7 +365,7 @@ namespace Client
 
               p=(Testing::param_t*)malloc(sizeof(Testing::param_t)*(nbInputSamples));
               current=p;
-              for(int i=0;i < nbInputSamples; i ++)
+              for(unsigned long i=0;i < nbInputSamples; i ++)
               {
                 
                 this->read32(&sample);
@@ -392,7 +394,7 @@ namespace Client
         this->outputNames->clear();
         std::string tmpstr;
 
-        for(int i=0;i<nbOutputs;i++)
+        for(unsigned long i=0;i<nbOutputs;i++)
         {
            this->readStr(tmp);
            tmpstr.assign(tmp);

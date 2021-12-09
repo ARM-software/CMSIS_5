@@ -3,13 +3,13 @@
  * Title:        arm_biquad_cascade_df1_32x64_q31.c
  * Description:  High precision Q31 Biquad cascade filter processing function
  *
- * $Date:        18. March 2019
- * $Revision:    V1.6.0
+ * $Date:        23 April 2021
+ * $Revision:    V1.9.0
  *
- * Target Processor: Cortex-M cores
+ * Target Processor: Cortex-M and Cortex-A cores
  * -------------------------------------------------------------------- */
 /*
- * Copyright (C) 2010-2019 ARM Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -26,7 +26,7 @@
  * limitations under the License.
  */
 
-#include "arm_math.h"
+#include "dsp/filtering_functions.h"
 
 /**
   @ingroup groupFilters
@@ -172,9 +172,115 @@
                    - \ref arm_biquad_cascade_df1_fast_q31() implements a Biquad cascade with 32-bit coefficients and state variables with a Q31 accumulator.
  */
 
-#if defined(ARM_MATH_MVEI)
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #include "arm_helium_utils.h"
+
+static void arm_biquad_cas_df1_32x64_q31_scalar(const arm_biquad_cas_df1_32x64_ins_q31 * S,
+  const q31_t * pSrc,
+        q31_t * pDst,
+        uint32_t blockSize)
+{
+  const q31_t *pIn = pSrc;                             /* input pointer initialization */
+        q31_t *pOut = pDst;                            /* output pointer initialization */
+        q63_t *pState = S->pState;                     /* state pointer initialization */
+  const q31_t *pCoeffs = S->pCoeffs;                   /* coeff pointer initialization */
+        q63_t acc;                                     /* accumulator */
+        q31_t Xn1, Xn2;                                /* Input Filter state variables */
+        q63_t Yn1, Yn2;                                /* Output Filter state variables */
+        q31_t b0, b1, b2, a1, a2;                      /* Filter coefficients */
+        q31_t Xn;                                      /* temporary input */
+        int32_t shift = (int32_t) S->postShift + 1;    /* Shift to be applied to the output */
+        uint32_t sample, stage = S->numStages;         /* loop counters */
+        q31_t acc_l, acc_h;                            /* temporary output */
+        uint32_t uShift = ((uint32_t) S->postShift + 1U);
+        uint32_t lShift = 32U - uShift;                /* Shift to be applied to the output */
+
+  do
+  {
+    /* Reading the coefficients */
+    b0 = *pCoeffs++;
+    b1 = *pCoeffs++;
+    b2 = *pCoeffs++;
+    a1 = *pCoeffs++;
+    a2 = *pCoeffs++;
+
+    /* Reading the state values */
+    Xn1 = (q31_t) (pState[0]);
+    Xn2 = (q31_t) (pState[1]);
+    Yn1 = pState[2];
+    Yn2 = pState[3];
+
+    /* Initialize blkCnt with number of samples */
+    sample = blockSize;
+
+    while (sample > 0U)
+    {
+      /* Read the input */
+      Xn = *pIn++;
+
+      /* acc =  b0 * x[n] + b1 * x[n-1] + b2 * x[n-2] + a1 * y[n-1] + a2 * y[n-2] */
+
+      /* acc =  b0 * x[n] */
+      acc = (q63_t) Xn * b0;
+      /* acc +=  b1 * x[n-1] */
+      acc += (q63_t) Xn1 * b1;
+      /* acc +=  b[2] * x[n-2] */
+      acc += (q63_t) Xn2 * b2;
+      /* acc +=  a1 * y[n-1] */
+      acc += mult32x64(Yn1, a1);
+      /* acc +=  a2 * y[n-2] */
+      acc += mult32x64(Yn2, a2);
+
+      /* Every time after the output is computed state should be updated. */
+      /* The states should be updated as: */
+      /* Xn2 = Xn1 */
+      /* Xn1 = Xn  */
+      /* Yn2 = Yn1 */
+      /* Yn1 = acc */
+      Xn2 = Xn1;
+      Xn1 = Xn;
+      Yn2 = Yn1;
+
+      /* The result is converted to 1.63, Yn1 variable is reused  */
+      Yn1 = acc << shift;
+
+      /* Calc lower part of acc */
+      acc_l = acc & 0xffffffff;
+
+      /* Calc upper part of acc */
+      acc_h = (acc >> 32) & 0xffffffff;
+
+      /* Apply shift for lower part of acc and upper part of acc */
+      acc_h = (uint32_t) acc_l >> lShift | acc_h << uShift;
+
+      /* Store the output in the destination buffer in 1.31 format. */
+      *pOut++ = acc_h;
+      /* Yn1 = acc << shift; */
+
+      /* Store the output in the destination buffer in 1.31 format. */
+/*    *pOut++ = (q31_t) (acc >> (32 - shift));  */
+
+      /* decrement loop counter */
+      sample--;
+    }
+
+    /* The first stage output is given as input to the second stage. */
+    pIn = pDst;
+
+    /* Reset to destination buffer working pointer */
+    pOut = pDst;
+
+    /*  Store the updated state variables back into the pState array */
+    *pState++ = (q63_t) Xn1;
+    *pState++ = (q63_t) Xn2;
+    *pState++ = Yn1;
+    *pState++ = Yn2;
+
+  } while (--stage);
+
+}
+
 void arm_biquad_cas_df1_32x64_q31(
   const arm_biquad_cas_df1_32x64_ins_q31 * S,
   const q31_t * pSrc,
@@ -193,218 +299,225 @@ void arm_biquad_cas_df1_32x64_q31(
     q31x4_t vecCoef, vecIn;
     q63_t     acc;
 
-    do
+    if (blockSize <= 3)
     {
-        uint32_t  i;
-        /*
-         * Reading the coefficients
-         */
-        b0 = *pCoeffs++;
-        b1 = *pCoeffs++;
-        b2 = *pCoeffs++;
-        a1 = *pCoeffs++;
-        a2 = *pCoeffs++;
-
-        vecCoef[0] = 0;
-        vecCoef[1] = b2;
-        vecCoef[2] = b1;
-        vecCoef[3] = b0;
-        /*
-         * Reading the state values
-         */
-        Xn1 = pState[0];
-        Xn2 = pState[1];
-        Yn1 = pState[2];
-        Yn2 = pState[3];
-
-        /*
-         * append history with initial samples
-         */
-        q31_t     hist[6];
-        hist[0] = 0;
-        hist[1] = Xn2;
-        hist[2] = Xn1;
-        hist[3] = pIn[0];
-        hist[4] = pIn[1];
-        hist[5] = pIn[2];
-
-        const q31_t  *pIn1 = hist;
-        q31x4_t vecIn0 = *(q31x4_t *) & pIn[0];
-        q31x4_t vecIn1 = *(q31x4_t *) & pIn[1];
-        q31x4_t vecIn2 = *(q31x4_t *) & pIn[2];
-
-        i = 3;
-        do
-        {
-            acc = mult32x64(Yn1, a1);
-            acc += mult32x64(Yn2, a2);
-            Yn2 = Yn1;
-            Yn1 = acc;
-            vecIn = vld1q(pIn1);
-            pIn1 += 1;
-            Yn1 = vmlaldavaq(Yn1, vecIn, vecCoef);
-            Yn1 = asrl(Yn1, -shift);
-            /*
-             * Store the output in the destination buffer in 1.31 format.
-             */
-            *pOut++ = (q31_t) (Yn1 >> 32);
-        }
-        while (--i);
-
-        sample = blockSize - 3;
-        pIn1 = pIn + 3;
-
-        i = sample / 4;
-        while (i > 0U)
-        {
-
-            acc = mult32x64(Yn1, a1);
-            acc += mult32x64(Yn2, a2);
-            Yn2 = Yn1;
-            Yn1 = acc;
-            Yn1 = vmlaldavaq(Yn1, vecIn0, vecCoef);
-            vecIn = vld1q(pIn1);
-            pIn1 += 1;
-            Yn1 = asrl(Yn1, -shift);
-            /*
-             * Store the output in the destination buffer in 1.31 format.
-             */
-            *pOut++ = (q31_t) (Yn1 >> 32);
-
-            acc = mult32x64(Yn1, a1);
-            acc += mult32x64(Yn2, a2);
-            Yn2 = Yn1;
-            Yn1 = acc;
-            Yn1 = vmlaldavaq(Yn1, vecIn1, vecCoef);
-            vecIn0 = vld1q(pIn1);
-            pIn1 += 1;
-            Yn1 = asrl(Yn1, -shift);
-            *pOut++ = (q31_t) (Yn1 >> 32);
-
-            acc = mult32x64(Yn1, a1);
-            acc += mult32x64(Yn2, a2);
-            Yn2 = Yn1;
-            Yn1 = acc;
-            Yn1 = vmlaldavaq(Yn1, vecIn2, vecCoef);
-            vecIn1 = vld1q(pIn1);
-            pIn1 += 1;
-            Yn1 = asrl(Yn1, -shift);
-            *pOut++ = (q31_t) (Yn1 >> 32);
-
-            acc = mult32x64(Yn1, a1);
-            acc += mult32x64(Yn2, a2);
-            Yn2 = Yn1;
-            Yn1 = acc;
-            Yn1 = vmlaldavaq(Yn1, vecIn, vecCoef);
-            vecIn2 = vld1q(pIn1);
-            pIn1 += 1;
-            Yn1 = asrl(Yn1, -shift);
-            *pOut++ = (q31_t) (Yn1 >> 32);
-            /*
-             * Decrement the loop counter
-             */
-            i--;
-        }
-        /*
-         * save input state
-         */
-        Xn2 = vecIn[2];
-        Xn1 = vecIn[3];
-
-        int       loopRemainder = blockSize - 3 - 4 * ((blockSize - 3) / 4);
-        if (loopRemainder == 1)
-        {
-            /*
-             * remainder
-             */
-            acc = mult32x64(Yn1, a1);
-            acc += mult32x64(Yn2, a2);
-            Yn2 = Yn1;
-            Yn1 = acc;
-            Yn1 = vmlaldavaq(Yn1, vecIn0, vecCoef);
-            Yn1 = asrl(Yn1, -shift);
-            *pOut++ = (q31_t) (Yn1 >> 32);
-            /*
-             * save input state
-             */
-            Xn2 = vecIn0[2];
-            Xn1 = vecIn0[3];
-
-        }
-        else if (loopRemainder == 2)
-        {
-            acc = mult32x64(Yn1, a1);
-            acc += mult32x64(Yn2, a2);
-            Yn2 = Yn1;
-            Yn1 = acc;
-            Yn1 = vmlaldavaq(Yn1, vecIn0, vecCoef);
-            Yn1 = asrl(Yn1, -shift);
-            *pOut++ = (q31_t) (Yn1 >> 32);
-
-            acc = mult32x64(Yn1, a1);
-            acc += mult32x64(Yn2, a2);
-            Yn2 = Yn1;
-            Yn1 = acc;
-            Yn1 = vmlaldavaq(Yn1, vecIn1, vecCoef);
-            Yn1 = asrl(Yn1, -shift);
-            *pOut++ = (q31_t) (Yn1 >> 32);
-            /*
-             * save input state
-             */
-            Xn2 = vecIn1[2];
-            Xn1 = vecIn1[3];
-
-        }
-        else if (loopRemainder == 3)
-        {
-            acc = mult32x64(Yn1, a1);
-            acc += mult32x64(Yn2, a2);
-            Yn2 = Yn1;
-            Yn1 = acc;
-            Yn1 = vmlaldavaq(Yn1, vecIn0, vecCoef);
-            Yn1 = asrl(Yn1, -shift);
-            *pOut++ = (q31_t) (Yn1 >> 32);
-
-            acc = mult32x64(Yn1, a1);
-            acc += mult32x64(Yn2, a2);
-            Yn2 = Yn1;
-            Yn1 = acc;
-            Yn1 = vmlaldavaq(Yn1, vecIn1, vecCoef);
-            Yn1 = asrl(Yn1, -shift);
-            *pOut++ = (q31_t) (Yn1 >> 32);
-
-            acc = mult32x64(Yn1, a1);
-            acc += mult32x64(Yn2, a2);
-            Yn2 = Yn1;
-            Yn1 = acc;
-            Yn1 = vmlaldavaq(Yn1, vecIn2, vecCoef);
-            Yn1 = asrl(Yn1, -shift);
-            *pOut++ = (q31_t) (Yn1 >> 32);
-            /*
-             * save input state
-             */
-            Xn2 = vecIn2[2];
-            Xn1 = vecIn2[3];
-
-        }
-
-        /*
-         * The first stage output is given as input to the second stage.
-         */
-        pIn = pDst;
-        /*
-         * Reset to destination buffer working pointer
-         */
-        pOut = pDst;
-        /*
-         * Store the updated state variables back into the pState array
-         */
-        *pState++ = (q63_t) Xn1;
-        *pState++ = (q63_t) Xn2;
-        *pState++ = Yn1;
-        *pState++ = Yn2;
+      arm_biquad_cas_df1_32x64_q31_scalar(S,pSrc,pDst,blockSize);
     }
-    while (--stage);
+    else
+    {
+      do
+      {
+          uint32_t  i;
+          /*
+           * Reading the coefficients
+           */
+          b0 = *pCoeffs++;
+          b1 = *pCoeffs++;
+          b2 = *pCoeffs++;
+          a1 = *pCoeffs++;
+          a2 = *pCoeffs++;
+  
+          vecCoef[0] = 0;
+          vecCoef[1] = b2;
+          vecCoef[2] = b1;
+          vecCoef[3] = b0;
+          /*
+           * Reading the state values
+           */
+          Xn1 = pState[0];
+          Xn2 = pState[1];
+          Yn1 = pState[2];
+          Yn2 = pState[3];
+  
+          /*
+           * append history with initial samples
+           */
+          q31_t     hist[6];
+          hist[0] = 0;
+          hist[1] = Xn2;
+          hist[2] = Xn1;
+          hist[3] = pIn[0];
+          hist[4] = pIn[1];
+          hist[5] = pIn[2];
+  
+          const q31_t  *pIn1 = hist;
+          q31x4_t vecIn0 = *(q31x4_t *) & pIn[0];
+          q31x4_t vecIn1 = *(q31x4_t *) & pIn[1];
+          q31x4_t vecIn2 = *(q31x4_t *) & pIn[2];
+  
+          i = 3;
+          do
+          {
+              acc = mult32x64(Yn1, a1);
+              acc += mult32x64(Yn2, a2);
+              Yn2 = Yn1;
+              Yn1 = acc;
+              vecIn = vld1q(pIn1);
+              pIn1 += 1;
+              Yn1 = vmlaldavaq(Yn1, vecIn, vecCoef);
+              Yn1 = asrl(Yn1, -shift);
+              /*
+               * Store the output in the destination buffer in 1.31 format.
+               */
+              *pOut++ = (q31_t) (Yn1 >> 32);
+          }
+          while (--i);
+  
+          sample = blockSize - 3;
+          pIn1 = pIn + 3;
+  
+          i = sample / 4;
+          while (i > 0U)
+          {
+  
+              acc = mult32x64(Yn1, a1);
+              acc += mult32x64(Yn2, a2);
+              Yn2 = Yn1;
+              Yn1 = acc;
+              Yn1 = vmlaldavaq(Yn1, vecIn0, vecCoef);
+              vecIn = vld1q(pIn1);
+              pIn1 += 1;
+              Yn1 = asrl(Yn1, -shift);
+              /*
+               * Store the output in the destination buffer in 1.31 format.
+               */
+              *pOut++ = (q31_t) (Yn1 >> 32);
+  
+              acc = mult32x64(Yn1, a1);
+              acc += mult32x64(Yn2, a2);
+              Yn2 = Yn1;
+              Yn1 = acc;
+              Yn1 = vmlaldavaq(Yn1, vecIn1, vecCoef);
+              vecIn0 = vld1q(pIn1);
+              pIn1 += 1;
+              Yn1 = asrl(Yn1, -shift);
+              *pOut++ = (q31_t) (Yn1 >> 32);
+  
+              acc = mult32x64(Yn1, a1);
+              acc += mult32x64(Yn2, a2);
+              Yn2 = Yn1;
+              Yn1 = acc;
+              Yn1 = vmlaldavaq(Yn1, vecIn2, vecCoef);
+              vecIn1 = vld1q(pIn1);
+              pIn1 += 1;
+              Yn1 = asrl(Yn1, -shift);
+              *pOut++ = (q31_t) (Yn1 >> 32);
+  
+              acc = mult32x64(Yn1, a1);
+              acc += mult32x64(Yn2, a2);
+              Yn2 = Yn1;
+              Yn1 = acc;
+              Yn1 = vmlaldavaq(Yn1, vecIn, vecCoef);
+              vecIn2 = vld1q(pIn1);
+              pIn1 += 1;
+              Yn1 = asrl(Yn1, -shift);
+              *pOut++ = (q31_t) (Yn1 >> 32);
+              /*
+               * Decrement the loop counter
+               */
+              i--;
+          }
+          /*
+           * save input state
+           */
+          Xn2 = vecIn[2];
+          Xn1 = vecIn[3];
+  
+          int       loopRemainder = blockSize - 3 - 4 * ((blockSize - 3) / 4);
+          if (loopRemainder == 1)
+          {
+              /*
+               * remainder
+               */
+              acc = mult32x64(Yn1, a1);
+              acc += mult32x64(Yn2, a2);
+              Yn2 = Yn1;
+              Yn1 = acc;
+              Yn1 = vmlaldavaq(Yn1, vecIn0, vecCoef);
+              Yn1 = asrl(Yn1, -shift);
+              *pOut++ = (q31_t) (Yn1 >> 32);
+              /*
+               * save input state
+               */
+              Xn2 = vecIn0[2];
+              Xn1 = vecIn0[3];
+  
+          }
+          else if (loopRemainder == 2)
+          {
+              acc = mult32x64(Yn1, a1);
+              acc += mult32x64(Yn2, a2);
+              Yn2 = Yn1;
+              Yn1 = acc;
+              Yn1 = vmlaldavaq(Yn1, vecIn0, vecCoef);
+              Yn1 = asrl(Yn1, -shift);
+              *pOut++ = (q31_t) (Yn1 >> 32);
+  
+              acc = mult32x64(Yn1, a1);
+              acc += mult32x64(Yn2, a2);
+              Yn2 = Yn1;
+              Yn1 = acc;
+              Yn1 = vmlaldavaq(Yn1, vecIn1, vecCoef);
+              Yn1 = asrl(Yn1, -shift);
+              *pOut++ = (q31_t) (Yn1 >> 32);
+              /*
+               * save input state
+               */
+              Xn2 = vecIn1[2];
+              Xn1 = vecIn1[3];
+  
+          }
+          else if (loopRemainder == 3)
+          {
+              acc = mult32x64(Yn1, a1);
+              acc += mult32x64(Yn2, a2);
+              Yn2 = Yn1;
+              Yn1 = acc;
+              Yn1 = vmlaldavaq(Yn1, vecIn0, vecCoef);
+              Yn1 = asrl(Yn1, -shift);
+              *pOut++ = (q31_t) (Yn1 >> 32);
+  
+              acc = mult32x64(Yn1, a1);
+              acc += mult32x64(Yn2, a2);
+              Yn2 = Yn1;
+              Yn1 = acc;
+              Yn1 = vmlaldavaq(Yn1, vecIn1, vecCoef);
+              Yn1 = asrl(Yn1, -shift);
+              *pOut++ = (q31_t) (Yn1 >> 32);
+  
+              acc = mult32x64(Yn1, a1);
+              acc += mult32x64(Yn2, a2);
+              Yn2 = Yn1;
+              Yn1 = acc;
+              Yn1 = vmlaldavaq(Yn1, vecIn2, vecCoef);
+              Yn1 = asrl(Yn1, -shift);
+              *pOut++ = (q31_t) (Yn1 >> 32);
+              /*
+               * save input state
+               */
+              Xn2 = vecIn2[2];
+              Xn1 = vecIn2[3];
+  
+          }
+  
+          /*
+           * The first stage output is given as input to the second stage.
+           */
+          pIn = pDst;
+          /*
+           * Reset to destination buffer working pointer
+           */
+          pOut = pDst;
+          /*
+           * Store the updated state variables back into the pState array
+           */
+          *pState++ = (q63_t) Xn1;
+          *pState++ = (q63_t) Xn2;
+          *pState++ = Yn1;
+          *pState++ = Yn2;
+      }
+      while (--stage);
+    }
 }
 #else
 void arm_biquad_cas_df1_32x64_q31(

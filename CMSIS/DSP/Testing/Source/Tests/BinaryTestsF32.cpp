@@ -16,6 +16,13 @@ a double precision computation.
 /* Upper bound of maximum matrix dimension used by Python */
 #define MAXMATRIXDIM 40
 
+static void checkInnerTail(float32_t *b)
+{
+    ASSERT_TRUE(b[0] == 0);
+    ASSERT_TRUE(b[1] == 0);
+    ASSERT_TRUE(b[2] == 0);
+    ASSERT_TRUE(b[3] == 0);
+}
 
 #define LOADDATA2()                          \
       const float32_t *inp1=input1.ptr();    \
@@ -29,6 +36,9 @@ a double precision computation.
       int nbMatrixes = dims.nbSamples() / 3;\
       int rows,internal,columns;                      \
       int i;
+
+
+
 
 
 #define PREPAREDATA2()                                                   \
@@ -46,10 +56,12 @@ a double precision computation.
       out.numCols=columns;                                               \
       out.pData = outp;
 
+                                             
 
     void BinaryTestsF32::test_mat_mult_f32()
     {     
       LOADDATA2();
+      arm_status status;
 
       for(i=0;i < nbMatrixes ; i ++)
       {
@@ -59,9 +71,11 @@ a double precision computation.
 
           PREPAREDATA2();
 
-          arm_mat_mult_f32(&this->in1,&this->in2,&this->out);
+          status=arm_mat_mult_f32(&this->in1,&this->in2,&this->out);
+          ASSERT_TRUE(status==ARM_MATH_SUCCESS);
 
           outp += (rows * columns);
+          checkInnerTail(outp);
 
       }
 
@@ -73,9 +87,12 @@ a double precision computation.
 
     } 
 
+    
+
     void BinaryTestsF32::test_mat_cmplx_mult_f32()
     {     
       LOADDATA2();
+      arm_status status;
 
       for(i=0;i < nbMatrixes ; i ++)
       {
@@ -86,9 +103,11 @@ a double precision computation.
 
           PREPAREDATA2();
 
-          arm_mat_cmplx_mult_f32(&this->in1,&this->in2,&this->out);
+          status=arm_mat_cmplx_mult_f32(&this->in1,&this->in2,&this->out);
+          ASSERT_TRUE(status==ARM_MATH_SUCCESS);
 
           outp += (2*rows * columns);
+          checkInnerTail(outp);
 
       }
 
@@ -105,7 +124,7 @@ a double precision computation.
     {
 
 
-    
+      (void)params;
       switch(id)
       {
          case TEST_MAT_MULT_F32_1:
@@ -132,6 +151,8 @@ a double precision computation.
             b.create(2*MAXMATRIXDIM*MAXMATRIXDIM,BinaryTestsF32::TMPB_F32_ID,mgr);
          break;
 
+         
+
     
       }
        
@@ -141,5 +162,6 @@ a double precision computation.
 
     void BinaryTestsF32::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)
     {
+       (void)id;
        output.dump(mgr);
     }

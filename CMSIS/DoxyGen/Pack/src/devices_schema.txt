@@ -1099,8 +1099,10 @@ The book element contains the location, filename, and extension of the file. The
 
 \section element_compile /package/devices/family/.../compile
 
-Specify header files and preprocessor defines for programming. This element can occur on various levels.
-Multiple elements are allowed. The last occurrence in the hierarchy determines the actual define.
+Specify the CMSIS-Core compliant device header file and a device specific preprocessor define automatically included and set by the build tools.
+In case of devices embedding multiple processor cores, an additional core specific define can be specified. In this case the Pname attribute becomes mandatory.
+This element can occur on various levels. Multiple elements are allowed. The last occurrence in the hierarchy determines the effective
+include path and define. It is required that each device has an effective header and define.
 
 \note
 - In the example below, the device \b STM32F407IG will have a define \c STM32F407IG. Previous defines
@@ -1158,13 +1160,22 @@ Multiple elements are allowed. The last occurrence in the hierarchy determines t
   </tr>
   <tr>
     <td>header</td>
-    <td>C-header file with path relative to the installation.</td>
+    <td>CMSIS-Core compliant device header file with path relative to the pack's base folder.</td>
     <td>xs:string</td>
-    <td>optional</td>
+    <td>required</td>
   </tr>
   <tr>
     <td>define</td>
-    <td>C-file name with device specific preprocessor defines. The path is relative to the installation.</td>
+    <td>Device specific preprocessor define (macro). This macro is set in the pre-processor command line (-D\<macro>) and allows to
+	    select device specific code during preprocessing of the application code, e.g. enabling/disabling device specific definitions in the device header file.</td>
+    <td>xs:string</td>
+    <td>required</td>
+  </tr>
+    <tr>
+    <td>Pdefine</td>
+    <td>This attribute can only be used for devices with multiple processor cores. It specifies a core specific preprocessor define (macro).
+        This macro is set in the pre-processor command line (-D\<macro>) and allows to select processor specific code during preprocessing
+		of the application code, e.g. enabling/disabling core specific definitions in the device header file.</td>
     <td>xs:string</td>
     <td>optional</td>
   </tr>
@@ -1174,7 +1185,7 @@ Multiple elements are allowed. The last occurrence in the hierarchy determines t
 
 \section element_description /package/devices/family/.../description
 
-Brief description of the element. Can occur on various levels. Should only contain the unique features of the device. Number
+Brief description of the element. Can occur on various levels and gets inherited from upper level if not defined in the element. Should only contain the unique features of the element. Number
 of bullet points should not exceed ten. To create a detailed feature list use the \ref element_feature instead.
 
 \b Example
@@ -1587,21 +1598,26 @@ This element can be defined on various levels. Inner memory elements supersede o
     <td>optional</td>
   </tr>
   <tr>
-    <td>id (deprecated in Version 1.4.0)</td>
-    <td>(deprecated Version 1.4.0) Identifier of the memory region consisting of a type indicator and an index (for example, \token{IRAM1}).
-    Predefind values can be selected as defined in \ref MemoryIDTypeEnum.</td>
-    <td>MemoryIDTypeEnum</td>
+    <td>id (deprecated since version 1.4.0)</td>
+    <td>Identifier of the memory region consisting of a type indicator and an index (for example, \token{IRAM1}).</td>
+    Predefined values can be selected as defined in \ref MemoryIDTypeEnum.</td>
+    <td>\ref MemoryIDTypeEnum</td>
     <td>optional</td>
   </tr>
   <tr>
-    <td>name (new in Version 1.4.0)</td>
-    <td>unique name of the memory (new in Version 1.4.0) to be used in conjunction with <em>access</em>
+    <td>name (new since version 1.4.0)</td>
+    <td>
+      <p>Unique name of the memory to be used in conjunction with <em>access</em>.</p>
+      <p>If a memory with the same name is already defined in a parent scope, the parent one is extended/overwritten.</p>
+      <p>Backward compatibility: If no 'name' attribute is given but 'id' attribute
+      is still present, the given 'id' attribute is used as the 'name'.</p>
+    </td>
     <td>xs:string</td>
     <td>optional</td>
   </tr>
   <tr>
-    <td>access (new in Version 1.4.0)</td>
-    <td>access permission of the memory. See MemoryAccessTypeString for details (new in Version 1.4.0).
+    <td>access (new since version 1.4.0)</td>
+    <td>Access permission of the memory. See \ref MemoryAccessTypeString for details.</td>
     <td>\ref MemoryAccessTypeString "MemoryAccessTypeString"</td>
     <td>optional</td>
   </tr>
@@ -1619,12 +1635,14 @@ This element can be defined on various levels. Inner memory elements supersede o
   </tr>
   <tr>
     <td>default</td>
-    <td>Indicates a general purpose memory region, that does not require any special considerations (access speed, remapping, protection, etc.).
-    If \token{true}, then an IRAM memory region will be used by the linker for locating any data and an IROM memory region will for locating 
-    any code. Every device needs at least one default IRAM region.
-    If an \ref element_algorithm "algorithm" element is specified (without \c RAMstart and
-    \c RAMsize attributes),    the first listed IRAM region with default="1" will also be used for executing the flash programming algorithm.</td>
-    Default value is \token{false}.
+    <td>
+      <p>Indicates a general purpose memory region, that does not require any special considerations (access speed, remapping, protection, etc.).</p>
+      <p>If \token{true}, then an IRAM memory region will be used by the linker for locating any data and an IROM memory region will for locating 
+      any code. Every device needs at least one default IRAM region.</p>
+      <p>If an \ref element_algorithm "algorithm" element is specified (without \c RAMstart and
+      \c RAMsize attributes), the first listed IRAM region with default="1" will also be used for executing the flash programming algorithm.</p>
+      <p>Default value is \token{false}.</p>
+    </td>
     <td>xs:boolean</td>
     <td>optional</td>
   </tr>
@@ -1635,10 +1653,30 @@ This element can be defined on various levels. Inner memory elements supersede o
     <td>optional</td>
   </tr>
   <tr>
-    <td>alias(new in Version 1.4.0)</td>
-    <td>reference to another memory description which shares the same physical memory. Some physical
-    memory is made accessible via different addresses, for example, chached vs. non-cached accesses. This
-    avoids the impression that the device has twice as much memory available.
+    <td>init (deprecated since version 1.6.3)</td>
+    <td>
+      <p>If \token{true}, the memory region shall not be zero initialized.</p>
+      <p>Default value is \token{false}.</p>
+    </td>
+    <td>xs:boolean</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>uninit (new since version 1.6.3)</td>
+    <td>
+      <p>If \token{true}, the memory region shall be kept uninitialized (i.e. keep the memory state as is).</p>
+      <p>Default value is \token{false}.</p>
+    </td>
+    <td>xs:boolean</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>alias (new since Version 1.4.0)</td>
+    <td>
+      Reference to another memory (by it's 'name' attribute) which shares the same physical memory. Some physical
+      memory is made accessible via different addresses, for example, cached vs. non-cached accesses. This
+      avoids the impression that the device has twice as much memory available.
+    </td>
     <td>xs:string</td>
     <td>optional</td>
   </tr>
@@ -1831,6 +1869,12 @@ the attribute \elem{Pname}. If the information is relevant to all processors, no
     <td>required for ARMv8.1-M based devices</td>
   </tr>
   <tr>
+    <td>Dcdecp</td>
+    <td>Specifies whether a device implements Custom Datapath Extension Coprocessors and which coprocessor interfaces can be used. See (<a href="https://developer.arm.com/documentation/ddi0607/ab/" target="_blank"><strong>CDE</strong></a>). Possible values are explained in \ref DcdecpEnum "Custom Datapath Extensions".</td>
+    <td>Hex8BitType</td>
+    <td>required for ARMv8.1-M based devices with CDE support</td>
+  </tr>
+  <tr>
     <td>Dendian</td>
     <td>Specifies the endianess of the processor. Use predefined values as listed in the table \ref DendianEnum "Endinaness".</td>
     <td>DendianEnum</td>
@@ -1886,6 +1930,11 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
     <td>http://www.active-semi.com</td>
   </tr>
   <tr>
+    <td class="XML-Token">Alif Semiconductor:165</td>
+    <td>Alif Semiconductor</td>
+    <td>http://www.alifsemi.com</td>
+  </tr>
+  <tr>
     <td class="XML-Token">Ambiq Micro:120</td>
     <td>Ambiq Micro</td>
     <td>http://www.ambiqmicro.com</td>
@@ -1931,6 +1980,16 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
     <td>http://www.autochips.com/index_en.aspx</td>
   </tr>
   <tr>
+    <td class="XML-Token">BrainChip:168</td>
+    <td>BrainChip Inc</td>
+    <td>https://brainchipinc.com</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">Cmsemicon:161</td>
+    <td>Cmsemicon</td>
+    <td>http://www.mcu.com.cn</td>
+  </tr>
+  <tr>
     <td class="XML-Token">CSR:118</td>
     <td>CSR</td>
     <td>http://www.csr.com</td>
@@ -1946,14 +2005,39 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
     <td>http://www.dialog-semiconductor.com</td>
   </tr>
   <tr>
+    <td class="XML-Token">ELAN:162</td>
+    <td>ELAN</td>
+    <td>http://www.emc.com.tw</td>
+  </tr>
+  <tr>
     <td class="XML-Token">Elmos Semiconductor AG:138</td>
     <td>Elmos Semiconductor AG</td>
     <td>http://www.elmos.com</td>
   </tr>
   <tr>
+    <td class="XML-Token">e-peas:167</td>
+	<td>e-peas semicondcutors</td>
+	<td>https://e-peas.com</td>
+  </tr>
+  <tr>
     <td class="XML-Token">EtaCompute:157</td>
 	<td>Eta Compute Inc.</td>
 	<td>https://www.etacompute.com</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">FMD:169</td>
+    <td>FMD</td>
+    <td>https://www.fremontmicro.com/</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">FMSH:159</td>
+    <td>Shanghai Fudan Microelectronics Group Co., Ltd</td>
+    <td>http://www.fmsh.com</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">Geehy:163</td>
+    <td>Geehy</td>
+    <td>https://www.geehy.com/</td>
   </tr>
   <tr>
     <td class="XML-Token">Generic:5</td>
@@ -1996,9 +2080,9 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
     <td>http://www.infineon.com</td>
   </tr>
   <tr>
-    <td class="XML-Token">Lapis Semiconductor:10</td>
-    <td>Lapis Semiconductor</td>
-    <td>http://www.lapis-semi.com</td>
+    <td class="XML-Token">LAPIS Technology:10</td>
+    <td>LAPIS Technology</td>
+    <td>http://www.lapis-tech.com</td>
   </tr>
   <tr>
     <td class="XML-Token">Linear Technolgy:136</td>
@@ -2096,9 +2180,19 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
     <td>http://www.rohm.com</td>
   </tr>
   <tr>
+    <td class="XML-Token">RPi:170</td>
+    <td>Raspberry Pi Foundation</td>
+    <td>https://www.raspberrypi.org/</td>
+  </tr>
+  <tr>
     <td class="XML-Token">Samsung:47</td>
     <td>Samsung Semiconductor</td>
     <td>http://www.samsung.com</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">SILAN:164</td>
+    <td>Hangzhou Silan Microelectronics Co., Ltd.</td>
+    <td>http://www.silan.com.cn/</td>
   </tr>
   <tr>
     <td class="XML-Token">Silergy Corp:139</td>
@@ -2169,6 +2263,11 @@ Contact cmsis@arm.com to ask for an extension. These values can be used in the e
     <td class="XML-Token">WIZnet:122</td>
     <td>WIZnet</td>
     <td>http://www.wiznet.co.kr</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">Xiamen PengPai Microelectronics Co. Ltd:166</td>
+    <td>Pai IC</td>
+    <td>https://www.pai-ic.com</td>
   </tr>
   <tr>
     <td class="XML-Token">Xinnova:135</td>
@@ -2269,7 +2368,7 @@ These values can be used in the elements:
   </tr>
   <tr>
     <td class="XML-Token">Cortex-M55</td>
-    <td><a href="http://developer.arm.com/products/processors/cortex-m/cortex-m55" target="_blank">Arm Cortex-M55</a> processor based device</td>
+    <td><a href="http://developer.arm.com/ip-products/processors/cortex-m/cortex-m55" target="_blank">Arm Cortex-M55</a> processor based device</td>
   </tr>  
   <tr>
     <td class="XML-Token">SC000</td>
@@ -2531,6 +2630,37 @@ The values can be used in the elements:
 </table>
 
 <p>&nbsp;</p>		
+
+\anchor DcdecpEnum <b>Table: Custom Datapath Extensions</b>
+
+The table lists values representing	Custom Datapath Extensions in a device.
+The values can be used in the elements:
+- \ref element_accept 
+- \ref element_require
+- \ref element_deny  
+- \ref element_processor
+
+<table class="cmtable" summary="Enumeration: DcdecpEnum">
+  <tr>
+    <th>Dcdecp=</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td class="XML-Token">BitN = 0</td>
+    <td>CDE co-processor interface disabled at BitN.</td>
+  </tr>
+  <tr>
+    <td class="XML-Token">BitN = 1</td>
+    <td>CDE co-processor interface enabled at BitN.</td>
+  </tr>
+</table>
+
+\b Examples:
+
+- Dcdecp=”0xff” enables CDE on all eight co-processor interfaces.
+- Dcdecp="0x12" enables CDE on co-processor interfaces 1 and 4.
+
+<p>&nbsp;</p>
 
 \anchor DendianEnum <b>Table: Endianness</b>
 
@@ -3104,7 +3234,7 @@ An <b>accessportV2</b> must be later selected via <b>__apid</b>. It is not possi
     <td>
       The address to select this access port in its parent's address space for a target access.
     </td>
-    <td>xs:unsignedInt</td>
+    <td>NonNegativeInteger</td>
     <td>required</td>
   </tr>
   <tr>

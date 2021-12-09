@@ -36,7 +36,7 @@ from termcolor import colored
 OUTPUT = "Output/"
 BASE_PATH = "../../"
 CMSIS_PATH = "../../../../../"
-UNITY_PATH = "../Unity/"
+UNITY_PATH = "Unity/"
 UNITY_BASE = BASE_PATH + UNITY_PATH
 UNITY_SRC = UNITY_BASE + "src/"
 CMSIS_FLAGS = " -DARM_MATH_DSP -DARM_MATH_LOOPUNROLL"
@@ -46,9 +46,14 @@ def parse_args():
     parser = argparse.ArgumentParser(description="Run CMSIS-NN unit tests.",
                                      epilog="Runs on all connected HW supported by Mbed.")
     parser.add_argument('--testdir', type=str, default='TESTRUN', help="prefix of output dir name")
-    parser.add_argument('-s', '--specific-test', type=str, default=None, help="run a specific test, e.g."
-                        " test_arm_convolve_s8, default is to run all tests")
+    parser.add_argument('-s', '--specific-test', type=str, default=None, help="Run a specific test, e.g."
+                        " -s TestCases/test_arm_avgpool_s8 (also this form will work: -s test_arm_avgpool_s8)."
+                        " So basically the different options can be listed with:"
+                        " ls -d TestCases/test_* -1")
     parser.add_argument('-c', '--compiler', type=str, default='GCC_ARM', choices=['GCC_ARM', 'ARMC6'])
+    parser.add_argument('--download-and-generate-test-runners', dest='download_and_generate', action='store_true',
+                        help="Just download Unity and generate test runners if needed")
+
     args = parser.parse_args()
     return args
 
@@ -101,14 +106,22 @@ def detect_architecture(target_name, target_json):
         with open(target_json, "r") as read_file:
             data = json.load(read_file)
 
-            if data[target_name]['core']:
-                arch = data[target_name]['core'][:9]
-                if data[target_name]['core'][:8] == 'Cortex-M':
+            if 'core' in data[target_name]:
+                core = data[target_name]['core']
+            elif 'inherits' in data[target_name]:
+                target_inherits = data[target_name]['inherits'][0]
+                core = data[target_inherits]['core']
+            else:
+                raise Exception("Cannot detect architecture")
+
+            if core:
+                arch = core[:9]
+                if core[:8] == 'Cortex-M':
                     return arch
-            error_handler(668, 'Unsupported target: {} with architecture: {}'.format(
+            error_handler(168, 'Unsupported target: {} with architecture: {}'.format(
                 target_name, arch))
     except Exception as e:
-        error_handler(667, e)
+        error_handler(167, e)
 
     return arch
 
@@ -129,11 +142,14 @@ def test_target(target, args, main_test):
 
     try:
         target_json = 'mbed-os/targets/targets.json'
+        mbed_path = BASE_PATH + 'Mbed/'
 
         if not path.exists("mbed-os.lib"):
             print("Initializing mbed in {}".format(os.getcwd()))
-            run_command('mbed new .')
-            shutil.copyfile(BASE_PATH + 'Profiles/mbed_app.json', 'mbed_app.json')
+            shutil.copyfile(mbed_path + 'mbed-os.lib', 'mbed-os.lib')
+            shutil.copyfile(mbed_path + 'mbed_app.json', 'mbed_app.json')
+            run_command('mbed config root .')
+            run_command('mbed deploy')
 
         arch = detect_architecture(target_model, target_json)
         if arch == 'Cortex-M4' or arch == 'Cortex-M7':
@@ -149,7 +165,7 @@ def test_target(target, args, main_test):
         test = ''
         additional_options = ' --source ' + BASE_PATH + main_test + \
                              ' --source ' + UNITY_SRC + \
-                             ' --profile ' + BASE_PATH + 'Profiles/release.json' + \
+                             ' --profile ' + mbed_path + 'release.json' + \
                              ' -f'
 
         result = run_command("mbed {} -v -m ".format(mbed_command) + target_model + ' -t ' + compiler +
@@ -162,12 +178,15 @@ def test_target(target, args, main_test):
                              ' --source ' + CMSIS_PATH + 'NN/Source/ConvolutionFunctions/'
                              ' --source ' + CMSIS_PATH + 'NN/Source/PoolingFunctions/'
                              ' --source ' + CMSIS_PATH + 'NN/Source/NNSupportFunctions/'
+                             ' --source ' + CMSIS_PATH + 'NN/Source/FullyConnectedFunctions/'
+                             ' --source ' + CMSIS_PATH + 'NN/Source/SoftmaxFunctions/'
+                             ' --source ' + CMSIS_PATH + 'NN/Source/SVDFunctions/'
                              + cmsis_flags +
                              additional_options,
                              flash_error_msg, die=die)
 
     except Exception as e:
-        error_handler(666, e)
+        error_handler(166, e)
 
     os.chdir(start_dir)
     return result
@@ -192,7 +211,7 @@ def test_target_with_unity(target, args, main_test):
     try:
         ser = serial.Serial(port, baudrate, timeout=timeout)
     except Exception as e:
-        error_handler(669, "serial exception: {}".format(e))
+        error_handler(169, "serial exception: {}".format(e))
 
     # Clear read buffer
     time.sleep(0.1)  # Workaround in response to: open() returns before port is ready
@@ -286,7 +305,7 @@ def print_summary(targets):
         verdict = verdict_pass
     else:
         verdict = verdict_fail
-    print("{} Summary: {} tests in total passed on {} targets ({})".
+    print("{} Summary: {} tests in total passed on {} target(s) ({})".
           format(verdict, passed, len(targets), ', '.join([t['name'] for t in targets])))
     print("{} {:.0f}% tests passed, {} tests failed out of {}".format(verdict, total*100, failed, expected))
 
@@ -303,17 +322,20 @@ def test_targets(args):
     targets = []
     main_tests = []
 
-    detect_targets(targets)
-
-    if len(targets) == 0:
-        print("No targets detected!")
-        return 3
+    if not args.download_and_generate:
+        detect_targets(targets)
+        if len(targets) == 0:
+            print("No targets detected!")
+            return 3
 
     download_unity()
 
     if not parse_tests(targets, main_tests, args.specific_test):
         print("No tests found?!")
         return 4
+
+    if args.download_and_generate:
+        return result
 
     for target in targets:
         for tst in main_tests:
@@ -344,8 +366,7 @@ def download_unity(force=False):
     os.makedirs(download_dir, exist_ok=False)
     current_dir = os.getcwd()
     os.chdir(download_dir)
-
-    process = subprocess.Popen("curl -LJO https://api.github.com/repos/ThrowTheSwitch/Unity/tarball/v2.5.0".split(),
+    process = subprocess.Popen('curl -LJ https://api.github.com/repos/ThrowTheSwitch/Unity/tarball/v2.5.0 --output unity_tarball.tar.gz'.split(),
                                stdout=subprocess.PIPE,
                                stderr=subprocess.PIPE,
                                universal_newlines=True)
@@ -355,19 +376,15 @@ def download_unity(force=False):
     for line in process.stdout:
         pass
     if not line:
-        error_handler(671)
-    try:
-        m = re.search('\'(.+?)\'', line.strip())
-    except AttributeError as e:
-        error_handler(673, e)
-    downloaded_file = download_dir + m.group(1)
+        error_handler(171)
+    downloaded_file = download_dir + "unity_tarball.tar.gz"
     os.chdir(current_dir)
     try:
         filename_base = downloaded_file.split('-')[0]
     except IndexError as e:
-        error_handler(674, e)
+        error_handler(174, e)
     if not filename_base:
-        error_handler(675)
+        error_handler(175)
     run_command("tar xzf "+downloaded_file+" -C "+unity_dir+" --strip-components=1")
     os.chdir(current_dir)
 
@@ -375,13 +392,39 @@ def download_unity(force=False):
     shutil.rmtree(download_dir)
 
 
+def parse_generated_test_runner(test_runner):
+    parsed_functions = ['setUp', 'tearDown', 'resetTest', 'verifyTest']
+
+    def is_func_to_parse(func):
+        for f in parsed_functions:
+            if f in func:
+                return True
+        return False
+
+    with open(test_runner, "r") as f:
+        lines = f.readlines()
+    with open(test_runner, "w") as f:
+        for line in lines:
+            sline = line.strip('\n')
+            if not re.search(r"\(void\);", sline):
+                f.write(line)
+            else:
+                if not is_func_to_parse(sline):
+                    f.write(line)
+
+
 def parse_tests(targets, main_tests, specific_test=None):
     """
-    Generate test runners and parse it to know what to expect from the serial console
-    Return True if successful
+    Generate test runners, extract and return path to unit test(s).
+    Also parse generated test runners to avoid warning: redundant redeclaration.
+    Return True if successful.
     """
     test_found = False
     directory = 'TestCases'
+
+    if specific_test and '/' in specific_test:
+        specific_test = specific_test.strip(directory).replace('/', '')
+
     for dir in next(os.walk(directory))[1]:
         if re.search(r'test_arm', dir):
             if specific_test and dir != specific_test:
@@ -411,6 +454,9 @@ def parse_tests(targets, main_tests, specific_test=None):
             test_found = parse_test(test_runner, targets)
             if not test_found:
                 return False
+
+            parse_generated_test_runner(test_runner)
+
     if not test_found:
         return False
     return True
@@ -423,7 +469,7 @@ def parse_test(test_runner, targets):
     try:
         read_file = open(test_runner, "r")
     except IOError as e:
-        error_handler(670, e)
+        error_handler(170, e)
     else:
         with read_file:
             for line in read_file:

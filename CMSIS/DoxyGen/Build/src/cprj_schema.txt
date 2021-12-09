@@ -19,7 +19,7 @@ The most significant differences are:
 \section section_layer Introduction of Layers
 One example is the separation of an existing project into files and components that are HW dependent (board, device, processor)
 and those that are application specific. The result is a HW and an application layer. Assuming that there is layers for multiple
-boards and applications sharing common interfaces between layers, any combination of HW laywer with an application layer can be
+boards and applications sharing common interfaces between layers, any combination of HW layer with an application layer can be
 combined to create projects and build consistent applications across a range of hardware.
 
 \section section_varieties Varieties of a build
@@ -72,7 +72,7 @@ The high level structure of a project is constructed from:
   <tr>
     <td>\<info></td>
     <td>\subpage element_info</td>
-    <td>Information about the project: description, keywords, categories, license, download.</td>
+    <td>Information about the project: description, documentation, categories, license.</td>
   </tr>
   <tr>
     <td>\<layers></td>
@@ -121,22 +121,18 @@ The high level structure of a project is constructed from:
   <info isLayer="false" >
     <description>BSD Client application on top of MCB4300 Basic I/O layer with Ethernet</description>
     <category>Wired Network, BSD Client, Board IO</category>
-    <keywords>MCB4300, MDK-Middleware, Network</keywords>
     <license>BSD-3-Clause</license>
-    <url></url>
   </info>
  
   <layers>
     <layer name="IO" hasTarget="1">
       <description>Basic I/O layer for MCB4300 for Ethernet applications</description>
       <category>Board IO, Wired Network</category>
-      <keywords>MCB4300, Ethernet, LPC4300</keywords>
       <license>BSD-3-Clause</license>
     </layer>
     <layer name="APP" hasTarget="0">
       <description>BSD Client application for Basic I/O layers with Ethernet</description>
       <category>Board IO, Wired Network</category>
-      <keywords>BSD_Client, Ethernet</keywords>
       <license>BSD-3-Clause</license>
     </layer>
   </layers>
@@ -154,7 +150,7 @@ The high level structure of a project is constructed from:
   </compilers>
  
   <target Ddsp="NO_DSP" Dendian="Little-endian" Dfpu="NO_FPU" Dmve="NO_MVE" Dname="LPC4357" Dtz="NO_TZ" Dvendor="NXP:11" Pname="Cortex-M4">
-    <output list="./Debug/" name="BSD_Client" obj="./Debug/" type="exe"/>
+    <output intdir="./Debug/" name="BSD_Client" outdir="./Debug/" type="exe"/>
     <ldflags compiler="AC5" add="--entry=Reset_Handler --load_addr_map_info --map --strict" file="BSD_Client.sct"/>
     <cflags  compiler="AC5" add="--c99 --omf_browse ./debug/main.crf -D__MICROLIB -O1"/>
     <asflags compiler="AC5" add="--pd __MICROLIB SETA 1 --xref"/>
@@ -343,9 +339,7 @@ The high level structure of a project is constructed from:
   <info isLayer="false" >
     <description>BSD Client application on top of MCB4300 Basic I/O layer with Ethernet</description>
     <category>Wired Network, BSD Client, Board IO</category>
-    <keywords>MCB4300, MDK-Middleware, Network</keywords>
     <license>BSD-3-Clause</license>
-    <url>https://github.com/ARM-software/cmsis-driver/examples/BSD_Client_MCB4300_IO/</url>
   </info>
   ...
 \endcode
@@ -367,12 +361,6 @@ The high level structure of a project is constructed from:
     <th>Use</th>
   </tr>
   <tr>
-    <td>name</td>
-    <td>name of the layer</td>
-    <td>\ref type_restrictedStringType "RestrictedString"</td>
-    <td>required</td>
-  </tr>
-  <tr>
     <td>isLayer</td>
     <td>If 'true' then the project file is a layer description and not a complete project expected to create an output. Only layer descriptions can be
     added to an existing project, or a project is constructed from using only layer descriptions. By default a description is a project (false).</td>
@@ -386,20 +374,20 @@ The high level structure of a project is constructed from:
     <th>Occurrence</th>
   </tr>
   <tr>
+    <td>name</td>
+    <td>Name of the project/layer</td>
+    <td>\ref type_restrictedStringType "RestrictedString"</td>
+    <td>0..*</td>
+  </tr>
+  <tr>
     <td>description</td>
-    <td>Brief description of the layer.</td>
+    <td>Brief description of the project/layer.</td>
     <td>xs:string</td>
-    <td>0..*</td>
+    <td>required</td>
   </tr>
   <tr>
-    <td>keywords</td>
-    <td>Comma seperated list of keywords of this layer used by search tools.</td>
-    <td>xs:string</td>
-    <td>0..*</td>
-  </tr>
-  <tr>
-    <td>category</td>
-    <td>Comma separated list of predefined categories for this layer used by search tools. Predefined list TBD.</td>
+    <td>doc</td>
+    <td>Project/layer documentation points to detailed documentation local *.md file or URL.</td>
     <td>xs:string</td>
     <td>0..*</td>
   </tr>
@@ -409,25 +397,8 @@ The high level structure of a project is constructed from:
     <td>xs:string</td>
     <td>0..*</td>
   </tr>
-  <tr>
-    <td>\ref element_url "url"</td>
-    <td>Specifies a public download location. Repository type and tag can be specified.</td>
-    <td>UrlType</td>
-    <td>0..*</td>
-  </tr>
 </table>
 
-\delim
-
-\section element_url /cprj/info/url
-\b Example <em>url</em> element
-\code
-  ...
-  <info>
-    <url type="git" tag="Rel-1.2.0">https://github/myOrg/myProj/Examples/myExample/</url>
-  </info>
-  ...
-\endcode
 \delim
 
 <table class="cmtable" summary="Type: urlType">
@@ -467,12 +438,14 @@ The high level structure of a project is constructed from:
 This element describes the hardware target, build output and command line options for a specific compiler tool-chain.
 These settings are applied to all modules of the project. The C/C++ and assembler flags can be refined for components, files.
 The following elements are available:
-- \ref element_output "output"     : Build output options
+- \ref element_output "output"            : Build output options
+- \ref element_includes "includes"        : List of include paths
+- \ref element_defines "defines"          : List of preprocessor definitions
 - \ref element_target_cflags "cflags"     : C compiler options applied to C modules (category="sourceC").
 - \ref element_target_cxxflags "cxxflags" : C++ compiler options applied to C++ modules (category="sourceCpp").
 - \ref element_target_asflags "asflags"   : Assembler options applied to Assembler modules (category="sourceAsm").
-- \ref element_ldflags "ldflags"   : Linker options applied when output attribute type="exe".
-- \ref element_arflags "arflags"   : Archiver options applied to Librarian when output attribute type="lib".
+- \ref element_ldflags "ldflags"          : Linker options applied when output attribute type="exe".
+- \ref element_arflags "arflags"          : Archiver options applied to Librarian when output attribute type="lib".
 
 Note: The compiler referenced by the above command line flags is required to be listed in the \<compilers> section.
 
@@ -486,7 +459,9 @@ Note: The compiler referenced by the above command line flags is required to be 
   </compilers>
   ...
   <target Dname="ARMCM0" Dvendor="ARM:82" Dendian="Little-endian">
-    <output name="Blinky" type="exe" obj="./Objects list="./Listings"/>
+    <output name="Blinky" type="exe" outdir="./Objects intdir="./Listings"/>
+    <includes>./path/to/header/files</includes>
+    <defines>DEF1=1;DEF2=2</defines>
     <cflags compiler="AC5" add="-Osize"/>
     ...
     <ldflags compiler="AC5" file="./RTE/Device/ARMCM0/gcc_arm.ld"/>
@@ -596,16 +571,28 @@ Note: The compiler referenced by the above command line flags is required to be 
     <td>1..1</td>
   </tr>
   <tr>
+    <td>\ref element_includes "includes"</td>
+    <td>List of include paths</td>
+    <td>xs:string</td>
+    <td>0..1</td>
+  </tr>
+  <tr>
+    <td>\ref element_defines "defines"</td>
+    <td>List of preprocessor definitions</td>
+    <td>xs:string</td>
+    <td>0..1</td>
+  </tr>
+  <tr>
     <td>\ref element_ldflags "ldflags"</td>
     <td>Linker flags used for constructing the effective linker command line</td>
     <td>LinkerFlagsType</td>
     <td>0..1</td>
+  </tr>
   <tr>
     <td>\ref element_arflags "arflags"</td>
     <td>Archiver command line flags for the toolchain selected by 'compiler' attribute.</td>
     <td>ArchiverFlagsType</td>
     <td>0..1</td>
-  </tr>
   </tr>
   <tr>
     <td>\ref type_toolOptionType "cflags"</td>
@@ -644,7 +631,7 @@ Specify the build output directories, output file and type (executable vs. libra
 <cprj ...>
   ...
   <target Dname="ARMCM0" Dvendor="ARM:83">
-     <output compiler="AC5" name="MyProject" type="exe" list="Listings" obj="Objects"/>
+     <output compiler="AC5" name="MyProject" type="exe" intdir="Listings" outdir="Objects"/>
      ...
   </target>
   ...
@@ -681,16 +668,73 @@ Specify the build output directories, output file and type (executable vs. libra
     <td>required</td>
   </tr>
   <tr>
-    <td>obj</td>
-    <td>Relative path of the output folder</td>
+    <td>intdir</td>
+    <td>Relative path of the folder containing intermediate files (such as object files).</td>
     <td>xs:string</td>
     <td>optional</td>
   </tr>
   <tr>
-    <td>listing</td>
-    <td>Relative path of the listings folder</td>
+    <td>outdir</td>
+    <td>Relative path of the output folder containing the executable binaries.</td>
     <td>xs:string</td>
     <td>optional</td>
+  </tr>
+</table>
+
+\delim
+
+\section element_includes /cprj/target/includes
+This element specifies a semicolon separated list of include paths that are valid for the compilation of all modules in the project.
+
+\b Example <em>includes</em> element
+\code
+<cprj ...>
+  ...
+  <target Ddsp="NO_DSP" Dendian="Little-endian" Dfpu="NO_FPU" Dmve="NO_MVE" Dname="LPC4357" Dtz="NO_TZ" Dvendor="NXP:11" Pname="Cortex-M4">
+    <output intdir="./Debug/" name="BSD_Client" outdir="./Debug/" type="exe"/>
+    <includes>./path/to/header/files</includes>
+  </target>
+  ...
+</cprj>
+\endcode
+
+<table class="cmtable" summary="Element: includes">
+  <tr>
+    <th>Parents</th>
+    <th colspan="3">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref element_target "target"</td>
+    <td colspan="3">\ref element_target</td>
+  </tr>
+</table>
+
+\delim
+
+\section element_defines /cprj/target/defines
+This element specifies a semicolon separated list of preprocessor definitions that are valid for all project modules undergoing preprocessing.
+Key/value pairs are separated by the equal sign.
+
+\b Example <em>defines</em> element
+\code
+<cprj ...>
+  ...
+  <target Ddsp="NO_DSP" Dendian="Little-endian" Dfpu="NO_FPU" Dmve="NO_MVE" Dname="LPC4357" Dtz="NO_TZ" Dvendor="NXP:11" Pname="Cortex-M4">
+    <output intdir="./Debug/" name="BSD_Client" outdir="./Debug/" type="exe"/>
+    <defines>DEF1=1;DEF2=2</defines>
+  </target>
+  ...
+</cprj>
+\endcode
+
+<table class="cmtable" summary="Element: defines">
+  <tr>
+    <th>Parents</th>
+    <th colspan="3">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref element_target "target"</td>
+    <td colspan="3">\ref element_target</td>
   </tr>
 </table>
 
@@ -707,7 +751,7 @@ in the output tag is set to "exe".
 <cprj ...>
   ...
   <target Ddsp="NO_DSP" Dendian="Little-endian" Dfpu="NO_FPU" Dmve="NO_MVE" Dname="LPC4357" Dtz="NO_TZ" Dvendor="NXP:11" Pname="Cortex-M4">
-    <output list="./Debug/" name="BSD_Client" obj="./Debug/" type="exe"/>
+    <output intdir="./Debug/" name="BSD_Client" outdir="./Debug/" type="exe"/>
     <ldflags compiler="AC5" add="--entry=Reset_Handler --load_addr_map_info --map --strict " file="BSD_Client.sct"/>
   </target>
   ...
@@ -754,7 +798,7 @@ Note that this option only takes effect if the type specified in the output tag 
 <cprj ...>
   ...
   <target Ddsp="NO_DSP" Dendian="Little-endian" Dfpu="NO_FPU" Dmve="NO_MVE" Dname="LPC4357" Dtz="NO_TZ" Dvendor="NXP:11" Pname="Cortex-M4">
-    <output list="./Debug/" name="BSD_Client" obj="./Debug/" type="lib"/>
+    <output intdir="./Debug/" name="BSD_Client" outdir="./Debug/" type="lib"/>
     <arflags compiler="AC5" add="--debug_symbols "/>
   </target>
   ...
@@ -800,7 +844,7 @@ are 'removed' on a lower level (component, group, file).
 <cprj ...>
   ...
   <target Ddsp="NO_DSP" Dendian="Little-endian" Dfpu="NO_FPU" Dmve="NO_MVE" Dname="LPC4357" Dtz="NO_TZ" Dvendor="NXP:11" Pname="Cortex-M4">
-    <output list="./Debug/" name="BSD_Client" obj="./Debug/" type="lib"/>
+    <output intdir="./Debug/" name="BSD_Client" outdir="./Debug/" type="lib"/>
     <cflags add="-O1 -fno-function-sections -fno-rtti -fshort-enums -fshort-wchar -funsigned-char"/>
     <arflags compiler="AC5" add="--debug_symbols "/>
   </target>
@@ -848,7 +892,7 @@ are 'removed' on a lower level (component, group, file).
 <cprj ...>
   ...
   <target Ddsp="NO_DSP" Dendian="Little-endian" Dfpu="NO_FPU" Dmve="NO_MVE" Dname="LPC4357" Dtz="NO_TZ" Dvendor="NXP:11" Pname="Cortex-M4">
-    <output list="./Debug/" name="BSD_Client" obj="./Debug/" type="lib"/>
+    <output intdir="./Debug/" name="BSD_Client" outdir="./Debug/" type="lib"/>
 	<cflags add="-O1 -fno-function-sections -fno-rtti -fshort-enums -fshort-wchar -funsigned-char"/>
 	<cxxflags add="-O1 -fno-function-sections -fno-rtti -fshort-enums -fshort-wchar -funsigned-char"/>
     <arflags compiler="AC5" add="--debug_symbols "/>
@@ -898,7 +942,7 @@ are 'removed' on a lower level (component, group, file).
 <cprj ...>
   ...
   <target Ddsp="NO_DSP" Dendian="Little-endian" Dfpu="NO_FPU" Dmve="NO_MVE" Dname="LPC4357" Dtz="NO_TZ" Dvendor="NXP:11" Pname="Cortex-M4">
-    <output list="./Debug/" name="BSD_Client" obj="./Debug/" type="lib"/>
+    <output intdir="./Debug/" name="BSD_Client" outdir="./Debug/" type="lib"/>
     <asflags add="--xref --split_ldm"/>
     <arflags compiler="AC5" add="--debug_symbols "/>
   </target>
@@ -932,6 +976,12 @@ are 'removed' on a lower level (component, group, file).
     <td>commandline string to be added to the command line of the assembler invoked for Assembler-modules specific the selected compiler tool-chain.</td>
     <td>xs:string</td>
     <td>required</td>
+  </tr>
+  <tr>
+    <td>use</td>
+    <td>selects legacy assembler to be invoked in place of the default assembler for a given tool-chain. Currently supported values: armasm (AC6), gas (GCC)</td>
+    <td>xs:string</td>
+    <td>optional</td>
   </tr>
 </table>
 
@@ -1351,6 +1401,12 @@ component. This flag can also be added to file groups and individual files withi
     <td>xs:string</td>
     <td>required</td>
   </tr>
+  <tr>
+    <td>use</td>
+    <td>selects legacy assembler to be invoked in place of the default assembler for a given tool-chain. Currently supported values: armasm (AC6), gas (GCC)</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>
 </table>
 \delim
 
@@ -1415,6 +1471,7 @@ commandline flags can also be applied on a group level.
 The description format allows the nesting of groups. It is up to the tool's implementation how grouping
 is represented in the user interface. The grouping of files only impacts the build, if the assignment of 
 command line options on a group level is supported.
+The group's name must be unique, multiple groups at the same level with the same name are not allowed.
 
 \b Example <em>files</em> section:
 \code
@@ -1455,7 +1512,7 @@ command line options on a group level is supported.
   </tr>
   <tr>
     <td>name</td>
-    <td>name of the group of files</td>
+    <td>Unique name of the group of files</td>
     <td>\ref type_restrictedStringType "RestrictedString"</td>
     <td>required</td>
   </tr>
@@ -1616,7 +1673,6 @@ See: \ref element_asflags
     <layer name="IO" hasTarget="1">
       <description>Basic I/O layer for MCB4300 for Ethernet applications</description>
       <category>Board IO, Wired Network</category>
-      <keywords>MCB4300, Ethernet, LPC4300"</keywords>
       <license>BSD-3-Clause</license>
     </layer>
     ...
@@ -1642,9 +1698,15 @@ See: \ref element_asflags
   </tr>
   <tr>
     <td>name</td>
-    <td>name of the layer</td>
+    <td>Layer ID</td>
     <td>\ref type_restrictedStringType "RestrictedString"</td>
     <td>required</td>
+  </tr>
+  <tr>
+    <td>title</td>
+    <td>Display name for the layer.</td>
+    <td>xs:string</td>
+    <td>0..*</td>
   </tr>
   <tr>
     <td>hasTarget</td>
@@ -1665,8 +1727,8 @@ See: \ref element_asflags
     <td>0..*</td>
   </tr>
   <tr>
-    <td>keywords</td>
-    <td>Comma seperated list of keywords of this layer used by search tools.</td>
+    <td>doc</td>
+    <td>Layer documentation points to detailed documentation local *.md file or URL.</td>
     <td>xs:string</td>
     <td>0..*</td>
   </tr>
@@ -1682,10 +1744,68 @@ See: \ref element_asflags
     <td>xs:string</td>
     <td>0..*</td>
   </tr>
+  <tr>
+  <td>\ref element_interfaces "interfaces"</td>
+    <td>Provided and consumed layer interfaces.</td>
+    <td>InterfacesType</td>
+    <td>0..*</td>
+  </tr>
 </table>
 
 \delim
 
+\section element_interfaces /cprj/layers/layer/interfaces
+
+\b Example <em>layer</em> element
+\code
+  ...
+  <layers>
+    <layer name="IO" hasTarget="1">
+      <description>Basic I/O layer for MCB4300 for Ethernet applications</description>
+      <category>Board IO, Wired Network</category>
+      <license>BSD-3-Clause</license>
+      <interfaces>
+        <consumes id="SPI"/>
+        <provides id="WIFI"/>
+      </interfaces>
+    </layer>
+    ...
+  </layers>
+  ...
+\endcode
+\delim
+
+<table class="cmtable" summary="Element: layer">
+  <tr>
+    <th>Parents</th>
+    <th colspan="3">Element Chain</th>
+  </tr>
+  <tr>
+    <td>\ref element_layer "layer"</td>
+    <td colspan="3">\ref element_layer</td>
+  </tr>
+  <tr>
+    <th>Attributes</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Use</th>
+  <tr>
+    <td>consumes</td>
+    <td>Interfaces consumed by the layer.</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>provides</td>
+    <td>Interfaces provided by the layer.</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>
+
+
+</table>
+
+\delim
 
 \page element_packages /cprj/packages
 
@@ -1842,7 +1962,6 @@ Restricted string type excludes the use of special characters including spaces i
     <td>optional</td>
   </tr>
 </table>
-
 
 \delim
 

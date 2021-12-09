@@ -12,9 +12,6 @@ a double precision computation.
 */
 #define REL_ERROR (1.2e-3)
 
-#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
-static __ALIGNED(8) float32_t coeffArray[32];
-#endif 
 
     void BIQUADF32::test_biquad_cascade_df1_ref()
     {
@@ -95,11 +92,8 @@ static __ALIGNED(8) float32_t coeffArray[32];
 
         float32_t *statep = state.ptr();
 
-#if !defined(ARM_MATH_NEON) 
         const float32_t *coefsp = coefs.ptr();
-#else
-        float32_t *coefsp = coefs.ptr();
-#endif
+
         
         const float32_t *inputp = inputs.ptr();
         float32_t *outp = output.ptr();
@@ -129,13 +123,15 @@ static __ALIGNED(8) float32_t coeffArray[32];
 #else
            float32_t *vecCoefsPtr = vecCoefs.ptr();
 
+           // Those Neon coefs must be computed from original coefs
+           arm_biquad_cascade_df2T_compute_coefs_f32(3,coefsp,vecCoefsPtr);
+
            arm_biquad_cascade_df2T_init_f32(&this->Sdf2T,
                     3,
                     vecCoefsPtr,
                     statep);
 
-           // Those Neon coefs must be computed from original coefs
-           arm_biquad_cascade_df2T_compute_coefs_f32(&this->Sdf2T,3,coefsp);
+           
 #endif
 
            /*
@@ -182,7 +178,7 @@ static __ALIGNED(8) float32_t coeffArray[32];
 
         int blockSize;
         int numStages;
-        int i;
+        unsigned long i;
 
         
 
@@ -260,7 +256,7 @@ static __ALIGNED(8) float32_t coeffArray[32];
         int blockSize;
         int numStages;
 
-        int i;
+        unsigned long i;
 
         
 
@@ -293,13 +289,15 @@ static __ALIGNED(8) float32_t coeffArray[32];
 #else
            float32_t *vecCoefsPtr = vecCoefs.ptr();
 
+           // Those Neon coefs must be computed from original coefs
+           arm_biquad_cascade_df2T_compute_coefs_f32(numStages,coefsp,vecCoefsPtr);
+
            arm_biquad_cascade_df2T_init_f32(&this->Sdf2T,
                     numStages,
                     vecCoefsPtr,
                     statep);
 
-           // Those Neon coefs must be computed from original coefs
-           arm_biquad_cascade_df2T_compute_coefs_f32(&this->Sdf2T,numStages,coefsp);
+           
 #endif
            coefsp += numStages * 5;
 
@@ -342,7 +340,7 @@ static __ALIGNED(8) float32_t coeffArray[32];
         int blockSize;
         int numStages;
 
-        int i;
+        unsigned long i;
 
         
 
@@ -400,7 +398,7 @@ static __ALIGNED(8) float32_t coeffArray[32];
     void BIQUADF32::setUp(Testing::testID_t id,std::vector<Testing::param_t>& params,Client::PatternMgr *mgr)
     {
       
-       
+       (void)params;
        switch(id)
        {
         case BIQUADF32::TEST_BIQUAD_CASCADE_DF1_REF_1:
@@ -466,6 +464,7 @@ static __ALIGNED(8) float32_t coeffArray[32];
 
     void BIQUADF32::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)
     {
+        (void)id;
         output.dump(mgr);
         switch(id)
         {

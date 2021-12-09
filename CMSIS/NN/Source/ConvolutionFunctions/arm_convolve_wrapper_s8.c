@@ -19,17 +19,17 @@
 /* ----------------------------------------------------------------------
  * Project:      CMSIS NN Library
  * Title:        arm_convolve_wrapper_s8.c
- * Description:  s8 convolution layer wrapper function with the main purpose to call the optimal kernel available in cmsis-nn to perform the convolution.
+ * Description:  s8 convolution layer wrapper function with the main purpose to call the optimal kernel available in
+ * cmsis-nn to perform the convolution.
  *
- * $Date:        May 18, 2020
- * $Revision:    V.1.0.0
+ * $Date:        09. October 2020
+ * $Revision:    V.1.0.1
  *
  * Target Processor:  Cortex-M cores
  *
  * -------------------------------------------------------------------- */
 
 #include "arm_nnfunctions.h"
-#include "arm_nn_types.h"
 
 /**
  *  @ingroup groupNN
@@ -41,31 +41,26 @@
  */
 
 /*
-   * Convolution layer
-   *
-   * Refer header file for details.
-   *
-   */
+ * Convolution layer
+ *
+ * Refer header file for details.
+ *
+ */
 
-arm_status arm_convolve_wrapper_s8(const cmsis_nn_context* ctx,
-                                   const cmsis_nn_conv_params* conv_params,
-                                   const cmsis_nn_per_channel_quant_params* quant_params,
-                                   const cmsis_nn_dims* input_dims,
+arm_status arm_convolve_wrapper_s8(const cmsis_nn_context *ctx,
+                                   const cmsis_nn_conv_params *conv_params,
+                                   const cmsis_nn_per_channel_quant_params *quant_params,
+                                   const cmsis_nn_dims *input_dims,
                                    const q7_t *input_data,
-                                   const cmsis_nn_dims* filter_dims,
+                                   const cmsis_nn_dims *filter_dims,
                                    const q7_t *filter_data,
-                                   const cmsis_nn_dims* bias_dims,
+                                   const cmsis_nn_dims *bias_dims,
                                    const int32_t *bias_data,
-                                   const cmsis_nn_dims* output_dims,
+                                   const cmsis_nn_dims *output_dims,
                                    q7_t *output_data)
 {
-    if ((conv_params->padding.w == 0) &&
-        (conv_params->padding.h == 0) &&
-        (input_dims->c % 4 == 0) &&
-        (conv_params->stride.w == 1) &&
-        (conv_params->stride.h == 1) &&
-        (filter_dims->w == 1) &&
-        (filter_dims->h == 1))
+    if ((conv_params->padding.w == 0) && (conv_params->padding.h == 0) && (input_dims->c % 4 == 0) &&
+        (conv_params->stride.w == 1) && (conv_params->stride.h == 1) && (filter_dims->w == 1) && (filter_dims->h == 1))
     {
         return arm_convolve_1x1_s8_fast(ctx,
                                         conv_params,
@@ -79,10 +74,7 @@ arm_status arm_convolve_wrapper_s8(const cmsis_nn_context* ctx,
                                         output_dims,
                                         output_data);
     }
-    else if ((output_dims->h == 1) &&
-             (input_dims->h == 1) &&
-             (filter_dims->h == 1) &&
-             (output_dims->w % 4 == 0) &&
+    else if ((output_dims->h == 1) && (input_dims->h == 1) && (filter_dims->h == 1) && (output_dims->w % 4 == 0) &&
              (input_dims->n == 1))
     {
         return arm_convolve_1_x_n_s8(ctx,
@@ -113,25 +105,17 @@ arm_status arm_convolve_wrapper_s8(const cmsis_nn_context* ctx,
     }
 }
 
-int32_t arm_convolve_wrapper_s8_get_buffer_size(const cmsis_nn_conv_params* conv_params,
-                                                const cmsis_nn_dims* input_dims,
-                                                const cmsis_nn_dims* filter_dims,
-                                                const cmsis_nn_dims* output_dims)
+int32_t arm_convolve_wrapper_s8_get_buffer_size(const cmsis_nn_conv_params *conv_params,
+                                                const cmsis_nn_dims *input_dims,
+                                                const cmsis_nn_dims *filter_dims,
+                                                const cmsis_nn_dims *output_dims)
 {
-    if ((conv_params->padding.w == 0) &&
-        (conv_params->padding.h == 0) &&
-        (input_dims->c % 4 == 0) &&
-        (conv_params->stride.w == 1) &&
-        (conv_params->stride.h == 1) &&
-        (filter_dims->w == 1) &&
-        (filter_dims->h == 1))
+    if ((conv_params->padding.w == 0) && (conv_params->padding.h == 0) && (input_dims->c % 4 == 0) &&
+        (conv_params->stride.w == 1) && (conv_params->stride.h == 1) && (filter_dims->w == 1) && (filter_dims->h == 1))
     {
         return arm_convolve_1x1_s8_fast_get_buffer_size(input_dims);
     }
-    else if ((output_dims->h == 1) &&
-             (input_dims->h == 1) &&
-             (filter_dims->h == 1) &&
-             (output_dims->w % 4 == 0) &&
+    else if ((output_dims->h == 1) && (input_dims->h == 1) && (filter_dims->h == 1) && (output_dims->w % 4 == 0) &&
              (input_dims->n == 1))
     {
         return arm_convolve_1_x_n_s8_get_buffer_size(input_dims, filter_dims);
@@ -145,4 +129,3 @@ int32_t arm_convolve_wrapper_s8_get_buffer_size(const cmsis_nn_conv_params* conv
 /**
  * @} end of NNConv group
  */
-

@@ -28,9 +28,9 @@
 #ifndef _FPGA_H_
 #define _FPGA_H_
 #include <string>
-#include "stdlib.h"
-#include "arm_math.h"
-#include "arm_math_f16.h"
+#include <cstdlib>
+#include "arm_math_types.h"
+#include "arm_math_types_f16.h"
 
 namespace Client
 {
@@ -114,7 +114,7 @@ FPGA driver. Used to read a C array describing how to drive the test.
       const char *m_patterns;
 
       // Parameter array
-      char *m_parameters;
+      //char *m_parameters;
 
       // Current position in the driver array
       const char *currentDesc;

@@ -1,0 +1,629 @@
+group Root {
+    class = Root
+
+    group DSP Benchmarks {
+        class = DSPBenchmarks
+        folder = DSP
+
+        group Statistics Benchmarks {
+           class = Stats
+           folder = Stats
+
+           suite Statistics Benchmarks F16 {
+              class = StatsF16
+              folder = StatsF16
+
+              ParamList {
+                  NB
+                  Summary NB
+                  Names "NB Samples"
+                  Formula "NB"
+              }
+
+              Pattern INPUT1_F16_ID : InputBench1_f16.txt 
+              Pattern INPUT2_F16_ID : InputBench2_f16.txt 
+              
+              Output  OUT_F16_ID : Output
+              Output  OUT_S16_ID : Index
+              Output  TMP_F16_ID : Temp
+
+              Params PARAM1_ID = {
+                  A = [16,32,64,128,256]
+              }
+
+              Functions {
+                Vector maximum:test_max_f16
+                Vector average:test_mean_f16
+                Vector minimum:test_min_f16
+                Vector energy:test_power_f16
+                Vector root mean square:test_rms_f16
+                Vector standard deviation:test_std_f16
+                Vector variance:test_var_f16
+                Entropy:test_entropy_f16
+                Vector logsumexp:test_logsumexp_f16
+                Kullback Leibler divergence:test_kullback_leibler_f16
+                Vector logsumexp dot product:test_logsumexp_dot_prod_f16
+                Vector max with no index:test_max_no_idx_f16
+                Vector absolute maximum:test_absmax_f16
+                Vector absolute minimum:test_absmin_f16
+              } -> PARAM1_ID
+
+           }
+
+        }
+
+        group Basic Maths {
+           class = BasicBenchmarks
+           folder = BasicMaths
+
+           suite Basic Maths Benchmarks F16 {
+              class = BasicMathsBenchmarksF16
+              folder = BasicMathsF16
+  
+              ParamList {
+                  NB
+                  Summary NB
+                  Names "NB Samples"
+                  Formula "NB"
+              }
+  
+              Pattern INPUT1_F16_ID : Input1_f16.txt 
+              Pattern INPUT2_F16_ID : Input2_f16.txt 
+              Output  OUT_SAMPLES_F16_ID : Output
+              Params PARAM1_ID = {
+                  A = [16,32,64,128,256]
+              }
+  
+              Functions {
+                 Elementwise multiplication:vec_mult_f16
+                 Vector addition:vec_add_f16
+                 Vector substraction:vec_sub_f16
+                 Elementwise absolute value:vec_abs_f16
+                 Elementwise negation:vec_negate_f16
+                 Elementwise offset:vec_offset_f16
+                 Vector scaling:vec_scale_f16
+                 Dot product:vec_dot_f16
+              } -> PARAM1_ID
+           }
+
+        }
+
+        group Complex Maths {
+           class = ComplexBenchmarks
+           folder = ComplexMaths
+
+           suite ComplexMaths Benchmarks F16 {
+              class = ComplexMathsBenchmarksF16
+              folder = ComplexMathsF16
+  
+              ParamList {
+                  NB
+                  Summary NB
+                  Names "NB Samples"
+                  Formula "NB"
+              }
+  
+              Pattern INPUT1_F16_ID : Input1_f16.txt 
+              Pattern INPUT2_F16_ID : Input2_f16.txt 
+              Pattern INPUT3_F16_ID : Input3_f16.txt 
+              Output  OUT_SAMPLES_F16_ID : Output
+              Params PARAM1_ID = {
+                  A = [16,32,64,128,256]
+              }
+  
+              Functions {
+                 Elementwise conjugate:vec_conj_f16
+                 Complex dot product:vec_dot_prod_f16
+                 Elementwise modulus:vec_mag_f16
+                 Elementwise modulus squared:vec_mag_squared_f16
+                 Elementwise complex multiplication:vec_mult_cmplx_f16
+                 Vector scaling by real number:vec_mult_real_f16
+              } -> PARAM1_ID
+           }
+
+        }
+
+        group Filtering {
+           class = DSPFiltering 
+           folder = Filtering 
+
+           group FIR {
+             class = FIR 
+             folder = FIR
+
+             suite FIR F16 {
+                class = FIRF16 
+                folder = FIRF16
+
+                ParamList {
+                  NumTaps, NB
+                  Summary NumTaps, NB
+                  Names "Number of taps","Number of samples"
+                  Formula "NumTaps * NB"
+                }
+
+                Pattern SAMPLES1_F16_ID : Samples1_f16.txt 
+                Pattern REFS1_F16_ID : Refs1_f16.txt 
+                Pattern COEFS1_F16_ID : Coefs1_f16.txt 
+
+                Output  OUT_SAMPLES_F16_ID : Output
+                Output  STATE_F16_ID : State
+                Output  ERR_F16_ID : Err
+
+                Params PARAM1_ID = {
+                  NumTaps = [16,32,64]
+                  NB = [64,128,256]
+                }
+
+                Functions {
+                   FIR Filter:test_fir_f16
+                } -> PARAM1_ID
+             }
+
+           }
+
+           group Convolutions / Correlations {
+             class = MISC 
+             folder = MISC
+
+             suite Convolutions / Correlations F16 {
+                class = MISCF16 
+                folder = MISCF16
+
+                ParamList {
+                  NBA, NBB
+                  Summary NBA, NBB
+                  Names "Number of samples A,Number of samples B"
+                  Formula "NBA * NBB"
+                }
+
+                Pattern INPUTSA1_F16_ID : InputsA1_f16.txt 
+                Pattern INPUTSB1_F16_ID : InputsB1_f16.txt 
+
+                Output  OUT_SAMPLES_F16_ID : Output
+
+                Params PARAM1_ID = {
+                  NBA = [9,16,64]
+                  NBB = [9,16,128]
+                }
+
+                Functions {
+                   disabled{Convolution:test_conv_f16}
+                   Correlation:test_correlate_f16
+                } -> PARAM1_ID
+              }
+
+
+           }
+
+
+           group BiQuads {
+             class = BIQUAD 
+             folder = BIQUAD
+
+             suite BiQuads F16 {
+                class = BIQUADF16 
+                folder = BIQUADF16
+
+                ParamList {
+                  NumStages, NB
+                  Summary NumStages, NB
+                  Names "Number of stages","Number of samples"
+                  Formula "NumStages * NB"
+                }
+
+                Pattern SAMPLES1_F16_ID : Samples1_f16.txt 
+                Pattern COEFS1_F16_ID : Coefs1_f16.txt 
+
+                Output  OUT_SAMPLES_F16_ID : Output
+                Output  STATE_F16_ID : State
+                Output  NEON_COEFS_F16_ID : NeonCoefs
+
+                Params PARAM1_ID = {
+                  NumStages = [1,2,4]
+                  NB = [16,128,256]
+                }
+
+                Functions {
+                   Cascaded BiQuad Filter DF1:test_biquad_cascade_df1_f16
+                   Cascaded BiQuad Filter DF2T:test_biquad_cascade_df2T_f16
+                   Cascaded BiQuad Filter Stereo DF2T:test_biquad_cascade_stereo_df2T_f16
+                } -> PARAM1_ID
+              }
+
+           }
+        }
+
+        group Fast Maths {
+           class = FastMath 
+           folder = FastMath 
+
+           suite Fast Maths F16 {
+                class = FastMathF16 
+                folder = FastMathF16
+
+                ParamList {
+                  NB
+                  Summary NB
+                  Names "Number of samples"
+                  Formula "NB"
+                }
+
+                Pattern SAMPLES_F16_ID : Samples1_f16.txt 
+                Output  OUT_SAMPLES_F16_ID : Output
+
+                Params PARAM1_ID = {
+                  NB = [64,128,256]
+                }
+
+                Functions {
+                   disabled{Cosine:test_cos_f16}
+                   disabled{Sine:test_sin_f16}
+                   Square Root:test_sqrt_f16
+                } -> PARAM1_ID
+             }
+
+        }
+
+        group Bayes{
+           class = Bayes
+           folder = Bayes 
+
+           suite Bayes F16 {
+              class = BayesF16
+              folder = BayesF16
+
+              ParamList {
+                  VECDIM,NBCLASSES
+                  Summary VECDIM,NBCLASSES
+                  Names "Vector dimension","Number of classes"
+                  Formula "VECDIM*NBCLASSES"
+                }
+
+              Pattern DIMS2_S16_ID : DimsBench2_s16.txt 
+              Pattern INPUTS2_F16_ID : Inputs2_f16.txt 
+              Pattern PARAMS2_F16_ID : Params2_f16.txt 
+              Pattern PREDICTS2_S16_ID : Predicts2_s16.txt
+
+              Output  OUT_PROBA_F16_ID : Probas
+              Output  OUT_PREDICT_S16_ID : Predicts
+
+              // Must be consistent with the Python script
+              Params PARAM1_ID = {
+                  VECDIM = [12,14,20]
+                  NBCLASSES = [3,5,4]
+                }
+
+              Functions {
+                 Naive Gaussian Bayes Predictor:test_gaussian_naive_bayes_predict_f16
+              } -> PARAM1_ID
+           }
+        }
+
+        group Distance  {
+           class = Distance
+           folder = Distance
+
+           suite Distance F16 {
+              class = DistanceF16
+              folder = DistanceF16
+
+              ParamList {
+                  NB
+                  Summary NB
+                  Names "NB Samples"
+                  Formula "NB"
+              }
+              
+              Pattern INPUTA_F16_ID : InputBenchA1_f16.txt
+              Pattern INPUTB_F16_ID : InputBenchB1_f16.txt
+
+              Pattern INPUTA_PROBA_F16_ID : InputBenchProbaA1_f16.txt
+              Pattern INPUTB_PROBA_F16_ID : InputBenchProbaB1_f16.txt
+
+              Output  TMPA_F16_ID : TmpA
+              Output  TMPB_F16_ID : TmpB
+
+              Params PARAM1_ID = {
+                  NB = [16,32,64,128,256]
+              }
+
+              Functions {
+                 Bray Curtis distance:test_braycurtis_distance_f16
+                 Canberra distance:test_canberra_distance_f16
+                 Chebyshev distance:test_chebyshev_distance_f16
+                 Cityblock distance:test_cityblock_distance_f16
+                 Correlation distance:test_correlation_distance_f16
+                 Cosine distance:test_cosine_distance_f16
+                 Euclidean distance:test_euclidean_distance_f16
+                 Jensen Shannon distance:test_jensenshannon_distance_f16
+                 Minkowski distance:test_minkowski_distance_f16
+              } -> PARAM1_ID
+           }
+
+        }
+
+        group SVM  {
+           class = SVM
+           folder = SVM 
+
+           suite SVM F16 {
+              class = SVMF16
+              folder = SVMF16
+
+              ParamList {
+                  VECDIM,NBVECS
+                  Summary VECDIM,NBVECS
+                  Names "Vector dimension","Number of suppot vectors"
+                  Formula "VECDIM*NBVECS"
+              }
+
+              Pattern INPUT_F16_ID : InputsBench6_f16.txt 
+              
+              Pattern DIMS_LINEAR_S16_ID : DimsLinear6_s16.txt 
+              Pattern PARAMS_LINEAR_F16_ID : ParamsLinear6_f16.txt
+
+              Pattern DIMS_POLY_S16_ID : DimsPoly6_s16.txt 
+              Pattern PARAMS_POLY_F16_ID : ParamsPoly6_f16.txt
+
+              Pattern DIMS_RBF_S16_ID : DimsRBF6_s16.txt 
+              Pattern PARAMS_RBF_F16_ID : ParamsRBF6_f16.txt
+
+              Pattern DIMS_SIGMOID_S16_ID : DimsSigmoid6_s16.txt 
+              Pattern PARAMS_SIGMOID_F16_ID : ParamsSigmoid6_f16.txt
+
+              Output  OUT_S32_ID : Output
+
+              // Must be consistent with the Python script
+              Params PARAM1_ID = {
+                  VECDIM = [16,32,64]
+                  NBVECS = [8,16,32]
+                }
+
+              Functions {
+                 Linear SVM:test_svm_linear_predict_f16
+                 Polynomial SVM:test_svm_polynomial_predict_f16
+                 RBF SVM:test_svm_rbf_predict_f16
+                 Sigmoid SVM:test_svm_sigmoid_predict_f16
+              } -> PARAM1_ID
+           }
+        }
+
+        group Barycenter {
+           class = Barycenter 
+           
+           suite Barycenter {
+                class = SupportBarF16 
+                folder = SupportBarF16
+
+                ParamList {
+                  NB,VECDIM
+                  Summary NB,VECDIM
+                  Names "Number of samples","Vector dimension"
+                  Formula "NB*VECDIM"
+                }
+
+                Pattern SAMPLES_F16_ID : Samples1_f16.txt 
+                Pattern COEFS_F16_ID : Coefs1_f16.txt 
+                Output  OUT_SAMPLES_F16_ID : Output
+
+                Params PARAM1_ID = {
+                  NB = [16,64,128]
+                  VECDIM = [5,10,15]
+                }
+
+                Functions {
+                   Barycenter:test_barycenter_f16
+                } -> PARAM1_ID
+   
+           }
+
+        }
+
+        group Support Functions {
+           class = Support 
+           folder = Support 
+
+           suite Support Functions F16 {
+                class = SupportF16 
+                folder = SupportF16
+
+                ParamList {
+                  NB
+                  Summary NB
+                  Names "Number of samples"
+                  Formula "NB"
+                }
+
+                Pattern SAMPLES_F32_ID : Samples1_f32.txt 
+                Pattern SAMPLES_F16_ID : Samples11_f16.txt 
+                Pattern SAMPLES_Q15_ID : Samples3_q15.txt 
+
+                Pattern INPUTS6_F16_ID : Inputs6_f16.txt 
+                Pattern WEIGHTS6_F16_ID : Weights6_f16.txt 
+                Pattern REF6_F16_ID : Ref6_f16.txt
+
+                Output  OUT_SAMPLES_F16_ID : Output
+
+                Params PARAM1_ID = {
+                  NB = [64,128,256]
+                }
+
+                Functions {
+                   Vector Copy:test_copy_f16
+                   Vector Filling:test_fill_f16
+                   Elementwise q15 to f16:test_q15_to_f16
+                   Elementwise f32 to f16:test_f32_to_f16
+                   Weighted sum:test_weighted_sum_f16
+                } -> PARAM1_ID
+             }
+
+        }
+
+        group Matrix {
+           class = Matrix 
+           folder = Matrix 
+
+           group Matrix Operators with one matrix size {
+              class = Unary 
+              folder = Unary 
+
+              suite Unary Matrix Operators F16 {
+                class = UnaryF16 
+                folder = UnaryF16
+
+                ParamList {
+                  NBR,NBC
+                  Summary NBR,NBC
+                  Names "Number of rows","Number of columns"
+                  Formula "NBR*NBC"
+                }
+
+                Pattern INPUTA_F16_ID : InputA1_f16.txt 
+                Pattern INPUTAC_F16_ID : InputAC1_f16.txt 
+                Pattern INPUTVEC1_F16_ID : InputVec1_f16.txt 
+
+                Pattern DIMSCHOLESKY1_DPO_S16_ID : DimsCholeskyDPO1_s16.txt 
+                Pattern DIMSCHOLESKY1_SDPO_S16_ID : DimsCholeskySDPO1_s16.txt 
+                Pattern INPUTSCHOLESKY1_DPO_F16_ID : InputCholeskyDPO1_f16.txt 
+                Pattern INPUTSCHOLESKY1_SDPO_F16_ID : InputCholeskySDPO1_f16.txt 
+
+                Pattern REFCHOLESKY1_DPO_F16_ID : RefCholeskyDPO1_f16.txt
+
+                Pattern REFLDLT_D_DPO1_F16_ID : RefLDLT_D_DPO1_f16.txt
+                Pattern REFLDLT_LL_DPO1_F16_ID : RefLDLT_LL_DPO1_f16.txt
+                Pattern REFLDLT_PERM_DPO1_F16_ID : RefLDLT_PERM_DPO1_s16.txt
+
+                Pattern REFLDLT_D_SDPO1_F16_ID : RefLDLT_D_SDPO1_f16.txt
+                Pattern REFLDLT_LL_SDPO1_F16_ID : RefLDLT_LL_SDPO1_f16.txt
+                Pattern REFLDLT_PERM_SDPO1_F16_ID : RefLDLT_PERM_SDPO1_s16.txt
+
+                Pattern INPUT_UT_DPO_F16_ID : InputUTDPO1_f16.txt
+                Pattern INPUT_LT_DPO_F16_ID : InputLTDPO1_f16.txt
+                Pattern INPUT_RNDA_DPO_F16_ID : InputRNDA1_f16.txt
+            
+                Pattern REF_UTINV_DPO_F16_ID : Ref_UTINV_DPO1_f16.txt
+                Pattern REF_LTINV_DPO_F16_ID : Ref_LTINV_DPO1_f16.txt
+                Pattern REF_CHOLINV_DPO_F16_ID : Ref_CHOLINV_DPO1_f16.txt
+
+                Output  TMPA_F16_ID : TempA
+                Output  TMPB_F16_ID : TempB
+                Output  OUT_F16_ID : Output
+
+                Params PARAM1_ID = {
+                  NBR = [5,10,40]
+                  NBC = [5,10,40]
+                }
+
+                Params PARAM_CHOLESKY_ID : ParamsCholesky1.txt
+
+                Functions {
+                   Matrix Scaling:test_mat_scale_f16
+                   Matrix Inversion:test_mat_inverse_f16
+                   Matrix Transpose:test_mat_trans_f16
+                   Matrix Addition:test_mat_add_f16
+                   Matrix Substraction:test_mat_sub_f16
+                   Matrix Vector Multiplication:test_mat_vec_mult_f16
+                   Matrix Complex Transpose:test_mat_cmplx_trans_f16
+                   Cholesky decomposition:test_mat_cholesky_dpo_f16 -> PARAM_CHOLESKY_ID
+                   Backward substitution:test_solve_upper_triangular_f16 -> PARAM_CHOLESKY_ID
+                   Foward substitution:test_solve_lower_triangular_f16 -> PARAM_CHOLESKY_ID
+                } -> PARAM1_ID
+              }
+
+           }
+
+           group Matrix Operators with two matrix sizes {
+              class = Binary 
+              folder = Binary 
+
+             suite Binary Matrix Operators F16 {
+                class = BinaryF16 
+                folder = BinaryF16
+
+                ParamList {
+                  NBR,NBI,NBC
+                  Summary NBR,NBI,NBC
+                  Names "Number of rows","Inner dimensions","Number of columns"
+                  Formula "NBR*NBI*NBC"
+                }
+
+                Pattern INPUTA_F16_ID : InputA1_f16.txt 
+                Pattern INPUTB_F16_ID : InputB1_f16.txt 
+
+                Pattern INPUTAC_F16_ID : InputAC1_f16.txt 
+                Pattern INPUTBC_F16_ID : InputBC1_f16.txt 
+                Output  OUT_F16_ID : Output
+
+                Params PARAM1_ID = {
+                  NBR = [5,10,40]
+                  NBI = [5,10,40]
+                  NBC = [5,10,40]
+                }
+
+
+                Functions {
+                   Matrix Multiplication:test_mat_mult_f16
+                   Complex Matrix Multiplication:test_mat_cmplx_mult_f16
+                } -> PARAM1_ID
+             }
+           }
+        }
+
+        group Spectral Transformations {
+           class = Transform 
+           folder = Transform 
+
+           suite Spectral Transformations F16 {
+                class = TransformF16 
+                folder = TransformF16
+
+                ParamList {
+                  NB,IFFT,BITREV
+                  Summary NB
+                  Names "Number of samples,Inverse FFT, Bit Reversal"
+                  Formula "I(NB*log2(NB))"
+                }
+
+                Pattern INPUTR_F16_ID : RealInputSamples19_f16.txt 
+                Pattern INPUTC_F16_ID : ComplexInputSamples_Noisy_512_6_f16.txt 
+                
+                Output  OUT_F16_ID : Temp
+                Output  TMP_F16_ID : Output
+                Output  STATE_F16_ID : Output
+
+                
+                Params CFFT_PARAM_ID = {
+                  NB = [64,128,256]
+                  IFFT = [0,1]
+                  REV = [0,1]
+                }
+ 
+                Params CFFT4_PARAM_ID = {
+                  NB = [16,64,256]
+                  IFFT = [0,1]
+                  REV = [0,1]
+                }
+
+                Params RFFT_PARAM_ID = {
+                  NB = [64,128,256]
+                  IFFT = [0,1]
+                  REV = [1]
+                }
+
+   
+
+                Functions {
+                   Complex FFT:test_cfft_f16 -> CFFT_PARAM_ID
+                   Real FFT:test_rfft_f16 -> RFFT_PARAM_ID
+                   Scalar Radix 4 Complex FFT:test_cfft_radix4_f16 -> CFFT4_PARAM_ID
+                   Scalar Radix 2 Complex FFT:test_cfft_radix2_f16 -> CFFT_PARAM_ID
+                }
+           }
+
+        }
+
+    }
+
+
+}

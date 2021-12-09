@@ -4,11 +4,13 @@
  * Title:        arm_rogerstanimoto_distance.c
  * Description:  Roger Stanimoto distance between two vectors
  *
+ * $Date:        23 April 2021
+ * $Revision:    V1.9.0
  *
- * Target Processor: Cortex-M cores
+ * Target Processor: Cortex-M and Cortex-A cores
  * -------------------------------------------------------------------- */
 /*
- * Copyright (C) 2010-2019 ARM Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -25,7 +27,7 @@
  * limitations under the License.
  */
 
-#include "arm_math.h"
+#include "dsp/distance_functions.h"
 #include <limits.h>
 #include <math.h>
 
@@ -47,7 +49,7 @@ extern void arm_boolean_distance_TT_FF_TF_FT(const uint32_t *pA
  */
 
 /**
- * @brief        Roger Stanimoto distance between two vectors
+ * @brief        Rogers Tanimoto distance between two vectors
  *
  * @param[in]    pA              First vector of packed booleans
  * @param[in]    pB              Second vector of packed booleans

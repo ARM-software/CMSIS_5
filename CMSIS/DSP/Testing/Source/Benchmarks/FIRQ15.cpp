@@ -1,6 +1,9 @@
 #include "FIRQ15.h"
 #include "Error.h"
 
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
+static __ALIGNED(8) q15_t coeffArray[64];
+#endif 
    
     void FIRQ15::test_fir_q15()
     {
@@ -35,10 +38,21 @@
        switch(id)
        {
            case TEST_FIR_Q15_1:
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
+              /* Copy coefficients and pad to zero 
+              */
+              memset(coeffArray,0,32*sizeof(q15_t));
+              q15_t *ptr;
+
+              ptr=coefs.ptr();
+              memcpy(coeffArray,ptr,this->nbTaps*sizeof(q15_t));
+              this->pCoefs = coeffArray;
+#else
+              this->pCoefs=coefs.ptr();
+#endif
               arm_fir_init_q15(&instFir,this->nbTaps,coefs.ptr(),state.ptr(),this->nbSamples);
 
               this->pSrc=samples.ptr();
-              this->pCoefs=coefs.ptr();
               this->pDst=output.ptr();
            break;
 

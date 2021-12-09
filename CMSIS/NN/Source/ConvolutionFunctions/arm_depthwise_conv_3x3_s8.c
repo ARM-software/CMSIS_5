@@ -22,16 +22,15 @@
  * Description:  Optimized s8 depthwise convolution function for channel
  *               multiplier of 1 and 3x3 kernel size.
  *
- * $Date:        February 26, 2020
- * $Revision:    V.1.0.0
+ * $Date:        09. October 2020
+ * $Revision:    V.2.0.1
  *
- * Target Processor:  Cortex-M cores
+ * Target Processor:  Cortex-M CPUs
  *
  * -------------------------------------------------------------------- */
 
-#include "arm_math.h"
-#include "arm_nnsupportfunctions.h"
 #include "arm_nnfunctions.h"
+#include "arm_nnsupportfunctions.h"
 
 /**
  *  @ingroup groupNN
@@ -43,36 +42,44 @@
  */
 
 /*
-   * Optimized s8 depthwise convolution function with constraint that
-   * in_channel == out_channel and kernel_x == kernel_y == 3 with pads at most 1
-   *
-   *  Refer prototype header file for details.
-   *
-   */
-arm_status arm_depthwise_conv_3x3_s8(const int8_t *input,
-                                     const int32_t input_x,
-                                     const int32_t input_y,
-                                     const int32_t input_ch,
-                                     const int8_t *kernel,
-                                     const int32_t output_ch,
-                                     const int32_t pad_x,
-                                     const int32_t pad_y,
-                                     const int32_t stride_x,
-                                     const int32_t stride_y,
+ * Optimized s8 depthwise convolution function with constraint that
+ * in_channel == out_channel and kernel_x == kernel_y == 3 with pads at most 1
+ *
+ *  Refer prototype header file for details.
+ *
+ */
+
+arm_status arm_depthwise_conv_3x3_s8(const cmsis_nn_context *ctx,
+                                     const cmsis_nn_dw_conv_params *dw_conv_params,
+                                     const cmsis_nn_per_channel_quant_params *quant_params,
+                                     const cmsis_nn_dims *input_dims,
+                                     const q7_t *input,
+                                     const cmsis_nn_dims *filter_dims,
+                                     const q7_t *kernel,
+                                     const cmsis_nn_dims *bias_dims,
                                      const int32_t *bias,
-                                     int8_t *output,
-                                     const int32_t *output_shift,
-                                     const int32_t *output_mult,
-                                     const int32_t output_x,
-                                     const int32_t output_y,
-                                     const int32_t output_offset,
-                                     const int32_t input_offset,
-                                     const int32_t output_activation_min,
-                                     const int32_t output_activation_max,
-                                     const int32_t dilation_x,
-                                     const int32_t dilation_y,
-                                     int16_t *buffer_a)
+                                     const cmsis_nn_dims *output_dims,
+                                     q7_t *output)
 {
+    (void)ctx;
+    (void)bias_dims;
+
+    const int32_t input_x = input_dims->w;
+    const int32_t input_y = input_dims->h;
+    const int32_t input_ch = input_dims->c;
+    const int32_t output_ch = output_dims->c;
+    const int32_t pad_x = dw_conv_params->padding.w;
+    const int32_t pad_y = dw_conv_params->padding.h;
+    const int32_t stride_x = dw_conv_params->stride.w;
+    const int32_t stride_y = dw_conv_params->stride.h;
+    const int32_t *output_shift = quant_params->shift;
+    const int32_t *output_mult = quant_params->multiplier;
+    const int32_t output_x = output_dims->w;
+    const int32_t output_y = output_dims->h;
+    const int32_t output_offset = dw_conv_params->output_offset;
+    const int32_t input_offset = dw_conv_params->input_offset;
+    const int32_t output_activation_min = dw_conv_params->activation.min;
+    const int32_t output_activation_max = dw_conv_params->activation.max;
 
     /* Check input constraints input_ch == output_ch */
     if (input_ch != output_ch)
@@ -80,40 +87,36 @@ arm_status arm_depthwise_conv_3x3_s8(const int8_t *input,
         return ARM_MATH_SIZE_MISMATCH;
     }
     /* Check input constraints pad_x <= 1 */
-    if(pad_x > 1)
+    if (pad_x > 1 || filter_dims->w != 3 || filter_dims->h != 3)
     {
         return ARM_MATH_ARGUMENT_ERROR;
     }
-    
-    (void)dilation_x;
-    (void)dilation_y;
-    (void)buffer_a;
-    
-    for(int32_t in_h = -pad_y, out_h = 0, out_idx = 0; out_h < output_y; in_h += stride_y, ++out_h)
+
+    for (int32_t in_h = -pad_y, out_h = 0, out_idx = 0; out_h < output_y; in_h += stride_y, ++out_h)
     {
-        for(int32_t in_w = -pad_x, out_w = 0, ker_h_start = MAX(0, -in_h); out_w < output_x; in_w += stride_x, ++out_w)
+        for (int32_t in_w = -pad_x, out_w = 0, ker_h_start = MAX(0, -in_h); out_w < output_x; in_w += stride_x, ++out_w)
         {
             int32_t in_ch = 0;
             int32_t ker_w_start = MAX(0, -in_w);
 
-            for(; in_ch <= (input_ch - 4); in_ch += 4)
+            for (; in_ch <= (input_ch - 4); in_ch += 4)
             {
                 int32_t out_buff0 = bias[in_ch + 0];
                 int32_t out_buff1 = bias[in_ch + 1];
                 int32_t out_buff2 = bias[in_ch + 2];
                 int32_t out_buff3 = bias[in_ch + 3];
 
-                const int8_t *input_ptr  = input + (in_h + ker_h_start) * (input_ch * input_x) + in_w * input_ch + in_ch;
+                const int8_t *input_ptr = input + (in_h + ker_h_start) * (input_ch * input_x) + in_w * input_ch + in_ch;
                 const int8_t *kernel_ptr = kernel + ker_h_start * (input_ch * 3) + in_ch;
 
-                for(int32_t ker_h = ker_h_start; ker_h < MIN(3, input_y - in_h); ++ker_h)
+                for (int32_t ker_h = ker_h_start; ker_h < MIN(3, input_y - in_h); ++ker_h)
                 {
-                    int32_t in_val  = 0;
+                    int32_t in_val = 0;
                     int32_t ker_val = 0;
 
-                    if(ker_w_start == 0)
+                    if (ker_w_start == 0)
                     {
-                        in_val  = arm_nn_read_q7x4(input_ptr);
+                        in_val = arm_nn_read_q7x4(input_ptr);
                         ker_val = arm_nn_read_q7x4(kernel_ptr);
 
                         out_buff0 += ((int8_t)in_val + input_offset) * (int8_t)ker_val;
@@ -122,7 +125,7 @@ arm_status arm_depthwise_conv_3x3_s8(const int8_t *input,
                         out_buff3 += ((int8_t)(in_val >> 24) + input_offset) * (int8_t)(ker_val >> 24);
                     }
 
-                    in_val  = arm_nn_read_q7x4(input_ptr + input_ch);
+                    in_val = arm_nn_read_q7x4(input_ptr + input_ch);
                     ker_val = arm_nn_read_q7x4(kernel_ptr + input_ch);
 
                     out_buff0 += ((int8_t)in_val + input_offset) * (int8_t)ker_val;
@@ -130,9 +133,9 @@ arm_status arm_depthwise_conv_3x3_s8(const int8_t *input,
                     out_buff2 += ((int8_t)(in_val >> 16) + input_offset) * (int8_t)(ker_val >> 16);
                     out_buff3 += ((int8_t)(in_val >> 24) + input_offset) * (int8_t)(ker_val >> 24);
 
-                    if((input_x - in_w) >= 3)
+                    if ((input_x - in_w) >= 3)
                     {
-                        in_val  = arm_nn_read_q7x4(input_ptr + (input_ch << 1));
+                        in_val = arm_nn_read_q7x4(input_ptr + (input_ch << 1));
                         ker_val = arm_nn_read_q7x4(kernel_ptr + (input_ch << 1));
 
                         out_buff0 += ((int8_t)in_val + input_offset) * (int8_t)ker_val;
@@ -141,7 +144,7 @@ arm_status arm_depthwise_conv_3x3_s8(const int8_t *input,
                         out_buff3 += ((int8_t)(in_val >> 24) + input_offset) * (int8_t)(ker_val >> 24);
                     }
 
-                    input_ptr  += (input_ch * input_x);
+                    input_ptr += (input_ch * input_x);
                     kernel_ptr += (input_ch * 3);
                 }
 
@@ -167,28 +170,28 @@ arm_status arm_depthwise_conv_3x3_s8(const int8_t *input,
             }
 
             // Leftover
-            for(; in_ch < input_ch; ++in_ch)
+            for (; in_ch < input_ch; ++in_ch)
             {
                 int32_t out_buff = bias[in_ch];
 
-                const int8_t *input_ptr  = input + (in_h + ker_h_start) * (input_ch * input_x) + in_w * input_ch + in_ch;
+                const int8_t *input_ptr = input + (in_h + ker_h_start) * (input_ch * input_x) + in_w * input_ch + in_ch;
                 const int8_t *kernel_ptr = kernel + ker_h_start * (input_ch * 3) + in_ch;
 
-                for(int32_t ker_h = ker_h_start; ker_h < MIN(3, input_y - in_h); ++ker_h)
+                for (int32_t ker_h = ker_h_start; ker_h < MIN(3, input_y - in_h); ++ker_h)
                 {
-                    if(ker_w_start == 0)
+                    if (ker_w_start == 0)
                     {
                         out_buff += (*(input_ptr) + input_offset) * *(kernel_ptr);
                     }
 
                     out_buff += (*(input_ptr + input_ch) + input_offset) * *(kernel_ptr + input_ch);
 
-                    if((input_x - in_w) >= 3)
+                    if ((input_x - in_w) >= 3)
                     {
                         out_buff += (*(input_ptr + (input_ch << 1)) + input_offset) * *(kernel_ptr + (input_ch << 1));
                     }
 
-                    input_ptr  += (input_ch * input_x);
+                    input_ptr += (input_ch * input_x);
                     kernel_ptr += (input_ch * 3);
                 }
 

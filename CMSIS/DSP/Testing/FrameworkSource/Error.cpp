@@ -25,11 +25,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include <stdlib.h> 
-#include <stdio.h>
+#include <cstdlib> 
+#include <cstdio>
+#include "arm_math_types.h"
+#include "arm_math_types_f16.h"
 #include "Error.h"
-#include "arm_math.h"
-#include "arm_math_f16.h"
+
 
 namespace Client {
 
@@ -88,7 +89,7 @@ void assert_near_equal(unsigned long nb,q63_t pa, q63_t pb, q63_t threshold)
     if (abs(pa - pb) > threshold)
     {
          char details[200];
-         sprintf(details,"diff %lld > %lld (%016llX,%016llX)",abs(pa - pb) , threshold,pa,pb);
+         sprintf(details,"diff %lld > %lld (0x%016llX,0x%016llX)",abs(pa - pb) , threshold,pa,pb);
          throw (Error(EQUAL_ERROR,nb,details));
     }
 };
@@ -99,7 +100,7 @@ void assert_near_equal(unsigned long nb,q31_t pa, q31_t pb, q31_t threshold)
     if (abs(pa - pb) > threshold)
     {
          char details[200];
-         sprintf(details,"diff %d > %d (%08X,%08X)",abs(pa - pb) , threshold,pa,pb);
+         sprintf(details,"diff %d > %d (0x%08X,0x%08X)",abs(pa - pb) , threshold,pa,pb);
          throw (Error(EQUAL_ERROR,nb,details));
     }
 };
@@ -110,7 +111,7 @@ void assert_near_equal(unsigned long nb,q15_t pa, q15_t pb, q15_t threshold)
     if (abs(pa - pb) > threshold)
     {
          char details[200];
-         sprintf(details,"diff %d > %d (%04X,%04X)",abs(pa - pb) , threshold,pa,pb);
+         sprintf(details,"diff %d > %d (0x%04X,0x%04X)",abs(pa - pb) , threshold,pa,pb);
          throw (Error(EQUAL_ERROR,nb,details));
     }
 };
@@ -121,7 +122,7 @@ void assert_near_equal(unsigned long nb,q7_t pa, q7_t pb, q7_t threshold)
     if (abs(pa - pb) > threshold)
     {
          char details[200];
-         sprintf(details,"diff %d > %d (%02X,%02X)",abs(pa - pb) , threshold,pa,pb);
+         sprintf(details,"diff %d > %d (0x%02X,0x%02X)",abs(pa - pb) , threshold,pa,pb);
          throw (Error(EQUAL_ERROR,nb,details));
     }
 };
@@ -341,7 +342,7 @@ void assert_close_error(unsigned long nb,float64_t &ref, float64_t &val, double 
     if (abs(val - ref) > (absthreshold + relthreshold * abs(ref)))
     {
         char details[200];
-        sprintf(details,"close %g : abs=%g, rel=%g",abs(val - ref) , absthreshold,relthreshold);
+        sprintf(details,"close error %g > %g: (val = %g, ref = %g)",abs(val - ref) , absthreshold + relthreshold * abs(ref),val,ref);
         throw (Error(CLOSE_ERROR,nb,details));
     }
 };
@@ -384,7 +385,7 @@ void assert_close_error(unsigned long nb,float32_t &ref, float32_t &val, double 
     if (abs(val - ref) > (absthreshold + relthreshold * abs(ref)))
     {
         char details[200];
-        sprintf(details,"close %g : abs=%g, rel=%g",abs(val - ref) , absthreshold,relthreshold);
+        sprintf(details,"close error %g > %g: (val = %g, ref = %g)",abs(val - ref) , absthreshold + relthreshold * abs(ref),val,ref);
         throw (Error(CLOSE_ERROR,nb,details));
     }
 };
@@ -428,7 +429,7 @@ void assert_close_error(unsigned long nb,float16_t &ref, float16_t &val, double 
     if (abs((float)val - (float)ref) > (absthreshold + relthreshold * abs((float)ref)))
     {
         char details[200];
-        sprintf(details,"close %g : abs=%g, rel=%g",abs(val - ref) , absthreshold,relthreshold);
+        sprintf(details,"close error %g > %g: (val = %g, ref = %g)",abs(val - ref) , absthreshold + relthreshold * abs(ref),val,ref);
         throw (Error(CLOSE_ERROR,nb,details));
     }
 };
@@ -825,6 +826,22 @@ void assert_snr_error(unsigned long nb,AnyPattern<float64_t> &pa,AnyPattern<floa
    float64_t *ptrB = pb.ptr();
 
    snr = arm_snr_f64(ptrA, ptrB, pa.nbSamples());
+
+   //printf("SNR = %f\n",snr);
+   
+   if (snr < threshold)
+   {
+     char details[200];
+     sprintf(details,"SNR %g < %g",snr,threshold);
+     throw (Error(SNR_ERROR,nb,details));
+   }
+}
+
+void assert_snr_error(unsigned long nb,float64_t a,float64_t b, float64_t threshold)
+{
+   float64_t snr;
+
+   snr = arm_snr_f64(&a, &b, 1);
 
    //printf("SNR = %f\n",snr);
    

@@ -1,11 +1,10 @@
-cmake_minimum_required (VERSION 3.6)
+cmake_minimum_required (VERSION 3.14)
 
 project(CMSISDSPFastMath)
 
 include(configLib)
 include(configDsp)
 
-file(GLOB SRC "./*_*.c")
 
 add_library(CMSISDSPFastMath STATIC)
 configLib(CMSISDSPFastMath ${ROOT})
@@ -42,10 +41,31 @@ if (NOT CONFIGTABLE OR ALLFAST OR ARM_SIN_Q31)
 target_sources(CMSISDSPFastMath PRIVATE arm_sin_q31.c)
 endif()
 
-target_sources(CMSISDSPFastMath PRIVATE arm_sqrt_q15.c)
+if (NOT CONFIGTABLE OR ALLFAST OR ARM_SQRT_Q31)
 target_sources(CMSISDSPFastMath PRIVATE arm_sqrt_q31.c)
+endif()
+
+if (NOT CONFIGTABLE OR ALLFAST OR ARM_SQRT_Q15)
+target_sources(CMSISDSPFastMath PRIVATE arm_sqrt_q15.c)
+endif()
+
 target_sources(CMSISDSPFastMath PRIVATE arm_vlog_f32.c)
+target_sources(CMSISDSPFastMath PRIVATE arm_vlog_f64.c)
 target_sources(CMSISDSPFastMath PRIVATE arm_vexp_f32.c)
+target_sources(CMSISDSPFastMath PRIVATE arm_vexp_f64.c)
+
+target_sources(CMSISDSPFastMath PRIVATE arm_vlog_q31.c)
+target_sources(CMSISDSPFastMath PRIVATE arm_vlog_q15.c)
+
+
+if ((NOT ARMAC5) AND (NOT DISABLEFLOAT16))
+target_sources(CMSISDSPFastMath PRIVATE arm_vlog_f16.c)
+target_sources(CMSISDSPFastMath PRIVATE arm_vexp_f16.c)
+target_sources(CMSISDSPFastMath PRIVATE arm_vinverse_f16.c)
+endif()
+
+target_sources(CMSISDSPFastMath PRIVATE arm_divide_q15.c)
+target_sources(CMSISDSPFastMath PRIVATE arm_divide_q31.c)
 
 
 ### Includes

@@ -12,10 +12,6 @@ a double precision computation.
 */
 #define REL_ERROR (1.2e-3)
 
-#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
-static __ALIGNED(8) float64_t coeffArray[64];
-#endif 
-
     void BIQUADF64::test_biquad_cascade_df2T_ref()
     {
 
@@ -96,7 +92,7 @@ static __ALIGNED(8) float64_t coeffArray[64];
         int blockSize;
         int numStages;
 
-        int i;
+        unsigned long i;
 
         
 
@@ -154,7 +150,7 @@ static __ALIGNED(8) float64_t coeffArray[64];
     void BIQUADF64::setUp(Testing::testID_t id,std::vector<Testing::param_t>& params,Client::PatternMgr *mgr)
     {
       
-       
+       (void)params;
        switch(id)
        {
         case BIQUADF64::TEST_BIQUAD_CASCADE_DF2T_REF_1:
@@ -186,6 +182,7 @@ static __ALIGNED(8) float64_t coeffArray[64];
 
     void BIQUADF64::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)
     {
+        (void)id;
         output.dump(mgr);
        
     }

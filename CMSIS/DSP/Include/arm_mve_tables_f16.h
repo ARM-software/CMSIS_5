@@ -4,12 +4,13 @@
  * Description:  common tables like fft twiddle factors, Bitreverse, reciprocal etc
  *               used for MVE implementation only
  *
- * $Date:        14. April 2020
+ * @version  V1.10.0
+ * @date     04 October 2021
  *
- * Target Processor: Cortex-M cores
+ * Target Processor: Cortex-M and Cortex-A cores
  * -------------------------------------------------------------------- */
 /*
- * Copyright (C) 2010-2020 ARM Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -29,7 +30,7 @@
  #ifndef _ARM_MVE_TABLES_F16_H
  #define _ARM_MVE_TABLES_F16_H
 
- #include "arm_math_f16.h"
+#include "arm_math_types_f16.h"
 
 #ifdef   __cplusplus
 extern "C"
@@ -39,7 +40,7 @@ extern "C"
 
  
 
-#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_FFT_ALLOW_TABLES)
 
@@ -96,7 +97,7 @@ extern float16_t rearranged_twiddle_stride3_4096_f16[2728];
 
 #endif /* !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_FFT_ALLOW_TABLES) */
 
-#endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
+#endif /* defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 
 

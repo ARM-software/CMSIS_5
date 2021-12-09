@@ -20,13 +20,11 @@ a double precision computation.
 #define GET_Q15_PTR() \
 const q15_t *inp1=input1.ptr(); \
 const q15_t *inp2=input2.ptr(); \
-q15_t *refp=ref.ptr(); \
 q15_t *outp=output.ptr();
 
 #define GET_LOGICAL_UINT16_PTR() \
 const uint16_t *inp1=inputLogical1.ptr(); \
 const uint16_t *inp2=inputLogical2.ptr(); \
-uint16_t *refp=refLogical.ptr(); \
 uint16_t *outp=outputLogical.ptr();
 
 
@@ -36,6 +34,21 @@ uint16_t *outp=outputLogical.ptr();
 
         arm_add_q15(inp1,inp2,outp,input1.nbSamples());
         
+        ASSERT_EMPTY_TAIL(output);
+
+        ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
+
+        ASSERT_NEAR_EQ(output,ref,ABS_ERROR_Q15);
+
+    } 
+
+    void BasicTestsQ15::test_clip_q15()
+    {
+        const q15_t *inp=input1.ptr();
+        q15_t *outp=output.ptr();
+
+        arm_clip_q15(inp,outp,this->min, this->max,input1.nbSamples());
+
         ASSERT_EMPTY_TAIL(output);
 
         ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
@@ -77,7 +90,6 @@ uint16_t *outp=outputLogical.ptr();
     void BasicTestsQ15::test_negate_q15()
     {
         const q15_t *inp1=input1.ptr();
-        q15_t *refp=ref.ptr();
         q15_t *outp=output.ptr();
 
         arm_negate_q15(inp1,outp,input1.nbSamples());
@@ -93,7 +105,6 @@ uint16_t *outp=outputLogical.ptr();
     void BasicTestsQ15::test_offset_q15()
     {
         const q15_t *inp1=input1.ptr();
-        q15_t *refp=ref.ptr();
         q15_t *outp=output.ptr();
 
         arm_offset_q15(inp1,this->scalar,outp,input1.nbSamples());
@@ -109,7 +120,6 @@ uint16_t *outp=outputLogical.ptr();
     void BasicTestsQ15::test_scale_q15()
     {
         const q15_t *inp1=input1.ptr();
-        q15_t *refp=ref.ptr();
         q15_t *outp=output.ptr();
 
         arm_scale_q15(inp1,this->scalar,0,outp,input1.nbSamples());
@@ -128,7 +138,6 @@ uint16_t *outp=outputLogical.ptr();
 
         const q15_t *inp1=input1.ptr();
         const q15_t *inp2=input2.ptr();
-        q63_t *refp=dotRef.ptr(); 
         q63_t *outp=dotOutput.ptr();
 
         arm_dot_prod_q15(inp1,inp2,input1.nbSamples(),&r);
@@ -147,6 +156,8 @@ uint16_t *outp=outputLogical.ptr();
     {
         GET_Q15_PTR();
 
+        (void)inp2;
+
         arm_abs_q15(inp1,outp,input1.nbSamples());
 
         ASSERT_EMPTY_TAIL(output);
@@ -160,8 +171,8 @@ uint16_t *outp=outputLogical.ptr();
     void BasicTestsQ15::test_shift_q15()
     {
         const q15_t *inp1=input1.ptr();
-        q15_t *refp=ref.ptr();
         q15_t *outp=output.ptr();
+
 
         arm_shift_q15(inp1,1,outp,input1.nbSamples());
 
@@ -201,6 +212,8 @@ uint16_t *outp=outputLogical.ptr();
     {
         GET_LOGICAL_UINT16_PTR();
 
+        (void)inp2;
+
         arm_not_u16(inp1,outp,inputLogical1.nbSamples());
         
         ASSERT_EMPTY_TAIL(outputLogical);
@@ -228,6 +241,8 @@ uint16_t *outp=outputLogical.ptr();
        Testing::nbSamples_t nb=MAX_NB_SAMPLES; 
 
        this->scalar = ONEHALF;
+
+       (void)params;
 
        
        switch(id)
@@ -628,6 +643,37 @@ uint16_t *outp=outputLogical.ptr();
           input1.reload(BasicTestsQ15::INPUT1_Q15_ID,mgr,nb);
           input2.reload(BasicTestsQ15::INPUT2_Q15_ID,mgr,nb);
         break;
+
+        case BasicTestsQ15::TEST_CLIP_Q15_57:
+          ref.reload(BasicTestsQ15::REF_CLIP1_Q15_ID,mgr);
+          input1.reload(BasicTestsQ15::INPUT_CLIP_Q15_ID,mgr,ref.nbSamples());
+          
+          output.create(ref.nbSamples(),BasicTestsQ15::OUT_SAMPLES_ID,mgr);
+          // Must be coherent with Python script used to generate test patterns
+          this->min=0xC000;
+          this->max=0xF333;
+        break;
+
+        case BasicTestsQ15::TEST_CLIP_Q15_58:
+          ref.reload(BasicTestsQ15::REF_CLIP2_Q15_ID,mgr);
+          input1.reload(BasicTestsQ15::INPUT_CLIP_Q15_ID,mgr,ref.nbSamples());
+          
+          output.create(ref.nbSamples(),BasicTestsQ15::OUT_SAMPLES_ID,mgr);
+          // Must be coherent with Python script used to generate test patterns
+          this->min=0xC000;
+          this->max=0x4000;
+        break;
+
+        case BasicTestsQ15::TEST_CLIP_Q15_59:
+          ref.reload(BasicTestsQ15::REF_CLIP3_Q15_ID,mgr);
+          input1.reload(BasicTestsQ15::INPUT_CLIP_Q15_ID,mgr,ref.nbSamples());
+          
+          output.create(ref.nbSamples(),BasicTestsQ15::OUT_SAMPLES_ID,mgr);
+          // Must be coherent with Python script used to generate test patterns
+          this->min=0x0CCD;
+          this->max=0x4000;
+        break;
+
           
 
        }

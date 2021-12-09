@@ -3,13 +3,13 @@
  * Title:        arm_max_q7.c
  * Description:  Maximum value of a Q7 vector
  *
- * $Date:        18. March 2019
- * $Revision:    V1.6.0
+ * $Date:        23 April 2021
+ * $Revision:    V1.9.0
  *
- * Target Processor: Cortex-M cores
+ * Target Processor: Cortex-M and Cortex-A cores
  * -------------------------------------------------------------------- */
 /*
- * Copyright (C) 2010-2019 ARM Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -26,7 +26,7 @@
  * limitations under the License.
  */
 
-#include "arm_math.h"
+#include "dsp/statistics_functions.h"
 
 /**
   @ingroup groupStats
@@ -45,89 +45,56 @@
   @param[out]    pIndex     index of maximum value returned here
   @return        none
  */
-#if defined(ARM_MATH_MVEI)
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #include "arm_helium_utils.h"
 
 static void arm_small_blk_max_q7(
     const q7_t * pSrc,
-    uint8_t blockSize,
+    uint16_t blockSize,
     q7_t * pResult,
     uint32_t * pIndex)
 {
-    uint32_t        blkCnt;           /* loop counters */
-    q7x16_t         vecSrc;
-    q7x16_t         curExtremValVec = vdupq_n_s8( Q7_MIN);
-    q7_t            maxValue = Q7_MIN, temp;
-    uint32_t        idx = blockSize;
-    uint8x16_t      indexVec;
-    uint8x16_t      curExtremIdxVec;
-    mve_pred16_t    p0;
+    int32_t        blkCnt;     /* loop counters */
+    q7x16_t        extremValVec = vdupq_n_s8(Q7_MIN);
+    q7_t           maxValue = Q7_MIN;
+    uint8x16_t     indexVec;
+    uint8x16_t     extremIdxVec;
+    mve_pred16_t   p0;
+    uint8_t        extremIdxArr[16];
 
+    indexVec = vidupq_u8(0U, 1);
 
-    indexVec = vidupq_u8((uint32_t)0, 1);
-    curExtremIdxVec = vdupq_n_u8(0);
-
-    blkCnt = blockSize >> 4;
-    while (blkCnt > 0U)
-    {
-        vecSrc = vldrbq_s8(pSrc);  
-        pSrc += 16;
+    blkCnt = blockSize;
+    do {
+        mve_pred16_t    p = vctp8q(blkCnt);
+        q7x16_t         extremIdxVal = vld1q_z_s8(pSrc, p);
         /*
          * Get current max per lane and current index per lane
          * when a max is selected
          */
-        p0 = vcmpgeq(vecSrc, curExtremValVec);
-        curExtremValVec = vpselq(vecSrc, curExtremValVec, p0);
-        curExtremIdxVec = vpselq(indexVec, curExtremIdxVec, p0);
+        p0 = vcmpgeq_m(extremIdxVal, extremValVec, p);
 
-        indexVec = indexVec +  16;
-        /*
-         * Decrement the blockSize loop counter
-         */
-        blkCnt--;
+        extremValVec = vorrq_m(extremValVec, extremIdxVal, extremIdxVal, p0);
+        /* store per-lane extrema indexes */
+        vst1q_p_u8(extremIdxArr, indexVec, p0);
+
+        indexVec += 16;
+        pSrc += 16;
+        blkCnt -= 16;
     }
-   
-    
-    /*
-     * Get max value across the vector
-     */
-    maxValue = vmaxvq(maxValue, curExtremValVec);
-    /*
-     * set index for lower values to max possible index
-     */
-    p0 = vcmpgeq(curExtremValVec, maxValue);
-    indexVec = vpselq(curExtremIdxVec, vdupq_n_u8(blockSize), p0);
-    /*
-     * Get min index which is thus for a max value
-     */
-    idx = vminvq(idx, indexVec);
+    while (blkCnt > 0);
 
-    /*
-     * tail
-     */
-    blkCnt = blockSize & 0xF;
 
-    while (blkCnt > 0U)
-    {
-      /* Initialize temp to the next consecutive values one by one */
-      temp = *pSrc++;
-  
-      /* compare for the maximum value */
-      if (maxValue < temp)
-      {
-        /* Update the maximum value and it's index */
-        maxValue = temp;
-        idx = blockSize - blkCnt;
-      }
-  
-      /* Decrement loop counter */
-      blkCnt--;
-    }
-    /*
-     * Save result
-     */
-    *pIndex = idx;
+    /* Get max value across the vector   */
+    maxValue = vmaxvq(maxValue, extremValVec);
+
+    /* set index for lower values to max possible index   */
+    p0 = vcmpgeq(extremValVec, maxValue);
+    extremIdxVec = vld1q_u8(extremIdxArr);
+
+    indexVec = vpselq(extremIdxVec, vdupq_n_u8(blockSize - 1), p0);
+    *pIndex = vminvq_u8(blockSize - 1, indexVec);
     *pResult = maxValue;
 }
 
@@ -138,8 +105,9 @@ void arm_max_q7(
         uint32_t * pIndex)
 {
     int32_t   totalSize = blockSize;
+    const uint16_t sub_blk_sz = UINT8_MAX + 1;
 
-    if (totalSize <= UINT8_MAX)
+    if (totalSize <= sub_blk_sz)
     {
         arm_small_blk_max_q7(pSrc, blockSize, pResult, pIndex);
     }
@@ -152,11 +120,11 @@ void arm_max_q7(
         /*
          * process blocks of 255 elts
          */
-        while (totalSize >= UINT8_MAX)
+        while (totalSize >= sub_blk_sz)
         {
             const q7_t     *curSrc = pSrc;
 
-            arm_small_blk_max_q7(curSrc, UINT8_MAX, pResult, pIndex);
+            arm_small_blk_max_q7(curSrc, sub_blk_sz, pResult, pIndex);
             if (*pResult > curBlkExtr)
             {
                 /*
@@ -167,8 +135,8 @@ void arm_max_q7(
                 curBlkIdx = curIdx;
             }
             curIdx++;
-            pSrc += UINT8_MAX;
-            totalSize -= UINT8_MAX;
+            pSrc += sub_blk_sz;
+            totalSize -= sub_blk_sz;
         }
         /*
          * remainder
@@ -180,7 +148,7 @@ void arm_max_q7(
             curBlkPos = *pIndex;
             curBlkIdx = curIdx;
         }
-        *pIndex = curBlkIdx * UINT8_MAX + curBlkPos;
+        *pIndex = curBlkIdx * sub_blk_sz + curBlkPos;
         *pResult = curBlkExtr;
     }
 }

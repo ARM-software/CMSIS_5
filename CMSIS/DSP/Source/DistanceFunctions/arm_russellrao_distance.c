@@ -4,11 +4,13 @@
  * Title:        arm_russellrao_distance.c
  * Description:  Russell-Rao distance between two vectors
  *
+ * $Date:        23 April 2021
+ * $Revision:    V1.9.0
  *
- * Target Processor: Cortex-M cores
+ * Target Processor: Cortex-M and Cortex-A cores
  * -------------------------------------------------------------------- */
 /*
- * Copyright (C) 2010-2019 ARM Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -25,7 +27,7 @@
  * limitations under the License.
  */
 
-#include "arm_math.h"
+#include "dsp/distance_functions.h"
 #include <limits.h>
 #include <math.h>
 
@@ -61,7 +63,7 @@ float32_t arm_russellrao_distance(const uint32_t *pA, const uint32_t *pB, uint32
     arm_boolean_distance_TT(pA, pB, numberOfBools, &ctt);
 
 
-    return(1.0*(numberOfBools - ctt) / ((float32_t)numberOfBools));
+    return(1.0f*(numberOfBools - ctt) / ((float32_t)numberOfBools));
 }
 
 

@@ -1,5 +1,8 @@
 #include "Test.h"
 #include "Pattern.h"
+
+#include "dsp/filtering_functions.h"
+
 class MISCF32:public Client::Suite
     {
         public:
@@ -13,11 +16,12 @@ class MISCF32:public Client::Suite
             Client::Pattern<float32_t> inputB;
 
             Client::LocalPattern<float32_t> output;
+            Client::LocalPattern<float32_t> tmp;
 
             // Reference patterns are not loaded when we are in dump mode
             Client::RefPattern<float32_t> ref;
 
-            int nba,nbb;
+            int nba,nbb,errOffset,first;
 
            
     };

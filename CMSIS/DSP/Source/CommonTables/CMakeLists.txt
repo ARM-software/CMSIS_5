@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.6)
+cmake_minimum_required (VERSION 3.14)
 
 project(CMSISDSPCommon)
 
@@ -41,3 +41,12 @@ if (HELIUM OR MVEF)
 endif()
 
 
+if (WRAPPER)
+    target_compile_definitions(CMSISDSPCommon PUBLIC ARM_TABLE_BITREV_1024)
+    target_compile_definitions(CMSISDSPCommon PUBLIC ARM_TABLE_TWIDDLECOEF_F32_4096)
+    target_compile_definitions(CMSISDSPCommon PUBLIC ARM_TABLE_TWIDDLECOEF_Q31_4096)
+    target_compile_definitions(CMSISDSPCommon PUBLIC ARM_TABLE_TWIDDLECOEF_Q15_4096)
+    if ((NOT ARMAC5) AND (NOT DISABLEFLOAT16))
+    target_compile_definitions(CMSISDSPCommon PUBLIC ARM_TABLE_TWIDDLECOEF_F16_4096)
+    endif()
+endif()

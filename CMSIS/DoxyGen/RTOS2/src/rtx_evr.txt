@@ -298,6 +298,17 @@ The event \b KernelGetSysTimerFreq is generated when the function \ref osKernelG
 */
 
 /**
+\fn void EvrRtxKernelErrorNotify (uint32_t code, void *object_id)
+\details
+The event \b KernelErrorNotify is generated when the function \ref osRtxErrorNotify is called.
+
+\b Value in the Event Recorder shows:
+  - \b code : error code. 
+  - \b object_id : object that caused the error.
+*/
+*/
+
+/**
 @}
 */
 
@@ -1052,7 +1063,7 @@ The event \b TimerError is generated when \ref CMSIS_RTOS_TimerMgmt routines com
 The status parameter indicates the execution status and can be one of the \ref osStatus_t "osStatus_t codes" or one
 of the extended execution status codes which are summarized in the table below.
 
-| Extended Status Code          | Description |
+|      Extended Status Code     | Description |
 |:------------------------------|:------------|
 | osRtxErrorKernelNotReady      | Kernel scheduler is not in Ready state. |
 | osRtxErrorKernelNotRunning    | Kernel scheduler is not executing - there is no running thread. |

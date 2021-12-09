@@ -1,5 +1,8 @@
 #include "Test.h"
 #include "Pattern.h"
+
+#include "dsp/transform_functions.h"
+
 class TransformCQ31:public Client::Suite
     {
         public:

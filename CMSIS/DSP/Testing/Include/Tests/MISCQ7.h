@@ -1,5 +1,8 @@
 #include "Test.h"
 #include "Pattern.h"
+
+#include "dsp/filtering_functions.h"
+
 class MISCQ7:public Client::Suite
     {
         public:
@@ -13,11 +16,14 @@ class MISCQ7:public Client::Suite
             Client::Pattern<q7_t> inputB;
 
             Client::LocalPattern<q7_t> output;
+            Client::LocalPattern<q7_t> tmp;
+
+            Client::LocalPattern<q15_t> scratchA,scratchB;
 
             // Reference patterns are not loaded when we are in dump mode
             Client::RefPattern<q7_t> ref;
 
-            int nba,nbb;
+            int nba,nbb,first;
 
            
     };

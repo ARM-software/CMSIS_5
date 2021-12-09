@@ -32,13 +32,13 @@
 
 #include <string>
 #include <cstddef>
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
+#include <cstdio>
+#include <cstring>
+#include <cstdlib>
 #include "Generators.h"
 #include "Semihosting.h"
-#include "arm_math.h"
-#include "arm_math_f16.h"
+#include "arm_math_types.h"
+#include "arm_math_types_f16.h"
 
 
 namespace Client

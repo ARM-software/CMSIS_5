@@ -1,7 +1,6 @@
 #include "TransformCF64.h"
 #include <stdio.h>
 #include "Error.h"
-#include "arm_math.h"
 #include "Test.h"
 
 #define SNR_THRESHOLD 250
@@ -31,7 +30,7 @@
     {
 
 
-       
+       (void)paramsArgs;
 
        switch(id)
        {
@@ -442,5 +441,6 @@
 
     void TransformCF64::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)
     {
+        (void)id;
         outputfft.dump(mgr);
     }

@@ -1,25 +1,65 @@
 #include "FastMathQ15.h"
 #include <stdio.h>
 #include "Error.h"
-#include "arm_math.h"
 #include "Test.h"
 
 
-#define SNR_THRESHOLD 70
+
+#define SNR_THRESHOLD 69
 /* 
 
 Reference patterns are generated with
 a double precision computation.
 
 */
+#define ABS_SQRT_ERROR ((q15_t)6)
+
 #define ABS_ERROR ((q15_t)10)
+
+#define LOG_ABS_ERROR ((q15_t)3)
+
+
+    void FastMathQ15::test_vlog_q15()
+    {
+        const q15_t *inp  = input.ptr();
+        q15_t *outp  = output.ptr();
+
+        arm_vlog_q15(inp,outp,ref.nbSamples());
+        
+        ASSERT_SNR(ref,output,(float32_t)SNR_THRESHOLD);
+        ASSERT_NEAR_EQ(ref,output,LOG_ABS_ERROR);
+        ASSERT_EMPTY_TAIL(output);
+
+    }
+
+    void FastMathQ15::test_division_q15()
+    {
+        const q15_t *nump  = numerator.ptr();
+        const q15_t *denp  = denominator.ptr();
+        q15_t *outp  = output.ptr();
+        int16_t *shiftp  = shift.ptr();
+        arm_status status;
+
+      
+        for(unsigned long i=0; i < ref.nbSamples(); i++)
+        {
+          status = arm_divide_q15(nump[i],denp[i],&outp[i],&shiftp[i]);
+        }
+
+        (void)status;
+
+        ASSERT_SNR(ref,output,(float32_t)SNR_THRESHOLD);
+        ASSERT_NEAR_EQ(ref,output,ABS_ERROR);
+        ASSERT_EQ(refShift,shift);
+
+    }
+
 
     void FastMathQ15::test_cos_q15()
     {
         const q15_t *inp  = input.ptr();
-        q15_t *refp  = ref.ptr();
         q15_t *outp  = output.ptr();
-        int i;
+        unsigned long i;
 
         for(i=0; i < ref.nbSamples(); i++)
         {
@@ -34,9 +74,8 @@ a double precision computation.
     void FastMathQ15::test_sin_q15()
     {
         const q15_t *inp  = input.ptr();
-        q15_t *refp  = ref.ptr();
         q15_t *outp  = output.ptr();
-        int i;
+        unsigned long i;
 
         for(i=0; i < ref.nbSamples(); i++)
         {
@@ -51,25 +90,27 @@ a double precision computation.
     void FastMathQ15::test_sqrt_q15()
     {
         const q15_t *inp  = input.ptr();
-        q15_t *refp  = ref.ptr();
         q15_t *outp  = output.ptr();
         arm_status status;
-        int i;
+        unsigned long i;
+
 
         for(i=0; i < ref.nbSamples(); i++)
         {
+            
            status=arm_sqrt_q15(inp[i],&outp[i]);
            ASSERT_TRUE((status == ARM_MATH_SUCCESS) || ((inp[i] <= 0) && (status == ARM_MATH_ARGUMENT_ERROR)));
         }
 
         ASSERT_SNR(ref,output,(float32_t)SNR_THRESHOLD);
-        ASSERT_NEAR_EQ(ref,output,ABS_ERROR);
+        ASSERT_NEAR_EQ(ref,output,ABS_SQRT_ERROR);
 
     }
 
   
     void FastMathQ15::setUp(Testing::testID_t id,std::vector<Testing::param_t>& paramsArgs,Client::PatternMgr *mgr)
     {
+        (void)paramsArgs;
         switch(id)
         {
             case FastMathQ15::TEST_COS_Q15_1:
@@ -98,12 +139,63 @@ a double precision computation.
 
             }
             break;
+
+            case FastMathQ15::TEST_DIVISION_Q15_4:
+            {
+               numerator.reload(FastMathQ15::NUMERATOR_Q15_ID,mgr);
+               denominator.reload(FastMathQ15::DENOMINATOR_Q15_ID,mgr);
+
+               ref.reload(FastMathQ15::DIVISION_VALUE_Q15_ID,mgr);
+               refShift.reload(FastMathQ15::DIVISION_SHIFT_S16_ID,mgr);
+
+               output.create(ref.nbSamples(),FastMathQ15::OUT_Q15_ID,mgr);
+               shift.create(ref.nbSamples(),FastMathQ15::SHIFT_S16_ID,mgr);
+
+            }
+            break;
+
+            case FastMathQ15::TEST_VLOG_Q15_5:
+            {
+               input.reload(FastMathQ15::LOGINPUT1_Q15_ID,mgr);
+               ref.reload(FastMathQ15::LOG1_Q15_ID,mgr);
+               output.create(ref.nbSamples(),FastMathQ15::OUT_Q15_ID,mgr);
+
+            }
+            break;
+
+            case FastMathQ15::TEST_VLOG_Q15_6:
+            {
+               input.reload(FastMathQ15::LOGINPUT1_Q15_ID,mgr,7);
+               ref.reload(FastMathQ15::LOG1_Q15_ID,mgr,7);
+               output.create(ref.nbSamples(),FastMathQ15::OUT_Q15_ID,mgr);
+
+            }
+            break;
+
+            case FastMathQ15::TEST_VLOG_Q15_7:
+            {
+               input.reload(FastMathQ15::LOGINPUT1_Q15_ID,mgr,16);
+               ref.reload(FastMathQ15::LOG1_Q15_ID,mgr,16);
+               output.create(ref.nbSamples(),FastMathQ15::OUT_Q15_ID,mgr);
+
+            }
+            break;
+
+            case FastMathQ15::TEST_VLOG_Q15_8:
+            {
+               input.reload(FastMathQ15::LOGINPUT1_Q15_ID,mgr,23);
+               ref.reload(FastMathQ15::LOG1_Q15_ID,mgr,23);
+               output.create(ref.nbSamples(),FastMathQ15::OUT_Q15_ID,mgr);
+
+            }
+            break;
         }
         
     }
 
     void FastMathQ15::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)
     {
+      (void)id;
       output.dump(mgr);
       
     }

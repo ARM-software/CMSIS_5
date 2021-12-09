@@ -28,7 +28,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+
+#if defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6100100)
 #include <rt_sys.h>
+#else
+#define GCCCOMPILER
+struct __FILE {int handle;};
+FILE __stdout;
+FILE __stdin;
+FILE __stderr;
+#endif
 
 
 #if defined (ARMv81MML_DSP_DP_MVE_FP)
@@ -240,6 +249,17 @@ typedef struct
 #define SERIAL_DATA  *((volatile unsigned *) SERIAL_BASE_ADDRESS)
 
 
+#define SOFTWARE_MARK  *((volatile unsigned *) (SERIAL_BASE_ADDRESS+4))
+
+void start_ipss_measurement()
+{
+  SOFTWARE_MARK = 1;
+}
+
+void stop_ipss_measurement()
+{
+  SOFTWARE_MARK = 0;
+}
 
 int stdout_putchar(char txchar)
 {
@@ -279,6 +299,9 @@ void SystemInit (void)
   SCB->CCR |= SCB_CCR_UNALIGN_TRP_Msk;
 #endif
 
+  unsigned int  fpscr =__get_FPSCR();
+  fpscr = fpscr & (~FPU_FPDSCR_AHP_Msk);
+  __set_FPSCR(fpscr);
 
   // enable DL branch cache
   CCR |= CCR_DL;
@@ -328,6 +351,7 @@ int fputc (int c, FILE * stream)
     return (-1);
 }
 
+#ifndef GCCCOMPILER
 /* IO device file handles. */
 #define FH_STDIN    0x8001
 #define FH_STDOUT   0x8002
@@ -674,6 +698,23 @@ long _sys_flen (FILEHANDLE fh) {
 }
 #endif
  
+#else /* gcc compiler */
+int _write(int   file,
+        char *ptr,
+        int   len)
+{
+  int i;
+  (void)file;
+  
+  for(i=0; i < len;i++)
+  {
+     stdout_putchar(*ptr++);
+  }
+  return len;
+}
+
+#endif
+
 #define log_str(...)		                            \
     do {                                                \
         const char *pchSrc = __VA_ARGS__;               \
@@ -683,7 +724,17 @@ long _sys_flen (FILEHANDLE fh) {
         } while(--hwSize);                              \
     } while(0)
 
-
+#ifdef GCCCOMPILER
+void _exit(int return_code)
+{
+    (void)return_code;
+    log_str("\n");
+    log_str("_[TEST COMPLETE]_________________________________________________\n");
+    log_str("\n\n");
+    stdout_putchar(4);
+    while(1);
+}
+#else
 void _sys_exit(int n)
 {
     (void)n;
@@ -693,6 +744,7 @@ void _sys_exit(int n)
 	stdout_putchar(4);
 	while(1);
 }
+#endif 
 
 extern void ttywrch (int ch);
 __attribute__((weak))

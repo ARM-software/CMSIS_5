@@ -3,13 +3,13 @@
  * Title:        arm_sub_f16.c
  * Description:  Floating-point vector subtraction
  *
- * $Date:        18. March 2019
- * $Revision:    V1.6.0
+ * $Date:        23 April 2021
+ * $Revision:    V1.9.0
  *
- * Target Processor: Cortex-M cores
+ * Target Processor: Cortex-M and Cortex-A cores
  * -------------------------------------------------------------------- */
 /*
- * Copyright (C) 2010-2019 ARM Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -26,7 +26,7 @@
  * limitations under the License.
  */
 
-#include "arm_math_f16.h"
+#include "dsp/basic_math_functions_f16.h"
 
 /**
   @ingroup groupMath
@@ -58,7 +58,7 @@
   @return        none
  */
 
-#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
 #include "arm_helium_utils.h"
 
 void arm_sub_f16(
@@ -129,13 +129,13 @@ void arm_sub_f16(
     /* C = A - B */
 
     /* Subtract and store result in destination buffer. */
-    *pDst++ = (*pSrcA++) - (*pSrcB++);
+    *pDst++ = (_Float16)(*pSrcA++) - (_Float16)(*pSrcB++);
 
-    *pDst++ = (*pSrcA++) - (*pSrcB++);
+    *pDst++ = (_Float16)(*pSrcA++) - (_Float16)(*pSrcB++);
 
-    *pDst++ = (*pSrcA++) - (*pSrcB++);
+    *pDst++ = (_Float16)(*pSrcA++) - (_Float16)(*pSrcB++);
 
-    *pDst++ = (*pSrcA++) - (*pSrcB++);
+    *pDst++ = (_Float16)(*pSrcA++) - (_Float16)(*pSrcB++);
 
     /* Decrement loop counter */
     blkCnt--;
@@ -156,7 +156,7 @@ void arm_sub_f16(
     /* C = A - B */
 
     /* Subtract and store result in destination buffer. */
-    *pDst++ = (*pSrcA++) - (*pSrcB++);
+    *pDst++ = (_Float16)(*pSrcA++) - (_Float16)(*pSrcB++);
 
     /* Decrement loop counter */
     blkCnt--;

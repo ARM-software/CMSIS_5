@@ -14,7 +14,9 @@
 #define RTE_CV_COREFUNC  1
 #define RTE_CV_CORESIMD  1
 #define RTE_CV_MPUFUNC   (__MPU_PRESENT)
+#if defined __ICACHE_PRESENT || defined __DCACHE_PRESENT
 #define RTE_CV_L1CACHE   (__ICACHE_PRESENT || __DCACHE_PRESENT)
+#endif
 
 //-------- <<< Use Configuration Wizard in Context Menu >>> --------------------
 

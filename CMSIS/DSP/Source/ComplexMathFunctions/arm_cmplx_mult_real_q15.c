@@ -3,13 +3,13 @@
  * Title:        arm_cmplx_mult_real_q15.c
  * Description:  Q15 complex by real multiplication
  *
- * $Date:        18. March 2019
- * $Revision:    V1.6.0
+ * $Date:        23 April 2021
+ * $Revision:    V1.9.0
  *
- * Target Processor: Cortex-M cores
+ * Target Processor: Cortex-M and Cortex-A cores
  * -------------------------------------------------------------------- */
 /*
- * Copyright (C) 2010-2019 ARM Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -26,7 +26,7 @@
  * limitations under the License.
  */
 
-#include "arm_math.h"
+#include "dsp/complex_math_functions.h"
 
 /**
   @ingroup groupCmplxMath
@@ -49,7 +49,7 @@
                    The function uses saturating arithmetic.
                    Results outside of the allowable Q15 range [0x8000 0x7FFF] are saturated.
  */
-#if defined(ARM_MATH_MVEI)
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 void arm_cmplx_mult_real_q15(
   const q15_t * pSrcCmplx,
@@ -57,7 +57,7 @@ void arm_cmplx_mult_real_q15(
         q15_t * pCmplxDst,
         uint32_t numSamples)
 {
-  const static uint16_t stride_cmplx_x_real_16[8] = {
+  static const uint16_t stride_cmplx_x_real_16[8] = {
       0, 0, 1, 1, 2, 2, 3, 3
       };
   q15x8_t rVec;

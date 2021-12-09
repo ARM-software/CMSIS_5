@@ -286,8 +286,8 @@ CMSIS-RTOS provides extension for tick-less operation which is useful for applic
 where the SysTick timer is also disabled. To provide a time-tick in such power-saving modes a wake-up timer is used to derive
 timer intervals. The function \b osKernelSuspend suspends the RTX kernel scheduler and thus enables sleep modes.
 
-The return value can be used to determine the amount of system ticks until the next tick-based kernel event will occure, i.e.
-a delayed thread becomed ready again. It is recommended to set up the low power timer to generate a wake-up interrupt based
+The return value can be used to determine the amount of system ticks until the next tick-based kernel event will occur, i.e.
+a delayed thread becomes ready again. It is recommended to set up the low power timer to generate a wake-up interrupt based
 on this return value.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
@@ -442,7 +442,7 @@ routine, see code example below.
 <b>Code Example</b>
 \code{.c}
 #include "cmsis_os2.h"
-
+ 
 void SetupDevice (void)  {
   uint32_t tick;
   

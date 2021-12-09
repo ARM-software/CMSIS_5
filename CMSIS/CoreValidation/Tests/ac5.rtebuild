@@ -5,30 +5,30 @@ import:
 targets:
   arm:
     toolchain   : ARMCC5
+    info        : [ --info summarysizes, --map, --load_addr_map_info, --xref, --callgraph, --symbols, --info sizes, --info totals, --info unused, --info veneers, "--list ${builddir}/${targetName}.map" ]
   armcm:
     cflags      : [ --c99, -c, "--cpu ${cpu}", "--fpu=${fpu}", --li, -g, "-%{optimize}", --apcs=interwork, --split_sections, --asm, --interleave ]
     asmflags    : [ "--cpu ${cpu}", "--fpu=${fpu}", --li, -g, --apcs=interwork ]
-    info        : [ --info summarysizes, --map, --load_addr_map_info, --xref, --callgraph, --symbols, --info sizes, --info totals, --info unused, --info veneers, "--list ${builddir}/${targetName}.map" ]
     linkflags   : [ "--cpu ${cpu}", "--fpu=${fpu}", --strict, --no_remove, --entry Reset_Handler, --diag_suppress=L6314, --diag_suppress=L6092w, "${info}" ]
-    linkscript  : "config/core_m/rtebuild.sct"
+    linkscript  : "config/core_m/rtebuild_ac5.sct"
   armcm0:
     cpu    : Cortex-M0
-    fpu    : none 
+    fpu    : none
   armcm0plus:
     cpu    : Cortex-M0plus
-    fpu    : none 
+    fpu    : none
   armcm3:
     cpu    : Cortex-M3
-    fpu    : none 
+    fpu    : none
   armcm4:
     cpu    : Cortex-M4
-    fpu    : none 
+    fpu    : none
   armcm4fp:
     cpu    : Cortex-M4.fp.sp
     fpu    : FPv4-SP
   armcm7:
     cpu    : Cortex-M7
-    fpu    : none 
+    fpu    : none
   armcm7sp:
     cpu    : Cortex-M7.fp.sp
     fpu    : FPv5-SP
@@ -39,8 +39,8 @@ targets:
     toolchain  : ARMCC5
     cflags      : [ "--cpu=${cpu}", "--apcs=/${float}", --li, --arm, --c99, "-%{optimize}", -g, -c ]
     asmflags    : [ "--cpu=${cpu}", "--apcs=/${float}", --li, --arm, -g ]
-    linkflags   : [ "--cpu=${cpu}", "--entry=Vectors" ]
-    linkscript : "./config/core_a/rtebuild_armcc.sct"
+    linkflags   : [ "--cpu=${cpu}", "--entry=Vectors", "${info}" ]
+    linkscript : "./config/core_a/rtebuild_ac5.sct"
     source:
       - ../../../Device/ARM/${device}/Source/AC5/startup_${device}.c
   armca5:

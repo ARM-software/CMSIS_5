@@ -462,7 +462,7 @@ The parameter \em arg provides (depending on the parameter \em control) addition
 	    The Slave Select line is configured as output and controlled by hardware. 
 		The line gets activated or deactivated automatically by the hardware for transfers and is not controlled by the Miscellaneous Control \ref ARM_SPI_CONTROL_SS.
 		When exactly the line is activated or deactivated is hardware dependent. Typically, the hardware will activate the line before starting the transfer 
-		and deactivate it after the transfer completes. Some hardware will leave the line activated until the SPI stays master. 
+		and deactivate it after the transfer completes. Some hardware will keep the line active as long as the SPI stays master. 
 		\note Some devices require that the SS signal is strictly defined regarding transfers. Refer to the documentation of your device.
     </td></tr>
 <tr>
@@ -470,7 +470,7 @@ The parameter \em arg provides (depending on the parameter \em control) addition
     <td>Set the Slave Select mode for the master to <b>Hardware monitored Input</b>. Used with Mode Control ARM_SPI_MODE_MASTER.
 	    Used in multi-master configuration where a master does not drive the Slave Select when driving the bus, but rather monitors it. 
 		When another master activates this line, the active master backs off. This is called Mode Fault. Slave Select is configured as input 
-		and hardware only monitors the line. When the line is deactivated externally while we are master, 
+		and hardware only monitors the line. When the line is activated externally while we are master, 
 		it presents a Mode Fault (\ref ARM_SPI_EVENT_MODE_FAULT) and the SPI switches to inactive mode.
     </td></tr>
 <tr><td>\ref ARM_SPI_SS_SLAVE_HW (default)</td>
@@ -672,7 +672,7 @@ functions.
 Here, SS is configured as an output. It will be automatically activated/deactivated for the transfers by hardware (not
 controlled by \ref ARM_SPI_Control (\ref ARM_SPI_CONTROL_SS)). The activation/deactivation of the line is completely hardware
 dependent. Typically, the hardware will activate it before starting a transfer and deactivate it after a transfer completes.
-Some hardware will leave it activated as long as the SPI stays master. Due to different hardware behavior, this mode is
+Some hardware will keep the line active as long as the SPI stays master. Due to different hardware behavior, this mode is
 typically not useful because certain devices require that the SS signal is strictly defined with regards to transfers.
 \sa ARM_SPI_Control
 \def ARM_SPI_SS_MASTER_HW_INPUT

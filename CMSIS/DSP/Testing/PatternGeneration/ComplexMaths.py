@@ -104,12 +104,20 @@ def  generatePatterns():
      PATTERNDIR = os.path.join("Patterns","DSP","ComplexMaths","ComplexMaths")
      PARAMDIR = os.path.join("Parameters","DSP","ComplexMaths","ComplexMaths")
      
+     configf64=Tools.Config(PATTERNDIR,PARAMDIR,"f64")
      configf32=Tools.Config(PATTERNDIR,PARAMDIR,"f32")
+     configf16=Tools.Config(PATTERNDIR,PARAMDIR,"f16")
      configq31=Tools.Config(PATTERNDIR,PARAMDIR,"q31")
      configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
      
+     configf32.setOverwrite(False)
+     configf16.setOverwrite(False)
+     configq31.setOverwrite(False)
+     configq15.setOverwrite(False)
      
+     writeTests(configf64,Tools.F64)
      writeTests(configf32,0)
+     writeTests(configf16,16)
      writeTests(configq31,31)
      writeTests(configq15,15)
 

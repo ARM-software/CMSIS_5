@@ -3,13 +3,13 @@
  * Title:        arm_common_tables_f16.h
  * Description:  Extern declaration for common tables
  *
- * $Date:        27. January 2017
- * $Revision:    V.1.5.1
+ * @version  V1.10.0
+ * @date     08 July 2021
  *
- * Target Processor: Cortex-M cores
+ * Target Processor: Cortex-M and Cortex-A cores
  * -------------------------------------------------------------------- */
 /*
- * Copyright (C) 2010-2017 ARM Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -29,8 +29,7 @@
 #ifndef _ARM_COMMON_TABLES_F16_H
 #define _ARM_COMMON_TABLES_F16_H
 
-#include "arm_math_f16.h"
-#include "arm_common_tables.h"
+#include "arm_math_types_f16.h"
 
 #ifdef   __cplusplus
 extern "C"
@@ -75,11 +74,54 @@ extern "C"
 
   #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || defined(ARM_TABLE_TWIDDLECOEF_F16_4096)
     extern const float16_t twiddleCoefF16_4096[8192];
+    #define twiddleCoefF16 twiddleCoefF16_4096
   #endif /* !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) */
+  
+ 
+  #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || defined(ARM_TABLE_TWIDDLECOEF_RFFT_F16_32)
+  extern const float16_t twiddleCoefF16_rfft_32[32];
+  #endif
+
+  #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || defined(ARM_TABLE_TWIDDLECOEF_RFFT_F16_64)
+  extern const float16_t twiddleCoefF16_rfft_64[64];
+  #endif
+
+  #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || defined(ARM_TABLE_TWIDDLECOEF_RFFT_F16_128)
+  extern const float16_t twiddleCoefF16_rfft_128[128];
+  #endif
+
+  #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || defined(ARM_TABLE_TWIDDLECOEF_RFFT_F16_256)
+  extern const float16_t twiddleCoefF16_rfft_256[256];
+  #endif
+
+  #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || defined(ARM_TABLE_TWIDDLECOEF_RFFT_F16_512)
+  extern const float16_t twiddleCoefF16_rfft_512[512];
+  #endif
+
+  #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || defined(ARM_TABLE_TWIDDLECOEF_RFFT_F16_1024)
+  extern const float16_t twiddleCoefF16_rfft_1024[1024];
+  #endif
+
+  #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || defined(ARM_TABLE_TWIDDLECOEF_RFFT_F16_2048)
+  extern const float16_t twiddleCoefF16_rfft_2048[2048];
+  #endif
+
+  #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || defined(ARM_TABLE_TWIDDLECOEF_RFFT_F16_4096)
+  extern const float16_t twiddleCoefF16_rfft_4096[4096];
+  #endif
+
   #endif /* ARMAC5 */
     
 #endif /* !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_FFT_ALLOW_TABLES) */
 
+#if !defined(__CC_ARM) && defined(ARM_FLOAT16_SUPPORTED)
+
+#if (defined(ARM_MATH_MVEF) || defined(ARM_MATH_HELIUM)) && !defined(ARM_MATH_AUTOVECTORIZE)
+       extern const float16_t exp_tab_f16[8];
+       extern const float16_t __logf_lut_f16[8];
+#endif /* (defined(ARM_MATH_MVEF) || defined(ARM_MATH_HELIUM)) && !defined(ARM_MATH_AUTOVECTORIZE) */
+#endif 
+       
 
 #ifdef   __cplusplus
 }

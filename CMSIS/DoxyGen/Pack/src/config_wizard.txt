@@ -19,6 +19,9 @@ line:
 - By default, the next code symbol that follows the annotation is modified. 
 - Items marked with * in the table below can be followed by a skip-value. A skip-value omits a number of code symbols (see
   <i>skip example</i> in table). This overwrites the previous rule.
+- Items marked with <code>+</code> in the table below can be followed by an identifier. When an identifier is present, the 
+  next code symbol following the symbol that matches the identifier is modified. See <i>identifier example</i> in the table.
+  An identifier can not be used together with a skip-value.
 - A descriptive text can be added to items. This text is displayed on screen (see table).
 - Whitespace characters are ignored in annotation items or annotation modifiers (text excluded).
 - You must not use \< or \> within configuration wizard lines other than for enclosing annotation items.
@@ -46,7 +49,7 @@ The following table lists the Configuration Wizard Annotations:
       </td>
     </tr>
     <tr>
-      <td>\<e><sup>*</sup></td>
+      <td>\<e><sup>*+</sup></td>
       <td>yes</td>
       <td>Heading with enable. Creates a header section with a checkbox to enabled or disabled all items and options enclosed by \<e> and \</e>.
       Excerpt from the \ref configWizard_codeExample.
@@ -61,6 +64,7 @@ The following table lists the Configuration Wizard Annotations:
       // <o>Round-Robin Timeout [ticks] <1-1000>
       // \<i> Defines how long a thread will execute before a thread switch.
       // \<i> Default: 5
+      // \<d> 5
       #ifndef OS_ROBINTOUT
       #define OS_ROBINTOUT 5
       #endif
@@ -71,7 +75,7 @@ The following table lists the Configuration Wizard Annotations:
       </td>
     </tr>
     <tr>
-      <td>\<e.<i>i</i>><sup>*</sup></td>
+      <td>\<e.<i>i</i>><sup>*+</sup></td>
       <td>yes</td>
       <td>Heading with Enable: modifies a specific bit (<i>i</i>) (example: \<e.4> - changes bit 4 of a value).
       \code
@@ -105,6 +109,21 @@ The following table lists the Configuration Wizard Annotations:
       // <i>This is shown as a tooltip when hovering over a text.
       \endcode
       Many examples in this table have tooltip examples.
+      </td>
+    </tr>
+    <tr>
+      <td>\<d></td>
+      <td>yes</td>
+      <td>Default value for previous item.
+      \code
+      // <o MODE> Operation Mode
+      // <modeOne=> Mode 1
+      // <modeTwo=> Mode 2
+      // <d> modeOne
+      // #define MODE       modeTwo
+      \endcode
+      Binary options, such as \<e> and \<q>, use <code>0</code> and <code>1</code> to signify "disabled" and "enabled", respectively.
+      Annotating options with a default value enables tools to implement "reset to default" functionality.
       </td>
     </tr>
     <tr>
@@ -144,7 +163,7 @@ The following table lists the Configuration Wizard Annotations:
       </td>
     </tr>
     <tr>
-      <td>\<q><sup>*</sup></td>
+      <td>\<q><sup>*+</sup></td>
       <td>yes</td>
       <td>Option for bit values which can be set via a
       checkbox.
@@ -158,50 +177,24 @@ The following table lists the Configuration Wizard Annotations:
       </td>
     </tr>
     <tr>
-      <td>\<o><sup>*</sup></td>
+      <td>\<o><sup>*+</sup></td>
       <td>yes</td>
       <td>Option with selection or number entry.
       \code
       // <o>Round-Robin Timeout [ticks] <1-1000>                             -- text displayed on screen. Range of [ticks] is [1..1000] 
       // \<i> Defines how long a thread will execute before a thread switch.  -- tooltip info
       // \<i> Default: 5                                                      -- tooltip info. Both displayed in one tooltip.
+      // \<d> 5                                                               -- default value
       #ifndef OS_ROBINTOUT
       #define OS_ROBINTOUT 5
       #endif
       // </e>
       \endcode
-      The example creates an option with the text \token{Round-Robin Timeout [ticks]} and a field to enter values that can range between {1..1000].
+      The example creates an option with the text \token{Round-Robin Timeout [ticks]} and a field to enter values that can range between [1..1000].
       </td>
     </tr>
     <tr>
-      <td>\<o <em>key-identifier</em>><sup>*  (new!)</sup></td>
-      <td>yes</td>
-      <td>Option with identifier selection replacing the identifier after the specified key-identifier:
-      \code
-      //   <o TIMESTAMP_SRC>Time Stamp Source
-      //      <dwt=>     DWT Cycle Counter
-      //      <systick=> SysTick
-      //      <user=>    User Timer 
-      //   <i>Selects source for 32-bit time stamp
-      #define TIMESTAMP_SRC  dwt
-      \endcode
-      The example creates an option with the text \token{Time Stamp Source} and a drop down-list showing the text items 
-      \token{DWT Cycle Counter}, \token{SysTick} and \token{User Timer}. The corresponding identifier within the tag \<...=> will be used for replacement.
-      
-      Use case for an assignment of an enumeration to a variable:
-      \code
-      //   <o redPortMode> Red port mode 
-      //     <OutPushPull_GPIO=>  PushPull
-      //     <OutOpenDrain_GPIO=> OpenDrain
-      //   <i>Selects GPIO output
-      ledConf.redPortMode = OutOpenDrain_GPIO;
-      \endcode
-      The example creates an option with the text \token{Red port mode} and a drop down-list showing the text items
-      \token{PushPull} and \token{OpenDrain}. The corresponding identifier \token{OutPushPull_GPIO} or \token{OutOpenDrain_GPIO} will be used to replace the 
-      identifier after the key-identifier \token{redPortMode}.
-    </tr>
-    <tr>
-      <td>\<o.<i>i</i>><sup>*</sup></td>
+      <td>\<o.<i>i</i>><sup>*+</sup></td>
       <td>yes</td>
       <td>Modify a single bit (example: \<e.4> - modifies bit 4).
       \code
@@ -213,7 +206,7 @@ The following table lists the Configuration Wizard Annotations:
       </td>
     </tr>
     <tr>
-      <td>\<o.<i>x</i>..<i>y</i>><sup>*</sup>
+      <td>\<o.<i>x</i>..<i>y</i>><sup>*+</sup>
       </td>
       <td>yes</td>
       <td>Modify a range of bits. (example: \<o.4..5> - bit 4 to 5).
@@ -230,7 +223,7 @@ The following table lists the Configuration Wizard Annotations:
       </td>
     </tr>
     <tr>
-      <td>\<s><sup>*</sup></td>
+      <td>\<s><sup>*+</sup></td>
       <td>yes</td>
       <td>Option with ASCII string entry.
       \code
@@ -243,7 +236,7 @@ The following table lists the Configuration Wizard Annotations:
       </td>
     </tr>
     <tr>
-      <td>\<s.<i>i</i>><sup>*</sup></td>
+      <td>\<s.<i>i</i>><sup>*+</sup></td>
       <td>yes</td>
       <td>Option with ASCII string entry and a size limit of <i>i</i> characters. 
       \code
@@ -255,13 +248,28 @@ The following table lists the Configuration Wizard Annotations:
       </td>
     </tr>
     <tr>
-      <td><i>skip example</i>
-      <br> \<q\em i>; 
-      <br> \<o\em i>;  \<o\em i.\em x>; 
-      <br> \<s\em i>;  \<s\em i.\em x>
-      </td>
+      <td>\<a.<i>i</i>><sup>*+</sup></td>
       <td>yes</td>
-      <td>Skip \em i items.  Can be applied to all annotation items marked with a * in this table.
+      <td>Option for array entry and a size of <i>i</i> elements. 
+      \code
+      //  <a.16 PUBLIC_KEY> Public key for signing <0..255> <f.h>
+      //  <d> {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}
+      #define PUBLIC_KEY  {0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F}
+      \endcode
+      The example makes use of the value range modifier to constrain each array element to byte size, has a default value of all-zero,
+      and uses the format specifier to ensure it is displayed as hexadecimal in the tool.
+
+      GUI tools should support array lengths up to 64 elements.
+      </td>
+    </tr>
+    <tr>
+      <td><i><b>skip example</b></i>
+      <br> \<q\em n>; 
+      <br> \<o\em n>;  \<o\em n.\em i>; 
+      <br> \<s\em n>;  \<s\em n.\em i>
+      </td>
+      <td>n/a</td>
+      <td>Skip \em n items.  Can be applied to all annotation items marked with a <code>*</code> in this table.
       \code
       // <o2>Skip 2 and modify the third item after this entry <1-9>
       #define VALUE1       1000
@@ -272,6 +280,27 @@ The following table lists the Configuration Wizard Annotations:
       </td>
     </tr>
     <tr>
+      <td><i><b>identifier example</b></i>
+      <br> \<q \em identifier> 
+      <br> \<e \em identifier> 
+      <br> \<o \em identifier> 
+      <br> \<s \em identifier> 
+      <br> \<e.\em i \em identifier> 
+      <br> \<o.\em i \em identifier> 
+      <br> \<s.\em i \em identifier> 
+      </td>
+      <td>n/a</td>
+      <td>Modify the item given by the identifier. Can be applied to all annotation items marked with a <code>+</code> in this table.
+      \code
+      // <o MODIFY_THIS>Modify the item after "MODIFY_THIS" <1-9>
+      #define VALUE1       1000
+      #define VALUE2       2000
+      #define MODIFY_THIS  3000
+      \endcode 
+      The example modifies the third item, as it follows the given identifier.
+      </td>
+    </tr>
+    <tr>
       <th>Modifier</th>
       <th>&nbsp;</th>
       <th>Description</th>
@@ -279,17 +308,32 @@ The following table lists the Configuration Wizard Annotations:
     <tr>
       <td>\<0-31></td>
       <td>no</td>
-      <td>Value range for option fields.</td>
+      <td><b>(deprecated<sup>1</sup>, see new range modifier below)</b><br>Value range for option fields. Both endpoints are inclusive.</td>
     </tr>
     <tr>
       <td>\<0-100:10></td>
       <td>no</td>
-      <td>Value range for option fields with step 10.</td>
+      <td><b>(deprecated<sup>1</sup>, see new range modifier below)</b><br>Value range for option fields with step 10. Both endpoints are inclusive.</td>
     </tr>
     <tr>
       <td>\<0x40-0x1000:0x10></td>
       <td>no</td>
-      <td>Value range in hex format and step 10.</td>
+      <td><b>(deprecated<sup>1</sup>, see new range modifier below)</b><br>Value range in hex format and step 16. Both endpoints are inclusive.</td>
+    </tr>
+    <tr>
+      <td>\<-32..31></td>
+      <td>no</td>
+      <td>Value range for option fields supporting negative numbers. Both endpoints are inclusive.</td>
+    </tr>
+    <tr>
+      <td>\<-50..100:10></td>
+      <td>no</td>
+      <td>Value range for option fields with step 10 supporting negative numbers. Both endpoints are inclusive.</td>
+    </tr>
+    <tr>
+      <td>\<-0x40..0x1000:0x10></td>
+      <td>no</td>
+      <td>Value range in hex format and step 16 supporting negative numbers. Both endpoints are inclusive.</td>
     </tr>
     <tr>
       <td>\<<i>value</i>=></td>
@@ -304,6 +348,7 @@ The following table lists the Configuration Wizard Annotations:
       //                        <6=> Realtime (highest)
       //   <i> Defines priority for Timer Thread                               -- tooltip info
       //   <i> Default: High                                                   -- tooltip info
+      //   <d> 5                                                               -- default value
       #ifndef OS_TIMERPRIO
       #define OS_TIMERPRIO   5
       #endif
@@ -317,7 +362,7 @@ The following table lists the Configuration Wizard Annotations:
       <td>\<<i>identifier</i>=></td>
       <td>yes</td>
       <td>Creates a drop down-list and displays the \em <b>text</b> following the definition of the identifiers \token{dwt}, \token{systick} and \token{user}.
-      Note that this must only be used in the context of \<o key-identifier>!
+      Note that this can only be used with options taking a key identifier (\<o \em identifier>).
       The \em <b>identifier</b> corresponding to the selected text replaces the identifier following the key-identifier specified by the \<o ...> tag.
       \code
       //   <o TIMESTAMP_SRC>Time Stamp Source
@@ -329,6 +374,18 @@ The following table lists the Configuration Wizard Annotations:
       \endcode
       In this example, the screen would show the option \token{Time Stamp Source}. The field value would display the text \token{DWT Cycle Counter}. 
       TIMESTAMP_SRC is set to \token{dwt}. When clicking on the field, a drop-down would show all options. See \ref configWizard_display.
+
+      Use case for an assignment of an enumeration to a variable:
+      \code
+      //   <o redPortMode> Red port mode
+      //     <OutPushPull_GPIO=>  PushPull
+      //     <OutOpenDrain_GPIO=> OpenDrain
+      //   <i>Selects GPIO output
+      ledConf.redPortMode = OutOpenDrain_GPIO;
+      \endcode
+      The example creates an option with the text \token{Red port mode} and a drop down-list showing the text items
+      \token{PushPull} and \token{OpenDrain}. The corresponding identifier \token{OutPushPull_GPIO} or \token{OutOpenDrain_GPIO} will be used to replace the
+      identifier after the key-identifier \token{redPortMode}.
     </tr>  
     <tr>
       <td>\<#+1>&nbsp;&nbsp; \<#-1><br>
@@ -349,7 +406,31 @@ The following table lists the Configuration Wizard Annotations:
       See \ref configWizard_display.
       </td>
     </tr>
+    <tr>
+      <td>\<f.<em>format-specifier</em>></td>
+      <td>no</td>
+      <td>Format specifier for graphical display of integer value. The <em>format-specifier</em> must be one of
+        <dl>
+        <dt>d</dt><dd>Decimal</dd>
+        <dt>h</dt><dd>Hexadecimal</dd>
+        <dt>o</dt><dd>Octal</dd>
+        <dt>b</dt><dd>Binary</dd>
+        </dl>
+        \code
+        // <o MY_DECIMAL_1> A decimal option <f.d>
+        #define MY_DECIMAL_1    13         -- displayed as decimal "13" in the tool
+
+        // <o MY_DECIMAL_2> Another decimal option <f.d>
+        #define MY_DECIMAL_2    0x10       -- displayed as decimal "16" in the tool
+
+        // <o MY_HEX> A hexadecimal option <f.h>
+        #define MY_HEX          52         -- displayed as hexadecimal "0x34" in the tool
+        \endcode
+      </td>
+    </tr>
 </table>
+
+<sup>1</sup> Tools are expected to continue support of deprecated features but annotated files shall be updated to the new version.
 
 \section configWizard_codeExample Code Example
 

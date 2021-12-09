@@ -361,7 +361,7 @@ void __STRT(uint32_t value, uint32_t ptr);
   \details Executes a LDAB instruction for 8 bit value.
   \param [in]    ptr  Pointer to data
   \return             value of type uint8_t at (*ptr)
-  \note    Only availabe for Armv8-M Architecture. 
+  \note    Only available for Armv8-M Architecture. 
  */
 uint8_t __LDAB(volatile uint8_t *ptr);
 
@@ -370,7 +370,7 @@ uint8_t __LDAB(volatile uint8_t *ptr);
   \details Executes a LDAH instruction for 16 bit values.
   \param [in]    ptr  Pointer to data
   \return        value of type uint16_t at (*ptr)
-  \note    Only availabe for Armv8-M Architecture. 
+  \note    Only available for Armv8-M Architecture. 
  */
 uint16_t __LDAH(volatile uint16_t *ptr);
 
@@ -379,7 +379,7 @@ uint16_t __LDAH(volatile uint16_t *ptr);
   \details Executes a LDA instruction for 32 bit values.
   \param [in]    ptr  Pointer to data
   \return        value of type uint32_t at (*ptr)
-  \note    Only availabe for Armv8-M Architecture. 
+  \note    Only available for Armv8-M Architecture. 
  */
 uint32_t __LDA(volatile uint32_t *ptr);
 
@@ -388,7 +388,7 @@ uint32_t __LDA(volatile uint32_t *ptr);
   \details Executes a STLB instruction for 8 bit values.
   \param [in]  value  Value to store
   \param [in]    ptr  Pointer to location
-  \note    Only availabe for Armv8-M Architecture. 
+  \note    Only available for Armv8-M Architecture. 
  */
 void __STLB(uint8_t value, volatile uint8_t *ptr);
 
@@ -397,7 +397,7 @@ void __STLB(uint8_t value, volatile uint8_t *ptr);
   \details Executes a STLH instruction for 16 bit values.
   \param [in]  value  Value to store
   \param [in]    ptr  Pointer to location
-  \note    Only availabe for Armv8-M Architecture. 
+  \note    Only available for Armv8-M Architecture. 
  */
 void __STLH(uint16_t value, volatile uint16_t *ptr);
 
@@ -406,7 +406,7 @@ void __STLH(uint16_t value, volatile uint16_t *ptr);
   \details Executes a STL instruction for 32 bit values.
   \param [in]  value  Value to store
   \param [in]    ptr  Pointer to location
-  \note    Only availabe for Armv8-M Architecture. 
+  \note    Only available for Armv8-M Architecture. 
  */
 void __STL(uint32_t value, volatile uint32_t *ptr);
 
@@ -415,7 +415,7 @@ void __STL(uint32_t value, volatile uint32_t *ptr);
   \details Executes a LDAB exclusive instruction for 8 bit value.
   \param [in]    ptr  Pointer to data
   \return             value of type uint8_t at (*ptr)
-  \note    Only availabe for Armv8-M Architecture. 
+  \note    Only available for Armv8-M Architecture. 
  */
 uint8_t __LDAEXB(volatile uint32_t *ptr);
 
@@ -424,7 +424,7 @@ uint8_t __LDAEXB(volatile uint32_t *ptr);
   \details Executes a LDAH exclusive instruction for 16 bit values.
   \param [in]    ptr  Pointer to data
   \return        value of type uint16_t at (*ptr)
-  \note    Only availabe for Armv8-M Architecture. 
+  \note    Only available for Armv8-M Architecture. 
  */
 uint16_t __LDAEXH(volatile uint32_t *ptr);
 
@@ -433,7 +433,7 @@ uint16_t __LDAEXH(volatile uint32_t *ptr);
   \details Executes a LDA exclusive instruction for 32 bit values.
   \param [in]    ptr  Pointer to data
   \return        value of type uint32_t at (*ptr)
-  \note    Only availabe for Armv8-M Architecture. 
+  \note    Only available for Armv8-M Architecture. 
  */
 uint32_t __LDAEX(volatile uint32_t *ptr);
 
@@ -444,7 +444,7 @@ uint32_t __LDAEX(volatile uint32_t *ptr);
   \param [in]    ptr  Pointer to location
   \return          0  Function succeeded
   \return          1  Function failed
-  \note    Only availabe for Armv8-M Architecture. 
+  \note    Only available for Armv8-M Architecture. 
  */
 uint32_t __STLEXB(uint8_t value, volatile uint8_t *ptr);
 
@@ -455,7 +455,7 @@ uint32_t __STLEXB(uint8_t value, volatile uint8_t *ptr);
   \param [in]    ptr  Pointer to location
   \return          0  Function succeeded
   \return          1  Function failed
-  \note    Only availabe for Armv8-M Architecture. 
+  \note    Only available for Armv8-M Architecture. 
  */
 uint32_t __STLEXH(uint16_t value, volatile uint16_t *ptr);
 
@@ -466,7 +466,7 @@ uint32_t __STLEXH(uint16_t value, volatile uint16_t *ptr);
   \param [in]    ptr  Pointer to location
   \return          0  Function succeeded
   \return          1  Function failed
-  \note    Only availabe for Armv8-M Architecture. 
+  \note    Only available for Armv8-M Architecture. 
  */
 uint32_t __STLEX(uint32_t value, volatile uint32_t *ptr);
 

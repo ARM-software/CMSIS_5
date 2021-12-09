@@ -26,8 +26,8 @@
  * limitations under the License.
  */
 #include "ArrayMemory.h"
-#include <stdlib.h>
-#include <string.h>
+#include <cstdlib>
+#include <cstring>
 #include <math.h>
 
 namespace Client {
@@ -127,7 +127,7 @@ namespace Client {
             char *p=ptr + length;
             bool isEmpty=true;
     
-            for(int i=0; i < this->getTailSize() ; i++)
+            for(unsigned long i=0; i < this->getTailSize() ; i++)
             {
                 //printf("%d\n",p[i]);
                 if (p[i] != 0)

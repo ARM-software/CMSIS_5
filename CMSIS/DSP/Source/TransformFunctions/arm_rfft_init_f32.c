@@ -3,13 +3,13 @@
  * Title:        arm_rfft_init_f32.c
  * Description:  RFFT & RIFFT Floating point initialisation function
  *
- * $Date:        18. March 2019
- * $Revision:    V1.6.0
+ * $Date:        23 April 2021
+ * $Revision:    V1.9.0
  *
- * Target Processor: Cortex-M cores
+ * Target Processor: Cortex-M and Cortex-A cores
  * -------------------------------------------------------------------- */
 /*
- * Copyright (C) 2010-2019 ARM Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -26,7 +26,7 @@
  * limitations under the License.
  */
 
-#include "arm_math.h"
+#include "dsp/transform_functions.h"
 #include "arm_common_tables.h"
 
 
@@ -71,9 +71,15 @@ arm_status arm_rfft_init_f32(
   uint32_t ifftFlagR,
   uint32_t bitReverseFlag)
 {
+   /*  Initialise the default arm status */
+  arm_status status = ARM_MATH_ARGUMENT_ERROR;
+
+#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_FFT_ALLOW_TABLES)
+
+#if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_ALL_FFT_TABLES) || defined(ARM_TABLE_REALCOEF_F32)
 
   /*  Initialise the default arm status */
-  arm_status status = ARM_MATH_SUCCESS;
+  status = ARM_MATH_SUCCESS;
 
   /*  Initialize the Real FFT length */
   S->fftLenReal = (uint16_t) fftLenReal;
@@ -129,6 +135,8 @@ arm_status arm_rfft_init_f32(
     arm_cfft_radix4_init_f32(S->pCfft, S->fftLenBy2, 0U, 0U);
   }
 
+#endif
+#endif
   /* return the status of RFFT Init function */
   return (status);
 

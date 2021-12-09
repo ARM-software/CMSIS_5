@@ -22,8 +22,8 @@
  * Description:  Converts the elements of the Q7 vector to a reordered Q15 vector with an added offset. The re-ordering
  *               is a signature of sign extension intrinsic(DSP extension).
  *
- * $Date:        March 3, 2020
- * $Revision:    V.2.0.2
+ * $Date:        May 29, 2020
+ * $Revision:    V.2.0.3
  *
  * Target Processor:  Cortex-M cores
  *
@@ -61,18 +61,18 @@ void arm_q7_to_q15_reordered_with_offset(const q7_t *src, q15_t *dst, uint32_t b
     block_cnt = block_size >> 2u;
 
     /* First part of the processing with loop unrolling. Compute 4 outputs at a time. */
-    const q31_t offset_q15x2 = __PKHBT(offset, offset, 16);
+    const q31_t offset_q15x2 = (q31_t)__PKHBT(offset, offset, 16);
     while (block_cnt > 0u)
     {
         /* convert from q7 to q15 and then store the results in the destination buffer */
         in_q7x4 = arm_nn_read_q7x4_ia(&src);
 
         /* Extract and sign extend each of the four q7 values to q15 */
-        out_q15x2_1 = __SXTAB16(offset_q15x2, __ROR(in_q7x4, 8));
+        out_q15x2_1 = __SXTAB16(offset_q15x2, __ROR((uint32_t)in_q7x4, 8));
         out_q15x2_2 = __SXTAB16(offset_q15x2, in_q7x4);
 
-        write_q15x2_ia(&dst, out_q15x2_2);
-        write_q15x2_ia(&dst, out_q15x2_1);
+        arm_nn_write_q15x2_ia(&dst, out_q15x2_2);
+        arm_nn_write_q15x2_ia(&dst, out_q15x2_1);
 
         block_cnt--;
     }

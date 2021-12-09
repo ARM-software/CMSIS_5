@@ -30,14 +30,18 @@
 
 #include "Test.h"
 #include "Pattern.h"
-#include "arm_math.h"
-#include "arm_math_f16.h"
+#include "arm_math_types.h"
+#include "arm_math_types_f16.h"
 
 namespace Client {
 
 template <typename T> 
 T *loadPattern(Testing::PatternID_t id, PatternMgr *mgr,Testing::nbSamples_t &nb, Testing::nbSamples_t maxSamples=MAX_NB_SAMPLES)
 {
+    (void)id;
+    (void)mgr; 
+    (void)nb;
+    (void)maxSamples;
     return(NULL);
 };
 
@@ -76,6 +80,8 @@ uint8_t *loadPattern(Testing::PatternID_t id, PatternMgr *mgr,Testing::nbSamples
 template <typename T> 
 T *localPattern(Testing::nbSamples_t id, PatternMgr *mgr)
 {
+    (void)id; 
+    (void)mgr;
     return(NULL);
 };
 
@@ -327,6 +333,7 @@ class LocalPattern : public AnyPattern<T>{
 
        void dump(PatternMgr *mgr)
        {
+           (void)mgr;
            /*
 
            If the pattern has never been created then m_mgr is NULL.

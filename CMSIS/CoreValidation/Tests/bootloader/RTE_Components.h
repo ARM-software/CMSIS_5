@@ -7,6 +7,8 @@
 #define CMSIS_device_header "ARMCM33_DSP_FP_TZ.h"
 #elif defined(ARMCM35P_DSP_FP_TZ)
 #define CMSIS_device_header "ARMCM35P_DSP_FP_TZ.h"
+#elif defined(ARMCM55)
+#define CMSIS_device_header "ARMCM55.h"
 #else
 #error "Unknown device selection!"
 #endif

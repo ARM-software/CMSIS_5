@@ -118,7 +118,7 @@ a double precision computation.
 
         ASSERT_EMPTY_TAIL(output);
 
-        //ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
+        ASSERT_SNR(output,ref,(float32_t)SNR_THRESHOLD);
 
         ASSERT_REL_ERROR(output,ref,REL_ERROR);
 
@@ -128,7 +128,7 @@ a double precision computation.
     void DECIMF32::setUp(Testing::testID_t id,std::vector<Testing::param_t>& params,Client::PatternMgr *mgr)
     {
       
-       
+       (void)params;
        
        switch(id)
        {
@@ -165,5 +165,6 @@ a double precision computation.
 
     void DECIMF32::tearDown(Testing::testID_t id,Client::PatternMgr *mgr)
     {
+        (void)id;
         output.dump(mgr);
     }

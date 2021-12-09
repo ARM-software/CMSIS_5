@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2019 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 Arm Limited or its affiliates.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -29,6 +29,7 @@
  * -------------------------------------------------------------------- */
 
 #include "arm_nnfunctions.h"
+#include "arm_nnsupportfunctions.h"
 
 /**
  *  @ingroup groupNN
@@ -39,12 +40,12 @@
  * @{
  */
 
-  /*
-   *  s8 version of concatenation along the X axis
-   *
-   * Refer to header file for details.
-   *
-   */
+/*
+ *  s8 version of concatenation along the X axis
+ *
+ * Refer to header file for details.
+ *
+ */
 void arm_concatenation_s8_x(const int8_t *input,
                             const uint16_t input_x,
                             const uint16_t input_y,
@@ -63,8 +64,8 @@ void arm_concatenation_s8_x(const int8_t *input,
     // Copy per row
     for (i = 0; i < num_iterations; ++i)
     {
-        memcpy(output, input, input_x);
-        input  += input_x;
+        arm_memcpy_q7(output, input, input_x);
+        input += input_x;
         output += output_x;
     }
 }

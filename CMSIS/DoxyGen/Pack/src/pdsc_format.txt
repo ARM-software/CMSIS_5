@@ -156,7 +156,7 @@ assists searching for packages.
   <tr>
     <td>xmlns:xs</td>
     <td>Is set to: \token{"http://www.w3.org/2001/XMLSchema-instance"} to indicate compliance to the XML format.</td>
-    <td>xs:decimal</td>
+    <td>xs:string</td>
     <td>required</td>
   </tr>
   <tr>
@@ -614,11 +614,11 @@ The latest release version is always listed on top.
 \b Example:
 \code
 <releases>
-  <release version="1.1.1">Fixed a problem with the feature xyz.
+  <release version="1.1.1" date="2020-05-12">Fixed a problem with the feature xyz.
   </release>     
-  <release version="1.1.0">Introduces a new feature xyz.
+  <release version="1.1.0" date="2020-03-13">Introduces a new feature xyz.
   </release>     
-  <release version="1.0.0">First published version.
+  <release version="1.0.0" date="2020-02-23">First published version.
   </release>     
 </releases>
 \endcode
@@ -638,6 +638,16 @@ The latest release version is always listed on top.
   </releases>
   ...
 </package> 
+\endcode
+
+\b Example for a deprecated pack with a replacement:
+\code
+<releases>
+  <release version="1.0.1" date="2020-04-18" deprecated="2020-04-18" replacement="Vendor.pack_name">Deprecated: use Vendor.pack_name instead.
+  </release>     
+  <release version="1.0.0" date="2020-03-24">Initial version.
+  </release>     
+</releases>
 \endcode
 
 <p>&nbsp;</p>
@@ -1137,7 +1147,7 @@ The table lists predefined Component Classes.
   </tr>
   <tr>
     <td class="XML-Token">CMSIS</td>
-    <td>Components defined by Cortex Microcontroller Software Interface Standard (e.g. <a class=el href="../../Core/html/index.html">CMSIS-Core(M)</a>, <a class=el href="../../Core_A/html/index.html">CMSIS-Core(A)</a>, <a class=el href="../../DSP/html/index.html">CMSIS-DSP</a> and <a class=el href="../../RTOS/html/index.html">CMSIS-RTOS</a>)</td>
+    <td>Components defined by the Common Microcontroller Software Interface Standard (e.g. <a class=el href="../../Core/html/index.html">CMSIS-Core(M)</a>, <a class=el href="../../Core_A/html/index.html">CMSIS-Core(A)</a>, <a class=el href="../../DSP/html/index.html">CMSIS-DSP</a> and <a class=el href="../../RTOS/html/index.html">CMSIS-RTOS</a>)</td>
   </tr>
   <tr>
     <td class="XML-Token">CMSIS Driver</td>

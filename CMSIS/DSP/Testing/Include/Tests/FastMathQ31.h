@@ -1,5 +1,8 @@
 #include "Test.h"
 #include "Pattern.h"
+
+#include "dsp/fast_math_functions.h"
+
 class FastMathQ31:public Client::Suite
     {
         public:
@@ -11,10 +14,19 @@ class FastMathQ31:public Client::Suite
             
             Client::Pattern<q31_t> input;
 
+
+            Client::Pattern<q31_t> numerator;
+            Client::Pattern<q31_t> denominator;
+
+
             Client::LocalPattern<q31_t> output;
+            Client::LocalPattern<int16_t> shift;
+
 
             // Reference patterns are not loaded when we are in dump mode
             Client::RefPattern<q31_t> ref;
+            Client::RefPattern<int16_t> refShift;
+
 
            
     };

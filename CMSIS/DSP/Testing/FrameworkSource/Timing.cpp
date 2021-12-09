@@ -52,9 +52,9 @@ static uint32_t startCycles=0;
 #else
   #warning "no appropriate header file found!"
 #endif
-#endif
+#endif /* CORTEXM*/
 
-#ifdef CORTEXA
+#if defined(CORTEXA) || defined(CORTEXR)
 #include "cmsis_cp15.h"
 unsigned int startCycles;
 
@@ -62,7 +62,7 @@ unsigned int startCycles;
 #define ENABLE_DIVIDER 0 
 #endif
 
-#ifdef EXTBENCH
+#if defined(EXTBENCH)  || defined(CACHEANALYSIS)
 unsigned long sectionCounter=0;
 #endif 
 
@@ -74,7 +74,7 @@ void initCycleMeasurement()
     SysTick->CTRL = 0;
 #endif 
 
-#ifdef CORTEXA
+#if defined(CORTEXA) || defined(CORTEXR)
 
     // in general enable all counters (including cycle counter)
     int32_t   value = 1;
@@ -89,7 +89,7 @@ void initCycleMeasurement()
     if (ENABLE_DIVIDER)
         value |= 8;             // enable "by 64" divider for CCNT.
 
-    value |= 16;
+    //value |= 16;
 
     // program the performance-counter control-register:
     __set_CP(15, 0, value, 9, 12, 0);
@@ -99,6 +99,12 @@ void initCycleMeasurement()
 
     // clear overflows:
     __set_CP(15, 0, 0x8000000f, 9, 12, 3);
+
+    #if defined(ARMCR52)
+      __get_CP(15, 0, value, 14, 15, 7);
+      value = value | (0x8000 << 12);
+      __set_CP(15, 0, value, 14, 15, 7);
+    #endif
 #endif
 
 }
@@ -123,7 +129,7 @@ void cycleMeasurementStart()
     
 #endif
 
-#ifdef CORTEXA
+#if defined(CORTEXA) || defined(CORTEXR)
     unsigned int value;
     // Read CCNT Register
     __get_CP(15, 0, value, 9, 13, 0);
@@ -156,10 +162,18 @@ Testing::cycles_t getCycles()
     {
       result = SYSTICK_INITIAL_VALUE - (v - startCycles);
     }
+    /* SysTick tested and tuned on IPSS.
+       On other FVP, the value is forced to 0
+       because measurement is wrong.
+    */
+    #if defined(NORMALFVP)
+    return(0);
+    #else
     return(result);
+    #endif
 #endif 
 
-#ifdef CORTEXA
+#if defined(CORTEXA) || defined(CORTEXR)
     unsigned int value;
     // Read CCNT Register
     __get_CP(15, 0, value, 9, 13, 0);

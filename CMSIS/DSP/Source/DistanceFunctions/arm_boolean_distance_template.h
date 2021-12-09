@@ -4,11 +4,13 @@
  * Title:        arm_boolean_distance.c
  * Description:  Templates for boolean distances
  *
+ * $Date:        23 April 2021
+ * $Revision:    V1.9.0
  *
- * Target Processor: Cortex-M cores
+ * Target Processor: Cortex-M and Cortex-A cores
  * -------------------------------------------------------------------- */
 /*
- * Copyright (C) 2010-2019 ARM Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -44,6 +46,12 @@
  */
 
 
+
+
+#define _FUNC(A,B) A##B 
+
+#define FUNC(EXT) _FUNC(arm_boolean_distance, EXT)
+
 /**
  * @brief        Elements of boolean distances
  *
@@ -52,18 +60,11 @@
  * @param[in]    pA              First vector of packed booleans
  * @param[in]    pB              Second vector of packed booleans
  * @param[in]    numberOfBools   Number of booleans
- * @param[out]   cTT             cTT value
- * @param[out]   cTF             cTF value
- * @param[out]   cFT             cFT value
  * @return None
  *
  */
 
-#define _FUNC(A,B) A##B 
-
-#define FUNC(EXT) _FUNC(arm_boolean_distance, EXT)
-
-#if defined(ARM_MATH_MVEI)
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #include "arm_common_tables.h"
 

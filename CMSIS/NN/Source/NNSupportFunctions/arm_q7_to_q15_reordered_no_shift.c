@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2018 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_q7_to_q15_reordered_no_shift.c
  * Description:  Converts the elements of the Q7 vector to reordered Q15 vector without left-shift
  *
- * $Date:        17. January 2018
- * $Revision:    V.1.0.0
+ * $Date:        July 20, 2021
+ * $Revision:    V.1.1.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -74,14 +74,14 @@
  *
  */
 
-void arm_q7_to_q15_reordered_no_shift(const q7_t * pSrc, q15_t * pDst, uint32_t blockSize)
+void arm_q7_to_q15_reordered_no_shift(const q7_t *pSrc, q15_t *pDst, uint32_t blockSize)
 {
-    const q7_t *pIn = pSrc;     /* Src pointer */
-    uint32_t  blkCnt;           /* loop counter */
+    const q7_t *pIn = pSrc; /* Src pointer */
+    uint32_t blkCnt;        /* loop counter */
 
-#ifndef ARM_MATH_CM0_FAMILY
-    q31_t     in;
-    q31_t     in1, in2;
+#if defined(ARM_MATH_DSP) && !defined(ARM_MATH_MVEI)
+    q31_t in;
+    q31_t in1, in2;
 
     /* Run the below code for Cortex-M4 and Cortex-M3 */
 
@@ -97,17 +97,17 @@ void arm_q7_to_q15_reordered_no_shift(const q7_t * pSrc, q15_t * pDst, uint32_t 
         in = arm_nn_read_q7x4_ia(&pIn);
 
         /* rotatate in by 8 and extend two q7_t values to q15_t values */
-        in1 = __SXTB16(__ROR(in, 8));
+        in1 = __SXTB16(__ROR((uint32_t)in, 8));
 
         /* extend remainig two q7_t values to q15_t values */
         in2 = __SXTB16(in);
 
 #ifndef ARM_MATH_BIG_ENDIAN
-        *__SIMD32(pDst)++ = in2;
-        *__SIMD32(pDst)++ = in1;
+        arm_nn_write_q7x4_ia((q7_t **)&pDst, in2);
+        arm_nn_write_q7x4_ia((q7_t **)&pDst, in1);
 #else
-        *__SIMD32(pDst)++ = in1;
-        *__SIMD32(pDst)++ = in2;
+        arm_nn_write_q7x4_ia((q7_t **)&pDst, in1);
+        arm_nn_write_q7x4_ia((q7_t **)&pDst, in2);
 #endif
 
         /* Decrement the loop counter */
@@ -125,18 +125,17 @@ void arm_q7_to_q15_reordered_no_shift(const q7_t * pSrc, q15_t * pDst, uint32_t 
     /* Loop over blockSize number of values */
     blkCnt = blockSize;
 
-#endif                          /* #ifndef ARM_MATH_CM0_FAMILY */
+#endif /* #ifndef ARM_MATH_CM0_FAMILY */
 
     while (blkCnt > 0u)
     {
         /* C = (q15_t) A << 8 */
         /* convert from q7 to q15 and then store the results in the destination buffer */
-        *pDst++ = (q15_t) * pIn++;
+        *pDst++ = (q15_t)*pIn++;
 
         /* Decrement the loop counter */
         blkCnt--;
     }
-
 }
 
 /**

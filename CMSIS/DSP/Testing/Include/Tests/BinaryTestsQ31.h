@@ -1,5 +1,8 @@
 #include "Test.h"
 #include "Pattern.h"
+
+#include "dsp/matrix_functions.h"
+
 class BinaryTestsQ31:public Client::Suite
     {
         public:
@@ -13,6 +16,8 @@ class BinaryTestsQ31:public Client::Suite
             Client::Pattern<q31_t> ref;
             Client::Pattern<int16_t> dims;
             Client::LocalPattern<q31_t> output;
+            Client::LocalPattern<q31_t> tmp;
+
 
             /* Local copies of inputs since matrix instance in CMSIS-DSP are not using
                pointers to const.

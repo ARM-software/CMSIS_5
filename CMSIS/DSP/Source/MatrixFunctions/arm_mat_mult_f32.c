@@ -3,13 +3,13 @@
  * Title:        arm_mat_mult_f32.c
  * Description:  Floating-point matrix multiplication
  *
- * $Date:        18. March 2019
- * $Revision:    V1.6.0
+ * $Date:        23 April 2021
+ * $Revision:    V1.9.0
  *
- * Target Processor: Cortex-M cores
+ * Target Processor: Cortex-M and Cortex-A cores
  * -------------------------------------------------------------------- */
 /*
- * Copyright (C) 2010-2019 ARM Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -26,7 +26,11 @@
  * limitations under the License.
  */
 
-#include "arm_math.h"
+#include "dsp/matrix_functions.h"
+
+#if defined(ARM_MATH_NEON)
+#define GROUPOFROWS 8
+#endif
 
 /**
  * @ingroup groupMatrix
@@ -54,14 +58,7 @@
  * @{
  */
 
-/**
- * @brief Floating-point matrix multiplication.
- * @param[in]       *pSrcA points to the first input matrix structure
- * @param[in]       *pSrcB points to the second input matrix structure
- * @param[out]      *pDst points to output matrix structure
- * @return     		The function returns either
- * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
- */
+
 
 #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
 
@@ -258,6 +255,14 @@ __STATIC_INLINE arm_status arm_mat_mult_f32_4x4_mve(
 }
 
 
+/**
+ * @brief Floating-point matrix multiplication.
+ * @param[in]       *pSrcA points to the first input matrix structure
+ * @param[in]       *pSrcB points to the second input matrix structure
+ * @param[out]      *pDst points to output matrix structure
+ * @return          The function returns either
+ * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
+ */
 arm_status arm_mat_mult_f32(
   const arm_matrix_instance_f32 * pSrcA,
   const arm_matrix_instance_f32 * pSrcB,
@@ -512,9 +517,14 @@ arm_status arm_mat_mult_f32(
 #else
 
 #if defined(ARM_MATH_NEON)
-
-#define GROUPOFROWS 8
-
+/**
+ * @brief Floating-point matrix multiplication.
+ * @param[in]       *pSrcA points to the first input matrix structure
+ * @param[in]       *pSrcB points to the second input matrix structure
+ * @param[out]      *pDst points to output matrix structure
+ * @return          The function returns either
+ * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
+ */
 arm_status arm_mat_mult_f32(
   const arm_matrix_instance_f32 * pSrcA,
   const arm_matrix_instance_f32 * pSrcB,
@@ -843,6 +853,14 @@ arm_status arm_mat_mult_f32(
   return (status);
 }
 #else
+/**
+ * @brief Floating-point matrix multiplication.
+ * @param[in]       *pSrcA points to the first input matrix structure
+ * @param[in]       *pSrcB points to the second input matrix structure
+ * @param[out]      *pDst points to output matrix structure
+ * @return          The function returns either
+ * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
+ */
 arm_status arm_mat_mult_f32(
   const arm_matrix_instance_f32 * pSrcA,
   const arm_matrix_instance_f32 * pSrcB,
@@ -906,7 +924,7 @@ arm_status arm_mat_mult_f32(
         /* matrix multiplication */
         while (colCnt > 0U)
         {
-          /* c(m,n) = a(1,1) * b(1,1) + a(1,2) * b(2,1) + .... + a(m,p) * b(p,n) */
+          /* c(m,p) = a(m,1) * b(1,p) + a(m,2) * b(2,p) + .... + a(m,n) * b(n,p) */
 
           /* Perform the multiply-accumulates */
           sum += *pIn1++ * *pIn2;
@@ -937,7 +955,7 @@ arm_status arm_mat_mult_f32(
 
         while (colCnt > 0U)
         {
-          /* c(m,n) = a(1,1) * b(1,1) + a(1,2) * b(2,1) + .... + a(m,p) * b(p,n) */
+          /* c(m,p) = a(m,1) * b(1,p) + a(m,2) * b(2,p) + .... + a(m,n) * b(n,p) */
 
           /* Perform the multiply-accumulates */
           sum += *pIn1++ * *pIn2;

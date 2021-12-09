@@ -3,13 +3,13 @@
  * Title:        arm_cfft_f32.c
  * Description:  Combined Radix Decimation in Frequency CFFT Floating point processing function
  *
- * $Date:        18. March 2019
- * $Revision:    V1.6.0
+ * $Date:        23 April 2021
+ * $Revision:    V1.9.0
  *
- * Target Processor: Cortex-M cores
+ * Target Processor: Cortex-M and Cortex-A cores
  * -------------------------------------------------------------------- */
 /*
- * Copyright (C) 2010-2019 ARM Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -26,7 +26,7 @@
  * limitations under the License.
  */
 
-#include "arm_math.h"
+#include "dsp/transform_functions.h"
 #include "arm_common_tables.h"
 
 #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
@@ -39,101 +39,70 @@
 static float32_t arm_inverse_fft_length_f32(uint16_t fftLen)
 {
   float32_t retValue=1.0;
-                                                      
-  switch (fftLen)                                     
-  {                                                   
-                                                      
-  case 4096U:                                         
-    retValue = 0.000244140625;                        
-    break;                                            
-                                                      
-  case 2048U:                                         
-    retValue = 0.00048828125;                         
-    break;                                            
-                                                      
-  case 1024U:                                         
-    retValue = 0.0009765625f;                         
-    break;                                            
-                                                      
-  case 512U:                                          
-    retValue = 0.001953125;                           
-    break;                                            
-                                                      
-  case 256U:                                          
-    retValue = 0.00390625f;                           
-    break;                                            
-                                                      
-  case 128U:                                          
-    retValue = 0.0078125;                             
-    break;                                            
-                                                      
-  case 64U:                                           
-    retValue = 0.015625f;                             
-    break;                                            
-                                                      
-  case 32U:                                           
-    retValue = 0.03125;                               
-    break;                                            
-                                                      
-  case 16U:                                           
-    retValue = 0.0625f;                               
-    break;                                            
-                                                      
-                                                      
-  default:                                            
-    break;                                            
-  }                                                   
-  return(retValue); 
+
+  switch (fftLen)
+  {
+
+  case 4096U:
+    retValue = 0.000244140625;
+    break;
+
+  case 2048U:
+    retValue = 0.00048828125;
+    break;
+
+  case 1024U:
+    retValue = 0.0009765625f;
+    break;
+
+  case 512U:
+    retValue = 0.001953125;
+    break;
+
+  case 256U:
+    retValue = 0.00390625f;
+    break;
+
+  case 128U:
+    retValue = 0.0078125;
+    break;
+
+  case 64U:
+    retValue = 0.015625f;
+    break;
+
+  case 32U:
+    retValue = 0.03125;
+    break;
+
+  case 16U:
+    retValue = 0.0625f;
+    break;
+
+
+  default:
+    break;
+  }
+  return(retValue);
 }
 
 
-static void arm_bitreversal_f32_inpl_mve(
-        uint32_t *pSrc,
-  const uint16_t  bitRevLen,
-  const uint16_t *pBitRevTab)
-
-{
-    uint64_t       *src = (uint64_t *) pSrc;
-    uint32_t        blkCnt;     /* loop counters */
-    uint32x4_t      bitRevTabOff;
-    uint32x4_t      one = vdupq_n_u32(1);
-
-    blkCnt = (bitRevLen / 2) / 2;
-    while (blkCnt > 0U) {
-        bitRevTabOff = vldrhq_u32(pBitRevTab);
-        pBitRevTab += 4;
-
-        uint64x2_t      bitRevOff1 = vmullbq_int_u32(bitRevTabOff, one);
-        uint64x2_t      bitRevOff2 = vmulltq_int_u32(bitRevTabOff, one);
-
-        uint64x2_t      in1 = vldrdq_gather_offset_u64(src, bitRevOff1);
-        uint64x2_t      in2 = vldrdq_gather_offset_u64(src, bitRevOff2);
-
-        vstrdq_scatter_offset_u64(src, bitRevOff1, in2);
-        vstrdq_scatter_offset_u64(src, bitRevOff2, in1);
-
-        /*
-         * Decrement the blockSize loop counter
-         */
-        blkCnt--;
-    }
-}
 
 
 static void _arm_radix4_butterfly_f32_mve(const arm_cfft_instance_f32 * S,float32_t * pSrc, uint32_t fftLen)
 {
-    f32x4_t vecTmp0, vecTmp1;
-    f32x4_t vecSum0, vecDiff0, vecSum1, vecDiff1;
-    f32x4_t vecA, vecB, vecC, vecD;
-    uint32_t  blkCnt;
-    uint32_t  n1, n2;
-    uint32_t  stage = 0;
-    int32_t  iter = 1;
-    static const uint32_t strides[4] = {
-        (0 - 16) * sizeof(q31_t *),
-        (1 - 16) * sizeof(q31_t *),
-        (8 - 16) * sizeof(q31_t *),
-        (9 - 16) * sizeof(q31_t *)
+    f32x4_t     vecTmp0, vecTmp1;
+    f32x4_t     vecSum0, vecDiff0, vecSum1, vecDiff1;
+    f32x4_t     vecA, vecB, vecC, vecD;
+    uint32_t    blkCnt;
+    uint32_t    n1, n2;
+    uint32_t    stage = 0;
+    int32_t     iter = 1;
+    static const int32_t strides[4] = {
+        (0 - 16) * (int32_t)sizeof(q31_t *),
+        (1 - 16) * (int32_t)sizeof(q31_t *),
+        (8 - 16) * (int32_t)sizeof(q31_t *),
+        (9 - 16) * (int32_t)sizeof(q31_t *)
     };
 
     n2 = fftLen;
@@ -141,28 +110,27 @@ static void _arm_radix4_butterfly_f32_mve(const arm_cfft_instance_f32 * S,float3
     n2 >>= 2u;
     for (int k = fftLen / 4u; k > 1; k >>= 2)
     {
+        float32_t const     *p_rearranged_twiddle_tab_stride1 =
+                            &S->rearranged_twiddle_stride1[
+                            S->rearranged_twiddle_tab_stride1_arr[stage]];
+        float32_t const     *p_rearranged_twiddle_tab_stride2 =
+                            &S->rearranged_twiddle_stride2[
+                            S->rearranged_twiddle_tab_stride2_arr[stage]];
+        float32_t const     *p_rearranged_twiddle_tab_stride3 =
+                            &S->rearranged_twiddle_stride3[
+                            S->rearranged_twiddle_tab_stride3_arr[stage]];
+
+        float32_t * pBase = pSrc;
         for (int i = 0; i < iter; i++)
         {
-            float32_t const     *p_rearranged_twiddle_tab_stride1 =
-                                &S->rearranged_twiddle_stride1[
-                                S->rearranged_twiddle_tab_stride1_arr[stage]];
-            float32_t const     *p_rearranged_twiddle_tab_stride2 =
-                                &S->rearranged_twiddle_stride2[
-                                S->rearranged_twiddle_tab_stride2_arr[stage]];
-            float32_t const     *p_rearranged_twiddle_tab_stride3 =
-                                &S->rearranged_twiddle_stride3[
-                                S->rearranged_twiddle_tab_stride3_arr[stage]];
-            float32_t const    *pW1, *pW2, *pW3;
-            float32_t           *inA = pSrc + CMPLX_DIM * i * n1;
-            float32_t           *inB = inA + n2 * CMPLX_DIM;
-            float32_t           *inC = inB + n2 * CMPLX_DIM;
-            float32_t           *inD = inC + n2 * CMPLX_DIM;
+            float32_t    *inA = pBase;
+            float32_t    *inB = inA + n2 * CMPLX_DIM;
+            float32_t    *inC = inB + n2 * CMPLX_DIM;
+            float32_t    *inD = inC + n2 * CMPLX_DIM;
+            float32_t const *pW1 = p_rearranged_twiddle_tab_stride1;
+            float32_t const *pW2 = p_rearranged_twiddle_tab_stride2;
+            float32_t const *pW3 = p_rearranged_twiddle_tab_stride3;
             f32x4_t            vecW;
-
-
-            pW1 = p_rearranged_twiddle_tab_stride1;
-            pW2 = p_rearranged_twiddle_tab_stride2;
-            pW3 = p_rearranged_twiddle_tab_stride3;
 
             blkCnt = n2 / 2;
             /*
@@ -231,6 +199,7 @@ static void _arm_radix4_butterfly_f32_mve(const arm_cfft_instance_f32 * S,float3
 
                 blkCnt--;
             }
+            pBase +=  CMPLX_DIM * n1;
         }
         n1 = n2;
         n2 >>= 2u;
@@ -241,7 +210,7 @@ static void _arm_radix4_butterfly_f32_mve(const arm_cfft_instance_f32 * S,float3
     /*
      * start of Last stage process
      */
-    uint32x4_t vecScGathAddr = *(uint32x4_t *) strides;
+    uint32x4_t vecScGathAddr = vld1q_u32((uint32_t*)strides);
     vecScGathAddr = vecScGathAddr + (uint32_t) pSrc;
 
     /* load scheduling */
@@ -333,16 +302,15 @@ static void _arm_radix4_butterfly_inverse_f32_mve(const arm_cfft_instance_f32 * 
     f32x4_t vecTmp0, vecTmp1;
     f32x4_t vecSum0, vecDiff0, vecSum1, vecDiff1;
     f32x4_t vecA, vecB, vecC, vecD;
-    f32x4_t vecW;
     uint32_t  blkCnt;
     uint32_t  n1, n2;
     uint32_t  stage = 0;
     int32_t  iter = 1;
-    static const uint32_t strides[4] = {
-        (0 - 16) * sizeof(q31_t *),
-        (1 - 16) * sizeof(q31_t *),
-        (8 - 16) * sizeof(q31_t *),
-        (9 - 16) * sizeof(q31_t *)
+    static const int32_t strides[4] = {
+        (0 - 16) * (int32_t)sizeof(q31_t *),
+        (1 - 16) * (int32_t)sizeof(q31_t *),
+        (8 - 16) * (int32_t)sizeof(q31_t *),
+        (9 - 16) * (int32_t)sizeof(q31_t *)
     };
 
     n2 = fftLen;
@@ -350,26 +318,27 @@ static void _arm_radix4_butterfly_inverse_f32_mve(const arm_cfft_instance_f32 * 
     n2 >>= 2u;
     for (int k = fftLen / 4; k > 1; k >>= 2)
     {
+        float32_t const *p_rearranged_twiddle_tab_stride1 =
+                &S->rearranged_twiddle_stride1[
+                S->rearranged_twiddle_tab_stride1_arr[stage]];
+        float32_t const *p_rearranged_twiddle_tab_stride2 =
+                &S->rearranged_twiddle_stride2[
+                S->rearranged_twiddle_tab_stride2_arr[stage]];
+        float32_t const *p_rearranged_twiddle_tab_stride3 =
+                &S->rearranged_twiddle_stride3[
+                S->rearranged_twiddle_tab_stride3_arr[stage]];
+
+        float32_t * pBase = pSrc;
         for (int i = 0; i < iter; i++)
         {
-            float32_t const *p_rearranged_twiddle_tab_stride1 =
-                    &S->rearranged_twiddle_stride1[
-                    S->rearranged_twiddle_tab_stride1_arr[stage]];
-            float32_t const *p_rearranged_twiddle_tab_stride2 =
-                    &S->rearranged_twiddle_stride2[
-                    S->rearranged_twiddle_tab_stride2_arr[stage]];
-            float32_t const *p_rearranged_twiddle_tab_stride3 =
-                    &S->rearranged_twiddle_stride3[
-                    S->rearranged_twiddle_tab_stride3_arr[stage]];
-            float32_t const *pW1, *pW2, *pW3;
-            float32_t *inA = pSrc + CMPLX_DIM * i * n1;
-            float32_t *inB = inA + n2 * CMPLX_DIM;
-            float32_t *inC = inB + n2 * CMPLX_DIM;
-            float32_t *inD = inC + n2 * CMPLX_DIM;
-
-            pW1 = p_rearranged_twiddle_tab_stride1;
-            pW2 = p_rearranged_twiddle_tab_stride2;
-            pW3 = p_rearranged_twiddle_tab_stride3;
+            float32_t    *inA = pBase;
+            float32_t    *inB = inA + n2 * CMPLX_DIM;
+            float32_t    *inC = inB + n2 * CMPLX_DIM;
+            float32_t    *inD = inC + n2 * CMPLX_DIM;
+            float32_t const *pW1 = p_rearranged_twiddle_tab_stride1;
+            float32_t const *pW2 = p_rearranged_twiddle_tab_stride2;
+            float32_t const *pW3 = p_rearranged_twiddle_tab_stride3;
+            f32x4_t       vecW;
 
             blkCnt = n2 / 2;
             /*
@@ -437,6 +406,7 @@ static void _arm_radix4_butterfly_inverse_f32_mve(const arm_cfft_instance_f32 * 
 
                 blkCnt--;
             }
+            pBase +=  CMPLX_DIM * n1;
         }
         n1 = n2;
         n2 >>= 2u;
@@ -447,7 +417,7 @@ static void _arm_radix4_butterfly_inverse_f32_mve(const arm_cfft_instance_f32 * 
     /*
      * start of Last stage process
      */
-    uint32x4_t vecScGathAddr = *(uint32x4_t *) strides;
+    uint32x4_t vecScGathAddr = vld1q_u32 ((uint32_t*)strides);
     vecScGathAddr = vecScGathAddr + (uint32_t) pSrc;
 
     /*
@@ -563,53 +533,53 @@ void arm_cfft_f32(
         float32_t * pSrc,
         uint8_t ifftFlag,
         uint8_t bitReverseFlag)
-{                                                                                
-        uint32_t fftLen = S->fftLen;     
+{
+        uint32_t fftLen = S->fftLen;
 
-        if (ifftFlag == 1U) {                                                            
-                                                                                         
-            switch (fftLen) {                                                            
-            case 16:                                                                     
-            case 64:                                                                     
-            case 256:                                                                    
-            case 1024:                                                                   
-            case 4096:                                                                   
-                _arm_radix4_butterfly_inverse_f32_mve(S, pSrc, fftLen, arm_inverse_fft_length_f32(S->fftLen)); 
-                break;                                                                   
-                                                                                         
-            case 32:                                                                     
-            case 128:                                                                    
-            case 512:                                                                    
-            case 2048:                                                                   
-                arm_cfft_radix4by2_inverse_f32_mve(S, pSrc, fftLen);              
-                break;                                                                   
-            }  
-        } else {                                                                         
-            switch (fftLen) {                                                            
-            case 16:                                                                     
-            case 64:                                                                     
-            case 256:                                                                    
-            case 1024:                                                                   
-            case 4096:                                                                   
-                _arm_radix4_butterfly_f32_mve(S, pSrc, fftLen);         
-                break;                                                                   
-                                                                                         
-            case 32:                                                                     
-            case 128:                                                                    
-            case 512:                                                                    
-            case 2048:                                                                   
-                arm_cfft_radix4by2_f32_mve(S, pSrc, fftLen);                      
-                break;                                                                   
-            }                                                                            
-        }                                                                                
-                                                                                         
-                                                                                         
-        if (bitReverseFlag) 
-        {                                                            
-            
-            arm_bitreversal_f32_inpl_mve((uint32_t*)pSrc, S->bitRevLength, S->pBitRevTable);
-                    
-        } 
+        if (ifftFlag == 1U) {
+
+            switch (fftLen) {
+            case 16:
+            case 64:
+            case 256:
+            case 1024:
+            case 4096:
+                _arm_radix4_butterfly_inverse_f32_mve(S, pSrc, fftLen, arm_inverse_fft_length_f32(S->fftLen));
+                break;
+
+            case 32:
+            case 128:
+            case 512:
+            case 2048:
+                arm_cfft_radix4by2_inverse_f32_mve(S, pSrc, fftLen);
+                break;
+            }
+        } else {
+            switch (fftLen) {
+            case 16:
+            case 64:
+            case 256:
+            case 1024:
+            case 4096:
+                _arm_radix4_butterfly_f32_mve(S, pSrc, fftLen);
+                break;
+
+            case 32:
+            case 128:
+            case 512:
+            case 2048:
+                arm_cfft_radix4by2_f32_mve(S, pSrc, fftLen);
+                break;
+            }
+        }
+
+
+        if (bitReverseFlag)
+        {
+
+            arm_bitreversal_32_inpl_mve((uint32_t*)pSrc, S->bitRevLength, S->pBitRevTable);
+
+        }
 }
 
 
@@ -631,7 +601,7 @@ extern void arm_bitreversal_32(
 
 /**
   @defgroup ComplexFFT Complex FFT Functions
- 
+
   @par
                    The Fast Fourier Transform (FFT) is an efficient algorithm for computing the
                    Discrete Fourier Transform (DFT).  The FFT can be orders of magnitude faster
@@ -649,7 +619,7 @@ extern void arm_bitreversal_32(
                    <pre>{real[0], imag[0], real[1], imag[1], ...} </pre>
                    The FFT result will be contained in the same array and the frequency domain
                    values will have the same interleaving.
- 
+
   @par Floating-point
                    The floating-point complex FFT uses a mixed-radix algorithm.  Multiple radix-8
                    stages are performed along with a single radix-2 or radix-4 stage, as needed.
@@ -661,12 +631,12 @@ extern void arm_bitreversal_32(
                    inverse transform includes a scale of <code>1/fftLen</code> as part of the
                    calculation and this matches the textbook definition of the inverse FFT.
   @par
-                   For the MVE version, the new arm_cfft_init_f32 initialization function is 
+                   For the MVE version, the new arm_cfft_init_f32 initialization function is
                    <b>mandatory</b>. <b>Compilation flags are available to include only the required tables for the
-                   needed FFTs.</b> Other FFT versions can continue to be initialized as 
+                   needed FFTs.</b> Other FFT versions can continue to be initialized as
                    explained below.
   @par
-                   For not MVE versions, pre-initialized data structures containing twiddle factors 
+                   For not MVE versions, pre-initialized data structures containing twiddle factors
                    and bit reversal tables are provided and defined in <code>arm_const_structs.h</code>.  Include
                    this header in your function and then pass one of the constant structures as
                    an argument to arm_cfft_f32.  For example:
@@ -781,7 +751,7 @@ extern void arm_bitreversal_32(
                          break;
                      }
   @endcode
- 
+
  */
 
 void arm_cfft_radix8by2_f32 (arm_cfft_instance_f32 * S, float32_t * p1)

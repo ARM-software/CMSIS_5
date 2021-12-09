@@ -22,11 +22,13 @@ def generatePatterns():
     PARAMDIR = os.path.join("Parameters","DSP","Controller","Controller")
     
     configf32=Tools.Config(PATTERNDIR,PARAMDIR,"f32")
+    configf16=Tools.Config(PATTERNDIR,PARAMDIR,"f16")
     configq31=Tools.Config(PATTERNDIR,PARAMDIR,"q31")
     configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
     
     
     writeTests(configf32)
+    writeTests(configf16)
     writeTests(configq31)
     writeTests(configq15)
 

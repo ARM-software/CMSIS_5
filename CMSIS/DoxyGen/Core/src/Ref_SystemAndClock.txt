@@ -17,8 +17,8 @@ a more flexible configuration of the microcontroller system.
 \note Please pay special attention to the static variable \c SystemCoreClock. This variable might be
 used throughout the whole system initialization and runtime to calculate frequency/time related values.
 Thus one must assure that the variable always reflects the actual system clock speed. Be aware that
-a value stored to \c SystemCoreClock during low level initializaton (i.e. \c SystemInit()) might get
-overwritten by C libray startup code and/or .bss section initialization.
+a value stored to \c SystemCoreClock during low level initialization (i.e. \c SystemInit()) might get
+overwritten by C library startup code and/or .bss section initialization.
 Thus its highly recommended to call \ref SystemCoreClockUpdate at the beginning of the user \c main() routine.
 
 

@@ -3,6 +3,7 @@
 ## How to use
 
 This document is explaining how to use cmake with CMSIS-DSP.
+(It is not official so not supported. The official way to build is to use the CMSIS-Pack).
 
 The example arm_variance_f32 in folder Examples/ARM/arm_variance_f32 has been modified to also
 support cmake and is used as an example in this document.
@@ -71,7 +72,7 @@ Create a folder BuildCMSISOnly.
 Inside the folder, create a CMakeLists.txt with the following content:
 
 ```cmake
-cmake_minimum_required (VERSION 3.6)
+cmake_minimum_required (VERSION 3.14)
 
 # Define the project
 project (testcmsisdsp VERSION 0.1)
@@ -118,18 +119,18 @@ Some new compilations symbols have been introduced to avoid including all the ta
 
 If no new symbol is defined, everything will behave as usual. If ARM_DSP_CONFIG_TABLES is defined then the new symbols will be taken into account.
 
-Then you can select all FFT tables or all interpolation tables by defining following compilation symbols:
+It is strongly suggested to use the new Python script cmsisdspconfig.py to generate the -D options to use on the compiler command line.
 
-* ARM_ALL_FFT_TABLES : All FFT tables are included 
-* ARM_ALL_FAST_TABLES : All interpolation tables are included
+    pip install streamlit
+    streamlit run cmsisdspconfig.py
 
-If more control is required, there are other symbols but it is not always easy to know which ones need to be enabled for a given use case.
-
-If you use cmake, it is easy since high level options are defined and they will select the right compilation symbols. If you don't use cmake, you can just look at fft.cmake to see which compilation symbols are needed.
+If you use cmake, it is also easy since high level options are defined and they will select the right compilation symbols. 
 
 For instance, if you want to use the arm_rfft_fast_f32, in fft.cmake you'll see an option RFFT_FAST_F32_32.
 
-We see that following symbols need to be enabled :
+If you don't use cmake nor the Python script, you can just look at fft.cmake or interpol.cmake in Source to see which compilation symbols are needed.
+
+We see, for arm_rfft_fast_f32, that the following symbols need to be enabled :
 
 * ARM_TABLE_TWIDDLECOEF_F32_16 
 * ARM_TABLE_BITREVIDX_FLT_16
@@ -141,4 +142,10 @@ In addition to that, ARM_DSP_CONFIG_TABLES must be enabled and finally ARM_FFT_A
 This last symbol is required because if no transform functions are included in the build, then by default all flags related to FFT tables are ignored.
 
 
+## Bit Reverse Tables CMSIS DSP
 
+It is a question coming often.
+
+It is now detailed [in this github issue](https://github.com/ARM-software/CMSIS_5/issues/858)
+
+Someone from the community has written a [Python script to help](https://gist.github.com/rosek86/d0d709852fddf36193071d7f61987bae)

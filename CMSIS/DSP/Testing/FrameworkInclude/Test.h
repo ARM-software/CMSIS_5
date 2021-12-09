@@ -30,10 +30,9 @@
 
 #include <cstdlib>
 #include <vector>
-#include <queue>
 #include <cstdio>
-#include "arm_math.h"
-#include "arm_math_f16.h"
+#include "arm_math_types.h"
+#include "arm_math_types_f16.h"
 
 
 // This special value means no limit on the number of samples.

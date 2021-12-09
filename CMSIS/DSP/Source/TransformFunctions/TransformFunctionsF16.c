@@ -30,4 +30,15 @@
 #include "arm_cfft_init_f16.c"
 #include "arm_cfft_radix2_f16.c"
 #include "arm_cfft_radix4_f16.c"
+#include "arm_rfft_fast_init_f16.c"
+#include "arm_rfft_fast_f16.c"
+#include "arm_cfft_radix8_f16.c"
 
+#include "arm_bitreversal_f16.c"
+
+#include "arm_mfcc_init_f16.c"
+#include "arm_mfcc_f16.c"
+
+/* Deprecated */
+#include "arm_cfft_radix2_init_f16.c"
+#include "arm_cfft_radix4_init_f16.c"

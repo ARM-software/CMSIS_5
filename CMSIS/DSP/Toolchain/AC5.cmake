@@ -30,7 +30,7 @@ function(compilerSpecificCompileOptions PROJECTNAME ROOT)
   endif()
 
   if (FASTMATHCOMPUTATIONS)
-      target_compile_options(${PROJECTNAME} PUBLIC "-ffast-math")
+      target_compile_options(${PROJECTNAME} PUBLIC "--fpmode=fast")
   endif()
   
   #if (HARDFP)
@@ -95,14 +95,38 @@ function(toolchainSpecificLinkForCortexA PROJECTNAME ROOT CORE PLATFORMFOLDER)
 
 endfunction()
 
+function(toolchainSpecificLinkForCortexR PROJECTNAME ROOT CORE PLATFORMFOLDER)
+    target_sources(${PROJECTNAME} PRIVATE ${PLATFORMFOLDER}/${CORE}/Startup/AC5/startup_${CORE}.c)
+    
+
+    # RTE Components.h
+    target_include_directories(${PROJECTNAME} PRIVATE ${ROOT}/CMSIS/DSP/Testing)
+
+    set(SCATTERFILE "${PLATFORMFOLDER}/${CORE}/LinkScripts/AC5/lnk.sct")
+
+    set_target_properties(${PROJECTNAME} PROPERTIES LINK_DEPENDS "${SCATTERFILE};${PLATFORMFOLDER}/${CORE}/LinkScripts/AC5/mem_${CORE}.h")
+
+    target_include_directories(${PROJECTNAME} PRIVATE ${PLATFORMFOLDER}/${CORE}/LinkScripts/AC5)
+
+    #target_link_options(${PROJECTNAME} PRIVATE "--info=sizes")
+    target_link_options(${PROJECTNAME} PRIVATE "--entry=Vectors;--scatter=${SCATTERFILE}")
+
+endfunction()
+
 function(compilerSpecificPlatformConfigLibForM PROJECTNAME ROOT)
 endfunction()
 
 function(compilerSpecificPlatformConfigLibForA PROJECTNAME ROOT)
 endfunction()
 
+function(compilerSpecificPlatformConfigLibForR PROJECTNAME ROOT)
+endfunction()
+
 function(compilerSpecificPlatformConfigAppForM PROJECTNAME ROOT)
 endfunction()
 
 function(compilerSpecificPlatformConfigAppForA PROJECTNAME ROOT)
+endfunction()
+
+function(compilerSpecificPlatformConfigAppForR PROJECTNAME ROOT)
 endfunction()

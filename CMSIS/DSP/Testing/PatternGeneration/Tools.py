@@ -3,7 +3,7 @@ import struct
 import numpy as np
 
 def normalize(a):
-  return(a/max(np.abs(a)))
+  return(a/np.max(np.abs(a)))
 
 TAILONLY = 1
 BODYONLY = 2
@@ -21,7 +21,7 @@ def loopnb(format,loopkind):
     nb = 0
     if loopkind == TAILONLY:
         if format == 64:
-            nb = 1 
+            nb = 2 
         if format == 0 or format == 31:
             nb = 3 
         if format == 15 or format == 16:
@@ -160,11 +160,17 @@ class Config:
       self._patternDir = "%s%s" % (patternDir,ext.upper())
       self._paramDir = "%s%s" % (paramDir,ext.upper())
       self._ext = ext 
+      self._overwrite=True
 
       createMissingDir(self._patternDir)
       createMissingDir(self._paramDir)
 
-    
+    def setOverwrite(self,v):
+        self._overwrite=v
+
+    def canOverwrite(self,path):
+        return(self._overwrite or not os.path.exists(path))
+
     def inputP(self,i,name=None):
         """ Path to a reference pattern from the ID
       
@@ -467,13 +473,14 @@ class Config:
           Returns:
             Nothing
         """
-        with open(i,"w") as f:
-            # Write sample dimension nb sample header
-            #np.savetxt(i, data, newline="\n", header="W\n%d" % len(data),comments ="" )
-            f.write("D\n%d\n" % len(data))
-            for v in data:
-                f.write("// %f\n" % v)
-                f.write("%s\n" % float64_to_hex(v))
+        if self.canOverwrite(i):
+          with open(i,"w") as f:
+              # Write sample dimension nb sample header
+              #np.savetxt(i, data, newline="\n", header="W\n%d" % len(data),comments ="" )
+              f.write("D\n%d\n" % len(data))
+              for v in data:
+                  f.write("// %f\n" % v)
+                  f.write("%s\n" % float64_to_hex(v))
 
     def _writeVectorF32(self,i,data):
         """ Write pattern data
@@ -492,13 +499,14 @@ class Config:
           Returns:
             Nothing
         """
-        with open(i,"w") as f:
-            # Write sample dimension nb sample header
-            #np.savetxt(i, data, newline="\n", header="W\n%d" % len(data),comments ="" )
-            f.write("W\n%d\n" % len(data))
-            for v in data:
-                f.write("// %f\n" % v)
-                f.write("%s\n" % float_to_hex(v))
+        if self.canOverwrite(i):
+          with open(i,"w") as f:
+              # Write sample dimension nb sample header
+              #np.savetxt(i, data, newline="\n", header="W\n%d" % len(data),comments ="" )
+              f.write("W\n%d\n" % len(data))
+              for v in data:
+                  f.write("// %f\n" % v)
+                  f.write("%s\n" % float_to_hex(v))
 
     def _writeVectorF16(self,i,data):
         """ Write pattern data
@@ -517,13 +525,14 @@ class Config:
           Returns:
             Nothing
         """
-        with open(i,"w") as f:
-            # Write sample dimension nb sample header
-            #np.savetxt(i, data, newline="\n", header="W\n%d" % len(data),comments ="" )
-            f.write("H\n%d\n" % len(data))
-            for v in data:
-                f.write("// %f\n" % v)
-                f.write("%s\n" % float16_to_hex(v))
+        if self.canOverwrite(i):
+          with open(i,"w") as f:
+              # Write sample dimension nb sample header
+              #np.savetxt(i, data, newline="\n", header="W\n%d" % len(data),comments ="" )
+              f.write("H\n%d\n" % len(data))
+              for v in data:
+                  f.write("// %f\n" % v)
+                  f.write("%s\n" % float16_to_hex(v))
 
     def _writeVectorQ63(self,i,data):
         """ Write pattern data
@@ -542,13 +551,14 @@ class Config:
           Returns:
             Nothing
         """
-        with open(i,"w") as f:
-            # Write sample dimension nb sample header
-            #np.savetxt(i, data, newline="\n", header="W\n%d" % len(data),comments ="" )
-            f.write("D\n%d\n" % len(data))
-            for v in data:
-                f.write("// %f\n" % v)
-                f.write("%s\n" % to_q63(v))
+        if self.canOverwrite(i):
+          with open(i,"w") as f:
+              # Write sample dimension nb sample header
+              #np.savetxt(i, data, newline="\n", header="W\n%d" % len(data),comments ="" )
+              f.write("D\n%d\n" % len(data))
+              for v in data:
+                  f.write("// %f\n" % v)
+                  f.write("%s\n" % to_q63(v))
 
     def _writeVectorQ31(self,i,data):
         """ Write pattern data
@@ -567,13 +577,14 @@ class Config:
           Returns:
             Nothing
         """
-        with open(i,"w") as f:
-            # Write sample dimension nb sample header
-            #np.savetxt(i, data, newline="\n", header="W\n%d" % len(data),comments ="" )
-            f.write("W\n%d\n" % len(data))
-            for v in data:
-                f.write("// %f\n" % v)
-                f.write("%s\n" % to_q31(v))
+        if self.canOverwrite(i):
+          with open(i,"w") as f:
+              # Write sample dimension nb sample header
+              #np.savetxt(i, data, newline="\n", header="W\n%d" % len(data),comments ="" )
+              f.write("W\n%d\n" % len(data))
+              for v in data:
+                  f.write("// %f\n" % v)
+                  f.write("%s\n" % to_q31(v))
 
     def _writeVectorQ15(self,i,data):
         """ Write pattern data
@@ -592,13 +603,14 @@ class Config:
           Returns:
             Nothing
         """
-        with open(i,"w") as f:
-            # Write sample dimension nb sample header
-            #np.savetxt(i, data, newline="\n", header="W\n%d" % len(data),comments ="" )
-            f.write("H\n%d\n" % len(data))
-            for v in data:
-                f.write("// %f\n" % v)
-                f.write("%s\n" % to_q15(v))
+        if self.canOverwrite(i):
+          with open(i,"w") as f:
+              # Write sample dimension nb sample header
+              #np.savetxt(i, data, newline="\n", header="W\n%d" % len(data),comments ="" )
+              f.write("H\n%d\n" % len(data))
+              for v in data:
+                  f.write("// %f\n" % v)
+                  f.write("%s\n" % to_q15(v))
 
     def _writeVectorS16(self,i,data):
         """ Write pattern data
@@ -617,13 +629,14 @@ class Config:
           Returns:
             Nothing
         """
-        with open(i,"w") as f:
-            # Write sample dimension nb sample header
-            #np.savetxt(i, data, newline="\n", header="W\n%d" % len(data),comments ="" )
-            f.write("H\n%d\n" % len(data))
-            for v in data:
-                f.write("// %d\n" % v)
-                f.write("%s\n" % s16(v))
+        if self.canOverwrite(i):
+          with open(i,"w") as f:
+              # Write sample dimension nb sample header
+              #np.savetxt(i, data, newline="\n", header="W\n%d" % len(data),comments ="" )
+              f.write("H\n%d\n" % len(data))
+              for v in data:
+                  f.write("// %d\n" % v)
+                  f.write("%s\n" % s16(v))
 
     def _writeVectorS32(self,i,data):
         """ Write pattern data
@@ -642,13 +655,14 @@ class Config:
           Returns:
             Nothing
         """
-        with open(i,"w") as f:
-            # Write sample dimension nb sample header
-            #np.savetxt(i, data, newline="\n", header="W\n%d" % len(data),comments ="" )
-            f.write("W\n%d\n" % len(data))
-            for v in data:
-                f.write("// %d\n" % v)
-                f.write("%s\n" % s32(v))
+        if self.canOverwrite(i):
+          with open(i,"w") as f:
+              # Write sample dimension nb sample header
+              #np.savetxt(i, data, newline="\n", header="W\n%d" % len(data),comments ="" )
+              f.write("W\n%d\n" % len(data))
+              for v in data:
+                  f.write("// %d\n" % v)
+                  f.write("%s\n" % s32(v))
 
     def _writeVectorU32(self,i,data):
         """ Write pattern data
@@ -667,13 +681,14 @@ class Config:
           Returns:
             Nothing
         """
-        with open(i,"w") as f:
-            # Write sample dimension nb sample header
-            #np.savetxt(i, data, newline="\n", header="W\n%d" % len(data),comments ="" )
-            f.write("W\n%d\n" % len(data))
-            for v in data:
-                f.write("// %s\n" % v)
-                f.write("%s\n" % u32(v))
+        if self.canOverwrite(i):
+          with open(i,"w") as f:
+              # Write sample dimension nb sample header
+              #np.savetxt(i, data, newline="\n", header="W\n%d" % len(data),comments ="" )
+              f.write("W\n%d\n" % len(data))
+              for v in data:
+                  f.write("// %s\n" % v)
+                  f.write("%s\n" % u32(v))
 
     def _writeVectorQ7(self,i,data):
         """ Write pattern data
@@ -692,13 +707,14 @@ class Config:
           Returns:
             Nothing
         """
-        with open(i,"w") as f:
-            # Write sample dimension nb sample header
-            #np.savetxt(i, data, newline="\n", header="W\n%d" % len(data),comments ="" )
-            f.write("B\n%d\n" % len(data))
-            for v in data:
-                f.write("// %f\n" % v)
-                f.write("%s\n" % to_q7(v))
+        if self.canOverwrite(i):
+          with open(i,"w") as f:
+              # Write sample dimension nb sample header
+              #np.savetxt(i, data, newline="\n", header="W\n%d" % len(data),comments ="" )
+              f.write("B\n%d\n" % len(data))
+              for v in data:
+                  f.write("// %f\n" % v)
+                  f.write("%s\n" % to_q7(v))
 
     def _writeVectorS8(self,i,data):
         """ Write pattern data
@@ -717,13 +733,14 @@ class Config:
           Returns:
             Nothing
         """
-        with open(i,"w") as f:
-            # Write sample dimension nb sample header
-            #np.savetxt(i, data, newline="\n", header="W\n%d" % len(data),comments ="" )
-            f.write("B\n%d\n" % len(data))
-            for v in data:
-                f.write("// %d\n" % v)
-                f.write("%s\n" % s8(v))
+        if self.canOverwrite(i):
+          with open(i,"w") as f:
+              # Write sample dimension nb sample header
+              #np.savetxt(i, data, newline="\n", header="W\n%d" % len(data),comments ="" )
+              f.write("B\n%d\n" % len(data))
+              for v in data:
+                  f.write("// %d\n" % v)
+                  f.write("%s\n" % s8(v))
 
     def writeReference(self,j,data,name=None):
         if (self._ext == "f64"):
@@ -829,12 +846,13 @@ class Config:
             Nothing
         """
         i=self.paramP(j,name)
-        with open(i,"w") as f:
-            # Write sample dimension nb sample header
-            #np.savetxt(i, data, newline="\n", header="W\n%d" % len(data),comments ="" )
-            f.write("%d\n" % len(data))
-            for v in data:
-                f.write("%d\n" % v)
+        if self.canOverwrite(i):
+          with open(i,"w") as f:
+              # Write sample dimension nb sample header
+              #np.savetxt(i, data, newline="\n", header="W\n%d" % len(data),comments ="" )
+              f.write("%d\n" % len(data))
+              for v in data:
+                  f.write("%d\n" % v)
 
 
 

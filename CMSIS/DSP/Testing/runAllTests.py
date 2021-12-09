@@ -30,6 +30,7 @@ def getLastRunID(c):
      return(int(result[0]))
 
 def addNewID(c,newid):
+  print("  New run ID = %d" % newid)
   c.execute(addNewIDCmd,(newid,))
   c.commit()
 
@@ -127,14 +128,18 @@ parser.add_argument('-p', nargs='?',type = str, default="FVP",help="Platform for
 
 parser.add_argument('-db', nargs='?',type = str,help="Benchmark database")
 parser.add_argument('-regdb', nargs='?',type = str,help="Regression database")
-parser.add_argument('-sqlite', nargs='?',default="/usr/bin/sqlite3",type = str,help="Regression database")
+parser.add_argument('-sqlite', nargs='?',default="/usr/bin/sqlite3",type = str,help="sqlite executable")
 
 parser.add_argument('-debug', action='store_true', help="Debug mode")
+parser.add_argument('-nokeep', action='store_true', help="Do not keep build folder")
 
 args = parser.parse_args()
 
 if args.debug:
    setDebugMode()
+
+if args.nokeep:
+   setNokeepBuildFolder()
 
 # Create missing database files
 # if the db arguments are specified
@@ -146,6 +151,7 @@ if args.db is not None:
    try:
       currentID = getLastRunID(conn)
       benchID = currentID + 1 
+      print("Bench db")
       addNewID(conn,benchID)
    finally:
      conn.close()
@@ -158,6 +164,7 @@ if args.regdb is not None:
    try:
       currentID = getLastRunID(conn)
       regID = currentID + 1 
+      print("Regression db")
       addNewID(conn,regID)
    finally:
      conn.close()
@@ -170,6 +177,16 @@ with open(args.i,"r") as f:
 
 #print(config["IMPLIEDFLAGS"])
 
+
+patternConfig={}
+
+
+
+if "PATTERNS" in config:
+   patternConfig={
+    "patterns":os.path.join(config["PATTERNS"],"Patterns")
+   ,"parameters":os.path.join(config["PATTERNS"],"Parameters")
+   }
 
 
 
@@ -258,7 +275,7 @@ def buildAndTest(compiler,theConfig,cmake,sim):
                       if 'SIM' in config:
                         if core in config['SIM']:
                            fvp = config['SIM'][core] 
-                      newTestStatus = test.runAndProcess(compiler,fvp,sim,args.b,args.db,args.regdb,benchID,regID)
+                      newTestStatus = test.runAndProcess(patternConfig,compiler,fvp,sim,args.b,args.db,args.regdb,benchID,regID)
                       testStatusForThisBuild = updateTestStatus(testStatusForThisBuild,newTestStatus)
                       if testStatusForThisBuild != NOTESTFAILED:
                          failedBuild[buildStr] = testStatusForThisBuild
@@ -285,13 +302,13 @@ def buildAndTest(compiler,theConfig,cmake,sim):
 
 if not isDebugMode():
    preprocess(args.f)
-   generateAllCCode()
+   generateAllCCode(patternConfig)
 else:
    msg("Debug Mode\n")
 
 for t in config["TOOLCHAINS"]:
     cmake,localConfig,sim = analyzeToolchain(config["TOOLCHAINS"][t],allConfigs)
-    msg("Testing toolchain %s\n" % cmake)
+    msg("Testing toolchain %s\n" % t)
     buildAndTest(t,localConfig,cmake,sim)
 
 

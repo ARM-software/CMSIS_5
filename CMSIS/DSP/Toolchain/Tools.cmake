@@ -12,7 +12,11 @@ if (GCC)
     include(Toolchain/GCC)
 endif()
 
-if (MSVC)
+if (ICCARM)
+    include(Toolchain/ICCARM)
+endif()
+
+if ((MSVC) OR (HOST))
     function(compilerSpecificCompileOptions PROJECTNAME ROOT)
     endfunction()
 endif()

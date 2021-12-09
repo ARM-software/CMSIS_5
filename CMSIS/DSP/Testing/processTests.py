@@ -5,7 +5,7 @@ import TestScripts.Deprecate as d
 
 
 parser = argparse.ArgumentParser(description='Parse test description')
-parser.add_argument('-f', nargs='?',type = str, default="Output.pickle", help="File path")
+parser.add_argument('-f', nargs='?',type = str, default="Output.pickle", help="Pickle path")
 
 parser.add_argument('-p', nargs='?',type = str, default="Patterns", help="Pattern dir path")
 parser.add_argument('-d', nargs='?',type = str, default="Parameters", help="Parameter dir path")
@@ -15,6 +15,8 @@ parser.add_argument('-d', nargs='?',type = str, default="Parameters", help="Para
 # Output is only one stdout
 # So the .h for include files need to be generated.
 parser.add_argument('-e', action='store_true', help="Embedded test")
+
+parser.add_argument('-b', action='store_true', help="Benchmark mode to use different generated folders")
 
 parser.add_argument('others', nargs=argparse.REMAINDER)
 
@@ -32,6 +34,6 @@ if args.f is not None:
     d.deprecate(root,args.others)
     #print(root)
     # Generate code with the tree of tests
-    c.genCodeForTree(root)
+    c.genCodeForTree(root,args.b)
 else:
     parser.print_help()

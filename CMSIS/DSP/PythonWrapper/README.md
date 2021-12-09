@@ -6,6 +6,9 @@ It is a very experimental wrapper with lots of limitations as described in the c
 
 But even with those limitations, it can be very useful to test a CMSIS-DSP implemention of an algorithm with all the power of numpy and scipy.
 
+A tutorial is also available but with less details than this README:
+https://developer.arm.com/documentation/102463/latest/
+
 # How to build and install
 
 ## Tested configurations
@@ -62,6 +65,17 @@ Now, you can install the cmsisdsp package in editable mode:
     > pip install -e "Path To The Folder Containing setup.py"
 
 Then you can copy the scripts testdsp.py and example.py and try to run them from this virtual environment. example.y is requiring a data file to be downloaded from the web. See below in this document for the link.
+
+It is also possible to compile and install directly from a Jupyter notebook by doing something like:
+
+    !pip install git+https://github.com/ARM-software/
+    CMSIS_5.git@5.8.0#egg=CMSISDSP\&subdirectory=CMSIS/DSP/PythonWrapper
+
+This will download, compile and install the PythonWrapper from the version 5.8.0 of the CMSIS-DSP (so not from the develop branch).
+
+It will work only if the compiler can be found and run from Jupyter.
+
+Note that due to the great number of possible configurations (OS, Compiler, Python), we can't give any support if you have problems compiling the PythonWrapper on your specific configuration. But, generally people manage to do it and solve all the problems.
 
 # Usage
 
@@ -193,7 +207,7 @@ In a real C code, a pointer to a data structure for the result v would have to b
 
 This example depends on a data file which can be downloaded here:
 
-https://www.physionet.org/pn3/ecgiddb/Person_87/rec_2.dat
+https://archive.physionet.org/pn3/ecgiddb/Person_87/rec_2.dat
 
 This signal was created for a master thesis:
 
@@ -203,6 +217,19 @@ and it is part of the PhysioNet database
 
 Goldberger AL, Amaral LAN, Glass L, Hausdorff JM, Ivanov PCh, Mark RG, Mietus JE, Moody GB, Peng C-K, Stanley HE. PhysioBank, PhysioToolkit, and PhysioNet: Components of a New Research Resource for Complex Physiologic Signals. Circulation 101(23):e215-e220 [Circulation Electronic Pages; http://circ.ahajournals.org/cgi/content/full/101/23/e215]; 2000 (June 13). 
 
+Note that the example file
+
+## Submodules
+
+The Python wrapper is containing two submodules : fixedpoint and mfcc
+
+fixedpoint is proving some tools to help generating the fixedpoint values expected
+by CMSIS-DSP.
+
+mfcc is generating some tools to generate the MEL filters, DCT and window coefficients
+expected by the CMSIS-DSP MFCC implemetation.
+
+MEL filters are represented as 3 arrays to encode a sparse array.
 
 # LIMITATIONS
 

@@ -1,5 +1,8 @@
 #include "Test.h"
 #include "Pattern.h"
+
+#include "dsp/basic_math_functions_f16.h"
+
 class BasicTestsF16:public Client::Suite
     {
         public:
@@ -14,4 +17,6 @@ class BasicTestsF16:public Client::Suite
             Client::LocalPattern<float16_t> output;
             // Reference patterns are not loaded when we are in dump mode
             Client::RefPattern<float16_t> ref;
+
+            float16_t min,max;
     };

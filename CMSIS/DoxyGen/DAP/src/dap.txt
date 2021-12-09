@@ -1,7 +1,7 @@
 /**
 \mainpage Firmware for CoreSight Debug Access Port
 
-<b>CMSIS-DAP</b> is a specification and a implementation of a <b>Firmware</b> that supports access to the CoreSight <b>Debug Access Port</b> (DAP).\n\n
+<b>CMSIS-DAP</b> is a <b>Protocol</b> specification and a implementation of a <b>Firmware</b> that supports access to the CoreSight <b>Debug Access Port</b> (DAP).\n\n
 
 The various Arm Cortex processors provide <a href="http://www.arm.com/products/system-ip/coresight/index.php" target="_blank">
 <b>CoreSight Debug and Trace</b></a>. CMSIS-DAP supports target Devices that contain one or more Cortex processors. 
@@ -30,6 +30,7 @@ Benefits of CMSIS-DAP
  - USB using HID (Human Interface Device) driver class that avoids driver installation on host PC.
  - Supports time-critical JTAG or SWD command execution (new in CMSIS-DAP Version 1.10). 
  - Supports Test Domain Timer for time measurement using the debug unit (new in CMSIS-DAP Version 1.2.0)
+ - Supports UART Communication Port, which can be routed to USB COM Port (optional) or native CMSIS-DAP commands (new in CMSIS-DAP Version 2.1.0).
  
 CMSIS-DAP Firmware
 ==================
@@ -40,8 +41,14 @@ Refer to \ref DAP_Config_gr for more information.
 The CMSIS-DAP Software Stack is composed of the following components:
 
   - CMSIS-DAP Firmware that interfaces to JTAG or SWD Debug pins using standard I/O pins of the Cortex-M device.
-  - CMSIS-Driver USART that connects the UART of the Cortex-M device to the SWO output from the target.
-  - USB Communication Stack that interfaces to the USB Port of the Host Computer using the HID or custom class.
+  - CMSIS-Driver USART that connects:
+    - UART of the Cortex-M device to the SWO output from the target,
+    - additional UART of the Cortex-M device to the UART from the target.
+    .
+  - USB Communication Stack that interfaces to the USB Port of the Host Computer using:
+    - HID or custom class,
+    - CDC ACM class to export USB COM Port.
+    .
   - The USB Device middleware may require CMSIS-RTOS and a CMSIS-Driver USB.
   
 \image html "CMSIS_DAP_SWStack.png" "CMSIS-DAP Software Stack"
@@ -75,11 +82,29 @@ CMSIS-DAP compliant Debug Units must be validated using the scripts provided in 
       <th>Description</th>
     </tr>
     <tr>
+      <td>V2.1.0</td>
+      <td>
+         Added: \ref DAP_uart_gr to support target communication via extra UART\n
+         Added: UART Receive/Transmit Buffer Size values in the command \ref DAP_Info \n
+         Added: Target Board Vendor and Target Board Name strings in the command \ref DAP_Info \n
+         Added: Product Firmware Version string in the command \ref DAP_Info \n
+         Changed: String encoding in \ref DAP_Info from ASCII to UTF-8
+      </td>
+    </tr>
+    <tr>
       <td>V2.0.0</td>
       <td>
          Changed: Communication via WinUSB to achieve high-speed transfer rates\n
          Added: Streaming SWO via separate \ref WinUSB "WinUSB" endpoint\n
-     Added: \ref DAP_SWO_Transport extended with transport mode 2 - Send trace data via separate \ref WinUSB "WinUSB" endpoint 
+         Added: \ref DAP_SWO_Transport extended with transport mode 2 - Send trace data via separate \ref WinUSB "WinUSB" endpoint 
+      </td>
+    </tr>
+    <tr>
+      <td>V1.3.0</td>
+      <td>
+         Added: Target Board Vendor and Target Board Name strings in the command \ref DAP_Info \n
+         Added: Product Firmware Version string in the command \ref DAP_Info \n
+         Changed: String encoding in \ref DAP_Info from ASCII to UTF-8
       </td>
     </tr>
     <tr>

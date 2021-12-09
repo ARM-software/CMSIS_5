@@ -15,6 +15,9 @@ unsigned int l1_dcache_miss_count = 0;
 unsigned int instructions_retired_count = 0;
  
 // Enable the PMU
+// Note: Before using the PMU, software needs to ensure 
+// that trace is enabled via the Debug Exception Monitor Control Register, DEMCR:
+// CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
  
 ARM_PMU_Enable();
  

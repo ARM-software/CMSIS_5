@@ -17,18 +17,21 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 
-  $Date:        03. April 2020
-  $Revision:    0.9.0
+  $Date:        23. September 2020
+  $Revision:    1.0.0
 
   $Project: Schema File for CMSIS Project Description File Format Specification
 
-  SchemaVersion=0.9.0
+  SchemaVersion=1.0.0
+
+  1.0.0: Specification of CMSIS Project Format:
+  - adding layer interface description
 
   0.9.0: (BETA) Specification of CMSIS Project Format, replacing CPDSC based on PACK.xsd.
 
 -->
 
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="qualified" version="0.9.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="qualified" version="1.0.0">
 
   <xs:simpleType name="RestrictedString">
     <xs:restriction base="xs:string">
@@ -48,14 +51,7 @@
     </xs:restriction>
   </xs:simpleType>
 
-  <xs:simpleType name="PackVersionType">
-    <xs:restriction base="xs:string">
-      <!-- major . minor . patch [[-]quality] [+build] -->
-      <xs:pattern value="[0-9]+.[0-9]+.[0-9]+((\-[0-9A-Za-z_\-\.]+)|([_A-Za-z][0-9A-Za-z_\-\.]*)|())((\+[\-\._A-Za-z0-9]+)|())" />
-    </xs:restriction>
-  </xs:simpleType>
-
-  <!-- version can contain one or more of alphanumeric characters and symbols '_' '-' '.' 
+  <!-- version can contain one or more of alphanumeric characters and symbols '_' '-' '.'
        Allows specifing a version range: minVersion : maxVersion
   -->
   <xs:simpleType name="VersionRangeType">
@@ -188,26 +184,14 @@
     </xs:restriction>
   </xs:simpleType>
 
-  <xs:complexType name="ComponentCategoryType">
-    <xs:attribute name="Cvendor"     type="xs:string"            use="optional" />
-    <xs:attribute name="Cbundle"     type="xs:string"            use="optional" />
-    <xs:attribute name="Cclass"      type="xs:string"            use="required" />
-    <xs:attribute name="Cgroup"      type="xs:string"            use="optional" />
-    <xs:attribute name="Csub"        type="xs:string"            use="optional" />
-    <xs:attribute name="Cvariant"    type="xs:string"            use="optional" />
-    <xs:attribute name="Cversion"    type="ComponentVersionType" use="optional" />
-    <xs:attribute name="Capiversion" type="ComponentVersionType" use="optional" />
-    <xs:attribute name="instances"   type="InstancesType"        use="optional" default="1" />
-  </xs:complexType>
-
   <!-- PackageType creates a unique ID for a package / if no version specified use "latest" -->
   <xs:complexType name="PackageType">
     <!-- vendor of the package -->
     <xs:attribute name="vendor"  type="xs:string" use="required" />
     <!-- name of the package -->
     <xs:attribute name="name"    type="xs:string" use="required" />
-    <!-- version of the package (no range supported) -->
-    <xs:attribute name="version" type="PackVersionType" use="optional" />
+    <!-- version of the package -->
+    <xs:attribute name="version" type="VersionRangeType" use="optional" />
   </xs:complexType>
 
   <!-- Package section type -->
@@ -217,21 +201,41 @@
     </xs:sequence>
   </xs:complexType>
 
+  <!-- Layer Interfaces type -->
+  <xs:complexType name="InterfacesType">
+    <xs:choice maxOccurs="unbounded">
+      <xs:element name="provides" type="InterfaceType"/>
+      <xs:element name="consumes" type="InterfaceType"/>
+    </xs:choice>
+  </xs:complexType>
+
+  <!-- provided interface -->
+  <xs:complexType name="InterfaceType">
+    <xs:attribute name="id"      type="xs:string"       use="required" />
+    <xs:attribute name="value"   type="xs:string"       use="optional" />
+  </xs:complexType>
+
   <xs:complexType name="LayerType">
     <xs:all>
       <!-- layer description -->
-      <xs:element name="description" type="xs:string" minOccurs="0" />
-      <!-- layer intentionally does not have url ! -->
-      <!-- comma separated list of keywords -->
-      <xs:element name="keywords"    type="xs:string" minOccurs="0" />
+      <xs:element name="description"   type="xs:string" minOccurs="0" />
+      <!-- layer documentation points to detailed documentation local *.md file or URL -->
+      <xs:element name="doc"           type="xs:string" minOccurs="0" />
       <!-- comma separated list of pre-defined categories -->
-      <xs:element name="category"    type="xs:string" minOccurs="0" />
+      <xs:element name="category"      type="xs:string" minOccurs="0" />
+      <!-- deprecated keywords -->
+      <xs:element name="keywords"      type="xs:string" minOccurs="0" />
       <!-- license covering the layer (the license of referenced components is not covered) -->
-      <xs:element name="license"     type="xs:string" minOccurs="0" />
+      <xs:element name="license"       type="xs:string" minOccurs="0" />
+      <!-- interfaces -->
+      <xs:element name="interfaces"    type="InterfacesType" minOccurs="0" />
     </xs:all>
-    <!-- layer name is used in file and directory names, hence restricted -->
-    <xs:attribute name="name"        type="RestrictedString"  use="required" />
-    <xs:attribute name="hasTarget"   type="xs:boolean" use="optional" />
+    <!-- layer name is an ID used in file and directory names, hence restricted -->
+    <xs:attribute name="name"      type="RestrictedString"  use="required" />
+    <!-- display name for the layer -->
+    <xs:attribute name="title"     type="xs:string"         use="optional" />
+    <!-- indicates whether this layer is HW dependent -->
+    <xs:attribute name="hasTarget" type="xs:boolean"        use="optional" />
   </xs:complexType>
 
   <!-- Layers section type -->
@@ -258,16 +262,22 @@
   <!-- Project target specification: -->
   <xs:complexType name="TargetType">
     <xs:choice maxOccurs="unbounded">
-      <!-- build options -->
+      <!-- Build options -->
       <xs:element name="output"    type="OutputType" />
-      <!-- linker command-line -->
+      <!-- Linker command-line -->
       <xs:element name="ldflags"   type="LinkerFlagsType" />
       <!-- C-Compiler command-line -->
       <xs:element name="cflags"    type="ToolOptionType" />
       <!-- C++ Compiler command-line -->
       <xs:element name="cxxflags"  type="ToolOptionType" />
+      <!-- Archiver command-line -->
+      <xs:element name="arflags"  type="ToolOptionType" />
       <!-- Assembler command-line -->
       <xs:element name="asflags"   type="AsmOptionType" />
+      <!-- Include paths -->
+      <xs:element name="includes"  type="xs:string" minOccurs="0" />
+      <!-- Preprocessing definitions -->
+      <xs:element name="defines"   type="xs:string" minOccurs="0" />
     </xs:choice>
     <!-- Board Vendor -->
     <xs:attribute name="Bvendor"  type="xs:string"   use="optional" />
@@ -296,10 +306,12 @@
   <!-- Build settings for the project, setting RTE filter options -->
   <xs:complexType name="OutputType">
     <!-- Project output file name -->
-    <xs:attribute name="name"  type="xs:string"          use="required" />
-    <xs:attribute name="obj"   type="xs:string"          use="optional" />
-    <xs:attribute name="list"  type="xs:string"          use="optional" />
-    <xs:attribute name="type"  type="CompilerOutputType" use="required" />
+    <xs:attribute name="name"   type="xs:string"          use="required" />
+    <xs:attribute name="obj"    type="xs:string"          use="optional" /> <!-- Deprecated -->
+    <xs:attribute name="list"   type="xs:string"          use="optional" /> <!-- Deprecated -->
+    <xs:attribute name="outdir" type="xs:string"          use="optional" />
+    <xs:attribute name="intdir" type="xs:string"          use="optional" />
+    <xs:attribute name="type"   type="CompilerOutputType" use="required" />
   </xs:complexType>
 
   <xs:complexType name="LinkerFlagsType">
@@ -313,7 +325,7 @@
     <xs:attribute name="compiler" type="CompilerEnumType" use="required" />
     <xs:attribute name="add"      type="xs:string" />
     <xs:attribute name="remove"   type="xs:string" />
-	<xs:attribute name="use"      type="xs:string" />
+    <xs:attribute name="use"      type="xs:string" />
   </xs:complexType>
 
   <xs:complexType name="ToolOptionType">
@@ -333,11 +345,16 @@
     <xs:choice maxOccurs="unbounded">
       <xs:element name="cflags"    type="ToolOptionType" />
       <xs:element name="cxxflags"  type="ToolOptionType" />
-      <xs:element name="asflags"   type="ToolOptionType" />
+      <xs:element name="asflags"   type="AsmOptionType" />
       <xs:element name="file"      type="FileType" />
-      <xs:element name="group"     type="GroupType" />
+      <xs:element name="group"     type="GroupType" >
+        <xs:unique name="unique-group-levelN">
+          <xs:selector xpath="group"/>
+          <xs:field xpath="@name"/>
+        </xs:unique>
+      </xs:element>
     </xs:choice>
-    <xs:attribute name="name" use="required" />
+    <xs:attribute name="name"  type="xs:string" use="required"/>
     <!-- layer reference -->
     <xs:attribute name="layer" type="RestrictedString" use="optional" />
   </xs:complexType>
@@ -347,7 +364,7 @@
     <xs:choice minOccurs="0">
       <xs:element name="cflags"   type="ToolOptionType" />
       <xs:element name="cxxflags" type="ToolOptionType" />
-      <xs:element name="asflags"  type="ToolOptionType" />
+      <xs:element name="asflags"  type="AsmOptionType" />
     </xs:choice>
     <!-- path + filename + extension -->
     <xs:attribute name="name"     type="xs:string"        use="required" />
@@ -370,9 +387,15 @@
       <!-- C++ Compiler command-line -->
       <xs:element name="cxxflags"  type="ToolOptionType" />
       <!-- Assembler command-line -->
-      <xs:element name="asflags"   type="ToolOptionType" />
-      <xs:element name="file" type="FileType" />
-      <xs:element name="group" type="GroupType" />
+      <xs:element name="asflags"   type="AsmOptionType" />
+      <xs:element name="file"      type="FileType" >
+      </xs:element>
+      <xs:element name="group"     type="GroupType" >
+        <xs:unique name="unique-group-level1">
+          <xs:selector xpath="group"/>
+          <xs:field xpath="@name"/>
+        </xs:unique>
+      </xs:element>
     </xs:choice>
   </xs:complexType>
 
@@ -397,7 +420,7 @@
             </xs:element>
             <xs:element name="cflags"   type="ToolOptionType" minOccurs="0"/>
             <xs:element name="cxxflags" type="ToolOptionType" minOccurs="0"/>
-            <xs:element name="asflags"  type="ToolOptionType" minOccurs="0"/>
+            <xs:element name="asflags"  type="AsmOptionType" minOccurs="0"/>
           </xs:choice>
           <xs:attribute name="Cvendor"     type="xs:string"            use="optional" />
           <xs:attribute name="Cbundle"     type="xs:string"            use="optional" />
@@ -433,7 +456,7 @@
     </xs:restriction>
   </xs:simpleType>
 
-  <!-- URL type (optionally describes public repository) -->
+  <!-- URL type (deprecated) -->
   <xs:complexType name="UrlType">
     <xs:simpleContent>
       <xs:extension base="xs:anyURI">
@@ -446,28 +469,19 @@
   <!-- Project/Layer Info -->
   <xs:complexType name="InfoType">
     <xs:all>
-      <!-- use filename as 'name' -->
+      <xs:element name="name"        type="xs:string" minOccurs="0" />
       <xs:element name="description" type="xs:string" minOccurs="1" />
-      <xs:element name="url"         type="UrlType"   minOccurs="0" />
-      <xs:element name="keywords"    type="xs:string" minOccurs="0" />
+      <xs:element name="doc"         type="xs:string" minOccurs="0" />
       <xs:element name="category"    type="xs:string" minOccurs="0" />
+      <!-- deprecated: url -->
+      <xs:element name="url"         type="UrlType"   minOccurs="0" />
+      <!-- deprecated: keywords -->
+      <xs:element name="keywords"    type="xs:string" minOccurs="0" />
       <!-- SPDX license ID: https://spdx.org/licenses/ -->
       <xs:element name="license"     type="xs:string" minOccurs="0" />
     </xs:all>
     <!-- 'true' if file is a layer description. Default 'false' -->
     <xs:attribute name="isLayer"      type="xs:boolean"         use="optional" default="false"/>
-  </xs:complexType>
-
-  <!-- Board Info -->
-  <xs:complexType name="BoardInfoType">
-    <xs:simpleContent>
-      <xs:extension base="xs:string">
-        <xs:attribute name="vendor"    type="xs:string"  use="required" />
-        <xs:attribute name="name"      type="xs:string"  use="required" />
-        <xs:attribute name="url"       type="xs:anyURI"  use="optional" />
-        <xs:attribute name="revision"  type="xs:string"  use="optional" />
-      </xs:extension>
-    </xs:simpleContent>
   </xs:complexType>
 
   <!-- package description root point -->
@@ -476,8 +490,6 @@
       <xs:all>
         <!-- project info -->
         <xs:element name="info"           type="InfoType"         minOccurs="1" />
-        <!-- board info -->
-        <xs:element name="board"          type="BoardInfoType"    minOccurs="0" />
         <!-- tool info -->
         <xs:element name="created"        type="CreationInfoType" minOccurs="0" />
         <!-- optional: project layers -->
@@ -491,8 +503,17 @@
         <!-- components used by project -->
         <xs:element name="components"     type="ComponentsType"   minOccurs="0" />
         <!-- project modules/source files not contained in components -->
-        <xs:element name="files"          type="FilesType"        minOccurs="0"/>
-      </xs:all>
+        <xs:element name="files"          type="FilesType"        minOccurs="0">
+          <xs:unique name="unique-group-level0">
+            <xs:selector xpath="group"/>
+            <xs:field xpath="@name"/>
+          </xs:unique>
+          <xs:unique name="unique-filename">
+            <xs:selector xpath=".//file"/>
+            <xs:field xpath="@name"/>
+          </xs:unique>
+        </xs:element>
+        </xs:all>
       <!-- schema version used by writer -->
       <xs:attribute name="schemaVersion"  type="SchemaVersionType" use="required" />
     </xs:complexType>

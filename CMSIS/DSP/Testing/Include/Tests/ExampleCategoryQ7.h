@@ -1,5 +1,8 @@
 #include "Test.h"
 #include "Pattern.h"
+
+#include "dsp/basic_math_functions.h"
+
 class ExampleCategoryQ7:public Client::Suite
     {
         public:

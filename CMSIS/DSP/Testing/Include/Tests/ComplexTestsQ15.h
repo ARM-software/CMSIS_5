@@ -1,5 +1,9 @@
 #include "Test.h"
 #include "Pattern.h"
+
+#include "dsp/complex_math_functions.h"
+
+
 class ComplexTestsQ15:public Client::Suite
     {
         public:

@@ -1,8 +1,8 @@
 /*****************************************************************************
  * @file     ReadMe.txt
  * @brief    Explanation how to use the Device folder and template files 
- * @version  V3.0.3
- * @date     10. January 2018
+ * @version  V3.0.4
+ * @date     20. January 2021
  *****************************************************************************/
 
 Following directory structure and template files are given:
@@ -12,18 +12,26 @@ Following directory structure and template files are given:
       +-- <Device>
             |
             +-- Include
+            |     +-- Template                            only Armv8-M/v8.1-M TrustZone
+            |     |     +- partition_<Device>.h           Secure/Non-Secure configuration
             |     +- <Device>.h                           header file 
-            |     +- system_Device.h                      system include file 
+            |     +- system_<Device>.h                    system include file 
             +-- Source
                   |
+                  +- startup_<Device>.c                   C startup file file 
                   +- system_<Device>.c                    system source file 
                   |
-                  +-- ARM                                 Arm RVCT toolchain
-                  |    +- startup_<Device>.s              ASM startup file for ARMCC
+                  +-- ARM                                 Arm ARMCLang toolchain
+                  |    +- startup_<Device>.s              ASM startup file for ARMCC    (deprecated)
+                  |    +- startup_<Device>.S              ASM startup file for ARMCLang (deprecated)
+                  |    +- <Device>.sct                    Scatter file
                   |
                   +-- GCC                                 Arm GNU toolchain
+                  |    +- startup_<Device>.S              ASM startup file              (deprecated)
+                  |    +- <Device>.ld                     Linker description file
                   |
                   +-- IAR                                 IAR toolchain
+                       +- startup_<Device>.s              ASM startup file
 
 
 Copy the complete folder including files and replace:

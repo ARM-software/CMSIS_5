@@ -3,13 +3,13 @@
  * Title:        arm_mean_f32.c
  * Description:  Mean value of a floating-point vector
  *
- * $Date:        18. March 2019
- * $Revision:    V1.6.0
+ * $Date:        23 April 2021
+ * $Revision:    V1.9.0
  *
- * Target Processor: Cortex-M cores
+ * Target Processor: Cortex-M and Cortex-A cores
  * -------------------------------------------------------------------- */
 /*
- * Copyright (C) 2010-2019 ARM Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -26,24 +26,12 @@
  * limitations under the License.
  */
 
-#include "arm_math.h"
+#include "dsp/statistics_functions.h"
 
 /**
   @ingroup groupStats
  */
 
-/**
-  @defgroup mean Mean
-
-  Calculates the mean of the input vector. Mean is defined as the average of the elements in the vector.
-  The underlying algorithm is used:
-
-  <pre>
-      Result = (pSrc[0] + pSrc[1] + pSrc[2] + ... + pSrc[blockSize-1]) / blockSize;
-  </pre>
-
-  There are separate functions for floating-point, Q31, Q15, and Q7 data types.
- */
 
 /**
   @addtogroup mean

@@ -18,129 +18,192 @@
 
 #include <arm_nnfunctions.h>
 #include <stdlib.h>
+#include <unity.h>
 
-#include "../Utils/validate.h"
 #include "../TestData/basic/test_data.h"
-#include "../TestData/stride2pad1/test_data.h"
 #include "../TestData/depthwise_2/test_data.h"
 #include "../TestData/depthwise_eq_in_out_ch/test_data.h"
+#include "../TestData/stride2pad1/test_data.h"
+#include "../Utils/validate.h"
 
 static const uint16_t dilation = 1;
 
 void basic_arm_depthwise_conv_s8_opt(void)
 {
-  const arm_status expected = ARM_MATH_SUCCESS;
-  q7_t output[BASIC_DST_SIZE] = {0};
+    const arm_status expected = ARM_MATH_SUCCESS;
+    q7_t output[BASIC_DST_SIZE] = {0};
 
-  const int32_t buf_size = arm_depthwise_conv_s8_opt_get_buffer_size(BASIC_IN_CH, BASIC_FILTER_X, BASIC_FILTER_Y);
-  q15_t *bufferA = (q15_t*)malloc(buf_size);
+    cmsis_nn_context ctx;
+    cmsis_nn_dw_conv_params dw_conv_params;
+    cmsis_nn_per_channel_quant_params quant_params;
+    cmsis_nn_dims input_dims;
+    cmsis_nn_dims filter_dims;
+    cmsis_nn_dims bias_dims;
+    cmsis_nn_dims output_dims;
 
-  arm_status result = arm_depthwise_conv_s8_opt(basic_input,
-                                                BASIC_INPUT_W,
-                                                BASIC_INPUT_H,
-                                                BASIC_IN_CH,
-                                                basic_weights,
-                                                BASIC_OUT_CH,
-                                                BASIC_FILTER_X,
-                                                BASIC_FILTER_Y,
-                                                BASIC_PAD_X,
-                                                BASIC_PAD_Y,
-                                                BASIC_STRIDE_X,
-                                                BASIC_STRIDE_Y,
-                                                basic_biases,
-                                                output,
-                                                basic_output_shift,
-                                                basic_output_mult,
-                                                BASIC_OUTPUT_W,
-                                                BASIC_OUTPUT_H,
-                                                BASIC_OUTPUT_OFFSET,
-                                                BASIC_INPUT_OFFSET,
-                                                BASIC_OUT_ACTIVATION_MIN,
-                                                BASIC_OUT_ACTIVATION_MAX,
-                                                dilation,
-                                                dilation,
-                                                bufferA);
-  free(bufferA);
-  TEST_ASSERT_EQUAL(expected, result);
-  TEST_ASSERT_TRUE(validate(output, basic_output_ref, BASIC_DST_SIZE));
+    const q31_t *bias_data = basic_biases;
+    const q7_t *kernel_data = basic_weights;
+    const q7_t *input_data = basic_input;
+
+    input_dims.n = BASIC_INPUT_BATCHES;
+    input_dims.w = BASIC_INPUT_W;
+    input_dims.h = BASIC_INPUT_H;
+    input_dims.c = BASIC_IN_CH;
+    filter_dims.w = BASIC_FILTER_X;
+    filter_dims.h = BASIC_FILTER_Y;
+    output_dims.w = BASIC_OUTPUT_W;
+    output_dims.h = BASIC_OUTPUT_H;
+    output_dims.c = BASIC_OUT_CH;
+
+    dw_conv_params.padding.w = BASIC_PAD_X;
+    dw_conv_params.padding.h = BASIC_PAD_Y;
+    dw_conv_params.stride.w = BASIC_STRIDE_X;
+    dw_conv_params.stride.h = BASIC_STRIDE_Y;
+    dw_conv_params.ch_mult = 1;
+
+    dw_conv_params.input_offset = BASIC_INPUT_OFFSET;
+    dw_conv_params.output_offset = BASIC_OUTPUT_OFFSET;
+    dw_conv_params.activation.min = BASIC_OUT_ACTIVATION_MIN;
+    dw_conv_params.activation.max = BASIC_OUT_ACTIVATION_MAX;
+    quant_params.multiplier = (int32_t *)basic_output_mult;
+    quant_params.shift = (int32_t *)basic_output_shift;
+
+    ctx.size = arm_depthwise_conv_s8_opt_get_buffer_size(&input_dims, &filter_dims);
+    ctx.buf = malloc(ctx.size);
+
+    arm_status result = arm_depthwise_conv_s8_opt(&ctx,
+                                                  &dw_conv_params,
+                                                  &quant_params,
+                                                  &input_dims,
+                                                  input_data,
+                                                  &filter_dims,
+                                                  kernel_data,
+                                                  &bias_dims,
+                                                  bias_data,
+                                                  &output_dims,
+                                                  output);
+
+    free(ctx.buf);
+    TEST_ASSERT_EQUAL(expected, result);
+    TEST_ASSERT_TRUE(validate(output, basic_output_ref, BASIC_DST_SIZE));
 }
 
 void stride2pad1_arm_depthwise_conv_s8_opt(void)
 {
-  const arm_status expected = ARM_MATH_SUCCESS;
-  q7_t output[STRIDE2PAD1_DST_SIZE] = {0};
+    const arm_status expected = ARM_MATH_SUCCESS;
+    q7_t output[STRIDE2PAD1_DST_SIZE] = {0};
 
-  const int32_t buf_size = arm_depthwise_conv_s8_opt_get_buffer_size(BASIC_IN_CH, BASIC_FILTER_X, BASIC_FILTER_Y);
-  q15_t *bufferA = (q15_t*)malloc(buf_size);
+    cmsis_nn_context ctx;
+    cmsis_nn_dw_conv_params dw_conv_params;
+    cmsis_nn_per_channel_quant_params quant_params;
+    cmsis_nn_dims input_dims;
+    cmsis_nn_dims filter_dims;
+    cmsis_nn_dims bias_dims;
+    cmsis_nn_dims output_dims;
 
-  arm_status result = arm_depthwise_conv_s8_opt(stride2pad1_input,
-                                                STRIDE2PAD1_INPUT_W,
-                                                STRIDE2PAD1_INPUT_H,
-                                                STRIDE2PAD1_IN_CH,
-                                                stride2pad1_weights,
-                                                STRIDE2PAD1_OUT_CH,
-                                                STRIDE2PAD1_FILTER_X,
-                                                STRIDE2PAD1_FILTER_Y,
-                                                STRIDE2PAD1_PAD_X,
-                                                STRIDE2PAD1_PAD_Y,
-                                                STRIDE2PAD1_STRIDE_X,
-                                                STRIDE2PAD1_STRIDE_Y,
-                                                stride2pad1_biases,
-                                                output,
-                                                stride2pad1_output_shift,
-                                                stride2pad1_output_mult,
-                                                STRIDE2PAD1_OUTPUT_W,
-                                                STRIDE2PAD1_OUTPUT_H,
-                                                STRIDE2PAD1_OUTPUT_OFFSET,
-                                                STRIDE2PAD1_INPUT_OFFSET,
-                                                STRIDE2PAD1_OUT_ACTIVATION_MIN,
-                                                STRIDE2PAD1_OUT_ACTIVATION_MAX,
-                                                dilation,
-                                                dilation,
-                                                bufferA);
-  free(bufferA);
-  TEST_ASSERT_EQUAL(expected, result);
-  TEST_ASSERT_TRUE(validate(output, stride2pad1_output_ref, STRIDE2PAD1_DST_SIZE));
+    const q31_t *bias_data = stride2pad1_biases;
+    const q7_t *kernel_data = stride2pad1_weights;
+    const q7_t *input_data = stride2pad1_input;
+
+    input_dims.n = STRIDE2PAD1_INPUT_BATCHES;
+    input_dims.w = STRIDE2PAD1_INPUT_W;
+    input_dims.h = STRIDE2PAD1_INPUT_H;
+    input_dims.c = STRIDE2PAD1_IN_CH;
+    filter_dims.w = STRIDE2PAD1_FILTER_X;
+    filter_dims.h = STRIDE2PAD1_FILTER_Y;
+    output_dims.w = STRIDE2PAD1_OUTPUT_W;
+    output_dims.h = STRIDE2PAD1_OUTPUT_H;
+    output_dims.c = STRIDE2PAD1_OUT_CH;
+
+    dw_conv_params.padding.w = STRIDE2PAD1_PAD_X;
+    dw_conv_params.padding.h = STRIDE2PAD1_PAD_Y;
+    dw_conv_params.stride.w = STRIDE2PAD1_STRIDE_X;
+    dw_conv_params.stride.h = STRIDE2PAD1_STRIDE_Y;
+    dw_conv_params.ch_mult = 1;
+
+    dw_conv_params.input_offset = STRIDE2PAD1_INPUT_OFFSET;
+    dw_conv_params.output_offset = STRIDE2PAD1_OUTPUT_OFFSET;
+    dw_conv_params.activation.min = STRIDE2PAD1_OUT_ACTIVATION_MIN;
+    dw_conv_params.activation.max = STRIDE2PAD1_OUT_ACTIVATION_MAX;
+    quant_params.multiplier = (int32_t *)stride2pad1_output_mult;
+    quant_params.shift = (int32_t *)stride2pad1_output_shift;
+
+    ctx.size = arm_depthwise_conv_s8_opt_get_buffer_size(&input_dims, &filter_dims);
+    ctx.buf = malloc(ctx.size);
+
+    arm_status result = arm_depthwise_conv_s8_opt(&ctx,
+                                                  &dw_conv_params,
+                                                  &quant_params,
+                                                  &input_dims,
+                                                  input_data,
+                                                  &filter_dims,
+                                                  kernel_data,
+                                                  &bias_dims,
+                                                  bias_data,
+                                                  &output_dims,
+                                                  output);
+
+    free(ctx.buf);
+    TEST_ASSERT_EQUAL(expected, result);
+    TEST_ASSERT_TRUE(validate(output, stride2pad1_output_ref, STRIDE2PAD1_DST_SIZE));
 }
 
 void depthwise_eq_in_out_ch_arm_depthwise_conv_s8_opt(void)
 {
-  const arm_status expected = ARM_MATH_SUCCESS;
-  q7_t output[DEPTHWISE_EQ_IN_OUT_CH_DST_SIZE] = {0};
+    const arm_status expected = ARM_MATH_SUCCESS;
+    q7_t output[DEPTHWISE_EQ_IN_OUT_CH_DST_SIZE] = {0};
 
-  const int32_t buf_size = arm_depthwise_conv_s8_opt_get_buffer_size(DEPTHWISE_EQ_IN_OUT_CH_IN_CH,
-                                                                     DEPTHWISE_EQ_IN_OUT_CH_FILTER_X,
-                                                                     DEPTHWISE_EQ_IN_OUT_CH_FILTER_Y);
-  q15_t *bufferA = (q15_t*)malloc(buf_size);
+    cmsis_nn_context ctx;
+    cmsis_nn_dw_conv_params dw_conv_params;
+    cmsis_nn_per_channel_quant_params quant_params;
+    cmsis_nn_dims input_dims;
+    cmsis_nn_dims filter_dims;
+    cmsis_nn_dims bias_dims;
+    cmsis_nn_dims output_dims;
 
-  arm_status result = arm_depthwise_conv_s8_opt(depthwise_eq_in_out_ch_input,
-                                                DEPTHWISE_EQ_IN_OUT_CH_INPUT_W,
-                                                DEPTHWISE_EQ_IN_OUT_CH_INPUT_H,
-                                                DEPTHWISE_EQ_IN_OUT_CH_IN_CH,
-                                                depthwise_eq_in_out_ch_weights,
-                                                DEPTHWISE_EQ_IN_OUT_CH_OUT_CH,
-                                                DEPTHWISE_EQ_IN_OUT_CH_FILTER_X,
-                                                DEPTHWISE_EQ_IN_OUT_CH_FILTER_Y,
-                                                DEPTHWISE_EQ_IN_OUT_CH_PAD_X,
-                                                DEPTHWISE_EQ_IN_OUT_CH_PAD_Y,
-                                                DEPTHWISE_EQ_IN_OUT_CH_STRIDE_X,
-                                                DEPTHWISE_EQ_IN_OUT_CH_STRIDE_Y,
-                                                depthwise_eq_in_out_ch_biases,
-                                                output,
-                                                depthwise_eq_in_out_ch_output_shift,
-                                                depthwise_eq_in_out_ch_output_mult,
-                                                DEPTHWISE_EQ_IN_OUT_CH_OUTPUT_W,
-                                                DEPTHWISE_EQ_IN_OUT_CH_OUTPUT_H,
-                                                DEPTHWISE_EQ_IN_OUT_CH_OUTPUT_OFFSET,
-                                                DEPTHWISE_EQ_IN_OUT_CH_INPUT_OFFSET,
-                                                DEPTHWISE_EQ_IN_OUT_CH_OUT_ACTIVATION_MIN,
-                                                DEPTHWISE_EQ_IN_OUT_CH_OUT_ACTIVATION_MAX,
-                                                dilation,
-                                                dilation,
-                                                bufferA);
+    const q31_t *bias_data = depthwise_eq_in_out_ch_biases;
+    const q7_t *kernel_data = depthwise_eq_in_out_ch_weights;
+    const q7_t *input_data = depthwise_eq_in_out_ch_input;
 
-  free(bufferA);
+    input_dims.n = DEPTHWISE_EQ_IN_OUT_CH_INPUT_BATCHES;
+    input_dims.w = DEPTHWISE_EQ_IN_OUT_CH_INPUT_W;
+    input_dims.h = DEPTHWISE_EQ_IN_OUT_CH_INPUT_H;
+    input_dims.c = DEPTHWISE_EQ_IN_OUT_CH_IN_CH;
+    filter_dims.w = DEPTHWISE_EQ_IN_OUT_CH_FILTER_X;
+    filter_dims.h = DEPTHWISE_EQ_IN_OUT_CH_FILTER_Y;
+    output_dims.w = DEPTHWISE_EQ_IN_OUT_CH_OUTPUT_W;
+    output_dims.h = DEPTHWISE_EQ_IN_OUT_CH_OUTPUT_H;
+    output_dims.c = DEPTHWISE_EQ_IN_OUT_CH_OUT_CH;
 
-  TEST_ASSERT_EQUAL(expected, result);
-  TEST_ASSERT_TRUE(validate(output, depthwise_eq_in_out_ch_output_ref, DEPTHWISE_EQ_IN_OUT_CH_DST_SIZE));
+    dw_conv_params.padding.w = DEPTHWISE_EQ_IN_OUT_CH_PAD_X;
+    dw_conv_params.padding.h = DEPTHWISE_EQ_IN_OUT_CH_PAD_Y;
+    dw_conv_params.stride.w = DEPTHWISE_EQ_IN_OUT_CH_STRIDE_X;
+    dw_conv_params.stride.h = DEPTHWISE_EQ_IN_OUT_CH_STRIDE_Y;
+    dw_conv_params.ch_mult = 1;
+
+    dw_conv_params.input_offset = DEPTHWISE_EQ_IN_OUT_CH_INPUT_OFFSET;
+    dw_conv_params.output_offset = DEPTHWISE_EQ_IN_OUT_CH_OUTPUT_OFFSET;
+    dw_conv_params.activation.min = DEPTHWISE_EQ_IN_OUT_CH_OUT_ACTIVATION_MIN;
+    dw_conv_params.activation.max = DEPTHWISE_EQ_IN_OUT_CH_OUT_ACTIVATION_MAX;
+    quant_params.multiplier = (int32_t *)depthwise_eq_in_out_ch_output_mult;
+    quant_params.shift = (int32_t *)depthwise_eq_in_out_ch_output_shift;
+
+    ctx.size = arm_depthwise_conv_s8_opt_get_buffer_size(&input_dims, &filter_dims);
+    ctx.buf = malloc(ctx.size);
+
+    arm_status result = arm_depthwise_conv_s8_opt(&ctx,
+                                                  &dw_conv_params,
+                                                  &quant_params,
+                                                  &input_dims,
+                                                  input_data,
+                                                  &filter_dims,
+                                                  kernel_data,
+                                                  &bias_dims,
+                                                  bias_data,
+                                                  &output_dims,
+                                                  output);
+
+    free(ctx.buf);
+    TEST_ASSERT_EQUAL(expected, result);
+    TEST_ASSERT_TRUE(validate(output, depthwise_eq_in_out_ch_output_ref, DEPTHWISE_EQ_IN_OUT_CH_DST_SIZE));
 }

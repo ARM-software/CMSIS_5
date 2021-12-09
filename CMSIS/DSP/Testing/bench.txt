@@ -5,6 +5,191 @@ group Root {
         class = DSPBenchmarks
         folder = DSP
 
+        group Statistics Benchmarks {
+           class = Stats
+           folder = Stats
+
+           suite Statistics Benchmarks F32 {
+              class = StatsF32
+              folder = StatsF32
+
+              ParamList {
+                  NB
+                  Summary NB
+                  Names "NB Samples"
+                  Formula "NB"
+              }
+
+              Pattern INPUT1_F32_ID : InputBench1_f32.txt 
+              Pattern INPUT2_F32_ID : InputBench2_f32.txt 
+              
+              Output  OUT_F32_ID : Output
+              Output  OUT_S16_ID : Index
+              Output  TMP_F32_ID : Temp
+
+              Params PARAM1_ID = {
+                  A = [16,32,64,128,256]
+              }
+
+              Functions {
+                Vector maximum:test_max_f32
+                Vector average:test_mean_f32
+                Vector minimum:test_min_f32
+                Vector energy:test_power_f32
+                Vector root mean square:test_rms_f32
+                Vector standard deviation:test_std_f32
+                Vector variance:test_var_f32
+                Entropy:test_entropy_f32
+                Vector logsumexp:test_logsumexp_f32
+                Kullback Leibler divergence:test_kullback_leibler_f32
+                Vector logsumexp dot product:test_logsumexp_dot_prod_f32
+                Vector max with no index:test_max_no_idx_f32
+                Vector absolute maximum:test_absmax_f32
+                Vector absolute minimum:test_absmin_f32
+              } -> PARAM1_ID
+
+           }
+
+           suite Statistics Benchmarks F64 {
+              class = StatsF64
+              folder = StatsF64
+
+              ParamList {
+                  NB
+                  Summary NB
+                  Names "NB Samples"
+                  Formula "NB"
+              }
+
+              Pattern INPUT1_F64_ID : InputBench1_f64.txt 
+              Pattern INPUT2_F64_ID : InputBench2_f64.txt 
+
+              Output  OUT_F64_ID : Output
+              Output  OUT_S16_ID : Index
+              Output  TMP_F64_ID : Temp
+
+              Params PARAM1_ID = {
+                  A = [16,32,64,128,256]
+              }
+
+              Functions {
+                Entropy:test_entropy_f64
+                Kullback Leibler divergence:test_kullback_leibler_f64
+              } -> PARAM1_ID
+
+           }
+
+           suite Statistics Benchmarks Q31 {
+              class = StatsQ31
+              folder = StatsQ31
+
+              ParamList {
+                  NB
+                  Summary NB
+                  Names "NB Samples"
+                  Formula "NB"
+              }
+
+              Pattern INPUT1_Q31_ID : InputBench1_q31.txt 
+              Pattern INPUT2_Q31_ID : InputBench2_q31.txt 
+              
+              Output  OUT_Q31_ID : Output
+              Output  OUT_Q63_ID : Output
+              Output  OUT_S16_ID : Index
+              Output  TMP_Q31_ID : Temp
+
+              Params PARAM1_ID = {
+                  A = [16,32,64,128,256]
+              }
+
+              Functions {
+                Vector maximum:test_max_q31
+                Vector average:test_mean_q31
+                Vector minimum:test_min_q31
+                Vector energy:test_power_q31
+                Vector root mean square:test_rms_q31
+                Vector standard deviation:test_std_q31
+                Vector variance:test_var_q31
+                Vector absolute maximum:test_absmax_q31
+                Vector absolute minimum:test_absmin_q31
+              } -> PARAM1_ID
+
+           }
+
+           suite Statistics Benchmarks Q15 {
+              class = StatsQ15
+              folder = StatsQ15
+
+              ParamList {
+                  NB
+                  Summary NB
+                  Names "NB Samples"
+                  Formula "NB"
+              }
+
+              Pattern INPUT1_Q15_ID : InputBench1_q15.txt 
+              Pattern INPUT2_Q15_ID : InputBench2_q15.txt 
+              
+
+              Output  OUT_Q15_ID : Output
+              Output  OUT_Q63_ID : Output
+              Output  OUT_S16_ID : Index
+              Output  TMP_Q15_ID : Temp
+
+              Params PARAM1_ID = {
+                  A = [16,32,64,128,256]
+              }
+
+              Functions {
+                Vector maximum:test_max_q15
+                Vector average:test_mean_q15
+                Vector minimum:test_min_q15
+                Vector energy:test_power_q15
+                Vector root mean square:test_rms_q15
+                Vector standard deviation:test_std_q15
+                Vector variance:test_var_q15
+                Vector absolute maximum:test_absmax_q15
+                Vector absolute minimum:test_absmin_q15
+              } -> PARAM1_ID
+
+           }
+
+           suite Statistics Benchmarks Q7 {
+              class = StatsQ7
+              folder = StatsQ7
+
+              ParamList {
+                  NB
+                  Summary NB
+                  Names "NB Samples"
+                  Formula "NB"
+              }
+
+              Pattern INPUT1_Q7_ID : InputBench1_q7.txt 
+              Pattern INPUT2_Q7_ID : InputBench2_q7.txt 
+              
+
+              Output  OUT_Q7_ID : Output
+              Output  OUT_Q31_ID : Output
+              Output  OUT_S16_ID : Index
+              Output  TMP_Q7_ID : Temp
+
+              Params PARAM1_ID = {
+                  A = [16,32,64,128,256]
+              }
+
+              Functions {
+                Vector maximum:test_max_q7
+                Vector average:test_mean_q7
+                Vector minimum:test_min_q7
+                Vector energy:test_power_q7
+                Vector absolute maximum:test_absmax_q7
+                Vector absolute minimum:test_absmin_q7
+              } -> PARAM1_ID
+
+           }
+        }
+
         group Basic Maths {
            class = BasicBenchmarks
            folder = BasicMaths
@@ -222,6 +407,43 @@ group Root {
            }
         }
 
+        group Quaternion Maths {
+           class = QuaternionBenchmarks
+           folder = QuaternionMaths
+
+           suite Quaternion Maths Benchmarks F32 {
+              class = QuaternionMathsBenchmarksF32
+              folder = QuaternionMathsF32
+  
+              ParamList {
+                  NB
+                  Summary NB
+                  Names "NB Samples"
+                  Formula "NB"
+              }
+  
+              Pattern INPUT1_F32_ID : Input1_f32.txt 
+              Pattern INPUT2_F32_ID : Input2_f32.txt 
+              Pattern INPUT_ROT_F32_ID : Input7_f32.txt 
+
+              Output  OUT_SAMPLES_F32_ID : Output
+              Params PARAM1_ID = {
+                  A = [16,32,64,128]
+              }
+  
+              Functions {
+                Quaternion Norm:test_quaternion_norm_f32
+                Quaternion inverse:test_quaternion_inverse_f32
+                Quaternion conjugate:test_quaternion_conjugate_f32
+                Quaternion normalization:test_quaternion_normalize_f32
+                Quaternion product:test_quaternion_prod_single_f32
+                Quaternion Elementwise product:test_quaternion_product_f32
+                Quaternion to rotation:test_quaternion2rotation_f32
+                Rotation to quaternion:test_rotation2quaternion_f32
+              } -> PARAM1_ID
+           }
+        }
+
         group Filtering {
            class = DSPFiltering 
            folder = Filtering 
@@ -320,6 +542,35 @@ group Root {
                    FIR Filter:test_fir_q15
                    LMS Filter:test_lms_q15
                    Normalized LMS Filter:test_lms_norm_q15
+                } -> PARAM1_ID
+             }
+
+             suite FIR Q7 {
+                class = FIRQ7
+                folder = FIRQ7
+
+                ParamList {
+                  NumTaps, NB
+                  Summary NumTaps, NB
+                  Names "Number of taps","Number of samples"
+                  Formula "NumTaps * NB"
+                }
+
+                Pattern SAMPLES1_Q7_ID : Samples1_q7.txt 
+                Pattern REFS1_Q7_ID : Refs1_q7.txt 
+                Pattern COEFS1_Q7_ID : Coefs1_q7.txt 
+
+                Output  OUT_SAMPLES_Q7_ID : Output
+                Output  STATE_Q7_ID : State
+                Output  ERR_Q7_ID : Err
+
+                Params PARAM1_ID = {
+                  NumTaps = [16,32,64]
+                  NB = [64,128,256]
+                }
+
+                Functions {
+                   FIR Filter:test_fir_q7
                 } -> PARAM1_ID
              }
            }
@@ -577,7 +828,7 @@ group Root {
                 }
 
                 Functions {
-                   Cascaded BiQuad Filter DF2T_f64:test_biquad_cascade_df2T_f64
+                   Cascaded BiQuad Filter DF2T:test_biquad_cascade_df2T_f64
                 } -> PARAM1_ID
               }
            }
@@ -747,6 +998,162 @@ group Root {
              }
         }
 
+        group Bayes{
+           class = Bayes
+           folder = Bayes 
+
+           suite Bayes F32 {
+              class = BayesF32
+              folder = BayesF32
+
+              ParamList {
+                  VECDIM,NBCLASSES
+                  Summary VECDIM,NBCLASSES
+                  Names "Vector dimension","Number of classes"
+                  Formula "VECDIM*NBCLASSES"
+                }
+
+              Pattern DIMS2_S16_ID : DimsBench2_s16.txt 
+              Pattern INPUTS2_F32_ID : Inputs2_f32.txt 
+              Pattern PARAMS2_F32_ID : Params2_f32.txt 
+              Pattern PREDICTS2_S16_ID : Predicts2_s16.txt
+
+              Output  OUT_PROBA_F32_ID : Probas
+              Output  OUT_PREDICT_S16_ID : Predicts
+
+              // Must be consistent with the Python script
+              Params PARAM1_ID = {
+                  VECDIM = [12,14,20]
+                  NBCLASSES = [3,5,4]
+                }
+
+              Functions {
+                 Naive Gaussian Bayes Predictor:test_gaussian_naive_bayes_predict_f32
+              } -> PARAM1_ID
+           }
+        }
+
+        group Distance  {
+           class = Distance
+           folder = Distance
+
+           suite Distance F32 {
+              class = DistanceF32
+              folder = DistanceF32
+
+              ParamList {
+                  NB
+                  Summary NB
+                  Names "NB Samples"
+                  Formula "NB"
+              }
+              
+              Pattern INPUTA_F32_ID : InputBenchA1_f32.txt
+              Pattern INPUTB_F32_ID : InputBenchB1_f32.txt
+
+              Pattern INPUTA_PROBA_F32_ID : InputBenchProbaA1_f32.txt
+              Pattern INPUTB_PROBA_F32_ID : InputBenchProbaB1_f32.txt
+
+              Output  TMPA_F32_ID : TmpA
+              Output  TMPB_F32_ID : TmpB
+
+              Params PARAM1_ID = {
+                  NB = [16,32,64,128,256]
+              }
+
+              Functions {
+                 Bray Curtis distance:test_braycurtis_distance_f32
+                 Canberra distance:test_canberra_distance_f32
+                 Chebyshev distance:test_chebyshev_distance_f32
+                 Cityblock distance:test_cityblock_distance_f32
+                 Correlation distance:test_correlation_distance_f32
+                 Cosine distance:test_cosine_distance_f32
+                 Euclidean distance:test_euclidean_distance_f32
+                 Jensen Shannon distance:test_jensenshannon_distance_f32
+                 Minkowski distance:test_minkowski_distance_f32
+              } -> PARAM1_ID
+           }
+
+           suite Distance  U32 {
+              class = DistanceU32
+              folder = DistanceU32
+
+              ParamList {
+                  NB
+                  Summary NB
+                  Names "NB Bits"
+                  Formula "NB"
+              }
+              
+              Pattern INPUTA_U32_ID : InputBenchA1_u32.txt
+              Pattern INPUTB_U32_ID : InputBenchB1_u32.txt
+
+        
+              Params PARAM1_ID = {
+                  NB = [512, 1024, 2048, 4096, 8192]
+              }
+
+
+              Functions {
+                 Dice distance:test_dice_distance_u32
+                 Hamming distance:test_hamming_distance_u32
+                 Jaccard distance:test_jaccard_distance_u32
+                 Kulsinski distance:test_kulsinski_distance_u32
+                 Roger Stanimoto distance:test_rogerstanimoto_distance_u32
+                 Russell Rao distance:test_russellrao_distance_u32
+                 Sokal Michener distance:test_sokalmichener_distance_u32
+                 Sokal Sneath distance:test_sokalsneath_distance_u32
+                 Yule distance:test_yule_distance_u32
+              } -> PARAM1_ID
+           }
+        }
+
+        group SVM  {
+           class = SVM
+           folder = SVM 
+
+           suite SVM F32 {
+              class = SVMF32
+              folder = SVMF32
+
+              ParamList {
+                  VECDIM,NBVECS
+                  Summary VECDIM,NBVECS
+                  Names "Vector dimension","Number of suppot vectors"
+                  Formula "VECDIM*NBVECS"
+              }
+
+              Pattern INPUT_F32_ID : InputsBench6_f32.txt 
+              
+              Pattern DIMS_LINEAR_S16_ID : DimsLinear6_s16.txt 
+              Pattern PARAMS_LINEAR_F32_ID : ParamsLinear6_f32.txt
+
+              Pattern DIMS_POLY_S16_ID : DimsPoly6_s16.txt 
+              Pattern PARAMS_POLY_F32_ID : ParamsPoly6_f32.txt
+
+              Pattern DIMS_RBF_S16_ID : DimsRBF6_s16.txt 
+              Pattern PARAMS_RBF_F32_ID : ParamsRBF6_f32.txt
+
+              Pattern DIMS_SIGMOID_S16_ID : DimsSigmoid6_s16.txt 
+              Pattern PARAMS_SIGMOID_F32_ID : ParamsSigmoid6_f32.txt
+
+              Output  OUT_S32_ID : Output
+
+              // Must be consistent with the Python script
+              Params PARAM1_ID = {
+                  VECDIM = [16,32,64]
+                  NBVECS = [8,16,32]
+                }
+
+              Functions {
+                 Linear SVM:test_svm_linear_predict_f32
+                 Polynomial SVM:test_svm_polynomial_predict_f32
+                 RBF SVM:test_svm_rbf_predict_f32
+                 Sigmoid SVM:test_svm_sigmoid_predict_f32
+              } -> PARAM1_ID
+           }
+        }
+
         group Barycenter {
            class = Barycenter 
            
@@ -809,12 +1216,12 @@ group Root {
                 }
 
                 Functions {
-                   test_copy_f32:test_copy_f32
-                   test_fill_f32:test_fill_f32
-                   test_q15_to_f32:test_q15_to_f32
-                   test_q31_to_f32:test_q31_to_f32
-                   test_q7_to_f32:test_q7_to_f32
-                   test_weighted_sum_f32:test_weighted_sum_f32
+                   Vector Copy:test_copy_f32
+                   Vector Filling:test_fill_f32
+                   Elementwise q15 to f32:test_q15_to_f32
+                   Elementwise q31 to f32:test_q31_to_f32
+                   Elementwise q7 to f32:test_q7_to_f32
+                   Weighted sum:test_weighted_sum_f32
                 } -> PARAM1_ID
              }
 
@@ -923,6 +1330,38 @@ group Root {
                 }
 
                 Pattern INPUTA_F32_ID : InputA1_f32.txt 
+                Pattern INPUTAC_F32_ID : InputAC1_f32.txt 
+                Pattern INPUTVEC1_F32_ID : InputVec1_f32.txt 
+
+                Pattern DIMSCHOLESKY1_DPO_S16_ID : DimsCholeskyDPO1_s16.txt 
+                Pattern DIMSCHOLESKY1_SDPO_S16_ID : DimsCholeskySDPO1_s16.txt 
+                Pattern INPUTSCHOLESKY1_DPO_F32_ID : InputCholeskyDPO1_f32.txt 
+                Pattern INPUTSCHOLESKY1_SDPO_F32_ID : InputCholeskySDPO1_f32.txt 
+
+                Pattern REFCHOLESKY1_DPO_F32_ID : RefCholeskyDPO1_f32.txt
+
+                Pattern REFLDLT_D_DPO1_F32_ID : RefLDLT_D_DPO1_f32.txt
+                Pattern REFLDLT_LL_DPO1_F32_ID : RefLDLT_LL_DPO1_f32.txt
+                Pattern REFLDLT_PERM_DPO1_F32_ID : RefLDLT_PERM_DPO1_s16.txt
+
+                Pattern REFLDLT_D_SDPO1_F32_ID : RefLDLT_D_SDPO1_f32.txt
+                Pattern REFLDLT_LL_SDPO1_F32_ID : RefLDLT_LL_SDPO1_f32.txt
+                Pattern REFLDLT_PERM_SDPO1_F32_ID : RefLDLT_PERM_SDPO1_s16.txt
+
+                Pattern INPUT_UT_DPO_F32_ID : InputUTDPO1_f32.txt
+                Pattern INPUT_LT_DPO_F32_ID : InputLTDPO1_f32.txt
+                Pattern INPUT_RNDA_DPO_F32_ID : InputRNDA1_f32.txt
+            
+                Pattern REF_UTINV_DPO_F32_ID : Ref_UTINV_DPO1_f32.txt
+                Pattern REF_LTINV_DPO_F32_ID : Ref_LTINV_DPO1_f32.txt
+                Pattern REF_CHOLINV_DPO_F32_ID : Ref_CHOLINV_DPO1_f32.txt
+
+                Output  D_F32_ID : Output
+                Output  LL_F32_ID : Output
+                Output  PERM_S16_ID : Output
+                
+                Output  TMPA_F32_ID : TempA
+                Output  TMPB_F32_ID : TempB
                 Output  OUT_F32_ID : Output
 
                 Params PARAM1_ID = {
@@ -930,12 +1369,20 @@ group Root {
                   NBC = [5,10,40]
                 }
 
+                Params PARAM_CHOLESKY_ID : ParamsCholesky1.txt
+
                 Functions {
                    Matrix Scaling:test_mat_scale_f32
                    Matrix Inversion:test_mat_inverse_f32
                    Matrix Transpose:test_mat_trans_f32
                    Matrix Addition:test_mat_add_f32
                    Matrix Substraction:test_mat_sub_f32
+                   Matrix Vector Multiplication:test_mat_vec_mult_f32
+                   Matrix Complex Transpose:test_mat_cmplx_trans_f32
+                   Cholesky decomposition:test_mat_cholesky_dpo_f32 -> PARAM_CHOLESKY_ID
+                   Backward substitution:test_solve_upper_triangular_f32 -> PARAM_CHOLESKY_ID
+                   Foward substitution:test_solve_lower_triangular_f32 -> PARAM_CHOLESKY_ID
+                   LDLT decomposition:test_ldlt_decomposition_f32 -> PARAM_CHOLESKY_ID
                 } -> PARAM1_ID
               }
 
@@ -951,6 +1398,9 @@ group Root {
                 }
 
                 Pattern INPUTA_Q31_ID : InputA1_q31.txt 
+                Pattern INPUTAC_Q31_ID : InputAC1_q31.txt 
+                Pattern INPUTVEC1_Q31_ID : InputVec1_q31.txt 
+
                 Output  OUT_Q31_ID : Output
 
                 Params PARAM1_ID = {
@@ -963,6 +1413,8 @@ group Root {
                    Matrix Transpose:test_mat_trans_q31
                    Matrix Addition:test_mat_add_q31
                    Matrix Substraction:test_mat_sub_q31
+                   Matrix Vector Multiplication:test_mat_vec_mult_q31
+                   Matrix Complex Transpose:test_mat_cmplx_trans_q31
                 } -> PARAM1_ID
               }
 
@@ -978,6 +1430,8 @@ group Root {
                 }
 
                 Pattern INPUTA_Q15_ID : InputA1_q15.txt 
+                Pattern INPUTAC_Q15_ID : InputAC1_q15.txt 
+                Pattern INPUTVEC1_Q15_ID : InputVec1_q15.txt 
                 Output  OUT_Q15_ID : Output
 
                 Params PARAM1_ID = {
@@ -990,8 +1444,37 @@ group Root {
                    Matrix Transpose:test_mat_trans_q15
                    Matrix Addition:test_mat_add_q15
                    Matrix Substraction:test_mat_sub_q15
+                   Matrix Vector Multiplication:test_mat_vec_mult_q15
+                   Matrix Complex Transpose:test_mat_cmplx_trans_q15
                 } -> PARAM1_ID
               }
+
+              suite Unary Matrix Operators Q7 {
+                class = UnaryQ7 
+                folder = UnaryQ7
+
+                ParamList {
+                  NBR,NBC
+                  Summary NBR,NBC
+                  Names "Number of rows","Number of columns"
+                  Formula "NBR*NBC"
+                }
+
+                Pattern INPUTA_Q7_ID : InputA1_q7.txt 
+                Pattern INPUTVEC1_Q7_ID : InputVec1_q7.txt 
+                Output  OUT_Q7_ID : Output
+
+                Params PARAM1_ID = {
+                  NBR = [5,10,40]
+                  NBC = [5,10,40]
+                }
+
+                Functions {
+                   Matrix Transpose:test_mat_trans_q7
+                   Matrix Vector Multiplication:test_mat_vec_mult_q7
+                } -> PARAM1_ID
+              }
+
 
               suite Unary Matrix Operators F64 {
                 class = UnaryF64 
@@ -1005,6 +1488,32 @@ group Root {
                 }
 
                 Pattern INPUTA_F64_ID : InputA1_f64.txt 
+
+                Pattern DIMSCHOLESKY1_DPO_S16_ID : DimsCholeskyDPO1_s16.txt 
+                Pattern DIMSCHOLESKY1_SDPO_S16_ID : DimsCholeskySDPO1_s16.txt 
+                Pattern INPUTSCHOLESKY1_DPO_F64_ID : InputCholeskyDPO1_f64.txt 
+                Pattern INPUTSCHOLESKY1_SDPO_F64_ID : InputCholeskySDPO1_f64.txt 
+
+                Pattern REFCHOLESKY1_DPO_F64_ID : RefCholeskyDPO1_f64.txt
+
+                Pattern REFLDLT_D_DPO1_F64_ID : RefLDLT_D_DPO1_f64.txt
+                Pattern REFLDLT_LL_DPO1_F64_ID : RefLDLT_LL_DPO1_f64.txt
+                Pattern REFLDLT_PERM_DPO1_F64_ID : RefLDLT_PERM_DPO1_s16.txt
+
+                Pattern REFLDLT_D_SDPO1_F64_ID : RefLDLT_D_SDPO1_f64.txt
+                Pattern REFLDLT_LL_SDPO1_F64_ID : RefLDLT_LL_SDPO1_f64.txt
+                Pattern REFLDLT_PERM_SDPO1_F64_ID : RefLDLT_PERM_SDPO1_s16.txt
+
+                Pattern INPUT_UT_DPO_F64_ID : InputUTDPO1_f64.txt
+                Pattern INPUT_LT_DPO_F64_ID : InputLTDPO1_f64.txt
+                Pattern INPUT_RNDA_DPO_F64_ID : InputRNDA1_f64.txt
+            
+                Pattern REF_UTINV_DPO_F64_ID : Ref_UTINV_DPO1_f64.txt
+                Pattern REF_LTINV_DPO_F64_ID : Ref_LTINV_DPO1_f64.txt
+                Pattern REF_CHOLINV_DPO_F64_ID : Ref_CHOLINV_DPO1_f64.txt
+
+                Output  TMPA_F64_ID : TempA
+                Output  TMPB_F64_ID : TempB
                 Output  OUT_F64_ID : Output
 
                 Params PARAM1_ID = {
@@ -1012,8 +1521,13 @@ group Root {
                   NBC = [5,10,40]
                 }
 
+                Params PARAM_CHOLESKY_ID : ParamsCholesky1.txt
+
                 Functions {
                    Matrix Inversion:test_mat_inverse_f64
+                   Cholesky decomposition:test_mat_cholesky_dpo_f64 -> PARAM_CHOLESKY_ID
+                   Backward substitution:test_solve_upper_triangular_f64 -> PARAM_CHOLESKY_ID
+                   Foward substitution:test_solve_lower_triangular_f64 -> PARAM_CHOLESKY_ID
                 } -> PARAM1_ID
               }
            }
@@ -1035,6 +1549,7 @@ group Root {
 
                 Pattern INPUTA_F32_ID : InputA1_f32.txt 
                 Pattern INPUTB_F32_ID : InputB1_f32.txt 
+
                 Pattern INPUTAC_F32_ID : InputAC1_f32.txt 
                 Pattern INPUTBC_F32_ID : InputBC1_f32.txt 
                 Output  OUT_F32_ID : Output
@@ -1044,6 +1559,7 @@ group Root {
                   NBI = [5,10,40]
                   NBC = [5,10,40]
                 }
+
 
                 Functions {
                    Matrix Multiplication:test_mat_mult_f32
@@ -1067,6 +1583,7 @@ group Root {
                 Pattern INPUTAC_Q31_ID : InputAC1_q31.txt 
                 Pattern INPUTBC_Q31_ID : InputBC1_q31.txt 
                 Output  OUT_Q31_ID : Output
+                Output  TMP_Q31_ID : Temp
 
                 Params PARAM1_ID = {
                   NBR = [5,10,40]
@@ -1074,10 +1591,12 @@ group Root {
                   NBC = [5,10,40]
                 }
 
+
                 Functions {
                    Matrix Multiplication:test_mat_mult_q31
                    Complex Matrix Multiplication:test_mat_cmplx_mult_q31
                    Fast Matrix Multiplication:test_mat_mult_fast_q31
+                   Opt Matrix Multiplication:test_mat_mult_opt_q31
                 } -> PARAM1_ID
              }
 
@@ -1097,6 +1616,7 @@ group Root {
                 Pattern INPUTAC_Q15_ID : InputAC1_q15.txt 
                 Pattern INPUTBC_Q15_ID : InputBC1_q15.txt 
                 Output  OUT_Q15_ID : Output
+                Output  TMP_Q15_ID : Temp
 
                 Params PARAM1_ID = {
                   NBR = [5,10,40]
@@ -1108,6 +1628,35 @@ group Root {
                    Matrix Multiplication:test_mat_mult_q15
                    Complex Matrix Multiplication:test_mat_cmplx_mult_q15
                    Fast Matrix Multiplication:test_mat_mult_fast_q15
+                } -> PARAM1_ID
+             }
+
+             suite Binary Matrix Operators Q7 {
+                class = BinaryQ7 
+                folder = BinaryQ7
+
+                ParamList {
+                  NBR,NBI,NBC
+                  Summary NBR,NBI,NBC
+                  Names "Number of rows","Inner dimensions","Number of columns"
+                  Formula "NBR*NBI*NBC"
+                }
+
+                Pattern INPUTA_Q7_ID : InputA1_q7.txt 
+                Pattern INPUTB_Q7_ID : InputB1_q7.txt 
+                Pattern INPUTAC_Q7_ID : InputAC1_q7.txt 
+                Pattern INPUTBC_Q7_ID : InputBC1_q7.txt 
+                Output  OUT_Q7_ID : Output
+
+                Params PARAM1_ID = {
+                  NBR = [5,10,40]
+                  NBI = [5,10,40]
+                  NBC = [5,10,40]
+                }
+
+
+                Functions {
+                   Matrix Multiplication:test_mat_mult_q7
                 } -> PARAM1_ID
              }
            }
@@ -1125,11 +1674,13 @@ group Root {
                   NB,IFFT,BITREV
                   Summary NB
                   Names "Number of samples,Inverse FFT, Bit Reversal"
-                  Formula "NB"
+                  Formula "I(NB*log2(NB))"
                 }
 
                 Pattern INPUTR_F32_ID : RealInputSamples19_f32.txt 
                 Pattern INPUTC_F32_ID : ComplexInputSamples_Noisy_512_6_f32.txt 
+                
+                Output  TMP_F32_ID : Temp
                 Output  OUT_F32_ID : Output
                 Output  STATE_F32_ID : Output
 
@@ -1162,8 +1713,8 @@ group Root {
                    Complex FFT:test_cfft_f32 -> CFFT_PARAM_ID
                    Real FFT:test_rfft_f32 -> RFFT_PARAM_ID
                    DCT4:test_dct4_f32 -> DCT_PARAM_ID
-                   Radix 4 Complex FFT:test_cfft_radix4_f32 -> CFFT4_PARAM_ID
-                   Radix 2 Complex FFT:test_cfft_radix2_f32 -> CFFT_PARAM_ID
+                   Scalar Radix 4 Complex FFT:test_cfft_radix4_f32 -> CFFT4_PARAM_ID
+                   Scalar Radix 2 Complex FFT:test_cfft_radix2_f32 -> CFFT_PARAM_ID
                 }
            }
 
@@ -1175,7 +1726,7 @@ group Root {
                   NB,IFFT,BITREV
                   Summary NB
                   Names "Number of samples,Inverse FFT, Bit Reversal"
-                  Formula "NB"
+                  Formula "I(NB*log2(NB))"
                 }
 
                 Pattern INPUTR_Q31_ID : RealInputSamples19_q31.txt 
@@ -1199,7 +1750,7 @@ group Root {
                 Params RFFT_PARAM_ID = {
                   NB = [64,128,256]
                   IFFT = [0,1]
-                  REV = [0,1]
+                  REV = [1]
                 }
 
                 Params DCT_PARAM_ID = {
@@ -1212,8 +1763,8 @@ group Root {
                    Complex FFT:test_cfft_q31 -> CFFT_PARAM_ID
                    Real FFT:test_rfft_q31 -> RFFT_PARAM_ID
                    DCT4:test_dct4_q31 -> DCT_PARAM_ID
-                   Radix 4 Complex FFT:test_cfft_radix4_q31 -> CFFT4_PARAM_ID
-                   Radix 2 Complex FFT:test_cfft_radix2_q31 -> CFFT_PARAM_ID
+                   Scalar Radix 4 Complex FFT:test_cfft_radix4_q31 -> CFFT4_PARAM_ID
+                   Scalar Radix 2 Complex FFT:test_cfft_radix2_q31 -> CFFT_PARAM_ID
                 }
            }
 
@@ -1225,7 +1776,7 @@ group Root {
                   NB,IFFT,BITREV
                   Summary NB
                   Names "Number of samples,Inverse FFT, Bit Reversal"
-                  Formula "NB"
+                  Formula "I(NB*log2(NB))"
                 }
 
                 Pattern INPUTR_Q15_ID : RealInputSamples19_q15.txt 
@@ -1262,8 +1813,8 @@ group Root {
                    Complex FFT:test_cfft_q15 -> CFFT_PARAM_ID
                    Real FFT:test_rfft_q15 -> RFFT_PARAM_ID
                    DCT4:test_dct4_q15 -> DCT_PARAM_ID
-                   Radix 4 Complex FFT:test_cfft_radix4_q15 -> CFFT4_PARAM_ID
-                   Radix 2 Complex FFT:test_cfft_radix2_q15 -> CFFT_PARAM_ID
+                   Scalar Radix 4 Complex FFT:test_cfft_radix4_q15 -> CFFT4_PARAM_ID
+                   Scalar Radix 2 Complex FFT:test_cfft_radix2_q15 -> CFFT_PARAM_ID
                 }
            }
         }

@@ -477,11 +477,11 @@ The messages in this category are issued by PackChk during package validation. T
   <td>There are no examples found for the board \em 'BOARD'.
   <br>Provide examples. Refer to \ref element_example.</td>
 </tr>
-<!-- /* not used*/
 <tr><td>M380</td> <td>WARNING</td> <td>No description found for [\em 'VENDOR'] 'MCU'</td>
-  <td> </td>
+  <td>No description was found for the device \em 'MCU' from \em 'VENDOR'.
+  <br>Use \token{description} attribute to provide information about the device, its subfamily, or family. Refer to \ref element_description.
+  </td>
 </tr>
--->
 <tr><td>M381</td> <td>WARNING</td> <td>Vendor names are not equal: '[\em 'VENDOR'] \em 'MCU', MCU '[\em 'VENDOR2'] \em 'MCU2', see Line \em 'LINE'</td>
   <td>Vendor name specified in the \token{Dvendor} attribute for the \token{\<mountedDevice>} tag does not match the actual device vendor name.
   <br>Verify and correct vendor name. Refer to \ref element_board_mountedDevice.</td>

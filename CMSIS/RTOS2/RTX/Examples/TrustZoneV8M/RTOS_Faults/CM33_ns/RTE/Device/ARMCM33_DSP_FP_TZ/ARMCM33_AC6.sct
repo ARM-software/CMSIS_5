@@ -1,6 +1,10 @@
 #! armclang -E --target=arm-arm-none-eabi -mcpu=cortex-m33 -xc
 ; command above MUST be in first line (no comment above!)
 
+;Note: Add '-mcmse' to first line if your software model is "Secure Mode".
+;      #! armclang -E --target=arm-arm-none-eabi -mcpu=cortex-m33 -xc -mcmse
+
+
 /*
 ;-------- <<< Use Configuration Wizard in Context Menu >>> -------------------
 */
@@ -32,6 +36,13 @@
 #define __STACK_SIZE    0x00000400
 #define __HEAP_SIZE     0x00000C00
 
+/*--------------------- CMSE Venner Configuration ---------------------------
+; <h> CMSE Venner Configuration
+;   <o0>  CMSE Venner Size (in Bytes) <0x0-0xFFFFFFFF:32>
+; </h>
+ *----------------------------------------------------------------------------*/
+#define __CMSEVENEER_SIZE    0x200
+
 /*
 ;------------- <<< end of configuration section >>> ---------------------------
 */
@@ -40,25 +51,43 @@
 /*----------------------------------------------------------------------------
   User Stack & Heap boundary definition
  *----------------------------------------------------------------------------*/
-#define __STACK_TOP    (__RAM_BASE + __RAM_SIZE)    /* starts at end of RAM */
-#define __HEAP_BASE    (AlignExpr(+0, 8))           /* starts after RW_RAM section, 8 byte aligned */
+#define __STACK_TOP    (__RAM_BASE + __RAM_SIZE - __STACKSEAL_SIZE) /* starts at end of RAM - 8 byte stack seal */
+#define __HEAP_BASE    (AlignExpr(+0, 8))                           /* starts after RW_RAM section, 8 byte aligned */
+
+/* ----------------------------------------------------------------------------
+  Stack seal size definition
+ *----------------------------------------------------------------------------*/
+#if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
+#define __STACKSEAL_SIZE   ( 8 )
+#else
+#define __STACKSEAL_SIZE   ( 0 )
+#endif
 
 
 /*----------------------------------------------------------------------------
-  Scatter File Definitions definition
+  Region base & size definition
  *----------------------------------------------------------------------------*/
-#define __RO_BASE       __ROM_BASE
-#define __RO_SIZE       __ROM_SIZE
+#if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
+#define __CV_BASE          ( __ROM_BASE + __ROM_SIZE - __CMSEVENEER_SIZE )
+#define __CV_SIZE          ( __CMSEVENEER_SIZE )
+#else
+#define __CV_SIZE          ( 0 )
+#endif
 
-#define __RW_BASE       __RAM_BASE
-#define __RW_SIZE      (__RAM_SIZE - __STACK_SIZE - __HEAP_SIZE)
+#define __RO_BASE          ( __ROM_BASE )
+#define __RO_SIZE          ( __ROM_SIZE - __CV_SIZE )
+
+#define __RW_BASE          ( __RAM_BASE )
+#define __RW_SIZE          ( __RAM_SIZE - __STACK_SIZE - __HEAP_SIZE )
 
 
+/*----------------------------------------------------------------------------
+  Scatter Region definition
+ *----------------------------------------------------------------------------*/
 LR_ROM __RO_BASE __RO_SIZE  {                       ; load region size_region
   ER_ROM __RO_BASE __RO_SIZE  {                     ; load address = execution address
    *.o (RESET, +First)
    *(InRoot$$Sections)
-;   *(Veneer$$CMSE)                                  ; uncomment for secure applications
    .ANY (+RO)
    .ANY (+XO)
   }
@@ -74,4 +103,17 @@ LR_ROM __RO_BASE __RO_SIZE  {                       ; load region size_region
 
   ARM_LIB_STACK __STACK_TOP EMPTY -__STACK_SIZE {   ; Reserve empty region for stack
   }
+
+#if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
+  STACKSEAL +0 EMPTY __STACKSEAL_SIZE {             ; Reserve empty region for stack seal immediately after stack
+  }
+#endif
 }
+
+#if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
+LR_CMSE_VENEER __CV_BASE ALIGN 32 __CV_SIZE  {      ; own load/execution region for CMSE Venners
+  ER_CMSE_VENEER __CV_BASE __CV_SIZE  {
+   *(Veneer$$CMSE)
+  }
+}
+#endif

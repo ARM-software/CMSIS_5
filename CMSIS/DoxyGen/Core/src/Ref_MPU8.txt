@@ -8,7 +8,7 @@ The MPU is used to prevent from illegal memory accesses that are typically cause
 
 <b>Example:</b>
 \code
-void main() 
+int main() 
 {
   // Set Region 0 using Attr 0
   ARM_MPU_SetMemAttr(0UL, ARM_MPU_ATTR(       /* Normal memory */
@@ -181,7 +181,7 @@ __STATIC_INLINE void ARM_MPU_SetRegion(uint32_t rnr, uint32_t rbar, uint32_t rla
 */   
 __STATIC_INLINE void ARM_MPU_SetRegion_NS(uint32_t rnr, uint32_t rbar, uint32_t rlar);
 
-/** Memcopy with strictly ordered memory access, e.g. for register targets.
+/** Memcpy with strictly ordered memory access, e.g. used by code in \ref ARM_MPU_LoadEx.
 * \param dst Destination data is copied to.
 * \param src Source data is copied from.
 * \param len Amount of data words to be copied.

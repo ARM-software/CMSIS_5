@@ -1,6 +1,9 @@
 #include "FIRQ31.h"
 #include "Error.h"
 
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
+static __ALIGNED(8) q31_t coeffArray[64];
+#endif 
    
     void FIRQ31::test_fir_q31()
     {
@@ -30,16 +33,28 @@
        samples.reload(FIRQ31::SAMPLES1_Q31_ID,mgr,this->nbSamples);
        coefs.reload(FIRQ31::COEFS1_Q31_ID,mgr,this->nbTaps);
 
-       state.create(this->nbSamples + this->nbTaps - 1,FIRQ31::STATE_Q31_ID,mgr);
+       state.create(2*ROUND_UP(this->nbSamples,4) + this->nbSamples + this->nbTaps - 1,FIRQ31::STATE_Q31_ID,mgr);
        output.create(this->nbSamples,FIRQ31::OUT_SAMPLES_Q31_ID,mgr);
 
        switch(id)
        {
            case TEST_FIR_Q31_1:
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
+              /* Copy coefficients and pad to zero 
+              */
+              memset(coeffArray,0,32*sizeof(q31_t));
+              q31_t *ptr;
+
+              ptr=coefs.ptr();
+              memcpy(coeffArray,ptr,this->nbTaps*sizeof(q31_t));
+              this->pCoefs = coeffArray;
+#else
+              this->pCoefs=coefs.ptr();
+#endif
+
               arm_fir_init_q31(&instFir,this->nbTaps,coefs.ptr(),state.ptr(),this->nbSamples);
 
               this->pSrc=samples.ptr();
-              this->pCoefs=coefs.ptr();
               this->pDst=output.ptr();
            break;
 

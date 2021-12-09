@@ -3,13 +3,13 @@
  * Title:        arm_cmplx_mat_mult_q15.c
  * Description:  Q15 complex matrix multiplication
  *
- * $Date:        18. March 2019
- * $Revision:    V1.6.0
+ * $Date:        23 April 2021
+ * $Revision:    V1.9.0
  *
- * Target Processor: Cortex-M cores
+ * Target Processor: Cortex-M and Cortex-A cores
  * -------------------------------------------------------------------- */
 /*
- * Copyright (C) 2010-2019 ARM Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -26,7 +26,7 @@
  * limitations under the License.
  */
 
-#include "arm_math.h"
+#include "dsp/matrix_functions.h"
 
 /**
   @ingroup groupMatrix
@@ -57,7 +57,7 @@
                    This approach provides 33 guard bits and there is no risk of overflow. The 34.30 result is then
                    truncated to 34.15 format by discarding the low 15 bits and then saturated to 1.15 format.
  */
-#if defined(ARM_MATH_MVEI)
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #define MVE_ASRL_SAT16(acc, shift)          ((sqrshrl_sat48(acc, -(32-shift)) >> 32) & 0xffffffff)
 
@@ -171,16 +171,16 @@ arm_status arm_mat_cmplx_mult_q15(
                 pSrcAVec += 8;
                 vecB = vldrhq_gather_shifted_offset(pInB, vecOffs);
 
-                acc0 = vmlsldavaq(acc0, vecA, vecB);
-                acc1 = vmlaldavaxq(acc1, vecA, vecB);
+                acc0 = vmlsldavaq_s16(acc0, vecA, vecB);
+                acc1 = vmlaldavaxq_s16(acc1, vecA, vecB);
                 vecB2 = vldrhq_gather_shifted_offset(pInB2, vecOffs);
                 /*
                  * move Matrix B read offsets, 4 rows down
                  */
-                vecOffs = vaddq(vecOffs, (uint16_t) (numColsB * 4 * CMPLX_DIM));
+                vecOffs = vaddq_n_u16(vecOffs, (uint16_t) (numColsB * 4 * CMPLX_DIM));
 
-                acc2 = vmlsldavaq(acc2, vecA, vecB2);
-                acc3 = vmlaldavaxq(acc3, vecA, vecB2);
+                acc2 = vmlsldavaq_s16(acc2, vecA, vecB2);
+                acc3 = vmlaldavaxq_s16(acc3, vecA, vecB2);
 
                 blkCnt--;
             }
@@ -196,17 +196,17 @@ arm_status arm_mat_cmplx_mult_q15(
 
                 vecA = vldrhq_z_s16(pSrcAVec, p0);
 
-                acc0 = vmlsldavaq(acc0, vecA, vecB);
-                acc1 = vmlaldavaxq(acc1, vecA, vecB);
+                acc0 = vmlsldavaq_s16(acc0, vecA, vecB);
+                acc1 = vmlaldavaxq_s16(acc1, vecA, vecB);
                 vecB2 = vldrhq_gather_shifted_offset(pInB2, vecOffs);
 
                 /*
                  * move Matrix B read offsets, 4 rows down
                  */
-                vecOffs = vaddq(vecOffs, (uint16_t) (numColsB * 4 * CMPLX_DIM));
+                vecOffs = vaddq_n_u16(vecOffs, (uint16_t) (numColsB * 4 * CMPLX_DIM));
 
-                acc2 = vmlsldavaq(acc2, vecA, vecB2);
-                acc3 = vmlaldavaxq(acc3, vecA, vecB2);
+                acc2 = vmlsldavaq_s16(acc2, vecA, vecB2);
+                acc3 = vmlaldavaxq_s16(acc3, vecA, vecB2);
 
             }
             /*
@@ -264,12 +264,12 @@ arm_status arm_mat_cmplx_mult_q15(
                 pSrcAVec += 8;
                 vecB = vldrhq_gather_shifted_offset(pInB, vecOffs);
 
-                acc0 = vmlsldavaq(acc0, vecA, vecB);
-                acc1 = vmlaldavaxq(acc1, vecA, vecB);
+                acc0 = vmlsldavaq_s16(acc0, vecA, vecB);
+                acc1 = vmlaldavaxq_s16(acc1, vecA, vecB);
                 /*
                  * move Matrix B read offsets, 4 rows down
                  */
-                vecOffs = vaddq(vecOffs, (uint16_t) (numColsB * 4 * CMPLX_DIM));
+                vecOffs = vaddq_n_u16(vecOffs, (uint16_t) (numColsB * 4 * CMPLX_DIM));
 
                 blkCnt--;
             }
@@ -284,8 +284,8 @@ arm_status arm_mat_cmplx_mult_q15(
                 vecB = vldrhq_gather_shifted_offset(pInB, vecOffs);
                 vecA = vldrhq_z_s16(pSrcAVec, p0);
 
-                acc0 = vmlsldavaq(acc0, vecA, vecB);
-                acc1 = vmlaldavaxq(acc1, vecA, vecB);
+                acc0 = vmlsldavaq_s16(acc0, vecA, vecB);
+                acc1 = vmlaldavaxq_s16(acc1, vecA, vecB);
                
             }
             /*

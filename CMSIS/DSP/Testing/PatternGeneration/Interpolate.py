@@ -2,7 +2,7 @@ import os.path
 import numpy as np
 import itertools
 import Tools
-from scipy.interpolate import interp1d,interp2d
+from scipy.interpolate import interp1d,interp2d,CubicSpline
 
 # Those patterns are used for tests and benchmarks.
 # For tests, there is the need to add tests for saturation
@@ -22,9 +22,9 @@ def writeTests(config,format):
     data=data[:-1]
     z = f(data)
 
-    if format != 0:
+    if format != 0 and format != 16:
        data = data / 2.0**11
-    if format != 0:
+    if format != 0 and format != 16:
        config.writeInputQ31(1, data,"Input")
     else:
        config.writeInput(1, data)
@@ -81,10 +81,10 @@ def writeTests(config,format):
     ref=np.array([f(i[0],i[1]) for i in inputVals])
 
 
-    if format != 0:
+    if format != 0 and format != 16:
        inputSamples = inputSamples / 2.0**11
     data = inputSamples.reshape(np.size(inputSamples))
-    if format != 0:
+    if format != 0 and format != 16:
        config.writeInputQ31(2, data,"Input")
     else:
        config.writeInput(2, data)
@@ -95,7 +95,32 @@ def writeTests(config,format):
 
 
     
- 
+    x = [0,3,10,20]
+    config.writeInput(3,x,"InputX")
+    y = [0,9,100,400]
+    config.writeInput(3,y,"InputY")
+    xnew = np.arange(0,20,1)
+    config.writeInput(3,xnew,"OutputX")
+    ynew = CubicSpline(x,y)
+    config.writeReference(3, ynew(xnew))
+
+    x = np.arange(0, 2*np.pi+np.pi/4, np.pi/4)
+    config.writeInput(4,x,"InputX")
+    y = np.sin(x)
+    config.writeInput(4,y,"InputY")
+    xnew = np.arange(0, 2*np.pi+np.pi/16, np.pi/16)
+    config.writeInput(4,xnew,"OutputX")
+    ynew = CubicSpline(x,y,bc_type="natural")
+    config.writeReference(4, ynew(xnew))
+
+    x = [0,3,10]
+    config.writeInput(5,x,"InputX")
+    y = x
+    config.writeInput(5,y,"InputY")
+    xnew = np.arange(-10,20,1)
+    config.writeInput(5,xnew,"OutputX")
+    ynew = CubicSpline(x,y)
+    config.writeReference(5, ynew(xnew))
 
 
 
@@ -105,11 +130,13 @@ def generatePatterns():
     PARAMDIR = os.path.join("Parameters","DSP","Interpolation","Interpolation")
     
     configf32=Tools.Config(PATTERNDIR,PARAMDIR,"f32")
+    configf16=Tools.Config(PATTERNDIR,PARAMDIR,"f16")
     configq31=Tools.Config(PATTERNDIR,PARAMDIR,"q31")
     configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
     configq7=Tools.Config(PATTERNDIR,PARAMDIR,"q7")
     
     writeTests(configf32,0)
+    writeTests(configf16,16)
     writeTests(configq31,31)
     writeTests(configq15,15)
     writeTests(configq7,7)

@@ -27,8 +27,8 @@
  */
 #ifndef _ASSERT_H_
 #define _ASSERT_H_
-#include "arm_math.h"
-#include "arm_math_f16.h"
+#include "arm_math_types.h"
+#include "arm_math_types_f16.h"
 #include <exception>
 #include "Test.h"
 #include "Pattern.h"
@@ -116,7 +116,7 @@ extern void assert_snr_error(unsigned long nb,AnyPattern<q31_t> &pa,AnyPattern<q
 extern void assert_snr_error(unsigned long nb,AnyPattern<q15_t> &pa,AnyPattern<q15_t> &pb, float32_t threshold);
 extern void assert_snr_error(unsigned long nb,AnyPattern<q7_t> &pa,AnyPattern<q7_t> &pb, float32_t threshold);
 
-extern void assert_snr_error(unsigned long nb,float64_t pa,float64_t pb, float32_t threshold);
+extern void assert_snr_error(unsigned long nb,float64_t pa,float64_t pb, float64_t threshold);
 extern void assert_snr_error(unsigned long nb,float32_t pa,float32_t pb, float32_t threshold);
 
 #if !defined (__CC_ARM) && defined(ARM_FLOAT16_SUPPORTED)
@@ -164,7 +164,10 @@ Macros to use to implement tests.
 #define ASSERT_EMPTY_TAIL(A) if (!A.isTailEmpty()) throw (Client::Error(TAIL_NOT_EMPTY_ERROR,__LINE__))
 
 namespace Client {
-    template <typename T> 
+
+using namespace std;
+
+template <typename T> 
 void assert_equal(unsigned long nb,T pa, T pb)
 {
     if (pa != pb)

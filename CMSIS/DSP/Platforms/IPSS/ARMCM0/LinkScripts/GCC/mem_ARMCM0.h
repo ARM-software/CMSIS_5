@@ -1,5 +1,5 @@
 /**************************************************************************//**
- * @file     mem_ARMCM0.h
+ * @file     mem_ARMCM7.h
  * @brief    Memory base and size definitions (used in scatter file)
  * @version  V1.1.0
  * @date     15. May 2019
@@ -25,8 +25,8 @@
  * limitations under the License.
  */
 
-#ifndef __MEM_ARMCM0_H
-#define __MEM_ARMCM0_H
+#ifndef __MEM_ARMCM7_H
+#define __MEM_ARMCM7_H
 
 
 

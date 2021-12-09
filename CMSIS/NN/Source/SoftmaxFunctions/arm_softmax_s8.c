@@ -21,13 +21,14 @@
  * Title:        arm_softmax_s8.c
  * Description:  S8 softmax function
  *
- * $Date:        April 6, 2020
- * $Revision:    V.2.0.0
+ * $Date:        17. August 2021
+ * $Revision:    V.2.0.3
  *
  * Target Processor:  Cortex-M cores
  *
  * -------------------------------------------------------------------- */
 
+#include "arm_nnfunctions.h"
 #include "arm_nnsupportfunctions.h"
 
 #define ACCUM_BITS 12
@@ -39,7 +40,8 @@ static int32x4_t arm_exp_on_negative_values_mve_32x4(int32x4_t val)
     int32_t shift = SHIFT_START;
     int32x4_t mask;
 
-    const int32x4_t val_mod_minus_quarter = vandq_s32(val, vdupq_n_s32((1 << SHIFT_START) - 1)) - vdupq_n_s32(1 << SHIFT_START);
+    const int32x4_t val_mod_minus_quarter =
+        vandq_s32(val, vdupq_n_s32((1 << SHIFT_START) - 1)) - vdupq_n_s32(1 << SHIFT_START);
     const int32x4_t remainder = vsubq_s32(val_mod_minus_quarter, val);
     const int32x4_t x = vaddq_n_s32(val_mod_minus_quarter << 5, 1 << 28);
     const int32x4_t x2 = MUL_SAT_MVE(x, x);
@@ -47,11 +49,11 @@ static int32x4_t arm_exp_on_negative_values_mve_32x4(int32x4_t val)
     const int32x4_t op_2 = x + DIV_POW2_MVE(MUL_SAT_MVE(op_1, vdupq_n_s32(715827883)) + x2, 1);
     int32x4_t result = vdupq_n_s32(1895147668) + MUL_SAT_MVE(vdupq_n_s32(1895147668), op_2);
 
-#define SELECT_IF_NON_ZERO(x)                                                          \
-    {                                                                                  \
-        mve_pred16_t p = vcmpneq_n_s32(remainder & vdupq_n_s32(1 << shift++), 0);      \
-        mask = vmvnq_m_s32(vdupq_n_s32(0), vdupq_n_s32(0), p);                         \
-        result = SELECT_USING_MASK(mask, MUL_SAT_MVE(result, vdupq_n_s32(x)), result); \
+#define SELECT_IF_NON_ZERO(x)                                                                                          \
+    {                                                                                                                  \
+        mve_pred16_t p = vcmpneq_n_s32(remainder & vdupq_n_s32(1 << shift++), 0);                                      \
+        mask = vmvnq_m_s32(vdupq_n_s32(0), vdupq_n_s32(0), p);                                                         \
+        result = SELECT_USING_MASK(mask, MUL_SAT_MVE(result, vdupq_n_s32(x)), result);                                 \
     }
 
     SELECT_IF_NON_ZERO(1672461947)
@@ -67,7 +69,7 @@ static int32x4_t arm_exp_on_negative_values_mve_32x4(int32x4_t val)
     mve_pred16_t p = vcmpeqq_n_s32(val, 0);
     mask = vmvnq_m_s32(vdupq_n_s32(0), vdupq_n_s32(0), p);
 
-    result = SELECT_USING_MASK(mask, vdupq_n_s32(Q31_MAX), result);
+    result = SELECT_USING_MASK(mask, vdupq_n_s32(NN_Q31_MAX), result);
     return result;
 }
 #endif
@@ -91,8 +93,8 @@ void arm_softmax_s8(const int8_t *input,
 {
 #ifdef ARM_MATH_MVEI
 
-#define ACT_MIN ((int8_t)Q7_MIN)
-#define ACT_MAX ((int8_t)Q7_MAX)
+#define ACT_MIN ((int8_t)NN_Q7_MIN)
+#define ACT_MAX ((int8_t)NN_Q7_MAX)
 
     const int32_t mask = (1 << shift);
 
@@ -147,7 +149,7 @@ void arm_softmax_s8(const int8_t *input,
 
         const int32_t headroom = __CLZ((uint32_t)sum);
         const int32_t bits_over_unit = ACCUM_BITS - headroom + 23;
-        const int32_t shifted_scale = ONE_OVER1((sum << headroom) - (1 << 31));
+        const int32_t shifted_scale = ONE_OVER1((sum > 0 ? sum << headroom : 0) - (1 << 31));
 
         vec_count = row_size / 4;
         idx = 0;
@@ -189,7 +191,8 @@ void arm_softmax_s8(const int8_t *input,
             int32_t diff = input[tail_idx + i] - max;
             if (diff >= diff_min)
             {
-                const int32_t res = DIV_POW2(MUL_SAT(shifted_scale, EXP_ON_NEG(MUL_SAT(diff * mask, mult))), bits_over_unit) - 128;
+                const int32_t res =
+                    DIV_POW2(MUL_SAT(shifted_scale, EXP_ON_NEG(MUL_SAT(diff * mask, mult))), bits_over_unit) - 128;
                 output[tail_idx + i] = (int8_t)CLAMP(res, (int32_t)ACT_MAX, (int32_t)ACT_MIN);
             }
             else
@@ -231,14 +234,15 @@ void arm_softmax_s8(const int8_t *input,
 
         const int32_t headroom = __CLZ(sum);
         const int32_t bits_over_unit = ACCUM_BITS - headroom + 23;
-        const int32_t shifted_scale = ONE_OVER1((sum << headroom) - (1 << 31));
+        const int32_t shifted_scale = ONE_OVER1((sum > 0 ? sum << headroom : 0) - (1 << 31));
 
         for (col = 0; col < row_size; ++col)
         {
             diff = input[col] - max;
             if (diff >= diff_min)
             {
-                const int32_t res = DIV_POW2(MUL_SAT(shifted_scale, EXP_ON_NEG(MUL_SAT(diff * mask, mult))), bits_over_unit) - 128;
+                const int32_t res =
+                    DIV_POW2(MUL_SAT(shifted_scale, EXP_ON_NEG(MUL_SAT(diff * mask, mult))), bits_over_unit) - 128;
                 output[col] = (int8_t)CLAMP(res, (int32_t)127, (int32_t)-128);
             }
             else
