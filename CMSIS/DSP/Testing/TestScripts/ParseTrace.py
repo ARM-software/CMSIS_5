@@ -1,4 +1,4 @@
-import re 
+import re
 
 parseRe = re.compile('(.*)\s+([0-9]+):([0-9a-f]+):(.*)')
 
@@ -9,7 +9,7 @@ clk1=0
 
 def getCycles(t):
     global dbgCnt
-    global clk0 
+    global clk0
     global clk1
     while(True):
       try:
@@ -20,7 +20,7 @@ def getCycles(t):
              if (('OP_HINT_DBG_32' in line) or ('DBG' in line)):
                  curClk = int(m.group(2))
                  if dbgCnt==0:
-                  clk0 =curClk 
+                  clk0 =curClk
                  if dbgCnt == 1:
                   clk1 = curClk
                  dbgCnt += 1
@@ -31,6 +31,5 @@ def getCycles(t):
         dbgCnt = 0
         return(0)
 
-      
 
-    
+
