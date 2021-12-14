@@ -784,7 +784,6 @@ void conv_out_activation_arm_convolve_s8(void)
 
 void conv_2x2_dilation_arm_convolve_s8(void)
 {
-#if !defined(ARM_MATH_MVEI) && !defined(ARM_MATH_DSP)
     q7_t output[CONV_2X2_DILATION_DST_SIZE] = {0};
 
     cmsis_nn_context ctx;
@@ -865,13 +864,10 @@ void conv_2x2_dilation_arm_convolve_s8(void)
     free(ctx.buf);
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
-
-#endif
 }
 
 void conv_2x2_dilation_5x5_input_arm_convolve_s8(void)
 {
-#if !defined(ARM_MATH_MVEI) && !defined(ARM_MATH_DSP)
     q7_t output[CONV_2X2_DILATION_5X5_INPUT_DST_SIZE] = {0};
 
     cmsis_nn_context ctx;
@@ -950,13 +946,10 @@ void conv_2x2_dilation_5x5_input_arm_convolve_s8(void)
     free(ctx.buf);
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
-
-#endif
 }
 
 void conv_3x3_dilation_5x5_input_arm_convolve_s8(void)
 {
-#if !defined(ARM_MATH_MVEI) && !defined(ARM_MATH_DSP)
     q7_t output[CONV_3X3_DILATION_5X5_INPUT_DST_SIZE] = {0};
 
     cmsis_nn_context ctx;
@@ -1035,13 +1028,10 @@ void conv_3x3_dilation_5x5_input_arm_convolve_s8(void)
     free(ctx.buf);
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
-
-#endif
 }
 
 void conv_2x3_dilation_arm_convolve_s8(void)
 {
-#if !defined(ARM_MATH_MVEI) && !defined(ARM_MATH_DSP)
     q7_t output[CONV_2X3_DILATION_DST_SIZE] = {0};
 
     cmsis_nn_context ctx;
@@ -1120,13 +1110,10 @@ void conv_2x3_dilation_arm_convolve_s8(void)
     free(ctx.buf);
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
-
-#endif
 }
 
 void conv_3x2_dilation_arm_convolve_s8(void)
 {
-#if !defined(ARM_MATH_MVEI) && !defined(ARM_MATH_DSP)
     q7_t output[CONV_3X2_DILATION_DST_SIZE] = {0};
 
     cmsis_nn_context ctx;
@@ -1205,13 +1192,10 @@ void conv_3x2_dilation_arm_convolve_s8(void)
     free(ctx.buf);
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
-
-#endif
 }
 
 void conv_dilation_golden_arm_convolve_s8(void)
 {
-#if !defined(ARM_MATH_MVEI) && !defined(ARM_MATH_DSP)
     q7_t output[CONV_DILATION_GOLDEN_DST_SIZE] = {0};
 
     cmsis_nn_context ctx;
@@ -1290,6 +1274,4 @@ void conv_dilation_golden_arm_convolve_s8(void)
     free(ctx.buf);
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
-
-#endif
 }

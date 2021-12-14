@@ -21,8 +21,8 @@
  * Title:        arm_convolve_s8.c
  * Description:  s8 version of convolution using symmetric quantization.
  *
- * $Date:        November 12, 2021
- * $Revision:    V.2.0.8
+ * $Date:        December 14, 2021
+ * $Revision:    V.2.1.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -100,26 +100,32 @@ arm_status arm_convolve_s8(const cmsis_nn_context *ctx,
         int32_t buffer_fill_cnt = 0;
         int32_t padded = 0;
         const int32_t num_elem = kernel_x * kernel_y * input_ch;
+        const int32_t dilation_x = conv_params->dilation.w;
+        const int32_t dilation_y = conv_params->dilation.h;
 
         /* This part implements the im2col function */
         for (int i_out_y = 0; i_out_y < output_y; i_out_y++)
         {
             for (int i_out_x = 0; i_out_x < output_x; i_out_x++)
             {
-                for (int i_ker_y = i_out_y * stride_y - pad_y; i_ker_y < i_out_y * stride_y - pad_y + kernel_y;
-                     i_ker_y++)
+                const int32_t base_idx_x = stride_x * i_out_x - pad_x;
+                const int32_t base_idx_y = stride_y * i_out_y - pad_y;
+
+                for (int32_t i_ker_y = 0; i_ker_y < kernel_y; i_ker_y++)
                 {
-                    for (int i_ker_x = i_out_x * stride_x - pad_x; i_ker_x < i_out_x * stride_x - pad_x + kernel_x;
-                         i_ker_x++)
+                    for (int32_t i_ker_x = 0; i_ker_x < kernel_x; i_ker_x++)
                     {
-                        if (i_ker_y < 0 || i_ker_y >= input_y || i_ker_x < 0 || i_ker_x >= input_x)
+                        const int32_t k_y = base_idx_y + dilation_y * i_ker_y;
+                        const int32_t k_x = base_idx_x + dilation_x * i_ker_x;
+
+                        if (k_y < 0 || k_y >= input_y || k_x < 0 || k_x >= input_x)
                         {
                             memset(im2col_buf, (int8_t)-input_offset, sizeof(q7_t) * input_ch);
                             padded = 1;
                         }
                         else
                         {
-                            arm_memcpy_q7(im2col_buf, input_data + (i_ker_y * input_x + i_ker_x) * input_ch, input_ch);
+                            arm_memcpy_q7(im2col_buf, input_data + (k_y * input_x + k_x) * input_ch, input_ch);
                         }
                         im2col_buf += input_ch;
                     }
@@ -183,8 +189,10 @@ arm_status arm_convolve_s8(const cmsis_nn_context *ctx,
                                      bias_data,
                                      out);
         }
+#else // #if defined(ARM_MATH_MVEI)
+        const uint16_t dilation_x = conv_params->dilation.w;
+        const uint16_t dilation_y = conv_params->dilation.h;
 
-#elif defined(ARM_MATH_DSP)
         int32_t i_out_y, i_out_x, i_ker_y, i_ker_x;
 
         /* Generate two columns from the input tensor a GEMM computation */
@@ -196,12 +204,17 @@ arm_status arm_convolve_s8(const cmsis_nn_context *ctx,
         {
             for (i_out_x = 0; i_out_x < output_x; i_out_x++)
             {
-                for (i_ker_y = i_out_y * stride_y - pad_y; i_ker_y < i_out_y * stride_y - pad_y + kernel_y; i_ker_y++)
+                const int32_t base_idx_y = stride_y * i_out_y - pad_y;
+                const int32_t base_idx_x = stride_x * i_out_x - pad_x;
+
+                for (i_ker_y = 0; i_ker_y < kernel_y; i_ker_y++)
                 {
-                    for (i_ker_x = i_out_x * stride_x - pad_x; i_ker_x < i_out_x * stride_x - pad_x + kernel_x;
-                         i_ker_x++)
+                    for (i_ker_x = 0; i_ker_x < kernel_x; i_ker_x++)
                     {
-                        if (i_ker_y < 0 || i_ker_y >= input_y || i_ker_x < 0 || i_ker_x >= input_x)
+                        const int32_t k_y = base_idx_y + dilation_y * i_ker_y;
+                        const int32_t k_x = base_idx_x + dilation_x * i_ker_x;
+
+                        if (k_y < 0 || k_y >= input_y || k_x < 0 || k_x >= input_x)
                         {
                             /* Filling 0 for out-of-bound paddings */
                             memset(two_column_buf, 0, sizeof(q15_t) * input_ch);
@@ -209,10 +222,8 @@ arm_status arm_convolve_s8(const cmsis_nn_context *ctx,
                         else
                         {
                             /* Copying the pixel data to column */
-                            arm_q7_to_q15_with_offset(input_data + (i_ker_y * input_x + i_ker_x) * input_ch,
-                                                      two_column_buf,
-                                                      input_ch,
-                                                      input_offset);
+                            arm_q7_to_q15_with_offset(
+                                input_data + (k_y * input_x + k_x) * input_ch, two_column_buf, input_ch, input_offset);
                         }
                         two_column_buf += input_ch;
                     }
@@ -258,6 +269,7 @@ arm_status arm_convolve_s8(const cmsis_nn_context *ctx,
                 const q15_t *ip_as_col = buffer_a;
 
                 /* 4 multiply and accumulates are done in one loop. */
+#if defined(ARM_MATH_DSP)
                 uint16_t col_count = (input_ch * kernel_y * kernel_x) >> 2;
 
                 while (col_count)
@@ -276,6 +288,9 @@ arm_status arm_convolve_s8(const cmsis_nn_context *ctx,
                 }
                 /* Handle left over mac */
                 col_count = input_ch * kernel_y * kernel_x & 0x3;
+#else
+                uint16_t col_count = input_ch * kernel_y * kernel_x;
+#endif
                 while (col_count)
                 {
                     q7_t ker_a1 = *ker_a++;
@@ -291,64 +306,7 @@ arm_status arm_convolve_s8(const cmsis_nn_context *ctx,
                 *out++ = (q7_t)sum;
             }
         }
-#else
-        /* Run the following code as reference implementation for Cortex-M0 and Cortex-M3 */
-        (void)buffer_a;
-        int32_t i_out_ch, i_out_y, i_out_x, i_input_ch, i_ker_y, i_ker_x;
-        int32_t conv_out;
-
-        const uint16_t dilation_x = conv_params->dilation.w;
-        const uint16_t dilation_y = conv_params->dilation.h;
-
-        for (i_out_ch = 0; i_out_ch < output_ch; i_out_ch++)
-        {
-            for (i_out_y = 0; i_out_y < output_y; i_out_y++)
-            {
-                for (i_out_x = 0; i_out_x < output_x; i_out_x++)
-                {
-                    conv_out = 0;
-
-                    const int32_t base_idx_y = stride_y * i_out_y - pad_y;
-                    const int32_t base_idx_x = stride_x * i_out_x - pad_x;
-
-                    const int32_t start_y_max = (-base_idx_y + dilation_y - 1) / dilation_y;
-                    const int32_t ker_y_start = MAX(0, start_y_max);
-                    const int32_t start_x_max = (-base_idx_x + dilation_x - 1) / dilation_x;
-                    const int32_t ker_x_start = MAX(0, start_x_max);
-
-                    const int32_t end_min_y = (input_y - base_idx_y + dilation_y - 1) / dilation_y;
-                    const int32_t ker_y_end = MIN(kernel_y, end_min_y);
-                    const int32_t end_min_x = (input_x - base_idx_x + dilation_x - 1) / dilation_x;
-                    const int32_t ker_x_end = MIN(kernel_x, end_min_x);
-
-                    for (i_ker_y = ker_y_start; i_ker_y < ker_y_end; i_ker_y++)
-                    {
-                        for (i_ker_x = ker_x_start; i_ker_x < ker_x_end; i_ker_x++)
-                        {
-                            const int32_t in_row = base_idx_y + dilation_y * i_ker_y;
-                            const int32_t in_col = base_idx_x + dilation_x * i_ker_x;
-                            for (i_input_ch = 0; i_input_ch < input_ch; i_input_ch++)
-                            {
-                                conv_out +=
-                                    (input_data[(in_row * input_x + in_col) * input_ch + i_input_ch] + input_offset) *
-                                    filter_data[i_out_ch * input_ch * kernel_y * kernel_x +
-                                                (i_ker_y * kernel_x + i_ker_x) * input_ch + i_input_ch];
-                            }
-                        }
-                    }
-                    if (bias_data)
-                    {
-                        conv_out += bias_data[i_out_ch];
-                    }
-                    conv_out = arm_nn_requantize(conv_out, output_mult[i_out_ch], output_shift[i_out_ch]);
-                    conv_out += out_offset;
-                    conv_out = MAX(conv_out, out_activation_min);
-                    conv_out = MIN(conv_out, out_activation_max);
-                    output_data[i_out_ch + (i_out_y * output_x + i_out_x) * output_ch] = (int8_t)conv_out;
-                }
-            }
-        }
-#endif
+#endif // #if defined(ARM_MATH_MVEI)
         /* Advance to the next batch */
         input_data += (input_x * input_y * input_ch);
         output_data += (output_x * output_y * output_ch);
@@ -367,12 +325,8 @@ int32_t arm_convolve_s8_get_buffer_size(const cmsis_nn_dims *input_dims, const c
     col_length = (col_length + 7) / 8;
     // 4 -> number of im2col buffers, 8 -> 8 elements per Q register
     return 4 * col_length * 8 * (int32_t)sizeof(int8_t);
-#elif defined(ARM_MATH_DSP)
-    return (2 * input_dims->c * filter_dims->w * filter_dims->h) * (int32_t)sizeof(int16_t);
 #else
-    (void)input_dims;
-    (void)filter_dims;
-    return 0;
+    return (2 * input_dims->c * filter_dims->w * filter_dims->h) * (int32_t)sizeof(int16_t);
 #endif
 }
 
