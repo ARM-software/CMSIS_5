@@ -65,6 +65,9 @@ class Configuration:
         # the index of functions to call in another array
         self.codeArray = False
 
+        # True for an horizontal graphviz layout
+        self.horizontal = True
+
     @property
     def debug(self):
         return (self.debugLimit > 0)

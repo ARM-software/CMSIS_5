@@ -657,9 +657,9 @@ class Schedule:
         """Write graphviz into file f""" 
         sdf.schedule.pythoncode.gencode(self,directory,config)
 
-    def graphviz(self,f):
+    def graphviz(self,f,config=Configuration()):
         """Write graphviz into file f""" 
-        sdf.schedule.graphviz.gengraph(self,f)
+        sdf.schedule.graphviz.gengraph(self,f,config)
     
     
     
