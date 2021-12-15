@@ -15,6 +15,7 @@
        - Support for int16 convolution and fully connected for reference implementation
        - Support for DSP extension optimization for int16 convolution and fully connected
        - Support for dilation for int8 convolution
+       - Support for dilation for int8 depthwise convolution
       CMSIS-RTOS2:
         - RTX 5.5.4 (see revision history for details)
     </release>

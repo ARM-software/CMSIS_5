@@ -419,7 +419,8 @@ class ConvSettings(TestSettings):
         super().__init__(dataset, testtype, args, in_ch, out_ch, x_in, y_in, w_x, w_y, stride_x, stride_y, pad,
                          randmin, randmax, batches, generate_bias=generate_bias, relu6=relu6,
                          out_activation_min=out_activation_min, out_activation_max=out_activation_max,
-                         int16xint8=int16xint8, bias_min=bias_min, bias_max=bias_max, dilation_x=dilation_x, dilation_y=dilation_y)
+                         int16xint8=int16xint8, bias_min=bias_min, bias_max=bias_max, dilation_x=dilation_x,
+                         dilation_y=dilation_y)
 
         self.scaling_factors = []
 
@@ -501,7 +502,8 @@ class ConvSettings(TestSettings):
         if self.test_type == 'conv':
             conv_layer = tf.keras.layers.Conv2D(self.output_ch, kernel_size=(self.filter_y, self.filter_x),
                                                 strides=(self.stride_y, self.stride_x),
-                                                padding=self.padding, input_shape=input_shape[1:], dilation_rate=(self.dilation_y, self.dilation_x))
+                                                padding=self.padding, input_shape=input_shape[1:],
+                                                dilation_rate=(self.dilation_y, self.dilation_x))
             model.add(conv_layer)
             conv_layer.set_weights([weights, biases])
         elif self.test_type == 'depthwise_conv':
@@ -509,7 +511,7 @@ class ConvSettings(TestSettings):
                 kernel_size=(self.filter_y, self.filter_x),
                 strides=(self.stride_y, self.stride_x),
                 padding=self.padding, depth_multiplier=self.channel_multiplier,
-                input_shape=input_shape[1:])
+                input_shape=input_shape[1:], dilation_rate=(self.dilation_y, self.dilation_x))
             model.add(depthwise_layer)
             depthwise_layer.set_weights([weights, biases])
 
@@ -1026,8 +1028,8 @@ def load_all_testdatasets():
                                               w_y=3, stride_x=1, stride_y=1, pad=True, out_activation_min=-61,
                                               out_activation_max=107)
     dataset = 'conv_dilation_golden'
-    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=1, batches=2, out_ch=3, x_in=6, y_in=4, w_x=2,
-                                              w_y=2, stride_x=1, stride_y=1, pad=True, out_activation_min=-128,
+    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=1, batches=2, out_ch=3, x_in=6, y_in=4,
+                                              w_x=2, w_y=2, stride_x=1, stride_y=1, pad=True, out_activation_min=-128,
                                               out_activation_max=127, dilation_x=3, dilation_y=2)
     dataset = 'conv_2x2_dilation'
     ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=2, out_ch=2, x_in=10, y_in=10, w_x=3,
@@ -1088,7 +1090,13 @@ def load_all_testdatasets():
     dataset = 'depthwise_null_bias_1'
     ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=2, out_ch=8, x_in=4, y_in=5, w_x=2,
                                               w_y=2, stride_x=1, stride_y=1, pad=True, generate_bias=False,
-                                              batches=1)                                                                                         
+                                              batches=1)
+    dataset = 'depthwise_dilation'
+    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=3, out_ch=9, x_in=6, y_in=5, w_x=3,
+                                              w_y=4, stride_x=2, stride_y=2, pad=True,
+                                              out_activation_min=-70, out_activation_max=127, dilation_x=2,
+                                              dilation_y=3)
+
     type_of_test = 'fully_connected'
     dataset = 'fully_connected'
     ALL_TESTDATA_SETS[dataset] = FullyConnectedSettings(dataset, type_of_test, args, in_ch=10, out_ch=6, x_in=2, y_in=1,
