@@ -23,8 +23,8 @@ Fused Activation | No | Yes
 Group | API | Base Operator | Input Constraints | Additional memory required for <br/> optimizations (bytes) | DSP Optimized |  MVE Optimized | Other comments |
 |:----| :---| :------------ | :---------------- | :--------------------------------------------------------| :-------------| :------------- | :------------- |
 |[Conv](https://arm-software.github.io/CMSIS_5/NN/html/group__NNConv.html)||||| |  ||
-||arm_convolve_wrapper_s8()|CONV|dilation = 1|n.a.| Yes | Yes |The additional memory required depends on the optimal convolution function called|
-||arm_convolve_s8()|CONV|dilation = 1|4 * (ker_x * ker_y * input_ch + delta)| Yes | Yes |delta - MVE only|
+||arm_convolve_wrapper_s8()|CONV| None |n.a.| Yes | Yes |The additional memory required depends on the optimal convolution function called.|
+||arm_convolve_s8()|CONV| None |4 * (ker_x * ker_y * input_ch + delta)| Yes | Yes |delta - MVE only|
 ||arm_convolve_1x1_s8_fast() | CONV | dilation = 1 <br/> ker_x = 1, ker_y = 1 <br/> pad = 0<br/> stride = 1<br/> input_ch % 4 = 0| No | Yes |Yes ||
 ||arm_convolve_1_x_n_s8() | CONV | dilation = 1 <br/> output_y % 4 = 0 | 4 * ker_x * ker_y * input_ch |Yes |Yes||
 || arm_depthwise_conv_wrapper_s8()| DEPTHWISE_CONV | dilation = 1|n.a.| Yes| Yes| The additional memory required depends on the optimal convolution function called|

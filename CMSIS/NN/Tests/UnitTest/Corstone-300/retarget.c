@@ -233,23 +233,44 @@ __attribute__((weak)) void(_sys_exit)(int return_code) { exit(return_code); }
    Copied from CMSIS/DSP/DSP_Lib_TestSuite/Common/platform/GCC/Retarget.c
 */
 
-int _open(const char *path, int flags, ...) { return (-1); }
+int _open(const char *path, int flags, ...)
+{
+    (void)path;
+    (void)flags;
+    return (-1);
+}
 
-int _close(int fd) { return (-1); }
+int _close(int fd)
+{
+    (void)fd;
+    return (-1);
+}
 
-int _lseek(int fd, int ptr, int dir) { return (0); }
+int _lseek(int fd, int ptr, int dir)
+{
+    (void)fd;
+    (void)ptr;
+    (void)dir;
+    return (0);
+}
 
 int __attribute__((weak)) _fstat(int fd, struct stat *st)
 {
+    (void)fd;
     memset(st, 0, sizeof(*st));
     st->st_mode = S_IFCHR;
     return (0);
 }
 
-int _isatty(int fd) { return (1); }
+int _isatty(int fd)
+{
+    (void)fd;
+    return (1);
+}
 
 int _read(int fd, char *ptr, int len)
 {
+    (void)fd;
     char c;
     int i;
 
@@ -266,6 +287,7 @@ int _read(int fd, char *ptr, int len)
 
 int _write(int fd, char *ptr, int len)
 {
+    (void)fd;
     int i;
 
     for (i = 0; i < len; i++)
