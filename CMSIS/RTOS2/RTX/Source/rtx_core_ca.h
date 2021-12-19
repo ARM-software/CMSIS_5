@@ -341,6 +341,7 @@ register uint32_t __rf   __ASM(SVC_RegF) = (uint32_t)f
 
 #define SVC_Out0
 #define SVC_Out1 "=r"(__r0)
+#define SVC_Out1 "=r"(__r0),"=r"(__r1)
 
 #define SVC_CL0
 #define SVC_CL1 "r1"
@@ -370,7 +371,7 @@ __attribute__((always_inline))                                                 \
 __STATIC_INLINE t __svc##f (t1 a1) {                                           \
   SVC_ArgR(0,a1);                                                              \
   SVC_ArgF(svcRtx##f);                                                         \
-  SVC_Call0(SVC_In1, SVC_Out0, SVC_CL1);                                       \
+  SVC_Call0(SVC_In1, SVC_Out1, SVC_CL1);                                       \
 }
 
 #define SVC0_1(f,t,t1)                                                         \
@@ -388,7 +389,7 @@ __STATIC_INLINE t __svc##f (t1 a1, t2 a2) {                                    \
   SVC_ArgR(0,a1);                                                              \
   SVC_ArgR(1,a2);                                                              \
   SVC_ArgF(svcRtx##f);                                                         \
-  SVC_Call0(SVC_In2, SVC_Out1, SVC_CL0);                                       \
+  SVC_Call0(SVC_In2, SVC_Out2, SVC_CL0);                                       \
   return (t) __r0;                                                             \
 }
 
@@ -399,7 +400,7 @@ __STATIC_INLINE t __svc##f (t1 a1, t2 a2, t3 a3) {                             \
   SVC_ArgR(1,a2);                                                              \
   SVC_ArgR(2,a3);                                                              \
   SVC_ArgF(svcRtx##f);                                                         \
-  SVC_Call0(SVC_In3, SVC_Out1, SVC_CL0);                                       \
+  SVC_Call0(SVC_In3, SVC_Out2, SVC_CL0);                                       \
   return (t) __r0;                                                             \
 }
 
@@ -411,7 +412,7 @@ __STATIC_INLINE t __svc##f (t1 a1, t2 a2, t3 a3, t4 a4) {                      \
   SVC_ArgR(2,a3);                                                              \
   SVC_ArgR(3,a4);                                                              \
   SVC_ArgF(svcRtx##f);                                                         \
-  SVC_Call0(SVC_In4, SVC_Out1, SVC_CL0);                                       \
+  SVC_Call0(SVC_In4, SVC_Out2, SVC_CL0);                                       \
   return (t) __r0;                                                             \
 }
 
