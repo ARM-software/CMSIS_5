@@ -221,6 +221,7 @@ class SlidingBuffer: public GenericNode<IN,windowSize-overlap,IN,windowSize>
 public:
     SlidingBuffer(FIFOBase<IN> &src,FIFOBase<IN> &dst):GenericNode<IN,windowSize-overlap,IN,windowSize>(src,dst)
     {
+        static_assert((windowSize-overlap)>0, "Overlap is too big");
         memory.resize(overlap);
     };
 
@@ -229,7 +230,7 @@ public:
         IN *b=this->getWriteBuffer();
         memcpy((void*)b,(void*)memory.data(),overlap*sizeof(IN));
         memcpy((void*)(b+overlap),(void*)a,(windowSize-overlap)*sizeof(IN));
-        memcpy((void*)memory.data(),(void*)(a+windowSize-(overlap<<1)),overlap*sizeof(IN)) ;
+        memcpy((void*)memory.data(),(void*)(b+windowSize-overlap),overlap*sizeof(IN)) ;
         return(0);
     };
 protected:
@@ -238,12 +239,13 @@ protected:
 };
 
 template<typename IN,int windowSize, int overlap>
-class OverlapAdd: public GenericNode<IN,windowSize,IN,overlap>
+class OverlapAdd: public GenericNode<IN,windowSize,IN,windowSize-overlap>
 {
 public:
     OverlapAdd(FIFOBase<IN> &src,FIFOBase<IN> &dst):GenericNode<IN,windowSize,IN,overlap>(src,dst)
     {
-        memory.resize(windowSize);
+        static_assert((windowSize-overlap)>0, "Overlap is too big");
+        memory.resize(overlap);
     };
 
     int run(){
@@ -251,17 +253,32 @@ public:
         IN *a=this->getReadBuffer();
         IN *b=this->getWriteBuffer();
 
-        memmove((void*)memory.data(),(void*)(memory.data()+overlap),(windowSize-overlap)*sizeof(IN));
-        for(i=0;i<windowSize-overlap;i++)
+        for(i=0;i<overlap;i++)
         {
             memory[i] = a[i] + memory[i];
         }
-        for(;i<windowSize;i++)
-        {
-            memory[i] = a[i];
-        }
 
-        memcpy((void*)b,(void*)memory.data(),overlap*sizeof(IN));
+        if (2*overlap - windowSize > 0)
+        {
+            
+            memcpy((void*)b,(void*)memory.data(),(windowSize-overlap)*sizeof(IN));
+
+            memmove(memory.data(),memory.data()+windowSize-overlap,(2*overlap - windowSize)*sizeof(IN));
+            memcpy(memory.data()+2*overlap - windowSize,a+overlap,(windowSize-overlap)*sizeof(IN));
+        }
+        else if (2*overlap - windowSize < 0)
+        {
+            memcpy((void*)b,(void*)memory.data(),overlap*sizeof(IN));
+            memcpy((void*)(b+overlap),(void*)(a+overlap),(windowSize - 2*overlap)*sizeof(IN));
+
+            memcpy((void*)memory.data(),(void*)(a+windowSize-overlap),overlap*sizeof(IN));
+        }
+        else
+        {
+            memcpy((void*)b,(void*)memory.data(),overlap*sizeof(IN));
+
+            memcpy((void*)memory.data(),(void*)(a+overlap),overlap*sizeof(IN));
+        }
         
         return(0);
     };
