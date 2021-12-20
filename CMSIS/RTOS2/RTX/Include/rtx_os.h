@@ -39,8 +39,8 @@ extern "C"
  
 /// Kernel Information
 #define osRtxVersionAPI      20010003   ///< API version (2.1.3)
-#define osRtxVersionKernel   50050003   ///< Kernel version (5.5.3)
-#define osRtxKernelId     "RTX V5.5.3"  ///< Kernel identification string
+#define osRtxVersionKernel   50050004   ///< Kernel version (5.5.4)
+#define osRtxKernelId     "RTX V5.5.4"  ///< Kernel identification string
  
  
 //  ==== Common definitions ====
