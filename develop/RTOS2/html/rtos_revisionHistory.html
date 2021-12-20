@@ -181,6 +181,12 @@ CMSIS-RTOS RTX Version 5</h1>
 <tr>
 <th>Version </th><th>Description  </th></tr>
 <tr>
+<td>V5.5.4 </td><td><ul>
+<li>Fixed potential register R1 corruption when calling OS functions from threads multiple times with same arguments (when using high level compiler optimizations).</li>
+<li>Minor code optimizations in osMessageQueuePut/Get   </li>
+</ul>
+</td></tr>
+<tr>
 <td>V5.5.3 </td><td><ul>
 <li>CVE-2021-27431 vulnerability mitigation.</li>
 <li>Added OS Initialization for IAR.</li>
