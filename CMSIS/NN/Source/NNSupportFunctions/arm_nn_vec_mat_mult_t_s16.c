@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020-2021 Arm Limited or its affiliates.
+ * Copyright (C) 2020-2022 Arm Limited or its affiliates.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_nn_vec_mat_mult_t_s16
  * Description:  s16 vector by matrix (transposed) multiplication
  *
- * $Date:        25. October 2021
- * $Revision:    V.1.1.1
+ * $Date:        04. January 2022
+ * $Revision:    V.1.2.0
  *
  * Target Processor:  Cortex-M
  *
@@ -58,6 +58,13 @@ arm_status arm_nn_vec_mat_mult_t_s16(const q15_t *lhs,
 #if defined(ARM_MATH_DSP) && !defined(ARM_MATH_MVEI)
     const int32_t row_loop_cnt = rhs_rows / 2;
 
+    int32_t rhs_cols_fast = rhs_cols;
+
+    if (rhs_cols > 512)
+    {
+        rhs_cols_fast = 512;
+    }
+
     for (int32_t i = 0; i < row_loop_cnt; i++)
     {
         q63_t acc_64_0 = 0;
@@ -65,7 +72,7 @@ arm_status arm_nn_vec_mat_mult_t_s16(const q15_t *lhs,
         int32_t acc_0 = 0;
         int32_t acc_1 = 0;
 
-        const int32_t col_loop_cnt = rhs_cols / 4;
+        const int32_t col_loop_cnt = rhs_cols_fast / 4;
 
         const int16_t *lhs_vec = lhs;
         const int8_t *rhs_0 = rhs;
@@ -89,21 +96,23 @@ arm_status arm_nn_vec_mat_mult_t_s16(const q15_t *lhs,
             acc_1 = __SMLAD(ker_1, vec_part_1, acc_1);
         }
 
+        acc_64_0 += acc_0;
+        acc_64_1 += acc_1;
+
         for (int k = col_loop_cnt * 4; k < rhs_cols; k++)
         {
             const int32_t lhs_temp = (*lhs_vec);
             lhs_vec++;
-            acc_0 += lhs_temp * (*rhs_0);
+            acc_64_0 += lhs_temp * (*rhs_0);
             rhs_0++;
-            acc_1 += lhs_temp * (*rhs_1);
+            acc_64_1 += lhs_temp * (*rhs_1);
             rhs_1++;
         }
 
-        acc_64_0 += acc_0;
-        acc_64_1 += acc_1;
         if (bias)
         {
             acc_64_0 += *bias++;
+            acc_64_1 += *bias++;
         }
         q31_t tmp;
         tmp = arm_nn_requantize_s64(acc_64_0, dst_multiplier, dst_shift);
@@ -111,10 +120,6 @@ arm_status arm_nn_vec_mat_mult_t_s16(const q15_t *lhs,
         tmp = MIN(tmp, activation_max);
         *dst++ = (q15_t)tmp;
 
-        if (bias)
-        {
-            acc_64_1 += *bias++;
-        }
         tmp = arm_nn_requantize_s64(acc_64_1, dst_multiplier, dst_shift);
         tmp = MAX(tmp, activation_min);
         tmp = MIN(tmp, activation_max);
@@ -125,7 +130,7 @@ arm_status arm_nn_vec_mat_mult_t_s16(const q15_t *lhs,
     {
         q63_t acc_64_0 = 0;
         int32_t acc_0 = 0;
-        const int32_t col_loop_cnt = rhs_cols / 4;
+        const int32_t col_loop_cnt = rhs_cols_fast / 4;
 
         const int16_t *lhs_vec = lhs;
         const int8_t *rhs_0 = rhs;
@@ -142,14 +147,16 @@ arm_status arm_nn_vec_mat_mult_t_s16(const q15_t *lhs,
             acc_0 = __SMLAD(ker_1, vec, acc_0);
         }
 
+        acc_64_0 += acc_0;
+
         for (int j = col_loop_cnt * 4; j < rhs_cols; j++)
         {
             const int32_t lhs_temp = (*lhs_vec);
             lhs_vec++;
-            acc_0 += lhs_temp * (*rhs_0);
+            acc_64_0 += lhs_temp * (*rhs_0);
             rhs_0++;
         }
-        acc_64_0 += acc_0;
+
         if (bias)
         {
             acc_64_0 += *bias++;
