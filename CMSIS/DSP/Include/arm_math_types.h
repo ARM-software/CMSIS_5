@@ -274,10 +274,12 @@ extern "C"
    */
   typedef int64_t q63_t;
 
+#if !defined(ARM_MATH_MVEF) /* float32_t is defined in arm_mve.h for MVEF. */
   /**
    * @brief 32-bit floating-point type definition.
    */
   typedef float float32_t;
+#endif
 
   /**
    * @brief 64-bit floating-point type definition.
