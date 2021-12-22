@@ -109,26 +109,25 @@ $(document).ready(function(){initNavTree('group__DAP__ConfigMCU__gr.html','');})
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Debug Unit Processor<div class="ingroups"><a class="el" href="group__DAP__Config__gr.html">Firmware Configuration</a></div></div>  </div>
+<div class="title">Debug Unit Processor<div class="ingroups"><a class="el" href="group__DAP__Config__gr.html">Firmware configuration</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>CMSIS-DAP Firmware runs on Debug Units with a Cortex-M microcontroller.  
+<p>CMSIS-DAP firmware runs on debug units with a Cortex-M microcontroller.  
 <a href="#details">More...</a></p>
-<p>CMSIS-DAP Firmware runs on Debug Units with a Cortex-M microcontroller. </p>
-<p>The CMSIS-DAP Firmware is designed to execute on a Debug Unit that is using a Cortex-M0, Cortex-M0+, Cortex-M3, or Cortex-M4 processor-based microcontroller.</p>
-<p>The following steps describe how to change the microcontroller in the CMSIS-DAP Firmware project:</p>
+<p>CMSIS-DAP firmware runs on debug units with a Cortex-M microcontroller. </p>
+<p>The CMSIS-DAP firmware is designed to execute on a debug unit that is using a Cortex-M processor-based microcontroller.</p>
+<p>The following steps describe how to change the microcontroller in the CMSIS-DAP firmware project:</p>
 <ol type="1">
-<li>Open in the uVision IDE the project file <b>.\Firmware\MyDebugUnit\CMSIS_DAP.uvproj</b>.</li>
-<li>Open the <b>Project - Options - Device</b> dialog and select the microcontroller of the new Debug Unit.</li>
-<li>In the <b>Project Window</b> replace the files that belong to the group <b>Startup Code</b> with the relevant files for the new device.</li>
-<li>Optionally you may modify the project file <b>Target</b> name and the file <b>Abstract.txt</b> to reflect the new Debug Unit.</li>
+<li>In the µVision IDE, open the project file <b>.\Firmware\MyDebugUnit\CMSIS_DAP.uvprojx</b>.</li>
+<li>Open the <b>Project - Options - Device</b> dialog and select the microcontroller of the new debug unit.</li>
+<li>Optionally, you may modify the project file <b>Target</b> name and the file <b>Abstract.txt</b> to reflect the new debug unit.</li>
 </ol>
 <div class="image">
 <img src="MDK_Device.png" alt="MDK_Device.png"/>
 <div class="caption">
 Select the microcontroller</div></div>
-<p> In MDK Version 5 changing the microcontroller should bring in already the relevant software components for the new target. However, depending on the availability you may need to replace some components with custom implementations.</p>
+<p> In MDK, changing the microcontroller adds relevant software components for the new target. However, depending on the availability you may need to replace some components with custom implementations.</p>
 <div class="image">
 <img src="RTE.png" alt="RTE.png"/>
 <div class="caption">

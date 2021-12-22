@@ -3,8 +3,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>Firmware Configuration</title>
-<title>CMSIS-DAP: Firmware Configuration</title>
+<title>Firmware configuration</title>
+<title>CMSIS-DAP: Firmware configuration</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="cmsis.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
@@ -111,76 +111,77 @@ $(document).ready(function(){initNavTree('group__DAP__Config__gr.html','');});
   <div class="summary">
 <a href="#groups">Content</a>  </div>
   <div class="headertitle">
-<div class="title">Firmware Configuration</div>  </div>
+<div class="title">Firmware configuration</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>CMSIS-DAP is designed for Debug Units with Cortex-M microcontroller.  
+<p>CMSIS-DAP is designed for debug units with a Cortex-M microcontroller.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
 Content</h2></td></tr>
 <tr class="memitem:group__DAP__ConfigMCU__gr"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DAP__ConfigMCU__gr.html">Debug Unit Processor</a></td></tr>
-<tr class="memdesc:group__DAP__ConfigMCU__gr"><td class="mdescLeft">&#160;</td><td class="mdescRight">CMSIS-DAP Firmware runs on Debug Units with a Cortex-M microcontroller. <br/></td></tr>
+<tr class="memdesc:group__DAP__ConfigMCU__gr"><td class="mdescLeft">&#160;</td><td class="mdescRight">CMSIS-DAP firmware runs on debug units with a Cortex-M microcontroller. <br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:group__DAP__ConfigIO__gr"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DAP__ConfigIO__gr.html">Configure I/O Ports and Debug Unit</a></td></tr>
-<tr class="memdesc:group__DAP__ConfigIO__gr"><td class="mdescLeft">&#160;</td><td class="mdescRight">DAP_config.h configures I/O ports and Debug Unit hardware parameters. <br/></td></tr>
+<tr class="memitem:group__DAP__ConfigIO__gr"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DAP__ConfigIO__gr.html">Configure I/O ports and debug unit</a></td></tr>
+<tr class="memdesc:group__DAP__ConfigIO__gr"><td class="mdescLeft">&#160;</td><td class="mdescRight">DAP_config.h configures I/O ports and debug unit hardware parameters. <br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:group__DAP__ConfigUSB__gr"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DAP__ConfigUSB__gr.html">Configure USB Peripheral</a></td></tr>
-<tr class="memdesc:group__DAP__ConfigUSB__gr"><td class="mdescLeft">&#160;</td><td class="mdescRight">CMSIS-DAP Firmware communicates via an USB interface to host computer. <br/></td></tr>
+<tr class="memitem:group__DAP__ConfigUSB__gr"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DAP__ConfigUSB__gr.html">Configure USB peripheral</a></td></tr>
+<tr class="memdesc:group__DAP__ConfigUSB__gr"><td class="mdescLeft">&#160;</td><td class="mdescRight">CMSIS-DAP firmware communicates via USB with the host computer. <br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:group__DAP__ConfigFlash__gr"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DAP__ConfigFlash__gr.html">Flash Program Firmware</a></td></tr>
-<tr class="memdesc:group__DAP__ConfigFlash__gr"><td class="mdescLeft">&#160;</td><td class="mdescRight">The CMSIS-DAP Firmware is programmed into Flash ROM of a Debug Unit. <br/></td></tr>
+<tr class="memitem:group__DAP__ConfigFlash__gr"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__DAP__ConfigFlash__gr.html">Flash program the firmware</a></td></tr>
+<tr class="memdesc:group__DAP__ConfigFlash__gr"><td class="mdescLeft">&#160;</td><td class="mdescRight">The CMSIS-DAP firmware is programmed into the Flash ROM of a debug unit. <br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
-<p>CMSIS-DAP is designed for Debug Units with Cortex-M microcontroller. </p>
-<p>The CMSIS-DAP firmware can be deployed to a Debug Unit that is based on Cortex-M processor-based microcontroller.</p>
+<p>CMSIS-DAP is designed for debug units with a Cortex-M microcontroller. </p>
+<p>The CMSIS-DAP firmware can be deployed to a debug unit that is based on Cortex-M processor-based microcontroller.</p>
 <div class="image">
 <img src="CMSIS_DAP_Debug_Unit.png" alt="CMSIS_DAP_Debug_Unit.png"/>
 <div class="caption">
-CMSIS-DAP Debug Unit Hardware</div></div>
+CMSIS-DAP debug unit Hardware</div></div>
 <p> The picture below shows the setup with an isolation adapter.</p>
 <div class="image">
 <img src="CMSIS_DAP_Debug_Unit_ISO.png" alt="CMSIS_DAP_Debug_Unit_ISO.png"/>
 <div class="caption">
-CMSIS-DAP Debug Unit with Isolation adapter</div></div>
- <h2>Hardware Requirements </h2>
-<p>The CMSIS-DAP Firmware is designed for Debug Units that fulfil the following hardware requirements:</p>
+CMSIS-DAP debug unit with isolation adapter</div></div>
+ <h2>Hardware requirements </h2>
+<p>The CMSIS-DAP firmware is designed for debug units that fulfil the following hardware requirements:</p>
 <ul>
-<li>Cortex-M0, Cortex-M0+, Cortex-M3, or Cortex-M4 processor-based microcontroller.</li>
-<li>CPU Clock: 48MHz or higher; microcontroller must have a SYSTICK timer.</li>
-<li>RAM: 8KB or more; Flash ROM: 16KB or more.</li>
-<li>Full-speed or High-speed USB Device Peripheral.</li>
-<li>7 standard I/O pins for JTAG/SWD Device Interface.</li>
-<li>optional 2 I/O pins for Status LEDs.</li>
-<li>optional UART to support SWO capturing (Rx pin connected to SWO)</li>
-<li>optional UART to support UART Communication Port</li>
+<li>Cortex-M processor-based microcontroller.</li>
+<li>CPU Clock: 48 MHz or higher; microcontroller must have a SYSTICK timer.</li>
+<li>RAM: 8 KB or more.</li>
+<li>Flash ROM: 16 KB or more.</li>
+<li>Full-speed or High-speed USB Device peripheral.</li>
+<li>7 standard I/O pins for JTAG/SWD interface.</li>
+<li>Optionally, 2 I/O pins for status LEDs.</li>
+<li>Optionally, a UART to support SWO capturing (Rx pin connected to SWO).</li>
+<li>Optionally, a UART to support an additional UART communication port (for printf debugging).</li>
 </ul>
-<h2>CMSIS-DAP Firmware </h2>
-<p>The CMSIS-DAP Firmware can be configured for a new Debug Unit using at least the <a href="https://www.keil.com/mdk5" target="_blank">Keil MDK-Plus or MDK-Professional Edition</a>. Reference implementations are provided as source code with complete project files and may be used as starting point for the firmware deployment to a new Debug Unit.</p>
-<p>The folder <b> .\Firmware\Config</b> contains a template of the <b>DAP_config.h</b> configuration file. Various adaptations for different target hardware are provided.</p>
+<h2>CMSIS-DAP firmware </h2>
+<p>The CMSIS-DAP firmware can be configured for a new debug unit using at least the <a href="https://www.keil.com/mdk5" target="_blank">Keil MDK-Plus or MDK-Professional Edition</a>. Reference implementations are provided as source code with complete project files and may be used as starting point for the firmware deployment to a new debug unit.</p>
+<p>The folder <b>.\Firmware\Config</b> contains a template of the <b>DAP_config.h</b> configuration file. Various adaptations for different target hardware are provided.</p>
 <table class="doxtable">
 <tr>
 <th>Folders and Files </th><th>Description  </th></tr>
 <tr>
-<td>.\Firmware\Examples\LPC-Link2\V1 </td><td>CMSIS-DAP Firmware using USB HID adapted to the NXP LPC-Link2 Debug Unit. </td></tr>
+<td>.\Firmware\Examples\LPC-Link2\V1 </td><td>CMSIS-DAP firmware using USB HID adapted to the NXP LPC-Link2 debug unit. </td></tr>
 <tr>
-<td>.\Firmware\Examples\LPC-Link2\V2 </td><td>CMSIS-DAP Firmware using WinUSB adapted to the NXP LPC-Link2 Debug Unit. </td></tr>
+<td>.\Firmware\Examples\LPC-Link2\V2 </td><td>CMSIS-DAP firmware using WinUSB adapted to the NXP LPC-Link2 debug unit. </td></tr>
 <tr>
-<td>.\Firmware\Examples\MCU-LINK </td><td>CMSIS-DAP Firmware using WinUSB adapted to the NXP MCU-LINK Debug Unit. </td></tr>
+<td>.\Firmware\Examples\MCU-LINK </td><td>CMSIS-DAP firmware using WinUSB adapted to the NXP MCU-LINK debug unit. </td></tr>
 </table>
-<p>The CMSIS-DAP Firmware is designed to execute on a Debug Unit that is using a Cortex-M0, Cortex-M0+, Cortex-M3, or Cortex-M4 processor-based microcontroller. To deploy the firmware to a new Debug Unit copy an existing firmware adaptation to a new folder. For example, copy the folder .\Firmware\XMC4200 to a folder called .\Firmware\MyDebugUnit.</p>
-<p>To following steps describe the adaptation of the CMSIS-DAP Firmware to a new Debug Unit:</p>
+<p>The CMSIS-DAP firmware is designed to execute on a debug unit that is using a Cortex-M processor-based microcontroller. To deploy the firmware to a new debug unit copy an existing firmware adaptation to a new folder. For example, copy the folder .\Firmware\Examples\MCU-LINK to a folder called .\Firmware\MyDebugUnit.</p>
+<p>To following steps describe the adaptation of the CMSIS-DAP firmware to a new debug unit:</p>
 <ol type="1">
 <li><a class="el" href="group__DAP__ConfigMCU__gr.html">Debug Unit Processor</a> : Select the microcontroller and replace the CMSIS-Core (Cortex-M) files.</li>
-<li><a class="el" href="group__DAP__ConfigIO__gr.html">Configure I/O Ports and Debug Unit</a> : Adapt the I/O Ports and specify other parameters for the Debug Unit.</li>
-<li><a class="el" href="group__DAP__ConfigUSB__gr.html">Configure USB Peripheral</a> : Adapt the USB Peripheral to the microcontroller.</li>
-<li><a class="el" href="group__DAP__USART__SWO__gr.html">Connect SWO Trace</a> : Optional you may add a CMSIS-Driver USART to interface to SWO.</li>
-<li><a class="el" href="group__DAP__USART__COM__gr.html">Connect UART Communication Port</a> : Optional you may add a CMSIS-Driver USART to interface to UART Communication Port.</li>
-<li><a class="el" href="group__DAP__Vendor__gr.html">CMSIS-DAP Vendor Commands</a> : Optional you may add vendor specific commands to the Debug Unit.</li>
-<li><a class="el" href="group__DAP__ConfigFlash__gr.html">Flash Program Firmware</a> : Program the adapted firmware to the Flash ROM of the new Debug Unit.</li>
-<li><a class="el" href="group__DAP__Validate__gr.html">Validate Debug Unit</a> : Validate the CMSIS-DAP firmware of the new Debug Unit. </li>
+<li><a class="el" href="group__DAP__ConfigIO__gr.html">Configure I/O ports and debug unit</a> : Adapt the I/O ports and specify other parameters for the debug unit.</li>
+<li><a class="el" href="group__DAP__ConfigUSB__gr.html">Configure USB peripheral</a> : Adapt the USB peripheral to the microcontroller.</li>
+<li><a class="el" href="group__DAP__USART__SWO__gr.html">Connect SWO trace</a> : Optionally, you may add a CMSIS-Driver USART to interface to SWO.</li>
+<li><a class="el" href="group__DAP__USART__COM__gr.html">Connect UART communication port</a> : Optionally, you may add a CMSIS-Driver USART to interface to UART communication port.</li>
+<li><a class="el" href="group__DAP__Vendor__gr.html">CMSIS-DAP Vendor Commands</a> : Optionally, you may add vendor specific commands to the debug unit.</li>
+<li><a class="el" href="group__DAP__ConfigFlash__gr.html">Flash program the firmware</a> : Program the adapted firmware to the Flash ROM of the new debug unit.</li>
+<li><a class="el" href="group__DAP__Validate__gr.html">Validate the debug unit operation</a> : Validate the CMSIS-DAP firmware of the new debug unit. </li>
 </ol>
 </div><!-- contents -->
 </div><!-- doc-content -->
