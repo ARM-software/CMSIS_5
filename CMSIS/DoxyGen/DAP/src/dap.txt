@@ -1,22 +1,17 @@
 /**
 \mainpage Firmware for CoreSight Debug Access Port
 
-<b>CMSIS-DAP</b> is a <b>Protocol</b> specification and a implementation of a <b>Firmware</b> that supports access to the CoreSight <b>Debug Access Port</b> (DAP).\n\n
+<b>CMSIS-DAP</b> is a <b>protocol</b> specification and a implementation of a <b>firmware</b> that supports access to the
+<a href="https://developer.arm.com/documentation/102585/0000/what-is-a-debug-access-port" target="_blank"><b>CoreSight Debug Access Port (DAP)</b></a>.
 
-The various Arm Cortex processors provide <a href="http://www.arm.com/products/system-ip/coresight/index.php" target="_blank">
-<b>CoreSight Debug and Trace</b></a>. CMSIS-DAP supports target Devices that contain one or more Cortex processors. 
-A Device provides a Debug Access Port (DAP) typically either with a 5-pin JTAG or with a 2-pin Serial Wired Debug (SWD)
-interface that connects to a Debug Unit. CMSIS-DAP is the interface firmware for a Debug Unit that connects 
-the Debug Port to USB. Debuggers that execute on a host computer connect via USB and the Debug Unit to the Device
-which runs the application software.
+The various Arm Cortex processors provide
+<a href="https://developer.arm.com/ip-products/system-ip/coresight-debug-and-trace" target="_blank"><b>CoreSight Debug and Trace</b></a>.
+CMSIS-DAP supports target devices that contain one or more Cortex processors. A device provides a Debug Access Port (DAP)
+typically either with a 5-pin JTAG or with a 2-pin Serial Wired Debug (SWD) interface that connects to a debug unit.
+CMSIS-DAP is the interface firmware for a debug unit that connects the debug port to USB. Debuggers that execute on a host
+computer connect via USB and the Debug Unit to the device which runs the application software.
 
-\image html "CMSIS_DAP_INTERFACE.png" "CMSIS-DAP Overview"
-
-Configuration of CMSIS-DAP Firmware
------------------------------------
-The CMSIS-DAP Firmware version 2 can be configured in two different USB interface modes:
- - Version 1 configuration uses USB HID as interface to the host PC.
- - Version 2 configuration uses WinUSB as interface to the host PC and provides high-speed SWO trace streaming.
+\image html "CMSIS_DAP_INTERFACE.png"
 
 Benefits of CMSIS-DAP
 ---------------------
@@ -24,51 +19,52 @@ Benefits of CMSIS-DAP
  - Access to CoreSight registers of all Cortex processor architectures (Cortex-A/R/M).
  - Connects via 5-pin JTAG or 2-pin Serial Wire Debug (SWD).
  - Supports multi-core debugging.
- - Supports Serial Wire Output of Cortex-M devices (new in CMSIS-DAP Version 1.1.0).
- - Easy to deploy to Debug Units based on Cortex-M microcontrollers. 
- - Debug Unit may be integrated on an evaluation board.
- - USB using HID (Human Interface Device) driver class that avoids driver installation on host PC.
- - Supports time-critical JTAG or SWD command execution (new in CMSIS-DAP Version 1.10). 
- - Supports Test Domain Timer for time measurement using the debug unit (new in CMSIS-DAP Version 1.2.0)
- - Supports UART Communication Port, which can be routed to USB COM Port (optional) or native CMSIS-DAP commands (new in CMSIS-DAP Version 2.1.0).
+ - Supports Serial Wire Output (SWO) of Cortex-M devices.
+ - Easy to deploy to debug units based on Cortex-M microcontrollers. 
+ - Debug unit may be integrated on an evaluation board.
+ - Using WinUSB avoids driver installation on host PC.
+ - Supports time-critical JTAG or SWD command execution.
+ - Supports Test Domain Timer for time measurement using the debug unit.
+ - Supports UART communication port, which can be routed to USB COM Port (optional) or native CMSIS-DAP commands (new in
+   CMSIS-DAP Version 2.1.0).
  
-CMSIS-DAP Firmware
+CMSIS-DAP firmware
 ==================
-The CMSIS-DAP Firmware is provided as source code and is fully configurable to a new Debug Unit. 
-A source code template and several reference implementations for popular Debug Units are provided.
-Refer to \ref DAP_Config_gr for more information.
+The CMSIS-DAP firmware is provided as source code and is fully configurable to a new debug unit. A source code template and
+several reference implementations for popular debug units are provided. Refer to \ref DAP_Config_gr for more information.
 
-The CMSIS-DAP Software Stack is composed of the following components:
+The CMSIS-DAP firmware stack is composed of the following components:
 
-  - CMSIS-DAP Firmware that interfaces to JTAG or SWD Debug pins using standard I/O pins of the Cortex-M device.
+  - CMSIS-DAP firmware that interfaces to JTAG or SWD pins using standard I/O pins of the Cortex-M device.
   - CMSIS-Driver USART that connects:
-    - UART of the Cortex-M device to the SWO output from the target,
-    - additional UART of the Cortex-M device to the UART from the target.
-    .
-  - USB Communication Stack that interfaces to the USB Port of the Host Computer using:
-    - HID or custom class,
-    - CDC ACM class to export USB COM Port.
-    .
+    - the UART of the Cortex-M device to the SWO output from the target.
+    - an additional UART of the Cortex-M device to the UART from the target.
+  - USB stack that interfaces to the USB port of the host computer using:
+    - a custom class (for WinUSB),
+    - the CDC ACM class to export USB COM Port.
   - The USB Device middleware may require CMSIS-RTOS and a CMSIS-Driver USB.
   
-\image html "CMSIS_DAP_SWStack.png" "CMSIS-DAP Software Stack"
+In the examples provided, the MDK-Middleware USB stack has been used. However, it is possible to use alternative USB stacks.
 
-In the examples provided the MDK Version 5 USB Communication Stack has been used. However it is possible to
-use alternative USB stacks instead.
+\note
 
-The CMSIS-DAP Firmware is provided in the following directory structure.
-
-Directory                             | Description
-:-------------------------------------|:------------------------------------------------------
-.\\CMSIS\\DAP\\Firmware\\Config       | CMSIS-DAP Firmware configuration 
-.\\CMSIS\\DAP\\Firmware\\Examples     | CMSIS-DAP Firmware adapted to various Debug Units
-.\\CMSIS\\DAP\\Firmware\\Include      | CMSIS-DAP Firmware header file
-.\\CMSIS\\DAP\\Firmware\\Source       | CMSIS-DAP Firmware source code
-.\\CMSIS\\DAP\\Firmware\\Template     | Interface Templates for MDK Version 5 middleware
+- CMSIS-DAP v1.x is \a deprecated and <i>not recommended for new designs</i>.
+- Use <b>CMSIS-DAP v2.x</b> instead that provides high-speed SWO trace streaming.
 
 Validation
 ----------
-CMSIS-DAP compliant Debug Units must be validated using the scripts provided in  \ref DAP_Validate_gr.
+CMSIS-DAP compliant debug units must be validated using the scripts provided in  \ref DAP_Validate_gr.
+
+The CMSIS-DAP firmware is provided in the following directory structure.
+
+Directory                             | Description
+:-------------------------------------|:------------------------------------------------------
+.\\CMSIS\\DAP\\Firmware\\Config       | CMSIS-DAP firmware configuration 
+.\\CMSIS\\DAP\\Firmware\\Examples     | CMSIS-DAP firmware adapted to various debug units
+.\\CMSIS\\DAP\\Firmware\\Include      | CMSIS-DAP firmware header file
+.\\CMSIS\\DAP\\Firmware\\Source       | CMSIS-DAP firmware source code
+.\\CMSIS\\DAP\\Firmware\\Template     | Interface templates for MDK-Middleware
+.\\CMSIS\\DAP\\Firmware\\Validation   | Validation project
 
 <hr>
 
