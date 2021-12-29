@@ -56,6 +56,9 @@ void depthwise_kernel_3x3_arm_depthwise_conv_3x3_s8(void)
     dw_conv_params.padding.h = DEPTHWISE_KERNEL_3X3_PAD_Y;
     dw_conv_params.stride.w = DEPTHWISE_KERNEL_3X3_STRIDE_X;
     dw_conv_params.stride.h = DEPTHWISE_KERNEL_3X3_STRIDE_Y;
+    dw_conv_params.dilation.w = DEPTHWISE_KERNEL_3X3_DILATION_X;
+    dw_conv_params.dilation.h = DEPTHWISE_KERNEL_3X3_DILATION_Y;
+
     dw_conv_params.ch_mult = DEPTHWISE_KERNEL_3X3_CH_MULT;
 
     dw_conv_params.input_offset = DEPTHWISE_KERNEL_3X3_INPUT_OFFSET;
@@ -136,6 +139,9 @@ void depthwise_kernel_3x3_arm_depthwise_conv_3x3_1_s8(void)
     dw_conv_params.padding.h = DEPTHWISE_KERNEL_3X3_PAD_Y;
     dw_conv_params.stride.w = DEPTHWISE_KERNEL_3X3_STRIDE_X;
     dw_conv_params.stride.h = DEPTHWISE_KERNEL_3X3_STRIDE_Y;
+    dw_conv_params.dilation.w = DEPTHWISE_KERNEL_3X3_DILATION_X;
+    dw_conv_params.dilation.h = DEPTHWISE_KERNEL_3X3_DILATION_Y;
+
     dw_conv_params.ch_mult = DEPTHWISE_KERNEL_3X3_CH_MULT;
 
     dw_conv_params.input_offset = DEPTHWISE_KERNEL_3X3_INPUT_OFFSET;
@@ -216,6 +222,9 @@ void depthwise_kernel_3x3_arm_depthwise_conv_3x3_2_s8(void)
     dw_conv_params.padding.h = DEPTHWISE_KERNEL_3X3_PAD_Y;
     dw_conv_params.stride.w = DEPTHWISE_KERNEL_3X3_STRIDE_X;
     dw_conv_params.stride.h = DEPTHWISE_KERNEL_3X3_STRIDE_Y;
+    dw_conv_params.dilation.w = DEPTHWISE_KERNEL_3X3_DILATION_X;
+    dw_conv_params.dilation.h = DEPTHWISE_KERNEL_3X3_DILATION_Y;
+
     dw_conv_params.ch_mult = DEPTHWISE_KERNEL_3X3_CH_MULT;
 
     dw_conv_params.input_offset = DEPTHWISE_KERNEL_3X3_INPUT_OFFSET;
