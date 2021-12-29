@@ -642,4 +642,21 @@ void depthwise_dilation_arm_depthwise_conv_s8(void)
     free(ctx.buf);
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, depthwise_dilation_output_ref, DEPTHWISE_DILATION_DST_SIZE));
+
+    const int32_t buf_size =
+        arm_depthwise_conv_wrapper_s8_get_buffer_size(&dw_conv_params, &input_dims, &filter_dims, &output_dims);
+    TEST_ASSERT_EQUAL(0, buf_size);
+    result = arm_depthwise_conv_wrapper_s8(&ctx,
+                                           &dw_conv_params,
+                                           &quant_params,
+                                           &input_dims,
+                                           input_data,
+                                           &filter_dims,
+                                           kernel_data,
+                                           &bias_dims,
+                                           bias_data,
+                                           &output_dims,
+                                           output);
+    TEST_ASSERT_EQUAL(expected, result);
+    TEST_ASSERT_TRUE(validate(output, depthwise_dilation_output_ref, DEPTHWISE_DILATION_DST_SIZE));
 }
