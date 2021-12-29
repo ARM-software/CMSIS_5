@@ -32,7 +32,7 @@ var group__NNConv =
     [ "arm_depthwise_conv_wrapper_s8_get_buffer_size", "group__NNConv.html#ga100b66e41b8fdf1eeb0c108bca6b6deb", null ],
     [ "arm_depthwise_separable_conv_HWC_q7", "group__NNConv.html#gad3d21b3bc6dbd6f3b97d01104349cb0a", null ],
     [ "arm_depthwise_separable_conv_HWC_q7_nonsquare", "group__NNConv.html#ga32ac508c5467813a84f74f96655dc697", null ],
-    [ "depthwise_conv_s8_generic", "group__NNConv.html#gae9f070a198f67a5337700b0a6cf7ef21", null ],
+    [ "depthwise_conv_s8_generic", "group__NNConv.html#ga8a0fd229483032bfe41183843e17f8f6", null ],
     [ "depthwise_conv_s8_mult_4", "group__NNConv.html#ga06d7783f6788faad5165fd0ae583bc59", null ],
     [ "depthwise_conv_u8_generic", "group__NNConv.html#gab98fd934700dff7667131744c8972d91", null ],
     [ "depthwise_conv_u8_mult_4", "group__NNConv.html#ga4c54b5bdb38fc20c2167bdfa289f1a2b", null ]
