@@ -21,8 +21,8 @@
  * Title:        arm_depthwise_conv_s8.c
  * Description:  s8 version of depthwise convolution.
  *
- * $Date:        20. Dec 2021
- * $Revision:    V.2.7.0
+ * $Date:        30. Dec 2021
+ * $Revision:    V.2.7.1
  *
  * Target Processor:  Cortex-M CPUs
  *
@@ -190,14 +190,36 @@ static void depthwise_conv_s8_generic(const q7_t *input,
                         const int idx_out_ch = i_ch_mult + i_input_ch * ch_mult;
                         int32_t acc_0 = 0;
 
-                        const int32_t start_y_max = (-base_idx_y + dilation_y - 1) / dilation_y;
-                        const int32_t ker_y_start = MAX(0, start_y_max);
-                        const int32_t start_x_max = (-base_idx_x + dilation_x - 1) / dilation_x;
-                        const int32_t ker_x_start = MAX(0, start_x_max);
-                        const int32_t end_min_y = (input_y - base_idx_y + dilation_y - 1) / dilation_y;
-                        const int32_t ker_y_end = MIN(kernel_y, end_min_y);
-                        const int32_t end_min_x = (input_x - base_idx_x + dilation_x - 1) / dilation_x;
-                        const int32_t ker_x_end = MIN(kernel_x, end_min_x);
+                        int ker_y_start;
+                        int ker_x_start;
+                        int ker_y_end;
+                        int ker_x_end;
+
+                        if (dilation_x > 1)
+                        {
+                            const int32_t start_x_max = (-base_idx_x + dilation_x - 1) / dilation_x;
+                            ker_x_start = MAX(0, start_x_max);
+                            const int32_t end_min_x = (input_x - base_idx_x + dilation_x - 1) / dilation_x;
+                            ker_x_end = MIN(kernel_x, end_min_x);
+                        }
+                        else
+                        {
+                            ker_x_start = MAX(0, -base_idx_x);
+                            ker_x_end = MIN(kernel_x, input_x - base_idx_x);
+                        }
+
+                        if (dilation_y > 1)
+                        {
+                            const int32_t start_y_max = (-base_idx_y + dilation_y - 1) / dilation_y;
+                            ker_y_start = MAX(0, start_y_max);
+                            const int32_t end_min_y = (input_y - base_idx_y + dilation_y - 1) / dilation_y;
+                            ker_y_end = MIN(kernel_y, end_min_y);
+                        }
+                        else
+                        {
+                            ker_y_start = MAX(0, -base_idx_y);
+                            ker_y_end = MIN(kernel_y, input_y - base_idx_y);
+                        }
 
                         if (bias)
                         {
