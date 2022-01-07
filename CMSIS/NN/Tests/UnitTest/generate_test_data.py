@@ -39,6 +39,7 @@ except Exception as e:
 REQUIRED_MINIMUM_TENSORFLOW_VERSION = version.parse("2.5")
 ALL_TESTDATA_SETS = {}
 CLANG_FORMAT = 'clang-format-9 -i'
+
 INT32_MAX = 2147483647
 INT32_MIN = -2147483648
 INT16_MAX = 32767
@@ -81,7 +82,7 @@ class TestSettings(ABC):
     # It also convinient when tesing changes in the script, to be able to run all test sets again.
     PREGEN = 'PregeneratedData/'
 
-    def __init__(self, dataset, testtype, args, in_ch, out_ch, x_in, y_in, w_x, w_y, stride_x, stride_y, pad,
+    def __init__(self, dataset, testtype, args, in_ch, out_ch, x_in, y_in, w_x, w_y, stride_x=1, stride_y=1, pad=False,
                  randmin=INT8_MIN, randmax=INT8_MAX, batches=1, generate_bias=True, relu6=False,
                  out_activation_min=None, out_activation_max=None, int16xint8=False, bias_min=None, bias_max=None,
                  dilation_x=1, dilation_y=1):
@@ -417,6 +418,63 @@ class TestSettings(ABC):
 
         return interpreter
 
+    def generate_json_from_template(self, weights_feature_data=None, weights_time_data=None, bias_data=None):
+        """
+        Takes a json template and parameters as input and creates a new json file.
+        """
+        generated_json_file = self.model_path + '.json'
+
+        with open(self.json_template, 'r') as in_file, open(generated_json_file, 'w') as out_file:
+            # Update shapes, scales and zero points
+            data = in_file.read()
+            for item, to_replace in self.json_replacements.items():
+                data = data.replace(item, str(to_replace))
+
+            data = json.loads(data)
+
+            # Update weights and bias data
+            if weights_feature_data is not None:
+                w_1_buffer_index = 1
+                data["buffers"][w_1_buffer_index]["data"] = self.to_bytes(weights_feature_data.numpy().ravel(), 1)
+            if weights_time_data is not None:
+                w_2_buffer_index = 2
+                data["buffers"][w_2_buffer_index]["data"] = self.to_bytes(weights_time_data.numpy().ravel(), 2)
+            if bias_data is not None:
+                bias_buffer_index = 3
+                data["buffers"][bias_buffer_index]["data"] = self.to_bytes(bias_data.numpy().ravel(), 4)
+
+            json.dump(data, out_file, indent=2)
+
+        return generated_json_file
+
+    def flatc_generate_tflite(self, json_input, schema):
+        flatc = 'flatc'
+        if schema is None:
+            raise RuntimeError("A schema file is required.")
+        command = "{} -o {} -c -b {} {}".format(flatc, self.headers_dir, schema, json_input)
+        command_list = command.split(' ')
+        process = subprocess.run(command_list)
+        if process.returncode != 0:
+            raise RuntimeError("The following command failed: {}. Did you install flatc?".format(command))
+
+    def to_bytes(self, tensor_data, type_size):
+        result_bytes = []
+
+        if type_size == 1:
+            tensor_type = np.uint8
+        elif type_size == 2:
+            tensor_type = np.uint16
+        elif type_size == 4:
+            tensor_type = np.uint32
+        else:
+            raise RuntimeError("Size not supported: {}".format(type_size))
+
+        for val in tensor_data:
+            for byte in int(tensor_type(val)).to_bytes(type_size, 'little'):
+                result_bytes.append(byte)
+
+        return result_bytes
+
 
 class ConvSettings(TestSettings):
 
@@ -723,21 +781,38 @@ class FullyConnectedSettings(TestSettings):
 class SoftmaxSettings(TestSettings):
     softmax_input_integer_bits = 5
 
-    def __init__(self, dataset, testtype, args, x_in=5, y_in=1, randmin=INT8_MIN, randmax=INT8_MAX):
+    def __init__(self, dataset, testtype, args, x_in=5, y_in=1, randmin=INT8_MIN, randmax=INT8_MAX, int16xint8=False,
+                 inInt8outInt16=False, input_scale=0.003922, input_zp=-128):
         super().__init__(dataset, testtype, args, 1, 1, x_in, y_in, 1, 1, 1, 1, False, randmin,
-                         randmax)
+                         randmax, int16xint8=int16xint8)
         self.x_input = self.x_output = x_in
         self.y_input = self.y_output = y_in
+        self.inInt8outInt16 = inInt8outInt16
+
+        if self.inInt8outInt16 and self.is_int16xint8:
+            raise RuntimeError("Specify input as either s8 or s16")
+
+        if self.inInt8outInt16:
+            self.input_scale = input_scale
+            self.json_template = "TestCases/Common/Softmax/softmax_int8_to_int16_template.json"
+            self.json_replacements = {"num_rows": self.y_input,
+                                      "row_size": self.x_input,
+                                      "input_scale": input_scale,
+                                      "input_zp": input_zp}
 
     def calc_softmax_params(self):
-        input_real_multiplier = min(self.input_scale * (1 << (31 - self.softmax_input_integer_bits)),
-                                    (1 << 31) - 1)
-        (self.input_multiplier, self.input_left_shift) = self.quantize_scale(input_real_multiplier)
+        if self.is_int16xint8:
+            input_scale_beta_rescale = self.input_scale / (10.0 / 65535.0)
+            (self.input_multiplier, self.input_left_shift) = self.quantize_scale(input_scale_beta_rescale)
+        else:
+            input_real_multiplier = min(self.input_scale * (1 << (31 - self.softmax_input_integer_bits)),
+                                        (1 << 31) - 1)
+            (self.input_multiplier, self.input_left_shift) = self.quantize_scale(input_real_multiplier)
 
-        self.diff_min = ((1 << self.softmax_input_integer_bits) - 1) * \
-                        (1 << (31 - self.softmax_input_integer_bits)) / \
-                        (1 << self.input_left_shift)
-        self.diff_min = math.floor(self.diff_min)
+            self.diff_min = ((1 << self.softmax_input_integer_bits) - 1) * \
+                            (1 << (31 - self.softmax_input_integer_bits)) / \
+                            (1 << self.input_left_shift)
+            self.diff_min = math.floor(self.diff_min)
 
     def write_c_config_header(self):
         super().write_c_config_header(write_common_parameters=False)
@@ -751,7 +826,8 @@ class SoftmaxSettings(TestSettings):
             f.write("#define {}_ROW_SIZE {}\n".format(prefix, self.x_input))
             f.write("#define {}_INPUT_MULT {}\n".format(prefix, self.input_multiplier))
             f.write("#define {}_INPUT_LEFT_SHIFT {}\n".format(prefix, self.input_left_shift))
-            f.write("#define {}_DIFF_MIN {}\n".format(prefix, -self.diff_min))
+            if not self.is_int16xint8:
+                f.write("#define {}_DIFF_MIN {}\n".format(prefix, -self.diff_min))
             f.write("#define {}_DST_SIZE {}\n".format(prefix, self.x_output * self.y_output))
 
     def get_softmax_randomized_input_data(self, input_data, input_shape):
@@ -766,22 +842,49 @@ class SoftmaxSettings(TestSettings):
 
     def generate_data(self, input_data=None, weights=None, biases=None):
         input_data = self.get_softmax_randomized_input_data(input_data, [self.y_input, self.x_input])
-        self.generate_c_array("input", input_data, datatype="int8_t")
 
-        # Create a one-layer Keras model.
-        model = tf.keras.models.Sequential()
-        input_shape = (self.y_input, self.x_input)
-        model.add(tf.keras.layers.Softmax(input_shape=input_shape[1:]))
+        if self.is_int16xint8:
+            inttype = tf.int16
+            datatype = "q15_t"
+        else:
+            inttype = tf.int8
+            datatype = "q7_t"
 
-        interpreter = self.convert_and_interpret(model, tf.int8, input_data)
+        self.generate_c_array("input", input_data, datatype=datatype)
+
+        # Generate reference.
+        if self.inInt8outInt16:
+            # Output is int16.
+            datatype = "q15_t"
+
+            # Keras does not support int8 input and int16 output for Softmax.
+            # Using a template json instead.
+            generated_json = self.generate_json_from_template()
+            self.flatc_generate_tflite(generated_json, args.schema_file)
+
+            interpreter = Interpreter(
+                model_path=str(self.model_path_tflite), experimental_op_resolver_type=OpResolverType.BUILTIN_REF)
+            interpreter.allocate_tensors()
+            all_layers_details = interpreter.get_tensor_details()
+            input_layer = all_layers_details[0]
+            output_layer = all_layers_details[1]
+
+            interpreter.set_tensor(input_layer["index"], tf.cast(input_data, tf.int8))
+            interpreter.invoke()
+            output_data = interpreter.get_tensor(output_layer["index"])
+        else:
+            # Create a one-layer Keras model.
+            model = tf.keras.models.Sequential()
+            input_shape = (self.y_input, self.x_input)
+            model.add(tf.keras.layers.Softmax(input_shape=input_shape[1:]))
+
+            interpreter = self.convert_and_interpret(model, inttype, input_data)
+            output_details = interpreter.get_output_details()
+            interpreter.invoke()
+            output_data = interpreter.get_tensor(output_details[0]["index"])
 
         self.calc_softmax_params()
-
-        # Generate reference
-        output_details = interpreter.get_output_details()
-        interpreter.invoke()
-        output_data = interpreter.get_tensor(output_details[0]["index"])
-        self.generate_c_array("output_ref", output_data)
+        self.generate_c_array("output_ref", output_data, datatype=datatype)
 
         self.write_c_config_header()
         self.write_c_header_wrapper()
@@ -940,60 +1043,8 @@ class SVDFSettings(TestSettings):
         self.write_c_config_header()
         self.write_c_header_wrapper()
 
-    def flatc_generate_tflite(self, json_input, schema):
-        flatc = 'flatc'
-        if schema is None:
-            raise RuntimeError("A schema file is required.")
-        command = "{} -o {} -c -b {} {}".format(flatc, self.headers_dir, schema, json_input)
-        command_list = command.split(' ')
-        process = subprocess.run(command_list)
-        if process.returncode != 0:
-            raise RuntimeError("The following command failed: {}. Did you install flatc?".format(command))
-
     def get_scale_and_zp(self, layer):
         return (layer['quantization_parameters']['scales'][0], layer['quantization_parameters']['zero_points'][0])
-
-    def to_bytes(self, tensor_data, type_size):
-        result_bytes = []
-
-        if type_size == 1:
-            tensor_type = np.uint8
-        elif type_size == 2:
-            tensor_type = np.uint16
-        elif type_size == 4:
-            tensor_type = np.uint32
-        else:
-            raise RuntimeError("Size not supported: {}".format(type_size))
-
-        for val in tensor_data:
-            for byte in int(tensor_type(val)).to_bytes(type_size, 'little'):
-                result_bytes.append(byte)
-
-        return result_bytes
-
-    def generate_json_from_template(self, weights_feature_data, weights_time_data, bias_data):
-        """
-        Takes a json template and parameters as input and creates a new json file.
-        """
-        w_1_buffer_index = 1
-        w_2_buffer_index = 2
-        bias_buffer_index = 3
-        generated_json_file = self.model_path + '.json'
-
-        with open(self.json_template, 'r') as in_file, open(generated_json_file, 'w') as out_file:
-            # Update shapes, scales and zero points
-            data = in_file.read()
-            for item, to_replace in self.json_replacements.items():
-                data = data.replace(item, str(to_replace))
-
-            # Update weights and bias data
-            data = json.loads(data)
-            data["buffers"][w_1_buffer_index]["data"] = self.to_bytes(weights_feature_data.numpy().ravel(), 1)
-            data["buffers"][w_2_buffer_index]["data"] = self.to_bytes(weights_time_data.numpy().ravel(), 2)
-            data["buffers"][bias_buffer_index]["data"] = self.to_bytes(bias_data.numpy().ravel(), 4)
-            json.dump(data, out_file, indent=2)
-
-        return generated_json_file
 
 
 class AddMulSettings(TestSettings):
@@ -1341,6 +1392,11 @@ def load_all_testdatasets():
     type_of_test = 'softmax'
     dataset = 'softmax'
     ALL_TESTDATA_SETS[dataset] = SoftmaxSettings(dataset, type_of_test, args, x_in=5, y_in=1)
+    dataset = 'softmax_s16'
+    ALL_TESTDATA_SETS[dataset] = SoftmaxSettings(dataset, type_of_test, args, x_in=10, y_in=1, int16xint8=True,
+                                                 randmin=INT16_MIN, randmax=INT16_MAX)
+    dataset = 'softmax_s8_s16'
+    ALL_TESTDATA_SETS[dataset] = SoftmaxSettings(dataset, type_of_test, args, x_in=12, y_in=1, inInt8outInt16=True)
 
     type_of_test = 'svdf'
     dataset = 'svdf'

@@ -21,8 +21,9 @@
  * Title:        arm_nnsupportfunctions.h
  * Description:  Public header file of support functions for CMSIS NN Library
  *
- * $Date:        7. February 2022
- * $Revision:    V.6.1.0
+
+ * $Date:        24. February 2022
+ * $Revision:    V.6.2.0
  *
  * Target Processor:  Cortex-M CPUs
  * -------------------------------------------------------------------- */
@@ -32,6 +33,8 @@
 
 #include "arm_nn_math_types.h"
 #include "arm_nn_types.h"
+
+#include <stdbool.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -777,6 +780,30 @@ q7_t *arm_nn_mat_mult_kernel_s8_s16(const q7_t *input_a,
                                     q7_t *out_0);
 
 /**
+ * @brief Common softmax function for s8 input and s8 or s16 output
+ * @param[in]  input          Pointer to the input tensor
+ * @param[in]  num_rows       Number of rows in the input tensor
+ * @param[in]  row_size       Number of elements in each input row
+ * @param[in]  mult           Input quantization multiplier
+ * @param[in]  shift          Input quantization shift within the range [0, 31]
+ * @param[in]  diff_min       Minimum difference with max in row. Used to check if
+ *                            the quantized exponential operation can be performed
+ * @param[in]  int16_output   Indicating s8 output if 0 else s16 output
+ * @param[out] output         Pointer to the output tensor
+ *
+ * @note Supported framework: TensorFlow Lite micro (bit-accurate)
+ *
+ */
+void arm_nn_softmax_common_s8(const int8_t *input,
+                              const int32_t num_rows,
+                              const int32_t row_size,
+                              const int32_t mult,
+                              const int32_t shift,
+                              const int32_t diff_min,
+                              const bool int16_output,
+                              void *output);
+
+/**
  * @brief macro for adding rounding offset
  */
 #ifndef ARM_NN_TRUNCATE
@@ -919,10 +946,10 @@ __STATIC_FORCEINLINE q31_t arm_nn_requantize(const q31_t val, const q31_t multip
 
 /**
  * @brief           Requantize a given 64 bit value.
- * @param[in]       val                 Value to be requantized
- * @param[in]       reduced_multiplier  Reduced multiplier from range {NN_Q31_MIN + 1, Q32_MAX} to {Q16_MIN + 1,
+ * @param[in]       val                 Value to be requantized in the range {-(1<<47)} to {(1<<47) - 1}
+ * @param[in]       reduced_multiplier  Reduced multiplier in the range {NN_Q31_MIN + 1, Q32_MAX} to {Q16_MIN + 1,
  * Q16_MAX}
- * @param[in]       shift               left or right shift for 'val * multiplier'
+ * @param[in]       shift               Left or right shift for 'val * multiplier' in the range {-31} to {7}
  *
  * @return          Returns (val * multiplier)/(2 ^ shift)
  *

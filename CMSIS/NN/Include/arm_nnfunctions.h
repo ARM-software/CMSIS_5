@@ -21,8 +21,8 @@
  * Title:        arm_nnfunctions.h
  * Description:  Public header file for CMSIS NN Library
  *
- * $Date:        14 February 2022
- * $Revision:    V.8.0.1
+ * $Date:        22 February 2022
+ * $Revision:    V.8.1.0
  *
  * Target Processor:  Cortex-M CPUs
  * -------------------------------------------------------------------- */
@@ -2070,7 +2070,6 @@ void arm_softmax_q15(const q15_t *vec_in, const uint16_t dim_vec, q15_t *p_out);
  * @note Supported framework: TensorFlow Lite micro (bit-accurate)
  *
  */
-
 void arm_softmax_s8(const int8_t *input,
                     const int32_t num_rows,
                     const int32_t row_size,
@@ -2078,6 +2077,57 @@ void arm_softmax_s8(const int8_t *input,
                     const int32_t shift,
                     const int32_t diff_min,
                     int8_t *output);
+
+/**
+ * @brief S8 to s16 softmax function
+ * @param[in]  input     Pointer to the input tensor
+ * @param[in]  num_rows  Number of rows in the input tensor
+ * @param[in]  row_size  Number of elements in each input row
+ * @param[in]  mult      Input quantization multiplier
+ * @param[in]  shift     Input quantization shift within the range [0, 31]
+ * @param[in]  diff_min  Minimum difference with max in row. Used to check if
+ *                       the quantized exponential operation can be performed
+ * @param[out] output    Pointer to the output tensor
+ *
+ * @note Supported framework: TensorFlow Lite micro (bit-accurate)
+ *
+ */
+void arm_softmax_s8_s16(const int8_t *input,
+                        const int32_t num_rows,
+                        const int32_t row_size,
+                        const int32_t mult,
+                        const int32_t shift,
+                        const int32_t diff_min,
+                        int16_t *output);
+
+/**
+ * @brief S16 softmax function
+ * @param[in]  input           Pointer to the input tensor
+ * @param[in]  num_rows        Number of rows in the input tensor
+ * @param[in]  row_size        Number of elements in each input row
+ * @param[in]  mult            Input quantization multiplier
+ * @param[in]  shift           Input quantization shift within the range [0, 31]
+ * @param[in]  softmax_params  Softmax s16 layer parameters with two pointers to LUTs speficied below.
+ *                             For indexing the high 9 bits are used and 7 remaining for interpolation.
+ *                             That means 512 entries for the 9-bit indexing and 1 extra for interpolation, i.e. 513
+ *                             values for each LUT.
+ *                             - Lookup table for exp(x), where x uniform distributed between [-10.0 , 0.0]
+ *                             - Lookup table for 1 / (1 + x), where x uniform distributed between [0.0 , 1.0]
+ * @param[out] output          Pointer to the output tensor
+ * @return                        The function returns
+ *                                    <code>ARM_MATH_ARGUMENT_ERROR</code> if LUTs are NULL
+ *                                    <code>ARM_MATH_SUCCESS</code> - Successful operation
+ *
+ * @note Supported framework: TensorFlow Lite micro (bit-accurate)
+ *
+ */
+arm_status arm_softmax_s16(const int16_t *input,
+                           const int32_t num_rows,
+                           const int32_t row_size,
+                           const int32_t mult,
+                           const int32_t shift,
+                           const cmsis_nn_softmax_lut_s16 *softmax_params,
+                           int16_t *output);
 
 /**
  * @brief U8 softmax function

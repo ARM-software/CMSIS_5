@@ -2,4 +2,4 @@
 #pragma once
 #include <stdint.h>
 
-const int8_t softmax_input[5] = {43, 49, 71, 1, 64};
+const q7_t softmax_input[5] = {-99, -122, -67, 10, -82};
