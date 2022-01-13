@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 #
-# Copyright (C) 2010-2021 Arm Limited or its affiliates.
+# Copyright (C) 2010-2022 Arm Limited or its affiliates.
 #
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -1122,6 +1122,10 @@ def load_all_testdatasets():
     ALL_TESTDATA_SETS[dataset] = FullyConnectedSettings(dataset, type_of_test, args, in_ch=7, out_ch=11, x_in=10,
                                                         y_in=10, batches=3, out_activation_min=-1444,
                                                         out_activation_max=32767, int16xint8=True)
+    dataset = 'fc_int16_slow'
+    ALL_TESTDATA_SETS[dataset] = FullyConnectedSettings(dataset, type_of_test, args, in_ch=7, out_ch=11, x_in=10,
+                                                        y_in=8, batches=3, randmin=(INT16_MAX-100), randmax=INT16_MAX,
+                                                        int16xint8=True)
 
     type_of_test = 'avgpool'
     dataset = 'avgpooling'
