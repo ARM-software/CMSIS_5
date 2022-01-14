@@ -1061,6 +1061,21 @@ def load_all_testdatasets():
                                               y_in=2, w_x=2, w_y=2, stride_x=1, stride_y=1, pad=False,
                                               out_activation_min=INT16_MIN, out_activation_max=INT16_MAX,
                                               int16xint8=True, bias_min=-0x300, bias_max=0x9fff)
+    dataset = 'int16xint8_dilation_1'
+    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=2, out_ch=2, x_in=32,
+                                              y_in=32, w_x=2, w_y=2, stride_x=1, stride_y=1, pad=False,
+                                              out_activation_min=INT16_MIN, out_activation_max=INT16_MAX,
+                                              int16xint8=True, bias_min=-0x300, dilation_x=2, dilation_y=2)
+    dataset = 'int16xint8_dilation_2'
+    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=3, out_ch=4, x_in=7,
+                                              y_in=8, w_x=2, w_y=4, stride_x=1, stride_y=1, pad=True,
+                                              randmin=INT16_MIN, randmax=INT16_MAX, out_activation_min=-13335,
+                                              out_activation_max=32767, int16xint8=True, dilation_x=2, dilation_y=2)
+    dataset = 'int16xint8_dilation_3'
+    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=3, out_ch=4, x_in=7,
+                                              y_in=8, w_x=2, w_y=4, stride_x=1, stride_y=1, pad=True,
+                                              randmin=INT16_MIN, randmax=INT16_MAX, out_activation_min=-13335,
+                                              out_activation_max=32767, int16xint8=True, dilation_x=2)
 
     type_of_test = 'depthwise_conv'
     dataset = 'depthwise_2'
