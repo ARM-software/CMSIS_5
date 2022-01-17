@@ -21,7 +21,9 @@
 
 digraph structs {
     node [shape=plaintext]
+{% if config.horizontal %}
     rankdir=LR
+{% endif %}
     edge [arrowsize=0.5]
     fontname="times"
 
@@ -36,6 +38,35 @@ digraph structs {
 </TABLE>>];
 {% else %}
 
+{% if not config.horizontal %}
+
+{{item.nodeID}} [label=<
+<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+  <TR>
+    {% for id in range(0,item.maxNbIOs) -%}
+    {% if item.inputNames[id] -%}
+    {% set input %}{{item.inputNames[id]}}{% endset %}
+    <TD PORT="{{input}}"><FONT POINT-SIZE="9.0">{{input}}</FONT></TD>
+    {% else %}
+    <TD></TD>
+    {%- endif %}
+    {%- endfor %}
+  </TR>
+  <TR>
+    <TD ALIGN="CENTER" COLSPAN="{{item.maxNbIOs}}">{{ item.graphvizName }}</TD>
+  </TR>
+  <TR>
+    {% for id in range(0,item.maxNbIOs) -%}
+    {% if item.outputNames[id] -%}
+    {% set output %}{{item.outputNames[id]}}{% endset %}
+    <TD PORT="{{output}}"><FONT POINT-SIZE="9.0">{{output}}</FONT></TD>
+    {% else %}
+    <TD></TD>
+    {%- endif %}
+    {%- endfor %}
+  </TR>
+</TABLE>>];
+{% else %}
 {{item.nodeID}} [label=<
 <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
   <TR>
@@ -51,31 +82,27 @@ digraph structs {
     <TD></TD>
 {% endif %}
   </TR>
-  <TR>
-{% if item.hasManyInputs %}
-{% for input in item.inputNames[1:] -%}
-   <TD PORT="{{input}}"><FONT POINT-SIZE="9.0">{{input}}</FONT></TD>
-{% endfor -%}
-{% for output in range(item.nbEmptyInputs) %}
+{% for id in range(1,item.maxNbIOs) -%}
+<TR>
+{% if item.inputNames[id] -%}
+{% set input %}{{item.inputNames[id]}}{% endset %}
+<TD PORT="{{input}}"><FONT POINT-SIZE="9.0">{{input}}</FONT></TD>
+{% else %} 
 <TD></TD>
-{% endfor %}
-{% else %}
-<TD></TD>
-{% endif %}
-{% if item.hasManyOutputs %}
-{% for output in item.outputNames[1:] -%}
+{%- endif %}
+
+{% if item.outputNames[id] -%}
+{% set output %}{{item.outputNames[id]}}{% endset %}
 <TD PORT="{{output}}"><FONT POINT-SIZE="9.0">{{output}}</FONT></TD>
-{% endfor -%}
-{% for output in range(item.nbEmptyOutputs) %}
+{% else %} 
 <TD></TD>
-{% endfor %}
-{% else %}
-<TD></TD>
-{% endif %}
+{%- endif %}
 </TR>
+{%- endfor %}
+
 
 </TABLE>>];
-
+{% endif %}
 {% endif %}
 {% endfor %}
 

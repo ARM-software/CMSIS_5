@@ -27,7 +27,7 @@
 ############################################
 from jinja2 import Environment, PackageLoader, select_autoescape
 
-def gengraph(sched,f):
+def gengraph(sched,f,config):
     env = Environment(
        loader=PackageLoader("sdf"),
        autoescape=select_autoescape(),
@@ -46,5 +46,6 @@ def gengraph(sched,f):
       nbFifos=nbFifos,
       constEdges=sched.constantEdges,
       nbConstEdges=len(sched.constantEdges),
-      constObjs=constObjs
+      constObjs=constObjs,
+      config=config
       ),file=f)

@@ -19,6 +19,8 @@
       <li> Added fully_connected int16 reference implementation </li>
       <li> Added fully_connected int16 DSP implementation </li>
       <li> Added unit tests for int16 fully_connected kernel </li>
+      <li> Added dilation support for int8 conv kernel </li>
+      <li> Added dilation support for int8 depthwise conv kernel </li>
       </ul>
     </td>
   </tr>

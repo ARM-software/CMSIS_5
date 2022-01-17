@@ -99,6 +99,13 @@
       <th>Description</th>
     </tr>
     <tr>
+      <td>V5.5.4</td>
+      <td>
+       - Fixed potential register R1 corruption when calling OS functions from threads multiple times with same arguments (when using high level compiler optimizations).
+       - Minor code optimizations in osMessageQueuePut/Get
+      </td>
+    </tr>
+    <tr>
       <td>V5.5.3</td>
       <td>
        - CVE-2021-27431 vulnerability mitigation.

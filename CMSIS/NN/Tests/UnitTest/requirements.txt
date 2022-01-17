@@ -77,7 +77,7 @@ soupsieve==2.2.1
 tensorboard==2.6.0
 tensorboard-data-server==0.6.1
 tensorboard-plugin-wit==1.8.0
-tensorflow==2.6.0
+tensorflow==2.6.1
 tensorflow-estimator==2.6.0
 termcolor==1.1.0
 transitions==0.8.9

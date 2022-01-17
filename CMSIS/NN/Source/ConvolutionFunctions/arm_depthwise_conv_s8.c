@@ -21,8 +21,8 @@
  * Title:        arm_depthwise_conv_s8.c
  * Description:  s8 version of depthwise convolution.
  *
- * $Date:        05. Nov 2021
- * $Revision:    V.2.6.0
+ * $Date:        30. Dec 2021
+ * $Revision:    V.2.7.1
  *
  * Target Processor:  Cortex-M CPUs
  *
@@ -166,7 +166,10 @@ static void depthwise_conv_s8_generic(const q7_t *input,
                                       const int32_t output_offset,
                                       const int32_t input_offset,
                                       const int32_t output_activation_min,
-                                      const int32_t output_activation_max)
+                                      const int32_t output_activation_max,
+                                      const uint16_t dilation_x,
+                                      const uint16_t dilation_y)
+
 {
     (void)output_ch;
     int i_out = 0;
@@ -186,12 +189,38 @@ static void depthwise_conv_s8_generic(const q7_t *input,
                     {
                         const int idx_out_ch = i_ch_mult + i_input_ch * ch_mult;
                         int32_t acc_0 = 0;
-                        /* Condition for kernel start dimension: (base_idx_<x,y> + ker_<x,y>_start) >= 0 */
-                        const int ker_y_start = MAX(0, -base_idx_y);
-                        const int ker_x_start = MAX(0, -base_idx_x);
-                        /* Condition for kernel end dimension: (base_idx_<x,y> + ker_<x,y>_end) < input_<x,y> */
-                        const int ker_y_end = MIN(kernel_y, input_y - base_idx_y);
-                        const int ker_x_end = MIN(kernel_x, input_x - base_idx_x);
+
+                        int ker_y_start;
+                        int ker_x_start;
+                        int ker_y_end;
+                        int ker_x_end;
+
+                        if (dilation_x > 1)
+                        {
+                            const int32_t start_x_max = (-base_idx_x + dilation_x - 1) / dilation_x;
+                            ker_x_start = MAX(0, start_x_max);
+                            const int32_t end_min_x = (input_x - base_idx_x + dilation_x - 1) / dilation_x;
+                            ker_x_end = MIN(kernel_x, end_min_x);
+                        }
+                        else
+                        {
+                            ker_x_start = MAX(0, -base_idx_x);
+                            ker_x_end = MIN(kernel_x, input_x - base_idx_x);
+                        }
+
+                        if (dilation_y > 1)
+                        {
+                            const int32_t start_y_max = (-base_idx_y + dilation_y - 1) / dilation_y;
+                            ker_y_start = MAX(0, start_y_max);
+                            const int32_t end_min_y = (input_y - base_idx_y + dilation_y - 1) / dilation_y;
+                            ker_y_end = MIN(kernel_y, end_min_y);
+                        }
+                        else
+                        {
+                            ker_y_start = MAX(0, -base_idx_y);
+                            ker_y_end = MIN(kernel_y, input_y - base_idx_y);
+                        }
+
                         if (bias)
                         {
                             acc_0 = bias[idx_out_ch];
@@ -199,10 +228,10 @@ static void depthwise_conv_s8_generic(const q7_t *input,
 
                         for (int i_ker_y = ker_y_start; i_ker_y < ker_y_end; i_ker_y++)
                         {
-                            const int32_t idx_y = base_idx_y + i_ker_y;
+                            const int32_t idx_y = base_idx_y + dilation_y * i_ker_y;
                             for (int i_ker_x = ker_x_start; i_ker_x < ker_x_end; i_ker_x++)
                             {
-                                const int32_t idx_x = base_idx_x + i_ker_x;
+                                const int32_t idx_x = base_idx_x + dilation_x * i_ker_x;
                                 int32_t idx_0 = (idx_y * input_x + idx_x) * input_ch + i_input_ch;
                                 int32_t ker_idx_0 = (i_ker_y * kernel_x + i_ker_x) * (input_ch * ch_mult) + idx_out_ch;
 
@@ -245,11 +274,15 @@ arm_status arm_depthwise_conv_s8(const cmsis_nn_context *ctx,
                                  const cmsis_nn_dims *output_dims,
                                  q7_t *output)
 {
+    const uint16_t dilation_x = dw_conv_params->dilation.w;
+    const uint16_t dilation_y = dw_conv_params->dilation.h;
+
     (void)dw_conv_params->dilation;
     (void)bias_dims;
     (void)ctx;
 
-    if (dw_conv_params->ch_mult % 4 == 0 && input_dims->n == 1)
+    if (dw_conv_params->ch_mult % 4 == 0 && input_dims->n == 1 && dw_conv_params->dilation.w == 1 &&
+        dw_conv_params->dilation.h == 1)
     {
         depthwise_conv_s8_mult_4(input,
                                  input_dims->w,
@@ -300,7 +333,9 @@ arm_status arm_depthwise_conv_s8(const cmsis_nn_context *ctx,
                                   dw_conv_params->output_offset,
                                   dw_conv_params->input_offset,
                                   dw_conv_params->activation.min,
-                                  dw_conv_params->activation.max);
+                                  dw_conv_params->activation.max,
+                                  dilation_x,
+                                  dilation_y);
     }
 
     /* Return to application */

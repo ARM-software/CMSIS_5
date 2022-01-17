@@ -229,7 +229,7 @@ SVC_Handler
                 CMP     R12, #0                     ; Compare SVC number
                 BNE     SVC_User                    ; Branch if User SVC
 
-                PUSH    {R0-R3}
+                PUSH    {R0-R3}                     ; Push arguments to stack
 
                 LDR     R0, =IRQ_NestLevel
                 LDR     R1, [R0]
@@ -243,20 +243,13 @@ SVC_Handler
                 LDR     R0, [R0, #I_TICK_IRQN_OFS]  ; Load OS Tick irqn
                 BLX     IRQ_Disable                 ; Disable OS Tick interrupt
 SVC_FuncCall
-                POP     {R0-R3}
-
-                LDR     R12, [SP]                   ; Reload R12 from stack
+                LDM     SP, {R0-R3, R12}            ; Reload R0-R3 and R12 from stack
 
                 CPSIE   i                           ; Re-enable interrupts
                 BLX     R12                         ; Branch to SVC function
                 CPSID   i                           ; Disable interrupts
 
-                SUB     SP, SP, #4
-                STM     SP, {SP}^                   ; Store SP_usr onto stack
-                POP     {R12}                       ; Pop SP_usr into R12
-                SUB     R12, R12, #16               ; Adjust pointer to SP_usr
-                LDMDB   R12, {R2,R3}                ; Load return values from SVC function
-                PUSH    {R0-R3}                     ; Push return values to stack
+                STR     R0, [SP]                    ; Store function return value
 
                 LDR     R0, =osRtxInfo
                 LDR     R1, [R0, #I_K_STATE_OFS]    ; Load RTX5 kernel state

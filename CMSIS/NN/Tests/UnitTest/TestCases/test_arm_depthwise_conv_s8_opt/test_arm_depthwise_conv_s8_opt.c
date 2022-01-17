@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -59,6 +59,9 @@ void basic_arm_depthwise_conv_s8_opt(void)
     dw_conv_params.padding.h = BASIC_PAD_Y;
     dw_conv_params.stride.w = BASIC_STRIDE_X;
     dw_conv_params.stride.h = BASIC_STRIDE_Y;
+    dw_conv_params.dilation.w = BASIC_DILATION_X;
+    dw_conv_params.dilation.h = BASIC_DILATION_Y;
+
     dw_conv_params.ch_mult = 1;
 
     dw_conv_params.input_offset = BASIC_INPUT_OFFSET;
@@ -119,6 +122,9 @@ void stride2pad1_arm_depthwise_conv_s8_opt(void)
     dw_conv_params.padding.h = STRIDE2PAD1_PAD_Y;
     dw_conv_params.stride.w = STRIDE2PAD1_STRIDE_X;
     dw_conv_params.stride.h = STRIDE2PAD1_STRIDE_Y;
+    dw_conv_params.dilation.w = STRIDE2PAD1_DILATION_X;
+    dw_conv_params.dilation.h = STRIDE2PAD1_DILATION_Y;
+
     dw_conv_params.ch_mult = 1;
 
     dw_conv_params.input_offset = STRIDE2PAD1_INPUT_OFFSET;
@@ -179,6 +185,9 @@ void depthwise_eq_in_out_ch_arm_depthwise_conv_s8_opt(void)
     dw_conv_params.padding.h = DEPTHWISE_EQ_IN_OUT_CH_PAD_Y;
     dw_conv_params.stride.w = DEPTHWISE_EQ_IN_OUT_CH_STRIDE_X;
     dw_conv_params.stride.h = DEPTHWISE_EQ_IN_OUT_CH_STRIDE_Y;
+    dw_conv_params.dilation.w = DEPTHWISE_EQ_IN_OUT_CH_DILATION_X;
+    dw_conv_params.dilation.h = DEPTHWISE_EQ_IN_OUT_CH_DILATION_Y;
+
     dw_conv_params.ch_mult = 1;
 
     dw_conv_params.input_offset = DEPTHWISE_EQ_IN_OUT_CH_INPUT_OFFSET;
