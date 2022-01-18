@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2022 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -57,6 +57,8 @@ void int16xint8_arm_convolve_fast_s16(void)
     conv_params.padding.h = INT16XINT8_PAD_Y;
     conv_params.stride.w = INT16XINT8_STRIDE_X;
     conv_params.stride.h = INT16XINT8_STRIDE_Y;
+    conv_params.dilation.w = INT16XINT8_DILATION_X;
+    conv_params.dilation.h = INT16XINT8_DILATION_X;
 
     conv_params.input_offset = 0;
     conv_params.output_offset = 0;
@@ -139,6 +141,8 @@ void requantize_s64_arm_convolve_fast_s16(void)
     conv_params.padding.h = REQUANTIZE_S64_PAD_Y;
     conv_params.stride.w = REQUANTIZE_S64_STRIDE_X;
     conv_params.stride.h = REQUANTIZE_S64_STRIDE_Y;
+    conv_params.dilation.w = REQUANTIZE_S64_DILATION_X;
+    conv_params.dilation.h = REQUANTIZE_S64_DILATION_Y;
 
     conv_params.input_offset = REQUANTIZE_S64_INPUT_OFFSET;
     conv_params.output_offset = REQUANTIZE_S64_OUTPUT_OFFSET;
