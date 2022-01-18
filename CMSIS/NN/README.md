@@ -34,6 +34,7 @@ Group | API | Base Operator | Input Constraints | Additional memory required for
 ||arm_convolve_wrapper_s16()|CONV|None|n.a.| Yes | No |The additional memory required depends on the optimal convolution function called|
 ||arm_convolve_s16()|CONV|None|No| No | No ||
 ||arm_convolve_fast_s16()|CONV|dilation = 1, <br/> ker_x * ker_y * input_ch < 512 <br/> |4 * ker_x * ker_y * input_ch| Yes | No ||
+| arm_depthwise_conv_s16() | DEPTHWISE_CONV | None | No|No|No||
 |[Fully Connected](https://arm-software.github.io/CMSIS_5/NN/html/group__FC.html)||||| |  | |
 || arm_fully_connected_s8() |FULLY CONNECTED & <br/> MAT MUL  | None | No | Yes | Yes | |
 || arm_fully_connected_s16() |FULLY CONNECTED & <br/> MAT MUL  | None | No | Yes | No | |

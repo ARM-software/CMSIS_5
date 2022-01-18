@@ -16,12 +16,8 @@
 # limitations under the License.
 #
 
-add_cmsis_nn_unit_test_executable(test_arm_convolve_1x1_s8_fast)
+add_cmsis_nn_unit_test_executable(test_arm_depthwise_conv_s16)
 
-target_sources(test_arm_convolve_1x1_s8_fast PRIVATE
-    Unity/unity_test_arm_convolve_1x1_s8_fast.c
-    Unity/TestRunner/unity_test_arm_convolve_1x1_s8_fast_runner.c)
-
-
-
-
+target_sources(test_arm_depthwise_conv_s16 PRIVATE
+    Unity/unity_test_arm_depthwise_conv_s16.c
+    Unity/TestRunner/unity_test_arm_depthwise_conv_s16_runner.c)
