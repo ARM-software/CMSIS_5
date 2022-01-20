@@ -189,8 +189,8 @@ void arm_correlate_opt_q15(
     while (tapCnt > 0U)
     {
       /* Read four samples from smaller buffer */
-      y1 = read_q15x2_ia ((q15_t **) &pIn2);
-      y2 = read_q15x2_ia ((q15_t **) &pIn2);
+      y1 = read_q15x2_ia (&pIn2);
+      y2 = read_q15x2_ia (&pIn2);
 
       /* multiply and accumulate */
       acc0 = __SMLALD(x1, y1, acc0);

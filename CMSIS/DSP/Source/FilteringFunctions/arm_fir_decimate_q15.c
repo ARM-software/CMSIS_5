@@ -377,7 +377,7 @@ void arm_fir_decimate_q15(
     while (tapCnt > 0U)
     {
       /* Read the b[numTaps-1] and b[numTaps-2] coefficients */
-      c0 = read_q15x2_ia ((q15_t **) &pb);
+      c0 = read_q15x2_ia (&pb);
 
       /* Read x[n-numTaps-1] and x[n-numTaps-2]sample */
       x0 = read_q15x2_ia (&px0);
@@ -388,7 +388,7 @@ void arm_fir_decimate_q15(
       acc1 = __SMLALD(x1, c0, acc1);
 
       /* Read the b[numTaps-3] and b[numTaps-4] coefficient */
-      c0 = read_q15x2_ia ((q15_t **) &pb);
+      c0 = read_q15x2_ia (&pb);
 
       /* Read x[n-numTaps-2] and x[n-numTaps-3] sample */
       x0 = read_q15x2_ia (&px0);
@@ -470,13 +470,13 @@ void arm_fir_decimate_q15(
     while (tapCnt > 0U)
     {
       /* Read the b[numTaps-1] and b[numTaps-2] coefficients */
-      c0 = read_q15x2_ia ((q15_t **) &pb);
+      c0 = read_q15x2_ia (&pb);
 
       /* Read x[n-numTaps-1] and x[n-numTaps-2] sample */
       x0 = read_q15x2_ia (&px);
 
       /* Read the b[numTaps-3] and b[numTaps-4] coefficients */
-      c1 = read_q15x2_ia ((q15_t **) &pb);
+      c1 = read_q15x2_ia (&pb);
 
       /* Perform the multiply-accumulate */
       sum0 = __SMLALD(x0, c0, sum0);

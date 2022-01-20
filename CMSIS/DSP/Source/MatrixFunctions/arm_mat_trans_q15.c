@@ -140,7 +140,7 @@ arm_status arm_mat_trans_q15(
       while (col > 0U)        /* column loop */
       {
         /* Read two elements from row */
-        in = read_q15x2_ia ((q15_t **) &pIn);
+        in = read_q15x2_ia (&pIn);
 
         /* Unpack and store one element in  destination */
 #ifndef ARM_MATH_BIG_ENDIAN
@@ -163,7 +163,7 @@ arm_status arm_mat_trans_q15(
         pOut += nRows;
 
         /* Read two elements from row */
-        in = read_q15x2_ia ((q15_t **) &pIn);
+        in = read_q15x2_ia (&pIn);
 
         /* Unpack and store one element in destination */
 #ifndef ARM_MATH_BIG_ENDIAN

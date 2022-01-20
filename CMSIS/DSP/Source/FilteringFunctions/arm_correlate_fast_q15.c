@@ -190,9 +190,9 @@ void arm_correlate_fast_q15(
     while (k > 0U)
     {
       /* x[0] * y[srcBLen - 4] , x[1] * y[srcBLen - 3] */
-      sum = __SMLAD(read_q15x2_ia ((q15_t **) &px), read_q15x2_ia ((q15_t **) &py), sum);
+      sum = __SMLAD(read_q15x2_ia (&px), read_q15x2_ia (&py), sum);
       /* x[3] * y[srcBLen - 1] , x[2] * y[srcBLen - 2] */
-      sum = __SMLAD(read_q15x2_ia ((q15_t **) &px), read_q15x2_ia ((q15_t **) &py), sum);
+      sum = __SMLAD(read_q15x2_ia (&px), read_q15x2_ia (&py), sum);
 
       /* Decrement loop counter */
       k--;
@@ -282,7 +282,7 @@ void arm_correlate_fast_q15(
       {
         /* Read the first two inputB samples using SIMD:
          * y[0] and y[1] */
-        c0 = read_q15x2_ia ((q15_t **) &py);
+        c0 = read_q15x2_ia (&py);
 
         /* acc0 +=  x[0] * y[0] + x[1] * y[1] */
         acc0 = __SMLAD(x0, c0, acc0);
@@ -303,7 +303,7 @@ void arm_correlate_fast_q15(
         acc3 = __SMLAD(x3, c0, acc3);
 
         /* Read y[2] and y[3] */
-        c0 = read_q15x2_ia ((q15_t **) &py);
+        c0 = read_q15x2_ia (&py);
 
         /* acc0 +=  x[2] * y[2] + x[3] * y[3] */
         acc0 = __SMLAD(x2, c0, acc0);
@@ -377,7 +377,7 @@ void arm_correlate_fast_q15(
       if (k == 3U)
       {
         /* Read y[4], y[5] */
-        c0 = read_q15x2_ia ((q15_t **) &py);
+        c0 = read_q15x2_ia (&py);
 
         /* Read x[7], x[8] */
         x3 = read_q15x2 ((q15_t *) px);
@@ -570,9 +570,9 @@ void arm_correlate_fast_q15(
     {
       /* Perform the multiply-accumulates */
       /* sum += x[srcALen - srcBLen + 4] * y[3] , sum += x[srcALen - srcBLen + 3] * y[2] */
-      sum = __SMLAD(read_q15x2_ia ((q15_t **) &px), read_q15x2_ia ((q15_t **) &py), sum);
+      sum = __SMLAD(read_q15x2_ia (&px), read_q15x2_ia (&py), sum);
       /* sum += x[srcALen - srcBLen + 2] * y[1] , sum += x[srcALen - srcBLen + 1] * y[0] */
-      sum = __SMLAD(read_q15x2_ia ((q15_t **) &px), read_q15x2_ia ((q15_t **) &py), sum);
+      sum = __SMLAD(read_q15x2_ia (&px), read_q15x2_ia (&py), sum);
 
       /* Decrement loop counter */
       k--;

@@ -227,8 +227,8 @@ arm_status arm_conv_partial_fast_opt_q15(
       {
 
         /* Read four samples from smaller buffer */
-        y1 = read_q15x2_ia ((q15_t **) &pIn2);
-        y2 = read_q15x2_ia ((q15_t **) &pIn2);
+        y1 = read_q15x2_ia (&pIn2);
+        y2 = read_q15x2_ia (&pIn2);
 
         /* multiply and accumulate */
         acc0 = __SMLAD(x1, y1, acc0);
@@ -340,7 +340,7 @@ arm_status arm_conv_partial_fast_opt_q15(
         x1 = read_q15x2_ia (&pScr1);
 
         /* Read two samples from smaller buffer */
-        y1 = read_q15x2_ia ((q15_t **) &pIn2);
+        y1 = read_q15x2_ia (&pIn2);
 
         /* multiply and accumulate */
         acc0 = __SMLAD(x1, y1, acc0);

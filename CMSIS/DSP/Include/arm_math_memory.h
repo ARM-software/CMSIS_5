@@ -93,7 +93,7 @@ __STATIC_FORCEINLINE q31_t read_q15x2 (
   @return        Q31 value
  */
 __STATIC_FORCEINLINE q31_t read_q15x2_ia (
-  q15_t ** pQ15)
+  q15_t const ** pQ15)
 {
   q31_t val;
 
@@ -113,7 +113,7 @@ __STATIC_FORCEINLINE q31_t read_q15x2_ia (
   @return        Q31 value
  */
 __STATIC_FORCEINLINE q31_t read_q15x2_da (
-  q15_t ** pQ15)
+  q15_t const ** pQ15)
 {
   q31_t val;
 
@@ -134,7 +134,7 @@ __STATIC_FORCEINLINE q31_t read_q15x2_da (
   @return        none
  */
 __STATIC_FORCEINLINE void write_q15x2_ia (
-  q15_t ** pQ15,
+  q15_t const ** pQ15,
   q31_t    value)
 {
   q31_t val = value;
@@ -175,7 +175,7 @@ __STATIC_FORCEINLINE void write_q15x2 (
   @return        Q31 value
  */
 __STATIC_FORCEINLINE q31_t read_q7x4_ia (
-  q7_t ** pQ7)
+  q7_t const ** pQ7)
 {
   q31_t val;
 
@@ -197,7 +197,7 @@ __STATIC_FORCEINLINE q31_t read_q7x4_ia (
   @return        Q31 value
  */
 __STATIC_FORCEINLINE q31_t read_q7x4_da (
-  q7_t ** pQ7)
+  q7_t const ** pQ7)
 {
   q31_t val;
 #ifdef __ARM_FEATURE_UNALIGNED

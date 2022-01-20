@@ -220,9 +220,9 @@ arm_status arm_conv_partial_q15(
       {
         /* Perform the multiply-accumulate */
         /* x[0], x[1] are multiplied with y[srcBLen - 1], y[srcBLen - 2] respectively */
-        sum = __SMLALDX(read_q15x2_ia ((q15_t **) &px), read_q15x2_da ((q15_t **) &py), sum);
+        sum = __SMLALDX(read_q15x2_ia (&px), read_q15x2_da (&py), sum);
         /* x[2], x[3] are multiplied with y[srcBLen - 3], y[srcBLen - 4] respectively */
-        sum = __SMLALDX(read_q15x2_ia ((q15_t **) &px), read_q15x2_da ((q15_t **) &py), sum);
+        sum = __SMLALDX(read_q15x2_ia (&px), read_q15x2_da (&py), sum);
 
         /* Decrement loop counter */
         k--;
@@ -326,7 +326,7 @@ arm_status arm_conv_partial_q15(
         {
           /* Read the last two inputB samples using SIMD:
            * y[srcBLen - 1] and y[srcBLen - 2] */
-          c0 = read_q15x2_da ((q15_t **) &py);
+          c0 = read_q15x2_da (&py);
 
           /* acc0 +=  x[0] * y[srcBLen - 1] + x[1] * y[srcBLen - 2] */
           acc0 = __SMLALDX(x0, c0, acc0);
@@ -347,7 +347,7 @@ arm_status arm_conv_partial_q15(
           acc3 = __SMLALDX(x3, c0, acc3);
 
           /* Read y[srcBLen - 3] and y[srcBLen - 4] */
-          c0 = read_q15x2_da ((q15_t **) &py);
+          c0 = read_q15x2_da (&py);
 
           /* acc0 +=  x[2] * y[srcBLen - 3] + x[3] * y[srcBLen - 4] */
           acc0 = __SMLALDX(x2, c0, acc0);
@@ -620,10 +620,10 @@ arm_status arm_conv_partial_q15(
       {
         /* x[srcALen - srcBLen + 1], x[srcALen - srcBLen + 2] are multiplied
          * with y[srcBLen - 1], y[srcBLen - 2] respectively */
-        sum = __SMLALDX(read_q15x2_ia ((q15_t **) &px), read_q15x2_da ((q15_t **) &py), sum);
+        sum = __SMLALDX(read_q15x2_ia (&px), read_q15x2_da (&py), sum);
         /* x[srcALen - srcBLen + 3], x[srcALen - srcBLen + 4] are multiplied
          * with y[srcBLen - 3], y[srcBLen - 4] respectively */
-        sum = __SMLALDX(read_q15x2_ia ((q15_t **) &px), read_q15x2_da ((q15_t **) &py), sum);
+        sum = __SMLALDX(read_q15x2_ia (&px), read_q15x2_da (&py), sum);
 
         /* Decrement loop counter */
         k--;

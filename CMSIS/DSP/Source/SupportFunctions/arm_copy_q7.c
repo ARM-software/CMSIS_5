@@ -98,7 +98,7 @@ void arm_copy_q7(
     /* C = A */
 
     /* read 4 samples at a time */
-    write_q7x4_ia (&pDst, read_q7x4_ia ((q7_t **) &pSrc));
+    write_q7x4_ia (&pDst, read_q7x4_ia (&pSrc));
 
     /* Decrement loop counter */
     blkCnt--;
