@@ -57,3 +57,5 @@ void test_depthwise_mult_batches_arm_depthwise_conv_s8(void) { depthwise_mult_ba
 void test_depthwise_null_bias_0_arm_depthwise_conv_s8(void) { depthwise_null_bias_0_arm_depthwise_conv_s8(); }
 
 void test_depthwise_null_bias_1_arm_depthwise_conv_s8(void) { depthwise_null_bias_1_arm_depthwise_conv_s8(); }
+
+void test_depthwise_dilation_arm_depthwise_conv_s8(void) { depthwise_dilation_arm_depthwise_conv_s8(); }

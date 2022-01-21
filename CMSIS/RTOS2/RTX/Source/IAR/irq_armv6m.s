@@ -73,7 +73,7 @@ SVC_Number
                 LDMIA    R0,{R0-R3}             ; Load function parameters from stack
                 BLX      R7                     ; Call service function
                 POP      {R2,R3}                ; Restore SP and EXC_RETURN
-                STMIA    R2!,{R0-R1}            ; Store function return values
+                STR      R0,[R2]                ; Store function return value
                 MOV      LR,R3                  ; Set EXC_RETURN
 
 SVC_Context

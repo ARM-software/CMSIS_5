@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 #
-# Copyright (C) 2010-2021 Arm Limited or its affiliates.
+# Copyright (C) 2010-2022 Arm Limited or its affiliates.
 #
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -138,7 +138,6 @@ class TestSettings(ABC):
         self.kernel_table_file = self.pregenerated_data_dir + self.testdataset + '/' + 'kernel.txt'
         self.inputs_table_file = self.pregenerated_data_dir + self.testdataset + '/' + 'input.txt'
         self.bias_table_file = self.pregenerated_data_dir + self.testdataset + '/' + 'bias.txt'
-        self.parameters_file = self.pregenerated_data_dir + self.testdataset + '/' + 'params.txt'
 
         if self.has_padding:
             self.padding = 'SAME'
@@ -148,7 +147,7 @@ class TestSettings(ABC):
         self.regenerate_new_weights = args.regenerate_weights
         self.regenerate_new_input = args.regenerate_input
         self.regenerate_new_bias = args.regenerate_biases
-        if not os.path.exists(self.parameters_file) or args.regenerate_all:
+        if args.regenerate_all:
             self.regenerate_new_bias = True
             self.regenerate_new_weights = True
             self.regenerate_new_input = True
@@ -416,11 +415,12 @@ class ConvSettings(TestSettings):
     def __init__(self, dataset, testtype, args, in_ch=1, out_ch=1, x_in=7, y_in=7, w_x=3, w_y=3, stride_x=2, stride_y=2,
                  pad=True, randmin=INT8_MIN, randmax=INT8_MAX, batches=1, generate_bias=True, relu6=False,
                  out_activation_min=None, out_activation_max=None, int16xint8=False, bias_min=None,
-                 bias_max=None):
+                 bias_max=None, dilation_x=1, dilation_y=1):
         super().__init__(dataset, testtype, args, in_ch, out_ch, x_in, y_in, w_x, w_y, stride_x, stride_y, pad,
                          randmin, randmax, batches, generate_bias=generate_bias, relu6=relu6,
                          out_activation_min=out_activation_min, out_activation_max=out_activation_max,
-                         int16xint8=int16xint8, bias_min=bias_min, bias_max=bias_max)
+                         int16xint8=int16xint8, bias_min=bias_min, bias_max=bias_max, dilation_x=dilation_x,
+                         dilation_y=dilation_y)
 
         self.scaling_factors = []
 
@@ -447,6 +447,8 @@ class ConvSettings(TestSettings):
                 f.write("#define {}_CH_MULT {}\n".format(prefix, self.channel_multiplier))
             f.write("#define {}_INPUT_OFFSET {}\n".format(prefix, -self.input_zero_point))
             f.write("#define {}_OUTPUT_OFFSET {}\n".format(prefix, self.output_zero_point))
+            f.write("#define {}_DILATION_X {}\n".format(prefix, self.dilation_x))
+            f.write("#define {}_DILATION_Y {}\n".format(prefix, self.dilation_y))
 
     def generate_quantize_per_channel_multiplier(self):
         num_channels = self.output_ch
@@ -500,7 +502,8 @@ class ConvSettings(TestSettings):
         if self.test_type == 'conv':
             conv_layer = tf.keras.layers.Conv2D(self.output_ch, kernel_size=(self.filter_y, self.filter_x),
                                                 strides=(self.stride_y, self.stride_x),
-                                                padding=self.padding, input_shape=input_shape[1:])
+                                                padding=self.padding, input_shape=input_shape[1:],
+                                                dilation_rate=(self.dilation_y, self.dilation_x))
             model.add(conv_layer)
             conv_layer.set_weights([weights, biases])
         elif self.test_type == 'depthwise_conv':
@@ -508,7 +511,7 @@ class ConvSettings(TestSettings):
                 kernel_size=(self.filter_y, self.filter_x),
                 strides=(self.stride_y, self.stride_x),
                 padding=self.padding, depth_multiplier=self.channel_multiplier,
-                input_shape=input_shape[1:])
+                input_shape=input_shape[1:], dilation_rate=(self.dilation_y, self.dilation_x))
             model.add(depthwise_layer)
             depthwise_layer.set_weights([weights, biases])
 
@@ -1024,6 +1027,30 @@ def load_all_testdatasets():
     ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=2, out_ch=2, x_in=3, y_in=3, w_x=3,
                                               w_y=3, stride_x=1, stride_y=1, pad=True, out_activation_min=-61,
                                               out_activation_max=107)
+    dataset = 'conv_dilation_golden'
+    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=1, batches=2, out_ch=3, x_in=6, y_in=4,
+                                              w_x=2, w_y=2, stride_x=1, stride_y=1, pad=True, out_activation_min=-128,
+                                              out_activation_max=127, dilation_x=3, dilation_y=2)
+    dataset = 'conv_2x2_dilation'
+    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=2, out_ch=2, x_in=10, y_in=10, w_x=3,
+                                              w_y=3, stride_x=1, stride_y=1, pad=False, out_activation_min=-61,
+                                              out_activation_max=107, dilation_x=2, dilation_y=2)
+    dataset = 'conv_2x3_dilation'
+    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=2, out_ch=2, x_in=3, y_in=3, w_x=3,
+                                              w_y=3, stride_x=1, stride_y=1, pad=True, out_activation_min=-61,
+                                              out_activation_max=107, dilation_x=2, dilation_y=2)
+    dataset = 'conv_3x2_dilation'
+    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=2, out_ch=2, x_in=3, y_in=3, w_x=3,
+                                              w_y=3, stride_x=1, stride_y=1, pad=True, out_activation_min=-61,
+                                              out_activation_max=107, dilation_x=3, dilation_y=2)
+    dataset = 'conv_2x2_dilation_5x5_input'
+    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=2, out_ch=2, x_in=5, y_in=5, w_x=3,
+                                              w_y=3, stride_x=1, stride_y=1, pad=True, out_activation_min=-61,
+                                              out_activation_max=107, dilation_x=2, dilation_y=2)
+    dataset = 'conv_3x3_dilation_5x5_input'
+    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=2, out_ch=2, x_in=9, y_in=11, w_x=3,
+                                              w_y=3, stride_x=1, stride_y=1, pad=True, out_activation_min=-61,
+                                              out_activation_max=107, dilation_x=2, dilation_y=2)
     dataset = 'int16xint8'
     ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=3, out_ch=4, x_in=7,
                                               y_in=8, w_x=2, w_y=4, stride_x=2, stride_y=3, pad=True,
@@ -1034,6 +1061,21 @@ def load_all_testdatasets():
                                               y_in=2, w_x=2, w_y=2, stride_x=1, stride_y=1, pad=False,
                                               out_activation_min=INT16_MIN, out_activation_max=INT16_MAX,
                                               int16xint8=True, bias_min=-0x300, bias_max=0x9fff)
+    dataset = 'int16xint8_dilation_1'
+    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=2, out_ch=2, x_in=32,
+                                              y_in=32, w_x=2, w_y=2, stride_x=1, stride_y=1, pad=False,
+                                              out_activation_min=INT16_MIN, out_activation_max=INT16_MAX,
+                                              int16xint8=True, bias_min=-0x300, dilation_x=2, dilation_y=2)
+    dataset = 'int16xint8_dilation_2'
+    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=3, out_ch=4, x_in=7,
+                                              y_in=8, w_x=2, w_y=4, stride_x=1, stride_y=1, pad=True,
+                                              randmin=INT16_MIN, randmax=INT16_MAX, out_activation_min=-13335,
+                                              out_activation_max=32767, int16xint8=True, dilation_x=2, dilation_y=2)
+    dataset = 'int16xint8_dilation_3'
+    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=3, out_ch=4, x_in=7,
+                                              y_in=8, w_x=2, w_y=4, stride_x=1, stride_y=1, pad=True,
+                                              randmin=INT16_MIN, randmax=INT16_MAX, out_activation_min=-13335,
+                                              out_activation_max=32767, int16xint8=True, dilation_x=2)
 
     type_of_test = 'depthwise_conv'
     dataset = 'depthwise_2'
@@ -1063,7 +1105,13 @@ def load_all_testdatasets():
     dataset = 'depthwise_null_bias_1'
     ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=2, out_ch=8, x_in=4, y_in=5, w_x=2,
                                               w_y=2, stride_x=1, stride_y=1, pad=True, generate_bias=False,
-                                              batches=1)                                                                                         
+                                              batches=1)
+    dataset = 'depthwise_dilation'
+    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=3, out_ch=9, x_in=6, y_in=5, w_x=3,
+                                              w_y=4, stride_x=2, stride_y=2, pad=True,
+                                              out_activation_min=-70, out_activation_max=127, dilation_x=2,
+                                              dilation_y=3)
+
     type_of_test = 'fully_connected'
     dataset = 'fully_connected'
     ALL_TESTDATA_SETS[dataset] = FullyConnectedSettings(dataset, type_of_test, args, in_ch=10, out_ch=6, x_in=2, y_in=1,
@@ -1089,6 +1137,10 @@ def load_all_testdatasets():
     ALL_TESTDATA_SETS[dataset] = FullyConnectedSettings(dataset, type_of_test, args, in_ch=7, out_ch=11, x_in=10,
                                                         y_in=10, batches=3, out_activation_min=-1444,
                                                         out_activation_max=32767, int16xint8=True)
+    dataset = 'fc_int16_slow'
+    ALL_TESTDATA_SETS[dataset] = FullyConnectedSettings(dataset, type_of_test, args, in_ch=7, out_ch=11, x_in=10,
+                                                        y_in=8, batches=3, randmin=(INT16_MAX-100), randmax=INT16_MAX,
+                                                        int16xint8=True)
 
     type_of_test = 'avgpool'
     dataset = 'avgpooling'

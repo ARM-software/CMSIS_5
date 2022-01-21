@@ -21,7 +21,7 @@
  * Title:        arm_nnsupportfunctions.h
  * Description:  Public header file of support functions for CMSIS NN Library
  *
- * $Date:        12. Nov 2021
+ * $Date:        23. Nov 2021
  * $Revision:    V.6.0.0
  *
  * Target Processor:  Cortex-M CPUs
@@ -870,8 +870,18 @@ __STATIC_FORCEINLINE q31_t arm_nn_divide_by_power_of_two(const q31_t dividend, c
  */
 __STATIC_FORCEINLINE q31_t arm_nn_requantize(const q31_t val, const q31_t multiplier, const q31_t shift)
 {
+#ifdef CMSIS_NN_USE_SINGLE_ROUNDING
+    const int64_t total_shift = 31 - shift;
+    const int64_t new_val = val * (int64_t)multiplier;
+
+    int32_t result = new_val >> (total_shift - 1);
+    result = (result + 1) >> 1;
+
+    return result;
+#else
     return arm_nn_divide_by_power_of_two(arm_nn_doubling_high_mult_no_sat(val * (1 << LEFT_SHIFT(shift)), multiplier),
                                          RIGHT_SHIFT(shift));
+#endif
 }
 
 /**
@@ -886,11 +896,10 @@ __STATIC_FORCEINLINE q31_t arm_nn_requantize(const q31_t val, const q31_t multip
  */
 __STATIC_FORCEINLINE q31_t arm_nn_requantize_s64(const q63_t val, const q31_t reduced_multiplier, const q31_t shift)
 {
-    q31_t result = 0;
-    q63_t new_val = val * reduced_multiplier;
+    const q63_t new_val = val * reduced_multiplier;
 
-    result = new_val >> (14 - shift); // 64->32 bit reduction
-    result = (result + 1) >> 1;       // Last shift position and insert round
+    q31_t result = new_val >> (14 - shift); // 64->32 bit reduction
+    result = (result + 1) >> 1;             // Last shift position and insert round
 
     return result;
 }
@@ -959,8 +968,21 @@ __STATIC_FORCEINLINE int32x4_t arm_divide_by_power_of_two_mve(const int32x4_t di
  */
 __STATIC_FORCEINLINE int32x4_t arm_requantize_mve(const int32x4_t val, const q31_t multiplier, const q31_t shift)
 {
+#ifdef CMSIS_NN_USE_SINGLE_ROUNDING
+    const int right_shift = MIN(-1, shift);
+    const int left_shift = shift - right_shift;
+
+    const int32x4_t left_shift_dup = vdupq_n_s32(left_shift);
+    const int32x4_t right_shift_dup = vdupq_n_s32(right_shift);
+
+    int32x4_t result = vqdmulhq_n_s32(vshlq_s32(val, left_shift_dup), multiplier);
+    result = vrshlq_s32(result, right_shift_dup);
+
+    return result;
+#else
     return arm_divide_by_power_of_two_mve(
         arm_doubling_high_mult_mve(vshlq_s32(val, vdupq_n_s32(LEFT_SHIFT(shift))), multiplier), RIGHT_SHIFT(shift));
+#endif
 }
 
 __STATIC_FORCEINLINE int32x4_t arm_doubling_high_mult_mve_32x4(const int32x4_t m1, const int32x4_t m2)
@@ -980,6 +1002,15 @@ __STATIC_FORCEINLINE int32x4_t arm_requantize_mve_32x4(const int32x4_t val,
                                                        const int32x4_t multiplier,
                                                        const int32x4_t shift)
 {
+#ifdef CMSIS_NN_USE_SINGLE_ROUNDING
+    const int32x4_t right_shift = vminq_s32(vdupq_n_s32(-1), shift);
+    const int32x4_t left_shift = vqsubq_s32(shift, right_shift);
+
+    int32x4_t result = vqdmulhq_s32(vshlq_s32(val, left_shift), multiplier);
+    result = vrshlq_s32(result, right_shift);
+
+    return result;
+#else
     const int32x4_t zz = vdupq_n_s32(0);
     const mve_pred16_t p = vcmpgtq_n_s32(shift, 0);
 
@@ -988,6 +1019,7 @@ __STATIC_FORCEINLINE int32x4_t arm_requantize_mve_32x4(const int32x4_t val,
 
     return arm_divide_by_power_of_two_mve_32x4(arm_doubling_high_mult_mve_32x4(vshlq_s32(val, left_shift), multiplier),
                                                right_shift);
+#endif
 }
 #endif
 

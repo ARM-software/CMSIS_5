@@ -21,8 +21,8 @@
  * Title:        arm_nn_mat_mult_kernel_s8_s16.c
  * Description:  Matrix-multiplication function for convolution
  *
- * $Date:        09. October 2020
- * $Revision:    V.1.0.3
+ * $Date:        14. December 2021
+ * $Revision:    V.1.1.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -49,7 +49,7 @@ q7_t *arm_nn_mat_mult_kernel_s8_s16(const q7_t *input_a,
                                     const int32_t *const output_bias,
                                     q7_t *out_0)
 {
-#if defined(ARM_MATH_DSP) && !defined(ARM_MATH_MVEI)
+#if !defined(ARM_MATH_MVEI)
     /* set up the second output pointers */
     q7_t *out_1 = out_0 + output_ch;
     const int32_t *bias = output_bias;
@@ -79,6 +79,7 @@ q7_t *arm_nn_mat_mult_kernel_s8_s16(const q7_t *input_a,
             ch_1_out_1 = *bias++;
         }
 
+#if defined(ARM_MATH_DSP)
         uint16_t col_count = num_col_a / 4;
         /* accumulate over the vector */
         while (col_count)
@@ -106,6 +107,9 @@ q7_t *arm_nn_mat_mult_kernel_s8_s16(const q7_t *input_a,
             col_count--;
         } /* while over col_count */
         col_count = num_col_a & 0x3;
+#else
+        uint16_t col_count = num_col_a;
+#endif
         while (col_count)
         {
             q7_t a0 = *ip_a0++;
@@ -170,6 +174,7 @@ q7_t *arm_nn_mat_mult_kernel_s8_s16(const q7_t *input_a,
             ch_0_out_1 = *bias++;
         }
 
+#if defined(ARM_MATH_DSP)
         uint16_t col_count = num_col_a >> 2;
         while (col_count)
         {
@@ -190,6 +195,9 @@ q7_t *arm_nn_mat_mult_kernel_s8_s16(const q7_t *input_a,
             col_count--;
         }
         col_count = num_col_a & 0x3;
+#else
+        uint16_t col_count = num_col_a;
+#endif
         while (col_count)
         {
             q7_t a0 = *ip_a0++;

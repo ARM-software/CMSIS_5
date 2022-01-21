@@ -54,6 +54,8 @@ When creating a new kind of node (here a sink) we always need to do 2 things:
 - Add inputs and outputs. The convention is that an input is named "i" and output "o". When there are several inputs they are named "ia", "ib" etc ...
 - For a sink you can only add an input. So the function addOutput is not available.
 - The constructor is taking a length and a type. It is used to create the io
+- When there are several inputs or outputs, they are ordered using alphabetical order.
+It is important to know what is the ID of the corresponding IO in the C code.
 
 The definition of a new kind of Source is very similar:
 
