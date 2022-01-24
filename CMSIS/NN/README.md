@@ -52,7 +52,9 @@ Group | API | Base Operator | Input Constraints | Additional memory required for
 |[Misc](https://arm-software.github.io/CMSIS_5/NN/html/group__groupNN.html)||||| |  ||
 ||arm_reshape_s8()| SOFTMAX | None | None | No | No | |
 ||arm_elementwise_add_s8()| ELEMENTWISE ADD | None | None | Yes| Yes| Reshape is not done in this function <br/> Only minor improvements are expected |
+||arm_elementwise_add_s16()| ELEMENTWISE ADD | None | None | No| No| Reshape is not done in this function <br/> Only minor improvements are expected |
 ||arm_elementwise_mul_s8()| ELEMENTWISE MUL | None | None | Yes| Yes| Reshape is not done in this function <br/> Only minor improvements are expected |
+||arm_elementwise_mul_s16()| ELEMENTWISE MUL | None | None | No| No| Reshape is not done in this function <br/> Only minor improvements are expected |
 ||arm_relu_q7() | RELU | None | None | Yes| No|
 ||arm_relu6_s8() | RELU | None | None | Yes| No|
 |[Concat](https://arm-software.github.io/CMSIS_5/NN/html/group__groupNN.html)||||| |  ||
