@@ -21,7 +21,7 @@
  * Title:        arm_nnfunctions.h
  * Description:  Public header file for CMSIS NN Library
  *
- * $Date:        20 January 2022
+ * $Date:        24 January 2022
  * $Revision:    V.7.4.0
  *
  * Target Processor:  Cortex-M CPUs
@@ -1916,6 +1916,47 @@ arm_status arm_avgpool_s8(const cmsis_nn_context *ctx,
 int32_t arm_avgpool_s8_get_buffer_size(const int dim_dst_width, const int ch_src);
 
 /**
+ * @brief s16 average pooling function.
+ *
+ * @param[in, out] ctx            Function context (e.g. temporary buffer). Check the function
+ *                                definition file to see if an additional buffer is required.
+ *                                Optional function {API}_get_buffer_size() provides the buffer
+ *                                size if an additional buffer is required.
+ * @param[in]      pool_params    Pooling parameters
+ * @param[in]      input_dims     Input (activation) tensor dimensions. Format: [H, W, C_IN]
+ *                                Argument 'N' is not used.
+ * @param[in]      input_data     Input (activation) data pointer. Data type: int16
+ * @param[in]      filter_dims    Filter tensor dimensions. Format: [H, W]
+ *                                Argument N and C are not used.
+ * @param[in]      output_dims    Output tensor dimensions. Format: [H, W, C_OUT]
+ *                                Argument N is not used.
+ *                                C_OUT equals C_IN.
+ * @param[in, out] output_data    Output data pointer. Data type: int16
+ * @return                        The function returns
+ *                                    <code>ARM_MATH_SUCCESS</code> - Successful operation
+ *
+ * @details
+ *    - Supported Framework: TensorFlow Lite
+ *
+ */
+arm_status arm_avgpool_s16(const cmsis_nn_context *ctx,
+                           const cmsis_nn_pool_params *pool_params,
+                           const cmsis_nn_dims *input_dims,
+                           const int16_t *input_data,
+                           const cmsis_nn_dims *filter_dims,
+                           const cmsis_nn_dims *output_dims,
+                           int16_t *output_data);
+
+/**
+ * @brief Get the required buffer size for S16 average pooling function
+ * @param[in]       dim_dst_width         output tensor dimension
+ * @param[in]       ch_src                number of input tensor channels
+ * @return          The function returns  required buffer size in bytes
+ *
+ */
+int32_t arm_avgpool_s16_get_buffer_size(const int dim_dst_width, const int ch_src);
+
+/**
  * @brief s8 max pooling function.
  *
  * @param[in, out] ctx            Function context (e.g. temporary buffer). Check the function
@@ -1947,6 +1988,40 @@ arm_status arm_max_pool_s8(const cmsis_nn_context *ctx,
                            const cmsis_nn_dims *filter_dims,
                            const cmsis_nn_dims *output_dims,
                            q7_t *output_data);
+
+/**
+ * @brief s16 max pooling function.
+ *
+ * @param[in, out] ctx            Function context (e.g. temporary buffer). Check the function
+ *                                definition file to see if an additional buffer is required.
+ *                                Optional function {API}_get_buffer_size() provides the buffer
+ *                                size if an additional buffer is required.
+ * @param[in]      pool_params    Pooling parameters
+ * @param[in]      input_dims     Input (activation) tensor dimensions. Format: [H, W, C_IN]
+ *                                Argument 'N' is not used.
+ * @param[in]      input_data     Input (activation) data pointer. The input tensor must not
+ *                                overlap with the output tensor. Data type: int16
+ * @param[in]      filter_dims    Filter tensor dimensions. Format: [H, W]
+ *                                Argument N and C are not used.
+ * @param[in]      output_dims    Output tensor dimensions. Format: [H, W, C_OUT]
+ *                                Argument N is not used.
+ *                                C_OUT equals C_IN.
+ * @param[in, out] output_data    Output data pointer. Data type: int16
+ * @return                        The function returns
+ *                                    <code>ARM_MATH_SUCCESS</code> - Successful operation
+ *
+ * @details
+ *    - Supported Framework: TensorFlow Lite
+ *
+ */
+arm_status arm_max_pool_s16(const cmsis_nn_context *ctx,
+                            const cmsis_nn_pool_params *pool_params,
+                            const cmsis_nn_dims *input_dims,
+                            const int16_t *src,
+                            const cmsis_nn_dims *filter_dims,
+                            const cmsis_nn_dims *output_dims,
+                            int16_t *dst);
+
 /**
  * @defgroup Softmax Softmax Functions
  *

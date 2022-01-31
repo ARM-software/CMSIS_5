@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2019-2022 Arm Limited.
+# Copyright (C) 2010-2022 Arm Limited or its affiliates.
 #
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -16,9 +16,8 @@
 # limitations under the License.
 #
 
-file(GLOB SRC "./*_s8.c")
-file(GLOB SRC_S16 "./*_s16.c")
-target_sources(cmsis-nn PRIVATE ${SRC} ${SRC_S16})
+add_cmsis_nn_unit_test_executable(test_arm_avgpool_s16)
 
-
-
+target_sources(test_arm_avgpool_s16 PRIVATE
+    Unity/unity_test_arm_avgpool_s16.c
+    Unity/TestRunner/unity_test_arm_avgpool_s16_runner.c)
