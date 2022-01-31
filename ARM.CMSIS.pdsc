@@ -16,6 +16,7 @@
        - Support for DSP extension optimization for int16 convolution and fully connected
        - Support dilation for int8 convolution
        - Support dilation for int8 depthwise convolution
+       - Support for int16 depthwise conv for reference implementation including dilation
        - Support for int16 average and max pooling for reference implementation
       CMSIS-RTOS2:
         - RTX 5.5.4 (see revision history for details)
@@ -2821,6 +2822,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q15_basic.c"/>
         <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_1x1_s8_fast.c"/>
         <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_conv_s8.c"/>
+        <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_conv_s16.c"/>
         <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_fast_s16.c"/>
         <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q15_fast_nonsquare.c"/>
         <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_s8.c"/>
