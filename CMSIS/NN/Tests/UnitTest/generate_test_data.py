@@ -424,14 +424,11 @@ class ConvSettings(TestSettings):
 
         self.scaling_factors = []
 
-        if self.test_type == 'conv':
-            self.quantized_dimension = 0
-        elif self.test_type == 'depthwise_conv':
-            self.quantized_dimension = 3
+        if self.test_type == 'depthwise_conv':
             self.channel_multiplier = self.output_ch // self.input_ch
             if self.output_ch % self.input_ch != 0:
                 raise RuntimeError("out channel ({}) is not multiple of in channel ({})".format(out_ch, in_ch))
-        else:
+        elif self.test_type != 'conv':
             raise RuntimeError("Invalid test type {}".format(self.test_type))
 
     def write_c_config_header(self):
@@ -1111,6 +1108,21 @@ def load_all_testdatasets():
                                               w_y=4, stride_x=2, stride_y=2, pad=True,
                                               out_activation_min=-70, out_activation_max=127, dilation_x=2,
                                               dilation_y=3)
+    dataset = 'dw_int16xint8'
+    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=4, out_ch=8, x_in=9, y_in=5, w_x=3,
+                                              w_y=4, stride_x=3, stride_y=2, pad=True, randmin=INT16_MIN,
+                                              randmax=INT16_MAX, out_activation_min=-21111,
+                                              out_activation_max=32767, int16xint8=True)
+    dataset = 'dw_int16xint8_dilation'
+    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=4, out_ch=8, x_in=9, y_in=5, w_x=4,
+                                              w_y=4, stride_x=1, stride_y=1, pad=True, randmin=INT16_MIN,
+                                              randmax=INT16_MAX, out_activation_min=-32700, dilation_x=3, dilation_y=2,
+                                              out_activation_max=32767, int16xint8=True)
+    dataset = 'dw_int16xint8_mult4'
+    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=2, out_ch=8, x_in=4, y_in=5, w_x=3,
+                                              w_y=4, stride_x=3, stride_y=2, pad=False, randmin=INT16_MIN,
+                                              randmax=INT16_MAX, out_activation_min=-32767,
+                                              out_activation_max=32767, int16xint8=True)
 
     type_of_test = 'fully_connected'
     dataset = 'fully_connected'

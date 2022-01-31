@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2021 Arm Limited or its affiliates.
+ * Copyright (C) 2010-2022 Arm Limited or its affiliates.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_nnfunctions.h
  * Description:  Public header file for CMSIS NN Library
  *
- * $Date:        17 August 2021
- * $Revision:    V.7.3.1
+ * $Date:        20 January 2022
+ * $Revision:    V.7.4.0
  *
  * Target Processor:  Cortex-M CPUs
  * -------------------------------------------------------------------- */
@@ -1130,14 +1130,14 @@ int32_t arm_depthwise_conv_wrapper_s8_get_buffer_size(const cmsis_nn_dw_conv_par
  * @param[in]      quant_params   Per-channel quantization info.
  *                               It contains the multiplier and shift values to be applied to each
  *                               output channel
- * @param[in]      input_dims     Input (activation) tensor dimensions. Format: [1, H, W, C_IN]
+ * @param[in]      input_dims     Input (activation) tensor dimensions. Format: [N, H, W, C_IN]
  *                                Batch argument N is not used.
  * @param[in]      input_data     Input (activation) data pointer. Data type: int8
  * @param[in]      filter_dims    Filter tensor dimensions. Format: [1, H, W, C_OUT]
  * @param[in]      filter_data    Filter data pointer. Data type: int8
  * @param[in]      bias_dims      Bias tensor dimensions. Format: [C_OUT]
  * @param[in]      bias_data      Bias data pointer. Data type: int32
- * @param[in]      output_dims    Output tensor dimensions. Format: [1, H, W, C_OUT]
+ * @param[in]      output_dims    Output tensor dimensions. Format: [N, H, W, C_OUT]
  * @param[in, out] output_data    Output data pointer. Data type: int8
  * @return     The function returns <code>ARM_MATH_SUCCESS</code>
  *
@@ -1156,6 +1156,47 @@ arm_status arm_depthwise_conv_s8(const cmsis_nn_context *ctx,
                                  const int32_t *bias_data,
                                  const cmsis_nn_dims *output_dims,
                                  q7_t *output_data);
+
+/**
+ * @brief Basic s16 depthwise convolution function that doesn't have any constraints on the input dimensions.
+ *
+ * @param[in, out] ctx            Function context (e.g. temporary buffer). Check the function
+ *                                definition file to see if an additional buffer is required.
+ *                                Optional function {API}_get_buffer_size() provides the buffer
+ *                                size if an additional buffer is required.
+ *                                exists if additional memory is.
+ * @param[in]      dw_conv_params Depthwise convolution parameters (e.g. strides, dilations, pads,...)
+ *                                conv_params->input_offset  : Not used
+ *                                conv_params->output_offset : Not used
+ * @param[in]      quant_params   Per-channel quantization info.
+ *                               It contains the multiplier and shift values to be applied to each
+ *                               output channel
+ * @param[in]      input_dims     Input (activation) tensor dimensions. Format: [N, H, W, C_IN]
+ *                                Batch argument N is not used.
+ * @param[in]      input_data     Input (activation) data pointer. Data type: int8
+ * @param[in]      filter_dims    Filter tensor dimensions. Format: [1, H, W, C_OUT]
+ * @param[in]      filter_data    Filter data pointer. Data type: int8
+ * @param[in]      bias_dims      Bias tensor dimensions. Format: [C_OUT]
+ * @param[in]      bias_data      Bias data pointer. Data type: int64
+ * @param[in]      output_dims    Output tensor dimensions. Format: [N, H, W, C_OUT]
+ * @param[in, out] output_data    Output data pointer. Data type: int16
+ * @return     The function returns <code>ARM_MATH_SUCCESS</code>
+ *
+ * @details
+ *    - Supported framework: TensorFlow Lite
+ *    - q15 is used as data type eventhough it is s16 data. It is done so to be consistent with existing APIs.
+ */
+arm_status arm_depthwise_conv_s16(const cmsis_nn_context *ctx,
+                                  const cmsis_nn_dw_conv_params *dw_conv_params,
+                                  const cmsis_nn_per_channel_quant_params *quant_params,
+                                  const cmsis_nn_dims *input_dims,
+                                  const q15_t *input,
+                                  const cmsis_nn_dims *filter_dims,
+                                  const q7_t *kernel,
+                                  const cmsis_nn_dims *bias_dims,
+                                  const int64_t *bias,
+                                  const cmsis_nn_dims *output_dims,
+                                  q15_t *output);
 
 /**
  * @brief Optimized s8 depthwise convolution function for 3x3 kernel size with some constraints on
