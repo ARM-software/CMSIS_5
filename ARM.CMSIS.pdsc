@@ -1129,12 +1129,14 @@ and 8-bit Java bytecodes in Jazelle state.
 
     <!-- Startup -->
     <condition id="Startup ARMCC6 Secure">
-        <require condition="ARMCC6"/>
-        <require condition="TZ Secure"/>
+      <description>Startup files for Arm Compiler 6 targeting TrustZone secure mode</description>
+      <require condition="ARMCC6"/>
+      <require condition="TZ Secure"/>
     </condition>
     <condition id="Startup ARMCC6 Unsecure">
-        <require condition="ARMCC6"/>
-        <deny condition="TZ Secure"/>
+      <description>Startup files for Arm Compiler 6 targeting non-TrustZone or TrustZone non-secure mode</description>
+      <require condition="ARMCC6"/>
+      <deny condition="TZ Secure"/>
     </condition>
 
     <!-- CMSIS-Core -->
