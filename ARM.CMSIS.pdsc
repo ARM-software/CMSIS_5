@@ -1309,64 +1309,64 @@ and 8-bit Java bytecodes in Jazelle state.
       <require Cclass="Device" Cgroup="Startup"/>
     </condition>
 
-    <condition id="RTOS RTX ARM ARMv6-M">
-        <description>Arm Compiler for Armv6-M architecture</description>
+    <condition id="ARMCC ARMv6-M LE">
+        <description>Arm Compiler for Armv6-M architecture (little endian)</description>
         <require condition="ARMCC"/>
         <require condition="ARMv6-M Device"/>
         <require Dendian="little"/>
     </condition>
-    <condition id="RTOS RTX ARM ARMv6-M BE">
+    <condition id="ARMCC ARMv6-M BE">
         <description>Arm Compiler for Armv6-M architecture (big endian)</description>
         <require condition="ARMCC"/>
         <require condition="ARMv6-M Device"/>
         <require Dendian="big"/>
     </condition>
-    <condition id="RTOS RTX ARM ARMv7-M NOFP">
-        <description>Arm Compiler for Armv7-M architecture without FPU</description>
+    <condition id="ARMCC ARMv7-M NOFP LE">
+        <description>Arm Compiler for Armv7-M architecture without FPU (little endian)</description>
         <require condition="ARMCC"/>
         <require condition="ARMv7-M Device"/>
         <require Dendian="little"/>
         <require Dfpu="NO_FPU"/>
     </condition>
-    <condition id="RTOS RTX ARM ARMv7-M BE NOFP">
-        <description>Arm Compiler for Armv7-M architecture (big endian) without FPU</description>
+    <condition id="ARMCC ARMv7-M NOFP BE">
+        <description>Arm Compiler for Armv7-M architecture without FPU (big endian)</description>
         <require condition="ARMCC"/>
         <require condition="ARMv7-M Device"/>
         <require Dendian="big"/>
         <require Dfpu="NO_FPU"/>
     </condition>
-    <condition id="RTOS RTX ARM ARMv7-M FP">
-        <description>Arm Compiler for Armv7-M architecture with FPU</description>
+    <condition id="ARMCC ARMv7-M FP LE">
+        <description>Arm Compiler for Armv7-M architecture with FPU (little endian)</description>
         <require condition="ARMCC"/>
         <require condition="ARMv7-M Device"/>
         <require Dendian="little"/>
         <accept Dfpu="SP_FPU"/>
         <accept Dfpu="DP_FPU"/>
     </condition>
-    <condition id="RTOS RTX ARM ARMv7-M BE FP">
-        <description>Arm Compiler for Armv7-M architecture (big endian) with FPU</description>
+    <condition id="ARMCC ARMv7-M FP BE">
+        <description>Arm Compiler for Armv7-M architecture with FPU (big endian)</description>
         <require condition="ARMCC"/>
         <require condition="ARMv7-M Device"/>
         <require Dendian="big"/>
         <accept Dfpu="SP_FPU"/>
         <accept Dfpu="DP_FPU"/>
     </condition>
-    <condition id="RTOS RTX ARM ARMv8-MBL">
-        <description>Arm Compiler for Armv8-M base line architecture</description>
+    <condition id="ARMCC ARMv8-MBL LE">
+        <description>Arm Compiler for Armv8-M base line architecture (little endian)</description>
         <require condition="ARMCC"/>
         <require condition="ARMv8-MBL Device"/>
         <require Dendian="little"/>
     </condition>
-    <condition id="RTOS RTX ARM ARMv8-MML NOFP">
-        <description>Arm Compiler for Armv8-M main line architecture without FPU/MVE</description>
+    <condition id="ARMCC ARMv8-MML NOFP LE">
+        <description>Arm Compiler for Armv8-M main line architecture without FPU/MVE (little endian)</description>
         <require condition="ARMCC"/>
         <require condition="ARMv8-MML Device"/>
         <require Dendian="little"/>
         <require Dfpu="NO_FPU"/>
         <require Dmve="NO_MVE"/>
     </condition>
-     <condition id="RTOS RTX ARM ARMv8-MML FP">
-        <description>Arm Compiler for Armv8-M main line architecture with FPU/MVE</description>
+     <condition id="ARMCC ARMv8-MML FP LE">
+        <description>Arm Compiler for Armv8-M main line architecture with FPU/MVE (little endian)</description>
         <require condition="ARMCC"/>
         <require condition="ARMv8-MML Device"/>
         <require Dendian="little"/>
@@ -1376,64 +1376,64 @@ and 8-bit Java bytecodes in Jazelle state.
         <accept Dmve="FP_MVE"/>
     </condition>
 
-    <condition id="RTOS RTX GCC ARMv6-M">
-        <description>GNU Compiler for Armv6-M architecture</description>
+    <condition id="GCC ARMv6-M LE">
+        <description>GNU Compiler for Armv6-M architecture (little endian)</description>
         <require condition="GCC"/>
         <require condition="ARMv6-M Device"/>
         <require Dendian="little"/>
     </condition>
-    <condition id="RTOS RTX GCC ARMv6-M BE">
+    <condition id="GCC ARMv6-M BE">
         <description>GNU Compiler for Armv6-M architecture (big endian)</description>
         <require condition="GCC"/>
         <require condition="ARMv6-M Device"/>
         <require Dendian="big"/>
     </condition>
-    <condition id="RTOS RTX GCC ARMv7-M NOFP">
-        <description>GNU Compiler for Armv7-M architecture without FPU</description>
+    <condition id="GCC ARMv7-M NOFP LE">
+        <description>GNU Compiler for Armv7-M architecture without FPU (little endian)</description>
         <require condition="GCC"/>
         <require condition="ARMv7-M Device"/>
         <require Dendian="little"/>
         <require Dfpu="NO_FPU"/>
     </condition>
-    <condition id="RTOS RTX GCC ARMv7-M BE NOFP">
-        <description>GNU Compiler for Armv7-M architecture (big endian) without FPU</description>
+    <condition id="GCC ARMv7-M NOFP BE">
+        <description>GNU Compiler for Armv7-M architecture without FPU (big endian)</description>
         <require condition="GCC"/>
         <require condition="ARMv7-M Device"/>
         <require Dendian="big"/>
         <require Dfpu="NO_FPU"/>
     </condition>
-    <condition id="RTOS RTX GCC ARMv7-M FP">
-        <description>GNU Compiler for Armv7-M architecture with FPU</description>
+    <condition id="GCC ARMv7-M FP LE">
+        <description>GNU Compiler for Armv7-M architecture with FPU (little endian)</description>
         <require condition="GCC"/>
         <require condition="ARMv7-M Device"/>
         <require Dendian="little"/>
         <accept Dfpu="SP_FPU"/>
         <accept Dfpu="DP_FPU"/>
     </condition>
-    <condition id="RTOS RTX GCC ARMv7-M BE FP">
-        <description>GNU Compiler for Armv7-M architecture (big endian) with FPU</description>
+    <condition id="GCC ARMv7-M FP BE">
+        <description>GNU Compiler for Armv7-M architecture with FPU (big endian)</description>
         <require condition="GCC"/>
         <require condition="ARMv7-M Device"/>
         <require Dendian="big"/>
         <accept Dfpu="SP_FPU"/>
         <accept Dfpu="DP_FPU"/>
     </condition>
-    <condition id="RTOS RTX GCC ARMv8-MBL">
-        <description>GNU Compiler for Armv8-M base line architecture</description>
+    <condition id="GCC ARMv8-MBL LE">
+        <description>GNU Compiler for Armv8-M base line architecture (little endian)</description>
         <require condition="GCC"/>
         <require condition="ARMv8-MBL Device"/>
         <require Dendian="little"/>
     </condition>
-    <condition id="RTOS RTX GCC ARMv8-MML NOFP">
-        <description>GNU Compiler for Armv8-M main line architecture without FPU/MVE</description>
+    <condition id="GCC ARMv8-MML NOFP LE">
+        <description>GNU Compiler for Armv8-M main line architecture without FPU/MVE (little endian)</description>
         <require condition="GCC"/>
         <require condition="ARMv8-MML Device"/>
         <require Dendian="little"/>
         <require Dfpu="NO_FPU"/>
         <require Dmve="NO_MVE"/>
     </condition>
-     <condition id="RTOS RTX GCC ARMv8-MML FP">
-        <description>GNU Compiler for Armv8-M main line architecture with FPU/MVE</description>
+     <condition id="GCC ARMv8-MML FP LE">
+        <description>GNU Compiler for Armv8-M main line architecture with FPU/MVE (little endian)</description>
         <require condition="GCC"/>
         <require condition="ARMv8-MML Device"/>
         <require Dendian="little"/>
@@ -1442,65 +1442,65 @@ and 8-bit Java bytecodes in Jazelle state.
         <accept Dmve="MVE"/>
         <accept Dmve="FP_MVE"/>
     </condition>
-    
-    <condition id="RTOS RTX IAR ARMv6-M">
-        <description>IAR Compiler for Armv6-M architecture</description>
+
+    <condition id="IARCC ARMv6-M LE">
+        <description>IAR Compiler for Armv6-M architecture (little endian)</description>
         <require condition="IAR"/>
         <require condition="ARMv6-M Device"/>
         <require Dendian="little"/>
     </condition>
-    <condition id="RTOS RTX IAR ARMv6-M BE">
-        <description>IAR Compiler for Armv6-M (big endian) architecture</description>
+    <condition id="IARCC ARMv6-M BE">
+        <description>IAR Compiler for Armv6-M architecture (big endian)</description>
         <require condition="IAR"/>
         <require condition="ARMv6-M Device"/>
         <require Dendian="big"/>
     </condition>
-    <condition id="RTOS RTX IAR ARMv7-M NOFP">
-        <description>IAR Compiler for Armv7-M architecture without FPU</description>
+    <condition id="IARCC ARMv7-M NOFP LE">
+        <description>IAR Compiler for Armv7-M architecture without FPU (little endian)</description>
         <require condition="IAR"/>
         <require condition="ARMv7-M Device"/>
         <require Dendian="little"/>
         <require Dfpu="NO_FPU"/>
     </condition>
-    <condition id="RTOS RTX IAR ARMv7-M BE NOFP">
-        <description>IAR Compiler for Armv7-M architecture (big endian) without FPU</description>
+    <condition id="IARCC ARMv7-M NOFP BE">
+        <description>IAR Compiler for Armv7-M architecture without FPU (big endian)</description>
         <require condition="IAR"/>
         <require condition="ARMv7-M Device"/>
         <require Dendian="big"/>
         <require Dfpu="NO_FPU"/>
     </condition>
-    <condition id="RTOS RTX IAR ARMv7-M FP">
-        <description>IAR Compiler for Armv7-M architecture with FPU</description>
+    <condition id="IARCC ARMv7-M FP LE">
+        <description>IAR Compiler for Armv7-M architecture with FPU (little endian)</description>
         <require condition="IAR"/>
         <require condition="ARMv7-M Device"/>
         <require Dendian="little"/>
         <accept Dfpu="SP_FPU"/>
         <accept Dfpu="DP_FPU"/>
     </condition>
-    <condition id="RTOS RTX IAR ARMv7-M BE FP">
-        <description>IAR Compiler for Armv7-M architecture (big endian) with FPU</description>
+    <condition id="IARCC ARMv7-M FP BE">
+        <description>IAR Compiler for Armv7-M architecture with FPU (big endian)</description>
         <require condition="IAR"/>
         <require condition="ARMv7-M Device"/>
         <require Dendian="big"/>
         <accept Dfpu="SP_FPU"/>
         <accept Dfpu="DP_FPU"/>
     </condition>
-    <condition id="RTOS RTX IAR ARMv8-MBL">
-        <description>IAR Compiler for Armv8-M base line architecture</description>
+    <condition id="IARCC ARMv8-MBL LE">
+        <description>IAR Compiler for Armv8-M base line architecture (little endian)</description>
         <require condition="IAR"/>
         <require condition="ARMv8-MBL Device"/>
         <require Dendian="little"/>
     </condition>
-    <condition id="RTOS RTX IAR ARMv8-MML NOFP">
-        <description>IAR Compiler for Armv8-M main line architecture without FPU/MVE</description>
+    <condition id="IARCC ARMv8-MML NOFP LE">
+        <description>IAR Compiler for Armv8-M main line architecture without FPU/MVE (little endian)</description>
         <require condition="IAR"/>
         <require condition="ARMv8-MML Device"/>
         <require Dendian="little"/>
         <require Dfpu="NO_FPU"/>
         <require Dmve="NO_MVE"/>
     </condition>
-     <condition id="RTOS RTX IAR ARMv8-MML FP">
-        <description>IAR Compiler for Armv8-M main line architecture with FPU/MVE</description>
+     <condition id="IARCC ARMv8-MML FP LE">
+        <description>IAR Compiler for Armv8-M main line architecture with FPU/MVE (little endian)</description>
         <require condition="IAR"/>
         <require condition="ARMv8-MML Device"/>
         <require Dendian="little"/>
@@ -1509,79 +1509,79 @@ and 8-bit Java bytecodes in Jazelle state.
         <accept Dmve="MVE"/>
         <accept Dmve="FP_MVE"/>
     </condition>
-    
-    <condition id="RTOS RTX ARMASM ARMv6-M">
+
+    <condition id="ARMASM ARMv6-M">
         <description>Arm Assembler for Armv6-M architecture</description>
         <require condition="ARMCC5"/>
         <require condition="ARMv6-M Device"/>
     </condition>
-    <condition id="RTOS RTX GAS ARMv6-M">
+    <condition id="GNUASM ARMv6-M">
         <description>GNU Assembler for Armv6-M architecture</description>
         <accept condition="ARMCC6"/>
         <accept condition="GCC"/>
         <require condition="ARMv6-M Device"/>
     </condition>
-    <condition id="RTOS RTX IARASM ARMv6-M">
+    <condition id="IARASM ARMv6-M">
         <description>IAR Assembler for Armv6-M architecture</description>
         <require condition="IAR"/>
         <require condition="ARMv6-M Device"/>
     </condition>
-    
-    <condition id="RTOS RTX ARMASM ARMv7-M">
+
+    <condition id="ARMASM ARMv7-M">
         <description>Arm Assembler for Armv7-M architecture</description>
         <require condition="ARMCC5"/>
         <require condition="ARMv7-M Device"/>
     </condition>
-    <condition id="RTOS RTX GAS ARMv7-M">
+    <condition id="GNUASM ARMv7-M">
         <description>GNU Assembler for Armv7-M architecture</description>
         <accept condition="ARMCC6"/>
         <accept condition="GCC"/>
         <require condition="ARMv7-M Device"/>
     </condition>
-    <condition id="RTOS RTX IARASM ARMv7-M">
+    <condition id="IARASM ARMv7-M">
         <description>IAR Assembler for Armv7-M architecture</description>
         <require condition="IAR"/>
         <require condition="ARMv7-M Device"/>
     </condition>
-    
-    <condition id="RTOS RTX GAS ARMv8-MBL">
+
+    <condition id="GNUASM ARMv8-MBL">
         <description>GNU Assembler for Armv8-M base line architecture</description>
         <require condition="ARMCC GCC"/>
         <require condition="ARMv8-MBL Device"/>
     </condition>
-    <condition id="RTOS RTX GAS ARMv8-MML">
+    <condition id="GNUASM ARMv8-MML">
         <description>GNU Assembler for Armv8-M main line architecture</description>
         <require condition="ARMCC GCC"/>
         <require condition="ARMv8-MML Device"/>
     </condition>
-    <condition id="RTOS RTX IARASM ARMv8-MBL">
+    <condition id="IARASM ARMv8-MBL">
         <description>IAR Assembler for Armv8-M base line architecture</description>
         <require condition="IAR"/>
         <require condition="ARMv8-MBL Device"/>
     </condition>
-    <condition id="RTOS RTX IARASM ARMv8-MML">
+    <condition id="IARASM ARMv8-MML">
         <description>IAR Assembler for Armv8-M main line architecture</description>
         <require condition="IAR"/>
         <require condition="ARMv8-MML Device"/>
     </condition>
 
-    <condition id="RTOS RTX ARMASM ARMv7-A">
+    <condition id="ARMASM ARMv7-A">
         <description>Arm Assembler for Armv7-A architecture</description>
         <require condition="ARMCC5"/>
         <require condition="ARMv7-A Device"/>
     </condition>
-    <condition id="RTOS RTX GAS ARMv7-A">
+    <condition id="GNUASM ARMv7-A">
         <description>GNU Assembler for Armv7-A architecture</description>
         <accept condition="ARMCC6"/>
         <accept condition="GCC"/>
         <require condition="ARMv7-A Device"/>
     </condition>
-    <condition id="RTOS RTX IARASM ARMv7-A">
+    <condition id="IARASM ARMv7-A">
         <description>IAR Assembler for Armv7-A architecture</description>
         <require condition="IAR"/>
         <require condition="ARMv7-A Device"/>
     </condition>
-    
+
     <!-- OS Tick -->
     <condition id="OS Tick PTIM">
       <description>Components required for OS Tick Private Timer</description>
@@ -1600,8 +1600,8 @@ and 8-bit Java bytecodes in Jazelle state.
 
   <components>
     <!-- CMSIS-Core component -->
-    <component Cclass="CMSIS" Cgroup="CORE" Cversion="5.5.0"  condition="ARMv6_7_8-M Device" >
-      <description>CMSIS-CORE for Cortex-M, SC000, SC300, ARMv8-M, ARMv8.1-M</description>
+    <component Cclass="CMSIS" Cgroup="CORE" Cversion="5.6.0"  condition="ARMv6_7_8-M Device" >
+      <description>CMSIS-CORE for Cortex-M, SC000, SC300, Star, ARMv8-M, ARMv8.1-M</description>
       <files>
         <!-- CPU independent -->
         <file category="doc"     name="CMSIS/Documentation/Core/html/index.html"/>
@@ -2320,26 +2320,26 @@ and 8-bit Java bytecodes in Jazelle state.
 
         <!-- CPU and Compiler dependent -->
         <!-- ARMCC -->
-        <file category="library" condition="RTOS RTX ARM ARMv6-M"         name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM0.lib"    src="CMSIS/RTOS/RTX/SRC/ARM"/>
-        <file category="library" condition="RTOS RTX ARM ARMv6-M BE"      name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM0_B.lib"  src="CMSIS/RTOS/RTX/SRC/ARM"/>
-        <file category="library" condition="RTOS RTX ARM ARMv7-M NOFP"    name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM3.lib"    src="CMSIS/RTOS/RTX/SRC/ARM"/>
-        <file category="library" condition="RTOS RTX ARM ARMv7-M BE NOFP" name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM3_B.lib"  src="CMSIS/RTOS/RTX/SRC/ARM"/>
-        <file category="library" condition="RTOS RTX ARM ARMv7-M FP"      name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM4.lib"    src="CMSIS/RTOS/RTX/SRC/ARM"/>
-        <file category="library" condition="RTOS RTX ARM ARMv7-M BE FP"   name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM4_B.lib"  src="CMSIS/RTOS/RTX/SRC/ARM"/>
+        <file category="library" condition="ARMCC ARMv6-M LE"      name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM0.lib"    src="CMSIS/RTOS/RTX/SRC/ARM"/>
+        <file category="library" condition="ARMCC ARMv6-M BE"      name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM0_B.lib"  src="CMSIS/RTOS/RTX/SRC/ARM"/>
+        <file category="library" condition="ARMCC ARMv7-M NOFP LE" name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM3.lib"    src="CMSIS/RTOS/RTX/SRC/ARM"/>
+        <file category="library" condition="ARMCC ARMv7-M NOFP BE" name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM3_B.lib"  src="CMSIS/RTOS/RTX/SRC/ARM"/>
+        <file category="library" condition="ARMCC ARMv7-M FP LE"   name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM4.lib"    src="CMSIS/RTOS/RTX/SRC/ARM"/>
+        <file category="library" condition="ARMCC ARMv7-M FP BE"   name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM4_B.lib"  src="CMSIS/RTOS/RTX/SRC/ARM"/>
         <!-- GCC -->
-        <file category="library" condition="RTOS RTX GCC ARMv6-M"         name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM0.a"   src="CMSIS/RTOS/RTX/SRC/GCC"/>
-        <file category="library" condition="RTOS RTX GCC ARMv6-M BE"      name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM0_B.a" src="CMSIS/RTOS/RTX/SRC/GCC"/>
-        <file category="library" condition="RTOS RTX GCC ARMv7-M NOFP"    name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM3.a"   src="CMSIS/RTOS/RTX/SRC/GCC"/>
-        <file category="library" condition="RTOS RTX GCC ARMv7-M BE NOFP" name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM3_B.a" src="CMSIS/RTOS/RTX/SRC/GCC"/>
-        <file category="library" condition="RTOS RTX GCC ARMv7-M FP"      name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM4.a"   src="CMSIS/RTOS/RTX/SRC/GCC"/>
-        <file category="library" condition="RTOS RTX GCC ARMv7-M BE FP"   name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM4_B.a" src="CMSIS/RTOS/RTX/SRC/GCC"/>
+        <file category="library" condition="GCC ARMv6-M LE"        name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM0.a"   src="CMSIS/RTOS/RTX/SRC/GCC"/>
+        <file category="library" condition="GCC ARMv6-M BE"        name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM0_B.a" src="CMSIS/RTOS/RTX/SRC/GCC"/>
+        <file category="library" condition="GCC ARMv7-M NOFP LE"   name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM3.a"   src="CMSIS/RTOS/RTX/SRC/GCC"/>
+        <file category="library" condition="GCC ARMv7-M NOFP BE"   name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM3_B.a" src="CMSIS/RTOS/RTX/SRC/GCC"/>
+        <file category="library" condition="GCC ARMv7-M FP LE"     name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM4.a"   src="CMSIS/RTOS/RTX/SRC/GCC"/>
+        <file category="library" condition="GCC ARMv7-M FP BE"     name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM4_B.a" src="CMSIS/RTOS/RTX/SRC/GCC"/>
         <!-- IAR -->
-        <file category="library" condition="RTOS RTX IAR ARMv6-M"         name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM0.a"      src="CMSIS/RTOS/RTX/SRC/IAR"/>
-        <file category="library" condition="RTOS RTX IAR ARMv6-M BE"      name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM0_B.a"    src="CMSIS/RTOS/RTX/SRC/IAR"/>
-        <file category="library" condition="RTOS RTX IAR ARMv7-M NOFP"    name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM3.a"      src="CMSIS/RTOS/RTX/SRC/IAR"/>
-        <file category="library" condition="RTOS RTX IAR ARMv7-M BE NOFP" name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM3_B.a"    src="CMSIS/RTOS/RTX/SRC/IAR"/>
-        <file category="library" condition="RTOS RTX IAR ARMv7-M FP"      name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM4.a"      src="CMSIS/RTOS/RTX/SRC/IAR"/>
-        <file category="library" condition="RTOS RTX IAR ARMv7-M BE FP"   name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM4_B.a"    src="CMSIS/RTOS/RTX/SRC/IAR"/>
+        <file category="library" condition="IARCC ARMv6-M LE"      name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM0.a"      src="CMSIS/RTOS/RTX/SRC/IAR"/>
+        <file category="library" condition="IARCC ARMv6-M BE"      name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM0_B.a"    src="CMSIS/RTOS/RTX/SRC/IAR"/>
+        <file category="library" condition="IARCC ARMv7-M NOFP LE" name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM3.a"      src="CMSIS/RTOS/RTX/SRC/IAR"/>
+        <file category="library" condition="IARCC ARMv7-M NOFP BE" name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM3_B.a"    src="CMSIS/RTOS/RTX/SRC/IAR"/>
+        <file category="library" condition="IARCC ARMv7-M FP LE"   name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM4.a"      src="CMSIS/RTOS/RTX/SRC/IAR"/>
+        <file category="library" condition="IARCC ARMv7-M FP BE"   name="CMSIS/RTOS/RTX/LIB/IAR/RTX_CM4_B.a"    src="CMSIS/RTOS/RTX/SRC/IAR"/>
       </files>
     </component>
     <!-- CMSIS-RTOS Keil RTX component (IFX variant) -->
@@ -2373,11 +2373,11 @@ and 8-bit Java bytecodes in Jazelle state.
 
         <!-- CPU and Compiler dependent -->
         <!-- ARMCC -->
-        <file category="library" condition="RTOS RTX ARM ARMv7-M NOFP" name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM3_IFX.lib"  src="CMSIS/RTOS/RTX/SRC/ARM"/>
-        <file category="library" condition="RTOS RTX ARM ARMv7-M FP"   name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM4_IFX.lib"  src="CMSIS/RTOS/RTX/SRC/ARM"/>
+        <file category="library" condition="ARMCC ARMv7-M NOFP LE" name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM3_IFX.lib"  src="CMSIS/RTOS/RTX/SRC/ARM"/>
+        <file category="library" condition="ARMCC ARMv7-M FP LE"   name="CMSIS/RTOS/RTX/LIB/ARM/RTX_CM4_IFX.lib"  src="CMSIS/RTOS/RTX/SRC/ARM"/>
         <!-- GCC -->
-        <file category="library" condition="RTOS RTX GCC ARMv7-M NOFP" name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM3_IFX.a" src="CMSIS/RTOS/RTX/SRC/GCC"/>
-        <file category="library" condition="RTOS RTX GCC ARMv7-M FP"   name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM4_IFX.a" src="CMSIS/RTOS/RTX/SRC/GCC"/>
+        <file category="library" condition="GCC ARMv7-M NOFP LE"   name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM3_IFX.a" src="CMSIS/RTOS/RTX/SRC/GCC"/>
+        <file category="library" condition="GCC ARMv7-M FP LE"     name="CMSIS/RTOS/RTX/LIB/GCC/libRTX_CM4_IFX.a" src="CMSIS/RTOS/RTX/SRC/GCC"/>
         <!-- IAR -->
       </files>
     </component>
@@ -2434,26 +2434,26 @@ and 8-bit Java bytecodes in Jazelle state.
 
         <!-- RTX libraries (CPU and Compiler dependent) -->
         <!-- ARMCC -->
-        <file category="library" condition="RTOS RTX ARM ARMv6-M"        name="CMSIS/RTOS2/RTX/Library/ARM/RTX_CM0.lib"    src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="RTOS RTX ARM ARMv7-M NOFP"   name="CMSIS/RTOS2/RTX/Library/ARM/RTX_CM3.lib"    src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="RTOS RTX ARM ARMv7-M FP"     name="CMSIS/RTOS2/RTX/Library/ARM/RTX_CM4F.lib"   src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="RTOS RTX ARM ARMv8-MBL"      name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MB.lib"   src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="RTOS RTX ARM ARMv8-MML NOFP" name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MM.lib"   src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="RTOS RTX ARM ARMv8-MML FP"   name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMF.lib"  src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="ARMCC ARMv6-M LE"        name="CMSIS/RTOS2/RTX/Library/ARM/RTX_CM0.lib"    src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="ARMCC ARMv7-M NOFP LE"   name="CMSIS/RTOS2/RTX/Library/ARM/RTX_CM3.lib"    src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="ARMCC ARMv7-M FP LE"     name="CMSIS/RTOS2/RTX/Library/ARM/RTX_CM4F.lib"   src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="ARMCC ARMv8-MBL LE"      name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MB.lib"   src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="ARMCC ARMv8-MML NOFP LE" name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MM.lib"   src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="ARMCC ARMv8-MML FP LE"   name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMF.lib"  src="CMSIS/RTOS2/RTX/Source"/>
         <!-- GCC -->
-        <file category="library" condition="RTOS RTX GCC ARMv6-M"        name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_CM0.a"   src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="RTOS RTX GCC ARMv7-M NOFP"   name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_CM3.a"   src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="RTOS RTX GCC ARMv7-M FP"     name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_CM4F.a"  src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="RTOS RTX GCC ARMv8-MBL"      name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MB.a"  src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="RTOS RTX GCC ARMv8-MML NOFP" name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MM.a"  src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="RTOS RTX GCC ARMv8-MML FP"   name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMF.a" src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="GCC ARMv6-M LE"          name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_CM0.a"   src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="GCC ARMv7-M NOFP LE"     name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_CM3.a"   src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="GCC ARMv7-M FP LE"       name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_CM4F.a"  src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="GCC ARMv8-MBL LE"        name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MB.a"  src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="GCC ARMv8-MML NOFP LE"   name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MM.a"  src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="GCC ARMv8-MML FP LE"     name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMF.a" src="CMSIS/RTOS2/RTX/Source"/>
         <!-- IAR -->
-        <file category="library" condition="RTOS RTX IAR ARMv6-M"        name="CMSIS/RTOS2/RTX/Library/IAR/RTX_CM0.a"      src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="RTOS RTX IAR ARMv7-M NOFP"   name="CMSIS/RTOS2/RTX/Library/IAR/RTX_CM3.a"      src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="RTOS RTX IAR ARMv7-M FP"     name="CMSIS/RTOS2/RTX/Library/IAR/RTX_CM4F.a"     src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="RTOS RTX IAR ARMv8-MBL"      name="CMSIS/RTOS2/RTX/Library/IAR/RTX_V8MB.a"     src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="RTOS RTX IAR ARMv8-MML NOFP" name="CMSIS/RTOS2/RTX/Library/IAR/RTX_V8MM.a"     src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="RTOS RTX IAR ARMv8-MML FP"   name="CMSIS/RTOS2/RTX/Library/IAR/RTX_V8MMF.a"    src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="IARCC ARMv6-M LE"        name="CMSIS/RTOS2/RTX/Library/IAR/RTX_CM0.a"      src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="IARCC ARMv7-M NOFP LE"   name="CMSIS/RTOS2/RTX/Library/IAR/RTX_CM3.a"      src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="IARCC ARMv7-M FP LE"     name="CMSIS/RTOS2/RTX/Library/IAR/RTX_CM4F.a"     src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="IARCC ARMv8-MBL LE"      name="CMSIS/RTOS2/RTX/Library/IAR/RTX_V8MB.a"     src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="IARCC ARMv8-MML NOFP LE" name="CMSIS/RTOS2/RTX/Library/IAR/RTX_V8MM.a"     src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="IARCC ARMv8-MML FP LE"   name="CMSIS/RTOS2/RTX/Library/IAR/RTX_V8MMF.a"    src="CMSIS/RTOS2/RTX/Source"/>
       </files>
     </component>
     <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Library_NS" Cversion="5.5.4" Capiversion="2.1.3" condition="RTOS2 RTX5 NS">
@@ -2492,17 +2492,17 @@ and 8-bit Java bytecodes in Jazelle state.
 
         <!-- RTX libraries (CPU and Compiler dependent) -->
         <!-- ARMCC -->
-        <file category="library" condition="RTOS RTX ARM ARMv8-MBL"      name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MBN.lib"   src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="RTOS RTX ARM ARMv8-MML NOFP" name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMN.lib"   src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="RTOS RTX ARM ARMv8-MML FP"   name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMFN.lib"  src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="ARMCC ARMv8-MBL LE"      name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MBN.lib"   src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="ARMCC ARMv8-MML NOFP LE" name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMN.lib"   src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="ARMCC ARMv8-MML FP LE"   name="CMSIS/RTOS2/RTX/Library/ARM/RTX_V8MMFN.lib"  src="CMSIS/RTOS2/RTX/Source"/>
         <!-- GCC -->
-        <file category="library" condition="RTOS RTX GCC ARMv8-MBL"      name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MBN.a"  src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="RTOS RTX GCC ARMv8-MML NOFP" name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMN.a"  src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="RTOS RTX GCC ARMv8-MML FP"   name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMFN.a" src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="GCC ARMv8-MBL LE"        name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MBN.a"  src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="GCC ARMv8-MML NOFP LE"   name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMN.a"  src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="GCC ARMv8-MML FP LE"     name="CMSIS/RTOS2/RTX/Library/GCC/libRTX_V8MMFN.a" src="CMSIS/RTOS2/RTX/Source"/>
         <!-- IAR -->
-        <file category="library" condition="RTOS RTX IAR ARMv8-MBL"      name="CMSIS/RTOS2/RTX/Library/IAR/RTX_V8MBN.a"     src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="RTOS RTX IAR ARMv8-MML NOFP" name="CMSIS/RTOS2/RTX/Library/IAR/RTX_V8MMN.a"     src="CMSIS/RTOS2/RTX/Source"/>
-        <file category="library" condition="RTOS RTX IAR ARMv8-MML FP"   name="CMSIS/RTOS2/RTX/Library/IAR/RTX_V8MMFN.a"    src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="IARCC ARMv8-MBL LE"      name="CMSIS/RTOS2/RTX/Library/IAR/RTX_V8MBN.a"     src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="IARCC ARMv8-MML NOFP LE" name="CMSIS/RTOS2/RTX/Library/IAR/RTX_V8MMN.a"     src="CMSIS/RTOS2/RTX/Source"/>
+        <file category="library" condition="IARCC ARMv8-MML FP LE"   name="CMSIS/RTOS2/RTX/Library/IAR/RTX_V8MMFN.a"    src="CMSIS/RTOS2/RTX/Source"/>
       </files>
     </component>
     <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Source" Cversion="5.5.4" Capiversion="2.1.3" condition="RTOS2 RTX5">
@@ -2552,18 +2552,18 @@ and 8-bit Java bytecodes in Jazelle state.
         <!-- RTX sources (library configuration) -->
         <file category="source" name="CMSIS/RTOS2/RTX/Source/rtx_lib.c"/>
         <!-- RTX sources (handlers ARMASM) -->
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv6m.s"   condition="RTOS RTX ARMASM ARMv6-M"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv7m.s"   condition="RTOS RTX ARMASM ARMv7-M"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv6m.s"   condition="ARMASM ARMv6-M"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv7m.s"   condition="ARMASM ARMv7-M"/>
         <!-- RTX sources (handlers GAS) -->
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv6m.S"   condition="RTOS RTX GAS ARMv6-M"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv7m.S"   condition="RTOS RTX GAS ARMv7-M"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mbl.S" condition="RTOS RTX GAS ARMv8-MBL"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml.S" condition="RTOS RTX GAS ARMv8-MML"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv6m.S"   condition="GNUASM ARMv6-M"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv7m.S"   condition="GNUASM ARMv7-M"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mbl.S" condition="GNUASM ARMv8-MBL"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml.S" condition="GNUASM ARMv8-MML"/>
         <!-- RTX sources (handlers IAR) -->
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv6m.s"   condition="RTOS RTX IARASM ARMv6-M"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv7m.s"   condition="RTOS RTX IARASM ARMv7-M"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mbl.s" condition="RTOS RTX IARASM ARMv8-MBL"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml.s" condition="RTOS RTX IARASM ARMv8-MML"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv6m.s"   condition="IARASM ARMv6-M"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv7m.s"   condition="IARASM ARMv7-M"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mbl.s" condition="IARASM ARMv8-MBL"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml.s" condition="IARASM ARMv8-MML"/>
         <!-- OS Tick (SysTick) -->
         <file category="source" name="CMSIS/RTOS2/Source/os_systick.c"/>
       </files>
@@ -2617,11 +2617,11 @@ and 8-bit Java bytecodes in Jazelle state.
         <!-- RTX sources (library configuration) -->
         <file category="source" name="CMSIS/RTOS2/RTX/Source/rtx_lib.c"/>
         <!-- RTX sources (handlers ARMASM) -->
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv7a.s" condition="RTOS RTX ARMASM ARMv7-A"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/ARM/irq_armv7a.s" condition="ARMASM ARMv7-A"/>
         <!-- RTX sources (handlers GAS) -->
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv7a.S" condition="RTOS RTX GAS ARMv7-A"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv7a.S" condition="GNUASM ARMv7-A"/>
         <!-- RTX sources (handlers IAR) -->
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv7a.s" condition="RTOS RTX IARASM ARMv7-A"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv7a.s" condition="IARASM ARMv7-A"/>
       </files>
     </component>
     <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Source_NS" Cversion="5.5.4" Capiversion="2.1.3" condition="RTOS2 RTX5 NS">
@@ -2672,11 +2672,11 @@ and 8-bit Java bytecodes in Jazelle state.
         <!-- RTX sources (library configuration) -->
         <file category="source" name="CMSIS/RTOS2/RTX/Source/rtx_lib.c"/>
         <!-- RTX sources (GAS handlers) -->
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mbl.S" condition="RTOS RTX GAS ARMv8-MBL"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml.S" condition="RTOS RTX GAS ARMv8-MML"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mbl.S" condition="GNUASM ARMv8-MBL"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/GCC/irq_armv8mml.S" condition="GNUASM ARMv8-MML"/>
         <!-- RTX sources (IAR handlers) -->
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mbl.s" condition="RTOS RTX IARASM ARMv8-MBL"/>
-        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml.s" condition="RTOS RTX IARASM ARMv8-MML"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mbl.s" condition="IARASM ARMv8-MBL"/>
+        <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv8mml.s" condition="IARASM ARMv8-MML"/>
         <!-- OS Tick (SysTick) -->
         <file category="source" name="CMSIS/RTOS2/Source/os_systick.c"/>
       </files>
