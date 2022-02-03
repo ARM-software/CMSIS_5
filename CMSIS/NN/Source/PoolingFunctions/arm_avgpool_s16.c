@@ -21,8 +21,8 @@
  * Title:        arm_avgpool_s16.c
  * Description:  Pooling function implementations
  *
- * $Date:        26. January 2022
- * $Revision:    V.1.0.0
+ * $Date:        3. February 2022
+ * $Revision:    V.1.0.1
  *
  * Target Processor:  Cortex-M CPUs
  *
@@ -54,6 +54,7 @@ arm_status arm_avgpool_s16(const cmsis_nn_context *ctx,
                            const cmsis_nn_dims *output_dims,
                            q15_t *dst)
 {
+    (void)ctx;
     const int32_t input_y = input_dims->h;
     const int32_t input_x = input_dims->w;
     const int32_t output_y = output_dims->h;

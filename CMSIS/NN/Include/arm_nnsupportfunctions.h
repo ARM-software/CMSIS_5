@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2021 Arm Limited or its affiliates.
+ * Copyright (C) 2010-2022 Arm Limited or its affiliates.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_nnsupportfunctions.h
  * Description:  Public header file of support functions for CMSIS NN Library
  *
- * $Date:        23. Nov 2021
- * $Revision:    V.6.0.0
+ * $Date:        3. February 2022
+ * $Revision:    V.6.0.1
  *
  * Target Processor:  Cortex-M CPUs
  * -------------------------------------------------------------------- */
@@ -606,7 +606,6 @@ __STATIC_FORCEINLINE q31_t arm_nn_read_q7x4(const q7_t *in_q7)
   @brief         Write four q7 to q7 pointer and increment pointer afterwards.
   @param[in]     in       Double pointer to input value
   @param[in]     value    Four bytes to copy
-  @return        none
  */
 __STATIC_FORCEINLINE void arm_nn_write_q7x4_ia(q7_t **in, q31_t value)
 {
@@ -1085,7 +1084,6 @@ __STATIC_FORCEINLINE int32_t arm_nn_one_over_one_plus_x_for_x_in_0_1(int32_t val
   @brief         Write 2 q15 elements and post increment pointer.
   @param[in]     dest_q15  Pointer to pointer that holds address of destination.
   @param[in]     src_q31   Input value to be written.
-  @return        none
  */
 __STATIC_FORCEINLINE void arm_nn_write_q15x2_ia(q15_t **dest_q15, q31_t src_q31)
 {
