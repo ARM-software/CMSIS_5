@@ -25,4 +25,6 @@ jobs:
     - name: Run xmllint
       run: |
         curl https://raw.githubusercontent.com/Open-CMSIS-Pack/Open-CMSIS-Pack-Spec/main/schema/PACK.xsd -o CMSIS/Utilities/PACK.xsd
+        echo "::add-matcher::.github/xmllint.json"
         xmllint --noout --schema "$(realpath -m ./CMSIS/Utilities/PACK.xsd)" "ARM.CMSIS.pdsc"
+        echo "::remove-matcher owner=xmllint::"
