@@ -297,6 +297,7 @@ popd > /dev/null
 
 if [ $(uname -s) = "Linux" ]; then
   echo "Running schema check for ${PACK_VENDOR}.${PACK_NAME}.pdsc"
+  curl https://raw.githubusercontent.com/Open-CMSIS-Pack/Open-CMSIS-Pack-Spec/main/schema/PACK.xsd -o CMSIS/Utilities/PACK.xsd
   xmllint --noout --schema "$(realpath -m ./CMSIS/Utilities/PACK.xsd)" "${PACK_BUILD}/${PACK_VENDOR}.${PACK_NAME}.pdsc"
   errorlevel=$?
   if [ $errorlevel -ne 0 ]; then

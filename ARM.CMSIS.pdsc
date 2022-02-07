@@ -1313,33 +1313,33 @@ and 8-bit Java bytecodes in Jazelle state.
         <description>Arm Compiler for Armv6-M architecture (little endian)</description>
         <require condition="ARMCC"/>
         <require condition="ARMv6-M Device"/>
-        <require Dendian="little"/>
+        <require Dendian="Little-endian"/>
     </condition>
     <condition id="ARMCC ARMv6-M BE">
         <description>Arm Compiler for Armv6-M architecture (big endian)</description>
         <require condition="ARMCC"/>
         <require condition="ARMv6-M Device"/>
-        <require Dendian="big"/>
+        <require Dendian="Big-endian"/>
     </condition>
     <condition id="ARMCC ARMv7-M NOFP LE">
         <description>Arm Compiler for Armv7-M architecture without FPU (little endian)</description>
         <require condition="ARMCC"/>
         <require condition="ARMv7-M Device"/>
-        <require Dendian="little"/>
+        <require Dendian="Little-endian"/>
         <require Dfpu="NO_FPU"/>
     </condition>
     <condition id="ARMCC ARMv7-M NOFP BE">
         <description>Arm Compiler for Armv7-M architecture without FPU (big endian)</description>
         <require condition="ARMCC"/>
         <require condition="ARMv7-M Device"/>
-        <require Dendian="big"/>
+        <require Dendian="Big-endian"/>
         <require Dfpu="NO_FPU"/>
     </condition>
     <condition id="ARMCC ARMv7-M FP LE">
         <description>Arm Compiler for Armv7-M architecture with FPU (little endian)</description>
         <require condition="ARMCC"/>
         <require condition="ARMv7-M Device"/>
-        <require Dendian="little"/>
+        <require Dendian="Little-endian"/>
         <accept Dfpu="SP_FPU"/>
         <accept Dfpu="DP_FPU"/>
     </condition>
@@ -1347,7 +1347,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <description>Arm Compiler for Armv7-M architecture with FPU (big endian)</description>
         <require condition="ARMCC"/>
         <require condition="ARMv7-M Device"/>
-        <require Dendian="big"/>
+        <require Dendian="Big-endian"/>
         <accept Dfpu="SP_FPU"/>
         <accept Dfpu="DP_FPU"/>
     </condition>
@@ -1355,13 +1355,13 @@ and 8-bit Java bytecodes in Jazelle state.
         <description>Arm Compiler for Armv8-M base line architecture (little endian)</description>
         <require condition="ARMCC"/>
         <require condition="ARMv8-MBL Device"/>
-        <require Dendian="little"/>
+        <require Dendian="Little-endian"/>
     </condition>
     <condition id="ARMCC ARMv8-MML NOFP LE">
         <description>Arm Compiler for Armv8-M main line architecture without FPU/MVE (little endian)</description>
         <require condition="ARMCC"/>
         <require condition="ARMv8-MML Device"/>
-        <require Dendian="little"/>
+        <require Dendian="Little-endian"/>
         <require Dfpu="NO_FPU"/>
         <require Dmve="NO_MVE"/>
     </condition>
@@ -1369,7 +1369,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <description>Arm Compiler for Armv8-M main line architecture with FPU/MVE (little endian)</description>
         <require condition="ARMCC"/>
         <require condition="ARMv8-MML Device"/>
-        <require Dendian="little"/>
+        <require Dendian="Little-endian"/>
         <accept Dfpu="SP_FPU"/>
         <accept Dfpu="DP_FPU"/>
         <accept Dmve="MVE"/>
@@ -1380,33 +1380,33 @@ and 8-bit Java bytecodes in Jazelle state.
         <description>GNU Compiler for Armv6-M architecture (little endian)</description>
         <require condition="GCC"/>
         <require condition="ARMv6-M Device"/>
-        <require Dendian="little"/>
+        <require Dendian="Little-endian"/>
     </condition>
     <condition id="GCC ARMv6-M BE">
         <description>GNU Compiler for Armv6-M architecture (big endian)</description>
         <require condition="GCC"/>
         <require condition="ARMv6-M Device"/>
-        <require Dendian="big"/>
+        <require Dendian="Big-endian"/>
     </condition>
     <condition id="GCC ARMv7-M NOFP LE">
         <description>GNU Compiler for Armv7-M architecture without FPU (little endian)</description>
         <require condition="GCC"/>
         <require condition="ARMv7-M Device"/>
-        <require Dendian="little"/>
+        <require Dendian="Little-endian"/>
         <require Dfpu="NO_FPU"/>
     </condition>
     <condition id="GCC ARMv7-M NOFP BE">
         <description>GNU Compiler for Armv7-M architecture without FPU (big endian)</description>
         <require condition="GCC"/>
         <require condition="ARMv7-M Device"/>
-        <require Dendian="big"/>
+        <require Dendian="Big-endian"/>
         <require Dfpu="NO_FPU"/>
     </condition>
     <condition id="GCC ARMv7-M FP LE">
         <description>GNU Compiler for Armv7-M architecture with FPU (little endian)</description>
         <require condition="GCC"/>
         <require condition="ARMv7-M Device"/>
-        <require Dendian="little"/>
+        <require Dendian="Little-endian"/>
         <accept Dfpu="SP_FPU"/>
         <accept Dfpu="DP_FPU"/>
     </condition>
@@ -1414,7 +1414,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <description>GNU Compiler for Armv7-M architecture with FPU (big endian)</description>
         <require condition="GCC"/>
         <require condition="ARMv7-M Device"/>
-        <require Dendian="big"/>
+        <require Dendian="Big-endian"/>
         <accept Dfpu="SP_FPU"/>
         <accept Dfpu="DP_FPU"/>
     </condition>
@@ -1422,13 +1422,13 @@ and 8-bit Java bytecodes in Jazelle state.
         <description>GNU Compiler for Armv8-M base line architecture (little endian)</description>
         <require condition="GCC"/>
         <require condition="ARMv8-MBL Device"/>
-        <require Dendian="little"/>
+        <require Dendian="Little-endian"/>
     </condition>
     <condition id="GCC ARMv8-MML NOFP LE">
         <description>GNU Compiler for Armv8-M main line architecture without FPU/MVE (little endian)</description>
         <require condition="GCC"/>
         <require condition="ARMv8-MML Device"/>
-        <require Dendian="little"/>
+        <require Dendian="Little-endian"/>
         <require Dfpu="NO_FPU"/>
         <require Dmve="NO_MVE"/>
     </condition>
@@ -1436,7 +1436,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <description>GNU Compiler for Armv8-M main line architecture with FPU/MVE (little endian)</description>
         <require condition="GCC"/>
         <require condition="ARMv8-MML Device"/>
-        <require Dendian="little"/>
+        <require Dendian="Little-endian"/>
         <accept Dfpu="SP_FPU"/>
         <accept Dfpu="DP_FPU"/>
         <accept Dmve="MVE"/>
@@ -1447,33 +1447,33 @@ and 8-bit Java bytecodes in Jazelle state.
         <description>IAR Compiler for Armv6-M architecture (little endian)</description>
         <require condition="IAR"/>
         <require condition="ARMv6-M Device"/>
-        <require Dendian="little"/>
+        <require Dendian="Little-endian"/>
     </condition>
     <condition id="IARCC ARMv6-M BE">
         <description>IAR Compiler for Armv6-M architecture (big endian)</description>
         <require condition="IAR"/>
         <require condition="ARMv6-M Device"/>
-        <require Dendian="big"/>
+        <require Dendian="Big-endian"/>
     </condition>
     <condition id="IARCC ARMv7-M NOFP LE">
         <description>IAR Compiler for Armv7-M architecture without FPU (little endian)</description>
         <require condition="IAR"/>
         <require condition="ARMv7-M Device"/>
-        <require Dendian="little"/>
+        <require Dendian="Little-endian"/>
         <require Dfpu="NO_FPU"/>
     </condition>
     <condition id="IARCC ARMv7-M NOFP BE">
         <description>IAR Compiler for Armv7-M architecture without FPU (big endian)</description>
         <require condition="IAR"/>
         <require condition="ARMv7-M Device"/>
-        <require Dendian="big"/>
+        <require Dendian="Big-endian"/>
         <require Dfpu="NO_FPU"/>
     </condition>
     <condition id="IARCC ARMv7-M FP LE">
         <description>IAR Compiler for Armv7-M architecture with FPU (little endian)</description>
         <require condition="IAR"/>
         <require condition="ARMv7-M Device"/>
-        <require Dendian="little"/>
+        <require Dendian="Little-endian"/>
         <accept Dfpu="SP_FPU"/>
         <accept Dfpu="DP_FPU"/>
     </condition>
@@ -1481,7 +1481,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <description>IAR Compiler for Armv7-M architecture with FPU (big endian)</description>
         <require condition="IAR"/>
         <require condition="ARMv7-M Device"/>
-        <require Dendian="big"/>
+        <require Dendian="Big-endian"/>
         <accept Dfpu="SP_FPU"/>
         <accept Dfpu="DP_FPU"/>
     </condition>
@@ -1489,13 +1489,13 @@ and 8-bit Java bytecodes in Jazelle state.
         <description>IAR Compiler for Armv8-M base line architecture (little endian)</description>
         <require condition="IAR"/>
         <require condition="ARMv8-MBL Device"/>
-        <require Dendian="little"/>
+        <require Dendian="Little-endian"/>
     </condition>
     <condition id="IARCC ARMv8-MML NOFP LE">
         <description>IAR Compiler for Armv8-M main line architecture without FPU/MVE (little endian)</description>
         <require condition="IAR"/>
         <require condition="ARMv8-MML Device"/>
-        <require Dendian="little"/>
+        <require Dendian="Little-endian"/>
         <require Dfpu="NO_FPU"/>
         <require Dmve="NO_MVE"/>
     </condition>
@@ -1503,7 +1503,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <description>IAR Compiler for Armv8-M main line architecture with FPU/MVE (little endian)</description>
         <require condition="IAR"/>
         <require condition="ARMv8-MML Device"/>
-        <require Dendian="little"/>
+        <require Dendian="Little-endian"/>
         <accept Dfpu="SP_FPU"/>
         <accept Dfpu="DP_FPU"/>
         <accept Dmve="MVE"/>
