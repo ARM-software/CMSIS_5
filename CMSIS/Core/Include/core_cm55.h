@@ -993,12 +993,12 @@ typedef struct
 /**
   \ingroup  CMSIS_core_register
   \defgroup CMSIS_ICB Implementation Control Block register (ICB)
-  \brief    Type definitions for the Implementation Control Block register
+  \brief    Type definitions for the Implementation Control Block Register
   @{
  */
 
 /**
-  \brief  Structure type to access the System Control and ID Register not in the SCB.
+  \brief  Structure type to access the Implementation Control Block (ICB).
  */
 typedef struct
 {
@@ -1399,7 +1399,7 @@ typedef struct
 
 /**
   \ingroup  CMSIS_core_register
-  \defgroup MemSysCtl_Type     Memory System Control Registers (Implementation defined)
+  \defgroup MemSysCtl_Type     Memory System Control Registers (IMPLEMENTATION DEFINED)
   \brief    Type definitions for the Memory System Control Registers (MEMSYSCTL)
   @{
  */
@@ -1596,13 +1596,15 @@ typedef struct
 #define EWIC_EVENTMASKA_EVENT_Msk  (0x1UL /*<< EWIC_EVENTMASKA_EVENT_Pos*/)            /*!< EWIC EVENTMASKA: EVENT Mask */
 
 /* EWIC External Wakeup Interrupt Controller (EVENTMASK) Register Definitions */
+#define EWIC_EVENTMASK_IRQ_Pos   0U                                                    /*!< EWIC EVENTMASKA: IRQ Position */
+#define EWIC_EVENTMASK_IRQ_Msk  (0xFFFFFFFFUL /*<< EWIC_EVENTMASKA_IRQ_Pos*/)          /*!< EWIC EVENTMASKA: IRQ Mask */
 
 /*@}*/ /* end of group EWIC_Type */
 
 
 /**
   \ingroup  CMSIS_core_register
-  \defgroup ErrBnk_Type     Error Banking Registers (Implementation defined)
+  \defgroup ErrBnk_Type     Error Banking Registers (IMPLEMENTATION DEFINED)
   \brief    Type definitions for the Error Banking Registers (ERRBNK)
   @{
  */
@@ -1742,7 +1744,7 @@ typedef struct
 
 /**
   \ingroup  CMSIS_core_register
-  \defgroup PrcCfgInf_Type     Processor Configuration Information Registers (Implementation defined)
+  \defgroup PrcCfgInf_Type     Processor Configuration Information Registers (IMPLEMENTATION DEFINED)
   \brief    Type definitions for the Processor Configuration Information Registerss (PRCCFGINF)
   @{
  */
