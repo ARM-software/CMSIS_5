@@ -382,17 +382,18 @@ The files for other compiler vendors differ slightly in the syntax, but not in t
 /**
 \page linker_sct_pg Scatter-Loading description file <device>_ac<5|6>.sct
 
-If C-Startup is used then it is necessary that also a scatter file for linking is used.
+A scatter file for linking is required when using a \ref startup_c_pg "C startup file".
 
 The \ref linker_sct_pg contains regions for:
- - Code (Read only data, Execute only data)
- - RAM (Read/Write data, Zero initialized data)
+ - Code (read-only data, execute-only data)
+ - RAM (read/write data, zero-initialized data)
  - Stack
  - Heap
- - Stack Seal (Armv8-M/v8.1-M)
+ - Stack seal (Armv8-M/v8.1-M)
  - CMSE veneer (Armv8-M/v8.1-M)
 
-Within the scatter file the user needs to specify a set of macros
+Within the scatter file, the user needs to specify a set of macros. The scatter file is passed through the
+C preprocessor which uses these macros to calculate the start address and the size of the different regions.
 
 \code
 /*--------------------- Flash Configuration ----------------------------------
@@ -429,9 +430,6 @@ Within the scatter file the user needs to specify a set of macros
  *----------------------------------------------------------------------------*/
 #define __CMSEVENEER_SIZE    0x200
 \endcode
-
-The scatter file is passed through the C preprocessor and these macros are used to
-calculate the start address and the size of the different regions.
 
 \note
 The stack is placed at the end of the available RAM and is growing downwards 
