@@ -21,8 +21,8 @@
  * Title:        arm_nnfunctions.h
  * Description:  Public header file for CMSIS NN Library
  *
- * $Date:        24 January 2022
- * $Revision:    V.7.4.0
+ * $Date:        7 February 2022
+ * $Revision:    V.8.0.0
  *
  * Target Processor:  Cortex-M CPUs
  * -------------------------------------------------------------------- */
@@ -1585,87 +1585,6 @@ q7_t *arm_nn_mat_mult_kernel_q7_q15(const q7_t *pA,
                                     const uint16_t out_shift,
                                     const q7_t *bias,
                                     q7_t *pOut);
-/**
- * @brief Matrix-multiplication function for convolution with per-channel requantization.
- * @param[in]       input_a     pointer to operand A
- * @param[in]       input_b     pointer to operand B, always consists of 2 vectors.
- * @param[in]       output_ch   number of rows of A
- * @param[in]       out_shift  pointer to per output channel requantization shift parameter.
- * @param[in]       out_mult   pointer to per output channel requantization multiplier parameter.
- * @param[in]       out_offset      output tensor offset.
- * @param[in]       activation_min   minimum value to clamp the output to. Range : int8
- * @param[in]       activation_max   maximum value to clamp the output to. Range : int8
- * @param[in]       num_col_a   number of columns of A
- * @param[in]       output_bias per output channel bias. Range : int32
- * @param[in,out]   out_0       pointer to output
- * @return     The function returns one of the two
- *              1. The incremented output pointer for a successful operation or
- *              2. NULL if implementation is not available.
- *
- * @details   This function does the matrix multiplication of weight matrix for all output channels
- *            with 2 columns from im2col and produces two elements/output_channel. The outputs are
- *            clamped in the range provided by activation min and max.
- *            Supported framework: TensorFlow Lite micro.
- */
-q7_t *arm_nn_mat_mult_kernel_s8_s16(const q7_t *input_a,
-                                    const q15_t *input_b,
-                                    const uint16_t output_ch,
-                                    const int32_t *out_shift,
-                                    const int32_t *out_mult,
-                                    const int32_t out_offset,
-                                    const int16_t activation_min,
-                                    const int16_t activation_max,
-                                    const uint16_t num_col_a,
-                                    const int32_t *const output_bias,
-                                    q7_t *out_0);
-
-/**
- * @brief Matrix-multiplication of re-ordered input B with A.
- *
- * @details  For arguments, refer arm_nn_mat_mult_kernel_s8_s16. The re-ordering is a consequence
- *           of sign extension done by the SXTB16 command on input_b. The outputs are clamped in the range
- *           provided by activation min and max.
- *   * @details
- *   - Supported framework : TensorFlow Lite Micro
- *   - The following constrains on the arguments apply
- *      -# num_col_a is a multiple of 4
- *      -# output_ch is a multiple of 2
- *
- */
-q7_t *arm_nn_mat_mult_kernel_s8_s16_reordered(const q7_t *input_a,
-                                              const q15_t *input_b,
-                                              const uint16_t output_ch,
-                                              const int32_t *out_shift,
-                                              const int32_t *out_mult,
-                                              const int32_t out_offset,
-                                              const int16_t activation_min,
-                                              const int16_t activation_max,
-                                              const uint16_t num_col_a,
-                                              const int32_t *const output_bias,
-                                              q7_t *out_0);
-
-/**
- *@brief Matrix-multiplication function for convolution with reordered columns
- *@param[in]       pA          pointer to operand A
- *@param[in]       pInBuffer   pointer to operand B, always conssists of 2 vectors
- *@param[in]       ch_im_out   numRow of A
- *@param[in]       numCol_A    numCol of A
- *@param[in]       bias_shift  amount of left-shift for bias
- *@param[in]       out_shift   amount of right-shift for output
- *@param[in]       bias        the bias
- *@param[in,out]   pOut        pointer to output
- *@return     The function returns the incremented output pointer
- *
- *@details  This function assumes that data in pInBuffer are reordered
- */
-q7_t *arm_nn_mat_mult_kernel_q7_q15_reordered(const q7_t *pA,
-                                              const q15_t *pInBuffer,
-                                              const uint16_t ch_im_out,
-                                              const uint16_t numCol_A,
-                                              const uint16_t bias_shift,
-                                              const uint16_t out_shift,
-                                              const q7_t *bias,
-                                              q7_t *pOut);
 
 #ifdef __cplusplus
 }

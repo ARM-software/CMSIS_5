@@ -21,8 +21,8 @@
  * Title:        arm_nnsupportfunctions.h
  * Description:  Public header file of support functions for CMSIS NN Library
  *
- * $Date:        3. February 2022
- * $Revision:    V.6.0.1
+ * $Date:        7. February 2022
+ * $Revision:    V.6.1.0
  *
  * Target Processor:  Cortex-M CPUs
  * -------------------------------------------------------------------- */
@@ -741,6 +741,40 @@ void arm_nn_mult_q15(q15_t *pSrcA, q15_t *pSrcB, q15_t *pDst, const uint16_t out
  */
 
 void arm_nn_mult_q7(q7_t *pSrcA, q7_t *pSrcB, q7_t *pDst, const uint16_t out_shift, uint32_t blockSize);
+
+/**
+ * @brief Matrix-multiplication function for convolution with per-channel requantization.
+ * @param[in]       input_a     pointer to operand A
+ * @param[in]       input_b     pointer to operand B, always consists of 2 vectors.
+ * @param[in]       output_ch   number of rows of A
+ * @param[in]       out_shift  pointer to per output channel requantization shift parameter.
+ * @param[in]       out_mult   pointer to per output channel requantization multiplier parameter.
+ * @param[in]       out_offset      output tensor offset.
+ * @param[in]       activation_min   minimum value to clamp the output to. Range : int8
+ * @param[in]       activation_max   maximum value to clamp the output to. Range : int8
+ * @param[in]       num_col_a   number of columns of A
+ * @param[in]       output_bias per output channel bias. Range : int32
+ * @param[in,out]   out_0       pointer to output
+ * @return     The function returns one of the two
+ *              1. The incremented output pointer for a successful operation or
+ *              2. NULL if implementation is not available.
+ *
+ * @details   This function does the matrix multiplication of weight matrix for all output channels
+ *            with 2 columns from im2col and produces two elements/output_channel. The outputs are
+ *            clamped in the range provided by activation min and max.
+ *            Supported framework: TensorFlow Lite micro.
+ */
+q7_t *arm_nn_mat_mult_kernel_s8_s16(const q7_t *input_a,
+                                    const q15_t *input_b,
+                                    const uint16_t output_ch,
+                                    const int32_t *out_shift,
+                                    const int32_t *out_mult,
+                                    const int32_t out_offset,
+                                    const int16_t activation_min,
+                                    const int16_t activation_max,
+                                    const uint16_t num_col_a,
+                                    const int32_t *const output_bias,
+                                    q7_t *out_0);
 
 /**
  * @brief macro for adding rounding offset
