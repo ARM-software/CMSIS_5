@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['scatter_2dloading_20description_20file_20_3cdevice_3e_5fac_3c5_7c6_3e_2esct',['Scatter-Loading description file &lt;device&gt;_ac&lt;5|6&gt;.sct',['../linker_sct_pg.html',1,'templates_pg']]],
   ['sau_20functions',['SAU Functions',['../group__sau__trustzone__functions.html',1,'']]],
   ['scb_5fcleandcache',['SCB_CleanDCache',['../group__Dcache__functions__m7.html#gaf5585be5547cc60585d702a6129f4c17',1,'core_cm7.txt']]],
   ['scb_5fcleandcache_5fby_5faddr',['SCB_CleanDCache_by_Addr',['../group__Dcache__functions__m7.html#gabc9e51347dca344c72948c3dba0364fd',1,'core_cm7.txt']]],

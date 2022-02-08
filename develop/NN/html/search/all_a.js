@@ -1,12 +1,11 @@
 var searchData=
 [
-  ['cmakelists_2etxt',['CMakeLists.txt',['../NNSupportFunctions_2CMakeLists_8txt.html',1,'']]],
-  ['neural_20network_20functions',['Neural Network Functions',['../group__groupNN.html',1,'']]],
-  ['n',['n',['../structcmsis__nn__dims.html#a907a0be31e2e3de73df89b1327724555',1,'cmsis_nn_dims']]],
-  ['nn_5fq31_5fmax',['NN_Q31_MAX',['../arm__nn__math__types_8h.html#a602e8d32c870d50039bbd651fd9b4544',1,'arm_nn_math_types.h']]],
-  ['nn_5fq31_5fmin',['NN_Q31_MIN',['../arm__nn__math__types_8h.html#aa10494e03ee6bdf5d573079ca559f073',1,'arm_nn_math_types.h']]],
-  ['nn_5fq7_5fmax',['NN_Q7_MAX',['../arm__nn__math__types_8h.html#a3fc66c904b4e92c8e06803dac0ee54a1',1,'arm_nn_math_types.h']]],
-  ['nn_5fq7_5fmin',['NN_Q7_MIN',['../arm__nn__math__types_8h.html#a342199b16a4abf4da4a7607a3a552b4f',1,'arm_nn_math_types.h']]],
-  ['nn_5fround',['NN_ROUND',['../arm__nnsupportfunctions_8h.html#a4cbd428a2b4a4f6b2a6e4219520c7ce0',1,'arm_nnsupportfunctions.h']]],
-  ['neural_20network_20data_20conversion_20functions',['Neural Network Data Conversion Functions',['../group__nndata__convert.html',1,'']]]
+  ['mask_5fif_5fnon_5fzero',['MASK_IF_NON_ZERO',['../arm__nnsupportfunctions_8h.html#a0bc8558b22558613ed3ad3eb624ec7a5',1,'arm_nnsupportfunctions.h']]],
+  ['mask_5fif_5fzero',['MASK_IF_ZERO',['../arm__nnsupportfunctions_8h.html#a76b700415a2c22cea484103b7123739b',1,'arm_nnsupportfunctions.h']]],
+  ['max',['max',['../structcmsis__nn__activation.html#a5fefc67d8979f6a9efe36330b9ba81cf',1,'cmsis_nn_activation::max()'],['../arm__nnsupportfunctions_8h.html#ad935f1ff1a50822e317bdb321ce991ad',1,'MAX():&#160;arm_nnsupportfunctions.h']]],
+  ['min',['min',['../structcmsis__nn__activation.html#a88a2ecd4bda8cd5f339c826df578585a',1,'cmsis_nn_activation::min()'],['../arm__nnsupportfunctions_8h.html#adcd021ac91d43a62b2cdecf9a5b971a7',1,'MIN():&#160;arm_nnsupportfunctions.h']]],
+  ['mul_5fpow2',['MUL_POW2',['../arm__nnsupportfunctions_8h.html#a9d7332bc4331d55ada7ea19407e2a8c3',1,'arm_nnsupportfunctions.h']]],
+  ['mul_5fsat',['MUL_SAT',['../arm__nnsupportfunctions_8h.html#a518f7e0db18bea6b61a2b88f266aef20',1,'arm_nnsupportfunctions.h']]],
+  ['mul_5fsat_5fmve',['MUL_SAT_MVE',['../arm__nnsupportfunctions_8h.html#a6349818fec8167dff87c3fb7ca81fc1c',1,'arm_nnsupportfunctions.h']]],
+  ['multiplier',['multiplier',['../structcmsis__nn__per__channel__quant__params.html#a33b4a56acc8ffaa077f7db31b001e5bd',1,'cmsis_nn_per_channel_quant_params::multiplier()'],['../structcmsis__nn__per__tensor__quant__params.html#a4edb6cf363e3d30ad7e5166275629548',1,'cmsis_nn_per_tensor_quant_params::multiplier()']]]
 ];

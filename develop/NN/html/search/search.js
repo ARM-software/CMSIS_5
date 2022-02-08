@@ -7,10 +7,10 @@
 
 var indexSectionsWithContent =
 {
-  0: "abcdefhilmnoprstuw",
+  0: "_abcdefhilmnoprstuw",
   1: "ac",
   2: "abcfhnprs",
-  3: "acdflst",
+  3: "_acdflst",
   4: "abcdfhilmnoprstw",
   5: "a",
   6: "a",

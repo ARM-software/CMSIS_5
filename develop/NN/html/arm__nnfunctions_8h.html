@@ -214,6 +214,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gad8a6832cf0c8a8862fc8cd9ec95f40a9"><td class="memItemLeft" align="right" valign="top">arm_status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NNConv.html#gad8a6832cf0c8a8862fc8cd9ec95f40a9">arm_depthwise_conv_s8</a> (const <a class="el" href="structcmsis__nn__context.html">cmsis_nn_context</a> *ctx, const <a class="el" href="structcmsis__nn__dw__conv__params.html">cmsis_nn_dw_conv_params</a> *dw_conv_params, const <a class="el" href="structcmsis__nn__per__channel__quant__params.html">cmsis_nn_per_channel_quant_params</a> *quant_params, const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *input_dims, const q7_t *input_data, const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *filter_dims, const q7_t *filter_data, const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *bias_dims, const int32_t *bias_data, const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *output_dims, q7_t *output_data)</td></tr>
 <tr class="memdesc:gad8a6832cf0c8a8862fc8cd9ec95f40a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Basic s8 depthwise convolution function that doesn't have any constraints on the input dimensions.  <a href="group__NNConv.html#gad8a6832cf0c8a8862fc8cd9ec95f40a9">More...</a><br/></td></tr>
 <tr class="separator:gad8a6832cf0c8a8862fc8cd9ec95f40a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3e5c3370f6f70ac51d559a53290bb45d"><td class="memItemLeft" align="right" valign="top">arm_status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NNConv.html#ga3e5c3370f6f70ac51d559a53290bb45d">arm_depthwise_conv_s16</a> (const <a class="el" href="structcmsis__nn__context.html">cmsis_nn_context</a> *ctx, const <a class="el" href="structcmsis__nn__dw__conv__params.html">cmsis_nn_dw_conv_params</a> *dw_conv_params, const <a class="el" href="structcmsis__nn__per__channel__quant__params.html">cmsis_nn_per_channel_quant_params</a> *quant_params, const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *input_dims, const q15_t *input, const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *filter_dims, const q7_t *kernel, const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *bias_dims, const int64_t *bias, const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *output_dims, q15_t *output)</td></tr>
+<tr class="memdesc:ga3e5c3370f6f70ac51d559a53290bb45d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Basic s16 depthwise convolution function that doesn't have any constraints on the input dimensions.  <a href="group__NNConv.html#ga3e5c3370f6f70ac51d559a53290bb45d">More...</a><br/></td></tr>
+<tr class="separator:ga3e5c3370f6f70ac51d559a53290bb45d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga558337f134d84dac2c312c5175bd67de"><td class="memItemLeft" align="right" valign="top">arm_status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NNConv.html#ga558337f134d84dac2c312c5175bd67de">arm_depthwise_conv_3x3_s8</a> (const <a class="el" href="structcmsis__nn__context.html">cmsis_nn_context</a> *ctx, const <a class="el" href="structcmsis__nn__dw__conv__params.html">cmsis_nn_dw_conv_params</a> *dw_conv_params, const <a class="el" href="structcmsis__nn__per__channel__quant__params.html">cmsis_nn_per_channel_quant_params</a> *quant_params, const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *input_dims, const q7_t *input_data, const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *filter_dims, const q7_t *filter_data, const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *bias_dims, const int32_t *bias_data, const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *output_dims, q7_t *output_data)</td></tr>
 <tr class="memdesc:ga558337f134d84dac2c312c5175bd67de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Optimized s8 depthwise convolution function for 3x3 kernel size with some constraints on the input arguments(documented below). Refer <a class="el" href="group__NNConv.html#gad8a6832cf0c8a8862fc8cd9ec95f40a9" title="Basic s8 depthwise convolution function that doesn&#39;t have any constraints on the input dimensions...">arm_depthwise_conv_s8()</a> for function argument details.  <a href="group__NNConv.html#ga558337f134d84dac2c312c5175bd67de">More...</a><br/></td></tr>
 <tr class="separator:ga558337f134d84dac2c312c5175bd67de"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -298,9 +301,18 @@ Functions</h2></td></tr>
 <tr class="memitem:ga08263590a94c39b4c1c199501ca166e4"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Pooling.html#ga08263590a94c39b4c1c199501ca166e4">arm_avgpool_s8_get_buffer_size</a> (const int dim_dst_width, const int ch_src)</td></tr>
 <tr class="memdesc:ga08263590a94c39b4c1c199501ca166e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the required buffer size for S8 average pooling function.  <a href="group__Pooling.html#ga08263590a94c39b4c1c199501ca166e4">More...</a><br/></td></tr>
 <tr class="separator:ga08263590a94c39b4c1c199501ca166e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac4d4234273f92a06a09228677a152d2c"><td class="memItemLeft" align="right" valign="top">arm_status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__nnfunctions_8h.html#ac4d4234273f92a06a09228677a152d2c">arm_avgpool_s16</a> (const <a class="el" href="structcmsis__nn__context.html">cmsis_nn_context</a> *ctx, const <a class="el" href="structcmsis__nn__pool__params.html">cmsis_nn_pool_params</a> *pool_params, const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *input_dims, const int16_t *input_data, const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *filter_dims, const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *output_dims, int16_t *output_data)</td></tr>
+<tr class="memdesc:ac4d4234273f92a06a09228677a152d2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">s16 average pooling function.  <a href="#ac4d4234273f92a06a09228677a152d2c">More...</a><br/></td></tr>
+<tr class="separator:ac4d4234273f92a06a09228677a152d2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac5f8a447fac56e1c48f353a746ec411a"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Pooling.html#gac5f8a447fac56e1c48f353a746ec411a">arm_avgpool_s16_get_buffer_size</a> (const int dim_dst_width, const int ch_src)</td></tr>
+<tr class="memdesc:gac5f8a447fac56e1c48f353a746ec411a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the required buffer size for S16 average pooling function.  <a href="group__Pooling.html#gac5f8a447fac56e1c48f353a746ec411a">More...</a><br/></td></tr>
+<tr class="separator:gac5f8a447fac56e1c48f353a746ec411a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3628978b2ab0b43d8f8723118c12acc4"><td class="memItemLeft" align="right" valign="top">arm_status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Pooling.html#ga3628978b2ab0b43d8f8723118c12acc4">arm_max_pool_s8</a> (const <a class="el" href="structcmsis__nn__context.html">cmsis_nn_context</a> *ctx, const <a class="el" href="structcmsis__nn__pool__params.html">cmsis_nn_pool_params</a> *pool_params, const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *input_dims, const q7_t *input_data, const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *filter_dims, const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *output_dims, q7_t *output_data)</td></tr>
 <tr class="memdesc:ga3628978b2ab0b43d8f8723118c12acc4"><td class="mdescLeft">&#160;</td><td class="mdescRight">s8 max pooling function.  <a href="group__Pooling.html#ga3628978b2ab0b43d8f8723118c12acc4">More...</a><br/></td></tr>
 <tr class="separator:ga3628978b2ab0b43d8f8723118c12acc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8bc3b3dd1fcf5ac462aa28bdddc0e3bb"><td class="memItemLeft" align="right" valign="top">arm_status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Pooling.html#ga8bc3b3dd1fcf5ac462aa28bdddc0e3bb">arm_max_pool_s16</a> (const <a class="el" href="structcmsis__nn__context.html">cmsis_nn_context</a> *ctx, const <a class="el" href="structcmsis__nn__pool__params.html">cmsis_nn_pool_params</a> *pool_params, const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *input_dims, const int16_t *src, const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *filter_dims, const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *output_dims, int16_t *dst)</td></tr>
+<tr class="memdesc:ga8bc3b3dd1fcf5ac462aa28bdddc0e3bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">s16 max pooling function.  <a href="group__Pooling.html#ga8bc3b3dd1fcf5ac462aa28bdddc0e3bb">More...</a><br/></td></tr>
+<tr class="separator:ga8bc3b3dd1fcf5ac462aa28bdddc0e3bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga89aff212a97a3cf32d9d7ddf11a8f43e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Softmax.html#ga89aff212a97a3cf32d9d7ddf11a8f43e">arm_softmax_q7</a> (const q7_t *vec_in, const uint16_t dim_vec, q7_t *p_out)</td></tr>
 <tr class="memdesc:ga89aff212a97a3cf32d9d7ddf11a8f43e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Q7 softmax function.  <a href="group__Softmax.html#ga89aff212a97a3cf32d9d7ddf11a8f43e">More...</a><br/></td></tr>
 <tr class="separator:ga89aff212a97a3cf32d9d7ddf11a8f43e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -373,6 +385,78 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="ac4d4234273f92a06a09228677a152d2c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">arm_status arm_avgpool_s16 </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structcmsis__nn__context.html">cmsis_nn_context</a> *&#160;</td>
+          <td class="paramname"><em>ctx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structcmsis__nn__pool__params.html">cmsis_nn_pool_params</a> *&#160;</td>
+          <td class="paramname"><em>pool_params</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *&#160;</td>
+          <td class="paramname"><em>input_dims</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int16_t *&#160;</td>
+          <td class="paramname"><em>input_data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *&#160;</td>
+          <td class="paramname"><em>filter_dims</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *&#160;</td>
+          <td class="paramname"><em>output_dims</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int16_t *&#160;</td>
+          <td class="paramname"><em>output_data</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">ctx</td><td>Function context (e.g. temporary buffer). Check the function definition file to see if an additional buffer is required. Optional function {API}_get_buffer_size() provides the buffer size if an additional buffer is required. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pool_params</td><td>Pooling parameters </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">input_dims</td><td>Input (activation) tensor dimensions. Format: [H, W, C_IN] Argument 'N' is not used. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">input_data</td><td>Input (activation) data pointer. Data type: int16 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">filter_dims</td><td>Filter tensor dimensions. Format: [H, W] Argument N and C are not used. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">output_dims</td><td>Output tensor dimensions. Format: [H, W, C_OUT] Argument N is not used. C_OUT equals C_IN. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">output_data</td><td>Output data pointer. Data type: int16 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The function returns <code>ARM_MATH_SUCCESS</code> - Successful operation</dd></dl>
+<ul>
+<li>Supported Framework: TensorFlow Lite </li>
+</ul>
+
+</div>
+</div>
 <a class="anchor" id="abc4fb258cfe8500ee68e812a293a80a3"></a>
 <div class="memitem">
 <div class="memproto">

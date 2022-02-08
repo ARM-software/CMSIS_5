@@ -1,5 +1,6 @@
 var group__NNConv =
 [
+    [ "__attribute__", "group__NNConv.html#ga43c4623c2553d09a59385aabe971d75d", null ],
     [ "arm_convolve_1_x_n_s8", "group__NNConv.html#ga5b85b56e06e563c05b08ad6ba7423e1d", null ],
     [ "arm_convolve_1_x_n_s8_get_buffer_size", "group__NNConv.html#gaf87f133e81ee6c1fbde89fe44c35352e", null ],
     [ "arm_convolve_1x1_HWC_q7_fast_nonsquare", "group__NNConv.html#ga110adcfdaab356c750c6270aa5e05f29", null ],
@@ -24,6 +25,7 @@ var group__NNConv =
     [ "arm_convolve_wrapper_s8", "group__NNConv.html#ga5ac772a94937e1efdab145a2ab4c0927", null ],
     [ "arm_convolve_wrapper_s8_get_buffer_size", "group__NNConv.html#ga60c117b646f95abeb9966eefc4a9da38", null ],
     [ "arm_depthwise_conv_3x3_s8", "group__NNConv.html#ga558337f134d84dac2c312c5175bd67de", null ],
+    [ "arm_depthwise_conv_s16", "group__NNConv.html#ga3e5c3370f6f70ac51d559a53290bb45d", null ],
     [ "arm_depthwise_conv_s8", "group__NNConv.html#gad8a6832cf0c8a8862fc8cd9ec95f40a9", null ],
     [ "arm_depthwise_conv_s8_opt", "group__NNConv.html#gab9dc832c407c0fe0f4d6fbb063e85e97", null ],
     [ "arm_depthwise_conv_s8_opt_get_buffer_size", "group__NNConv.html#ga0ee6e4c1a521657c35477ae0daf1c842", null ],
@@ -32,6 +34,7 @@ var group__NNConv =
     [ "arm_depthwise_conv_wrapper_s8_get_buffer_size", "group__NNConv.html#ga100b66e41b8fdf1eeb0c108bca6b6deb", null ],
     [ "arm_depthwise_separable_conv_HWC_q7", "group__NNConv.html#gad3d21b3bc6dbd6f3b97d01104349cb0a", null ],
     [ "arm_depthwise_separable_conv_HWC_q7_nonsquare", "group__NNConv.html#ga32ac508c5467813a84f74f96655dc697", null ],
+    [ "depthwise_conv_s16_generic_s16", "group__NNConv.html#gadde7c225c29269334cd821ead685361d", null ],
     [ "depthwise_conv_s8_generic", "group__NNConv.html#ga8a0fd229483032bfe41183843e17f8f6", null ],
     [ "depthwise_conv_s8_mult_4", "group__NNConv.html#ga06d7783f6788faad5165fd0ae583bc59", null ],
     [ "depthwise_conv_u8_generic", "group__NNConv.html#gab98fd934700dff7667131744c8972d91", null ],

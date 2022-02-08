@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['arm_5favgpool_5fs16_2ec',['arm_avgpool_s16.c',['../arm__avgpool__s16_8c.html',1,'']]],
   ['arm_5favgpool_5fs8_2ec',['arm_avgpool_s8.c',['../arm__avgpool__s8_8c.html',1,'']]],
   ['arm_5fconcatenation_5fs8_5fw_2ec',['arm_concatenation_s8_w.c',['../arm__concatenation__s8__w_8c.html',1,'']]],
   ['arm_5fconcatenation_5fs8_5fx_2ec',['arm_concatenation_s8_x.c',['../arm__concatenation__s8__x_8c.html',1,'']]],
@@ -22,6 +23,7 @@ var searchData=
   ['arm_5fconvolve_5fwrapper_5fs16_2ec',['arm_convolve_wrapper_s16.c',['../arm__convolve__wrapper__s16_8c.html',1,'']]],
   ['arm_5fconvolve_5fwrapper_5fs8_2ec',['arm_convolve_wrapper_s8.c',['../arm__convolve__wrapper__s8_8c.html',1,'']]],
   ['arm_5fdepthwise_5fconv_5f3x3_5fs8_2ec',['arm_depthwise_conv_3x3_s8.c',['../arm__depthwise__conv__3x3__s8_8c.html',1,'']]],
+  ['arm_5fdepthwise_5fconv_5fs16_2ec',['arm_depthwise_conv_s16.c',['../arm__depthwise__conv__s16_8c.html',1,'']]],
   ['arm_5fdepthwise_5fconv_5fs8_2ec',['arm_depthwise_conv_s8.c',['../arm__depthwise__conv__s8_8c.html',1,'']]],
   ['arm_5fdepthwise_5fconv_5fs8_5fopt_2ec',['arm_depthwise_conv_s8_opt.c',['../arm__depthwise__conv__s8__opt_8c.html',1,'']]],
   ['arm_5fdepthwise_5fconv_5fu8_5fbasic_5fver1_2ec',['arm_depthwise_conv_u8_basic_ver1.c',['../arm__depthwise__conv__u8__basic__ver1_8c.html',1,'']]],
@@ -38,6 +40,7 @@ var searchData=
   ['arm_5ffully_5fconnected_5fq7_5fopt_2ec',['arm_fully_connected_q7_opt.c',['../arm__fully__connected__q7__opt_8c.html',1,'']]],
   ['arm_5ffully_5fconnected_5fs16_2ec',['arm_fully_connected_s16.c',['../arm__fully__connected__s16_8c.html',1,'']]],
   ['arm_5ffully_5fconnected_5fs8_2ec',['arm_fully_connected_s8.c',['../arm__fully__connected__s8_8c.html',1,'']]],
+  ['arm_5fmax_5fpool_5fs16_2ec',['arm_max_pool_s16.c',['../arm__max__pool__s16_8c.html',1,'']]],
   ['arm_5fmax_5fpool_5fs8_2ec',['arm_max_pool_s8.c',['../arm__max__pool__s8_8c.html',1,'']]],
   ['arm_5fnn_5faccumulate_5fq7_5fto_5fq15_2ec',['arm_nn_accumulate_q7_to_q15.c',['../arm__nn__accumulate__q7__to__q15_8c.html',1,'']]],
   ['arm_5fnn_5factivations_5fq15_2ec',['arm_nn_activations_q15.c',['../arm__nn__activations__q15_8c.html',1,'']]],

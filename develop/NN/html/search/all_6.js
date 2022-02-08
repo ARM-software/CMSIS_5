@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['h',['h',['../structcmsis__nn__tile.html#a13c54be71aa552c2bc76d12032a3d092',1,'cmsis_nn_tile::h()'],['../structcmsis__nn__dims.html#a471946ee336572a5a96eeb0894e6005a',1,'cmsis_nn_dims::h()']]],
-  ['half_5fwords',['half_words',['../unionarm__nnword.html#a9b5e49e4e2c4b7203e07b305386bb2ba',1,'arm_nnword']]],
-  ['high',['high',['../structarm__nn__double.html#a66939b6b5007a77c843d260b431e68ac',1,'arm_nn_double']]],
-  ['history_2etxt',['history.txt',['../history_8txt.html',1,'']]]
+  ['cmakelists_2etxt',['CMakeLists.txt',['../FullyConnectedFunctions_2CMakeLists_8txt.html',1,'']]],
+  ['fully_2dconnected_20layer_20functions',['Fully-connected Layer Functions',['../group__FC.html',1,'']]],
+  ['file',['file',['../ActivationFunctions_2CMakeLists_8txt.html#a8d7e7c15c84124257a973f238fb8a675',1,'file(GLOB SRC&quot;./*_s8.c&quot;) target_sources(cmsis-nn PRIVATE $:&#160;CMakeLists.txt'],['../BasicMathFunctions_2CMakeLists_8txt.html#ac88d81d89655b3eabe77f1a4cae6b2e1',1,'file(GLOB SRC&quot;./*_*.c&quot;) target_sources(cmsis-nn PRIVATE $:&#160;CMakeLists.txt'],['../ConcatenationFunctions_2CMakeLists_8txt.html#ac88d81d89655b3eabe77f1a4cae6b2e1',1,'file(GLOB SRC&quot;./*_*.c&quot;) target_sources(cmsis-nn PRIVATE $:&#160;CMakeLists.txt'],['../FullyConnectedFunctions_2CMakeLists_8txt.html#a8d7e7c15c84124257a973f238fb8a675',1,'file(GLOB SRC&quot;./*_s8.c&quot;) target_sources(cmsis-nn PRIVATE $:&#160;CMakeLists.txt'],['../NNSupportFunctions_2CMakeLists_8txt.html#a8d7e7c15c84124257a973f238fb8a675',1,'file(GLOB SRC&quot;./*_s8.c&quot;) target_sources(cmsis-nn PRIVATE $:&#160;CMakeLists.txt'],['../ReshapeFunctions_2CMakeLists_8txt.html#ac88d81d89655b3eabe77f1a4cae6b2e1',1,'file(GLOB SRC&quot;./*_*.c&quot;) target_sources(cmsis-nn PRIVATE $:&#160;CMakeLists.txt'],['../SoftmaxFunctions_2CMakeLists_8txt.html#a8d7e7c15c84124257a973f238fb8a675',1,'file(GLOB SRC&quot;./*_s8.c&quot;) target_sources(cmsis-nn PRIVATE $:&#160;CMakeLists.txt'],['../SVDFunctions_2CMakeLists_8txt.html#a8d7e7c15c84124257a973f238fb8a675',1,'file(GLOB SRC&quot;./*_s8.c&quot;) target_sources(cmsis-nn PRIVATE $:&#160;CMakeLists.txt']]],
+  ['filter_5foffset',['filter_offset',['../structcmsis__nn__fc__params.html#a73c44b038fbb561281e27d58bb18b9a0',1,'cmsis_nn_fc_params']]]
 ];
