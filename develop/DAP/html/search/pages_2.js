@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['revision_20history_20of_20cmsis_2ddap',['Revision History of CMSIS-DAP',['../dap_revisionHistory.html',1,'']]]
+  ['installing_20cmsis_2ddap_20enabled_20debug_20adapters',['Installing CMSIS-DAP enabled debug adapters',['../dap_install.html',1,'']]]
 ];

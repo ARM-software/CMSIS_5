@@ -2,6 +2,10 @@ var NAVTREE =
 [
   [ "CMSIS-DAP", "index.html", [
     [ "Firmware for CoreSight Debug Access Port", "index.html", null ],
+    [ "Installing CMSIS-DAP enabled debug adapters", "dap_install.html", [
+      [ "Additional requirements for Linux", "dap_install.html#udevrules", null ],
+      [ "Additional requirements for Windows 7", "dap_install.html#win7", null ]
+    ] ],
     [ "Revision History of CMSIS-DAP", "dap_revisionHistory.html", null ],
     [ "Reference", "modules.html", "modules" ]
   ] ]
@@ -9,7 +13,7 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"dap_revisionHistory.html"
+"dap_install.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

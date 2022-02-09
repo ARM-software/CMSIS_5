@@ -10,7 +10,7 @@ var indexSectionsWithContent =
   0: "acdfgijlprstuv",
   1: "dlprt",
   2: "acdfgjrstuv",
-  3: "cfr"
+  3: "cfir"
 };
 
 var indexSectionNames =

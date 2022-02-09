@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['communication_20via_20usb_20bulk_20endpoints',['Communication via USB bulk endpoints',['../group__DAP__ConfigUSB__gr.html',1,'']]],
   ['cpu_5fclock',['CPU_CLOCK',['../group__DAP__Config__Debug__gr.html#ga512016e5f1966a8fd45b3f1a81ba5b8f',1,'DAP_config.h']]],
   ['cmsis_2ddap_20commands',['CMSIS-DAP Commands',['../group__DAP__Commands__gr.html',1,'']]],
   ['cmsis_2ddap_20debug_20unit_20information',['CMSIS-DAP Debug Unit Information',['../group__DAP__Config__Debug__gr.html',1,'']]],
@@ -13,6 +14,5 @@ var searchData=
   ['connect_20uart_20communication_20port',['Connect UART communication port',['../group__DAP__USART__COM__gr.html',1,'']]],
   ['connect_20swo_20trace',['Connect SWO trace',['../group__DAP__USART__SWO__gr.html',1,'']]],
   ['cmsis_2ddap_20vendor_20commands',['CMSIS-DAP Vendor Commands',['../group__DAP__Vendor__gr.html',1,'']]],
-  ['communication_20device_20class',['Communication Device Class',['../group__DAP__ConfigUSB__gr.html',1,'']]],
-  ['communication_20via_20winusb',['Communication via WinUSB',['../group__DAP__ConfigUSB__gr.html',1,'']]]
+  ['communication_20device_20class',['Communication Device Class',['../group__DAP__ConfigUSB__gr.html',1,'']]]
 ];

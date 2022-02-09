@@ -125,7 +125,7 @@ $(document).ready(function(){initNavTree('index.html','');});
 <li>Supports Serial Wire Output (SWO) of Cortex-M devices.</li>
 <li>Easy to deploy to debug units based on Cortex-M microcontrollers.</li>
 <li>Debug unit may be integrated on an evaluation board.</li>
-<li>Using WinUSB avoids driver installation on host PC.</li>
+<li>Using USB bulk transfers avoids driver installation on host PC.</li>
 <li>Supports time-critical JTAG or SWD command execution.</li>
 <li>Supports Test Domain Timer for time measurement using the debug unit.</li>
 <li>Supports UART communication port, which can be routed to USB COM Port (optional) or native CMSIS-DAP commands (new in CMSIS-DAP Version 2.1.0).</li>
@@ -141,7 +141,7 @@ $(document).ready(function(){initNavTree('index.html','');});
 </ul>
 </li>
 <li>USB stack that interfaces to the USB port of the host computer using:<ul>
-<li>a custom class (for WinUSB),</li>
+<li>a custom class (for USB bulk endpoints),</li>
 <li>the CDC ACM class to export USB COM Port.</li>
 </ul>
 </li>
@@ -151,7 +151,7 @@ $(document).ready(function(){initNavTree('index.html','');});
 <dl class="section note"><dt>Note</dt><dd></dd></dl>
 <ul>
 <li>CMSIS-DAP v1.x is <em>deprecated</em> and <em>not recommended for new designs</em>.</li>
-<li>Use <b>CMSIS-DAP v2.x</b> instead that provides high-speed SWO trace streaming.</li>
+<li>Use <a class="el" href="group__DAP__ConfigUSB__gr.html">CMSIS-DAP v2.x</a> instead that provides high-speed SWO trace streaming and does not require driver installation in modern operating systems (Mac OS, Linux, Windows). Refer to <a class="el" href="dap_install.html">Installing CMSIS-DAP enabled debug adapters</a> for more information.</li>
 </ul>
 <h2>Validation </h2>
 <p>CMSIS-DAP compliant debug units must be validated using the scripts provided in <a class="el" href="group__DAP__Validate__gr.html">Validate the debug unit operation</a>.</p>

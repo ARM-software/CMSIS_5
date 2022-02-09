@@ -3,8 +3,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>Revision History of CMSIS-DAP</title>
-<title>CMSIS-DAP: Revision History of CMSIS-DAP</title>
+<title>Installing CMSIS-DAP enabled debug adapters</title>
+<title>CMSIS-DAP: Installing CMSIS-DAP enabled debug adapters</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="cmsis.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
@@ -90,7 +90,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('dap_revisionHistory.html','');});
+$(document).ready(function(){initNavTree('dap_install.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -109,39 +109,17 @@ $(document).ready(function(){initNavTree('dap_revisionHistory.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Revision History of CMSIS-DAP </div>  </div>
+<div class="title">Installing CMSIS-DAP enabled debug adapters </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><table  class="cmtable" summary="Revision History">
-<tr>
-<th>Version </th><th>Description  </th></tr>
-<tr>
-<td>V2.1.0 </td><td>Added: <a class="el" href="group__DAP__uart__gr.html">UART COM Commands</a> to support target communication via extra UART<br/>
- Added: UART Receive/Transmit Buffer Size values in the command <a class="el" href="group__DAP__Info.html">DAP_Info</a> <br/>
- Added: Target Board Vendor and Target Board Name strings in the command <a class="el" href="group__DAP__Info.html">DAP_Info</a> <br/>
- Added: Product Firmware Version string in the command <a class="el" href="group__DAP__Info.html">DAP_Info</a> <br/>
- Changed: String encoding in <a class="el" href="group__DAP__Info.html">DAP_Info</a> from ASCII to UTF-8   </td></tr>
-<tr>
-<td>V2.0.0 </td><td>Changed: Communication via USB bulk endpoints to achieve high-speed transfer rates<br/>
- Added: Streaming SWO via separate <a class="el" href="group__DAP__ConfigUSB__gr.html">USB bulk endpoint</a><br/>
- Added: <a class="el" href="group__DAP__SWO__Transport.html">DAP_SWO_Transport</a> extended with transport mode 2 - Send trace data via separate <a class="el" href="group__DAP__ConfigUSB__gr.html">USB bulk endpoint</a>   </td></tr>
-<tr>
-<td>V1.3.0 </td><td>Added: Target Board Vendor and Target Board Name strings in the command <a class="el" href="group__DAP__Info.html">DAP_Info</a> <br/>
- Added: Product Firmware Version string in the command <a class="el" href="group__DAP__Info.html">DAP_Info</a> <br/>
- Changed: String encoding in <a class="el" href="group__DAP__Info.html">DAP_Info</a> from ASCII to UTF-8   </td></tr>
-<tr>
-<td>V1.2.0 </td><td>Added: <a class="el" href="group__DAP__SWD__Sequence.html">DAP_SWD_Sequence</a> to enable SWD multi-drop target selection <br/>
- Added: Test Domain Timer values in the commands <a class="el" href="group__DAP__Info.html">DAP_Info</a>, <a class="el" href="group__DAP__Transfer.html">DAP_Transfer</a>   </td></tr>
-<tr>
-<td>V1.1.0 </td><td>Added: <a class="el" href="group__DAP__swo__gr.html">SWO Commands</a> to support Serial Wire Output (SWO) in UART mode<br/>
- Added: <a class="el" href="group__DAP__atomic__gr.html">Atomic Commands</a> support for executing time critical DAP commands   </td></tr>
-<tr>
-<td>V1.0.0 </td><td>Version 1.0.0 was never released; version number skipped.  </td></tr>
-<tr>
-<td>V0.02 </td><td>Renamed <b>DAP_LED</b> to <a class="el" href="group__DAP__HostStatus.html">DAP_HostStatus</a>.  </td></tr>
-<tr>
-<td>V0.01 </td><td>Beta Release.  </td></tr>
-</table>
+<div class="textblock"><p>Using CMSIS-DAP v2 removes the necessity to install separate drivers on Mac OS, Linux, and Windows (8 and above) for the debug adapter.</p>
+<h1><a class="anchor" id="udevrules"></a>
+Additional requirements for Linux</h1>
+<p>On Linux, permission to access USB devices from user space must be explicitly granted via udev rules. Exemplary udev rules are available in the <a href="https://github.com/pyocd/pyOCD/tree/main/udev" target="_blank">pyOCD GitHub repo</a> that allow to access common debug probes without requiring it to be run as root.</p>
+<h1><a class="anchor" id="win7"></a>
+Additional requirements for Windows 7</h1>
+<p>For Windows 7, the CMSIS-DAP v2 device will install automatically if the PC is connected to the Internet and device installation settings are set to automatically download and install drivers for devices. The installed device will be seen in the Device Manager under Universal Serial Bus devices as a WinUSB Device.</p>
+<p>If no Internet connection is available or you want the device to show with a different name in the Device Manager, you should provide an .inf file. Refer to <a class="el" href="group__DAP__ConfigUSB__gr.html#wininf">USB Driver and *.inf file</a> for more information. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
