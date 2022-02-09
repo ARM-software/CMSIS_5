@@ -191,11 +191,11 @@ module1 = Extension(config.extensionName,
                               )
 
 setup (name = config.setupName,
-       version = '1.0.0',
+       version = '1.0.1',
        packages=['cmsisdsp'],
        description = config.setupDescription,
        ext_modules = [module1],
-       author = 'Copyright (C) 2010-2021 ARM Limited or its affiliates. All rights reserved.',
+       author = 'Copyright (C) 2010-2022 ARM Limited or its affiliates. All rights reserved.',
        url="https://github.com/ARM-software/CMSIS_5",
        classifiers=[
         "Programming Language :: Python",
