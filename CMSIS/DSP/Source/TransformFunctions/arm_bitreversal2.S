@@ -87,7 +87,10 @@
 	.type   arm_bitreversal_32, %function
 #endif
 
-#if defined (ARM_MATH_CM0_FAMILY)
+#if defined (__ARM_ARCH_8M_BASE__) || defined (__ARM_ARCH_6M__) || \
+    defined(__ARM8M_BASELINE__) || \
+    ((defined(__ARM_ARCH_PROFILE) && __ARM_ARCH_PROFILE == 'M') && \
+    (__ARM_ARCH == 6))
 
 arm_bitreversal_32 PROC
 	ADDS     r3,r1,#1
