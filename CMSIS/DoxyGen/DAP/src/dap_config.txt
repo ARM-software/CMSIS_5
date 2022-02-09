@@ -38,9 +38,9 @@ Various adaptations for different target hardware are provided.
 
 Folders and Files                     | Description
 ------------------------------------- | -----------------------------------------------------------------------
-.\\Firmware\\Examples\\LPC-Link2\\V1  | CMSIS-DAP firmware using USB HID adapted to the NXP LPC-Link2 debug unit.
-.\\Firmware\\Examples\\LPC-Link2\\V2  | CMSIS-DAP firmware using WinUSB adapted to the NXP LPC-Link2 debug unit.
-.\\Firmware\\Examples\\MCU-LINK       | CMSIS-DAP firmware using WinUSB adapted to the NXP MCU-LINK debug unit.
+.\\Firmware\\Examples\\LPC-Link2\\V1  | CMSIS-DAP firmware using USB HID class adapted to the NXP LPC-Link2 debug unit.
+.\\Firmware\\Examples\\LPC-Link2\\V2  | CMSIS-DAP firmware using USB bulk transfers adapted to the NXP LPC-Link2 debug unit.
+.\\Firmware\\Examples\\MCU-LINK       | CMSIS-DAP firmware using USB bulk transfers adapted to the NXP MCU-LINK debug unit.
 
 The CMSIS-DAP firmware is designed to execute on a debug unit that is using a Cortex-M processor-based microcontroller. To
 deploy the firmware to a new debug unit copy an existing firmware adaptation to a new folder. For example, copy the folder
@@ -101,11 +101,10 @@ parameters for the hardware of the CMSIS-DAP debug unit.
 CMSIS-DAP firmware communicates via USB with the host computer. The USB communication is implemented via MDK-Middleware
 components that access the USB peripheral of the microcontroller.
 
-The CMSIS-DAP firmware  v2 uses the \ref WinUSB "WinUSB class" that provides high-speed communication. 
+The CMSIS-DAP v2 firmware uses \ref BulkUSB "USB bulk endpoints" that provide high-speed communication. In addition,
+\ref USB_CDC is used to enable USB COM port.
 
-In addition, \ref USB_CDC is used to enable USB COM port.
-
-For the USB interface it is important to provide correct configuration information for the USB Peripheral as described in this section.
+For the USB interface it is important to provide correct configuration information for the USB peripheral as described in this section.
 
 The following steps describe how to change and configure the USB peripheral in the CMSIS-DAP firmware project:
 
@@ -127,26 +126,42 @@ The following steps describe how to change and configure the USB peripheral in t
 <br>
 \image html "MDK_USB.png" "Adapt the USB Peripheral to the microcontroller"
 
-\page WinUSB Communication via WinUSB
+\page BulkUSB Communication via USB bulk endpoints
 
-CMSIS-DAP v2 configuration uses WinUSB and is therefore faster than the deprecated v1. Optionally, support for streaming SWO
+CMSIS-DAP v2 uses USB bulk endpoints and is therefore faster than the deprecated v1. Optionally, support for streaming SWO
 trace is provided via an additional USB endpoint.
 
-The WinUSB configuration requires custom class support with the interface setting – Class Code: 0xFF (Vendor specific),
-Subclass: 0x00, Protocol code: 0x00. Depending on the configuration, it uses the following USB endpoints which should be
-configured in the interface descriptor in this order:
+This configuration requires custom class support with the interface setting:
+- Class Code: 0xFF (Vendor specific)
+- Subclass: 0x00
+- Protocol code: 0x00
+
+\note This interface enables also <a href="https://wicg.github.io/webusb/" target="_blank">WebUSB</a> technology that is used in web browsers to connect to a debug adapter connected to your PC.
+
+Depending on the configuration, it uses the following USB endpoints which should be configured in the interface descriptor in this order:
   - Endpoint 1: Bulk Out – used for commands received from host PC.
   - Endpoint 2: Bulk In – used for responses send to host PC.
   - Endpoint 3: Bulk In (optional) – used for streaming SWO trace (if enabled with \ref SWO_STREAM).
 
-To identify a CMSIS-DAP V2 configuration by debuggers the following WinUSB GUID must be used:
+\image html "MDK_USB_Custom.png" "Configuration settings for the USB custom class"
+
+\note These settings allow support in Windows (8 and above), Mac OS, and Linux without further drivers. Some additional
+settings are required to automatically install CMSIS-DAP enabled debug adapters in these operating systems.
+
+
+<b>Additional settings for Microsoft Windows</b>
+<br><br>
+For automatic installation of a CMSIS-DAP v2 enabled debug adapter in Windows, use the following WinUSB GUID in the USB
+custom class:
 \code
 {CDB3B5AD-293B-4663-AA36-1AAE46463776}
 \endcode
-The picture below shows the configuration of the USB custom class. 
 
-\image html "MDK_USB_Custom.png" "Adapt CMSIS-DAP to the WinUSB class"
+The picture below shows the WinUSB GIUD configuration of the USB custom class:
 
+\image html "MDK_USB_Custom_WinUSBGIUD.png" "Adapt CMSIS-DAP to the WinUSB class"
+
+\anchor wininf
 <b>USB Driver and *.inf file</b>
 <br><br>
 Windows 8 and above does not require a WinUSB driver provided that the USB firmware stack supports Microsoft descriptors. 
@@ -155,12 +170,12 @@ to facilitate automated driver installation.
 <br><br>
 For Windows 7, the CMSIS-DAP v2 device will install automatically if the PC is connected to the Internet and device
 installation settings are set to automatically download and install drivers for devices. The installed device will be seen
-in the Device Manager under Universal Serial Bus devices as a WinUsb Device.
+in the Device Manager under Universal Serial Bus devices as a WinUSB Device.
 <br><br>
 If no Internet connection is available or you want the device to show with a different name in the Device Manager, you
 should provide an .inf file and sign it to generate .cat files. More information is available from Microsoft under the topic  
 <a href="https://technet.microsoft.com/en-us/library/dd919238(v=ws.10).aspx" target="_blank">Steps for Signing a Device Driver Package</a>.
-<br><br>
+<br>
 
 The following CMSIS_DAP_v2.inf file should be provided for an Windows 7 host PC.
 
@@ -168,7 +183,7 @@ The following CMSIS_DAP_v2.inf file should be provided for an Windows 7 host PC.
 
 \page USB_CDC Communication Device Class
 
-CMSIS-DAP V2 supports also a UART communication port optionally routed to a USB COM port which is implemented by a USB
+CMSIS-DAP v2 supports also a UART communication port optionally routed to a USB COM port which is implemented by a USB
 Communication Device Class (CDC) device. 
 <br><br>
 
