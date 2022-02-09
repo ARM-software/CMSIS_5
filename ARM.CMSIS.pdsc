@@ -2816,7 +2816,6 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_1_x_n_s8.c"/>
         <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_nn_mat_mult_kernel_s8_s16.c"/>
         <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_conv_u8_basic_ver1.c"/>
-        <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_nn_mat_mult_kernel_s8_s16_reordered.c"/>
         <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_separable_conv_HWC_q7.c"/>
         <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_conv_wrapper_s8.c"/>
         <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_nn_mat_mult_kernel_q7_q15.c"/>
