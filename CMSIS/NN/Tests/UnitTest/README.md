@@ -10,11 +10,10 @@ Python3 is required.
 It has been tested with Python 3.6 and it has been tested on Ubuntu 16 and 18.
 
 Make sure to use a `pip` version > 19.0 (or >20.3 for macOS), otherwise tensorflow 2 packages are not available.
-
-There is a requirement file that can be used to install the dependencies.
+If in a virtual environment just start by upgrading pip.
 
 ```
-pip3 install -r requirements.txt
+pip install --upgrade pip
 ```
 
 Note that the exact versions are not required, and there are not a lot of packages to install manually.
@@ -23,15 +22,22 @@ To manually install packages, see below.
 
 ### Executing unit tests
 
-For executing unit tests, the python3 package pyserial is required. Version 3.4 of pyserial has been tested ok.
+If using the script unittest_targets.py for executing unit tests, the following packages are needed.
 
 ```
-pip3 install pyserial
+pip install pyserial mbed-ls termcolor
 ```
 
 Other required python packages are mbed-cli and and mbed-ls. It should not matter if those are installed under python2 or python3 as they are command-line tools. These packages have been tested for Python2, with the following versions: mbed-ls(1.7.9) and mbed-cli(1.10.1).
 
 ### Generating new test data
+
+For generating new test data, the following packages are needed.
+
+```
+pip install numpy packaging tensorflow
+```
+
 
 For generating new data, the python3 packages tensorflow, numpy and packaging are required. Most unit tests use a Keras generated model for reference. The SVDF unit test use a json template as input for generating a model. To do so flatc compiler is needed and it requires a schema file.
 
