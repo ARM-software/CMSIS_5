@@ -1619,11 +1619,11 @@ extern "C" {
  * @param[in]       input_2_shift           shift for input 2
  * @param[in]       left_shift              input left shift
  * @param[in,out]   output                  pointer to output vector
- * @param[in]       out_offset              output offset
+ * @param[in]       out_offset              output offset.  Range: -128 to 127
  * @param[in]       out_mult                output multiplier
  * @param[in]       out_shift               output shift
- * @param[in]       out_activation_min      minimum value to clamp output to. Min: -127
- * @param[in]       out_activation_max      maximum value to clamp output to. Max: 128
+ * @param[in]       out_activation_min      minimum value to clamp output to. Min: -128
+ * @param[in]       out_activation_max      maximum value to clamp output to. Max: 127
  * @param[in]       block_size              number of samples
  * @return          The function returns    ARM_MATH_SUCCESS
  */
@@ -1648,15 +1648,15 @@ arm_status arm_elementwise_add_s8(const int8_t *input_1_vect,
  * @brief s16 elementwise add of two vectors
  * @param[in]       input_1_vect            pointer to input vector 1
  * @param[in]       input_2_vect            pointer to input vector 2
- * @param[in]       input_1_offset          offset for input 1. Range:
+ * @param[in]       input_1_offset          offset for input 1. Range: -32767 to 32768
  * @param[in]       input_1_mult            multiplier for input 1
  * @param[in]       input_1_shift           shift for input 1
- * @param[in]       input_2_offset          offset for input 2. Range:
+ * @param[in]       input_2_offset          offset for input 2. Range: -32767 to 32768
  * @param[in]       input_2_mult            multiplier for input 2
  * @param[in]       input_2_shift           shift for input 2
  * @param[in]       left_shift              input left shift
  * @param[in,out]   output                  pointer to output vector
- * @param[in]       out_offset              output offset
+ * @param[in]       out_offset              output offset. Range: -32768 to 32767
  * @param[in]       out_mult                output multiplier
  * @param[in]       out_shift               output shift
  * @param[in]       out_activation_min      minimum value to clamp output to. Min: -32768
@@ -1688,11 +1688,11 @@ arm_status arm_elementwise_add_s16(const int16_t *input_1_vect,
  * @param[in]       input_1_offset          offset for input 1. Range: -127 to 128
  * @param[in]       input_2_offset          offset for input 2. Range: -127 to 128
  * @param[in,out]   output                  pointer to output vector
- * @param[in]       out_offset              output offset
+ * @param[in]       out_offset              output offset. Range: -128 to 127
  * @param[in]       out_mult                output multiplier
  * @param[in]       out_shift               output shift
- * @param[in]       out_activation_min      minimum value to clamp output to. Min: -127
- * @param[in]       out_activation_max      maximum value to clamp output to. Max: 128
+ * @param[in]       out_activation_min      minimum value to clamp output to. Min: -128
+ * @param[in]       out_activation_max      maximum value to clamp output to. Max: 127
  * @param[in]       block_size              number of samples
  * @return          The function returns    ARM_MATH_SUCCESS
  *
@@ -1714,10 +1714,10 @@ arm_status arm_elementwise_mul_s8(const int8_t *input_1_vect,
  * @brief s16 elementwise multiplication
  * @param[in]       input_1_vect            pointer to input vector 1
  * @param[in]       input_2_vect            pointer to input vector 2
- * @param[in]       input_1_offset          offset for input 1. Range: -32768 to 32767
- * @param[in]       input_2_offset          offset for input 2. Range: -32768 to 32767
+ * @param[in]       input_1_offset          offset for input 1. Range: -32767 to 32768
+ * @param[in]       input_2_offset          offset for input 2. Range: -32767 to 32768
  * @param[in,out]   output                  pointer to output vector
- * @param[in]       out_offset              output offset
+ * @param[in]       out_offset              output offset. Range: -32768 to 32767
  * @param[in]       out_mult                output multiplier
  * @param[in]       out_shift               output shift
  * @param[in]       out_activation_min      minimum value to clamp output to. Min: -32768
