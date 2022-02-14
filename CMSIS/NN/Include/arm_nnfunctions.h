@@ -21,7 +21,7 @@
  * Title:        arm_nnfunctions.h
  * Description:  Public header file for CMSIS NN Library
  *
- * $Date:        9 February 2022
+ * $Date:        14 February 2022
  * $Revision:    V.8.0.1
  *
  * Target Processor:  Cortex-M CPUs
@@ -1648,15 +1648,15 @@ arm_status arm_elementwise_add_s8(const int8_t *input_1_vect,
  * @brief s16 elementwise add of two vectors
  * @param[in]       input_1_vect            pointer to input vector 1
  * @param[in]       input_2_vect            pointer to input vector 2
- * @param[in]       input_1_offset          offset for input 1. Range: -32767 to 32768
+ * @param[in]       input_1_offset          offset for input 1. Not used.
  * @param[in]       input_1_mult            multiplier for input 1
  * @param[in]       input_1_shift           shift for input 1
- * @param[in]       input_2_offset          offset for input 2. Range: -32767 to 32768
+ * @param[in]       input_2_offset          offset for input 2. Not used.
  * @param[in]       input_2_mult            multiplier for input 2
  * @param[in]       input_2_shift           shift for input 2
  * @param[in]       left_shift              input left shift
  * @param[in,out]   output                  pointer to output vector
- * @param[in]       out_offset              output offset. Range: -32768 to 32767
+ * @param[in]       out_offset              output offset. Not used.
  * @param[in]       out_mult                output multiplier
  * @param[in]       out_shift               output shift
  * @param[in]       out_activation_min      minimum value to clamp output to. Min: -32768
@@ -1714,10 +1714,10 @@ arm_status arm_elementwise_mul_s8(const int8_t *input_1_vect,
  * @brief s16 elementwise multiplication
  * @param[in]       input_1_vect            pointer to input vector 1
  * @param[in]       input_2_vect            pointer to input vector 2
- * @param[in]       input_1_offset          offset for input 1. Range: -32767 to 32768
- * @param[in]       input_2_offset          offset for input 2. Range: -32767 to 32768
+ * @param[in]       input_1_offset          offset for input 1. Not used.
+ * @param[in]       input_2_offset          offset for input 2. Not used.
  * @param[in,out]   output                  pointer to output vector
- * @param[in]       out_offset              output offset. Range: -32768 to 32767
+ * @param[in]       out_offset              output offset. Not used.
  * @param[in]       out_mult                output multiplier
  * @param[in]       out_shift               output shift
  * @param[in]       out_activation_min      minimum value to clamp output to. Min: -32768

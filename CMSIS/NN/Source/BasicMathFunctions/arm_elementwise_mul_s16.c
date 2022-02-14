@@ -21,7 +21,7 @@
  * Title:        arm_elementwise_mul_s16
  * Description:  Element wise multiplication
  *
- * $Date:        3 Februari 2022
+ * $Date:        14 Februari 2022
  * $Revision:    V.1.0.0
  *
  * Target Processor:  Cortex-M cores
@@ -58,6 +58,9 @@ arm_status arm_elementwise_mul_s16(const int16_t *input_1_vect,
                                    const int32_t out_activation_max,
                                    const int32_t block_size)
 {
+    (void)input_1_offset;
+    (void)input_2_offset;
+    (void)out_offset;
     int32_t loop_count;
     int32_t input_1;
     int32_t input_2;
@@ -69,11 +72,11 @@ arm_status arm_elementwise_mul_s16(const int16_t *input_1_vect,
     {
         /* C = A * B */
 
-        input_1 = *input_1_vect++ + input_1_offset;
-        input_2 = *input_2_vect++ + input_2_offset;
+        input_1 = *input_1_vect++;
+        input_2 = *input_2_vect++;
 
         mul_res = input_1 * input_2;
-        mul_res = arm_nn_requantize(mul_res, out_mult, out_shift) + out_offset;
+        mul_res = arm_nn_requantize(mul_res, out_mult, out_shift);
 
         mul_res = MAX(mul_res, out_activation_min);
         mul_res = MIN(mul_res, out_activation_max);
