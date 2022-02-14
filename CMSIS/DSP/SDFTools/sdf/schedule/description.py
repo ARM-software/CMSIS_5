@@ -40,6 +40,9 @@ from sdf.schedule.node import *
 from sdf.schedule.config import *
 from sdf.schedule.types import *
 
+# To debug graph coloring for memory optimization
+#import matplotlib.pyplot as plt
+
 class IncompatibleIO(Exception):
     pass
 
@@ -67,16 +70,14 @@ class FIFODesc:
     def __init__(self,fifoid):
         # The FIFO is in fact just an array
         self.isArray=False 
-        # Max distance between a write and a read to the FIFO
-        # If it is 1, data written to FIFO
-        # is immediately read so buffer can be reused
-        self.distance=1
         # FIFO length
         self.length=0
         # FIFO type
         self.theType=None 
         # Buffer used by FIFO
         self.buffer=None 
+        # Used for plot in graphviz
+        self.bufferID=-1
         self._fifoID=fifoid 
         # Source IO
         self.src = None 
@@ -84,15 +85,16 @@ class FIFODesc:
         self.dst = None 
         # FIFO delay
         self.delay=0
-        # Can use a shared buffer ?
-        self.isShared = False
 
-        self._writeTime= 0
-
-        # Track when FIFO is used
-        # For allocation of shared buffers we need
-        # to know when 2 buffers are used at same time
-        self._timeOfUse=[]
+        # Used for liveliness analysis
+        # To share buffers between FIFO in memory optimization
+        # mode, we need to know when a FIFO is in use.
+        # We compute the maximum extent : so the biggest interval
+        # and not a disconnected union of intervals
+        # This could be improved. We could use
+        # a disjoint union of intervals but they should be mapped
+        # to the same node in the interference graph
+        self._liveInterval=(-1,-1)
 
         # shared buffer number not yet allocated
         self.sharedNB=-1
@@ -110,36 +112,31 @@ class FIFODesc:
         return(self.delay>0)
 
     def dump(self):
-        shared=0 
-        if self.isShared:
-            shared=1
-        print("array %d dist %d len %d %s id %d src %s:%s dst %s:%s  shared:%d" % 
+        
+        print("array %d len %d %s id %d src %s:%s dst %s:%s  " % 
             (self.isArray,
-             self.distance,
              self.length,
              self.theType.ctype,
              self.fifoID,
              self.src.owner.nodeID,
              self.src.name,
              self.dst.owner.nodeID,
-             self.dst.name,
-             shared))
+             self.dst.name))
 
     @property
     def fifoID(self):
         return self._fifoID
     
     def recordWrite(self,theTime):
-        self._timeOfUse.append(theTime)
-        if self._writeTime == 0:
-           self._writeTime = theTime
+        start,stop=self._liveInterval  
+        if start==-1:
+            self._liveInterval=(theTime,stop)
 
     def recordRead(self,theTime):
-        self._timeOfUse.append(theTime)
-        delta = theTime - self._writeTime 
-        self._writeTime = 0
-        if delta > self.distance:
-            self.distance = delta
+        start,stop=self._liveInterval 
+        if (theTime > stop):
+            self._liveInterval=(start,theTime)
+
 
 def analyzeStep(vec,allFIFOs,theTime):
     """Analyze an evolution step to know which FIFOs are read and written to"""
@@ -209,7 +206,7 @@ class Graph():
 
         return(res)
 
-    def initializeFIFODescriptions(self,config,allFIFOs, fifoLengths):
+    def initializeFIFODescriptions(self,config,allFIFOs, fifoLengths,maxTime):
         """Initialize FIFOs datastructure""" 
         for fifo in allFIFOs:
             edge = self._sortedEdges[fifo.fifoID]
@@ -218,113 +215,126 @@ class Graph():
             fifo.src=src
             fifo.dst=dst 
             fifo.delay=self.getDelay(edge)
+            # When a FIFO is working as an array then its buffer may
+            # potentially be shared with other FIFOs workign as arrays
             if src.nbSamples == dst.nbSamples:
                 if fifo.delay==0:
                    fifo.isArray = True 
-                if fifo.distance==1:
-                    if fifo.delay==0:
-                       fifo.isShared = True
             fifo.theType = src.theType
             #fifo.dump()
 
-        # When we have bufA -> Node -> bufB then
-        # bufA and bufB can't share the same memory.
-
-        # For the allocation of shared buffer we scan all times 
-        # of use and for each time we look at the FIFOs which 
-        # can be potentially shared.
-
-        # For each time of use, record the potentially shareable fifos
-        # which are used
-        fifoForTime={} 
-        for fifo in allFIFOs:
-            if fifo.isShared:
-                for t in fifo._timeOfUse:
-                    if t in fifoForTime:
-                        fifoForTime[t].append(fifo)
-                    else:
-                        fifoForTime[t]=[fifo]
-
-        # If several shareable FIFOs are used at same time, they
-        # must be assigned to different shared buffers if possible
-        usedAtSameTime={} 
-        for t in sorted(fifoForTime.keys()):
-            if len(fifoForTime[t])>2:
-                # This case is not managed in this version.
-                # It could occur with quadripoles for instance
-                for fifo in fifoForTime[t]:
-                    fifo.isShared=False
-            elif len(fifoForTime[t])==2:
-                 # 2 FIFOs are used at the same time
-                 fifoA = fifoForTime[t][0]
-                 fifoB = fifoForTime[t][1]
-                 if fifoA.sharedNB >= 0 and fifoA.sharedNB == fifoB.sharedNB:
-                     # Those FIFOs are already both assigned to a buffer
-                     # and we can't reassign and they use the same buffer
-                     # So we can't consistently associate shared buffers to those
-                     # FIFOs
-                     fifoA.isShared=False 
-                     fifoB.isShared=False
-                 else:
-                     # The 2 FIFOs were never associated with a shared buffer
-                     if fifoA.sharedNB < 0 and fifoB.sharedNB < 0:
-                         fifoA.sharedNB=0 
-                         fifoB.sharedNB=1 
-                     # One FIFO is associated, so we associate the other one
-                     # to the other shared buffer
-                     elif fifoA.sharedNB < 0:
-                         fifoA.sharedNB = 1 - fifoB.sharedNB 
-                     else:
-                         fifoB.sharedNB = 1 - fifoA.sharedNB 
-            else:
-                fifoA = fifoForTime[t][0]
-                if fifoA.sharedNB < 0:
-                    fifoA.sharedNB = 0
-                        
-
-
-        # Now we create buffers 
-        maxSharedA=0
-        maxSharedB=0
-        allBuffers=[]
-        for fifo in allFIFOs:
-            lengthInBytes = fifo.theType.bytes * fifo.length
-            if fifo.isShared:
-                if fifo.sharedNB == 0:
-                    if lengthInBytes > maxSharedA:
-                       maxSharedA = lengthInBytes 
-                if fifo.sharedNB == 1:
-                    if lengthInBytes > maxSharedB:
-                       maxSharedB = lengthInBytes 
 
         bufferID=0
-        sharedA=None
-        sharedB=None
-        if maxSharedA > 0 and config.memoryOptimization:
-           # Create the shared buffer if memory optimization on
-           sharedA = FifoBuffer(bufferID,CType(UINT8),maxSharedA)
-           allBuffers.append(sharedA)
-           bufferID = bufferID + 1
+        allBuffers=[]
 
-        if maxSharedB > 0 and config.memoryOptimization:
-           # Create the shared buffer if memory optimization on
-           sharedB = FifoBuffer(bufferID,CType(UINT8),maxSharedB)
-           allBuffers.append(sharedB)
-           bufferID = bufferID + 1
+        # Compute a graph describing when FIFOs are used at the same time
+        # The use graph coloring to allocate buffer to those FIFOs.
+        # Then size the buffer based on the longest FIFO using it
+        if config.memoryOptimization:
+            G = nx.Graph()
+
+            for fifo in allFIFOs: 
+                    if fifo.isArray:
+                        G.add_node(fifo)
+
+            # Create the interference graph
+
+            # Dictionary of active FIFOs at a given time.
+            # The time is a scheduling step
+            active={}
+            currentTime=0
+            while currentTime<=maxTime:
+                # Remove fifo no more active.
+                # Thei stop time < currenTime
+                toDelete=[]
+                for k in active:
+                    start,stop=k._liveInterval 
+                    if stop<currentTime:
+                        toDelete.append(k)
+                for k in toDelete:
+                    del active[k]   
+    
+                # Check FIFOs becoming active.
+                # They are added to the active list
+                # and an interference edge is added between thus FIFO
+                # and all the FIFOs active at same time.
+                for fifo in allFIFOs: 
+                    if fifo.isArray:
+                        start,stop=fifo._liveInterval
+                        # If a src -> node -> dst
+                        # At time t, node will read for src and the stop time
+                        # will be currentTime t.
+                        # And it will write to dst and the start time will be
+                        # currentTime
+                        # So, src and dst are both live at this time.
+                        # Which means the condition on the stop time must be 
+                        # stop >= currentTime and not a strict comparison
+                        if start<=currentTime and stop >= currentTime:
+                            if not (fifo in active):
+                                for k in active:
+                                    G.add_edge(k,fifo)
+                                active[fifo]=True 
+    
+                currentTime = currentTime + 1
+
+            # To debug and display the graph
+            if False:
+               labels={}
+               for n in G.nodes:
+                  labels[n]="%s -> %s" % (n.src.owner.nodeName,n.dst.owner.nodeName)
+       
+               pos = nx.spring_layout(G, seed=3113794652)
+               subax1 = plt.subplot(121)
+               nx.draw_networkx_edges(G, pos, width=1.0, alpha=0.5)
+               
+               nx.draw_networkx_labels(G, pos, labels, font_size=10)
+               plt.show()
+               quit()
+
+        
+            # Graph coloring
+            d = nx.coloring.greedy_color(G, strategy="largest_first")
+
+            # Allocate the colors (buffer ID) to the FIFO
+            # and keep track of the max color number
+            # Since other buffers (for real FIFOs) will have their
+            # numbering start after this one.
+            for fifo in d:
+                fifo.sharedNB=d[fifo]
+                bufferID=max(bufferID,fifo.sharedNB)
+
+
+
+            # Compute the max size for each shared buffer
+            maxSizes={} 
+            for fifo in d:
+                lengthInBytes = fifo.theType.bytes * fifo.length
+                if fifo.sharedNB in maxSizes:
+                    maxSizes[fifo.sharedNB] = max(maxSizes[fifo.sharedNB],lengthInBytes) 
+                else:
+                    maxSizes[fifo.sharedNB]=lengthInBytes
+
+            # Create the buffers
+            for theID in maxSizes:
+              sharedA = FifoBuffer(theID,CType(UINT8),maxSizes[theID])
+              allBuffers.append(sharedA)
 
         for fifo in allFIFOs:
             # Use shared buffer if memory optimization
-            if fifo.isShared and config.memoryOptimization:
-                if fifo.sharedNB == 0:
-                   fifo.buffer=sharedA 
-                else:
-                    fifo.buffer=sharedB
+            if fifo.isArray and config.memoryOptimization:
+                fifo.buffer=allBuffers[fifo.sharedNB] 
+                fifo.bufferID=fifo.sharedNB
+            # Create a new buffer for a real FIFO
+            # Use bufferID which is starting after the numbers allocated
+            # to shared buffers
             else:
                 buf = FifoBuffer(bufferID,fifo.theType,fifo.length)
                 allBuffers.append(buf)
                 fifo.buffer=buf
+                fifo.bufferID = bufferID
                 bufferID = bufferID + 1
 
+        # Compute the total memory used in bytes
         self._totalMemory = 0
         for buf in allBuffers:
             self._totalMemory = self._totalMemory + buf._theType.bytes * buf._length
@@ -529,7 +539,7 @@ class Graph():
 
         fifoMax=np.floor(bMax).astype(np.int32)
         
-        allBuffers=self.initializeFIFODescriptions(config,allFIFOs,fifoMax)
+        allBuffers=self.initializeFIFODescriptions(config,allFIFOs,fifoMax,evolutionTime)
         self._allFIFOs = allFIFOs 
         self._allBuffers = allBuffers
         return(Schedule(self,self._sortedNodes,self._sortedEdges,schedule))

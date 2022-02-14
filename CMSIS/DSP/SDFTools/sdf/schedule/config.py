@@ -68,6 +68,9 @@ class Configuration:
         # True for an horizontal graphviz layout
         self.horizontal = True
 
+        # Display FIFO buffers in graph instead of datatype
+        self.displayFIFOBuf = False
+
     @property
     def debug(self):
         return (self.debugLimit > 0)

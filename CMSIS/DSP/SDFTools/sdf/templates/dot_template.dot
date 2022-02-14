@@ -115,16 +115,30 @@ digraph structs {
 <TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >{{fifos[id].src.nbSamples}}</FONT>
 </TD></TR></TABLE>>]
 
+{% if config.displayFIFOBuf %}
+{{delayBoxID(id)}}:i -> {{io(fifos[id].dst.owner,fifos[id].dst)}} [headlabel=<
+<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >{{fifos[id].dst.nbSamples}}</FONT>
+</TD></TR></TABLE>>,label="buf{{fifos[id].bufferID}}"]
+{% else %}
 {{delayBoxID(id)}}:i -> {{io(fifos[id].dst.owner,fifos[id].dst)}} [headlabel=<
 <TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >{{fifos[id].dst.nbSamples}}</FONT>
 </TD></TR></TABLE>>,label="{{fifos[id].theType.graphViztype}}({{fifos[id].length}})"]
+{% endif %}
 
+{% else %}
+{% if config.displayFIFOBuf %}
+{{io(fifos[id].src.owner,fifos[id].src)}} -> {{io(fifos[id].dst.owner,fifos[id].dst)}} [headlabel=<
+<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >{{fifos[id].dst.nbSamples}}</FONT>
+</TD></TR></TABLE>>,taillabel=<
+<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >{{fifos[id].src.nbSamples}}</FONT>
+</TD></TR></TABLE>>,label="buf{{fifos[id].bufferID}}"]
 {% else %}
 {{io(fifos[id].src.owner,fifos[id].src)}} -> {{io(fifos[id].dst.owner,fifos[id].dst)}} [headlabel=<
 <TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >{{fifos[id].dst.nbSamples}}</FONT>
 </TD></TR></TABLE>>,taillabel=<
 <TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >{{fifos[id].src.nbSamples}}</FONT>
 </TD></TR></TABLE>>,label="{{fifos[id].theType.graphViztype}}({{fifos[id].length}})"]
+{% endif %}
 {% endif %}
 {% endfor %}
 

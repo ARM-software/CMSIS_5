@@ -52,15 +52,35 @@ toMono [label=<
 
 
 
-src:i -> toMono:i [headlabel=<<FONT COLOR="blue" POINT-SIZE="12.0" >384</FONT>>,taillabel=<<FONT COLOR="blue" POINT-SIZE="12.0" >384</FONT>>,label="q15(384)"]
+src:i -> toMono:i [headlabel=<
+<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >384</FONT>
+</TD></TR></TABLE>>,taillabel=<
+<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >384</FONT>
+</TD></TR></TABLE>>,label="q15(384)"]
 
-toMono:i -> audioWin:i [headlabel=<<FONT COLOR="blue" POINT-SIZE="12.0" >768</FONT>>,taillabel=<<FONT COLOR="blue" POINT-SIZE="12.0" >192</FONT>>,label="q15(768)"]
+toMono:i -> audioWin:i [headlabel=<
+<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >768</FONT>
+</TD></TR></TABLE>>,taillabel=<
+<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >192</FONT>
+</TD></TR></TABLE>>,label="q15(768)"]
 
-audioWin:i -> mfcc:i [headlabel=<<FONT COLOR="blue" POINT-SIZE="12.0" >1024</FONT>>,taillabel=<<FONT COLOR="blue" POINT-SIZE="12.0" >1024</FONT>>,label="q15(1024)"]
+audioWin:i -> mfcc:i [headlabel=<
+<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >1024</FONT>
+</TD></TR></TABLE>>,taillabel=<
+<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >1024</FONT>
+</TD></TR></TABLE>>,label="q15(1024)"]
 
-mfcc:i -> mfccWin:i [headlabel=<<FONT COLOR="blue" POINT-SIZE="12.0" >377</FONT>>,taillabel=<<FONT COLOR="blue" POINT-SIZE="12.0" >13</FONT>>,label="q15(377)"]
+mfcc:i -> mfccWin:i [headlabel=<
+<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >377</FONT>
+</TD></TR></TABLE>>,taillabel=<
+<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >13</FONT>
+</TD></TR></TABLE>>,label="q15(377)"]
 
-mfccWin:i -> sink:i [headlabel=<<FONT COLOR="blue" POINT-SIZE="12.0" >754</FONT>>,taillabel=<<FONT COLOR="blue" POINT-SIZE="12.0" >754</FONT>>,label="q15(754)"]
+mfccWin:i -> sink:i [headlabel=<
+<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >754</FONT>
+</TD></TR></TABLE>>,taillabel=<
+<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >754</FONT>
+</TD></TR></TABLE>>,label="q15(754)"]
 
 
 }
