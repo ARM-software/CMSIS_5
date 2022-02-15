@@ -38,8 +38,7 @@ Various adaptations for different target hardware are provided.
 
 Folders and Files                     | Description
 ------------------------------------- | -----------------------------------------------------------------------
-.\\Firmware\\Examples\\LPC-Link2\\V1  | CMSIS-DAP firmware using USB HID class adapted to the NXP LPC-Link2 debug unit.
-.\\Firmware\\Examples\\LPC-Link2\\V2  | CMSIS-DAP firmware using USB bulk transfers adapted to the NXP LPC-Link2 debug unit.
+.\\Firmware\\Examples\\LPC-Link2      | CMSIS-DAP firmware using USB bulk transfers adapted to the NXP LPC-Link2 debug unit.
 .\\Firmware\\Examples\\MCU-LINK       | CMSIS-DAP firmware using USB bulk transfers adapted to the NXP MCU-LINK debug unit.
 
 The CMSIS-DAP firmware is designed to execute on a debug unit that is using a Cortex-M processor-based microcontroller. To
