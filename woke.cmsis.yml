@@ -1,0 +1,46 @@
+# This section is project specific
+ignore_files:
+
+# This section should be Arm specific. Work in progress...
+rules:
+  - name: whitelist
+    terms:
+      - whitelist
+      - white-list
+    alternatives:
+      - allowlist
+
+  - name: blacklist
+    terms:
+      - blacklist
+      - black-list
+    alternatives:
+      - denylist
+      - blocklist
+    severity: warning
+
+  - name: grandfathered
+    terms:
+      - grandfathered
+    alternatives:
+      - legacy feature
+    severity: warning
+
+  - name: foobar
+    terms:
+      - foobar
+    alternatives:
+      - another name
+    severity: warning
+
+  - name: guys
+    terms:
+      - guy
+      - guys
+    alternatives:
+      - everyone
+    severity: warning
+
+# Inspiration taken from:
+# https://confluence.arm.com/pages/viewpage.action?pageId=828902331
+
