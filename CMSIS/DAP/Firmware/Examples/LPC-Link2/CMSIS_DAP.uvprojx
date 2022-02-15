@@ -339,7 +339,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>.;..\..\..\Include</IncludePath>
+              <IncludePath>.;..\..\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -482,27 +482,27 @@
             <File>
               <FileName>DAP.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\Source\DAP.c</FilePath>
+              <FilePath>..\..\Source\DAP.c</FilePath>
             </File>
             <File>
               <FileName>JTAG_DP.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\Source\JTAG_DP.c</FilePath>
+              <FilePath>..\..\Source\JTAG_DP.c</FilePath>
             </File>
             <File>
               <FileName>SW_DP.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\Source\SW_DP.c</FilePath>
+              <FilePath>..\..\Source\SW_DP.c</FilePath>
             </File>
             <File>
               <FileName>SWO.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\Source\SWO.c</FilePath>
+              <FilePath>..\..\Source\SWO.c</FilePath>
             </File>
             <File>
               <FileName>UART.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\Source\UART.c</FilePath>
+              <FilePath>..\..\Source\UART.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -853,7 +853,7 @@
               <MiscControls></MiscControls>
               <Define>TARGET_POWER_EN LPC_LINK2_ONBOARD</Define>
               <Undefine></Undefine>
-              <IncludePath>.;..\..\..\Include</IncludePath>
+              <IncludePath>.;..\..\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -945,27 +945,27 @@
             <File>
               <FileName>DAP.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\Source\DAP.c</FilePath>
+              <FilePath>..\..\Source\DAP.c</FilePath>
             </File>
             <File>
               <FileName>JTAG_DP.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\Source\JTAG_DP.c</FilePath>
+              <FilePath>..\..\Source\JTAG_DP.c</FilePath>
             </File>
             <File>
               <FileName>SW_DP.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\Source\SW_DP.c</FilePath>
+              <FilePath>..\..\Source\SW_DP.c</FilePath>
             </File>
             <File>
               <FileName>SWO.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\Source\SWO.c</FilePath>
+              <FilePath>..\..\Source\SWO.c</FilePath>
             </File>
             <File>
               <FileName>UART.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\Source\UART.c</FilePath>
+              <FilePath>..\..\Source\UART.c</FilePath>
             </File>
           </Files>
         </Group>
