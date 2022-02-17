@@ -23,11 +23,12 @@
  * -----------------------------------------------------------------------------
  */
 
-#include "cmsis_compiler.h"
 #include "rtx_os.h"
 
 #ifdef    CMSIS_device_header
 #include  CMSIS_device_header
+#else
+#include "cmsis_compiler.h"
 #endif
 
 #ifdef    RTE_Compiler_EventRecorder
