@@ -19,6 +19,7 @@ DOCKERINFO = [
         'label': 'latest'
     ]
 ]
+ALPINE_VERSION = '3.15'
 HADOLINT_VERSION = '2.6.0-alpine'
 
 dockerinfo = DOCKERINFO['production']
@@ -51,42 +52,10 @@ patternCoreValidation = [
 ]
 
 CONFIGURATIONS = [
-    'pre_commit': [
-        'mdevices': ['CM0', 'CM3', 'CM4FP', 'CM7DP', 'CM23', 'CM33NS', 'CM35PS', 'CM55NS'],
-        'adevices': ['CA7', 'CA9neon'],
-        'devices' : [],
-        'configs' : [
-            'AC5': ['low', 'tiny'],
-            'AC6': ['low', 'tiny'],
-            'AC6LTM': ['low', 'tiny'],
-            'GCC': ['low', 'tiny']
-        ]
-    ],
-    'post_commit': [
-        'devices' : ['CM0', 'CM0plus', 'CM3', 'CM4', 'CM4FP', 'CM7', 'CM7SP', 'CM7DP',
-             'CM23', 'CM23S', 'CM23NS', 'CM33', 'CM33S', 'CM33NS',
-             'CM35P', 'CM35PS', 'CM35PNS', 'CM55', 'CM55S', 'CM55NS',
-             'CA5', 'CA5neon', 'CA7', 'CA7neon', 'CA9', 'CA9neon'],
-        'configs' : [
-            'AC5': ['low', 'tiny'],
-            'AC6': ['low', 'tiny'],
-            'AC6LTM': ['low', 'tiny'],
-            'GCC': ['low', 'tiny']
-        ]
-    ],
-    'nightly': [
-        'devices' : ['CM0', 'CM0plus', 'CM3', 'CM4', 'CM4FP', 'CM7', 'CM7SP', 'CM7DP',
-                     'CM23', 'CM23S', 'CM23NS', 'CM33', 'CM33S', 'CM33NS',
-                     'CM35P', 'CM35PS', 'CM35PNS', 'CM55', 'CM55S', 'CM55NS',
-                     'CA5', 'CA5neon', 'CA7', 'CA7neon', 'CA9', 'CA9neon'],
-        'configs' : [
-            'AC5': ['low', 'mid', 'high', 'size', 'tiny'],
-            'AC6': ['low', 'mid', 'high', 'size', 'tiny'],
-            'AC6LTM': ['low', 'mid', 'high', 'size', 'tiny'],
-            'GCC': ['low', 'mid', 'high', 'size', 'tiny']
-        ]
-    ],
-    'release': []
+    'pre_commit' : [ "--pairwise" ],
+    'post_commit' : [ "--pairwise" ],
+    'nightly' : [ ],
+    'release' : [ ]
 ]
 CONFIGURATION = CONFIGURATIONS[JOB_BASE_NAME]
 
@@ -112,7 +81,7 @@ VERSION = null
 artifactory = new ArtifactoryHelper(this)
 
 pipeline {
-    agent { label 'master' }
+    agent none
     options {
         timestamps()
         timeout(time: 1, unit: 'HOURS')
@@ -128,6 +97,32 @@ pipeline {
     }
     stages {
         stage('Checkout') {
+            agent {
+                kubernetes {
+                    defaultContainer 'generic'
+                    slaveConnectTimeout 600
+                    yaml """\
+                        apiVersion: v1
+                        kind: Pod
+                        securityContext:
+                          runAsUser: 1000
+                          runAsGroup: 1000
+                        spec:
+                          imagePullSecrets:
+                            - name: artifactory-mcu-docker
+                          securityContext:
+                            runAsUser: 1000
+                            runAsGroup: 1000
+                          containers:
+                            - name: generic
+                              image: mcu--docker.eu-west-1.artifactory.aws.arm.com/alpine:${ALPINE_VERSION}
+                              command:
+                                - sleep
+                              args:
+                                - infinity
+                        """.stripIndent()
+                }
+            }
             steps {
                 script {
                     COMMIT = checkoutScmWithRetry(3)
@@ -141,6 +136,33 @@ pipeline {
         }
 
         stage('Analyse') {
+            agent {
+                kubernetes {
+                    defaultContainer 'generic'
+                    slaveConnectTimeout 600
+                    yaml """\
+                        apiVersion: v1
+                        kind: Pod
+                        securityContext:
+                          runAsUser: 1000
+                          runAsGroup: 1000
+                        spec:
+                          imagePullSecrets:
+                            - name: artifactory-mcu-docker
+                          securityContext:
+                            runAsUser: 1000
+                            runAsGroup: 1000
+                          containers:
+                            - name: generic
+                              image: mcu--docker.eu-west-1.artifactory.aws.arm.com/alpine:${ALPINE_VERSION}
+                              command:
+                                - sleep
+                              args:
+                                - infinity
+
+                        """.stripIndent()
+                }
+            }
             when {
                 expression { return isPrecommit || isPostcommit }
                 beforeOptions true
@@ -154,30 +176,30 @@ pipeline {
                     def hasCoreA = fileSetMatches(fileset, patternCoreA)
                     def hasCoreValidation = fileSetMatches(fileset, patternCoreValidation)
 
-echo """Change analysis:
-- hasGlobal = ${hasGlobal}
-- hasDocker = ${hasDocker}
-- hasCoreM = ${hasCoreM}
-- hasCoreA = ${hasCoreA}
-- hasCoreValidation = ${hasCoreValidation}
-"""
+                    echo """Change analysis:
+                     - hasGlobal = ${hasGlobal}
+                     - hasDocker = ${hasDocker}
+                     - hasCoreM = ${hasCoreM}
+                     - hasCoreA = ${hasCoreA}
+                     - hasCoreValidation = ${hasCoreValidation}
+                    """.stripIndent()
 
                     if (isPrecommit) {
                         if (hasGlobal || hasDocker || hasCoreM || hasCoreValidation) {
-                            CONFIGURATION['devices'] += CONFIGURATION['mdevices']
+                            CONFIGURATION += ["--device CM*"]
                         }
                         if (hasGlobal || hasDocker || hasCoreA || hasCoreValidation) {
-                            CONFIGURATION['devices'] += CONFIGURATION['adevices']
+                            CONFIGURATION += ["--device CA*"]
                         }
                     }
 
                     DOCKER_BUILD &= hasDocker
                     CORE_VALIDATION &= hasGlobal || hasDocker || hasCoreM || hasCoreA || hasCoreValidation
 
-echo """Stage schedule:
-- DOCKER_BUILD = ${DOCKER_BUILD}
-- CORE_VALIDATION = ${CORE_VALIDATION}
-"""
+                    echo """Stage schedule:
+                     - DOCKER_BUILD = ${DOCKER_BUILD}
+                     - CORE_VALIDATION = ${CORE_VALIDATION}
+                    """.stripIndent()
                 }
             }
         }
@@ -247,7 +269,7 @@ echo """Stage schedule:
                             - name: artifactory-mcu-docker
                           containers:
                             - name: docker-dind
-                              image: docker:dind
+                              image: mirrors--dockerhub.eu-west-1.artifactory.aws.arm.com/docker:dind
                               securityContext:
                                 privileged: true
                               volumeMounts:
@@ -256,7 +278,7 @@ echo """Stage schedule:
                           volumes:
                             - name: dind-storage
                               emptyDir: {}
-                        """.stripIndent()
+                    """.stripIndent()
                 }
             }
             steps {
@@ -339,19 +361,12 @@ echo """Stage schedule:
             matrix {
                 axes {
                     axis {
-                      name 'DEVICE'
-                      values 'CM0', 'CM0plus', 'CM3', 'CM4', 'CM4FP', 'CM7', 'CM7SP', 'CM7DP',
-                             'CM23', 'CM23S', 'CM23NS', 'CM33', 'CM33S', 'CM33NS',
-                             'CM35P', 'CM35PS', 'CM35PNS', 'CM55', 'CM55S', 'CM55NS',
-                             'CA5', 'CA5neon', 'CA7', 'CA7neon', 'CA9', 'CA9neon'
+                      name 'SLICE'
+                      values 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
                     }
                 }
                 stages {
                     stage('Test') {
-                        when {
-                            expression { return DEVICE in CONFIGURATION['devices'] }
-                            beforeOptions true
-                        }
                         agent {
                             kubernetes {
                                 defaultContainer 'cmsis'
@@ -384,16 +399,10 @@ echo """Stage schedule:
                         steps {
                             checkoutScmWithRetry(3)
                             dir('CMSIS/CoreValidation/Tests') {
-                                script {
-                                    CONFIGURATION['configs'].each { COMPILER, OPTS ->
-                                        tee("CV_${COMPILER}_${DEVICE}.log") {
-                                            sh "python3 build.py -d ${DEVICE} -c ${COMPILER} -o ${OPTS.join(' -o ')} build run"
-                                        }
-                                    }
-                                }
-
+                                sh "pip install -e git+https://github.com/energy6/python-matrix-runner#egg=python-matrix-runner"
+                                sh "python3 build.py ${CONFIGURATION.join(' ')} --slice ${SLICE}/10 build run"
                                 archiveArtifacts artifacts: 'CoreValidation_*.zip', allowEmptyArchive: true
-                                stash name: "CV_${DEVICE}", includes: '*.log, *.junit'
+                                stash name: "CV_${SLICE}", includes: '*.log, *.junit'
                             }
                         }
                     }
@@ -402,6 +411,32 @@ echo """Stage schedule:
         }
 
         stage('Results') {
+            agent {
+                kubernetes {
+                    defaultContainer 'generic'
+                    slaveConnectTimeout 600
+                    yaml """\
+                        apiVersion: v1
+                        kind: Pod
+                        securityContext:
+                          runAsUser: 1000
+                          runAsGroup: 1000
+                        spec:
+                          imagePullSecrets:
+                            - name: artifactory-mcu-docker
+                          securityContext:
+                            runAsUser: 1000
+                            runAsGroup: 1000
+                          containers:
+                            - name: generic
+                              image: mcu--docker.eu-west-1.artifactory.aws.arm.com/alpine:${ALPINE_VERSION}
+                              command:
+                                - sleep
+                              args:
+                                - infinity
+                        """.stripIndent()
+                }
+            }
             when {
                 expression { return CORE_VALIDATION }
                 beforeOptions true
@@ -410,7 +445,7 @@ echo """Stage schedule:
                 dir('results') {
                     deleteDir()
                     script {
-                        CONFIGURATION['devices'].each { unstash "CV_${it}" }
+                        (1..10).each { unstash "CV_${it}" }
                     }
 
                     recordIssues tools: [armCc(id: 'AC5', name: 'Arm Compiler 5', pattern: 'CV_AC5_*.log'),
@@ -444,7 +479,7 @@ echo """Stage schedule:
                             - name: artifactory-mcu-docker
                           containers:
                             - name: docker-dind
-                              image: docker:dind
+                              image: mirrors--dockerhub.eu-west-1.artifactory.aws.arm.com/docker:dind
                               securityContext:
                                 privileged: true
                               volumeMounts:
@@ -477,6 +512,32 @@ echo """Stage schedule:
         }
 
         stage('Release Promote') {
+            agent {
+                kubernetes {
+                    defaultContainer 'generic'
+                    slaveConnectTimeout 600
+                    yaml """\
+                        apiVersion: v1
+                        kind: Pod
+                        securityContext:
+                          runAsUser: 1000
+                          runAsGroup: 1000
+                        spec:
+                          imagePullSecrets:
+                            - name: artifactory-mcu-docker
+                          securityContext:
+                            runAsUser: 1000
+                            runAsGroup: 1000
+                          containers:
+                            - name: generic
+                              image: mcu--docker.eu-west-1.artifactory.aws.arm.com/alpine:${ALPINE_VERSION}
+                              command:
+                                - sleep
+                              args:
+                                - infinity
+                        """.stripIndent()
+                }
+            }
             when {
                 expression { return isRelease }
                 beforeOptions true
