@@ -134,10 +134,27 @@ typedef struct
  */
 typedef struct
 {
-        uint32_t RESERVED0[1];           ///< Reserved
-  __IM  uint32_t ICTR;                   ///< Offset: 0x004 (R/ )  Interrupt Controller Type Register
-  __IOM uint32_t ACTLR;                  ///< Offset: 0x008 (R/W)  Auxiliary Control Register
+        uint32_t RESERVED0[1];           /*!< Reserved */
+  __IM  uint32_t ICTR;                   /*!< Offset: 0x004 (R/ )  Interrupt Controller Type Register
+                                            \note available for Cortex-M3, Cortex-M4, Cortex-M7, Cortex-M33, Cortex-M33P, SecureCore SC300 */
+  __IOM uint32_t ACTLR;                  /*!< Offset: 0x008 (R/W)  Auxiliary Control Register
+                                            \note available for Cortex-M1, Cortex-M3 , Cortex-M4, Cortex-M7, Cortex-M33, Cortex-M33P, SecureCore SC000, SecureCore SC300 */
+  __IOM uint32_t CPPWR;                  /*!< Offset: 0x00C (R/W)  Coprocessor Power Control Register
+                                            \note available for Cortex-M33, Cortex-M33P */
 } SCnSCB_Type;
+
+
+/**************************************************************************************************/
+/** \brief  Structure type to access the Implementation Control Block Register (ICB).
+    \note replaces SCnSCB_Type (only Cortex-M55)
+ */
+typedef struct
+{
+        uint32_t RESERVED0[1U];
+  __IM  uint32_t ICTR;                   /*!< Offset: 0x004 (R/ )  Interrupt Controller Type Register */
+  __IOM uint32_t ACTLR;                  /*!< Offset: 0x008 (R/W)  Auxiliary Control Register */
+  __IOM uint32_t CPPWR;                  /*!< Offset: 0x00C (R/W)  Coprocessor Power Control  Register */
+} ICB_Type;
 
 
 /**************************************************************************************************/
