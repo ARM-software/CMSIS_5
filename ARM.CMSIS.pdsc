@@ -18,6 +18,7 @@
        - Support dilation for int8 depthwise convolution
        - Support for int16 depthwise conv for reference implementation including dilation
        - Support for int16 average and max pooling for reference implementation
+       - Support for elementwise add and mul int16 scalar version
       CMSIS-RTOS2:
         - RTX 5.5.4 (see revision history for details)
     </release>
@@ -2849,7 +2850,9 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="source" name="CMSIS/NN/Source/PoolingFunctions/arm_avgpool_s16.c"/>
         <file category="source" name="CMSIS/NN/Source/PoolingFunctions/arm_pool_q7_HWC.c"/>
         <file category="source" name="CMSIS/NN/Source/BasicMathFunctions/arm_elementwise_mul_s8.c"/>
+        <file category="source" name="CMSIS/NN/Source/BasicMathFunctions/arm_elementwise_mul_s16.c"/>
         <file category="source" name="CMSIS/NN/Source/BasicMathFunctions/arm_elementwise_add_s8.c"/>
+        <file category="source" name="CMSIS/NN/Source/BasicMathFunctions/arm_elementwise_add_s16.c"/>
         <file category="source" name="CMSIS/NN/Source/ActivationFunctions/arm_relu6_s8.c"/>
         <file category="source" name="CMSIS/NN/Source/ActivationFunctions/arm_relu_q15.c"/>
         <file category="source" name="CMSIS/NN/Source/ActivationFunctions/arm_relu_q7.c"/>

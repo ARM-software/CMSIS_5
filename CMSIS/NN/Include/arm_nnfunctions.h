@@ -21,8 +21,8 @@
  * Title:        arm_nnfunctions.h
  * Description:  Public header file for CMSIS NN Library
  *
- * $Date:        7 February 2022
- * $Revision:    V.8.0.0
+ * $Date:        14 February 2022
+ * $Revision:    V.8.0.1
  *
  * Target Processor:  Cortex-M CPUs
  * -------------------------------------------------------------------- */
@@ -1603,27 +1603,27 @@ extern "C" {
 /**
  * @defgroup BasicMath Basic math functions
  *
- * Element wise add and multiplication functions.
+ * Elementwise add and multiplication functions.
  *
  */
 
 /**
- * @brief s8 element wise add of two vectors
+ * @brief s8 elementwise add of two vectors
  * @param[in]       input_1_vect            pointer to input vector 1
  * @param[in]       input_2_vect            pointer to input vector 2
- * @param[in]       input_1_offset          offset for input 1. Range: Range: -127 to 128
+ * @param[in]       input_1_offset          offset for input 1. Range: -127 to 128
  * @param[in]       input_1_mult            multiplier for input 1
  * @param[in]       input_1_shift           shift for input 1
- * @param[in]       input_2_offset          offset for input 2. Range: Range: -127 to 128
+ * @param[in]       input_2_offset          offset for input 2. Range: -127 to 128
  * @param[in]       input_2_mult            multiplier for input 2
  * @param[in]       input_2_shift           shift for input 2
  * @param[in]       left_shift              input left shift
  * @param[in,out]   output                  pointer to output vector
- * @param[in]       out_offset              output offset
+ * @param[in]       out_offset              output offset.  Range: -128 to 127
  * @param[in]       out_mult                output multiplier
  * @param[in]       out_shift               output shift
- * @param[in]       out_activation_min      minimum value to clamp output to
- * @param[in]       out_activation_max      maximum value to clamp output to
+ * @param[in]       out_activation_min      minimum value to clamp output to. Min: -128
+ * @param[in]       out_activation_max      maximum value to clamp output to. Max: 127
  * @param[in]       block_size              number of samples
  * @return          The function returns    ARM_MATH_SUCCESS
  */
@@ -1642,20 +1642,57 @@ arm_status arm_elementwise_add_s8(const int8_t *input_1_vect,
                                   const int32_t out_shift,
                                   const int32_t out_activation_min,
                                   const int32_t out_activation_max,
-                                  const uint32_t block_size);
+                                  const int32_t block_size);
 
 /**
- * @brief s8 element wise multiplication
+ * @brief s16 elementwise add of two vectors
  * @param[in]       input_1_vect            pointer to input vector 1
  * @param[in]       input_2_vect            pointer to input vector 2
- * @param[in]       input_1_offset          offset for input 1. Range: Range: -127 to 128
- * @param[in]       input_2_offset          offset for input 2. Range: Range: -127 to 128
+ * @param[in]       input_1_offset          offset for input 1. Not used.
+ * @param[in]       input_1_mult            multiplier for input 1
+ * @param[in]       input_1_shift           shift for input 1
+ * @param[in]       input_2_offset          offset for input 2. Not used.
+ * @param[in]       input_2_mult            multiplier for input 2
+ * @param[in]       input_2_shift           shift for input 2
+ * @param[in]       left_shift              input left shift
  * @param[in,out]   output                  pointer to output vector
- * @param[in]       out_offset              output offset
+ * @param[in]       out_offset              output offset. Not used.
  * @param[in]       out_mult                output multiplier
  * @param[in]       out_shift               output shift
- * @param[in]       out_activation_min      minimum value to clamp output to
- * @param[in]       out_activation_max      maximum value to clamp output to
+ * @param[in]       out_activation_min      minimum value to clamp output to. Min: -32768
+ * @param[in]       out_activation_max      maximum value to clamp output to. Max: 32767
+ * @param[in]       block_size              number of samples
+ * @return          The function returns    ARM_MATH_SUCCESS
+ */
+arm_status arm_elementwise_add_s16(const int16_t *input_1_vect,
+                                   const int16_t *input_2_vect,
+                                   const int32_t input_1_offset,
+                                   const int32_t input_1_mult,
+                                   const int32_t input_1_shift,
+                                   const int32_t input_2_offset,
+                                   const int32_t input_2_mult,
+                                   const int32_t input_2_shift,
+                                   const int32_t left_shift,
+                                   int16_t *output,
+                                   const int32_t out_offset,
+                                   const int32_t out_mult,
+                                   const int32_t out_shift,
+                                   const int32_t out_activation_min,
+                                   const int32_t out_activation_max,
+                                   const int32_t block_size);
+
+/**
+ * @brief s8 elementwise multiplication
+ * @param[in]       input_1_vect            pointer to input vector 1
+ * @param[in]       input_2_vect            pointer to input vector 2
+ * @param[in]       input_1_offset          offset for input 1. Range: -127 to 128
+ * @param[in]       input_2_offset          offset for input 2. Range: -127 to 128
+ * @param[in,out]   output                  pointer to output vector
+ * @param[in]       out_offset              output offset. Range: -128 to 127
+ * @param[in]       out_mult                output multiplier
+ * @param[in]       out_shift               output shift
+ * @param[in]       out_activation_min      minimum value to clamp output to. Min: -128
+ * @param[in]       out_activation_max      maximum value to clamp output to. Max: 127
  * @param[in]       block_size              number of samples
  * @return          The function returns    ARM_MATH_SUCCESS
  *
@@ -1671,7 +1708,37 @@ arm_status arm_elementwise_mul_s8(const int8_t *input_1_vect,
                                   const int32_t out_shift,
                                   const int32_t out_activation_min,
                                   const int32_t out_activation_max,
-                                  const uint32_t block_size);
+                                  const int32_t block_size);
+
+/**
+ * @brief s16 elementwise multiplication
+ * @param[in]       input_1_vect            pointer to input vector 1
+ * @param[in]       input_2_vect            pointer to input vector 2
+ * @param[in]       input_1_offset          offset for input 1. Not used.
+ * @param[in]       input_2_offset          offset for input 2. Not used.
+ * @param[in,out]   output                  pointer to output vector
+ * @param[in]       out_offset              output offset. Not used.
+ * @param[in]       out_mult                output multiplier
+ * @param[in]       out_shift               output shift
+ * @param[in]       out_activation_min      minimum value to clamp output to. Min: -32768
+ * @param[in]       out_activation_max      maximum value to clamp output to. Max: 32767
+ * @param[in]       block_size              number of samples
+ * @return          The function returns    ARM_MATH_SUCCESS
+ *
+ * @details   Supported framework: TensorFlow Lite micro
+ */
+arm_status arm_elementwise_mul_s16(const int16_t *input_1_vect,
+                                   const int16_t *input_2_vect,
+                                   const int32_t input_1_offset,
+                                   const int32_t input_2_offset,
+                                   int16_t *output,
+                                   const int32_t out_offset,
+                                   const int32_t out_mult,
+                                   const int32_t out_shift,
+                                   const int32_t out_activation_min,
+                                   const int32_t out_activation_max,
+                                   const int32_t block_size);
+
 /**
  * @defgroup Acti Activation Functions
  *
