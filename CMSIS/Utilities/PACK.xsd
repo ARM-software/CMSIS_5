@@ -191,6 +191,7 @@
       <xs:enumeration value="Hynix Semiconductor:6" />
       <xs:enumeration value="Hyundai:35" />
       <xs:enumeration value="Infineon:7" />
+      <xs:enumeration value="Jonzic:174" />
       <xs:enumeration value="Kionix:127" />
       <xs:enumeration value="LAPIS Technology:10" />
       <xs:enumeration value="Lapis Semiconductor:10" />
