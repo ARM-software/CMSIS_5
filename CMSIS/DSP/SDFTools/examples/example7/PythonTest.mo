@@ -13,7 +13,7 @@ model PythonTest
     Placement(visible = true, transformation(origin = {-82, 8}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
   inner Modelica.Blocks.Noise.GlobalSeed globalSeed annotation(
     Placement(visible = true, transformation(origin = {-86, -28}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
-  ARM.Sound.WaveOutput waveOutput(path = "C:\\benchresults\\PythonSDFModelica\\larsen.wav")  annotation(
+  ARM.Sound.WaveOutput waveOutput annotation(
     Placement(visible = true, transformation(origin = {24, -32}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
 equation
   connect(vht.y, transferFunction.u) annotation(
