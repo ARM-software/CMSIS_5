@@ -1,8 +1,5 @@
-import sys
+from cmsisdsp.sdf.scheduler import *
 
-sys.path.append("../..")
-
-from sdf import *
 
 AUDIO_INTERRUPT_LENGTH = 160
 MFCCFEATURESSIZE=10

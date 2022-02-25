@@ -1,10 +1,5 @@
-import sys
-
-# To find SDF module
-sys.path.append("../..")
-
 import numpy as np
-from sdf.schedule.simu import *
+from cmsisdsp.sdf.nodes.simu import *
 
 a=np.zeros(10)
 f=FIFO(10,a)

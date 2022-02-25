@@ -1,9 +1,7 @@
-import sys
 import numpy as np 
 
-sys.path.append("../..")
+from cmsisdsp.sdf.scheduler import *
 
-from sdf import *
 
 from sharedconfig import *
 
