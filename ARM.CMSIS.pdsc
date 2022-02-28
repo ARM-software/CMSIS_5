@@ -1086,7 +1086,7 @@ and 8-bit Java bytecodes in Jazelle state.
       <accept Dcore="Cortex-M33"/>
       <accept Dcore="Cortex-M35P"/>
       <accept Dcore="Cortex-M55"/>
-      <accept Dcore="Star"/>
+      <accept Dcore="Star-MC1"/>
     </condition>
     <condition id="ARMv8-M Device">
       <description>Armv8-M architecture based device</description>
@@ -1601,7 +1601,7 @@ and 8-bit Java bytecodes in Jazelle state.
   <components>
     <!-- CMSIS-Core component -->
     <component Cclass="CMSIS" Cgroup="CORE" Cversion="5.6.0"  condition="ARMv6_7_8-M Device" >
-      <description>CMSIS-CORE for Cortex-M, SC000, SC300, Star, ARMv8-M, ARMv8.1-M</description>
+      <description>CMSIS-CORE for Cortex-M, SC000, SC300, Star-MC1, ARMv8-M, ARMv8.1-M</description>
       <files>
         <!-- CPU independent -->
         <file category="doc"     name="CMSIS/Documentation/Core/html/index.html"/>
