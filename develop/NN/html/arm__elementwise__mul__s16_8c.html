@@ -3,8 +3,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>FPU Functions</title>
-<title>CMSIS-Core (Cortex-M): FPU Functions</title>
+<title>arm_elementwise_mul_s16.c File Reference</title>
+<title>CMSIS-NN: arm_elementwise_mul_s16.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="cmsis.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
@@ -32,10 +32,10 @@
  <tr style="height: 46px;">
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
-   <div id="projectname">CMSIS-Core (Cortex-M)
-   &#160;<span id="projectnumber">Version 5.6.0</span>
+   <div id="projectname">CMSIS-NN
+   &#160;<span id="projectnumber">Version 3.0.0</span>
    </div>
-   <div id="projectbrief">CMSIS-Core support for Cortex-M processor-based devices</div>
+   <div id="projectbrief">CMSIS NN Software Library</div>
   </td>
  </tr>
  </tbody>
@@ -90,7 +90,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('group__fpu__functions.html','');});
+$(document).ready(function(){initNavTree('arm__elementwise__mul__s16_8c.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -98,7 +98,7 @@ $(document).ready(function(){initNavTree('group__fpu__functions.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -111,53 +111,22 @@ $(document).ready(function(){initNavTree('group__fpu__functions.html','');});
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">FPU Functions</div>  </div>
+<div class="title">arm_elementwise_mul_s16.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>Functions that relate to the Floating-Point Arithmetic Unit.  
-<a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga6bcad99ce80a0e7e4ddc6f2379081756"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__compiler__conntrol__gr.html#gaba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__fpu__functions.html#ga6bcad99ce80a0e7e4ddc6f2379081756">SCB_GetFPUType</a> (void)</td></tr>
-<tr class="memdesc:ga6bcad99ce80a0e7e4ddc6f2379081756"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the FPU type.  <a href="#ga6bcad99ce80a0e7e4ddc6f2379081756">More...</a><br/></td></tr>
-<tr class="separator:ga6bcad99ce80a0e7e4ddc6f2379081756"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab38457329632897eb6efedf9dfcef1e4"><td class="memItemLeft" align="right" valign="top">arm_status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__BasicMath.html#gab38457329632897eb6efedf9dfcef1e4">arm_elementwise_mul_s16</a> (const int16_t *input_1_vect, const int16_t *input_2_vect, const int32_t input_1_offset, const int32_t input_2_offset, int16_t *output, const int32_t out_offset, const int32_t out_mult, const int32_t out_shift, const int32_t out_activation_min, const int32_t out_activation_max, const int32_t block_size)</td></tr>
+<tr class="memdesc:gab38457329632897eb6efedf9dfcef1e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">s16 element wise multiplication of two vectors  <a href="group__BasicMath.html#gab38457329632897eb6efedf9dfcef1e4">More...</a><br/></td></tr>
+<tr class="separator:gab38457329632897eb6efedf9dfcef1e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Description</h2>
-<p>Functions that relate to the Floating-Point Arithmetic Unit. </p>
-<p>Some Cortex-M processors include optional floating-point arithmetic functionality, with support for single and double-precision arithmetic. The Cortex-M processor with FPU is an implementation of the single-precision and double-precision variant of the Armv7-M Architecture with Floating-Point Extension (FPv5). </p>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga6bcad99ce80a0e7e4ddc6f2379081756"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="group__compiler__conntrol__gr.html#gaba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> uint32_t SCB_GetFPUType </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Get the FPU type. </p>
-<dl class="section return"><dt>Returns</dt><dd><ul>
-<li><b>0</b>: No FPU</li>
-<li><b>1</b>: Single precision FPU</li>
-<li><b>2</b>: Double + Single precision FPU</li>
-</ul>
-</dd></dl>
-<p>The function returns the implemented FPU type. </p>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
+    <li class="navelem"><a class="el" href="dir_06560e3359c5da94845158f0031c08e8.html">NN</a></li><li class="navelem"><a class="el" href="dir_13dc9928808d08450b31fdaf572dfc8e.html">Source</a></li><li class="navelem"><a class="el" href="dir_394f5ca5709e76b95005b8e22acd23ce.html">BasicMathFunctions</a></li><li class="navelem"><a class="el" href="arm__elementwise__mul__s16_8c.html">arm_elementwise_mul_s16.c</a></li>
     <li class="footer">
       <script type="text/javascript">
         <!--
