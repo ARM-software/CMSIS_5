@@ -141,8 +141,8 @@ __STATIC_FORCEINLINE void write_q15x2_ia (
 #ifdef __ARM_FEATURE_UNALIGNED
   memcpy (*pQ15, &val, 4);
 #else
-  (*pQ15)[0] = (val & 0x0FFFF);
-  (*pQ15)[1] = (val >> 16) & 0x0FFFF;
+  (*pQ15)[0] = (q15_t)(val & 0x0FFFF);
+  (*pQ15)[1] = (q15_t)((val >> 16) & 0x0FFFF);
 #endif
 
  *pQ15 += 2;
@@ -163,8 +163,8 @@ __STATIC_FORCEINLINE void write_q15x2 (
 #ifdef __ARM_FEATURE_UNALIGNED
   memcpy (pQ15, &val, 4);
 #else
-  pQ15[0] = val & 0x0FFFF;
-  pQ15[1] = val >> 16;
+  pQ15[0] = (q15_t)(val & 0x0FFFF);
+  pQ15[1] = (q15_t)(val >> 16);
 #endif
 }
 
@@ -224,10 +224,10 @@ __STATIC_FORCEINLINE void write_q7x4_ia (
 #ifdef __ARM_FEATURE_UNALIGNED
   memcpy (*pQ7, &val, 4);
 #else
-  (*pQ7)[0] = val & 0x0FF;
-  (*pQ7)[1] = (val >> 8) & 0x0FF;
-  (*pQ7)[2] = (val >> 16) & 0x0FF;
-  (*pQ7)[3] = (val >> 24) & 0x0FF;
+  (*pQ7)[0] = (q7_t)(val & 0x0FF);
+  (*pQ7)[1] = (q7_t)((val >> 8) & 0x0FF);
+  (*pQ7)[2] = (q7_t)((val >> 16) & 0x0FF);
+  (*pQ7)[3] = (q7_t)((val >> 24) & 0x0FF);
 
 #endif
   *pQ7 += 4;
