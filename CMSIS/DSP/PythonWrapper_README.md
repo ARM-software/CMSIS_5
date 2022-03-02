@@ -8,8 +8,6 @@ The idea is to follow as closely as possible the C [CMSIS-DSP](https://github.co
 
 The signal processing chain can thus be tested and developed in a Python environment and then easily converted to a C implementation running on a Cortex-M or Cortex-A board.
 
-It is an experimental wrapper with some limitations as described in the sections below.
-
 A tutorial is also available but with less details than this README:
 https://developer.arm.com/documentation/102463/latest/
 
@@ -47,6 +45,12 @@ DSP examples are available in the [CMSIS-DSP PythonWrapper examples](https://git
 
 Synchronous Data Flow examples are available in the [SDF](https://github.com/ARM-software/CMSIS_5/tree/develop/CMSIS/DSP/SDFTools) folder of [CMSIS-DSP](https://github.com/ARM-software/CMSIS_5/tree/develop/CMSIS/DSP) .
 
+You can also install and run it from [Google colab](https://colab.research.google.com/):
+
+This [link](https://colab.research.google.com/github/ARM-software/CMSIS_5/blob/develop/CMSIS/DSP/PythonWrapper/examples/cmsisdsp_tests.ipynb) will open a Jupyter notebook in [Google colab](https://colab.research.google.com/) for testing.
+
+The notebook is from the [examples](https://github.com/ARM-software/CMSIS_5/tree/develop/CMSIS/DSP/PythonWrapper/examples) in the CMSIS-DSP GitHub repository.
+
 ### Building
 
 It it is not working (because it is not possible for us to test all configurations), you can then try to build and install the wrapper manually.
@@ -80,17 +84,6 @@ Depending on the example, you may have to install more packages.
 The examples are in the  [CMSIS-DSP PythonWrapper examples](https://github.com/ARM-software/CMSIS_5/tree/develop/CMSIS/DSP/PythonWrapper/examples) folder.
 
 You can test the scripts `testdsp.py` and `example.py` and try to run them from this virtual environment. `example.py` is requiring a data file to be downloaded from the web. See below in this document for the link.
-
-It is also possible to compile and install directly from a Jupyter notebook by doing something like:
-
-    !pip install git+https://github.com/ARM-software/
-    CMSIS_5.git@5.8.0#egg=CMSISDSP\&subdirectory=CMSIS/DSP/PythonWrapper
-
-This will download, compile and install the PythonWrapper from the version 5.8.0 of the [CMSIS-DSP](https://github.com/ARM-software/CMSIS_5/tree/develop/CMSIS/DSP) (so not from the develop branch). It is an older version of the `PythonWrapper`.
-
-If you use this install method for a more recent version, don't forget `setup.py` have been moved to `DSP` folder and is no more in `PythonWrapper`.
-
-It will work only if the compiler can be found and run from Jupyter.
 
 Note that due to the great number of possible configurations (OS, Compiler, Python), we can't give any support if you have problems compiling the `PythonWrapper` on your specific configuration. But, generally people manage to do it and solve all the problems.
 
@@ -244,14 +237,3 @@ MEL filters are represented as 3 arrays to encode a sparse array.
 
 The wrapper is now containing the Synchronous Data Flow Python scripts and you should refer the the documentation in `DSP/SDFTools` folder to know how to use those tools.
 
-# LIMITATIONS
-
-Due to the high number of functions in the [CMSIS-DSP](https://github.com/ARM-software/CMSIS_5/tree/develop/CMSIS/DSP), the first version of the wrapper was generated automatically from a custom script.
-
-Only a subset of the functions has been tested.
-
-It is likely that some problems are present. The API is quite regular in [CMSIS-DSP](https://github.com/ARM-software/CMSIS_5/tree/develop/CMSIS/DSP) but there are a few exceptions and the generation script is not managing all of them.
-
-So, the API may crash due to unallocated variables or wrong data conversions.
-
-The generated C code is a first version for bootstrapping the process. Now that this C file exists, the improvements will be done on the C code rather than on the generation script.
