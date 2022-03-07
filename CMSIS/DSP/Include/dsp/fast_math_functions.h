@@ -309,18 +309,6 @@ arm_status arm_sqrt_q15(
   q15_t in,
   q15_t * pOut);
 
-  /**
-   * @brief  Vector Floating-point square root function.
-   * @param[in]  pIn   input vector.
-   * @param[out] pOut  vector of square roots of input elements.
-   * @param[in]  len   length of input vector.
-   * @return The function returns ARM_MATH_SUCCESS if input value is positive value or ARM_MATH_ARGUMENT_ERROR if
-   * <code>in</code> is negative value and returns zero output for negative values.
-   */
-  void arm_vsqrt_f32(
-  float32_t * pIn,
-  float32_t * pOut,
-  uint16_t len);
 
 
   /**

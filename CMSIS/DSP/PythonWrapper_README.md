@@ -47,9 +47,7 @@ Synchronous Data Flow examples are available in the [SDF](https://github.com/ARM
 
 You can also install and run it from [Google colab](https://colab.research.google.com/):
 
-This [link](https://colab.research.google.com/github/ARM-software/CMSIS_5/blob/develop/CMSIS/DSP/PythonWrapper/examples/cmsisdsp_tests.ipynb) will open a Jupyter notebook in [Google colab](https://colab.research.google.com/) for testing.
-
-The notebook is from the [examples](https://github.com/ARM-software/CMSIS_5/tree/develop/CMSIS/DSP/PythonWrapper/examples) in the CMSIS-DSP GitHub repository.
+This [link](https://colab.research.google.com/github/ARM-software/CMSIS_5/blob/develop/CMSIS/DSP/PythonWrapper/examples/cmsisdsp_tests.ipynb) will open a Jupyter notebook in [Google colab](https://colab.research.google.com/) for testing. This notebook is from the [examples](https://github.com/ARM-software/CMSIS_5/tree/develop/CMSIS/DSP/PythonWrapper/examples) in the CMSIS-DSP GitHub repository.
 
 ### Building
 

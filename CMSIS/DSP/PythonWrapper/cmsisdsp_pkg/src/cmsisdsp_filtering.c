@@ -302,6 +302,10 @@ typedef struct {
     arm_fir_instance_f32 *instance;
 } dsp_arm_fir_instance_f32Object;
 
+typedef struct {
+    PyObject_HEAD
+    arm_fir_instance_f64 *instance;
+} dsp_arm_fir_instance_f64Object;
 
 static void
 arm_fir_instance_f32_dealloc(dsp_arm_fir_instance_f32Object* self)
@@ -320,6 +324,32 @@ arm_fir_instance_f32_dealloc(dsp_arm_fir_instance_f32Object* self)
        if (self->instance->pCoeffs)
        {
           PyMem_Free((float32_t*)self->instance->pCoeffs);
+       }
+
+
+       PyMem_Free(self->instance);
+    }
+
+    Py_TYPE(self)->tp_free((PyObject*)self);
+}
+
+static void
+arm_fir_instance_f64_dealloc(dsp_arm_fir_instance_f64Object* self)
+{
+    //printf("Dealloc called\n");
+    if (self->instance)
+    {
+
+
+       if (self->instance->pState)
+       {
+          PyMem_Free(self->instance->pState);
+       }
+
+
+       if (self->instance->pCoeffs)
+       {
+          PyMem_Free((float64_t*)self->instance->pCoeffs);
        }
 
 
@@ -352,6 +382,28 @@ arm_fir_instance_f32_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
     return (PyObject *)self;
 }
 
+static PyObject *
+arm_fir_instance_f64_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
+{
+    dsp_arm_fir_instance_f64Object *self;
+    //printf("New called\n");
+
+    self = (dsp_arm_fir_instance_f64Object *)type->tp_alloc(type, 0);
+    //printf("alloc called\n");
+
+    if (self != NULL) {
+
+        self->instance = PyMem_Malloc(sizeof(arm_fir_instance_f64));
+
+        self->instance->pState = NULL;
+        self->instance->pCoeffs = NULL;
+
+    }
+
+
+    return (PyObject *)self;
+}
+
 static int
 arm_fir_instance_f32_init(dsp_arm_fir_instance_f32Object *self, PyObject *args, PyObject *kwds)
 {
@@ -371,7 +423,27 @@ if (PyArg_ParseTupleAndKeywords(args, kwds, "|h", kwlist,&self->instance->numTap
     return 0;
 }
 
+static int
+arm_fir_instance_f64_init(dsp_arm_fir_instance_f64Object *self, PyObject *args, PyObject *kwds)
+{
+
+    PyObject *pState=NULL;
+    PyObject *pCoeffs=NULL;
+char *kwlist[] = {
+"numTaps",NULL
+};
+
+if (PyArg_ParseTupleAndKeywords(args, kwds, "|h", kwlist,&self->instance->numTaps
+))
+    {
+
+
+    }
+    return 0;
+}
+
 GETFIELD(arm_fir_instance_f32,numTaps,"h");
+GETFIELD(arm_fir_instance_f64,numTaps,"h");
 
 
 static PyMethodDef arm_fir_instance_f32_methods[] = {
@@ -381,8 +453,16 @@ static PyMethodDef arm_fir_instance_f32_methods[] = {
     {NULL}  /* Sentinel */
 };
 
+static PyMethodDef arm_fir_instance_f64_methods[] = {
+
+    {"numTaps", (PyCFunction) Method_arm_fir_instance_f64_numTaps,METH_NOARGS,"numTaps"},
+
+    {NULL}  /* Sentinel */
+};
+
 
 DSPType(arm_fir_instance_f32,arm_fir_instance_f32_new,arm_fir_instance_f32_dealloc,arm_fir_instance_f32_init,arm_fir_instance_f32_methods);
+DSPType(arm_fir_instance_f64,arm_fir_instance_f64_new,arm_fir_instance_f64_dealloc,arm_fir_instance_f64_init,arm_fir_instance_f64_methods);
 
 
 typedef struct {
@@ -3135,6 +3215,7 @@ void typeRegistration(PyObject *module) {
   ADDTYPE(arm_fir_instance_q15);
   ADDTYPE(arm_fir_instance_q31);
   ADDTYPE(arm_fir_instance_f32);
+  ADDTYPE(arm_fir_instance_f64);
   ADDTYPE(arm_biquad_casd_df1_inst_q15);
   ADDTYPE(arm_biquad_casd_df1_inst_q31);
   ADDTYPE(arm_biquad_casd_df1_inst_f32);
@@ -3464,6 +3545,39 @@ cmsis_arm_fir_f32(PyObject *obj, PyObject *args)
   return(NULL);
 }
 
+static PyObject *
+cmsis_arm_fir_f64(PyObject *obj, PyObject *args)
+{
+
+  PyObject *S=NULL; // input
+  PyObject *pSrc=NULL; // input
+  float64_t *pSrc_converted=NULL; // input
+  float64_t *pDst=NULL; // output
+  uint32_t blockSize; // input
+
+  if (PyArg_ParseTuple(args,"OO",&S,&pSrc))
+  {
+
+    dsp_arm_fir_instance_f64Object *selfS = (dsp_arm_fir_instance_f64Object *)S;
+    GETARGUMENT(pSrc,NPY_DOUBLE,double,float64_t);
+    blockSize = arraySizepSrc ;
+
+    pDst=PyMem_Malloc(sizeof(float64_t)*blockSize);
+
+
+    arm_fir_f64(selfS->instance,pSrc_converted,pDst,blockSize);
+ FLOAT64ARRAY1(pDstOBJ,blockSize,pDst);
+
+    PyObject *pythonResult = Py_BuildValue("O",pDstOBJ);
+
+    FREEARGUMENT(pSrc_converted);
+    Py_DECREF(pDstOBJ);
+    return(pythonResult);
+
+  }
+  return(NULL);
+}
+
 
 static PyObject *
 cmsis_arm_fir_init_f32(PyObject *obj, PyObject *args)
@@ -3486,6 +3600,33 @@ cmsis_arm_fir_init_f32(PyObject *obj, PyObject *args)
     blockSize = arraySizepState - arraySizepCoeffs + 1;
 
     arm_fir_init_f32(selfS->instance,numTaps,pCoeffs_converted,pState_converted,blockSize);
+    Py_RETURN_NONE;
+
+  }
+  return(NULL);
+}
+
+static PyObject *
+cmsis_arm_fir_init_f64(PyObject *obj, PyObject *args)
+{
+
+  PyObject *S=NULL; // input
+  uint16_t numTaps; // input
+  PyObject *pCoeffs=NULL; // input
+  float64_t *pCoeffs_converted=NULL; // input
+  PyObject *pState=NULL; // input
+  float64_t *pState_converted=NULL; // input
+  uint32_t blockSize; // input
+
+  if (PyArg_ParseTuple(args,"OhOO",&S,&numTaps,&pCoeffs,&pState))
+  {
+
+    dsp_arm_fir_instance_f64Object *selfS = (dsp_arm_fir_instance_f64Object *)S;
+    GETARGUMENT(pCoeffs,NPY_DOUBLE,double,float64_t);
+    GETARGUMENT(pState,NPY_DOUBLE,double,float64_t);
+    blockSize = arraySizepState - arraySizepCoeffs + 1;
+
+    arm_fir_init_f64(selfS->instance,numTaps,pCoeffs_converted,pState_converted,blockSize);
     Py_RETURN_NONE;
 
   }
@@ -6120,6 +6261,41 @@ cmsis_arm_correlate_f32(PyObject *obj, PyObject *args)
   return(NULL);
 }
 
+static PyObject *
+cmsis_arm_correlate_f64(PyObject *obj, PyObject *args)
+{
+
+  PyObject *pSrcA=NULL; // input
+  float64_t *pSrcA_converted=NULL; // input
+  uint32_t srcALen; // input
+  PyObject *pSrcB=NULL; // input
+  float64_t *pSrcB_converted=NULL; // input
+  uint32_t srcBLen; // input
+  float64_t *pDst=NULL; // output
+
+  if (PyArg_ParseTuple(args,"OiOi",&pSrcA,&srcALen,&pSrcB,&srcBLen))
+  {
+
+    GETARGUMENT(pSrcA,NPY_DOUBLE,double,float64_t);
+    GETARGUMENT(pSrcB,NPY_DOUBLE,double,float64_t);
+    uint32_t outputLength = 2*MAX(srcALen,srcBLen) - 1 ;
+
+    pDst=PyMem_Malloc(sizeof(float64_t)*outputLength);
+
+
+    arm_correlate_f64(pSrcA_converted,srcALen,pSrcB_converted,srcBLen,pDst);
+ FLOAT64ARRAY1(pDstOBJ,outputLength,pDst);
+
+    PyObject *pythonResult = Py_BuildValue("O",pDstOBJ);
+
+    FREEARGUMENT(pSrcA_converted);
+    FREEARGUMENT(pSrcB_converted);
+    Py_DECREF(pDstOBJ);
+    return(pythonResult);
+
+  }
+  return(NULL);
+}
 
 static PyObject *
 cmsis_arm_correlate_opt_q15(PyObject *obj, PyObject *args)
@@ -6713,6 +6889,8 @@ static PyMethodDef CMSISDSPMethods[] = {
 {"arm_fir_init_q31",  cmsis_arm_fir_init_q31, METH_VARARGS,""},
 {"arm_fir_f32",  cmsis_arm_fir_f32, METH_VARARGS,""},
 {"arm_fir_init_f32",  cmsis_arm_fir_init_f32, METH_VARARGS,""},
+{"arm_fir_f64",  cmsis_arm_fir_f64, METH_VARARGS,""},
+{"arm_fir_init_f64",  cmsis_arm_fir_init_f64, METH_VARARGS,""},
 {"arm_biquad_cascade_df1_q15",  cmsis_arm_biquad_cascade_df1_q15, METH_VARARGS,""},
 {"arm_biquad_cascade_df1_init_q15",  cmsis_arm_biquad_cascade_df1_init_q15, METH_VARARGS,""},
 {"arm_biquad_cascade_df1_fast_q15",  cmsis_arm_biquad_cascade_df1_fast_q15, METH_VARARGS,""},
@@ -6789,6 +6967,7 @@ static PyMethodDef CMSISDSPMethods[] = {
 {"arm_lms_norm_q15",  cmsis_arm_lms_norm_q15, METH_VARARGS,""},
 {"arm_lms_norm_init_q15",  cmsis_arm_lms_norm_init_q15, METH_VARARGS,""},
 {"arm_correlate_f32",  cmsis_arm_correlate_f32, METH_VARARGS,""},
+{"arm_correlate_f64",  cmsis_arm_correlate_f64, METH_VARARGS,""},
 {"arm_correlate_opt_q15",  cmsis_arm_correlate_opt_q15, METH_VARARGS,""},
 {"arm_correlate_q15",  cmsis_arm_correlate_q15, METH_VARARGS,""},
 {"arm_correlate_fast_q15",  cmsis_arm_correlate_fast_q15, METH_VARARGS,""},

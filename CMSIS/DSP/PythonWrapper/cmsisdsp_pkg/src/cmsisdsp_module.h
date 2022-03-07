@@ -117,7 +117,7 @@ Method_##NAME##_##FIELD(dsp_##NAME##Object *self, PyObject *ignored)\
            SRCFORMAT *f=(SRCFORMAT*)PyArray_DATA(FIELD##c);                   \
            uint32_t n = PyArray_SIZE(FIELD##c);                               \
            self->instance->FIELD =PyMem_Malloc(sizeof(DSTFORMAT)*n);                \
-           MEMCPY(self->instance->FIELD ,f,n,DSTFORMAT);                      \
+           MEMCPY((DSTFORMAT*)self->instance->FIELD ,f,n,DSTFORMAT);                      \
            Py_DECREF(FIELD##c);                                               \
        }                                                                      \
     }

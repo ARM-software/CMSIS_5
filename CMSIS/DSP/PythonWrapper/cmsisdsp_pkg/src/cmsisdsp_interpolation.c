@@ -463,6 +463,107 @@ static PyMethodDef arm_bilinear_interp_instance_q7_methods[] = {
 DSPType(arm_bilinear_interp_instance_q7,arm_bilinear_interp_instance_q7_new,arm_bilinear_interp_instance_q7_dealloc,arm_bilinear_interp_instance_q7_init,arm_bilinear_interp_instance_q7_methods);
 
 
+typedef struct {
+    PyObject_HEAD
+    arm_spline_instance_f32 *instance;
+} dsp_arm_spline_instance_f32Object;
+
+
+static void
+arm_spline_instance_f32_dealloc(dsp_arm_spline_instance_f32Object* self)
+{
+    //printf("Dealloc called\n");
+    if (self->instance)
+    {
+
+
+       if (self->instance->x)
+       {
+          PyMem_Free((float32_t *)self->instance->x);
+       }
+
+       if (self->instance->y)
+       {
+          PyMem_Free((float32_t *)self->instance->y);
+       }
+
+       if (self->instance->coeffs)
+       {
+          PyMem_Free((float32_t *)self->instance->coeffs);
+       }
+
+
+       PyMem_Free(self->instance);
+    }
+
+    Py_TYPE(self)->tp_free((PyObject*)self);
+}
+
+
+static PyObject *
+arm_spline_instance_f32_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
+{
+    dsp_arm_spline_instance_f32Object *self;
+    //printf("New called\n");
+
+    self = (dsp_arm_spline_instance_f32Object *)type->tp_alloc(type, 0);
+    //printf("alloc called\n");
+
+    if (self != NULL) {
+
+        self->instance = PyMem_Malloc(sizeof(arm_spline_instance_f32));
+
+        self->instance->x = NULL;
+        self->instance->y = NULL;
+        self->instance->coeffs = NULL;
+
+    }
+
+
+    return (PyObject *)self;
+}
+
+static int
+arm_spline_instance_f32_init(dsp_arm_spline_instance_f32Object *self, PyObject *args, PyObject *kwds)
+{
+
+    PyObject *x=NULL;
+    PyObject *y=NULL;
+
+char *kwlist[] = {
+"type","x","y","n_x",NULL
+};
+
+if (PyArg_ParseTupleAndKeywords(args, kwds, "|iOOi", kwlist,&self->instance->type
+,&x
+,&y
+,&self->instance->type
+))
+    {
+
+    INITARRAYFIELD(x,NPY_DOUBLE,double,float32_t);
+    INITARRAYFIELD(y,NPY_DOUBLE,double,float32_t);
+
+    }
+    return 0;
+}
+
+GETFIELD(arm_spline_instance_f32,type,"i");
+GETFIELD(arm_spline_instance_f32,n_x,"i");
+
+
+static PyMethodDef arm_spline_instance_f32_methods[] = {
+
+    {"type", (PyCFunction) Method_arm_spline_instance_f32_type,METH_NOARGS,"type"},
+    {"n_x", (PyCFunction) Method_arm_spline_instance_f32_n_x,METH_NOARGS,"n_x"},
+
+    {NULL}  /* Sentinel */
+};
+
+
+DSPType(arm_spline_instance_f32,arm_spline_instance_f32_new,arm_spline_instance_f32_dealloc,arm_spline_instance_f32_init,arm_spline_instance_f32_methods);
+
+
 
 void typeRegistration(PyObject *module) {
 
@@ -474,7 +575,8 @@ void typeRegistration(PyObject *module) {
   ADDTYPE(arm_bilinear_interp_instance_q31);
   ADDTYPE(arm_bilinear_interp_instance_q15);
   ADDTYPE(arm_bilinear_interp_instance_q7);
-  
+  ADDTYPE(arm_spline_instance_f32);
+
 }
 
 
@@ -697,7 +799,76 @@ cmsis_arm_bilinear_interp_q7(PyObject *obj, PyObject *args)
 
 
 
+static PyObject *
+cmsis_arm_spline_init_f32(PyObject *obj, PyObject *args)
+{
 
+  PyObject *S=NULL; // input
+  uint32_t type;
+  PyObject *pX=NULL; // input
+  float32_t *pX_converted=NULL; // input
+  PyObject *pY=NULL; // input
+  float32_t *pY_converted=NULL; // input
+  uint32_t n;
+
+  if (PyArg_ParseTuple(args,"OiOO",&S,&type,&pX,&pY))
+  {
+
+    dsp_arm_spline_instance_f32Object *selfS = (dsp_arm_spline_instance_f32Object *)S;
+
+    GETARGUMENT(pX,NPY_DOUBLE,double,float32_t);
+    GETARGUMENT(pY,NPY_DOUBLE,double,float32_t);
+    n = arraySizepX ;
+    float32_t * coeffs=PyMem_Malloc(sizeof(float32_t)*n*3);
+    float32_t * tempBuffer=PyMem_Malloc(sizeof(float32_t)*n*2);
+
+    arm_spline_init_f32(selfS->instance,
+        type,pX_converted,pY_converted,n,coeffs,tempBuffer);
+
+    PyObject* theReturnOBJ=Py_BuildValue("i",0);
+
+    PyObject *pythonResult = Py_BuildValue("O",theReturnOBJ);
+
+    Py_DECREF(theReturnOBJ);
+    PyMem_Free(tempBuffer);
+    return(pythonResult);
+
+  }
+  return(NULL);
+}
+
+static PyObject *
+cmsis_arm_spline_f32(PyObject *obj, PyObject *args)
+{
+
+  PyObject *S=NULL; // input
+  PyObject *pSrc=NULL; // input
+  float32_t *pSrc_converted=NULL; // input
+  float32_t *pDst=NULL; // output
+  uint32_t blockSize; // input
+
+  if (PyArg_ParseTuple(args,"OO",&S,&pSrc))
+  {
+
+    dsp_arm_spline_instance_f32Object *selfS = (dsp_arm_spline_instance_f32Object *)S;
+    GETARGUMENT(pSrc,NPY_DOUBLE,double,float32_t);
+    blockSize = arraySizepSrc ;
+
+    pDst=PyMem_Malloc(sizeof(float32_t)*blockSize);
+
+
+    arm_spline_f32(selfS->instance,pSrc_converted,pDst,blockSize);
+ FLOATARRAY1(pDstOBJ,blockSize,pDst);
+
+    PyObject *pythonResult = Py_BuildValue("O",pDstOBJ);
+
+    FREEARGUMENT(pSrc_converted);
+    Py_DECREF(pDstOBJ);
+    return(pythonResult);
+
+  }
+  return(NULL);
+}
 
 static PyMethodDef CMSISDSPMethods[] = {
 
@@ -712,6 +883,8 @@ static PyMethodDef CMSISDSPMethods[] = {
 {"arm_bilinear_interp_q31",  cmsis_arm_bilinear_interp_q31, METH_VARARGS,""},
 {"arm_bilinear_interp_q15",  cmsis_arm_bilinear_interp_q15, METH_VARARGS,""},
 {"arm_bilinear_interp_q7",  cmsis_arm_bilinear_interp_q7, METH_VARARGS,""},
+{"arm_spline_f32",  cmsis_arm_spline_f32, METH_VARARGS,""},
+{"arm_spline_init_f32",  cmsis_arm_spline_init_f32, METH_VARARGS,""},
     {"error_out", (PyCFunction)error_out, METH_NOARGS, NULL},
     {NULL, NULL, 0, NULL}        /* Sentinel */
 };

@@ -11,6 +11,10 @@ from cmsisdsp_transform import *
 from cmsisdsp_interpolation import *
 from cmsisdsp_quaternion import *
 from cmsisdsp_fastmath import *
+from cmsisdsp_distance import *
+from cmsisdsp_bayes import *
+from cmsisdsp_svm import *
+
 
 __version__ = cmsisdsp.version.__version__
 

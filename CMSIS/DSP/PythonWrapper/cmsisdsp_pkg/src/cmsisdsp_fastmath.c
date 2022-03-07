@@ -388,6 +388,129 @@ cmsis_arm_sqrt_q15(PyObject *obj, PyObject *args)
 }
 
 
+static PyObject *
+cmsis_arm_vexp_f32(PyObject *obj, PyObject *args)
+{
+
+  PyObject *pSrc=NULL; // input
+  float32_t *pSrc_converted=NULL; // input
+  float32_t *pDst=NULL; // output
+  uint32_t blockSize; // input
+
+  if (PyArg_ParseTuple(args,"O",&pSrc))
+  {
+
+    GETARGUMENT(pSrc,NPY_DOUBLE,double,float32_t);
+    blockSize = arraySizepSrc ;
+
+    pDst=PyMem_Malloc(sizeof(float32_t)*blockSize);
+
+
+    arm_vexp_f32(pSrc_converted,pDst,blockSize);
+ FLOATARRAY1(pDstOBJ,blockSize,pDst);
+
+    PyObject *pythonResult = Py_BuildValue("O",pDstOBJ);
+
+    FREEARGUMENT(pSrc_converted);
+    Py_DECREF(pDstOBJ);
+    return(pythonResult);
+
+  }
+  return(NULL);
+}
+
+static PyObject *
+cmsis_arm_vexp_f64(PyObject *obj, PyObject *args)
+{
+
+  PyObject *pSrc=NULL; // input
+  float64_t *pSrc_converted=NULL; // input
+  float64_t *pDst=NULL; // output
+  uint32_t blockSize; // input
+
+  if (PyArg_ParseTuple(args,"O",&pSrc))
+  {
+
+    GETARGUMENT(pSrc,NPY_DOUBLE,double,float64_t);
+    blockSize = arraySizepSrc ;
+
+    pDst=PyMem_Malloc(sizeof(float64_t)*blockSize);
+
+
+    arm_vexp_f64(pSrc_converted,pDst,blockSize);
+ FLOAT64ARRAY1(pDstOBJ,blockSize,pDst);
+
+    PyObject *pythonResult = Py_BuildValue("O",pDstOBJ);
+
+    FREEARGUMENT(pSrc_converted);
+    Py_DECREF(pDstOBJ);
+    return(pythonResult);
+
+  }
+  return(NULL);
+}
+
+static PyObject *
+cmsis_arm_vlog_f32(PyObject *obj, PyObject *args)
+{
+
+  PyObject *pSrc=NULL; // input
+  float32_t *pSrc_converted=NULL; // input
+  float32_t *pDst=NULL; // output
+  uint32_t blockSize; // input
+
+  if (PyArg_ParseTuple(args,"O",&pSrc))
+  {
+
+    GETARGUMENT(pSrc,NPY_DOUBLE,double,float32_t);
+    blockSize = arraySizepSrc ;
+
+    pDst=PyMem_Malloc(sizeof(float32_t)*blockSize);
+
+
+    arm_vlog_f32(pSrc_converted,pDst,blockSize);
+ FLOATARRAY1(pDstOBJ,blockSize,pDst);
+
+    PyObject *pythonResult = Py_BuildValue("O",pDstOBJ);
+
+    FREEARGUMENT(pSrc_converted);
+    Py_DECREF(pDstOBJ);
+    return(pythonResult);
+
+  }
+  return(NULL);
+}
+
+static PyObject *
+cmsis_arm_vlog_f64(PyObject *obj, PyObject *args)
+{
+
+  PyObject *pSrc=NULL; // input
+  float64_t *pSrc_converted=NULL; // input
+  float64_t *pDst=NULL; // output
+  uint32_t blockSize; // input
+
+  if (PyArg_ParseTuple(args,"O",&pSrc))
+  {
+
+    GETARGUMENT(pSrc,NPY_DOUBLE,double,float64_t);
+    blockSize = arraySizepSrc ;
+
+    pDst=PyMem_Malloc(sizeof(float64_t)*blockSize);
+
+
+    arm_vlog_f64(pSrc_converted,pDst,blockSize);
+ FLOAT64ARRAY1(pDstOBJ,blockSize,pDst);
+
+    PyObject *pythonResult = Py_BuildValue("O",pDstOBJ);
+
+    FREEARGUMENT(pSrc_converted);
+    Py_DECREF(pDstOBJ);
+    return(pythonResult);
+
+  }
+  return(NULL);
+}
 
 
 
@@ -411,7 +534,10 @@ static PyMethodDef CMSISDSPMethods[] = {
 {"arm_sqrt_q15",  cmsis_arm_sqrt_q15, METH_VARARGS,""},
 {"arm_divide_q31",  cmsis_arm_divide_q31, METH_VARARGS,""},
 {"arm_divide_q15",  cmsis_arm_divide_q15, METH_VARARGS,""},
-
+{"arm_vexp_f32",  cmsis_arm_vexp_f32, METH_VARARGS,""},
+{"arm_vlog_f32",  cmsis_arm_vlog_f32, METH_VARARGS,""},
+{"arm_vexp_f64",  cmsis_arm_vexp_f64, METH_VARARGS,""},
+{"arm_vlog_f64",  cmsis_arm_vlog_f64, METH_VARARGS,""},
     {"error_out", (PyCFunction)error_out, METH_NOARGS, NULL},
     {NULL, NULL, 0, NULL}        /* Sentinel */
 };

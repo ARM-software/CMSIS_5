@@ -181,6 +181,38 @@ cmsis_arm_cmplx_mag_squared_f32(PyObject *obj, PyObject *args)
   return(NULL);
 }
 
+static PyObject *
+cmsis_arm_cmplx_mag_squared_f64(PyObject *obj, PyObject *args)
+{
+
+  PyObject *pSrc=NULL; // input
+  float64_t *pSrc_converted=NULL; // input
+  float64_t *pDst=NULL; // output
+  uint32_t numSamples; // input
+
+  if (PyArg_ParseTuple(args,"O",&pSrc))
+  {
+
+    GETARGUMENT(pSrc,NPY_DOUBLE,double,float64_t);
+    numSamples = arraySizepSrc ;
+    numSamples = numSamples / 2;
+
+    pDst=PyMem_Malloc(sizeof(float64_t)*2*numSamples);
+
+
+    arm_cmplx_mag_squared_f64(pSrc_converted,pDst,numSamples);
+ FLOAT64ARRAY1(pDstOBJ,numSamples,pDst);
+
+    PyObject *pythonResult = Py_BuildValue("O",pDstOBJ);
+
+    FREEARGUMENT(pSrc_converted);
+    Py_DECREF(pDstOBJ);
+    return(pythonResult);
+
+  }
+  return(NULL);
+}
+
 
 static PyObject *
 cmsis_arm_cmplx_mag_squared_q31(PyObject *obj, PyObject *args)
@@ -274,6 +306,38 @@ cmsis_arm_cmplx_mag_f32(PyObject *obj, PyObject *args)
 
     arm_cmplx_mag_f32(pSrc_converted,pDst,numSamples);
  FLOATARRAY1(pDstOBJ,numSamples,pDst);
+
+    PyObject *pythonResult = Py_BuildValue("O",pDstOBJ);
+
+    FREEARGUMENT(pSrc_converted);
+    Py_DECREF(pDstOBJ);
+    return(pythonResult);
+
+  }
+  return(NULL);
+}
+
+static PyObject *
+cmsis_arm_cmplx_mag_f64(PyObject *obj, PyObject *args)
+{
+
+  PyObject *pSrc=NULL; // input
+  float64_t *pSrc_converted=NULL; // input
+  float64_t *pDst=NULL; // output
+  uint32_t numSamples; // input
+
+  if (PyArg_ParseTuple(args,"O",&pSrc))
+  {
+
+    GETARGUMENT(pSrc,NPY_DOUBLE,double,float64_t);
+    numSamples = arraySizepSrc ;
+    numSamples = numSamples / 2;
+
+    pDst=PyMem_Malloc(sizeof(float64_t)*2*numSamples);
+
+
+    arm_cmplx_mag_f64(pSrc_converted,pDst,numSamples);
+ FLOAT64ARRAY1(pDstOBJ,numSamples,pDst);
 
     PyObject *pythonResult = Py_BuildValue("O",pDstOBJ);
 
@@ -392,8 +456,8 @@ cmsis_arm_cmplx_dot_prod_q15(PyObject *obj, PyObject *args)
   PyObject *pSrcB=NULL; // input
   q15_t *pSrcB_converted=NULL; // input
   uint32_t numSamples; // input
-  q31_t *realResult=NULL; // output
-  q31_t *imagResult=NULL; // output
+  q31_t realResult; // output
+  q31_t imagResult; // output
 
   if (PyArg_ParseTuple(args,"OO",&pSrcA,&pSrcB))
   {
@@ -403,15 +467,10 @@ cmsis_arm_cmplx_dot_prod_q15(PyObject *obj, PyObject *args)
     numSamples = arraySizepSrcA ;
     numSamples = numSamples / 2;
 
-    realResult=PyMem_Malloc(sizeof(q31_t)*1);
 
-
-    imagResult=PyMem_Malloc(sizeof(q31_t)*1);
-
-
-    arm_cmplx_dot_prod_q15(pSrcA_converted,pSrcB_converted,numSamples,realResult,imagResult);
-    PyObject* realResultOBJ=Py_BuildValue("i",*realResult);
-    PyObject* imagResultOBJ=Py_BuildValue("i",*imagResult);
+    arm_cmplx_dot_prod_q15(pSrcA_converted,pSrcB_converted,numSamples,&realResult,&imagResult);
+    PyObject* realResultOBJ=Py_BuildValue("i",realResult);
+    PyObject* imagResultOBJ=Py_BuildValue("i",imagResult);
 
     PyObject *pythonResult = Py_BuildValue("OO",realResultOBJ,imagResultOBJ);
 
@@ -435,8 +494,8 @@ cmsis_arm_cmplx_dot_prod_q31(PyObject *obj, PyObject *args)
   PyObject *pSrcB=NULL; // input
   q31_t *pSrcB_converted=NULL; // input
   uint32_t numSamples; // input
-  q63_t *realResult=NULL; // output
-  q63_t *imagResult=NULL; // output
+  q63_t realResult; // output
+  q63_t imagResult; // output
 
   if (PyArg_ParseTuple(args,"OO",&pSrcA,&pSrcB))
   {
@@ -446,15 +505,10 @@ cmsis_arm_cmplx_dot_prod_q31(PyObject *obj, PyObject *args)
     numSamples = arraySizepSrcA ;
     numSamples = numSamples / 2;
 
-    realResult=PyMem_Malloc(sizeof(q63_t)*1);
 
-
-    imagResult=PyMem_Malloc(sizeof(q63_t)*1);
-
-
-    arm_cmplx_dot_prod_q31(pSrcA_converted,pSrcB_converted,numSamples,realResult,imagResult);
-    PyObject* realResultOBJ=Py_BuildValue("L",*realResult);
-    PyObject* imagResultOBJ=Py_BuildValue("L",*imagResult);
+    arm_cmplx_dot_prod_q31(pSrcA_converted,pSrcB_converted,numSamples,&realResult,&imagResult);
+    PyObject* realResultOBJ=Py_BuildValue("L",realResult);
+    PyObject* imagResultOBJ=Py_BuildValue("L",imagResult);
 
     PyObject *pythonResult = Py_BuildValue("OO",realResultOBJ,imagResultOBJ);
 
@@ -478,8 +532,8 @@ cmsis_arm_cmplx_dot_prod_f32(PyObject *obj, PyObject *args)
   PyObject *pSrcB=NULL; // input
   float32_t *pSrcB_converted=NULL; // input
   uint32_t numSamples; // input
-  float32_t *realResult=NULL; // output
-  float32_t *imagResult=NULL; // output
+  float32_t realResult; // output
+  float32_t imagResult; // output
 
   if (PyArg_ParseTuple(args,"OO",&pSrcA,&pSrcB))
   {
@@ -489,15 +543,10 @@ cmsis_arm_cmplx_dot_prod_f32(PyObject *obj, PyObject *args)
     numSamples = arraySizepSrcA ;
     numSamples = numSamples / 2;
 
-    realResult=PyMem_Malloc(sizeof(float32_t)*1);
 
-
-    imagResult=PyMem_Malloc(sizeof(float32_t)*1);
-
-
-    arm_cmplx_dot_prod_f32(pSrcA_converted,pSrcB_converted,numSamples,realResult,imagResult);
-    PyObject* realResultOBJ=Py_BuildValue("f",*realResult);
-    PyObject* imagResultOBJ=Py_BuildValue("f",*imagResult);
+    arm_cmplx_dot_prod_f32(pSrcA_converted,pSrcB_converted,numSamples,&realResult,&imagResult);
+    PyObject* realResultOBJ=Py_BuildValue("f",realResult);
+    PyObject* imagResultOBJ=Py_BuildValue("f",imagResult);
 
     PyObject *pythonResult = Py_BuildValue("OO",realResultOBJ,imagResultOBJ);
 
@@ -735,7 +784,41 @@ cmsis_arm_cmplx_mult_cmplx_f32(PyObject *obj, PyObject *args)
   return(NULL);
 }
 
+static PyObject *
+cmsis_arm_cmplx_mult_cmplx_f64(PyObject *obj, PyObject *args)
+{
 
+  PyObject *pSrcA=NULL; // input
+  float64_t *pSrcA_converted=NULL; // input
+  PyObject *pSrcB=NULL; // input
+  float64_t *pSrcB_converted=NULL; // input
+  float64_t *pDst=NULL; // output
+  uint32_t numSamples; // input
+
+  if (PyArg_ParseTuple(args,"OO",&pSrcA,&pSrcB))
+  {
+
+    GETARGUMENT(pSrcA,NPY_DOUBLE,double,float64_t);
+    GETARGUMENT(pSrcB,NPY_DOUBLE,double,float64_t);
+    numSamples = arraySizepSrcA ;
+    numSamples = numSamples / 2;
+
+    pDst=PyMem_Malloc(sizeof(float64_t)*2*numSamples);
+
+
+    arm_cmplx_mult_cmplx_f64(pSrcA_converted,pSrcB_converted,pDst,numSamples);
+ FLOAT64ARRAY1(pDstOBJ,2*numSamples,pDst);
+
+    PyObject *pythonResult = Py_BuildValue("O",pDstOBJ);
+
+    FREEARGUMENT(pSrcA_converted);
+    FREEARGUMENT(pSrcB_converted);
+    Py_DECREF(pDstOBJ);
+    return(pythonResult);
+
+  }
+  return(NULL);
+}
 
 
 static PyMethodDef CMSISDSPMethods[] = {
@@ -745,11 +828,13 @@ static PyMethodDef CMSISDSPMethods[] = {
 {"arm_cmplx_conj_q31",  cmsis_arm_cmplx_conj_q31, METH_VARARGS,""},
 {"arm_cmplx_conj_q15",  cmsis_arm_cmplx_conj_q15, METH_VARARGS,""},
 {"arm_cmplx_mag_squared_f32",  cmsis_arm_cmplx_mag_squared_f32, METH_VARARGS,""},
+{"arm_cmplx_mag_squared_f64",  cmsis_arm_cmplx_mag_squared_f64, METH_VARARGS,""},
 {"arm_cmplx_mag_squared_q31",  cmsis_arm_cmplx_mag_squared_q31, METH_VARARGS,""},
 {"arm_cmplx_mag_squared_q15",  cmsis_arm_cmplx_mag_squared_q15, METH_VARARGS,""},
 
 
 {"arm_cmplx_mag_f32",  cmsis_arm_cmplx_mag_f32, METH_VARARGS,""},
+{"arm_cmplx_mag_f64",  cmsis_arm_cmplx_mag_f64, METH_VARARGS,""},
 {"arm_cmplx_mag_q31",  cmsis_arm_cmplx_mag_q31, METH_VARARGS,""},
 {"arm_cmplx_mag_q15",  cmsis_arm_cmplx_mag_q15, METH_VARARGS,""},
 {"arm_cmplx_mag_fast_q15",  cmsis_arm_cmplx_mag_fast_q15, METH_VARARGS,""},
@@ -762,6 +847,7 @@ static PyMethodDef CMSISDSPMethods[] = {
 {"arm_cmplx_mult_cmplx_q15",  cmsis_arm_cmplx_mult_cmplx_q15, METH_VARARGS,""},
 {"arm_cmplx_mult_cmplx_q31",  cmsis_arm_cmplx_mult_cmplx_q31, METH_VARARGS,""},
 {"arm_cmplx_mult_cmplx_f32",  cmsis_arm_cmplx_mult_cmplx_f32, METH_VARARGS,""},
+{"arm_cmplx_mult_cmplx_f64",  cmsis_arm_cmplx_mult_cmplx_f64, METH_VARARGS,""},
 
     {"error_out", (PyCFunction)error_out, METH_NOARGS, NULL},
     {NULL, NULL, 0, NULL}        /* Sentinel */
