@@ -23,7 +23,7 @@ cmsis_dsp_version="1.10.0"
 
 
 # Commit hash used to build the wrapper
-commit_hash="f2fb4f86cee3a17fbb394c315c99b833249db44d"
+commit_hash="7106010d41b3bf810403e954c36c2643d98c58e7"
 
 # True if development version used
 developmentVersion=True
