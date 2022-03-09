@@ -21,7 +21,7 @@
  * Title:        arm_nn_softmax_common_s8.c
  * Description:  Softmax with s8 input and output of s8 or s16.
  *
- * $Date:        23 Februari 2022
+ * $Date:        9 March 2022
  * $Revision:    V.1.0.0
  *
  * Target Processor:  Cortex-M processors
@@ -99,13 +99,13 @@ void arm_nn_softmax_common_s8(const int8_t *input,
                 if (diff >= diff_min)
                 {
                     const int32_t res =
-                        DIV_POW2(MUL_SAT(shifted_scale, EXP_ON_NEG(MUL_SAT(diff * mask, mult))), bits_over_unit) -
-                        32768;
-                    output_s16[col] = (int16_t)CLAMP(res, (int32_t)32767, (int32_t)-32768);
+                        DIV_POW2(MUL_SAT(shifted_scale, EXP_ON_NEG(MUL_SAT(diff * mask, mult))), bits_over_unit) +
+                        INT16_MIN;
+                    output_s16[col] = (int16_t)CLAMP(res, (int32_t)INT16_MAX, (int32_t)INT16_MIN);
                 }
                 else
                 {
-                    output_s16[col] = -32768;
+                    output_s16[col] = INT16_MIN;
                 }
             }
             output_s16 += row_size;
@@ -122,12 +122,13 @@ void arm_nn_softmax_common_s8(const int8_t *input,
                 if (diff >= diff_min)
                 {
                     const int32_t res =
-                        DIV_POW2(MUL_SAT(shifted_scale, EXP_ON_NEG(MUL_SAT(diff * mask, mult))), bits_over_unit) - 128;
-                    output_s8[col] = (int8_t)CLAMP(res, (int32_t)127, (int32_t)-128);
+                        DIV_POW2(MUL_SAT(shifted_scale, EXP_ON_NEG(MUL_SAT(diff * mask, mult))), bits_over_unit) +
+                        INT8_MIN;
+                    output_s8[col] = (int8_t)CLAMP(res, (int32_t)INT8_MAX, (int32_t)INT8_MIN);
                 }
                 else
                 {
-                    output_s8[col] = -128;
+                    output_s8[col] = INT8_MIN;
                 }
             }
             output_s8 += row_size;

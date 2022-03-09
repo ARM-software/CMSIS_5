@@ -21,7 +21,7 @@
  * Title:        arm_softmax_s8.c
  * Description:  S8 softmax function
  *
- * $Date:        7 January 2022
+ * $Date:        9 March 2022
  * $Revision:    V.2.1.0
  *
  * Target Processor:  Cortex-M cores
@@ -192,7 +192,7 @@ void arm_softmax_s8(const int8_t *input,
             if (diff >= diff_min)
             {
                 const int32_t res =
-                    DIV_POW2(MUL_SAT(shifted_scale, EXP_ON_NEG(MUL_SAT(diff * mask, mult))), bits_over_unit) - 128;
+                    DIV_POW2(MUL_SAT(shifted_scale, EXP_ON_NEG(MUL_SAT(diff * mask, mult))), bits_over_unit) + INT8_MIN;
                 output[tail_idx + i] = (int8_t)CLAMP(res, (int32_t)ACT_MAX, (int32_t)ACT_MIN);
             }
             else

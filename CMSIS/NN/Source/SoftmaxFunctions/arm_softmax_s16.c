@@ -21,7 +21,7 @@
  * Title:        arm_softmax_s16.c
  * Description:  S16 softmax function
  *
- * $Date:        23. Februari 2022
+ * $Date:        9 March 2022
  * $Revision:    V.1.0.0
  *
  * Target Processor:  Cortex-M cores
@@ -69,8 +69,8 @@ arm_status arm_softmax_s16(const int16_t *input,
         {
             diff = input[col] - max;
             const int32_t scaled_diff = arm_nn_requantize(diff, mult, shift);
-            const int32_t symmetric_scaled_diff = scaled_diff + 32767;
-            const int16_t saturated_symmetric_scaled_diff = MIN(MAX(symmetric_scaled_diff, -32768), 32767);
+            const int32_t symmetric_scaled_diff = scaled_diff + INT16_MAX;
+            const int16_t saturated_symmetric_scaled_diff = MIN(MAX(symmetric_scaled_diff, INT16_MIN), INT16_MAX);
 
             // Lookup from exp table and cache result for next step
             const int16_t index = (256 + (saturated_symmetric_scaled_diff >> 7));
@@ -90,7 +90,8 @@ arm_status arm_softmax_s16(const int16_t *input,
         const int32_t shifted_sum = (((sum) << (headroom - 1)) + (1 << 13)) >> 14;
 
         // Since LUT computes 1/(1 + x), compute x = (sum - 1) => -65536
-        // Since LUT expects a symmetrical input, recenter from [0, 65535] to [-32768, 32767] => -32768
+        // Since LUT expects a symmetrical input, recenter from [UINT16_MIN, UINT16_MAX] to [INT16_MIN, INT16_MAX] =>
+        // -32768 ==> So in total -65536 -32768 => -98304
         const int16_t symmetric_shifted_sum = shifted_sum - 98304;
 
         // Lookup from one by one table
