@@ -1,12 +1,12 @@
 /******************************************************************************
  * @file     arm_nn_math_types.h
  * @brief    Compiler include and basic types
- * @version  V1.0.0
- * @date     08 July 2021
+ * @version  V1.1.0
+ * @date     09 March 2022
  * Target Processor: Cortex-M
  ******************************************************************************/
 /*
- * Copyright (c) 2010-2021 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (c) 2010-2022 Arm Limited or its affiliates.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -145,8 +145,10 @@ extern "C" {
  */
 
 #define NN_Q31_MAX ((q31_t)(0x7FFFFFFFL))
+#define NN_Q15_MAX ((q15_t)(0x7FFF))
 #define NN_Q7_MAX ((q7_t)(0x7F))
 #define NN_Q31_MIN ((q31_t)(0x80000000L))
+#define NN_Q15_MIN ((q15_t)(0x8000))
 #define NN_Q7_MIN ((q7_t)(0x80))
 
 /**

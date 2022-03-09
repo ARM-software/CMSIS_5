@@ -100,12 +100,12 @@ void arm_nn_softmax_common_s8(const int8_t *input,
                 {
                     const int32_t res =
                         DIV_POW2(MUL_SAT(shifted_scale, EXP_ON_NEG(MUL_SAT(diff * mask, mult))), bits_over_unit) +
-                        INT16_MIN;
-                    output_s16[col] = (int16_t)CLAMP(res, (int32_t)INT16_MAX, (int32_t)INT16_MIN);
+                        NN_Q15_MIN;
+                    output_s16[col] = (int16_t)CLAMP(res, (int32_t)NN_Q15_MAX, (int32_t)NN_Q15_MIN);
                 }
                 else
                 {
-                    output_s16[col] = INT16_MIN;
+                    output_s16[col] = NN_Q15_MIN;
                 }
             }
             output_s16 += row_size;
@@ -123,12 +123,12 @@ void arm_nn_softmax_common_s8(const int8_t *input,
                 {
                     const int32_t res =
                         DIV_POW2(MUL_SAT(shifted_scale, EXP_ON_NEG(MUL_SAT(diff * mask, mult))), bits_over_unit) +
-                        INT8_MIN;
-                    output_s8[col] = (int8_t)CLAMP(res, (int32_t)INT8_MAX, (int32_t)INT8_MIN);
+                        NN_Q7_MIN;
+                    output_s8[col] = (int8_t)CLAMP(res, (int32_t)NN_Q7_MAX, (int32_t)NN_Q7_MIN);
                 }
                 else
                 {
-                    output_s8[col] = INT8_MIN;
+                    output_s8[col] = NN_Q7_MIN;
                 }
             }
             output_s8 += row_size;
