@@ -21,8 +21,8 @@
  * Title:        arm_nnfunctions.h
  * Description:  Public header file for CMSIS NN Library
  *
- * $Date:        22 February 2022
- * $Revision:    V.8.1.0
+ * $Date:        10 March 2022
+ * $Revision:    V.8.1.1
  *
  * Target Processor:  Cortex-M CPUs
  * -------------------------------------------------------------------- */
@@ -50,6 +50,15 @@
    * types including 8-bit integers (q7_t) and 16-bit integers (q15_t). The descrition of the
    * kernels are included in the function description. The implementation details are also
    * described in this paper [1].
+   *
+   * Supported Processors
+   * -------
+   * CMSIS-NN targets Cortex-M processors with typically three different implementations for each function. Each
+   * targets a different group of processors.
+   *  - Processors without SIMD capability (e.g, Cortex-M0)
+   *  - Processors with DSP extention (e.g Cortex-M4)
+   *  - Processors with MVE extension (e.g Cortex-M55)
+   * The right implementation is picked through feature flags and the user usually does not have to explicit set it.
    *
    * Function Classification
    * --------
