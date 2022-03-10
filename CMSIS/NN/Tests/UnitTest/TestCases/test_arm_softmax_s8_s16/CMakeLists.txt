@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2019-2022 Arm Limited.
+# Copyright (C) 2010-2022 Arm Limited or its affiliates.
 #
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -16,11 +16,8 @@
 # limitations under the License.
 #
 
-file(GLOB SRC "./*_s8.c")
-target_sources(cmsis-nn PRIVATE ${SRC} arm_q7_to_q15_with_offset.c
-                                       arm_nn_mat_mul_kernel_s16.c
-                                       arm_q7_to_q15_with_offset.c
-                                       arm_nn_mat_mul_kernel_s16.c
-                                       arm_nn_vec_mat_mult_t_s16.c
-                                       arm_q7_to_q15_no_shift.c)
+add_cmsis_nn_unit_test_executable(test_arm_softmax_s8_s16)
 
+target_sources(test_arm_softmax_s8_s16 PRIVATE
+    Unity/unity_test_arm_softmax_s8_s16.c
+    Unity/TestRunner/unity_test_arm_softmax_s8_s16_runner.c)
