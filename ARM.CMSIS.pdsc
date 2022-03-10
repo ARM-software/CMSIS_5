@@ -21,6 +21,7 @@
        - Support for int16 depthwise conv for reference implementation including dilation
        - Support for int16 average and max pooling for reference implementation
        - Support for elementwise add and mul int16 scalar version
+       - Support for softmax int16 scalar version
       CMSIS-RTOS2:
         - RTX 5.5.4 (see revision history for details)
     </release>
@@ -2283,6 +2284,8 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="source" name="CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_mat_q7_vec_q15.c"/>
         <file category="source" name="CMSIS/NN/Source/SoftmaxFunctions/arm_softmax_q15.c"/>
         <file category="source" name="CMSIS/NN/Source/SoftmaxFunctions/arm_softmax_s8.c"/>
+        <file category="source" name="CMSIS/NN/Source/SoftmaxFunctions/arm_softmax_s8_s16.c"/>
+        <file category="source" name="CMSIS/NN/Source/SoftmaxFunctions/arm_softmax_s16.c"/>
         <file category="source" name="CMSIS/NN/Source/SoftmaxFunctions/arm_softmax_u8.c"/>
         <file category="source" name="CMSIS/NN/Source/SoftmaxFunctions/arm_softmax_q7.c"/>
         <file category="source" name="CMSIS/NN/Source/SoftmaxFunctions/arm_softmax_with_batch_q7.c"/>
