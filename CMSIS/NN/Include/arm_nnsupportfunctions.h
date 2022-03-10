@@ -21,9 +21,8 @@
  * Title:        arm_nnsupportfunctions.h
  * Description:  Public header file of support functions for CMSIS NN Library
  *
-
- * $Date:        16. March 2022
- * $Revision:    V.6.2.1
+ * $Date:        16 March 2022
+ * $Revision:    V.7.0.0
  *
  * Target Processor:  Cortex-M CPUs
  * -------------------------------------------------------------------- */
@@ -388,6 +387,8 @@ arm_status arm_nn_mat_mult_nt_t_s8(const q7_t *lhs,
  * @param[in]      rhs_rows        Number of rows in the right-hand side input matrix
  * @param[in]      activation_min  Minimum value to clamp the output to. Range: int8
  * @param[in]      activation_max  Maximum value to clamp the output to. Range: int8
+ * @param[in]      address_offset  Memory position offset for dst. First output is stored at 'dst', the
+ *                                 second at 'dst + address_offset' and so on. Default value is typically 1.
  *
  * @return         The function returns <code>ARM_MATH_SUCCESS</code>
  *
@@ -404,7 +405,8 @@ arm_status arm_nn_vec_mat_mult_t_s8(const q7_t *lhs,
                                     const int32_t rhs_cols,
                                     const int32_t rhs_rows,
                                     const int32_t activation_min,
-                                    const int32_t activation_max);
+                                    const int32_t activation_max,
+                                    const int32_t address_offset);
 
 /**
  * @brief s16 Vector by Matrix (transposed) multiplication

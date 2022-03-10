@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2022 Arm Limited or its affiliates.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -22,7 +22,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../test_arm_svdf_s8.c"
+#include "../test_arm_svdf_state_s16_s8.c"
 #include "unity.h"
 
 #ifdef USING_FVP_CORSTONE_300
@@ -44,10 +44,10 @@ void setUp(void)
  */
 void tearDown(void) {}
 
-void test_svdf_arm_svdf_s8(void) { svdf_arm_svdf_s8(); }
+void test_svdf_arm_state_s16_s8(void) { svdf_arm_svdf_state_s16_s8(); }
 
-void test_svdf_1_arm_svdf_s8(void) { svdf_1_arm_svdf_s8(); }
+void test_svdf_1_arm_state_s16_s8(void) { svdf_1_arm_svdf_state_s16_s8(); }
 
-void test_svdf_2_arm_svdf_s8(void) { svdf_2_arm_svdf_s8(); }
+void test_svdf_2_arm_state_s16_s8(void) { svdf_2_arm_svdf_state_s16_s8(); }
 
-void test_svdf_3_arm_svdf_s8(void) { svdf_3_arm_svdf_s8(); }
+void test_svdf_3_arm_state_s16_s8(void) { svdf_3_arm_svdf_state_s16_s8(); }

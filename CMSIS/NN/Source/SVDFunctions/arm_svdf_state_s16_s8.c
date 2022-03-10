@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2022 Arm Limited or its affiliates.
+ * Copyright (C) 2022 Arm Limited or its affiliates.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_svdf_s8.c
  * Description:  S8 basic SVDF layer function
  *
- * $Date:        16 March 2022
- * $Revision:    V.3.0.0
+ * $Date:        8 April 2022
+ * $Revision:    V.1.0.0
  *
  * Target Processor:  Cortex-M processors
  *
@@ -41,29 +41,29 @@
  */
 
 /*
- * S8 SVDF layer function for TensorFlow Lite with 8 bit state tensor
+ * S8 SVDF layer function for TensorFlow Lite with 16 bit state tensor
  *
  * Refer to header file for details.
  *
  */
 
-arm_status arm_svdf_s8(const cmsis_nn_context *input_ctx,
-                       const cmsis_nn_context *output_ctx,
-                       const cmsis_nn_svdf_params *svdf_params,
-                       const cmsis_nn_per_tensor_quant_params *input_quant_params,
-                       const cmsis_nn_per_tensor_quant_params *output_quant_params,
-                       const cmsis_nn_dims *input_dims,
-                       const q7_t *input_data,
-                       const cmsis_nn_dims *state_dims,
-                       q7_t *state_data,
-                       const cmsis_nn_dims *weights_feature_dims,
-                       const q7_t *weights_feature_data,
-                       const cmsis_nn_dims *weights_time_dims,
-                       const q7_t *weights_time_data,
-                       const cmsis_nn_dims *bias_dims,
-                       const q31_t *bias_data,
-                       const cmsis_nn_dims *output_dims,
-                       q7_t *output_data)
+arm_status arm_svdf_state_s16_s8(const cmsis_nn_context *input_ctx,
+                                 const cmsis_nn_context *output_ctx,
+                                 const cmsis_nn_svdf_params *svdf_params,
+                                 const cmsis_nn_per_tensor_quant_params *input_quant_params,
+                                 const cmsis_nn_per_tensor_quant_params *output_quant_params,
+                                 const cmsis_nn_dims *input_dims,
+                                 const q7_t *input_data,
+                                 const cmsis_nn_dims *state_dims,
+                                 q15_t *state_data,
+                                 const cmsis_nn_dims *weights_feature_dims,
+                                 const q7_t *weights_feature_data,
+                                 const cmsis_nn_dims *weights_time_dims,
+                                 const q15_t *weights_time_data,
+                                 const cmsis_nn_dims *bias_dims,
+                                 const q31_t *bias_data,
+                                 const cmsis_nn_dims *output_dims,
+                                 q7_t *output_data)
 {
     (void)bias_dims;
     (void)state_dims;
@@ -99,30 +99,28 @@ arm_status arm_svdf_s8(const cmsis_nn_context *input_ctx,
     }
     q31_t *buffer_b = (q31_t *)output_ctx->buf;
 
-    memmove((int8_t *)state_data,
-            (int8_t *)state_data + 1,
-            (size_t)((input_batches * feature_batches * time_batches - 1) * (int32_t)sizeof(int8_t)));
+    memmove((q15_t *)state_data,
+            (q15_t *)state_data + 1,
+            (size_t)((input_batches * feature_batches * time_batches - 1) * (int32_t)sizeof(int16_t)));
 
     for (int i_batch = 0; i_batch < input_batches; i_batch++)
     {
-        q7_t *res_ptr = state_data + (time_batches * i_batch * feature_batches) + (time_batches - 1);
+        q15_t *res_ptr = state_data + (time_batches * i_batch * feature_batches) + (time_batches - 1);
         const q7_t *weight = weights_feature_data;
         const q7_t *input = input_data + i_batch * input_height;
 
-        arm_status res = arm_nn_vec_mat_mult_t_s8(input,
-                                                  weight,
-                                                  NULL,
-                                                  res_ptr,
-                                                  -zp_in,
-                                                  0,
-                                                  0,
-                                                  multiplier_in,
-                                                  shift_in,
-                                                  input_height,
-                                                  feature_batches,
-                                                  in_activation_min,
-                                                  in_activation_max,
-                                                  time_batches);
+        arm_status res = arm_nn_vec_mat_mult_t_svdf_s8(input,
+                                                       weight,
+                                                       res_ptr,
+                                                       -zp_in,
+                                                       0,
+                                                       time_batches,
+                                                       multiplier_in,
+                                                       shift_in,
+                                                       input_height,
+                                                       feature_batches,
+                                                       in_activation_min,
+                                                       in_activation_max);
 
         if (res != ARM_MATH_SUCCESS)
         {
@@ -132,10 +130,10 @@ arm_status arm_svdf_s8(const cmsis_nn_context *input_ctx,
 
     {
         q31_t *ptr_a = buffer_a;
-        const int8_t *v2 = state_data;
+        const q15_t *v2 = state_data;
         for (int i_batch = 0; i_batch < input_batches; i_batch++)
         {
-            const int8_t *v1 = weights_time_data;
+            const q15_t *v1 = weights_time_data;
 
             for (int i_feature_batch = 0; i_feature_batch < feature_batches; i_feature_batch++)
             {
@@ -147,12 +145,8 @@ arm_status arm_svdf_s8(const cmsis_nn_context *input_ctx,
                 for (int i = 0; i < block_count; i++)
                 {
                     j += 2;
-
-                    q31_t r1 = arm_nn_read_q7x4_ia(&v1);
-                    r1 = __SXTB16(r1);
-
-                    q31_t r2 = arm_nn_read_q7x4_ia(&v2);
-                    r2 = __SXTB16(r2);
+                    q31_t r1 = arm_nn_read_q15x2_ia(&v1);
+                    q31_t r2 = arm_nn_read_q15x2_ia(&v2);
 
                     sum = __SMLAD(r1, r2, sum);
                 }

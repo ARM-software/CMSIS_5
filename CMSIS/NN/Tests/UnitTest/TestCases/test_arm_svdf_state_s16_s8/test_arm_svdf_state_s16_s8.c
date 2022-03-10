@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2022 Arm Limited or its affiliates.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -41,7 +41,7 @@ static bool check_null_bias(const int32_t *bias, int32_t size)
     return null_bias;
 }
 
-void svdf_arm_svdf_s8(void)
+void svdf_arm_svdf_state_s16_s8(void)
 {
     const arm_status expected = ARM_MATH_SUCCESS;
     cmsis_nn_context input_ctx;
@@ -99,23 +99,23 @@ void svdf_arm_svdf_s8(void)
         for (int j = 0; j < number_inputs; j++)
         {
             memcpy(input_data, svdf_input_sequence + j * input_round_size, input_round_size);
-            arm_status result = arm_svdf_s8(&input_ctx,
-                                            &output_ctx,
-                                            &svdf_params,
-                                            &input_quant_params,
-                                            &output_quant_params,
-                                            &input_dims,
-                                            input_data,
-                                            &state_dims,
-                                            state_data,
-                                            &weights_feature_dims,
-                                            weights_feature_data,
-                                            &weights_time_dims,
-                                            weights_time_data,
-                                            &bias_dims,
-                                            null_bias == true ? NULL : svdf_biases,
-                                            &output_dims,
-                                            output_data);
+            arm_status result = arm_svdf_state_s16_s8(&input_ctx,
+                                                      &output_ctx,
+                                                      &svdf_params,
+                                                      &input_quant_params,
+                                                      &output_quant_params,
+                                                      &input_dims,
+                                                      input_data,
+                                                      &state_dims,
+                                                      state_data,
+                                                      &weights_feature_dims,
+                                                      weights_feature_data,
+                                                      &weights_time_dims,
+                                                      weights_time_data,
+                                                      &bias_dims,
+                                                      null_bias == true ? NULL : svdf_biases,
+                                                      &output_dims,
+                                                      output_data);
             TEST_ASSERT_EQUAL(expected, result);
         }
 
@@ -127,7 +127,7 @@ void svdf_arm_svdf_s8(void)
     free(output_ctx.buf);
 }
 
-void svdf_1_arm_svdf_s8(void)
+void svdf_1_arm_svdf_state_s16_s8(void)
 {
     const arm_status expected = ARM_MATH_SUCCESS;
     cmsis_nn_context input_ctx;
@@ -184,23 +184,23 @@ void svdf_1_arm_svdf_s8(void)
         for (int j = 0; j < number_inputs; j++)
         {
             memcpy(input_data, svdf_1_input_sequence + j * input_round_size, input_round_size);
-            arm_status result = arm_svdf_s8(&input_ctx,
-                                            &output_ctx,
-                                            &svdf_1_params,
-                                            &input_quant_params,
-                                            &output_quant_params,
-                                            &input_dims,
-                                            input_data,
-                                            &state_dims,
-                                            state_data,
-                                            &weights_feature_dims,
-                                            weights_feature_data,
-                                            &weights_time_dims,
-                                            weights_time_data,
-                                            &bias_dims,
-                                            null_bias == true ? NULL : svdf_1_biases,
-                                            &output_dims,
-                                            output_data);
+            arm_status result = arm_svdf_state_s16_s8(&input_ctx,
+                                                      &output_ctx,
+                                                      &svdf_1_params,
+                                                      &input_quant_params,
+                                                      &output_quant_params,
+                                                      &input_dims,
+                                                      input_data,
+                                                      &state_dims,
+                                                      state_data,
+                                                      &weights_feature_dims,
+                                                      weights_feature_data,
+                                                      &weights_time_dims,
+                                                      weights_time_data,
+                                                      &bias_dims,
+                                                      null_bias == true ? NULL : svdf_1_biases,
+                                                      &output_dims,
+                                                      output_data);
             TEST_ASSERT_EQUAL(expected, result);
         }
 
@@ -212,7 +212,7 @@ void svdf_1_arm_svdf_s8(void)
     free(output_ctx.buf);
 }
 
-void svdf_2_arm_svdf_s8(void)
+void svdf_2_arm_svdf_state_s16_s8(void)
 {
     const arm_status expected = ARM_MATH_SUCCESS;
     cmsis_nn_context input_ctx;
@@ -269,23 +269,23 @@ void svdf_2_arm_svdf_s8(void)
         for (int j = 0; j < number_inputs; j++)
         {
             memcpy(input_data, svdf_2_input_sequence + j * input_round_size, input_round_size);
-            arm_status result = arm_svdf_s8(&input_ctx,
-                                            &output_ctx,
-                                            &svdf_2_params,
-                                            &input_quant_params,
-                                            &output_quant_params,
-                                            &input_dims,
-                                            input_data,
-                                            &state_dims,
-                                            state_data,
-                                            &weights_feature_dims,
-                                            weights_feature_data,
-                                            &weights_time_dims,
-                                            weights_time_data,
-                                            &bias_dims,
-                                            null_bias == true ? NULL : svdf_2_biases,
-                                            &output_dims,
-                                            output_data);
+            arm_status result = arm_svdf_state_s16_s8(&input_ctx,
+                                                      &output_ctx,
+                                                      &svdf_2_params,
+                                                      &input_quant_params,
+                                                      &output_quant_params,
+                                                      &input_dims,
+                                                      input_data,
+                                                      &state_dims,
+                                                      state_data,
+                                                      &weights_feature_dims,
+                                                      weights_feature_data,
+                                                      &weights_time_dims,
+                                                      weights_time_data,
+                                                      &bias_dims,
+                                                      null_bias == true ? NULL : svdf_2_biases,
+                                                      &output_dims,
+                                                      output_data);
             TEST_ASSERT_EQUAL(expected, result);
         }
 
@@ -297,7 +297,7 @@ void svdf_2_arm_svdf_s8(void)
     free(output_ctx.buf);
 }
 
-void svdf_3_arm_svdf_s8(void)
+void svdf_3_arm_svdf_state_s16_s8(void)
 {
     const arm_status expected = ARM_MATH_SUCCESS;
     cmsis_nn_context input_ctx;
@@ -354,23 +354,23 @@ void svdf_3_arm_svdf_s8(void)
         for (int j = 0; j < number_inputs; j++)
         {
             memcpy(input_data, svdf_3_input_sequence + j * input_round_size, input_round_size);
-            arm_status result = arm_svdf_s8(&input_ctx,
-                                            &output_ctx,
-                                            &svdf_3_params,
-                                            &input_quant_params,
-                                            &output_quant_params,
-                                            &input_dims,
-                                            input_data,
-                                            &state_dims,
-                                            state_data,
-                                            &weights_feature_dims,
-                                            weights_feature_data,
-                                            &weights_time_dims,
-                                            weights_time_data,
-                                            &bias_dims,
-                                            null_bias == true ? NULL : svdf_3_biases,
-                                            &output_dims,
-                                            output_data);
+            arm_status result = arm_svdf_state_s16_s8(&input_ctx,
+                                                      &output_ctx,
+                                                      &svdf_3_params,
+                                                      &input_quant_params,
+                                                      &output_quant_params,
+                                                      &input_dims,
+                                                      input_data,
+                                                      &state_dims,
+                                                      state_data,
+                                                      &weights_feature_dims,
+                                                      weights_feature_data,
+                                                      &weights_time_dims,
+                                                      weights_time_data,
+                                                      &bias_dims,
+                                                      null_bias == true ? NULL : svdf_3_biases,
+                                                      &output_dims,
+                                                      output_data);
             TEST_ASSERT_EQUAL(expected, result);
         }
 
