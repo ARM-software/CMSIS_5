@@ -1,5 +1,6 @@
 # CMSIS NN
-
+CMSIS NN software library is a collection of efficient neural network kernels developed to maximize the
+performance and minimize the memory footprint of neural networks on Cortex-M processors.
 ## About
 This page  give a quick overview of the functions available and key differences between them.
 
@@ -7,7 +8,8 @@ This page  give a quick overview of the functions available and key differences 
 
 ## Support / Contact
 For any questions or to reach the CMSIS-NN team, please create a new issue in https://github.com/ARM-software/CMSIS_5/issues
-
+## Supported Framework
+[TensorFlow Lite for Microcontrollers](https://www.tensorflow.org/lite/microcontrollers)
 ## Legacy vs TFL micro compliant APIs
 There are two kinds of APIs available in the CMSIS-NN repository; One that supports a legacy symmetric quantization scheme[1] and one that supports TFL micro's symmetric quantization scheme. One of the main differences is how the quantization is performed. The legacy APIs have a fixed point format with power of 2 scaling. This simplifies the re-quantization to a cycle efficient shift operation. No new development is done on the legacy functions and all of the new development is on the functions that support TFL micro. The table below highlights some of the differences between the two formats for convolution related functions. The TFL micro compliant APIs in most cases have a _s8 suffix and is always specified in the API header file.
 
