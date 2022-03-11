@@ -151,7 +151,6 @@ var NAVTREEINDEX2 =
 "group__SQRT.html#ga5abe5ca724f3e15849662b03752c1238":[3,6,4,4],
 "group__SQRT.html#ga897a7cd07e490b404fd5dcad307fe119":[3,6,4,1],
 "group__SQRT.html#gaa37d8b017ef0c8d356dc98fd78e2d96b":[3,6,4,3],
-"group__SQRT.html#gaa9b8a2bea8a22489bfd968eb4687a7bd":[3,6,4,6],
 "group__SQRT.html#gaf6719bb18280f9c76077432e7445f2f5":[3,6,4,0],
 "group__STD.html":[3,11,10],
 "group__STD.html#ga287b6ce703636c7e8cb9833b290ae4ce":[3,11,10,1],
@@ -249,5 +248,6 @@ var NAVTREEINDEX2 =
 "group__groupStats.html":[3,11],
 "group__groupSupport.html":[3,12],
 "group__groupTransforms.html":[3,14],
-"group__inv__clarke.html":[3,4,4]
+"group__inv__clarke.html":[3,4,4],
+"group__inv__clarke.html#ga1a73ce96f94b2124d02426690e587197":[3,4,4,0]
 };

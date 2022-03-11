@@ -12,6 +12,7 @@ var annotated =
     [ "cmsis_nn_per_channel_quant_params", "structcmsis__nn__per__channel__quant__params.html", "structcmsis__nn__per__channel__quant__params" ],
     [ "cmsis_nn_per_tensor_quant_params", "structcmsis__nn__per__tensor__quant__params.html", "structcmsis__nn__per__tensor__quant__params" ],
     [ "cmsis_nn_pool_params", "structcmsis__nn__pool__params.html", "structcmsis__nn__pool__params" ],
+    [ "cmsis_nn_softmax_lut_s16", "structcmsis__nn__softmax__lut__s16.html", "structcmsis__nn__softmax__lut__s16" ],
     [ "cmsis_nn_svdf_params", "structcmsis__nn__svdf__params.html", "structcmsis__nn__svdf__params" ],
     [ "cmsis_nn_tile", "structcmsis__nn__tile.html", "structcmsis__nn__tile" ]
 ];

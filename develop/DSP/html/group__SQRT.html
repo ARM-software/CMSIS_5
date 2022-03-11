@@ -136,9 +136,6 @@ Functions</h2></td></tr>
 <tr class="memitem:ga5abe5ca724f3e15849662b03752c1238"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__math__types_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6">arm_status</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SQRT.html#ga5abe5ca724f3e15849662b03752c1238">arm_sqrt_q15</a> (<a class="el" href="arm__math__types_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> in, <a class="el" href="arm__math__types_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *pOut)</td></tr>
 <tr class="memdesc:ga5abe5ca724f3e15849662b03752c1238"><td class="mdescLeft">&#160;</td><td class="mdescRight">Q15 square root function.  <a href="#ga5abe5ca724f3e15849662b03752c1238">More...</a><br/></td></tr>
 <tr class="separator:ga5abe5ca724f3e15849662b03752c1238"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa9b8a2bea8a22489bfd968eb4687a7bd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SQRT.html#gaa9b8a2bea8a22489bfd968eb4687a7bd">arm_vsqrt_f32</a> (<a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *pIn, <a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *pOut, uint16_t len)</td></tr>
-<tr class="memdesc:gaa9b8a2bea8a22489bfd968eb4687a7bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vector Floating-point square root function.  <a href="#gaa9b8a2bea8a22489bfd968eb4687a7bd">More...</a><br/></td></tr>
-<tr class="separator:gaa9b8a2bea8a22489bfd968eb4687a7bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga534098da4bd86e2a5abed863d0dbd8ea"><td class="memItemLeft" align="right" valign="top">__STATIC_FORCEINLINE <a class="el" href="arm__math__types_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6">arm_status</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SQRT.html#ga534098da4bd86e2a5abed863d0dbd8ea">arm_sqrt_f16</a> (float16_t in, float16_t *pOut)</td></tr>
 <tr class="memdesc:ga534098da4bd86e2a5abed863d0dbd8ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Floating-point square root function.  <a href="#ga534098da4bd86e2a5abed863d0dbd8ea">More...</a><br/></td></tr>
 <tr class="separator:ga534098da4bd86e2a5abed863d0dbd8ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -350,47 +347,6 @@ Functions</h2></td></tr>
 <li><a class="el" href="arm__math__types_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6a74897e18d4b8f62b12a7d8a01dd2bb35">ARM_MATH_ARGUMENT_ERROR</a> : input value is negative; *pOut is set to 0 </li>
 </ul>
 </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gaa9b8a2bea8a22489bfd968eb4687a7bd"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void arm_vsqrt_f32 </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *&#160;</td>
-          <td class="paramname"><em>pIn</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *&#160;</td>
-          <td class="paramname"><em>pOut</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>len</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">pIn</td><td>input vector. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">pOut</td><td>vector of square roots of input elements. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>length of input vector. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The function returns ARM_MATH_SUCCESS if input value is positive value or ARM_MATH_ARGUMENT_ERROR if <code>in</code> is negative value and returns zero output for negative values. </dd></dl>
 
 </div>
 </div>
