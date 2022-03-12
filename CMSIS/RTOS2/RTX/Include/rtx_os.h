@@ -123,9 +123,11 @@ typedef struct osRtxThread_s {
   uint32_t                 stack_size;  ///< Stack Size
   uint32_t                         sp;  ///< Current Stack Pointer
   uint32_t                thread_addr;  ///< Thread entry address
+#if (DOMAIN_NS == 1)
   uint32_t                  tz_memory;  ///< TrustZone Memory Identifier
 #ifdef RTX_TF_M_EXTENSION
   uint32_t                  tz_module;  ///< TrustZone Module Identifier
+#endif
 #endif
 } osRtxThread_t;
  
