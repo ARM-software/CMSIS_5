@@ -21,8 +21,8 @@
  * Title:        arm_nnfunctions.h
  * Description:  Public header file for CMSIS NN Library
  *
- * $Date:        16 March 2022
- * $Revision:    V.8.1.2
+ * $Date:        10 March 2022
+ * $Revision:    V.8.1.1
  *
  * Target Processor:  Cortex-M CPUs
  * -------------------------------------------------------------------- */
@@ -1594,29 +1594,6 @@ q7_t *arm_nn_mat_mult_kernel_q7_q15(const q7_t *pA,
                                     const uint16_t out_shift,
                                     const q7_t *bias,
                                     q7_t *pOut);
-
-/**
- *@brief Matrix-multiplication function for convolution with reordered columns
- *@param[in]       pA          pointer to operand A
- *@param[in]       pInBuffer   pointer to operand B, always conssists of 2 vectors
- *@param[in]       ch_im_out   numRow of A
- *@param[in]       numCol_A    numCol of A
- *@param[in]       bias_shift  amount of left-shift for bias
- *@param[in]       out_shift   amount of right-shift for output
- *@param[in]       bias        the bias
- *@param[in,out]   pOut        pointer to output
- *@return     The function returns the incremented output pointer
- *
- *@details  This function assumes that data in pInBuffer are reordered
- */
-q7_t *arm_nn_mat_mult_kernel_q7_q15_reordered(const q7_t *pA,
-                                              const q15_t *pInBuffer,
-                                              const uint16_t ch_im_out,
-                                              const uint16_t numCol_A,
-                                              const uint16_t bias_shift,
-                                              const uint16_t out_shift,
-                                              const q7_t *bias,
-                                              q7_t *pOut);
 
 #ifdef __cplusplus
 }
