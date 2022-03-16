@@ -33,6 +33,7 @@ var searchData=
   ['core_20register_20access_20functions',['Core Register Access Functions',['../group__coreregister__trustzone__functions.html',1,'']]],
   ['cpacr',['CPACR',['../structSCB__Type.html#ac6a860c1b8d8154a1f00d99d23b67764',1,'SCB_Type']]],
   ['cpicnt',['CPICNT',['../structDWT__Type.html#a2c08096c82abe245c0fa97badc458154',1,'DWT_Type']]],
+  ['cppwr',['CPPWR',['../structSCnSCB__Type.html#a356efebfcbdaecaf1176e6cd86a60bf1',1,'SCnSCB_Type::CPPWR()'],['../structICB__Type.html#ae81003a1446544876fc9c9eccffddab7',1,'ICB_Type::CPPWR()']]],
   ['cpuid',['CPUID',['../structSCB__Type.html#a21e08d546d8b641bee298a459ea73e46',1,'SCB_Type']]],
   ['cspsr',['CSPSR',['../structTPI__Type.html#a8826aa84e5806053395a742d38d59d0f',1,'TPI_Type']]],
   ['ctrl',['CTRL',['../structPMU__Type.html#aba9bddd6b49c88e38f4bb79d32002c3c',1,'PMU_Type::CTRL()'],['../structSysTick__Type.html#a875e7afa5c4fd43997fb544a4ac6e37e',1,'SysTick_Type::CTRL()'],['../structMPU__Type.html#a769178ef949f0d5d8f18ddbd9e4e926f',1,'MPU_Type::CTRL()'],['../structDWT__Type.html#add790c53410023b3b581919bb681fe2a',1,'DWT_Type::CTRL()']]],

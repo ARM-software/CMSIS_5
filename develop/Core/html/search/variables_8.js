@@ -4,7 +4,7 @@ var searchData=
   ['icer',['ICER',['../structNVIC__Type.html#a245df8bac1da05c39eadabede9323203',1,'NVIC_Type']]],
   ['icpr',['ICPR',['../structNVIC__Type.html#a8d8f45d9c5c67bba3c153c55574bac95',1,'NVIC_Type']]],
   ['icsr',['ICSR',['../structSCB__Type.html#a0ca18ef984d132c6bf4d9b61cd00f05a',1,'SCB_Type']]],
-  ['ictr',['ICTR',['../structSCnSCB__Type.html#a34ec1d771245eb9bd0e3ec9336949762',1,'SCnSCB_Type']]],
+  ['ictr',['ICTR',['../structSCnSCB__Type.html#a34ec1d771245eb9bd0e3ec9336949762',1,'SCnSCB_Type::ICTR()'],['../structICB__Type.html#af468675de58ebcffd888d55cd9c1715d',1,'ICB_Type::ICTR()']]],
   ['imcr',['IMCR',['../structITM__Type.html#ae2ce4d3a54df2fd11a197ccac4406cd0',1,'ITM_Type']]],
   ['intenclr',['INTENCLR',['../structPMU__Type.html#aaff7d5f3246c641d1f503d74a5adb0ee',1,'PMU_Type']]],
   ['intenset',['INTENSET',['../structPMU__Type.html#a3f5a5872105d9056145e9095bc1c63ac',1,'PMU_Type']]],

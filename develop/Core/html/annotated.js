@@ -6,6 +6,7 @@ var annotated =
     [ "CoreDebug_Type", "structCoreDebug__Type.html", "structCoreDebug__Type" ],
     [ "DWT_Type", "structDWT__Type.html", "structDWT__Type" ],
     [ "FPU_Type", "structFPU__Type.html", "structFPU__Type" ],
+    [ "ICB_Type", "structICB__Type.html", "structICB__Type" ],
     [ "IPSR_Type", "unionIPSR__Type.html", "unionIPSR__Type" ],
     [ "ITM_Type", "structITM__Type.html", "structITM__Type" ],
     [ "MPU_Type", "structMPU__Type.html", "structMPU__Type" ],
