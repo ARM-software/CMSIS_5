@@ -1263,9 +1263,14 @@ def load_all_testdatasets():
                                           w_y=3, stride_x=2, stride_y=2, pad=True, generate_bias=False,
                                           out_activation_min=-104, out_activation_max=127)
     dataset = 'depthwise_eq_in_out_ch'
-    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=6, out_ch=6, x_in=4, y_in=5, w_x=2, generate_bias=False,
-                                          w_y=3, stride_x=1, stride_y=1, pad=True,
-                                          out_activation_min=-86, out_activation_max=127)
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=250, out_ch=250, x_in=7,
+                                          y_in=5, w_x=2, w_y=2, stride_x=1, stride_y=1, pad=True)
+    dataset = 'depthwise_sub_block'
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=9, out_ch=9, x_in=7,
+                                          y_in=5, w_x=2, w_y=2, stride_x=1, stride_y=1, pad=False)
+    dataset = 'depthwise_x_stride'
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=9, out_ch=9, x_in=7,
+                                          y_in=5, w_x=2, w_y=2, stride_x=2, stride_y=1, pad=False)
     dataset = 'depthwise_out_activation'
     TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=3, out_ch=3, x_in=6, y_in=5, w_x=3,
                                           w_y=4, pad=False, out_activation_min=-45,
