@@ -2,4 +2,4 @@
 #pragma once
 #include <stdint.h>
 
-const q7_t softmax_input[5] = {-99, -122, -67, 10, -82};
+const q7_t softmax_input[10] = {101, 49, 6, -34, -75, -79, -38, 120, -55, 115};

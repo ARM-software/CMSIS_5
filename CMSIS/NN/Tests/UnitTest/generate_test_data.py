@@ -876,9 +876,9 @@ class SoftmaxSettings(TestSettings):
             # Create a one-layer Keras model.
             model = tf.keras.models.Sequential()
             input_shape = (self.y_input, self.x_input)
-            model.add(tf.keras.layers.Softmax(input_shape=input_shape[1:]))
+            model.add(tf.keras.layers.Softmax(input_shape=input_shape))
 
-            interpreter = self.convert_and_interpret(model, inttype, input_data)
+            interpreter = self.convert_and_interpret(model, inttype, tf.expand_dims(input_data, axis=0))
             output_details = interpreter.get_output_details()
             interpreter.invoke()
             output_data = interpreter.get_tensor(output_details[0]["index"])
@@ -1391,25 +1391,25 @@ def load_all_testdatasets():
 
     type_of_test = 'softmax'
     dataset = 'softmax'
-    ALL_TESTDATA_SETS[dataset] = SoftmaxSettings(dataset, type_of_test, args, x_in=5, y_in=1)
+    ALL_TESTDATA_SETS[dataset] = SoftmaxSettings(dataset, type_of_test, args, x_in=5, y_in=2)
     dataset = 'softmax_s16'
-    ALL_TESTDATA_SETS[dataset] = SoftmaxSettings(dataset, type_of_test, args, x_in=10, y_in=1, int16xint8=True,
+    ALL_TESTDATA_SETS[dataset] = SoftmaxSettings(dataset, type_of_test, args, x_in=10, y_in=3, int16xint8=True,
                                                  randmin=INT16_MIN, randmax=INT16_MAX)
     dataset = 'softmax_s8_s16'
-    ALL_TESTDATA_SETS[dataset] = SoftmaxSettings(dataset, type_of_test, args, x_in=12, y_in=1, inInt8outInt16=True)
+    ALL_TESTDATA_SETS[dataset] = SoftmaxSettings(dataset, type_of_test, args, x_in=12, y_in=2, inInt8outInt16=True)
 
     type_of_test = 'svdf'
     dataset = 'svdf'
-    ALL_TESTDATA_SETS[dataset] = SVDFSettings(dataset, type_of_test, args,  batches=2, number_inputs=2, rank=8,
+    ALL_TESTDATA_SETS[dataset] = SVDFSettings(dataset, type_of_test, args, batches=2, number_inputs=2, rank=8,
                                               memory_size=8, input_size=3, number_units=3)
     dataset = 'svdf_1'
-    ALL_TESTDATA_SETS[dataset] = SVDFSettings(dataset, type_of_test, args,  batches=3, number_inputs=2, rank=1,
+    ALL_TESTDATA_SETS[dataset] = SVDFSettings(dataset, type_of_test, args, batches=3, number_inputs=2, rank=1,
                                               memory_size=2, input_size=7, number_units=5)
     dataset = 'svdf_2'
-    ALL_TESTDATA_SETS[dataset] = SVDFSettings(dataset, type_of_test, args,  batches=3, number_inputs=2, rank=2,
+    ALL_TESTDATA_SETS[dataset] = SVDFSettings(dataset, type_of_test, args, batches=3, number_inputs=2, rank=2,
                                               memory_size=2, input_size=7, number_units=5, generate_bias=False)
     dataset = 'svdf_3'
-    ALL_TESTDATA_SETS[dataset] = SVDFSettings(dataset, type_of_test, args,  batches=1, number_inputs=2, rank=1,
+    ALL_TESTDATA_SETS[dataset] = SVDFSettings(dataset, type_of_test, args, batches=1, number_inputs=2, rank=1,
                                               memory_size=2, input_size=20, number_units=12, generate_bias=False)
 
     type_of_test = 'add'
