@@ -21,8 +21,8 @@
  * Title:        arm_nn_softmax_common_s8.c
  * Description:  Softmax with s8 input and output of s8 or s16.
  *
- * $Date:        9 March 2022
- * $Revision:    V.1.0.0
+ * $Date:        17 March 2022
+ * $Revision:    V.1.0.1
  *
  * Target Processor:  Cortex-M processors
  * -------------------------------------------------------------------- */
@@ -88,7 +88,7 @@ void arm_nn_softmax_common_s8(const int8_t *input,
 
         if (int16_output)
         {
-            int16_t *output_s16 = (int16_t *)output;
+            int16_t *output_s16 = (int16_t *)output + row_idx * row_size;
 
             bits_over_unit = ACCUM_BITS - headroom + 15;
 
@@ -108,11 +108,10 @@ void arm_nn_softmax_common_s8(const int8_t *input,
                     output_s16[col] = NN_Q15_MIN;
                 }
             }
-            output_s16 += row_size;
         }
         else
         {
-            int8_t *output_s8 = (int8_t *)output;
+            int8_t *output_s8 = (int8_t *)output + row_idx * row_size;
 
             bits_over_unit = ACCUM_BITS - headroom + 23;
 
@@ -131,7 +130,6 @@ void arm_nn_softmax_common_s8(const int8_t *input,
                     output_s8[col] = NN_Q7_MIN;
                 }
             }
-            output_s8 += row_size;
         }
 
         input += row_size;
