@@ -167,23 +167,23 @@ void arm_cmplx_mag_q15(
     /* C[0] = sqrt(A[0] * A[0] + A[1] * A[1]) */
 
 #if defined (ARM_MATH_DSP)
-    in = read_q15x2_ia ((q15_t **) &pSrc);
+    in = read_q15x2_ia (&pSrc);
     acc0 = __SMUAD(in, in);
     /* store result in 2.14 format in destination buffer. */
     arm_sqrt_q31(acc0  >> 1 , &res);
     *pDst++ = res >> 16;
 
-    in = read_q15x2_ia ((q15_t **) &pSrc);
+    in = read_q15x2_ia (&pSrc);
     acc0 = __SMUAD(in, in);
     arm_sqrt_q31(acc0  >> 1 , &res);
     *pDst++ = res >> 16;
 
-    in = read_q15x2_ia ((q15_t **) &pSrc);
+    in = read_q15x2_ia (&pSrc);
     acc0 = __SMUAD(in, in);
     arm_sqrt_q31(acc0  >> 1 , &res);
     *pDst++ = res >> 16;
 
-    in = read_q15x2_ia ((q15_t **) &pSrc);
+    in = read_q15x2_ia (&pSrc);
     acc0 = __SMUAD(in, in);
     arm_sqrt_q31(acc0  >> 1 , &res);
     *pDst++ = res >> 16;
@@ -238,7 +238,7 @@ void arm_cmplx_mag_q15(
     /* C[0] = sqrt(A[0] * A[0] + A[1] * A[1]) */
 
 #if defined (ARM_MATH_DSP)
-    in = read_q15x2_ia ((q15_t **) &pSrc);
+    in = read_q15x2_ia (&pSrc);
     acc0 = __SMUAD(in, in);
 
     /* store result in 2.14 format in destination buffer. */

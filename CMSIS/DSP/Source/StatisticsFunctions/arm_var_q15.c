@@ -154,12 +154,12 @@ void arm_var_q15(
     /* Compute sum of squares and store result in a temporary variable, sumOfSquares. */
     /* Compute sum and store result in a temporary variable, sum. */
 #if defined (ARM_MATH_DSP)
-    in32 = read_q15x2_ia ((q15_t **) &pSrc);
+    in32 = read_q15x2_ia (&pSrc);
     sumOfSquares = __SMLALD(in32, in32, sumOfSquares);
     sum += ((in32 << 16U) >> 16U);
     sum +=  (in32 >> 16U);
 
-    in32 = read_q15x2_ia ((q15_t **) &pSrc);
+    in32 = read_q15x2_ia (&pSrc);
     sumOfSquares = __SMLALD(in32, in32, sumOfSquares);
     sum += ((in32 << 16U) >> 16U);
     sum +=  (in32 >> 16U);

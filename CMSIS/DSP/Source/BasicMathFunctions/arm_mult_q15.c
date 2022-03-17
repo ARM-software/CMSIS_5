@@ -123,13 +123,13 @@ void arm_mult_q15(
 
 #if defined (ARM_MATH_DSP)
     /* read 2 samples at a time from sourceA */
-    inA1 = read_q15x2_ia ((q15_t **) &pSrcA);
+    inA1 = read_q15x2_ia (&pSrcA);
     /* read 2 samples at a time from sourceB */
-    inB1 = read_q15x2_ia ((q15_t **) &pSrcB);
+    inB1 = read_q15x2_ia (&pSrcB);
     /* read 2 samples at a time from sourceA */
-    inA2 = read_q15x2_ia ((q15_t **) &pSrcA);
+    inA2 = read_q15x2_ia (&pSrcA);
     /* read 2 samples at a time from sourceB */
-    inB2 = read_q15x2_ia ((q15_t **) &pSrcB);
+    inB2 = read_q15x2_ia (&pSrcB);
 
     /* multiply mul = sourceA * sourceB */
     mul1 = (q31_t) ((q15_t) (inA1 >> 16) * (q15_t) (inB1 >> 16));

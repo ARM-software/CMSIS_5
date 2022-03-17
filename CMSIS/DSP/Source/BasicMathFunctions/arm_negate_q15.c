@@ -118,10 +118,10 @@ void arm_negate_q15(
 
 #if defined (ARM_MATH_DSP)
     /* Negate and store result in destination buffer (2 samples at a time). */
-    in1 = read_q15x2_ia ((q15_t **) &pSrc);
+    in1 = read_q15x2_ia (&pSrc);
     write_q15x2_ia (&pDst, __QSUB16(0, in1));
 
-    in1 = read_q15x2_ia ((q15_t **) &pSrc);
+    in1 = read_q15x2_ia (&pSrc);
     write_q15x2_ia (&pDst, __QSUB16(0, in1));
 #else
     in = *pSrc++;

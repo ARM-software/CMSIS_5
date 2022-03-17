@@ -119,8 +119,8 @@ void arm_q15_to_q7(
     /* Convert from q15 to q7 and store result in destination buffer */
 #if defined (ARM_MATH_DSP)
 
-    in1 = read_q15x2_ia ((q15_t **) &pIn);
-    in2 = read_q15x2_ia ((q15_t **) &pIn);
+    in1 = read_q15x2_ia (&pIn);
+    in2 = read_q15x2_ia (&pIn);
 
 #ifndef ARM_MATH_BIG_ENDIAN
 

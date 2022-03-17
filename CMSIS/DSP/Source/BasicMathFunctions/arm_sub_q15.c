@@ -125,11 +125,11 @@ void arm_sub_q15(
 
 #if defined (ARM_MATH_DSP)
     /* read 2 times 2 samples at a time from sourceA */
-    inA1 = read_q15x2_ia ((q15_t **) &pSrcA);
-    inA2 = read_q15x2_ia ((q15_t **) &pSrcA);
+    inA1 = read_q15x2_ia (&pSrcA);
+    inA2 = read_q15x2_ia (&pSrcA);
     /* read 2 times 2 samples at a time from sourceB */
-    inB1 = read_q15x2_ia ((q15_t **) &pSrcB);
-    inB2 = read_q15x2_ia ((q15_t **) &pSrcB);
+    inB1 = read_q15x2_ia (&pSrcB);
+    inB2 = read_q15x2_ia (&pSrcB);
 
     /* Subtract and store 2 times 2 samples at a time */
     write_q15x2_ia (&pDst, __QSUB16(inA1, inB1));
