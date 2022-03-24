@@ -1,11 +1,11 @@
 /**************************************************************************//**
  * @file     cmsis_gcc.h
  * @brief    CMSIS compiler specific macros, functions, instructions
- * @version  V1.3.1
- * @date     05. May 2021
+ * @version  V1.3.2
+ * @date     24. March 2022
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2021 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2022 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -459,23 +459,7 @@ __STATIC_FORCEINLINE uint32_t __ROR(uint32_t op1, uint32_t op2)
 __STATIC_FORCEINLINE  uint32_t __RBIT(uint32_t value)
 {
   uint32_t result;
-
-#if ((defined (__ARM_ARCH_7M__      ) && (__ARM_ARCH_7M__      == 1)) || \
-     (defined (__ARM_ARCH_7EM__     ) && (__ARM_ARCH_7EM__     == 1)) || \
-     (defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1))    )
    __ASM ("rbit %0, %1" : "=r" (result) : "r" (value) );
-#else
-  int32_t s = (4U /*sizeof(v)*/ * 8U) - 1U; /* extra shift needed at end */
-
-  result = value;                      /* r will be reversed bits of v; first get LSB of v */
-  for (value >>= 1U; value; value >>= 1U)
-  {
-    result <<= 1U;
-    result |= value & 1U;
-    s--;
-  }
-  result <<= s;                        /* shift when v's highest bits are zero */
-#endif
   return result;
 }
 
