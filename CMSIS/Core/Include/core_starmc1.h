@@ -1,6 +1,6 @@
 /**************************************************************************//**
- * @file     core_star.h
- * @brief    CMSIS ArmChina STAR Core Peripheral Access Layer Header File
+ * @file     core_starmc1.h
+ * @brief    CMSIS ArmChina STAR-MC1 Core Peripheral Access Layer Header File
  * @version  V1.0.0
  * @date     12. June 2021
  ******************************************************************************/
@@ -57,19 +57,19 @@
  *                 CMSIS definitions
  ******************************************************************************/
 /**
-  \ingroup Cortex_STAR
+  \ingroup STAR-MC1
   @{
  */
 
 #include "cmsis_version.h"
 
-/*  CMSIS STAR definitions */
+/*  CMSIS STAR-MC1 definitions */
 #define __STAR_CMSIS_VERSION_MAIN  (__CM_CMSIS_VERSION_MAIN)                   /*!< \deprecated [31:16] CMSIS HAL main version */
 #define __STAR_CMSIS_VERSION_SUB   (__CM_CMSIS_VERSION_SUB)                    /*!< \deprecated [15:0]  CMSIS HAL sub version */
 #define __STAR_CMSIS_VERSION       ((__STAR_CMSIS_VERSION_MAIN << 16U) | \
                                      __STAR_CMSIS_VERSION_SUB           )      /*!< \deprecated CMSIS HAL version number */
 
-/* DCore to be changed for STAR */
+/* DCore to be changed for STAR-MC1 */
 #define __CORTEX_M                 (33U)                                       /*!< Cortex-M Core */
 
 /** __FPU_USED indicates whether an FPU is used or not.
@@ -297,7 +297,7 @@
 #define     __OM     volatile            /*! Defines 'write only' structure member permissions */
 #define     __IOM    volatile            /*! Defines 'read / write' structure member permissions */
 
-/*@} end of group Cortex_STAR */
+/*@} end of group STAR-MC1 */
 
 
 
@@ -2855,8 +2855,8 @@ __STATIC_INLINE void TZ_SAU_Disable(void)
 #define CCSIDR_WAYS(x)         (((x) & SCB_CCSIDR_ASSOCIATIVITY_Msk) >> SCB_CCSIDR_ASSOCIATIVITY_Pos)
 #define CCSIDR_SETS(x)         (((x) & SCB_CCSIDR_NUMSETS_Msk      ) >> SCB_CCSIDR_NUMSETS_Pos      )
 
-#define __SCB_DCACHE_LINE_SIZE  32U /*!< STAR cache line size is fixed to 32 bytes (8 words). See also register SCB_CCSIDR */
-#define __SCB_ICACHE_LINE_SIZE  32U /*!< STAR cache line size is fixed to 32 bytes (8 words). See also register SCB_CCSIDR */
+#define __SCB_DCACHE_LINE_SIZE  32U /*!< STAR-MC1 cache line size is fixed to 32 bytes (8 words). See also register SCB_CCSIDR */
+#define __SCB_ICACHE_LINE_SIZE  32U /*!< STAR-MC1 cache line size is fixed to 32 bytes (8 words). See also register SCB_CCSIDR */
 
 /**
   \brief   Enable I-Cache
