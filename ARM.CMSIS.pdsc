@@ -12,6 +12,7 @@
       Active development ...
       CMSIS-Core(M): 5.6.0
        - Arm China STAR-MC1 cpu support
+       - Updated system_ARMCM55.c
       CMSIS-DSP: 1.10.0 (see revision history for details)
       CMSIS-NN: 3.1.0 (see revision history for details)
        - Support for int16 convolution and fully connected for reference implementation
@@ -1905,7 +1906,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="linkerScript" name="Device/ARM/ARMCM55/Source/ARM/ARMCM55_ac6_s.sct"         version="1.1.0" attr="config" condition="Startup ARMCC6 Secure"/>
         <file category="linkerScript" name="Device/ARM/ARMCM55/Source/ARM/ARMCM55_ac6.sct"           version="1.1.0" attr="config" condition="Startup ARMCC6 Unsecure"/>
         <file category="linkerScript" name="Device/ARM/ARMCM55/Source/GCC/gcc_arm.ld"                version="2.2.0" attr="config" condition="GCC"/>
-        <file category="sourceC"      name="Device/ARM/ARMCM55/Source/system_ARMCM55.c"              version="1.0.1" attr="config"/>
+        <file category="sourceC"      name="Device/ARM/ARMCM55/Source/system_ARMCM55.c"              version="1.1.0" attr="config"/>
         <!-- SAU configuration -->
         <file category="header"       name="Device/ARM/ARMCM55/Include/Template/partition_ARMCM55.h" version="1.0.0" attr="config" condition="TZ Secure"/>
       </files>
