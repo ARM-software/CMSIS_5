@@ -69,8 +69,8 @@
 #define __STAR_CMSIS_VERSION       ((__STAR_CMSIS_VERSION_MAIN << 16U) | \
                                      __STAR_CMSIS_VERSION_SUB           )      /*!< \deprecated CMSIS HAL version number */
 
-/* DCore to be changed for STAR-MC1 */
-#define __CORTEX_M                 (33U)                                       /*!< Cortex-M Core */
+/* Macro Define for STAR-MC1 */
+#define __STAR_MC                 (1U)                                       /*!< STAR-MC Core */
 
 /** __FPU_USED indicates whether an FPU is used or not.
     For this, __FPU_PRESENT has to be checked prior to making use of FPU specific registers and functions.
