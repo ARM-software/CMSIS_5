@@ -224,6 +224,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga7f74841dd08196377cc29ce98deb2c12"><td class="memItemLeft" align="right" valign="top">q7_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NNBasicMath.html#ga7f74841dd08196377cc29ce98deb2c12">arm_nn_depthwise_conv_nt_t_s8</a> (const q7_t *lhs, const q7_t *rhs, const int32_t lhs_offset, const uint16_t num_ch, const int32_t *out_shift, const int32_t *out_mult, const int32_t out_offset, const int32_t activation_min, const int32_t activation_max, const uint16_t row_x_col, const int32_t *const output_bias, q7_t *out)</td></tr>
 <tr class="memdesc:ga7f74841dd08196377cc29ce98deb2c12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Depthwise convolution of transposed rhs matrix with 4 lhs matrices. To be used in non-padded cases. Dimensions are the same for lhs and rhs.  <a href="group__NNBasicMath.html#ga7f74841dd08196377cc29ce98deb2c12">More...</a><br/></td></tr>
 <tr class="separator:ga7f74841dd08196377cc29ce98deb2c12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aefe9c7ce9a65060a244b06dffe74c4b3"><td class="memItemLeft" align="right" valign="top">q7_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__nnsupportfunctions_8h.html#aefe9c7ce9a65060a244b06dffe74c4b3">arm_nn_mat_mult_kernel_q7_q15_reordered</a> (const q7_t *pA, const q15_t *pInBuffer, const uint16_t ch_im_out, const uint16_t numCol_A, const uint16_t bias_shift, const uint16_t out_shift, const q7_t *bias, q7_t *pOut)</td></tr>
+<tr class="memdesc:aefe9c7ce9a65060a244b06dffe74c4b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Matrix-multiplication function for convolution with reordered columns.  <a href="#aefe9c7ce9a65060a244b06dffe74c4b3">More...</a><br/></td></tr>
+<tr class="separator:aefe9c7ce9a65060a244b06dffe74c4b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afdda94a339b76615d3161e9fc63f4d21"><td class="memItemLeft" align="right" valign="top">__STATIC_FORCEINLINE q31_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__nnsupportfunctions_8h.html#afdda94a339b76615d3161e9fc63f4d21">arm_nn_read_q15x2_ia</a> (const q15_t **in_q15)</td></tr>
 <tr class="memdesc:afdda94a339b76615d3161e9fc63f4d21"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read 2 q15 elements and post increment pointer.  <a href="#afdda94a339b76615d3161e9fc63f4d21">More...</a><br/></td></tr>
 <tr class="separator:afdda94a339b76615d3161e9fc63f4d21"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1062,6 +1065,89 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>References <a class="el" href="arm__nnsupportfunctions_8h.html#a7ce5ee6d8839bf541fb4bbdf4ef80eb1">DIV_POW2</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#a76b700415a2c22cea484103b7123739b">MASK_IF_ZERO</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#a518f7e0db18bea6b61a2b88f266aef20">MUL_SAT</a>, <a class="el" href="arm__nn__math__types_8h.html#a602e8d32c870d50039bbd651fd9b4544">NN_Q31_MAX</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#a4b3b6a6ed8cb224c5bcabd9ad1c94fde">SELECT_IF_NON_ZERO</a>, and <a class="el" href="arm__nnsupportfunctions_8h.html#a6f69b7e95b80e10a5f5d2ddbbfbc301f">SELECT_USING_MASK</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aefe9c7ce9a65060a244b06dffe74c4b3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">q7_t* arm_nn_mat_mult_kernel_q7_q15_reordered </td>
+          <td>(</td>
+          <td class="paramtype">const q7_t *&#160;</td>
+          <td class="paramname"><em>pA</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const q15_t *&#160;</td>
+          <td class="paramname"><em>pInBuffer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>ch_im_out</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>numCol_A</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>bias_shift</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint16_t&#160;</td>
+          <td class="paramname"><em>out_shift</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const q7_t *&#160;</td>
+          <td class="paramname"><em>bias</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">q7_t *&#160;</td>
+          <td class="paramname"><em>pOut</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">pA</td><td>pointer to operand A </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pInBuffer</td><td>pointer to operand B, always conssists of 2 vectors </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ch_im_out</td><td>numRow of A </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">numCol_A</td><td>numCol of A </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">bias_shift</td><td>amount of left-shift for bias </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">out_shift</td><td>amount of right-shift for output </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">bias</td><td>the bias </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">pOut</td><td>pointer to output </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The function returns the incremented output pointer</dd></dl>
+<p>This function assumes that data in pInBuffer are reordered</p>
+<p>Matrix-multiplication function for convolution with reordered columns.</p>
+<p>Refer to header file for details. </p>
+
+<p>References <a class="el" href="arm__nnsupportfunctions_8h.html#afdda94a339b76615d3161e9fc63f4d21">arm_nn_read_q15x2_ia()</a>, and <a class="el" href="arm__nnsupportfunctions_8h.html#a4cbd428a2b4a4f6b2a6e4219520c7ce0">NN_ROUND</a>.</p>
+
+<p>Referenced by <a class="el" href="group__NNConv.html#ga110adcfdaab356c750c6270aa5e05f29">arm_convolve_1x1_HWC_q7_fast_nonsquare()</a>, <a class="el" href="group__NNConv.html#gae00d3c1285907d59657369fc98bcc83f">arm_convolve_HWC_q7_fast()</a>, and <a class="el" href="group__NNConv.html#gabc6d6b991024e9e5c5cdbd7489de88ef">arm_convolve_HWC_q7_fast_nonsquare()</a>.</p>
 
 </div>
 </div>

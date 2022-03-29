@@ -138,10 +138,8 @@ Common Driver Functions</h1>
 <li><b>GetVersion:</b> can be called at any time to obtain version information of the driver interface.</li>
 <li><b>GetCapabilities:</b> can be called at any time to obtain capabilities of the driver interface.</li>
 <li><b>Initialize:</b> must be called before powering the peripheral using <b>PowerControl</b>. This function performs the following:<ul>
-<li>allocate I/O resources.<ul>
+<li>allocate I/O resources.</li>
 <li>register an optional <b>SignalEvent</b> callback function.</li>
-</ul>
-</li>
 </ul>
 </li>
 <li><b>SignalEvent:</b> is an optional callback function that is registered with the <b>Initialize</b> function. This callback function is initiated from interrupt service routines and indicates hardware events or the completion of a data block transfer operation.</li>
