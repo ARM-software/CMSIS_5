@@ -1072,7 +1072,8 @@ Protocol                     | Description
 :----------------------------|:-------------------------------------------------
 \ref ARM_SOCKET_IPPROTO_TCP  | Must be used with ARM_SOCKET_SOCK_STREAM socket type
 \ref ARM_SOCKET_IPPROTO_UDP  | Must be used with ARM_SOCKET_SOCK_DGRAM socket type
- 
+\token{0}                    | The system selects a matching protocol for the socket type
+
 \b Example:
  - see \ref ARM_WIFI_SocketListen, \ref ARM_WIFI_SocketConnect
 */
@@ -1143,7 +1144,7 @@ void Echo_Server_Thread (void *arg) {
       }
       if (res > 0) {
         wifi->SocketSend (sock, dbuf, res);         // Echo the data
-      }    
+      }
     }
     wifi->SocketClose (sock);
   }
