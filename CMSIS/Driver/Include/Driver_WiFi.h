@@ -254,7 +254,7 @@ typedef struct ARM_WIFI_NET_INFO_s {
                    - \ref ARM_DRIVER_ERROR_PARAMETER   : Parameter error (NULL scan_info pointer or max_num equal to 0)
 */
 /**
-  \fn            int32_t ARM_WIFI_Activate (uint32_t interface, ARM_WIFI_CONFIG_t *config)
+  \fn            int32_t ARM_WIFI_Activate (uint32_t interface, const ARM_WIFI_CONFIG_t *config)
   \brief         Activate interface (Connect to a wireless network or activate an access point).
   \param[in]     interface Interface (0 = Station, 1 = Access Point)
   \param[in]     config    Pointer to ARM_WIFI_CONFIG_t structure where Configuration parameters are located
@@ -507,7 +507,7 @@ typedef struct ARM_WIFI_NET_INFO_s {
 */
 /**
   \fn            int32_t ARM_WIFI_SocketGetPeerName (int32_t socket, uint8_t *ip, uint32_t *ip_len, uint16_t *port)
-  \brief         Retrieve remote IP address and port of a socket
+  \brief         Retrieve remote IP address and port of a socket.
   \param[in]     socket   Socket identification number
   \param[out]    ip       Pointer to buffer where remote address shall be returned (NULL for none)
   \param[in,out] ip_len   Pointer to length of 'ip' (or NULL if 'ip' is NULL)

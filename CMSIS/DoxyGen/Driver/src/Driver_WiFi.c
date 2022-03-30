@@ -624,11 +624,11 @@ for (i = 0; i < num; i++) {
 \endcode
 */
 
-int32_t ARM_WIFI_Activate (uint32_t interface, ARM_WIFI_CONFIG_t *config) {
+int32_t ARM_WIFI_Activate (uint32_t interface, const ARM_WIFI_CONFIG_t *config) {
   return ARM_DRIVER_OK;
 }
 /**
-\fn int32_t ARM_WIFI_Activate (uint32_t interface, ARM_WIFI_CONFIG_t *config)
+\fn int32_t ARM_WIFI_Activate (uint32_t interface, const ARM_WIFI_CONFIG_t *config)
 \details
 The function \b ARM_WIFI_Activate activates the specified interface.
 
