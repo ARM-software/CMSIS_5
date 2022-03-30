@@ -30,7 +30,7 @@ var group__wifi__management__gr =
     [ "ARM_WIFI_SetOption", "group__wifi__management__gr.html#gaf38a7aeb470eec596febc850c8b69ccf", null ],
     [ "ARM_WIFI_GetOption", "group__wifi__management__gr.html#ga56910984e5068f6502e12f72e1f80edf", null ],
     [ "ARM_WIFI_Scan", "group__wifi__management__gr.html#ga856972af36e51cf0c4112029332d529f", null ],
-    [ "ARM_WIFI_Activate", "group__wifi__management__gr.html#ga7d545744a848702d75043de30ea5260a", null ],
+    [ "ARM_WIFI_Activate", "group__wifi__management__gr.html#ga1c66b78c07133b6cf463d32401a0eacc", null ],
     [ "ARM_WIFI_Deactivate", "group__wifi__management__gr.html#ga1842127df60067481ac2f40d19153e3e", null ],
     [ "ARM_WIFI_IsConnected", "group__wifi__management__gr.html#ga3d641222defb5f52f6dae4ce1d540d0f", null ],
     [ "ARM_WIFI_GetNetInfo", "group__wifi__management__gr.html#ga29a5b0072470a8c56f0939f3c97ed08e", null ]

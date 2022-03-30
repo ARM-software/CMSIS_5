@@ -155,16 +155,16 @@ Functions</h2></td></tr>
 <tr class="memdesc:gac0f189afbd35914d4c85e77b40672b16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connect a socket to a remote host.  <a href="#gac0f189afbd35914d4c85e77b40672b16">More...</a><br/></td></tr>
 <tr class="separator:gac0f189afbd35914d4c85e77b40672b16"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaecc9ba19491ed00c27da3f5677895d48"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__wifi__socket__gr.html#gaecc9ba19491ed00c27da3f5677895d48">ARM_WIFI_SocketRecv</a> (int32_t socket, void *buf, uint32_t len)</td></tr>
-<tr class="memdesc:gaecc9ba19491ed00c27da3f5677895d48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive data on a connected socket.  <a href="#gaecc9ba19491ed00c27da3f5677895d48">More...</a><br/></td></tr>
+<tr class="memdesc:gaecc9ba19491ed00c27da3f5677895d48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive data or check if data is available on a connected socket.  <a href="#gaecc9ba19491ed00c27da3f5677895d48">More...</a><br/></td></tr>
 <tr class="separator:gaecc9ba19491ed00c27da3f5677895d48"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2b15232d69f2ae8e189512d6c68c8a81"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__wifi__socket__gr.html#ga2b15232d69f2ae8e189512d6c68c8a81">ARM_WIFI_SocketRecvFrom</a> (int32_t socket, void *buf, uint32_t len, uint8_t *ip, uint32_t *ip_len, uint16_t *port)</td></tr>
-<tr class="memdesc:ga2b15232d69f2ae8e189512d6c68c8a81"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive data on a socket.  <a href="#ga2b15232d69f2ae8e189512d6c68c8a81">More...</a><br/></td></tr>
+<tr class="memdesc:ga2b15232d69f2ae8e189512d6c68c8a81"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive data or check if data is available on a socket.  <a href="#ga2b15232d69f2ae8e189512d6c68c8a81">More...</a><br/></td></tr>
 <tr class="separator:ga2b15232d69f2ae8e189512d6c68c8a81"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaee8615b026e8525fb21ca45ba3778ac8"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__wifi__socket__gr.html#gaee8615b026e8525fb21ca45ba3778ac8">ARM_WIFI_SocketSend</a> (int32_t socket, const void *buf, uint32_t len)</td></tr>
-<tr class="memdesc:gaee8615b026e8525fb21ca45ba3778ac8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send data on a connected socket.  <a href="#gaee8615b026e8525fb21ca45ba3778ac8">More...</a><br/></td></tr>
+<tr class="memdesc:gaee8615b026e8525fb21ca45ba3778ac8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send data or check if data can be sent on a connected socket.  <a href="#gaee8615b026e8525fb21ca45ba3778ac8">More...</a><br/></td></tr>
 <tr class="separator:gaee8615b026e8525fb21ca45ba3778ac8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5ddd3dd5f863b8392e4281dd48a28d28"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__wifi__socket__gr.html#ga5ddd3dd5f863b8392e4281dd48a28d28">ARM_WIFI_SocketSendTo</a> (int32_t socket, const void *buf, uint32_t len, const uint8_t *ip, uint32_t ip_len, uint16_t port)</td></tr>
-<tr class="memdesc:ga5ddd3dd5f863b8392e4281dd48a28d28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send data on a socket.  <a href="#ga5ddd3dd5f863b8392e4281dd48a28d28">More...</a><br/></td></tr>
+<tr class="memdesc:ga5ddd3dd5f863b8392e4281dd48a28d28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send data or check if data can be sent on a socket.  <a href="#ga5ddd3dd5f863b8392e4281dd48a28d28">More...</a><br/></td></tr>
 <tr class="separator:ga5ddd3dd5f863b8392e4281dd48a28d28"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac187e418893de33817e4fcbdd85dbaee"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__wifi__socket__gr.html#gac187e418893de33817e4fcbdd85dbaee">ARM_WIFI_SocketGetSockName</a> (int32_t socket, uint8_t *ip, uint32_t *ip_len, uint16_t *port)</td></tr>
 <tr class="memdesc:gac187e418893de33817e4fcbdd85dbaee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve local IP address and port of a socket.  <a href="#gac187e418893de33817e4fcbdd85dbaee">More...</a><br/></td></tr>
@@ -266,6 +266,8 @@ Functions</h2></td></tr>
 <td align="left"><a class="el" href="group__wifi__protocol.html#gaf07cfcf1b65ea6c6be0629459a2ba781">ARM_SOCKET_IPPROTO_TCP</a> </td><td align="left">Must be used with ARM_SOCKET_SOCK_STREAM socket type </td></tr>
 <tr>
 <td align="left"><a class="el" href="group__wifi__protocol.html#gabacbead83c772f5737b25b4fc390e16d">ARM_SOCKET_IPPROTO_UDP</a> </td><td align="left">Must be used with ARM_SOCKET_SOCK_DGRAM socket type </td></tr>
+<tr>
+<td align="left"><span class="XML-Token">0</span> </td><td align="left">The system selects a matching protocol for the socket type </td></tr>
 </table>
 <p><b>Example:</b> </p>
 <ul>
@@ -410,7 +412,7 @@ Functions</h2></td></tr>
 <div class="line">      }</div>
 <div class="line">      <span class="keywordflow">if</span> (res &gt; 0) {</div>
 <div class="line">        wifi-&gt;<a class="code" href="group__wifi__interface__gr.html#a7ff47d391831d547d310dd66f22c2942">SocketSend</a> (sock, dbuf, res);         <span class="comment">// Echo the data</span></div>
-<div class="line">      }    </div>
+<div class="line">      }</div>
 <div class="line">    }</div>
 <div class="line">    wifi-&gt;<a class="code" href="group__wifi__interface__gr.html#a471a1be6d9adbccb83ca1f268643031c">SocketClose</a> (sock);</div>
 <div class="line">  }</div>
@@ -631,17 +633,18 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Receive data on a connected socket. </p>
+<p>Receive data or check if data is available on a connected socket. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">socket</td><td>Socket identification number </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">buf</td><td>Pointer to buffer where data should be stored </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>Length of buffer (in bytes) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>Length of buffer (in bytes), set len = 0 to check if data is available </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>status information<ul>
-<li>number of bytes received (&gt;=0)</li>
+<li>number of bytes received (&gt;=0), if len != 0</li>
+<li>0 : Data is available (len = 0)</li>
 <li><a class="el" href="group__wifi__soc__func.html#ga535e069b83aafcf70dd089e6097bceef">ARM_SOCKET_ESOCK</a> : Invalid socket</li>
 <li><a class="el" href="group__wifi__soc__func.html#ga695aa5c5329602d9465fbc6c22fc9978">ARM_SOCKET_EINVAL</a> : Invalid argument (pointer to buffer or length)</li>
 <li><a class="el" href="group__wifi__soc__func.html#ga0bde95e313d907032074583bc06b24a1">ARM_SOCKET_ENOTCONN</a> : Socket is not connected</li>
@@ -712,12 +715,12 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Receive data on a socket. </p>
+<p>Receive data or check if data is available on a socket. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">socket</td><td>Socket identification number </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">buf</td><td>Pointer to buffer where data should be stored </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>Length of buffer (in bytes) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>Length of buffer (in bytes), set len = 0 to check if data is available </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">ip</td><td>Pointer to buffer where remote source address shall be returned (NULL for none) </td></tr>
     <tr><td class="paramdir">[in,out]</td><td class="paramname">ip_len</td><td>Pointer to length of 'ip' (or NULL if 'ip' is NULL)<ul>
 <li>length of supplied 'ip' on input</li>
@@ -729,7 +732,8 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>status information<ul>
-<li>number of bytes received (&gt;=0)</li>
+<li>number of bytes received (&gt;=0), if len != 0</li>
+<li>0 : Data is available (len = 0)</li>
 <li><a class="el" href="group__wifi__soc__func.html#ga535e069b83aafcf70dd089e6097bceef">ARM_SOCKET_ESOCK</a> : Invalid socket</li>
 <li><a class="el" href="group__wifi__soc__func.html#ga695aa5c5329602d9465fbc6c22fc9978">ARM_SOCKET_EINVAL</a> : Invalid argument (pointer to buffer or length)</li>
 <li><a class="el" href="group__wifi__soc__func.html#ga0bde95e313d907032074583bc06b24a1">ARM_SOCKET_ENOTCONN</a> : Socket is not connected</li>
@@ -817,17 +821,18 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Send data on a connected socket. </p>
+<p>Send data or check if data can be sent on a connected socket. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">socket</td><td>Socket identification number </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">buf</td><td>Pointer to buffer containing data to send </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>Length of data (in bytes) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>Length of data (in bytes), set len = 0 to check if data can be sent </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>status information<ul>
-<li>number of bytes sent (&gt;=0)</li>
+<li>number of bytes sent (&gt;=0), if len != 0</li>
+<li>0 : Data can be sent (len = 0)</li>
 <li><a class="el" href="group__wifi__soc__func.html#ga535e069b83aafcf70dd089e6097bceef">ARM_SOCKET_ESOCK</a> : Invalid socket</li>
 <li><a class="el" href="group__wifi__soc__func.html#ga695aa5c5329602d9465fbc6c22fc9978">ARM_SOCKET_EINVAL</a> : Invalid argument (pointer to buffer or length)</li>
 <li><a class="el" href="group__wifi__soc__func.html#ga0bde95e313d907032074583bc06b24a1">ARM_SOCKET_ENOTCONN</a> : Socket is not connected</li>
@@ -902,12 +907,12 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Send data on a socket. </p>
+<p>Send data or check if data can be sent on a socket. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">socket</td><td>Socket identification number </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">buf</td><td>Pointer to buffer containing data to send </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>Length of data (in bytes) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>Length of data (in bytes), set len = 0 to check if data can be sent </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">ip</td><td>Pointer to remote destination IP address </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">ip_len</td><td>Length of 'ip' address in bytes </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">port</td><td>Remote destination port number </td></tr>
@@ -915,7 +920,8 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>status information<ul>
-<li>number of bytes sent (&gt;=0)</li>
+<li>number of bytes sent (&gt;=0), if len != 0</li>
+<li>0 : Data can be sent (len = 0)</li>
 <li><a class="el" href="group__wifi__soc__func.html#ga535e069b83aafcf70dd089e6097bceef">ARM_SOCKET_ESOCK</a> : Invalid socket</li>
 <li><a class="el" href="group__wifi__soc__func.html#ga695aa5c5329602d9465fbc6c22fc9978">ARM_SOCKET_EINVAL</a> : Invalid argument (pointer to buffer or length)</li>
 <li><a class="el" href="group__wifi__soc__func.html#ga0bde95e313d907032074583bc06b24a1">ARM_SOCKET_ENOTCONN</a> : Socket is not connected</li>

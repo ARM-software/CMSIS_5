@@ -201,7 +201,7 @@ var searchData=
   ['arm_5fusbh_5fsignalpipeevent',['ARM_USBH_SignalPipeEvent',['../group__usbh__host__gr.html#gae58d36afd83a0e32b07e89fb7145c9de',1,'Driver_USBH.c']]],
   ['arm_5fusbh_5fsignalportevent',['ARM_USBH_SignalPortEvent',['../group__usbh__host__gr.html#ga53619da2a3d56934629084b0d5c4700c',1,'Driver_USBH.c']]],
   ['arm_5fusbh_5funinitialize',['ARM_USBH_Uninitialize',['../group__usbh__host__gr.html#gafc2f18bc12bb0019f9cd1836dcca408d',1,'Driver_USBH.c']]],
-  ['arm_5fwifi_5factivate',['ARM_WIFI_Activate',['../group__wifi__management__gr.html#ga7d545744a848702d75043de30ea5260a',1,'Driver_WiFi.c']]],
+  ['arm_5fwifi_5factivate',['ARM_WIFI_Activate',['../group__wifi__management__gr.html#ga1c66b78c07133b6cf463d32401a0eacc',1,'Driver_WiFi.c']]],
   ['arm_5fwifi_5fbypasscontrol',['ARM_WIFI_BypassControl',['../group__wifi__bypass__gr.html#ga678fa1aa06ca6aaa67c7eb7a7660730e',1,'Driver_WiFi.c']]],
   ['arm_5fwifi_5fdeactivate',['ARM_WIFI_Deactivate',['../group__wifi__management__gr.html#ga1842127df60067481ac2f40d19153e3e',1,'Driver_WiFi.c']]],
   ['arm_5fwifi_5fethgetrxframesize',['ARM_WIFI_EthGetRxFrameSize',['../group__wifi__bypass__gr.html#gab67442ff061d0c4311a7046bce8d0cd1',1,'Driver_WiFi.c']]],

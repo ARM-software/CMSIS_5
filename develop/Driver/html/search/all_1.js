@@ -1006,7 +1006,7 @@ var searchData=
   ['arm_5fusbh_5fsignalportevent',['ARM_USBH_SignalPortEvent',['../group__usbh__host__gr.html#ga53619da2a3d56934629084b0d5c4700c',1,'Driver_USBH.c']]],
   ['arm_5fusbh_5fsignalportevent_5ft',['ARM_USBH_SignalPortEvent_t',['../group__usbh__host__gr.html#ga61edcbb6ee863fe87abee488d78e1051',1,'Driver_USBH.h']]],
   ['arm_5fusbh_5funinitialize',['ARM_USBH_Uninitialize',['../group__usbh__host__gr.html#gafc2f18bc12bb0019f9cd1836dcca408d',1,'Driver_USBH.c']]],
-  ['arm_5fwifi_5factivate',['ARM_WIFI_Activate',['../group__wifi__management__gr.html#ga7d545744a848702d75043de30ea5260a',1,'Driver_WiFi.c']]],
+  ['arm_5fwifi_5factivate',['ARM_WIFI_Activate',['../group__wifi__management__gr.html#ga1c66b78c07133b6cf463d32401a0eacc',1,'Driver_WiFi.c']]],
   ['arm_5fwifi_5fapi_5fversion',['ARM_WIFI_API_VERSION',['../Driver__WiFi_8h.html#aa6a3705716b58d58fdbf72d8308f1383',1,'Driver_WiFi.h']]],
   ['arm_5fwifi_5fbeacon',['ARM_WIFI_BEACON',['../group__WiFi__option.html#ga6171d24c661b54465ced2dae7980897c',1,'Driver_WiFi.c']]],
   ['arm_5fwifi_5fbssid',['ARM_WIFI_BSSID',['../group__WiFi__option.html#gae84cbf48cd5168371621fc5f78aac0a4',1,'Driver_WiFi.c']]],
