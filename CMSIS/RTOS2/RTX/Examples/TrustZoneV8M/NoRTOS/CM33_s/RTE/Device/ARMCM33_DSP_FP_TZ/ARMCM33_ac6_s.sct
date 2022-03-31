@@ -36,9 +36,9 @@
 #define __STACK_SIZE    0x00000400
 #define __HEAP_SIZE     0x00000C00
 
-/*--------------------- CMSE Venner Configuration ---------------------------
-; <h> CMSE Venner Configuration
-;   <o0>  CMSE Venner Size (in Bytes) <0x0-0xFFFFFFFF:32>
+/*--------------------- CMSE Veneer Configuration ---------------------------
+; <h> CMSE Veneer Configuration
+;   <o0>  CMSE Veneer Size (in Bytes) <0x0-0xFFFFFFFF:32>
 ; </h>
  *----------------------------------------------------------------------------*/
 #define __CMSEVENEER_SIZE    0x200
@@ -111,7 +111,7 @@ LR_ROM __RO_BASE __RO_SIZE  {                       ; load region size_region
 }
 
 #if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
-LR_CMSE_VENEER __CV_BASE ALIGN 32 __CV_SIZE  {      ; own load/execution region for CMSE Venners
+LR_CMSE_VENEER __CV_BASE ALIGN 32 __CV_SIZE  {      ; own load/execution region for CMSE Veneers
   ER_CMSE_VENEER __CV_BASE __CV_SIZE  {
    *(Veneer$$CMSE)
   }
