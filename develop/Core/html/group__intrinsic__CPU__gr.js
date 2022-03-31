@@ -39,7 +39,7 @@ var group__intrinsic__CPU__gr =
     [ "__STREXW", "group__intrinsic__CPU__gr.html#ga335deaaa7991490e1450cb7d1e4c5197", null ],
     [ "__STRHT", "group__intrinsic__CPU__gr.html#ga2b5d93b8e461755b1072a03df3f1722e", null ],
     [ "__STRT", "group__intrinsic__CPU__gr.html#ga625bc4ac0b1d50de9bcd13d9f050030e", null ],
-    [ "__USAT", "group__intrinsic__CPU__gr.html#ga76bbe4374a5912362866cdc1ded4064a", null ],
+    [ "__USAT", "group__intrinsic__CPU__gr.html#ga9ba87371aebd17dd6244ed3458b29b5d", null ],
     [ "__WFE", "group__intrinsic__CPU__gr.html#gad3efec76c3bfa2b8528ded530386c563", null ],
     [ "__WFI", "group__intrinsic__CPU__gr.html#gaed91dfbf3d7d7b7fba8d912fcbeaad88", null ]
 ];

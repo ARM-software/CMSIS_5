@@ -142,7 +142,7 @@ var searchData=
   ['_5f_5fuqsub8',['__UQSUB8',['../group__intrinsic__SIMD__gr.html#ga9736fe816aec74fe886e7fb949734eab',1,'Ref_cm4_simd.txt']]],
   ['_5f_5fusad8',['__USAD8',['../group__intrinsic__SIMD__gr.html#gac8855c07044239ea775c8128013204f0',1,'Ref_cm4_simd.txt']]],
   ['_5f_5fusada8',['__USADA8',['../group__intrinsic__SIMD__gr.html#gad032bd21f013c5d29f5fcb6b0f02bc3f',1,'Ref_cm4_simd.txt']]],
-  ['_5f_5fusat',['__USAT',['../group__intrinsic__CPU__gr.html#ga76bbe4374a5912362866cdc1ded4064a',1,'Ref_cmInstr.txt']]],
+  ['_5f_5fusat',['__USAT',['../group__intrinsic__CPU__gr.html#ga9ba87371aebd17dd6244ed3458b29b5d',1,'Ref_cmInstr.txt']]],
   ['_5f_5fusat16',['__USAT16',['../group__intrinsic__SIMD__gr.html#ga967f516afff5900cf30f1a81907cdd89',1,'Ref_cm4_simd.txt']]],
   ['_5f_5fusax',['__USAX',['../group__intrinsic__SIMD__gr.html#ga578a082747436772c482c96d7a58e45e',1,'Ref_cm4_simd.txt']]],
   ['_5f_5fusub16',['__USUB16',['../group__intrinsic__SIMD__gr.html#ga9f2b77e11fc4a77b26c36c423ed45b4e',1,'Ref_cm4_simd.txt']]],
