@@ -236,10 +236,13 @@ void __CLREX(void);
 
 
 /**************************************************************************************************/
-/** \brief  Signed Saturate [not for Cortex-M0, Cortex-M0+, or SC000]
+/** \brief  Signed Saturate
 
-    This function saturates a signed value [not for Cortex-M0, Cortex-M0+, or SC000].
-    The Q bit is set if saturation occurs.
+    This function saturates a signed value.
+    The Q bit is set if saturation occurs [not for Cortex-M0, Cortex-M0+, or SC000].
+
+    On Armv6-M (Cortex-M0, Cortex-M0+, and SC000) this function is not available as a core instruction
+    instruction and thus __SSAT is implemented in software.
 
     \param [in]  value  Value to be saturated
     \param [in]    sat  Bit position to saturate to [1..32]
@@ -249,16 +252,19 @@ int32_t __SSAT(int32_t value, uint32_t sat);
 
 
 /**************************************************************************************************/
-/** \brief  Unsigned Saturate [not for Cortex-M0, Cortex-M0+, or SC000]
+/** \brief  Unsigned Saturate
 
-    This function saturates an unsigned value [not for Cortex-M0, Cortex-M0+, or SC000].
-    The Q bit is set if saturation occurs.
+    This function saturates an unsigned value.
+    The Q bit is set if saturation occurs [not for Cortex-M0, Cortex-M0+, or SC000].
+
+    On Armv6-M (Cortex-M0, Cortex-M0+, and SC000) this function is not available as a core instruction
+    instruction and thus __USAT is implemented in software.
 
     \param [in]  value  Value to be saturated
     \param [in]    sat  Bit position to saturate to [0..31]
     \return             Saturated value
  */
-uint32_t __USAT(uint32_t value, uint32_t sat);
+uint32_t __USAT(int32_t value, uint32_t sat);
 
 
 /**************************************************************************************************/
