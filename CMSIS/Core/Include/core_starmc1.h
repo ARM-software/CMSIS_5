@@ -1,12 +1,12 @@
 /**************************************************************************//**
  * @file     core_starmc1.h
  * @brief    CMSIS ArmChina STAR-MC1 Core Peripheral Access Layer Header File
- * @version  V1.0.0
- * @date     12. June 2021
+ * @version  V1.0.1
+ * @date     29. March 2022
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2018 Arm Limited. 
- * Copyright (c) 2018-2020 ArmChina. 
+ * Copyright (c) 2018-2022 ArmChina. 
  * All rights reserved.
  * SPDX-License-Identifier: Apache-2.0
  *
