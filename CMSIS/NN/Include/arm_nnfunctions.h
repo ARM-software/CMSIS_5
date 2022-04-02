@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2021 Arm Limited or its affiliates.
+ * Copyright (C) 2010-2022 Arm Limited or its affiliates.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_nnfunctions.h
  * Description:  Public header file for CMSIS NN Library
  *
- * $Date:        17 August 2021
- * $Revision:    V.7.3.1
+ * $Date:        10 March 2022
+ * $Revision:    V.8.1.1
  *
  * Target Processor:  Cortex-M CPUs
  * -------------------------------------------------------------------- */
@@ -50,6 +50,15 @@
    * types including 8-bit integers (q7_t) and 16-bit integers (q15_t). The descrition of the
    * kernels are included in the function description. The implementation details are also
    * described in this paper [1].
+   *
+   * Supported Processors
+   * -------
+   * CMSIS-NN targets Cortex-M processors with typically three different implementations for each function. Each
+   * targets a different group of processors.
+   *  - Processors without SIMD capability (e.g, Cortex-M0)
+   *  - Processors with DSP extention (e.g Cortex-M4)
+   *  - Processors with MVE extension (e.g Cortex-M55)
+   * The right implementation is picked through feature flags and the user usually does not have to explicit set it.
    *
    * Function Classification
    * --------
@@ -1130,14 +1139,14 @@ int32_t arm_depthwise_conv_wrapper_s8_get_buffer_size(const cmsis_nn_dw_conv_par
  * @param[in]      quant_params   Per-channel quantization info.
  *                               It contains the multiplier and shift values to be applied to each
  *                               output channel
- * @param[in]      input_dims     Input (activation) tensor dimensions. Format: [1, H, W, C_IN]
+ * @param[in]      input_dims     Input (activation) tensor dimensions. Format: [N, H, W, C_IN]
  *                                Batch argument N is not used.
  * @param[in]      input_data     Input (activation) data pointer. Data type: int8
  * @param[in]      filter_dims    Filter tensor dimensions. Format: [1, H, W, C_OUT]
  * @param[in]      filter_data    Filter data pointer. Data type: int8
  * @param[in]      bias_dims      Bias tensor dimensions. Format: [C_OUT]
  * @param[in]      bias_data      Bias data pointer. Data type: int32
- * @param[in]      output_dims    Output tensor dimensions. Format: [1, H, W, C_OUT]
+ * @param[in]      output_dims    Output tensor dimensions. Format: [N, H, W, C_OUT]
  * @param[in, out] output_data    Output data pointer. Data type: int8
  * @return     The function returns <code>ARM_MATH_SUCCESS</code>
  *
@@ -1156,6 +1165,47 @@ arm_status arm_depthwise_conv_s8(const cmsis_nn_context *ctx,
                                  const int32_t *bias_data,
                                  const cmsis_nn_dims *output_dims,
                                  q7_t *output_data);
+
+/**
+ * @brief Basic s16 depthwise convolution function that doesn't have any constraints on the input dimensions.
+ *
+ * @param[in, out] ctx            Function context (e.g. temporary buffer). Check the function
+ *                                definition file to see if an additional buffer is required.
+ *                                Optional function {API}_get_buffer_size() provides the buffer
+ *                                size if an additional buffer is required.
+ *                                exists if additional memory is.
+ * @param[in]      dw_conv_params Depthwise convolution parameters (e.g. strides, dilations, pads,...)
+ *                                conv_params->input_offset  : Not used
+ *                                conv_params->output_offset : Not used
+ * @param[in]      quant_params   Per-channel quantization info.
+ *                               It contains the multiplier and shift values to be applied to each
+ *                               output channel
+ * @param[in]      input_dims     Input (activation) tensor dimensions. Format: [N, H, W, C_IN]
+ *                                Batch argument N is not used.
+ * @param[in]      input_data     Input (activation) data pointer. Data type: int8
+ * @param[in]      filter_dims    Filter tensor dimensions. Format: [1, H, W, C_OUT]
+ * @param[in]      filter_data    Filter data pointer. Data type: int8
+ * @param[in]      bias_dims      Bias tensor dimensions. Format: [C_OUT]
+ * @param[in]      bias_data      Bias data pointer. Data type: int64
+ * @param[in]      output_dims    Output tensor dimensions. Format: [N, H, W, C_OUT]
+ * @param[in, out] output_data    Output data pointer. Data type: int16
+ * @return     The function returns <code>ARM_MATH_SUCCESS</code>
+ *
+ * @details
+ *    - Supported framework: TensorFlow Lite
+ *    - q15 is used as data type eventhough it is s16 data. It is done so to be consistent with existing APIs.
+ */
+arm_status arm_depthwise_conv_s16(const cmsis_nn_context *ctx,
+                                  const cmsis_nn_dw_conv_params *dw_conv_params,
+                                  const cmsis_nn_per_channel_quant_params *quant_params,
+                                  const cmsis_nn_dims *input_dims,
+                                  const q15_t *input,
+                                  const cmsis_nn_dims *filter_dims,
+                                  const q7_t *kernel,
+                                  const cmsis_nn_dims *bias_dims,
+                                  const int64_t *bias,
+                                  const cmsis_nn_dims *output_dims,
+                                  q15_t *output);
 
 /**
  * @brief Optimized s8 depthwise convolution function for 3x3 kernel size with some constraints on
@@ -1544,87 +1594,6 @@ q7_t *arm_nn_mat_mult_kernel_q7_q15(const q7_t *pA,
                                     const uint16_t out_shift,
                                     const q7_t *bias,
                                     q7_t *pOut);
-/**
- * @brief Matrix-multiplication function for convolution with per-channel requantization.
- * @param[in]       input_a     pointer to operand A
- * @param[in]       input_b     pointer to operand B, always consists of 2 vectors.
- * @param[in]       output_ch   number of rows of A
- * @param[in]       out_shift  pointer to per output channel requantization shift parameter.
- * @param[in]       out_mult   pointer to per output channel requantization multiplier parameter.
- * @param[in]       out_offset      output tensor offset.
- * @param[in]       activation_min   minimum value to clamp the output to. Range : int8
- * @param[in]       activation_max   maximum value to clamp the output to. Range : int8
- * @param[in]       num_col_a   number of columns of A
- * @param[in]       output_bias per output channel bias. Range : int32
- * @param[in,out]   out_0       pointer to output
- * @return     The function returns one of the two
- *              1. The incremented output pointer for a successful operation or
- *              2. NULL if implementation is not available.
- *
- * @details   This function does the matrix multiplication of weight matrix for all output channels
- *            with 2 columns from im2col and produces two elements/output_channel. The outputs are
- *            clamped in the range provided by activation min and max.
- *            Supported framework: TensorFlow Lite micro.
- */
-q7_t *arm_nn_mat_mult_kernel_s8_s16(const q7_t *input_a,
-                                    const q15_t *input_b,
-                                    const uint16_t output_ch,
-                                    const int32_t *out_shift,
-                                    const int32_t *out_mult,
-                                    const int32_t out_offset,
-                                    const int16_t activation_min,
-                                    const int16_t activation_max,
-                                    const uint16_t num_col_a,
-                                    const int32_t *const output_bias,
-                                    q7_t *out_0);
-
-/**
- * @brief Matrix-multiplication of re-ordered input B with A.
- *
- * @details  For arguments, refer arm_nn_mat_mult_kernel_s8_s16. The re-ordering is a consequence
- *           of sign extension done by the SXTB16 command on input_b. The outputs are clamped in the range
- *           provided by activation min and max.
- *   * @details
- *   - Supported framework : TensorFlow Lite Micro
- *   - The following constrains on the arguments apply
- *      -# num_col_a is a multiple of 4
- *      -# output_ch is a multiple of 2
- *
- */
-q7_t *arm_nn_mat_mult_kernel_s8_s16_reordered(const q7_t *input_a,
-                                              const q15_t *input_b,
-                                              const uint16_t output_ch,
-                                              const int32_t *out_shift,
-                                              const int32_t *out_mult,
-                                              const int32_t out_offset,
-                                              const int16_t activation_min,
-                                              const int16_t activation_max,
-                                              const uint16_t num_col_a,
-                                              const int32_t *const output_bias,
-                                              q7_t *out_0);
-
-/**
- *@brief Matrix-multiplication function for convolution with reordered columns
- *@param[in]       pA          pointer to operand A
- *@param[in]       pInBuffer   pointer to operand B, always conssists of 2 vectors
- *@param[in]       ch_im_out   numRow of A
- *@param[in]       numCol_A    numCol of A
- *@param[in]       bias_shift  amount of left-shift for bias
- *@param[in]       out_shift   amount of right-shift for output
- *@param[in]       bias        the bias
- *@param[in,out]   pOut        pointer to output
- *@return     The function returns the incremented output pointer
- *
- *@details  This function assumes that data in pInBuffer are reordered
- */
-q7_t *arm_nn_mat_mult_kernel_q7_q15_reordered(const q7_t *pA,
-                                              const q15_t *pInBuffer,
-                                              const uint16_t ch_im_out,
-                                              const uint16_t numCol_A,
-                                              const uint16_t bias_shift,
-                                              const uint16_t out_shift,
-                                              const q7_t *bias,
-                                              q7_t *pOut);
 
 #ifdef __cplusplus
 }
@@ -1643,27 +1612,27 @@ extern "C" {
 /**
  * @defgroup BasicMath Basic math functions
  *
- * Element wise add and multiplication functions.
+ * Elementwise add and multiplication functions.
  *
  */
 
 /**
- * @brief s8 element wise add of two vectors
+ * @brief s8 elementwise add of two vectors
  * @param[in]       input_1_vect            pointer to input vector 1
  * @param[in]       input_2_vect            pointer to input vector 2
- * @param[in]       input_1_offset          offset for input 1. Range: Range: -127 to 128
+ * @param[in]       input_1_offset          offset for input 1. Range: -127 to 128
  * @param[in]       input_1_mult            multiplier for input 1
  * @param[in]       input_1_shift           shift for input 1
- * @param[in]       input_2_offset          offset for input 2. Range: Range: -127 to 128
+ * @param[in]       input_2_offset          offset for input 2. Range: -127 to 128
  * @param[in]       input_2_mult            multiplier for input 2
  * @param[in]       input_2_shift           shift for input 2
  * @param[in]       left_shift              input left shift
  * @param[in,out]   output                  pointer to output vector
- * @param[in]       out_offset              output offset
+ * @param[in]       out_offset              output offset.  Range: -128 to 127
  * @param[in]       out_mult                output multiplier
  * @param[in]       out_shift               output shift
- * @param[in]       out_activation_min      minimum value to clamp output to
- * @param[in]       out_activation_max      maximum value to clamp output to
+ * @param[in]       out_activation_min      minimum value to clamp output to. Min: -128
+ * @param[in]       out_activation_max      maximum value to clamp output to. Max: 127
  * @param[in]       block_size              number of samples
  * @return          The function returns    ARM_MATH_SUCCESS
  */
@@ -1682,20 +1651,57 @@ arm_status arm_elementwise_add_s8(const int8_t *input_1_vect,
                                   const int32_t out_shift,
                                   const int32_t out_activation_min,
                                   const int32_t out_activation_max,
-                                  const uint32_t block_size);
+                                  const int32_t block_size);
 
 /**
- * @brief s8 element wise multiplication
+ * @brief s16 elementwise add of two vectors
  * @param[in]       input_1_vect            pointer to input vector 1
  * @param[in]       input_2_vect            pointer to input vector 2
- * @param[in]       input_1_offset          offset for input 1. Range: Range: -127 to 128
- * @param[in]       input_2_offset          offset for input 2. Range: Range: -127 to 128
+ * @param[in]       input_1_offset          offset for input 1. Not used.
+ * @param[in]       input_1_mult            multiplier for input 1
+ * @param[in]       input_1_shift           shift for input 1
+ * @param[in]       input_2_offset          offset for input 2. Not used.
+ * @param[in]       input_2_mult            multiplier for input 2
+ * @param[in]       input_2_shift           shift for input 2
+ * @param[in]       left_shift              input left shift
  * @param[in,out]   output                  pointer to output vector
- * @param[in]       out_offset              output offset
+ * @param[in]       out_offset              output offset. Not used.
  * @param[in]       out_mult                output multiplier
  * @param[in]       out_shift               output shift
- * @param[in]       out_activation_min      minimum value to clamp output to
- * @param[in]       out_activation_max      maximum value to clamp output to
+ * @param[in]       out_activation_min      minimum value to clamp output to. Min: -32768
+ * @param[in]       out_activation_max      maximum value to clamp output to. Max: 32767
+ * @param[in]       block_size              number of samples
+ * @return          The function returns    ARM_MATH_SUCCESS
+ */
+arm_status arm_elementwise_add_s16(const int16_t *input_1_vect,
+                                   const int16_t *input_2_vect,
+                                   const int32_t input_1_offset,
+                                   const int32_t input_1_mult,
+                                   const int32_t input_1_shift,
+                                   const int32_t input_2_offset,
+                                   const int32_t input_2_mult,
+                                   const int32_t input_2_shift,
+                                   const int32_t left_shift,
+                                   int16_t *output,
+                                   const int32_t out_offset,
+                                   const int32_t out_mult,
+                                   const int32_t out_shift,
+                                   const int32_t out_activation_min,
+                                   const int32_t out_activation_max,
+                                   const int32_t block_size);
+
+/**
+ * @brief s8 elementwise multiplication
+ * @param[in]       input_1_vect            pointer to input vector 1
+ * @param[in]       input_2_vect            pointer to input vector 2
+ * @param[in]       input_1_offset          offset for input 1. Range: -127 to 128
+ * @param[in]       input_2_offset          offset for input 2. Range: -127 to 128
+ * @param[in,out]   output                  pointer to output vector
+ * @param[in]       out_offset              output offset. Range: -128 to 127
+ * @param[in]       out_mult                output multiplier
+ * @param[in]       out_shift               output shift
+ * @param[in]       out_activation_min      minimum value to clamp output to. Min: -128
+ * @param[in]       out_activation_max      maximum value to clamp output to. Max: 127
  * @param[in]       block_size              number of samples
  * @return          The function returns    ARM_MATH_SUCCESS
  *
@@ -1711,7 +1717,37 @@ arm_status arm_elementwise_mul_s8(const int8_t *input_1_vect,
                                   const int32_t out_shift,
                                   const int32_t out_activation_min,
                                   const int32_t out_activation_max,
-                                  const uint32_t block_size);
+                                  const int32_t block_size);
+
+/**
+ * @brief s16 elementwise multiplication
+ * @param[in]       input_1_vect            pointer to input vector 1
+ * @param[in]       input_2_vect            pointer to input vector 2
+ * @param[in]       input_1_offset          offset for input 1. Not used.
+ * @param[in]       input_2_offset          offset for input 2. Not used.
+ * @param[in,out]   output                  pointer to output vector
+ * @param[in]       out_offset              output offset. Not used.
+ * @param[in]       out_mult                output multiplier
+ * @param[in]       out_shift               output shift
+ * @param[in]       out_activation_min      minimum value to clamp output to. Min: -32768
+ * @param[in]       out_activation_max      maximum value to clamp output to. Max: 32767
+ * @param[in]       block_size              number of samples
+ * @return          The function returns    ARM_MATH_SUCCESS
+ *
+ * @details   Supported framework: TensorFlow Lite micro
+ */
+arm_status arm_elementwise_mul_s16(const int16_t *input_1_vect,
+                                   const int16_t *input_2_vect,
+                                   const int32_t input_1_offset,
+                                   const int32_t input_2_offset,
+                                   int16_t *output,
+                                   const int32_t out_offset,
+                                   const int32_t out_mult,
+                                   const int32_t out_shift,
+                                   const int32_t out_activation_min,
+                                   const int32_t out_activation_max,
+                                   const int32_t block_size);
+
 /**
  * @defgroup Acti Activation Functions
  *
@@ -1875,6 +1911,47 @@ arm_status arm_avgpool_s8(const cmsis_nn_context *ctx,
 int32_t arm_avgpool_s8_get_buffer_size(const int dim_dst_width, const int ch_src);
 
 /**
+ * @brief s16 average pooling function.
+ *
+ * @param[in, out] ctx            Function context (e.g. temporary buffer). Check the function
+ *                                definition file to see if an additional buffer is required.
+ *                                Optional function {API}_get_buffer_size() provides the buffer
+ *                                size if an additional buffer is required.
+ * @param[in]      pool_params    Pooling parameters
+ * @param[in]      input_dims     Input (activation) tensor dimensions. Format: [H, W, C_IN]
+ *                                Argument 'N' is not used.
+ * @param[in]      input_data     Input (activation) data pointer. Data type: int16
+ * @param[in]      filter_dims    Filter tensor dimensions. Format: [H, W]
+ *                                Argument N and C are not used.
+ * @param[in]      output_dims    Output tensor dimensions. Format: [H, W, C_OUT]
+ *                                Argument N is not used.
+ *                                C_OUT equals C_IN.
+ * @param[in, out] output_data    Output data pointer. Data type: int16
+ * @return                        The function returns
+ *                                    <code>ARM_MATH_SUCCESS</code> - Successful operation
+ *
+ * @details
+ *    - Supported Framework: TensorFlow Lite
+ *
+ */
+arm_status arm_avgpool_s16(const cmsis_nn_context *ctx,
+                           const cmsis_nn_pool_params *pool_params,
+                           const cmsis_nn_dims *input_dims,
+                           const int16_t *input_data,
+                           const cmsis_nn_dims *filter_dims,
+                           const cmsis_nn_dims *output_dims,
+                           int16_t *output_data);
+
+/**
+ * @brief Get the required buffer size for S16 average pooling function
+ * @param[in]       dim_dst_width         output tensor dimension
+ * @param[in]       ch_src                number of input tensor channels
+ * @return          The function returns  required buffer size in bytes
+ *
+ */
+int32_t arm_avgpool_s16_get_buffer_size(const int dim_dst_width, const int ch_src);
+
+/**
  * @brief s8 max pooling function.
  *
  * @param[in, out] ctx            Function context (e.g. temporary buffer). Check the function
@@ -1906,6 +1983,40 @@ arm_status arm_max_pool_s8(const cmsis_nn_context *ctx,
                            const cmsis_nn_dims *filter_dims,
                            const cmsis_nn_dims *output_dims,
                            q7_t *output_data);
+
+/**
+ * @brief s16 max pooling function.
+ *
+ * @param[in, out] ctx            Function context (e.g. temporary buffer). Check the function
+ *                                definition file to see if an additional buffer is required.
+ *                                Optional function {API}_get_buffer_size() provides the buffer
+ *                                size if an additional buffer is required.
+ * @param[in]      pool_params    Pooling parameters
+ * @param[in]      input_dims     Input (activation) tensor dimensions. Format: [H, W, C_IN]
+ *                                Argument 'N' is not used.
+ * @param[in]      input_data     Input (activation) data pointer. The input tensor must not
+ *                                overlap with the output tensor. Data type: int16
+ * @param[in]      filter_dims    Filter tensor dimensions. Format: [H, W]
+ *                                Argument N and C are not used.
+ * @param[in]      output_dims    Output tensor dimensions. Format: [H, W, C_OUT]
+ *                                Argument N is not used.
+ *                                C_OUT equals C_IN.
+ * @param[in, out] output_data    Output data pointer. Data type: int16
+ * @return                        The function returns
+ *                                    <code>ARM_MATH_SUCCESS</code> - Successful operation
+ *
+ * @details
+ *    - Supported Framework: TensorFlow Lite
+ *
+ */
+arm_status arm_max_pool_s16(const cmsis_nn_context *ctx,
+                            const cmsis_nn_pool_params *pool_params,
+                            const cmsis_nn_dims *input_dims,
+                            const int16_t *src,
+                            const cmsis_nn_dims *filter_dims,
+                            const cmsis_nn_dims *output_dims,
+                            int16_t *dst);
+
 /**
  * @defgroup Softmax Softmax Functions
  *
@@ -1968,7 +2079,6 @@ void arm_softmax_q15(const q15_t *vec_in, const uint16_t dim_vec, q15_t *p_out);
  * @note Supported framework: TensorFlow Lite micro (bit-accurate)
  *
  */
-
 void arm_softmax_s8(const int8_t *input,
                     const int32_t num_rows,
                     const int32_t row_size,
@@ -1976,6 +2086,57 @@ void arm_softmax_s8(const int8_t *input,
                     const int32_t shift,
                     const int32_t diff_min,
                     int8_t *output);
+
+/**
+ * @brief S8 to s16 softmax function
+ * @param[in]  input     Pointer to the input tensor
+ * @param[in]  num_rows  Number of rows in the input tensor
+ * @param[in]  row_size  Number of elements in each input row
+ * @param[in]  mult      Input quantization multiplier
+ * @param[in]  shift     Input quantization shift within the range [0, 31]
+ * @param[in]  diff_min  Minimum difference with max in row. Used to check if
+ *                       the quantized exponential operation can be performed
+ * @param[out] output    Pointer to the output tensor
+ *
+ * @note Supported framework: TensorFlow Lite micro (bit-accurate)
+ *
+ */
+void arm_softmax_s8_s16(const int8_t *input,
+                        const int32_t num_rows,
+                        const int32_t row_size,
+                        const int32_t mult,
+                        const int32_t shift,
+                        const int32_t diff_min,
+                        int16_t *output);
+
+/**
+ * @brief S16 softmax function
+ * @param[in]  input           Pointer to the input tensor
+ * @param[in]  num_rows        Number of rows in the input tensor
+ * @param[in]  row_size        Number of elements in each input row
+ * @param[in]  mult            Input quantization multiplier
+ * @param[in]  shift           Input quantization shift within the range [0, 31]
+ * @param[in]  softmax_params  Softmax s16 layer parameters with two pointers to LUTs speficied below.
+ *                             For indexing the high 9 bits are used and 7 remaining for interpolation.
+ *                             That means 512 entries for the 9-bit indexing and 1 extra for interpolation, i.e. 513
+ *                             values for each LUT.
+ *                             - Lookup table for exp(x), where x uniform distributed between [-10.0 , 0.0]
+ *                             - Lookup table for 1 / (1 + x), where x uniform distributed between [0.0 , 1.0]
+ * @param[out] output          Pointer to the output tensor
+ * @return                        The function returns
+ *                                    <code>ARM_MATH_ARGUMENT_ERROR</code> if LUTs are NULL
+ *                                    <code>ARM_MATH_SUCCESS</code> - Successful operation
+ *
+ * @note Supported framework: TensorFlow Lite micro (bit-accurate)
+ *
+ */
+arm_status arm_softmax_s16(const int16_t *input,
+                           const int32_t num_rows,
+                           const int32_t row_size,
+                           const int32_t mult,
+                           const int32_t shift,
+                           const cmsis_nn_softmax_lut_s16 *softmax_params,
+                           int16_t *output);
 
 /**
  * @brief U8 softmax function

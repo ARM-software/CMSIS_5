@@ -1,8 +1,4 @@
-import sys
-
-sys.path.append("../..")
-
-from sdf import *
+from cmsisdsp.sdf.scheduler import *
 
 ### Define new types of Nodes 
 

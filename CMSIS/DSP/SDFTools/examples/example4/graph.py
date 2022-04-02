@@ -1,16 +1,13 @@
-import sys
 import numpy as np 
 
-sys.path.append("../..")
-
-from sdf import *
-
+from cmsisdsp.sdf.scheduler import *
 
 
 FS=16000
 # You can try with 120
 AUDIO_INTERRUPT_LENGTH = 192
 WINSIZE=256
+OVERLAP=128
 floatType=CType(F32)
 
 
@@ -18,8 +15,8 @@ floatType=CType(F32)
 src=FileSource("src",AUDIO_INTERRUPT_LENGTH)
 src.addLiteralArg("input_example3.txt")
 
-sliding=SlidingBuffer("audioWin",floatType,256,128)
-overlap=OverlapAdd("audioOverlap",floatType,256,128)
+sliding=SlidingBuffer("audioWin",floatType,WINSIZE,OVERLAP)
+overlap=OverlapAdd("audioOverlap",floatType,WINSIZE,OVERLAP)
 window=Dsp("mult",floatType,WINSIZE)
 
 toCmplx=ToComplex("toCmplx",floatType,WINSIZE)

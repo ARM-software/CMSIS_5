@@ -1,0 +1,90 @@
+{
+  "version": 3,
+  "operator_codes": [
+    {
+      "deprecated_builtin_code": 25,
+      "version": 2,
+      "builtin_code": "SOFTMAX"
+    }
+  ],
+  "subgraphs": [
+    {
+      "tensors": [
+        {
+          "shape": [
+            num_rows,
+            row_size
+          ],
+          "type": "INT8",
+          "buffer": 1,
+          "name": "softmax_input",
+          "quantization": {
+            "scale": [
+              input_scale
+            ],
+            "zero_point": [
+              input_zp
+            ]
+          }
+        },
+        {
+          "shape": [
+            num_rows,
+            row_size
+          ],
+          "type": "INT16",
+          "buffer": 2,
+          "name": "softmax_output",
+          "quantization": {
+            "scale": [
+              0.0000152587890625
+            ],
+            "zero_point": [
+              -32768
+            ]
+          }
+        }
+      ],
+      "inputs": [
+        0
+      ],
+      "outputs": [
+        1
+      ],
+      "operators": [
+        {
+          "inputs": [
+            0
+          ],
+          "outputs": [
+            1
+          ],
+          "builtin_options_type": "SoftmaxOptions",
+          "builtin_options": {
+            "beta": 1.0
+          }
+        }
+      ],
+      "name": "main"
+    }
+  ],
+  "description": "MLIR Converted.",
+  "buffers": [
+    {
+    },
+    {
+    },
+    {
+    },
+    {
+      "data": [
+      ]
+    }
+  ],
+  "metadata": [
+    {
+      "name": "min_runtime_version",
+      "buffer": 3
+    }
+  ]
+}

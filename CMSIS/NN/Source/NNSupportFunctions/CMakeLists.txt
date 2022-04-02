@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2019-2021 Arm Limited.
+# Copyright (c) 2019-2022 Arm Limited.
 #
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -18,9 +18,9 @@
 
 file(GLOB SRC "./*_s8.c")
 target_sources(cmsis-nn PRIVATE ${SRC} arm_q7_to_q15_with_offset.c
-                                      arm_nn_mat_mul_kernel_s16.c
-                                      arm_q7_to_q15_with_offset.c
-                                      arm_nn_mat_mul_kernel_s16.c
-                                      arm_nn_vec_mat_mult_t_s16.c
-                                      arm_q7_to_q15_no_shift.c)
+                                       arm_nn_mat_mul_kernel_s16.c
+                                       arm_q7_to_q15_with_offset.c
+                                       arm_nn_mat_mul_kernel_s16.c
+                                       arm_nn_vec_mat_mult_t_s16.c
+                                       arm_q7_to_q15_no_shift.c)
 

@@ -25,16 +25,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ############################################
-from sdf.schedule.simu import *
+from cmsisdsp.sdf.nodes.simu import *
 from custom import *
 
 # Host only nodes
-from sdf.nodes.py.host.NumpySink import *
-from sdf.nodes.py.host.WavSource import *
+from cmsisdsp.sdf.nodes.host.NumpySink import *
+from cmsisdsp.sdf.nodes.host.WavSource import *
 
 # Embedded nodes
-from sdf.nodes.py.StereoToMono import *
-from sdf.nodes.py.MFCC import *
+from cmsisdsp.sdf.nodes.StereoToMono import *
+from cmsisdsp.sdf.nodes.MFCC import *
 
 
 

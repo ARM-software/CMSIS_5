@@ -1,3 +1,4 @@
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \mainpage Firmware for CoreSight Debug Access Port
 
@@ -22,7 +23,7 @@ Benefits of CMSIS-DAP
  - Supports Serial Wire Output (SWO) of Cortex-M devices.
  - Easy to deploy to debug units based on Cortex-M microcontrollers. 
  - Debug unit may be integrated on an evaluation board.
- - Using WinUSB avoids driver installation on host PC.
+ - Using USB bulk transfers avoids driver installation on host PC.
  - Supports time-critical JTAG or SWD command execution.
  - Supports Test Domain Timer for time measurement using the debug unit.
  - Supports UART communication port, which can be routed to USB COM Port (optional) or native CMSIS-DAP commands (new in
@@ -40,7 +41,7 @@ The CMSIS-DAP firmware stack is composed of the following components:
     - the UART of the Cortex-M device to the SWO output from the target.
     - an additional UART of the Cortex-M device to the UART from the target.
   - USB stack that interfaces to the USB port of the host computer using:
-    - a custom class (for WinUSB),
+    - a custom class (for USB bulk endpoints),
     - the CDC ACM class to export USB COM Port.
   - The USB Device middleware may require CMSIS-RTOS and a CMSIS-Driver USB.
   
@@ -49,7 +50,8 @@ In the examples provided, the MDK-Middleware USB stack has been used. However, i
 \note
 
 - CMSIS-DAP v1.x is \a deprecated and <i>not recommended for new designs</i>.
-- Use <b>CMSIS-DAP v2.x</b> instead that provides high-speed SWO trace streaming.
+- Use \ref BulkUSB "CMSIS-DAP v2.x" instead that provides high-speed SWO trace streaming and does not require driver
+  installation in modern operating systems (Mac OS, Linux, Windows). Refer to \ref dap_install for more information.
 
 Validation
 ----------
@@ -69,6 +71,30 @@ Directory                             | Description
 <hr>
 
 */
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/** 
+\page dap_install Installing CMSIS-DAP enabled debug adapters
+
+Using CMSIS-DAP v2 removes the necessity to install separate drivers on Mac OS, Linux, and Windows (8 and above) for the
+debug adapter.
+
+\section udevrules Additional requirements for Linux
+
+On Linux, permission to access USB devices from user space must be explicitly granted via udev rules. Exemplary udev rules
+are available in the <a href="https://github.com/pyocd/pyOCD/tree/main/udev" target="_blank">pyOCD GitHub repo</a> that
+allow to access common debug probes without requiring it to be run as root.
+
+\section win7 Additional requirements for Windows 7
+
+For Windows 7, the CMSIS-DAP v2 device will install automatically if the PC is connected to the Internet and device
+installation settings are set to automatically download and install drivers for devices. The installed device will be seen
+in the Device Manager under Universal Serial Bus devices as a WinUSB Device.
+
+If no Internet connection is available or you want the device to show with a different name in the Device Manager, you
+should provide an .inf file. Refer to \ref wininf "USB Driver and *.inf file" for more information.
+
+*/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /** 
 \page dap_revisionHistory Revision History of CMSIS-DAP
 
@@ -90,9 +116,9 @@ Directory                             | Description
     <tr>
       <td>V2.0.0</td>
       <td>
-         Changed: Communication via WinUSB to achieve high-speed transfer rates\n
-         Added: Streaming SWO via separate \ref WinUSB "WinUSB" endpoint\n
-         Added: \ref DAP_SWO_Transport extended with transport mode 2 - Send trace data via separate \ref WinUSB "WinUSB" endpoint 
+         Changed: Communication via USB bulk endpoints to achieve high-speed transfer rates\n
+         Added: Streaming SWO via separate \ref BulkUSB "USB bulk endpoint"\n
+         Added: \ref DAP_SWO_Transport extended with transport mode 2 - Send trace data via separate \ref BulkUSB "USB bulk endpoint" 
       </td>
     </tr>
     <tr>
@@ -131,4 +157,3 @@ Directory                             | Description
     </tr>
 </table>
 */
-

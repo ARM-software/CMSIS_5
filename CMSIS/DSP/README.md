@@ -1,5 +1,58 @@
 # README
 
+## Folders and files
+
+### Folders
+
+* cmsisdsp
+  * Require to build the CMSIS-DSP PythonWrapper for the Python repository
+  * It contains all Python packages
+* ComputeLibrary:
+  * Some kernels required when building CMSIS-DSP with Neon acceleration
+* Examples:
+  * Examples of use of CMSIS-DSP
+* Include:
+  * Include files for CMSIS-DSP
+* Platforms:
+  * Used for running the CMSIS-DSP test framework on Arm IPSS
+* PrivateInclude:
+  * Some include needed to build CMSIS-DSP
+* PythonWrapper:
+  * C code for the CMSIS-DSP PythonWrapper
+  * Examples for the PythonWrapper
+* Scripts:
+  * Debugging scripts
+  * Script to generate some coefficient tables used by CMSIS-DSP
+* SDFTools:
+  * Examples for the Synchronous Data Flow
+  * C++ templates for the Synchronous Data Flow
+* Source:
+  * CMSIS-DSP source
+* Testing:
+  * CMSIS-DSP Test frameworks
+* Toolchain:
+  * cmake files for building with gcc or Arm clang
+
+### Files
+
+Some files are needed to generate the PythonWrapper:
+
+* PythonWrapper_README.md
+* LICENSE.txt
+* MANIFEST.in
+* pyproject.toml
+* setup.py
+
+cmake files are useful to build CMSIS-DSP and the Test framework.
+
+filterLinkScript.py is used by the cmake build.
+
+cmsisdspconfig.py:
+
+* Web browser UI to generate build configurations
+
+
+
 ## How to use
 
 This document is explaining how to use cmake with CMSIS-DSP.
@@ -24,7 +77,7 @@ The cmake command is requiring several arguments. For instance, to build for m7 
     -DROOT="../../../../../.." \
     -DPLATFORM="FVP" \
     -G "Unix Makefiles" ..
-  
+
 DCMAKE_PREFIX_PATH is the path to the compiler toolchain. This folder should contain the bin folder where are the compiler executables.
 
 ROOT is pointing to the root CMSIS folder (the one containing CMSIS and Device).
@@ -45,7 +98,7 @@ To build for A5, you need to change DCMAKE_TOOLCHAIN_FILE and ARM_CPU:
     -DARM_CPU="cortex-a5"
 
 To build for A5 with Neon acceleration, you need to add:
-  
+
     -DNEON=ON
 
 ### Building 

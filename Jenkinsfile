@@ -132,7 +132,7 @@ pipeline {
                 script {
                     COMMIT = checkoutScmWithRetry(3)
                     echo "COMMIT: ${COMMIT}"
-                    VERSION = (sh(returnStdout: true, script: 'git describe --always')).trim()
+                    VERSION = (sh(returnStdout: true, script: 'git describe --tags --always')).trim()
                     echo "VERSION: '${VERSION}'"
                 }
 

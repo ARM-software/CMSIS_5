@@ -1,8 +1,9 @@
 cmake_minimum_required (VERSION 3.14)
 include(CMakePrintHelpers)
 
-find_package(Python3 3.6 EXACT COMPONENTS Interpreter)
+set(Python_FIND_REGISTRY "LAST")
 
+find_package (Python COMPONENTS Interpreter)
 
 function(sdf TARGET)
     if (DOT)
@@ -17,7 +18,7 @@ function(sdf TARGET)
 
     add_custom_command(OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/generated/scheduler.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/test.dot
-        COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/graph.py
+        COMMAND ${Python_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/graph.py
         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
         DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/graph.py
         VERBATIM

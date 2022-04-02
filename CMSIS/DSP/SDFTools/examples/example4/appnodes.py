@@ -25,20 +25,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ############################################
-from sdf.schedule.simu import *
+from cmsisdsp.sdf.nodes.simu import *
 from custom import *
 
-from sdf.nodes.py.host.FileSink import *
-from sdf.nodes.py.host.FileSource import *
-from sdf.nodes.py.CFFT import *
-from sdf.nodes.py.ICFFT import *
-from sdf.nodes.py.ToComplex import *
-from sdf.nodes.py.ToReal import *
-
-
-
-
-
-
-
-
+from cmsisdsp.sdf.nodes.host.FileSink import *
+from cmsisdsp.sdf.nodes.host.FileSource import *
+from cmsisdsp.sdf.nodes.CFFT import *
+from cmsisdsp.sdf.nodes.ICFFT import *
+from cmsisdsp.sdf.nodes.ToComplex import *
+from cmsisdsp.sdf.nodes.ToReal import *

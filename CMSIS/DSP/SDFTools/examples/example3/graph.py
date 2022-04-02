@@ -1,9 +1,6 @@
-import sys
 import numpy as np 
 
-sys.path.append("../..")
-
-from sdf import *
+from cmsisdsp.sdf.scheduler import *
 
 
 FS=16000

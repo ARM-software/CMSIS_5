@@ -89,7 +89,13 @@ At the end, both FIFOs are empty so the schedule can be run again : it is period
 
 ## How to build the examples
 
-In folder SDFTools/example/build, type the cmake command:
+First, you must install the `CMSIS-DSP` PythonWrapper:
+
+```
+pip install cmsisdsp
+```
+
+In folder `SDFTools/example/build`, type the `cmake` command:
 
 ```bash
 cmake -DHOST=YES -DDOT="path to dot tool" -DCMSIS="path to cmsis" -G "Unix Makefiles" ..
@@ -112,7 +118,13 @@ dot -Tpdf -o test.pdf test.dot
 
 It will generate the C++ files for the schedule and a pdf representation of the graph.
 
-Then, to build, you'll need to build CMSIS-DSP, the .cpp file contained in the example and add the include folder `sdf/src` 
+Note that the Python code is relying on the CMSIS-DSP PythonWrapper which is now also containing the Python scripts for the Synchronous Data Flow.
+
+To build the C examples:
+
+* CMSIS-DSP must be built, 
+* the .cpp file contained in the example must be built
+* the include folder `sdf/src` must be added
 
 For `example3` which is using an input file, cmake should have copied the input test pattern `input_example3.txt` inside the build folder. The output file will also be generated in the build folder.
 
@@ -124,6 +136,8 @@ python main.py
 ```
 
 The first line is generating the schedule in Python. The second line is executing the schedule.
+
+`example7` is communicating with `OpenModelica`. You need to install the VHTModelica blocks from the [VHT-SystemModeling](https://github.com/ARM-software/VHT-SystemModeling) project on our GitHub
 
 ## Limitations
 
@@ -164,6 +178,7 @@ Here is a list of the nodes supported by default. More can be easily added:
 - StereoToMonoQ15 : Interleaved stereo converted to mono with scaling to avoid saturation of the addition
 - Python only nodes:
   - WavSink and WavSource to use wav files for testing
+  - VHTSDF : To communicate with OpenModelica using VHTModelica blocks
 
 
 ## Detailed examples 
@@ -175,21 +190,4 @@ Here is a list of the nodes supported by default. More can be easily added:
 
 Examples 5 and 6 are showing how to use the CMSIS-DSP MFCC with a synchronous data flow.
 
-## Building the examples
-
-The script `create.bat` or `create.sh` in folder `examples/build` must be changed to use the path to the root CMSIS-DSP folder.
-
-Then, those scripts can be used to create a make using cmake.
-
-After those steps, typing `make` will build the C examples.
-
-To run the first one for example you'll have to type (from `build` folder): `bin_example1\example1`
-
-For the python examples, you need to go to the example folder (for instance `example4`). In the folder, type `python main.py`.
-
-
-
-If the dataflow is changed for any Python example, from the corresponding example folder you'll have to type `python graph.py` to regenerate the schedule. And you'll have to type `dot -Tpdf -o test.pdf test.dot` in the Python examples to regenerate the graph picture.
-
-For the C++ examples, the make is taking care of regenerating the schedule and the dot graph when `graph.py` is edited.
-
+Example 7 is communicating with OpenModelica. The Modelica model (PythonTest) in the example is implementing a Larsen effect.

@@ -157,7 +157,7 @@ Each CMSIS-Driver contains these functions:
  
  - \b Initialize: must be called before powering the peripheral using \b PowerControl. This function performs the following:
      - allocate I/O resources.
-	 - register an optional \b SignalEvent callback function.
+     - register an optional \b SignalEvent callback function.
 
  - \b SignalEvent: is an optional callback function that is registered with the \b Initialize function. This callback
    function is initiated from interrupt service routines and indicates hardware events or the completion of a data block

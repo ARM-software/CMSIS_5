@@ -1,32 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- 
-  Copyright (c) 2013-2020 ARM Limited. All rights reserved.
- 
+
+  Copyright (c) 2013-2022 ARM Limited. All rights reserved.
+
   SPDX-License-Identifier: Apache-2.0
- 
+
   Licensed under the Apache License, Version 2.0 (the License); you may
   not use this file except in compliance with the License.
   You may obtain a copy of the License at
- 
+
   www.apache.org/licenses/LICENSE-2.0
- 
+
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an AS IS BASIS, WITHOUT
   WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   See the License for the specific language governing permissions and
   limitations under the License.
 
-  $Date:        1. Dec 2020
-  $Revision:    1.7.2
+  $Date:        31. Jan 2022
+  $Revision:    1.7.3
 
   $Project: Schema File for Package Description File Format Specification
 
   Package file name convention <vendor>.<name>.<version>.pack
-  SchemaVersion=1.7.2
-  
+  SchemaVersion=1.7.3
+
+  31. January 2022
+   - added 'Star' to DcoreEnum
+
   1. December 2020: v1.7.2
-   - added 'XC' to CompilerEnumType to enable use of Microchip XC32 compiler 
+   - added 'XC' to CompilerEnumType to enable use of Microchip XC32 compiler
 
   13. November 2020: v1.7.1
   - undo removing deprecated attributes as they are still used in latest pdsc file versions:
@@ -37,7 +40,7 @@
   - added processor attribute Dcdecp for implemented Custom Datapath Extension Coprocessors (Cortex-M33)
   - extended BoardType added DebugProbeType and FlashAlgorithm.
   - removed types and references used by deprecated cprj format.
-  
+
   26. March 2020: v1.6.3
   - added 'folder' attribute to example's <environment> element.
   - added 'ACCESS_AP' to DataPatchAccessTypeEnum.
@@ -56,12 +59,12 @@
   - added value to DsecureEnum: 2 = TZ-disabled.
   - added component boolean attribute 'custom', indicating that the component requires implementation.
   - updated DmveEnum to select between single and double precision floating point support (MVE_FP deprecated).
-  
+
   14. March 2019: 1.6.0
   - added Armv8.1-M MVE processor feature attribute 'Dmve'.
   - added local and global pre-include section Pre_Include_Local_Component_h, Pre_Include_Global_h.
   - added file categories 'preIncludeLocal' and 'preIncludeGlobal' FileCategoryEnum.
-  - added file attribute 'path' for file category 'header' to add support for relative include paths. 
+  - added file attribute 'path' for file category 'header' to add support for relative include paths.
   - added to package element the possibility to restrict the usage of the with attributes Dvendor, Dname, Dcore, and Tcompiler.
   - added dominate element to overwrite identical APIs, or components.
   - added attribute 'condition' to the api element so that an API can be excluded based on a condition.
@@ -78,7 +81,7 @@
   21. November 2016: 1.4.8
   - added support for semantic versioning quality information in ConditionVersionType
   - relaxed schema by making some more elements optional
-  
+
   07. November 2016: 1.4.7
   - added multiple version types to tighten the schema checking depending on context
   - added new generator sections for exe, web and eclipse based generators
@@ -86,14 +89,14 @@
   - added new attributes Dtz, Ddsp, Dsecure to conditions
   - added new processors Cortex-M23 and Cortex-M33
   - added new attribute public to books and images to indicate public use of documents and board images
-  
+
   12. July 2016: 1.4.6
   - refined Dname string pattern restriction
-  
+
   13. June 2016: 1.4.5
   - added: Punits to ProcessorType
   - added: Punit to DebugType
-  
+
   26. April 2016: 1.4.4
   - added: attribute defaultResetSequence to DebugType.
   - added: <requirements> section:
@@ -102,18 +105,18 @@
     - <compiler> defining required toolchains
   - added: <create> section used for tool independent project description
     - attributes: name, documentation, condition
-    - <target> specifies the board and device targeted by the project 
-    - <options> 
-    - <files> specifies the grouped files 
+    - <target> specifies the board and device targeted by the project
+    - <options>
+    - <files> specifies the grouped files
   - updated: <algorith> element
     - added attributes: style, parameter and endian
   - updated: <memory> element
     - added attributes: name, access and alias
     - deprecating attribute: id (replaced by name + access)
-    
+
   03. Dec 2015: 1.4.3
   - adding attribute "sdf" to devices section element debugconfig
-  
+
   16. Oct 2015: 1.4.1
   - Pname, Dname, Dvariant type changed from xs:string to RestrictedString
 
@@ -124,18 +127,18 @@
   - added devices algorithm tag attribute: style
   - added attribute to define a default component variant
   - added board book category: layout
-  
+
   29. May 2015
   - added missing Pname attribute to GeneratorDeviceSelectType used for multi processor
     devices
-  
+
   12. Jan. 2014
   - allow to link a component with a generator via new component attribute
   - generator command extended to deal with more sophisticated command lines / document sequence
-  
+
 -->
 
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="qualified" version="1.7.2">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="qualified" version="1.7.3">
 
   <!-- NonNegativeInteger specifies the format in which numbers are represented in hexadecimal or decimal format -->
   <xs:simpleType name="NonNegativeInteger">
@@ -191,6 +194,7 @@
       <xs:enumeration value="Hynix Semiconductor:6" />
       <xs:enumeration value="Hyundai:35" />
       <xs:enumeration value="Infineon:7" />
+      <xs:enumeration value="Jonzic:174" />
       <xs:enumeration value="Kionix:127" />
       <xs:enumeration value="LAPIS Technology:10" />
       <xs:enumeration value="Lapis Semiconductor:10" />
@@ -414,7 +418,7 @@
     <xs:attribute name="index" type="xs:unsignedInt" use="required" />
     <xs:anyAttribute processContents="lax" />
   </xs:complexType>
-  
+
   <!-- AccessPortV2Type -->
   <xs:complexType name="AccessPortV2Type">
     <xs:attribute name="__apid" type="xs:unsignedInt" use="required" />
@@ -615,7 +619,7 @@
     <!-- size specifies the gap size in bytes -->
     <xs:attribute name="size" type="NonNegativeInteger" use="required"/>
   </xs:complexType>
-  
+
   <!-- Flash Info Element Group -->
   <xs:group name="FlashInfoElementGroup">
     <xs:choice>
@@ -623,7 +627,7 @@
       <xs:element name="gap"   type="FlashInfoGapType"/>
     </xs:choice>
   </xs:group>
-  
+
   <!-- Flash Info Type -->
   <xs:complexType name="FlashInfoType">
     <xs:sequence>
@@ -758,6 +762,7 @@
   <!-- Dcore enumeration type -->
   <xs:simpleType name="DcoreEnum">
     <xs:restriction base="xs:token">
+      <xs:enumeration value="Star" />
       <xs:enumeration value="SC000" />
       <xs:enumeration value="SC300" />
       <xs:enumeration value="Cortex-M0" />
@@ -1306,7 +1311,7 @@
       <xs:enumeration value="ST-Link"/>
     </xs:restriction>
   </xs:simpleType>
-  
+
   <!-- on board debug probe -->
   <xs:complexType name="DebugProbeType">
     <xs:attribute name="deviceIndex" type="xs:string" use="optional" />
@@ -1435,7 +1440,7 @@
     <xs:attribute name="public" type="xs:boolean" use="optional" default="false" />
   </xs:complexType>
 
-  <!-- some strings are used to construct filenames (e.g. package name). Such names can contain only subset of characters 
+  <!-- some strings are used to construct filenames (e.g. package name). Such names can contain only subset of characters
        and must not contain neither spaces nor dots.
   -->
   <xs:simpleType name="RestrictedString">
@@ -1463,7 +1468,7 @@
     </xs:restriction>
   </xs:simpleType>
 
-  <!-- version can contain one or more of alphanumeric characters and symbols '_' '-' '.' 
+  <!-- version can contain one or more of alphanumeric characters and symbols '_' '-' '.'
        Important: version pattern shall remain the same while versions change
   -->
   <xs:simpleType name="PackVersionType">
@@ -1473,7 +1478,7 @@
     </xs:restriction>
   </xs:simpleType>
 
-  <!-- version can contain one or more of alphanumeric characters and symbols '_' '-' '.' 
+  <!-- version can contain one or more of alphanumeric characters and symbols '_' '-' '.'
        Allows specifing a version range: minVersion : maxVersion
   -->
   <xs:simpleType name="ConditionVersionType">
@@ -1559,7 +1564,7 @@
 
   <!-- Generator file type definition -->
   <xs:complexType name="GeneratorFileType">
-    <!-- conditions can be used to filter relevant files depending on e.g. device name 
+    <!-- conditions can be used to filter relevant files depending on e.g. device name
          or toolchain -->
     <xs:attribute name="condition" type="xs:string" use="optional" />
     <!-- file item category: generator specific file type -->
@@ -1592,7 +1597,7 @@
       <xs:pattern value="http[s]{0,1}://[!-~]+" />
     </xs:restriction>
   </xs:simpleType>
-  
+
   <!-- exe generator argument has optional host and switch attributes -->
   <xs:complexType name="ExeGeneratorArgumentType">
     <xs:simpleContent>
@@ -1737,7 +1742,7 @@
   <xs:complexType name="DominateType">
     <xs:attribute name="info" type="xs:string" use="required"/>
   </xs:complexType>
-  
+
   <!-- package description root point -->
   <xs:element name="package" nillable="true">
     <xs:complexType>

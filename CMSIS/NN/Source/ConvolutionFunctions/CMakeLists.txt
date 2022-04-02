@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2019-2021 Arm Limited.
+# Copyright (c) 2019-2022 Arm Limited.
 #
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -17,7 +17,8 @@
 #
 
 file(GLOB SRC "./*_s8*.c")
-target_sources(cmsis-nn PRIVATE arm_convolve_s16.c arm_convolve_wrapper_s16.c arm_convolve_fast_s16.c ${SRC})
+file(GLOB SRC_S16 "./*_s16*.c")
+target_sources(cmsis-nn PRIVATE ${SRC} ${SRC_S16})
 
 
 

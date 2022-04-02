@@ -2,4 +2,4 @@
 #pragma once
 #include <stdint.h>
 
-const q7_t softmax_output_ref[5] = {-78, -76, -72, -85, -73};
+const q7_t softmax_output_ref[10] = {-57, -70, -79, -86, -92, -94, -88, -54, -91, -56};

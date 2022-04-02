@@ -51,8 +51,8 @@ function pack_version()
 
 function git_describe()
 {
-  if [ git rev-parse --git-dir 2>/dev/null ]; then
-    local gitversion=$(git describe --match $1* --abbrev=9 2>/dev/null || echo "$1-dirty-0-g$(git describe --match $1* --always --abbrev=9 2>/dev/null)")
+  if git rev-parse --git-dir 2>&1 >/dev/null; then
+    local gitversion=$(git describe --tags --match $1* --abbrev=9 2>/dev/null || echo "$1-dirty-0-g$(git describe --tags --match $1* --always --abbrev=9 2>/dev/null)")
     local version=$(echo $gitversion | sed -r -e 's/-([0-9]+)-(g[0-9a-f]{9})/\1+\2/')
     if [[ $version != $1 ]] && [[ $version == $gitversion ]]; then
         version+=0
@@ -297,6 +297,7 @@ popd > /dev/null
 
 if [ $(uname -s) = "Linux" ]; then
   echo "Running schema check for ${PACK_VENDOR}.${PACK_NAME}.pdsc"
+  curl https://raw.githubusercontent.com/Open-CMSIS-Pack/Open-CMSIS-Pack-Spec/main/schema/PACK.xsd -o CMSIS/Utilities/PACK.xsd
   xmllint --noout --schema "$(realpath -m ./CMSIS/Utilities/PACK.xsd)" "${PACK_BUILD}/${PACK_VENDOR}.${PACK_NAME}.pdsc"
   errorlevel=$?
   if [ $errorlevel -ne 0 ]; then
