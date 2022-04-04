@@ -95,12 +95,16 @@ extern "C"
 #endif
 
 #if defined(ARM_MATH_NEON)
-#include <arm_neon.h>
-#if defined(__ARM_FEATURE_FP16_VECTOR_ARITHMETIC) && __ARM_FEATURE_FP16_VECTOR_ARITHMETIC
-  #if !defined(ARM_MATH_NEON_FLOAT16)
-  #define ARM_MATH_NEON_FLOAT16
+  #if defined(_MSC_VER) && defined(_M_ARM64EC)
+    #include <arm64_neon.h>
+  #else
+    #include <arm_neon.h>
   #endif
-#endif
+  #if defined(__ARM_FEATURE_FP16_VECTOR_ARITHMETIC) && __ARM_FEATURE_FP16_VECTOR_ARITHMETIC
+    #if !defined(ARM_MATH_NEON_FLOAT16)
+      #define ARM_MATH_NEON_FLOAT16
+    #endif
+  #endif
 #endif
 
 #if !defined(ARM_MATH_AUTOVECTORIZE)
