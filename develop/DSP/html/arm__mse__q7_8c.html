@@ -3,8 +3,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>System View Description</title>
-<title>CMSIS-SVD: System View Description</title>
+<title>arm_mse_q7.c File Reference</title>
+<title>CMSIS-DSP: arm_mse_q7.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="cmsis.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
@@ -32,10 +32,10 @@
  <tr style="height: 46px;">
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
-   <div id="projectname">CMSIS-SVD
-   &#160;<span id="projectnumber">Version 1.3.8</span>
+   <div id="projectname">CMSIS-DSP
+   &#160;<span id="projectnumber">Version 1.9.0</span>
    </div>
-   <div id="projectbrief">CMSIS System View Description</div>
+   <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
  </tr>
  </tbody>
@@ -57,8 +57,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </script>
   <div id="navrow1" class="tabs">
     <ul class="tablist">
-      <li class="current"><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Usage&#160;and&#160;Description</span></a></li>
+      <li><a href="modules.html"><span>Reference</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -89,7 +90,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('index.html','');});
+$(document).ready(function(){initNavTree('arm__mse__q7_8c.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -97,7 +98,7 @@ $(document).ready(function(){initNavTree('index.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(11)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -107,57 +108,25 @@ $(document).ready(function(){initNavTree('index.html','');});
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">System View Description </div>  </div>
+<div class="title">arm_mse_q7.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2>Introduction </h2>
-<p>The CMSIS System View Description format(CMSIS-SVD) formalizes the description of the system contained in Arm Cortex-M processor-based microcontrollers, in particular, the memory mapped registers of peripherals. The detail contained in system view descriptions is comparable to the data in device reference manuals. The information ranges from high level functional descriptions of a peripheral all the way down to the definition and purpose of an individual bit field in a memory mapped register.</p>
-<p>CMSIS-SVD files are developed and maintained by silicon vendors. Silicon vendors distribute their descriptions as part of CMSIS Device Family Packs. Tool vendors use CMSIS-SVD files for providing device-specific debug views of peripherals in their debugger. Last but not least, CMSIS-compliant device header files are generated from CMSIS-SVD files.</p>
-<h2>CMSIS-SVD Benefits </h2>
-<ul>
-<li>For Software Developers:<ul>
-<li>Consistency between device header file and what is being displayed by the debugger.</li>
-<li>Detailed information about peripherals, registers, fields, and bit values as well as named interrupts from within the debugger, without the need to reference device documentation.</li>
-<li>Convenient access to new and updated descriptions as part of the silicon vendor's CMSIS Device Family Packs as the packs are made availabl by silicon vendors.</li>
-<li>Improved software development efficiency.</li>
-</ul>
-</li>
-<li>For Silicon Vendors:<ul>
-<li>A tool vendor independent file format enables early device support by a wide range of toolchains with limited effort.</li>
-<li>The XML-based format helps ease the integration into in-house design flows.</li>
-<li>Automated generation of CMSIS compliant device header files.</li>
-<li>Full control throughout the life cycle of the CMSIS-SVD files from creation to maintenance.</li>
-</ul>
-</li>
-<li>For Tool Vendors:<ul>
-<li>Unified file format across silicon vendors helps the efficiency of supporting a wide range of devices in a timely manner.</li>
-<li>Silicon vendors can provide early review access to the device support via restricted access to CMSIS Device Family Packs.</li>
-<li>Updated descriptions are available over the web simplifying the maintenance of device support.</li>
-</ul>
-</li>
-</ul>
-<h2>Language Specification and Conventions </h2>
-<ul>
-<li><a class="el" href="svd_Format_pg.html">SVD Description (*.svd) Format</a></li>
-</ul>
-<h2>CMSIS-SVD in ARM::CMSIS Pack </h2>
-<p>The following files relevant to CMSIS-SVD are present in the <b>ARM::CMSIS</b> Pack directories:</p>
-<table class="doxtable">
-<tr>
-<th>File/Folder </th><th>Content  </th></tr>
-<tr>
-<td><b>CMSIS\Documentation\SVD</b> </td><td>This documentation </td></tr>
-<tr>
-<td><b>CMSIS\Utilities</b> </td><td>Exemplary SVD file (<a class="el" href="svd_Example_pg.html">ARM_Example.svd</a>) and generated header file (ARM_Example.h). </td></tr>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga22b727f31a46bc579fb7c5555be94cb1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__mse.html#ga22b727f31a46bc579fb7c5555be94cb1">arm_mse_q7</a> (const <a class="el" href="arm__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *pSrcA, const <a class="el" href="arm__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *pSrcB, uint32_t <a class="el" href="arm__variance__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>, <a class="el" href="arm__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *pResult)</td></tr>
+<tr class="memdesc:ga22b727f31a46bc579fb7c5555be94cb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mean square error between two Q7 vectors.  <a href="group__mse.html#ga22b727f31a46bc579fb7c5555be94cb1">More...</a><br/></td></tr>
+<tr class="separator:ga22b727f31a46bc579fb7c5555be94cb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<p>&#160;</p>
-<hr/>
- </div></div><!-- contents -->
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
+    <li class="navelem"><a class="el" href="dir_650d82db24a6311fa7658fced19ae149.html">DSP</a></li><li class="navelem"><a class="el" href="dir_cf3b734d050ceea02fbfb06f215bbc8f.html">Source</a></li><li class="navelem"><a class="el" href="dir_cb79679bd7d585e2e3c8a1b12a7b28d8.html">StatisticsFunctions</a></li><li class="navelem"><a class="el" href="arm__mse__q7_8c.html">arm_mse_q7.c</a></li>
     <li class="footer">
       <script type="text/javascript">
         <!--

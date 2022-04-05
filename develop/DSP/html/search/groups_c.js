@@ -14,5 +14,6 @@ var searchData=
   ['mean',['Mean',['../group__mean.html',1,'']]],
   ['mfcc',['MFCC',['../group__MFCC.html',1,'']]],
   ['minimum',['Minimum',['../group__Min.html',1,'']]],
-  ['minkowski_20distance',['Minkowski distance',['../group__Minkowski.html',1,'']]]
+  ['minkowski_20distance',['Minkowski distance',['../group__Minkowski.html',1,'']]],
+  ['mean_20square_20error',['Mean Square Error',['../group__mse.html',1,'']]]
 ];

@@ -3,8 +3,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>CMakeLists.txt File Reference</title>
-<title>CMSIS-DSP: CMakeLists.txt File Reference</title>
+<title>Mean Square Error</title>
+<title>CMSIS-DSP: Mean Square Error</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="cmsis.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
@@ -90,7 +90,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('Source_2StatisticsFunctions_2CMakeLists_8txt.html','');});
+$(document).ready(function(){initNavTree('group__mse.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -111,47 +111,64 @@ $(document).ready(function(){initNavTree('Source_2StatisticsFunctions_2CMakeList
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">CMakeLists.txt File Reference</div>  </div>
+<div class="title">Mean Square Error<div class="ingroups"><a class="el" href="group__groupStats.html">Statistics Functions</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a6e731aa61a58b859be37c7e05da86ee1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Source_2StatisticsFunctions_2CMakeLists_8txt.html#a6e731aa61a58b859be37c7e05da86ee1">cmake_minimum_required</a> (VERSION 3.14) project(CMSISDSPStatistics) <a class="el" href="Source_2CMakeLists_8txt.html#abe658af24e68335d143536fb31fa1158">include</a>(configLib) <a class="el" href="Source_2CMakeLists_8txt.html#abe658af24e68335d143536fb31fa1158">include</a>(<a class="el" href="Source_2TransformFunctions_2CMakeLists_8txt.html#ae6d7ba4710aac973ef55978a7d3570f2">configDsp</a>) add_library(CMSISDSPStatistics STATIC) target_sources(CMSISDSPStatistics PRIVATE arm_entropy_f32.c) target_sources(CMSISDSPStatistics PRIVATE arm_entropy_f64.c) target_sources(CMSISDSPStatistics PRIVATE arm_kullback_leibler_f32.c) target_sources(CMSISDSPStatistics PRIVATE arm_kullback_leibler_f64.c) target_sources(CMSISDSPStatistics PRIVATE arm_logsumexp_dot_prod_f32.c) target_sources(CMSISDSPStatistics PRIVATE arm_logsumexp_f32.c) target_sources(CMSISDSPStatistics PRIVATE arm_max_f32.c) target_sources(CMSISDSPStatistics PRIVATE arm_max_f64.c) target_sources(CMSISDSPStatistics PRIVATE arm_max_no_idx_f32.c) target_sources(CMSISDSPStatistics PRIVATE arm_max_no_idx_f64.c) target_sources(CMSISDSPStatistics PRIVATE arm_min_no_idx_f32.c) target_sources(CMSISDSPStatistics PRIVATE arm_min_no_idx_f64.c) target_sources(CMSISDSPStatistics PRIVATE arm_max_q15.c) target_sources(CMSISDSPStatistics PRIVATE arm_max_q31.c) target_sources(CMSISDSPStatistics PRIVATE arm_max_q7.c) target_sources(CMSISDSPStatistics PRIVATE arm_max_no_idx_q31.c) target_sources(CMSISDSPStatistics PRIVATE arm_max_no_idx_q15.c) target_sources(CMSISDSPStatistics PRIVATE arm_max_no_idx_q7.c) target_sources(CMSISDSPStatistics PRIVATE arm_mean_f32.c) target_sources(CMSISDSPStatistics PRIVATE arm_mean_f64.c) target_sources(CMSISDSPStatistics PRIVATE arm_mean_q15.c) target_sources(CMSISDSPStatistics PRIVATE arm_mean_q31.c) target_sources(CMSISDSPStatistics PRIVATE arm_mean_q7.c) target_sources(CMSISDSPStatistics PRIVATE arm_min_f32.c) target_sources(CMSISDSPStatistics PRIVATE arm_min_f64.c) target_sources(CMSISDSPStatistics PRIVATE arm_min_q15.c) target_sources(CMSISDSPStatistics PRIVATE arm_min_q31.c) target_sources(CMSISDSPStatistics PRIVATE arm_min_q7.c) target_sources(CMSISDSPStatistics PRIVATE arm_min_no_idx_q31.c) target_sources(CMSISDSPStatistics PRIVATE arm_min_no_idx_q15.c) target_sources(CMSISDSPStatistics PRIVATE arm_min_no_idx_q7.c) target_sources(CMSISDSPStatistics PRIVATE arm_power_f32.c) target_sources(CMSISDSPStatistics PRIVATE arm_power_f64.c) target_sources(CMSISDSPStatistics PRIVATE arm_power_q15.c) target_sources(CMSISDSPStatistics PRIVATE arm_power_q31.c) target_sources(CMSISDSPStatistics PRIVATE arm_power_q7.c) target_sources(CMSISDSPStatistics PRIVATE arm_rms_f32.c) target_sources(CMSISDSPStatistics PRIVATE arm_rms_q15.c) target_sources(CMSISDSPStatistics PRIVATE arm_rms_q31.c) target_sources(CMSISDSPStatistics PRIVATE arm_std_f32.c) target_sources(CMSISDSPStatistics PRIVATE arm_std_f64.c) target_sources(CMSISDSPStatistics PRIVATE arm_std_q15.c) target_sources(CMSISDSPStatistics PRIVATE arm_std_q31.c) target_sources(CMSISDSPStatistics PRIVATE arm_var_f32.c) target_sources(CMSISDSPStatistics PRIVATE arm_var_f64.c) target_sources(CMSISDSPStatistics PRIVATE arm_var_q15.c) target_sources(CMSISDSPStatistics PRIVATE arm_var_q31.c) target_sources(CMSISDSPStatistics PRIVATE arm_absmax_f32.c) target_sources(CMSISDSPStatistics PRIVATE arm_absmax_f64.c) target_sources(CMSISDSPStatistics PRIVATE arm_absmax_q15.c) target_sources(CMSISDSPStatistics PRIVATE arm_absmax_q31.c) target_sources(CMSISDSPStatistics PRIVATE arm_absmax_q7.c) target_sources(CMSISDSPStatistics PRIVATE arm_absmin_f32.c) target_sources(CMSISDSPStatistics PRIVATE arm_absmin_f64.c) target_sources(CMSISDSPStatistics PRIVATE arm_absmin_q15.c) target_sources(CMSISDSPStatistics PRIVATE arm_absmin_q31.c) target_sources(CMSISDSPStatistics PRIVATE arm_absmin_q7.c) target_sources(CMSISDSPStatistics PRIVATE arm_absmax_no_idx_f32.c) target_sources(CMSISDSPStatistics PRIVATE arm_absmax_no_idx_f64.c) target_sources(CMSISDSPStatistics PRIVATE arm_absmax_no_idx_q15.c) target_sources(CMSISDSPStatistics PRIVATE arm_absmax_no_idx_q31.c) target_sources(CMSISDSPStatistics PRIVATE arm_absmax_no_idx_q7.c) target_sources(CMSISDSPStatistics PRIVATE arm_absmin_no_idx_f32.c) target_sources(CMSISDSPStatistics PRIVATE arm_absmin_no_idx_f64.c) target_sources(CMSISDSPStatistics PRIVATE arm_absmin_no_idx_q15.c) target_sources(CMSISDSPStatistics PRIVATE arm_absmin_no_idx_q31.c) target_sources(CMSISDSPStatistics PRIVATE arm_absmin_no_idx_q7.c) target_sources(CMSISDSPStatistics PRIVATE arm_mse_q7.c) configLib(CMSISDSPStatistics $</td></tr>
-<tr class="separator:a6e731aa61a58b859be37c7e05da86ee1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9a1e8f9f1c355e967a0285140cae53cc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Source_2StatisticsFunctions_2CMakeLists_8txt.html#a9a1e8f9f1c355e967a0285140cae53cc">configDsp</a> (CMSISDSPStatistics ${ROOT}) target_include_directories(CMSISDSPStatistics PUBLIC&quot;$</td></tr>
-<tr class="separator:a9a1e8f9f1c355e967a0285140cae53cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga22b727f31a46bc579fb7c5555be94cb1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__mse.html#ga22b727f31a46bc579fb7c5555be94cb1">arm_mse_q7</a> (const <a class="el" href="arm__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *pSrcA, const <a class="el" href="arm__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *pSrcB, uint32_t <a class="el" href="arm__variance__example__f32_8c.html#ab6558f40a619c2502fbc24c880fd4fb0">blockSize</a>, <a class="el" href="arm__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *pResult)</td></tr>
+<tr class="memdesc:ga22b727f31a46bc579fb7c5555be94cb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mean square error between two Q7 vectors.  <a href="#ga22b727f31a46bc579fb7c5555be94cb1">More...</a><br/></td></tr>
+<tr class="separator:ga22b727f31a46bc579fb7c5555be94cb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Description</h2>
+<p>Calculates the mean square error between two vectors. </p>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="a6e731aa61a58b859be37c7e05da86ee1"></a>
+<a class="anchor" id="ga22b727f31a46bc579fb7c5555be94cb1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">cmake_minimum_required </td>
+          <td class="memname">void arm_mse_q7 </td>
           <td>(</td>
-          <td class="paramtype">VERSION 3.&#160;</td>
-          <td class="paramname"><em>14</em></td><td>)</td>
-          <td></td>
+          <td class="paramtype">const <a class="el" href="arm__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *&#160;</td>
+          <td class="paramname"><em>pSrcA</em>, </td>
         </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a9a1e8f9f1c355e967a0285140cae53cc"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
         <tr>
-          <td class="memname">configDsp </td>
-          <td>(</td>
-          <td class="paramtype">CMSISDSPStatistics ${ROOT}&#160;</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">const <a class="el" href="arm__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *&#160;</td>
+          <td class="paramname"><em>pSrcB</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>blockSize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="arm__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *&#160;</td>
+          <td class="paramname"><em>pResult</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">pSrcA</td><td>points to the first input vector </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pSrcB</td><td>points to the second input vector </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">blockSize</td><td>number of samples in input vector </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pResult</td><td>mean square error </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>none </dd></dl>
 
 </div>
 </div>
@@ -160,7 +177,6 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="Source_2StatisticsFunctions_2CMakeLists_8txt.html">CMakeLists.txt</a></li>
     <li class="footer">
       <script type="text/javascript">
         <!--
