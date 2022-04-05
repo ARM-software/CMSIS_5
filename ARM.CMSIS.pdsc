@@ -8,7 +8,7 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
-    <release version="5.8.1">
+    <release version="5.9.0">
       Active development ...
       CMSIS-Core(M): 5.6.0
        - Arm China STAR-MC1 cpu support
