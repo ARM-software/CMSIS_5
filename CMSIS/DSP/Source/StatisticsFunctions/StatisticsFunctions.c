@@ -93,3 +93,4 @@
 #include "arm_absmin_no_idx_q15.c"
 #include "arm_absmin_no_idx_q31.c"
 #include "arm_absmin_no_idx_q7.c"
+#include "arm_mse_q7.c"

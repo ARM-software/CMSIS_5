@@ -895,7 +895,20 @@ float64_t arm_kullback_leibler_f64(const float64_t * pSrcA,
       uint32_t   blockSize,
       q7_t *pResult);
 
-
+/**
+  @brief         Mean square error between two Q7 vectors.
+  @param[in]     pSrcA       points to the first input vector
+  @param[in]     pSrcB       points to the second input vector
+  @param[in]     blockSize  number of samples in input vector
+  @param[out]    pResult    mean square error
+  @return        none 
+*/
+  
+void arm_mse_q7(
+  const q7_t * pSrcA,
+  const q7_t * pSrcB,
+        uint32_t blockSize,
+        q7_t * pResult);
 
 #ifdef   __cplusplus
 }

@@ -80,6 +80,7 @@ target_sources(CMSISDSPStatistics PRIVATE arm_absmin_no_idx_f64.c)
 target_sources(CMSISDSPStatistics PRIVATE arm_absmin_no_idx_q15.c)
 target_sources(CMSISDSPStatistics PRIVATE arm_absmin_no_idx_q31.c)
 target_sources(CMSISDSPStatistics PRIVATE arm_absmin_no_idx_q7.c)
+target_sources(CMSISDSPStatistics PRIVATE arm_mse_q7.c)
 
 configLib(CMSISDSPStatistics ${ROOT})
 configDsp(CMSISDSPStatistics ${ROOT})

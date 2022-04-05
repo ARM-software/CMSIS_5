@@ -356,6 +356,11 @@ def powerTest(format,data):
    else:
        return(np.dot(data,data))
 
+def mseTest(format,data1,data2):
+   nb = len(data1)
+   err = data1 - data2
+   return(np.dot(err,err) / nb)
+
 def rmsTest(format,data):
    return(math.sqrt(np.dot(data,data)/data.size))
 
@@ -383,6 +388,29 @@ def generateFuncTests(config,nb,format,data,func,name):
 
     nbiters = 100
     funcvalue=func(format,data[0:nbiters])
+    funcvals.append(funcvalue)
+
+    config.writeReference(nb, funcvals,name)
+    return(nb+1)
+
+def generateOperatorTests(config,nb,format,data1,data2,func,name):
+
+    funcvals=[]
+
+    nbiters = Tools.loopnb(format,Tools.TAILONLY)
+    funcvalue=func(format,data1[0:nbiters],data2[0:nbiters])
+    funcvals.append(funcvalue)
+
+    nbiters = Tools.loopnb(format,Tools.BODYONLY)
+    funcvalue=func(format,data1[0:nbiters],data2[0:nbiters])
+    funcvals.append(funcvalue)
+
+    nbiters = Tools.loopnb(format,Tools.BODYANDTAIL)
+    funcvalue=func(format,data1[0:nbiters],data2[0:nbiters])
+    funcvals.append(funcvalue)
+
+    nbiters = 100
+    funcvalue=func(format,data1[0:nbiters],data2[0:nbiters])
     funcvals.append(funcvalue)
 
     config.writeReference(nb, funcvals,name)
@@ -449,13 +477,21 @@ def writeTests(config,nb,format):
 # So new tests have to be added after existing ones
 def writeNewsTests(config,nb,format):
     NBSAMPLES = 300
+    #config.setOverwrite(True)
     data1=np.random.randn(NBSAMPLES)
-    
     data1 = Tools.normalize(data1)
 
+    data2=np.random.randn(NBSAMPLES)
+    data2 = Tools.normalize(data2)
+
     config.writeInput(1, data1,"InputNew")
+
     nb=generateMaxAbsTests(config,nb,format,data1)
     nb=generateMinAbsTests(config,nb,format,data1)
+
+    config.writeInput(2, data2,"InputNew")
+    nb=generateOperatorTests(config,nb,format,data1,data2,mseTest,"MSEVals")
+    #config.setOverwrite(False)
 
 
 def generateBenchmark(config,format):
@@ -490,32 +526,33 @@ def generatePatterns():
     configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
     configq7 =Tools.Config(PATTERNDIR,PARAMDIR,"q7")
     
+    configf64.setOverwrite(False)
     configf32.setOverwrite(False)
     configf16.setOverwrite(False)
     configq31.setOverwrite(False)
     configq15.setOverwrite(False)
     configq7.setOverwrite(False)
 
-    #nb=writeTests(configf32,1,0)
-    #nb=writeF32OnlyTests(configf32,22)
-    #writeNewsTests(configf32,nb,Tools.F32)
+    nb=writeTests(configf32,1,0)
+    nb=writeF32OnlyTests(configf32,22)
+    writeNewsTests(configf32,nb,Tools.F32)
 
     nb=writeTests(configf64,1,Tools.F64)
     nb=writeF64OnlyTests(configf64,22)
     writeNewsTests(configf64,nb,Tools.F64)
 
-    #nb=writeTests(configq31,1,31)
-    #writeNewsTests(configq31,nb,Tools.Q31)
-#
-    #nb=writeTests(configq15,1,15)
-    #writeNewsTests(configq15,nb,Tools.Q15)
-#
-    #nb=writeTests(configq7,1,7)
-    #writeNewsTests(configq7,nb,Tools.Q7)
-#
-    #nb=writeTests(configf16,1,16)
-    #nb=writeF16OnlyTests(configf16,22)
-    #writeNewsTests(configf16,nb,Tools.F16)
+    nb=writeTests(configq31,1,31)
+    writeNewsTests(configq31,nb,Tools.Q31)
+
+    nb=writeTests(configq15,1,15)
+    writeNewsTests(configq15,nb,Tools.Q15)
+
+    nb=writeTests(configq7,1,7)
+    writeNewsTests(configq7,nb,Tools.Q7)
+
+    nb=writeTests(configf16,1,16)
+    nb=writeF16OnlyTests(configf16,22)
+    writeNewsTests(configf16,nb,Tools.F16)
 
     generateBenchmark(configf64, Tools.F64)
     generateBenchmark(configf32, Tools.F32)

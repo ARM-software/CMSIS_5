@@ -6,6 +6,8 @@
 //#include <cstdio>
 
 #define SNR_THRESHOLD 20
+#define SNR_THRESHOLD_MSE 14
+
 /* 
 
 Reference patterns are generated with
@@ -14,6 +16,9 @@ a double precision computation.
 */
 #define ABS_ERROR_Q7 ((q7_t)20)
 #define ABS_ERROR_Q31 ((q31_t)(1<<15))
+
+#define ABS_ERROR_Q7_MSE ((q7_t)6)
+
 
 
     void StatsTestsQ7::test_max_q7()
@@ -251,6 +256,29 @@ Python code must be tuned to change this.
         ASSERT_SNR(result,refp[this->refOffset],(float32_t)SNR_THRESHOLD);
 
         ASSERT_NEAR_EQ(result,refp[this->refOffset],(q31_t)ABS_ERROR_Q31);
+
+    }
+
+    void StatsTestsQ7::test_mse_q7()
+    {
+        const q7_t *inpA  = inputA.ptr();
+        const q7_t *inpB  = inputB.ptr();
+
+        q7_t result;
+
+        q7_t *refp  = ref.ptr();
+
+        q7_t *outp  = output.ptr();
+
+        arm_mse_q7(inpA,inpB,
+              inputA.nbSamples(),
+              &result);
+
+        outp[0] = result;
+
+        ASSERT_SNR(result,refp[this->refOffset],(float32_t)SNR_THRESHOLD_MSE);
+
+        ASSERT_NEAR_EQ(result,refp[this->refOffset],(q7_t)ABS_ERROR_Q7_MSE);
 
     }
 
@@ -895,6 +923,58 @@ But the tests are kept for when they will be available.
                output.create(1,StatsTestsQ7::OUT_Q7_ID,mgr);
 
                refOffset = 2;
+            }
+            break;
+
+            case StatsTestsQ7::TEST_MSE_Q7_35:
+            {
+               inputA.reload(StatsTestsQ7::INPUTNEW1_Q7_ID,mgr,15);
+               inputB.reload(StatsTestsQ7::INPUTNEW2_Q7_ID,mgr,15);
+              
+               ref.reload(StatsTestsQ7::MSE_Q7_ID,mgr);
+               
+               output.create(1,StatsTestsQ7::OUT_Q7_ID,mgr);
+
+               refOffset = 0;
+            }
+            break;
+
+            case StatsTestsQ7::TEST_MSE_Q7_36:
+            {
+               inputA.reload(StatsTestsQ7::INPUTNEW1_Q7_ID,mgr,32);
+               inputB.reload(StatsTestsQ7::INPUTNEW2_Q7_ID,mgr,32);
+              
+               ref.reload(StatsTestsQ7::MSE_Q7_ID,mgr);
+               
+               output.create(1,StatsTestsQ7::OUT_Q7_ID,mgr);
+
+               refOffset = 1;
+            }
+            break;
+
+            case StatsTestsQ7::TEST_MSE_Q7_37:
+            {
+               inputA.reload(StatsTestsQ7::INPUTNEW1_Q7_ID,mgr,47);
+               inputB.reload(StatsTestsQ7::INPUTNEW2_Q7_ID,mgr,47);
+              
+               ref.reload(StatsTestsQ7::MSE_Q7_ID,mgr);
+               
+               output.create(1,StatsTestsQ7::OUT_Q7_ID,mgr);
+
+               refOffset = 2;
+            }
+            break;
+
+            case StatsTestsQ7::TEST_MSE_Q7_38:
+            {
+               inputA.reload(StatsTestsQ7::INPUTNEW1_Q7_ID,mgr,100);
+               inputB.reload(StatsTestsQ7::INPUTNEW2_Q7_ID,mgr,100);
+              
+               ref.reload(StatsTestsQ7::MSE_Q7_ID,mgr);
+               
+               output.create(1,StatsTestsQ7::OUT_Q7_ID,mgr);
+
+               refOffset = 3;
             }
             break;
           

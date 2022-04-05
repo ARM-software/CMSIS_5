@@ -240,7 +240,7 @@ void arm_absmin_f16(
   outIndex = 0U;
 
   /* Load first input value that act as reference value for comparision */
-  out = fabsf(*pSrc++);
+  out = (_Float16)fabsf((float32_t)*pSrc++);
 
   /* Initialize blkCnt with number of samples */
   blkCnt = (blockSize - 1U);

@@ -426,6 +426,7 @@ group Root {
 
               Pattern INPUT1_Q7_ID : Input1_q7.txt 
               Pattern INPUTNEW1_Q7_ID : InputNew1_q7.txt
+              Pattern INPUTNEW2_Q7_ID : InputNew2_q7.txt
 
               Pattern INPUT2_Q7_ID : Input2_q7.txt 
               Pattern MAXINDEXES_S16_ID : MaxIndexes1_s16.txt
@@ -445,6 +446,8 @@ group Root {
 
               Pattern ABSMAXINDEXMAX_Q7_ID : InputAbsMaxIndexMax8_q7.txt
               Pattern ABSMININDEXMAX_Q7_ID : InputAbsMinIndexMax9_q7.txt
+              
+              Pattern MSE_Q7_ID : MSEVals10_q7.txt
 
 
               //Pattern RMSVALS_Q7_ID : RmsVals5_q7.txt
@@ -502,6 +505,11 @@ group Root {
                 Test nb=2    arm_absmin_no_idx_q7:test_absmin_no_idx_q7
                 Test nb=2n   arm_absmin_no_idx_q7:test_absmin_no_idx_q7
                 Test nb=2n+1 arm_absmin_no_idx_q7:test_absmin_no_idx_q7
+
+                Test nb=15    arm_mse_q7:test_mse_q7
+                Test nb=16n   arm_mse_q7:test_mse_q7
+                Test nb=16n+1 arm_mse_q7:test_mse_q7
+                Test long     arm_mse_q7:test_mse_q7
 
               }
 
