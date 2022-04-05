@@ -349,9 +349,10 @@ to configure the priority of an interrupt. It is equipped with the standard Syst
         - \token{CA53}: Arm Cortex-A53
         - \token{CA57}: Arm Cortex-A57
         - \token{CA72}: Arm Cortex-A72
+        - \token{SMC1}: Arm China STAR-MC1
         - \token{other}: other processor architectures
         </td>
-        <td>cpuNameType </td>
+        <td>cpuNameType</td>
         <td>1..1 </td>
     </tr> 
     <tr>
