@@ -313,6 +313,7 @@ echo """Stage schedule:
             }
             steps {
                 checkoutScmWithRetry(3)
+                sh('./CMSIS/Utilities/fetch_devtools.sh')
                 sh('./CMSIS/RTOS/RTX/LIB/fetch_libs.sh')
                 sh('./CMSIS/RTOS2/RTX/Library/fetch_libs.sh')
 
