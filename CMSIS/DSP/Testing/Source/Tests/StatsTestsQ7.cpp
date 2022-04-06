@@ -6,7 +6,7 @@
 //#include <cstdio>
 
 #define SNR_THRESHOLD 20
-#define SNR_THRESHOLD_MSE 14
+#define SNR_THRESHOLD_MSE 20
 
 /* 
 

@@ -910,6 +910,66 @@ void arm_mse_q7(
         uint32_t blockSize,
         q7_t * pResult);
 
+/**
+  @brief         Mean square error between two Q15 vectors.
+  @param[in]     pSrcA       points to the first input vector
+  @param[in]     pSrcB       points to the second input vector
+  @param[in]     blockSize  number of samples in input vector
+  @param[out]    pResult    mean square error
+  @return        none 
+*/
+  
+void arm_mse_q15(
+  const q15_t * pSrcA,
+  const q15_t * pSrcB,
+        uint32_t blockSize,
+        q15_t * pResult);
+
+/**
+  @brief         Mean square error between two Q31 vectors.
+  @param[in]     pSrcA       points to the first input vector
+  @param[in]     pSrcB       points to the second input vector
+  @param[in]     blockSize  number of samples in input vector
+  @param[out]    pResult    mean square error
+  @return        none 
+*/
+  
+void arm_mse_q31(
+  const q31_t * pSrcA,
+  const q31_t * pSrcB,
+        uint32_t blockSize,
+        q31_t * pResult);
+
+/**
+  @brief         Mean square error between two single precision float vectors.
+  @param[in]     pSrcA       points to the first input vector
+  @param[in]     pSrcB       points to the second input vector
+  @param[in]     blockSize  number of samples in input vector
+  @param[out]    pResult    mean square error
+  @return        none 
+*/
+  
+void arm_mse_f32(
+  const float32_t * pSrcA,
+  const float32_t * pSrcB,
+        uint32_t blockSize,
+        float32_t * pResult);
+
+/**
+  @brief         Mean square error between two double precision float vectors.
+  @param[in]     pSrcA       points to the first input vector
+  @param[in]     pSrcB       points to the second input vector
+  @param[in]     blockSize  number of samples in input vector
+  @param[out]    pResult    mean square error
+  @return        none 
+*/
+  
+void arm_mse_f64(
+  const float64_t * pSrcA,
+  const float64_t * pSrcB,
+        uint32_t blockSize,
+        float64_t * pResult);
+
 #ifdef   __cplusplus
 }
 #endif

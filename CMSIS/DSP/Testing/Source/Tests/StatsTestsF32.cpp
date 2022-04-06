@@ -436,7 +436,30 @@ a double precision computation.
     } 
 
    
+    void StatsTestsF32::test_mse_f32()
+    {
+        const float32_t *inpA  = inputA.ptr();
+        const float32_t *inpB  = inputB.ptr();
+
+        float32_t result;
+
+        float32_t *refp  = ref.ptr();
+
+        float32_t *outp  = output.ptr();
+
+        arm_mse_f32(inpA,inpB,
+              inputA.nbSamples(),
+              &result);
+
+        outp[0] = result;
+
+        ASSERT_SNR(result,refp[this->refOffset],(float32_t)SNR_THRESHOLD);
+
+        ASSERT_REL_ERROR(result,refp[this->refOffset],(float32_t)REL_ERROR);
+
+    }
   
+
     void StatsTestsF32::setUp(Testing::testID_t id,std::vector<Testing::param_t>& paramsArgs,Client::PatternMgr *mgr)
     {
         (void)paramsArgs;
@@ -1024,6 +1047,58 @@ a double precision computation.
                output.create(1,StatsTestsF32::OUT_F32_ID,mgr);
 
                refOffset = 2;
+            }
+            break;
+
+            case StatsTestsF32::TEST_MSE_F32_49:
+            {
+               inputA.reload(StatsTestsF32::INPUTNEW1_F32_ID,mgr,3);
+               inputB.reload(StatsTestsF32::INPUTNEW2_F32_ID,mgr,3);
+              
+               ref.reload(StatsTestsF32::MSE_F32_ID,mgr);
+               
+               output.create(1,StatsTestsF32::OUT_F32_ID,mgr);
+
+               refOffset = 0;
+            }
+            break;
+
+            case StatsTestsF32::TEST_MSE_F32_50:
+            {
+               inputA.reload(StatsTestsF32::INPUTNEW1_F32_ID,mgr,8);
+               inputB.reload(StatsTestsF32::INPUTNEW2_F32_ID,mgr,8);
+              
+               ref.reload(StatsTestsF32::MSE_F32_ID,mgr);
+               
+               output.create(1,StatsTestsF32::OUT_F32_ID,mgr);
+
+               refOffset = 1;
+            }
+            break;
+
+            case StatsTestsF32::TEST_MSE_F32_51:
+            {
+               inputA.reload(StatsTestsF32::INPUTNEW1_F32_ID,mgr,11);
+               inputB.reload(StatsTestsF32::INPUTNEW2_F32_ID,mgr,11);
+              
+               ref.reload(StatsTestsF32::MSE_F32_ID,mgr);
+               
+               output.create(1,StatsTestsF32::OUT_F32_ID,mgr);
+
+               refOffset = 2;
+            }
+            break;
+
+            case StatsTestsF32::TEST_MSE_F32_52:
+            {
+               inputA.reload(StatsTestsF32::INPUTNEW1_F32_ID,mgr,100);
+               inputB.reload(StatsTestsF32::INPUTNEW2_F32_ID,mgr,100);
+              
+               ref.reload(StatsTestsF32::MSE_F32_ID,mgr);
+               
+               output.create(1,StatsTestsF32::OUT_F32_ID,mgr);
+
+               refOffset = 3;
             }
             break;
 

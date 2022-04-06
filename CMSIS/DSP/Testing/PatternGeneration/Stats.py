@@ -477,7 +477,8 @@ def writeTests(config,nb,format):
 # So new tests have to be added after existing ones
 def writeNewsTests(config,nb,format):
     NBSAMPLES = 300
-    #config.setOverwrite(True)
+    if format==Tools.F16:
+       config.setOverwrite(True)
     data1=np.random.randn(NBSAMPLES)
     data1 = Tools.normalize(data1)
 
@@ -491,7 +492,7 @@ def writeNewsTests(config,nb,format):
 
     config.writeInput(2, data2,"InputNew")
     nb=generateOperatorTests(config,nb,format,data1,data2,mseTest,"MSEVals")
-    #config.setOverwrite(False)
+    config.setOverwrite(False)
 
 
 def generateBenchmark(config,format):

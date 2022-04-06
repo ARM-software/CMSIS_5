@@ -43,3 +43,4 @@
 #include "arm_absmin_f16.c"
 #include "arm_absmax_no_idx_f16.c"
 #include "arm_absmin_no_idx_f16.c"
+#include "arm_mse_f16.c"

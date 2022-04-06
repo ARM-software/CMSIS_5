@@ -15,6 +15,7 @@ group Root {
 
               Pattern INPUT1_F16_ID : Input1_f16.txt 
               Pattern INPUTNEW1_F16_ID : InputNew1_f16.txt 
+              Pattern INPUTNEW2_F16_ID : InputNew2_f16.txt 
 
               Pattern INPUT2_F16_ID : Input2_f16.txt 
               Pattern MAXINDEXES_S16_ID : MaxIndexes1_s16.txt
@@ -50,6 +51,8 @@ group Root {
 
               Pattern ABSMININDEXES_S16_ID : AbsMinIndexes27_s16.txt
               Pattern ABSMINVALS_F16_ID : AbsMinVals27_f16.txt
+
+              Pattern MSE_F16_ID : MSEVals28_f16.txt
 
               Output  OUT_F16_ID : Output
               Output  OUT_S16_ID : Index
@@ -100,25 +103,30 @@ group Root {
 
                 Test stability  arm_std_f16:test_std_stability_f16
 
-                Test nb=3    arm_absmax_f16:test_absmax_f16
-                Test nb=4n   arm_absmax_f16:test_absmax_f16
-                Test nb=4n+1 arm_absmax_f16:test_absmax_f16
+                Test nb=7    arm_absmax_f16:test_absmax_f16
+                Test nb=8n   arm_absmax_f16:test_absmax_f16
+                Test nb=8n+1 arm_absmax_f16:test_absmax_f16
 
-                Test nb=3    arm_absmin_f16:test_absmin_f16
-                Test nb=4n   arm_absmin_f16:test_absmin_f16
-                Test nb=4n+1 arm_absmin_f16:test_absmin_f16
+                Test nb=7    arm_absmin_f16:test_absmin_f16
+                Test nb=8n   arm_absmin_f16:test_absmin_f16
+                Test nb=8n+1 arm_absmin_f16:test_absmin_f16
 
                 Test nb=7    arm_min_no_idx_f16:test_min_no_idx_f16
                 Test nb=8n   arm_min_no_idx_f16:test_min_no_idx_f16
                 Test nb=8n+1 arm_min_no_idx_f16:test_min_no_idx_f16
 
-                Test nb=2    arm_absmax_no_idx_f16:test_absmax_no_idx_f16
-                Test nb=2n   arm_absmax_no_idx_f16:test_absmax_no_idx_f16
-                Test nb=2n+1 arm_absmax_no_idx_f16:test_absmax_no_idx_f16
+                Test nb=7    arm_absmax_no_idx_f16:test_absmax_no_idx_f16
+                Test nb=8n   arm_absmax_no_idx_f16:test_absmax_no_idx_f16
+                Test nb=8n+1 arm_absmax_no_idx_f16:test_absmax_no_idx_f16
 
-                Test nb=2    arm_absmin_no_idx_f16:test_absmin_no_idx_f16
-                Test nb=2n   arm_absmin_no_idx_f16:test_absmin_no_idx_f16
-                Test nb=2n+1 arm_absmin_no_idx_f16:test_absmin_no_idx_f16
+                Test nb=7    arm_absmin_no_idx_f16:test_absmin_no_idx_f16
+                Test nb=8n   arm_absmin_no_idx_f16:test_absmin_no_idx_f16
+                Test nb=8n+1 arm_absmin_no_idx_f16:test_absmin_no_idx_f16
+
+                Test nb=7    arm_mse_f16:test_mse_f16
+                Test nb=8n   arm_mse_f16:test_mse_f16
+                Test nb=8n+1 arm_mse_f16:test_mse_f16
+                Test long    arm_mse_f16:test_mse_f16
               }
            }
         }

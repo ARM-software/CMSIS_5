@@ -1,7 +1,7 @@
 /* ----------------------------------------------------------------------
  * Project:      CMSIS DSP Library
- * Title:        arm_mse_q7.c
- * Description:  Mean square error between two Q7 vectors
+ * Title:        arm_mse_q31.c
+ * Description:  Mean square error between two Q31 vectors
  *
  * $Date:        04 April 2022
  * $Revision:    V1.10.0
@@ -32,12 +32,6 @@
   @ingroup groupStats
  */
 
-/**
-  @defgroup MSE Mean Square Error
-
-  Calculates the mean square error between two vectors.
-
- */
 
 /**
   @addtogroup MSE
@@ -45,26 +39,26 @@
  */
 
 /**
-  @brief         Mean square error between two Q7 vectors.
+  @brief         Mean square error between two Q31 vectors.
   @param[in]     pSrcA       points to the first input vector
   @param[in]     pSrcB       points to the second input vector
-  @param[in]     blockSize   number of samples in input vector
-  @param[out]    pResult     mean square error
+  @param[in]     blockSize  number of samples in input vector
+  @param[out]    pResult    mean square error
   @return        none
  */
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
-void arm_mse_q7(
-  const q7_t * pSrcA,
-  const q7_t * pSrcB,
+void arm_mse_q31(
+  const q31_t * pSrcA,
+  const q31_t * pSrcB,
         uint32_t blockSize,
-        q7_t * pResult)
+        q31_t * pResult)
 {
     uint32_t  blkCnt;           /* loop counters */
-    q7x16_t vecSrcA,vecSrcB;
-    q31_t   sum = 0LL;
+    q31x4_t vecSrcA,vecSrcB;
+    q63_t   sum = 0LL;
 
-   /* Compute 16 outputs at a time */
-    blkCnt = blockSize >> 4U;
+   /* Compute 4 outputs at a time */
+    blkCnt = blockSize >> 2U;
     while (blkCnt > 0U)
     {
         vecSrcA = vld1q(pSrcA);
@@ -73,24 +67,25 @@ void arm_mse_q7(
         vecSrcA = vshrq(vecSrcA,1);
         vecSrcB = vshrq(vecSrcB,1);
 
+
         vecSrcA = vqsubq(vecSrcA,vecSrcB);
         /*
          * sum lanes
          */
-        sum = vmladavaq(sum, vecSrcA, vecSrcA);
+        sum = vrmlaldavhaq(sum, vecSrcA, vecSrcA);
 
         blkCnt--;
-        pSrcA += 16;
-        pSrcB += 16;
+        pSrcA += 4;
+        pSrcB += 4;
     }
 
     /*
      * tail
      */
-    blkCnt = blockSize & 0xF;
+    blkCnt = blockSize & 3;
     if (blkCnt > 0U)
     {
-        mve_pred16_t p0 = vctp8q(blkCnt);
+        mve_pred16_t p0 = vctp32q(blkCnt);
         vecSrcA = vld1q(pSrcA);
         vecSrcB = vld1q(pSrcB);
 
@@ -99,22 +94,24 @@ void arm_mse_q7(
 
         vecSrcA = vqsubq(vecSrcA,vecSrcB);
 
-        sum = vmladavaq_p(sum, vecSrcA, vecSrcA, p0);
+        sum = vrmlaldavhaq_p(sum, vecSrcA, vecSrcA, p0);
     }
 
-    *pResult = (q7_t) __SSAT((q15_t) (sum / blockSize)>>5, 8);
+    
+    *pResult = (q31_t) ((sum / blockSize)>>21);
+
 }
 #else
-void arm_mse_q7(
-  const q7_t * pSrcA,
-  const q7_t * pSrcB,
+void arm_mse_q31(
+  const q31_t * pSrcA,
+  const q31_t * pSrcB,
         uint32_t blockSize,
-        q7_t * pResult)
+        q31_t * pResult)
 {
         uint32_t blkCnt;                               /* Loop counter */
-        q31_t sum = 0;                                 /* Temporary result storage */
-        q7_t inA,inB;                                       /* Temporary variable to store input value */
+        q63_t sum = 0;                                 /* Temporary result storage */
 
+        q31_t inA32,inB32;                                    /* Temporary variable to store packed input value */
 
 #if defined (ARM_MATH_LOOPUNROLL)
 
@@ -123,25 +120,26 @@ void arm_mse_q7(
 
   while (blkCnt > 0U)
   {
-    inA = *pSrcA++ >> 1;
-    inB = *pSrcB++ >> 1;
-    inA = (q7_t) __SSAT((q15_t) inA - (q15_t)inB, 8);
-    sum += ((q15_t) inA * inA);
+    inA32 = *pSrcA++ >> 1;
+    inB32 = *pSrcB++ >> 1;
+    inA32 = __QSUB(inA32, inB32);
+    sum += ((q63_t) inA32 * inA32) >> 14U;
 
-    inA = *pSrcA++ >> 1;
-    inB = *pSrcB++ >> 1;
-    inA = (q7_t) __SSAT((q15_t) inA - (q15_t)inB, 8);
-    sum += ((q15_t) inA * inA);
+    inA32 = *pSrcA++ >> 1;
+    inB32 = *pSrcB++ >> 1;
+    inA32 = __QSUB(inA32, inB32);
+    sum += ((q63_t) inA32 * inA32) >> 14U;
 
-    inA = *pSrcA++ >> 1;
-    inB = *pSrcB++ >> 1;
-    inA = (q7_t) __SSAT((q15_t) inA - (q15_t)inB, 8);
-    sum += ((q15_t) inA * inA);
+    inA32 = *pSrcA++ >> 1;
+    inB32 = *pSrcB++ >> 1;
+    inA32 = __QSUB(inA32, inB32);
+    sum += ((q63_t) inA32 * inA32) >> 14U;
 
-    inA = *pSrcA++ >> 1;
-    inB = *pSrcB++ >> 1;
-    inA = (q7_t) __SSAT((q15_t) inA - (q15_t)inB, 8);
-    sum += ((q15_t) inA * inA);
+    inA32 = *pSrcA++ >> 1;
+    inB32 = *pSrcB++ >> 1;
+    inA32 = __QSUB(inA32, inB32);
+    sum += ((q63_t) inA32 * inA32) >> 14U;
+
 
     /* Decrement loop counter */
     blkCnt--;
@@ -159,18 +157,17 @@ void arm_mse_q7(
 
   while (blkCnt > 0U)
   {
-    inA = *pSrcA++ >> 1;
-    inB = *pSrcB++ >> 1;
-
-    inA = (q7_t) __SSAT((q15_t) inA - (q15_t)inB, 8);
-    sum += ((q15_t) inA * inA);
+    inA32 = *pSrcA++ >> 1;
+    inB32 = *pSrcB++ >> 1;
+    inA32 = __QSUB(inA32, inB32);
+    sum += ((q63_t) inA32 * inA32) >> 14U;
 
     /* Decrement loop counter */
     blkCnt--;
   }
 
-  /* Store result in q7 format */
-  *pResult = (q7_t) __SSAT((q15_t) (sum / blockSize)>>5, 8);;
+  /* Store result in q31 format */
+  *pResult = (q31_t) ((sum / blockSize)>>15);
 }
 #endif /* defined(ARM_MATH_MVEI) */
 

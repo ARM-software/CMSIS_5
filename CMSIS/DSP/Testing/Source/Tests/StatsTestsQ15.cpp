@@ -6,6 +6,8 @@
 //#include <cstdio>
 
 #define SNR_THRESHOLD 50
+#define SNR_THRESHOLD_MSE 50
+
 /* 
 
 Reference patterns are generated with
@@ -13,6 +15,8 @@ a double precision computation.
 
 */
 #define ABS_ERROR_Q15 ((q15_t)100)
+#define ABS_ERROR_Q15_MSE ((q15_t)100)
+
 #define ABS_ERROR_Q63 (1<<17)
 
     void StatsTestsQ15::test_max_q15()
@@ -310,6 +314,29 @@ a double precision computation.
     }
 
   
+    void StatsTestsQ15::test_mse_q15()
+    {
+        const q15_t *inpA  = inputA.ptr();
+        const q15_t *inpB  = inputB.ptr();
+
+        q15_t result;
+
+        q15_t *refp  = ref.ptr();
+
+        q15_t *outp  = output.ptr();
+
+        arm_mse_q15(inpA,inpB,
+              inputA.nbSamples(),
+              &result);
+
+        outp[0] = result;
+
+        ASSERT_SNR(result,refp[this->refOffset],(float32_t)SNR_THRESHOLD_MSE);
+
+        ASSERT_NEAR_EQ(result,refp[this->refOffset],(q15_t)ABS_ERROR_Q15_MSE);
+
+    }
+
   
     void StatsTestsQ15::setUp(Testing::testID_t id,std::vector<Testing::param_t>& paramsArgs,Client::PatternMgr *mgr)
     {
@@ -805,6 +832,58 @@ a double precision computation.
                output.create(1,StatsTestsQ15::OUT_Q15_ID,mgr);
 
                refOffset = 2;
+            }
+            break;
+
+            case StatsTestsQ15::TEST_MSE_Q15_40:
+            {
+               inputA.reload(StatsTestsQ15::INPUTNEW1_Q15_ID,mgr,7);
+               inputB.reload(StatsTestsQ15::INPUTNEW2_Q15_ID,mgr,7);
+              
+               ref.reload(StatsTestsQ15::MSE_Q15_ID,mgr);
+               
+               output.create(1,StatsTestsQ15::OUT_Q15_ID,mgr);
+
+               refOffset = 0;
+            }
+            break;
+
+            case StatsTestsQ15::TEST_MSE_Q15_41:
+            {
+               inputA.reload(StatsTestsQ15::INPUTNEW1_Q15_ID,mgr,16);
+               inputB.reload(StatsTestsQ15::INPUTNEW2_Q15_ID,mgr,16);
+              
+               ref.reload(StatsTestsQ15::MSE_Q15_ID,mgr);
+               
+               output.create(1,StatsTestsQ15::OUT_Q15_ID,mgr);
+
+               refOffset = 1;
+            }
+            break;
+
+            case StatsTestsQ15::TEST_MSE_Q15_42:
+            {
+               inputA.reload(StatsTestsQ15::INPUTNEW1_Q15_ID,mgr,23);
+               inputB.reload(StatsTestsQ15::INPUTNEW2_Q15_ID,mgr,23);
+              
+               ref.reload(StatsTestsQ15::MSE_Q15_ID,mgr);
+               
+               output.create(1,StatsTestsQ15::OUT_Q15_ID,mgr);
+
+               refOffset = 2;
+            }
+            break;
+
+            case StatsTestsQ15::TEST_MSE_Q15_43:
+            {
+               inputA.reload(StatsTestsQ15::INPUTNEW1_Q15_ID,mgr,100);
+               inputB.reload(StatsTestsQ15::INPUTNEW2_Q15_ID,mgr,100);
+              
+               ref.reload(StatsTestsQ15::MSE_Q15_ID,mgr);
+               
+               output.create(1,StatsTestsQ15::OUT_Q15_ID,mgr);
+
+               refOffset = 3;
             }
             break;
 

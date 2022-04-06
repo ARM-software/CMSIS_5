@@ -243,6 +243,21 @@ float16_t arm_kullback_leibler_f16(const float16_t * pSrcA
       uint32_t   blockSize,
       float16_t *pResult);
 
+/**
+  @brief         Mean square error between two half precision float vectors.
+  @param[in]     pSrcA       points to the first input vector
+  @param[in]     pSrcB       points to the second input vector
+  @param[in]     blockSize  number of samples in input vector
+  @param[out]    pResult    mean square error
+  @return        none 
+*/
+  
+void arm_mse_f16(
+  const float16_t * pSrcA,
+  const float16_t * pSrcB,
+        uint32_t blockSize,
+        float16_t * pResult);
+
 #endif /*defined(ARM_FLOAT16_SUPPORTED)*/
 #ifdef   __cplusplus
 }

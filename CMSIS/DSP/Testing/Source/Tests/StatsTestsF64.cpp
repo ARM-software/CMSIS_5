@@ -439,6 +439,29 @@ a double precision computation.
 
 */
   
+    void StatsTestsF64::test_mse_f64()
+    {
+        const float64_t *inpA  = inputA.ptr();
+        const float64_t *inpB  = inputB.ptr();
+
+        float64_t result;
+
+        float64_t *refp  = ref.ptr();
+
+        float64_t *outp  = output.ptr();
+
+        arm_mse_f64(inpA,inpB,
+              inputA.nbSamples(),
+              &result);
+
+        outp[0] = result;
+
+        ASSERT_SNR(result,refp[this->refOffset],(float64_t)SNR_THRESHOLD);
+
+        ASSERT_REL_ERROR(result,refp[this->refOffset],(float64_t)REL_ERROR);
+
+    }
+
     void StatsTestsF64::setUp(Testing::testID_t id,std::vector<Testing::param_t>& paramsArgs,Client::PatternMgr *mgr)
     {
         (void)paramsArgs;
@@ -1027,6 +1050,58 @@ a double precision computation.
                output.create(1,StatsTestsF64::OUT_F64_ID,mgr);
 
                refOffset = 2;
+            }
+            break;
+
+            case StatsTestsF64::TEST_MSE_F64_49:
+            {
+               inputA.reload(StatsTestsF64::INPUTNEW1_F64_ID,mgr,2);
+               inputB.reload(StatsTestsF64::INPUTNEW2_F64_ID,mgr,2);
+              
+               ref.reload(StatsTestsF64::MSE_F64_ID,mgr);
+               
+               output.create(1,StatsTestsF64::OUT_F64_ID,mgr);
+
+               refOffset = 0;
+            }
+            break;
+
+            case StatsTestsF64::TEST_MSE_F64_50:
+            {
+               inputA.reload(StatsTestsF64::INPUTNEW1_F64_ID,mgr,4);
+               inputB.reload(StatsTestsF64::INPUTNEW2_F64_ID,mgr,4);
+              
+               ref.reload(StatsTestsF64::MSE_F64_ID,mgr);
+               
+               output.create(1,StatsTestsF64::OUT_F64_ID,mgr);
+
+               refOffset = 1;
+            }
+            break;
+
+            case StatsTestsF64::TEST_MSE_F64_51:
+            {
+               inputA.reload(StatsTestsF64::INPUTNEW1_F64_ID,mgr,5);
+               inputB.reload(StatsTestsF64::INPUTNEW2_F64_ID,mgr,5);
+              
+               ref.reload(StatsTestsF64::MSE_F64_ID,mgr);
+               
+               output.create(1,StatsTestsF64::OUT_F64_ID,mgr);
+
+               refOffset = 2;
+            }
+            break;
+
+            case StatsTestsF64::TEST_MSE_F64_52:
+            {
+               inputA.reload(StatsTestsF64::INPUTNEW1_F64_ID,mgr,100);
+               inputB.reload(StatsTestsF64::INPUTNEW2_F64_ID,mgr,100);
+              
+               ref.reload(StatsTestsF64::MSE_F64_ID,mgr);
+               
+               output.create(1,StatsTestsF64::OUT_F64_ID,mgr);
+
+               refOffset = 3;
             }
             break;
 
