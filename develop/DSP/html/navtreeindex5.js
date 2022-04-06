@@ -1,5 +1,10 @@
 var NAVTREEINDEX5 =
 {
+"structarm__mfcc__instance__q15.html#a8ac2a63296ee4e08bb019bf75f66f7d0":[4,75,6],
+"structarm__mfcc__instance__q15.html#a8be8e70eb1e8f3ecf297c39d6bedafc9":[4,75,2],
+"structarm__mfcc__instance__q15.html#a92fa17569af954a83e7d76d88693ecc6":[4,75,3],
+"structarm__mfcc__instance__q15.html#ac625335e6a9c7ad9d658b148bb0d650a":[4,75,7],
+"structarm__mfcc__instance__q15.html#acfacbcf8d50f063823b8097880bc9485":[4,75,5],
 "structarm__mfcc__instance__q15.html#af4dfc8960dea69fe00bf6018eb70eb5a":[4,75,8],
 "structarm__mfcc__instance__q31.html":[4,76],
 "structarm__mfcc__instance__q31.html#a13e9ec26f0771670bc9e3802b8d774d3":[4,76,1],

@@ -225,6 +225,13 @@ var NAVTREEINDEX1 =
 "group__MFCC.html#ga7e55fc08a473af73055021aedae27c32":[3,14,2,4],
 "group__MFCC.html#gada3ab681711c96cc8b39394a42614678":[3,14,2,1],
 "group__MFCC.html#gae6a307eafd0bb6534369d239e76ef766":[3,14,2,2],
+"group__MSE.html":[3,11,8],
+"group__MSE.html#ga0aeaf53dbe494db3e6f49ef3d6b1f6c1":[3,11,8,0],
+"group__MSE.html#ga0ce5aa7143c936e17010819c4f4fc49f":[3,11,8,4],
+"group__MSE.html#ga22b727f31a46bc579fb7c5555be94cb1":[3,11,8,5],
+"group__MSE.html#ga25be2fdaf67f6e186a83e0fe2e05d078":[3,11,8,2],
+"group__MSE.html#ga5a80adab03f7619b9fd81bb4d462d482":[3,11,8,1],
+"group__MSE.html#gaed0b8f9926f21904eb91033236e00343":[3,11,8,3],
 "group__Manhattan.html":[3,5,0,3],
 "group__Manhattan.html#ga0a7194c6d56ce679a6ba1d5ebc814d5c":[3,5,0,3,1],
 "group__Manhattan.html#gaa579d814b40db8c118b6a212018a4d9c":[3,5,0,3,2],
@@ -242,12 +249,5 @@ var NAVTREEINDEX1 =
 "group__MatrixChol.html#gaf94a1d82b0f71856e0eecb87675a5427":[3,9,1,0],
 "group__MatrixComplexTrans.html":[3,9,3],
 "group__MatrixComplexTrans.html#ga05fdddccd50cd459907060e5699f3423":[3,9,3,2],
-"group__MatrixComplexTrans.html#ga51ed397be1c75ce5338f59c64b3b4474":[3,9,3,3],
-"group__MatrixComplexTrans.html#ga76bb8262330184e9824594d5e0efb01f":[3,9,3,0],
-"group__MatrixComplexTrans.html#gab5629936904fc64f1513de45f9f52d80":[3,9,3,1],
-"group__MatrixExample.html":[3,0,8],
-"group__MatrixInit.html":[3,9,4],
-"group__MatrixInit.html#ga11e3dc41592a6401c13182fef9416a27":[3,9,4,1],
-"group__MatrixInit.html#ga1d3b0bea0f7978b117c16b330fe0e2e5":[3,9,4,0],
-"group__MatrixInit.html#ga31a7c2b991803d49719393eb2d53dc26":[3,9,4,2]
+"group__MatrixComplexTrans.html#ga51ed397be1c75ce5338f59c64b3b4474":[3,9,3,3]
 };

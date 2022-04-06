@@ -30,7 +30,7 @@ var searchData=
   ['minimum',['Minimum',['../group__Min.html',1,'']]],
   ['min_5fmarks',['min_marks',['../arm__class__marks__example__f32_8c.html#abb7687fa07ec54d8e792cfcbfe2ca809',1,'arm_class_marks_example_f32.c']]],
   ['minkowski_20distance',['Minkowski distance',['../group__Minkowski.html',1,'']]],
-  ['mean_20square_20error',['Mean Square Error',['../group__mse.html',1,'']]],
+  ['mean_20square_20error',['Mean Square Error',['../group__MSE.html',1,'']]],
   ['mu',['mu',['../structarm__lms__instance__f32.html#a11402afa7c9b9dac4cb953fa386e74d2',1,'arm_lms_instance_f32::mu()'],['../structarm__lms__instance__q15.html#aab4745770bd667de040227eec1b5ff8d',1,'arm_lms_instance_q15::mu()'],['../structarm__lms__instance__q31.html#a21ab4237a726ea7751f5026d89d2e577',1,'arm_lms_instance_q31::mu()'],['../structarm__lms__norm__instance__f32.html#a11402afa7c9b9dac4cb953fa386e74d2',1,'arm_lms_norm_instance_f32::mu()'],['../structarm__lms__norm__instance__q31.html#a21ab4237a726ea7751f5026d89d2e577',1,'arm_lms_norm_instance_q31::mu()'],['../structarm__lms__norm__instance__q15.html#aab4745770bd667de040227eec1b5ff8d',1,'arm_lms_norm_instance_q15::mu()'],['../arm__signal__converge__example__f32_8c.html#a09bc9e6a44f0291cfcf578f2efcddfab',1,'MU():&#160;arm_signal_converge_example_f32.c']]],
   ['mul32x16',['mul32x16',['../arm__levinson__durbin__q31_8c.html#ad065cb1c3e66c4be3712bc57b992a085',1,'arm_levinson_durbin_q31.c']]],
   ['mul32x32',['mul32x32',['../arm__levinson__durbin__q31_8c.html#ab12f883a050db324e5a87159f83f337f',1,'arm_levinson_durbin_q31.c']]],

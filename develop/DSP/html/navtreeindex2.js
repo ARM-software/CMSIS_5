@@ -1,5 +1,12 @@
 var NAVTREEINDEX2 =
 {
+"group__MatrixComplexTrans.html#ga76bb8262330184e9824594d5e0efb01f":[3,9,3,0],
+"group__MatrixComplexTrans.html#gab5629936904fc64f1513de45f9f52d80":[3,9,3,1],
+"group__MatrixExample.html":[3,0,8],
+"group__MatrixInit.html":[3,9,4],
+"group__MatrixInit.html#ga11e3dc41592a6401c13182fef9416a27":[3,9,4,1],
+"group__MatrixInit.html#ga1d3b0bea0f7978b117c16b330fe0e2e5":[3,9,4,0],
+"group__MatrixInit.html#ga31a7c2b991803d49719393eb2d53dc26":[3,9,4,2],
 "group__MatrixInit.html#ga48a5e5d37e1f062cc57fcfaf683343cc":[3,9,4,3],
 "group__MatrixInv.html":[3,9,5],
 "group__MatrixInv.html#ga542be7aabbf7a2297a4b62cf212910e3":[3,9,5,1],
@@ -242,12 +249,5 @@ var NAVTREEINDEX2 =
 "group__groupFilters.html":[3,7],
 "group__groupInterpolation.html":[3,8],
 "group__groupMath.html":[3,1],
-"group__groupMatrix.html":[3,9],
-"group__groupQuaternionMath.html":[3,10],
-"group__groupSVM.html":[3,13],
-"group__groupStats.html":[3,11],
-"group__groupSupport.html":[3,12],
-"group__groupTransforms.html":[3,14],
-"group__inv__clarke.html":[3,4,4],
-"group__inv__clarke.html#ga1a73ce96f94b2124d02426690e587197":[3,4,4,0]
+"group__groupMatrix.html":[3,9]
 };

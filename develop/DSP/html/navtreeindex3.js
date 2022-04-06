@@ -1,5 +1,12 @@
 var NAVTREEINDEX3 =
 {
+"group__groupQuaternionMath.html":[3,10],
+"group__groupSVM.html":[3,13],
+"group__groupStats.html":[3,11],
+"group__groupSupport.html":[3,12],
+"group__groupTransforms.html":[3,14],
+"group__inv__clarke.html":[3,4,4],
+"group__inv__clarke.html#ga1a73ce96f94b2124d02426690e587197":[3,4,4,0],
 "group__inv__clarke.html#ga3bab178431f22d13332a0dfae4390172":[3,4,4,1],
 "group__inv__park.html":[3,4,2],
 "group__inv__park.html#ga896b639ecd52c33d427bc7cdc8d303b2":[3,4,2,0],
@@ -16,8 +23,6 @@ var NAVTREEINDEX3 =
 "group__mean.html#gab86ec60eba14c4bc4e2bd9b54ac4b487":[3,11,6,4],
 "group__mean.html#gad53642208dd6246ba943acf3534d939e":[3,11,6,0],
 "group__mean.html#gae4fb7698771d7c24f536ed24347c1488":[3,11,6,1],
-"group__mse.html":[3,11,8],
-"group__mse.html#ga22b727f31a46bc579fb7c5555be94cb1":[3,11,8,0],
 "group__park.html":[3,4,1],
 "group__park.html#ga18f92d09e080edc98a00c01886b56b5d":[3,4,1,0],
 "group__park.html#ga69be76685149b18f345f705aa8efaad0":[3,4,1,1],
@@ -244,10 +249,5 @@ var NAVTREEINDEX3 =
 "structarm__cfft__radix4__instance__q31.html#a9760c603af5d85652496dbffd63a8a2e":[4,30,5],
 "structarm__cfft__radix4__instance__q31.html#ab8db3bbe7c61e6bb8ca2a55e3446e11a":[4,30,2],
 "structarm__cfft__radix4__instance__q31.html#ad6ca6e223f986ebfd94c5ee1e410aa73":[4,30,3],
-"structarm__cfft__radix4__instance__q31.html#afe772e5b5001c9d8e85032115a8df5bf":[4,30,6],
-"structarm__dct4__instance__f32.html":[4,31],
-"structarm__dct4__instance__f32.html#a1bf2ed86ef2c3dd83af606bb3f520f2a":[4,31,2],
-"structarm__dct4__instance__f32.html#a37d49571fe35012087153c093705cd11":[4,31,0],
-"structarm__dct4__instance__f32.html#a6978f973c110508f6086347c87eaea7a":[4,31,4],
-"structarm__dct4__instance__f32.html#a8292d9775f5c5472f59915649fe3b378":[4,31,6]
+"structarm__cfft__radix4__instance__q31.html#afe772e5b5001c9d8e85032115a8df5bf":[4,30,6]
 };
