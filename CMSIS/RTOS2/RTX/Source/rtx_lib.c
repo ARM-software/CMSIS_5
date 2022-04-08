@@ -674,6 +674,7 @@ void osRtxKernelPreInit (void) {
 
 extern void $Super$$_fp_init (void);
 
+void $Sub$$_fp_init (void);
 void $Sub$$_fp_init (void) {
   $Super$$_fp_init();
   FPU->FPDSCR = __get_FPSCR();
