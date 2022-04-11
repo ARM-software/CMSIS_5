@@ -22,8 +22,8 @@
  * Description:  Public header file of support functions for CMSIS NN Library
  *
 
- * $Date:        16. March 2022
- * $Revision:    V.6.2.1
+ * $Date:        19. April 2022
+ * $Revision:    V.6.2.2
  *
  * Target Processor:  Cortex-M CPUs
  * -------------------------------------------------------------------- */
@@ -652,7 +652,7 @@ __STATIC_FORCEINLINE void arm_memset_q7(q7_t *dst, const q7_t val, uint32_t bloc
     __asm volatile("   vdup.8                  q0, %[set_val]             \n"
                    "   wlstp.8                 lr, %[cnt], 1f             \n"
                    "2:                                                    \n"
-                   "   vstrb.8                 q0, [%[in]], 16            \n"
+                   "   vstrb.8                 q0, [%[in]], #16            \n"
                    "   letp                    lr, 2b                     \n"
                    "1:                                                    \n"
                    : [ in ] "+r"(dst)
@@ -999,8 +999,8 @@ __STATIC_FORCEINLINE void arm_memcpy_q7(q7_t *__RESTRICT dst, const q7_t *__REST
 #if defined(ARM_MATH_MVEI)
     __asm volatile("   wlstp.8                 lr, %[cnt], 1f             \n"
                    "2:                                                    \n"
-                   "   vldrb.8                 q0, [%[in]], 16            \n"
-                   "   vstrb.8                 q0, [%[out]], 16           \n"
+                   "   vldrb.8                 q0, [%[in]], #16            \n"
+                   "   vstrb.8                 q0, [%[out]], #16           \n"
                    "   letp                    lr, 2b                     \n"
                    "1:                                                    \n"
                    : [ in ] "+r"(src), [ out ] "+r"(dst)
