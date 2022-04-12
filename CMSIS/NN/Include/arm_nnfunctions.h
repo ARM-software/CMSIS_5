@@ -21,8 +21,8 @@
  * Title:        arm_nnfunctions.h
  * Description:  Public header file for CMSIS NN Library
  *
- * $Date:        10 March 2022
- * $Revision:    V.8.1.1
+ * $Date:        7 April 2022
+ * $Revision:    V.8.1.2
  *
  * Target Processor:  Cortex-M CPUs
  * -------------------------------------------------------------------- */
@@ -1199,13 +1199,13 @@ arm_status arm_depthwise_conv_s16(const cmsis_nn_context *ctx,
                                   const cmsis_nn_dw_conv_params *dw_conv_params,
                                   const cmsis_nn_per_channel_quant_params *quant_params,
                                   const cmsis_nn_dims *input_dims,
-                                  const q15_t *input,
+                                  const q15_t *input_data,
                                   const cmsis_nn_dims *filter_dims,
-                                  const q7_t *kernel,
+                                  const q7_t *filter_data,
                                   const cmsis_nn_dims *bias_dims,
-                                  const int64_t *bias,
+                                  const int64_t *bias_data,
                                   const cmsis_nn_dims *output_dims,
-                                  q15_t *output);
+                                  q15_t *output_data);
 
 /**
  * @brief Optimized s8 depthwise convolution function for 3x3 kernel size with some constraints on
@@ -1994,14 +1994,14 @@ arm_status arm_max_pool_s8(const cmsis_nn_context *ctx,
  * @param[in]      pool_params    Pooling parameters
  * @param[in]      input_dims     Input (activation) tensor dimensions. Format: [H, W, C_IN]
  *                                Argument 'N' is not used.
- * @param[in]      input_data     Input (activation) data pointer. The input tensor must not
+ * @param[in]      src            Input (activation) data pointer. The input tensor must not
  *                                overlap with the output tensor. Data type: int16
  * @param[in]      filter_dims    Filter tensor dimensions. Format: [H, W]
  *                                Argument N and C are not used.
  * @param[in]      output_dims    Output tensor dimensions. Format: [H, W, C_OUT]
  *                                Argument N is not used.
  *                                C_OUT equals C_IN.
- * @param[in, out] output_data    Output data pointer. Data type: int16
+ * @param[in, out] dst            Output data pointer. Data type: int16
  * @return                        The function returns
  *                                    <code>ARM_MATH_SUCCESS</code> - Successful operation
  *
