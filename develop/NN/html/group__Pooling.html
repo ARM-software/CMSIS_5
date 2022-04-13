@@ -492,10 +492,10 @@ Functions</h2></td></tr>
     <tr><td class="paramdir">[in,out]</td><td class="paramname">ctx</td><td>Function context (e.g. temporary buffer). Check the function definition file to see if an additional buffer is required. Optional function {API}_get_buffer_size() provides the buffer size if an additional buffer is required. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">pool_params</td><td>Pooling parameters </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">input_dims</td><td>Input (activation) tensor dimensions. Format: [H, W, C_IN] Argument 'N' is not used. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">input_data</td><td>Input (activation) data pointer. The input tensor must not overlap with the output tensor. Data type: int16 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">src</td><td>Input (activation) data pointer. The input tensor must not overlap with the output tensor. Data type: int16 </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">filter_dims</td><td>Filter tensor dimensions. Format: [H, W] Argument N and C are not used. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">output_dims</td><td>Output tensor dimensions. Format: [H, W, C_OUT] Argument N is not used. C_OUT equals C_IN. </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">output_data</td><td>Output data pointer. Data type: int16 </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">dst</td><td>Output data pointer. Data type: int16 </td></tr>
   </table>
   </dd>
 </dl>

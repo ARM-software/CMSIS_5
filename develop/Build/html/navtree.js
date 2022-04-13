@@ -1,18 +1,15 @@
 var NAVTREE =
 [
   [ "CMSIS-Build", "index.html", [
-    [ "Overview", "index.html", [
-      [ "Components of CMSIS-Build", "index.html#CB_Components", null ]
-    ] ],
-    [ "Revision history", "build_revisionHistory.html", null ],
-    [ "Command Line Build", "CmdLineBuild.html", "CmdLineBuild" ],
-    [ "Project Description (*.cprj) Format", "cprjFormat_pg.html", "cprjFormat_pg" ]
+    [ "Overview", "index.html", null ],
+    [ "General", "md_src_General.html", null ],
+    [ "*.CPRJ Project Format", "cprjFormat_pg.html", "cprjFormat_pg" ]
   ] ]
 ];
 
 var NAVTREEINDEX =
 [
-"CmdLineBuild.html"
+"cprjFormat_pg.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

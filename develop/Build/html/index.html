@@ -111,44 +111,44 @@ $(document).ready(function(){initNavTree('index.html','');});
 <div class="title">Overview </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><b>CMSIS-Build</b> is a set of tools, software frameworks, and work flows that improve productivity:</p>
+<div class="textblock"><p>CMSIS-Build is now replaced with the <a href="https://github.com/Open-CMSIS-Pack/devtools/tree/main/tools">**CMSIS-Toolbox**</a> that is a set of tools for creating and building projects that are based on software packs. It also contains tools that help to create software packs.</p>
+<h2>Components of CMSIS-Toolbox</h2>
+<p>The <a href="https://github.com/Open-CMSIS-Pack/devtools/tree/main/tools">**CMSIS-Toolbox**</a> is developed under the <a href="https://www.open-cmsis-pack.org/">Linaro Open-CMSIS-Pack</a> project and contains these tools:</p>
 <ul>
-<li><a class="el" href="cprjFormat_pg.html">CPRJ</a> is a generic CMSIS-aware project file format that allows IDEs and command-line build tools to share the same projects.</li>
-<li>A <a class="el" href="CmdLineBuild.html">Continuous Integration (CI) work flow</a> for projects that are based on software components supplied in CMSIS-Pack format.</li>
-<li>Software Layers enable code reuse across different targets. A software layer is a pre-configured software component selection and user source code.</li>
-<li><a href="../../Driver/html/group__vio__interface__gr.html"><b>CMSIS-Driver VIO</b></a> is a set of generic input/output functions for example and test code. It allows to fast migration from evaluation boards to production hardware.</li>
+<li><b>cpackget</b> download, add and remove software packs.</li>
+<li><b>csolution</b> to create and manage complex applications with user source files and content from software packs</li>
+<li><b>cbuild</b> controls the build process that translates a project to a executable binary image.</li>
+<li><b>packgen</b> to create a software pack from a CMake based software repository.</li>
+<li><b>packchk</b> to validate a software pack</li>
 </ul>
-<p>The figure below shows how the <b>CMSIS-Build</b> components may be used to create a IoT cloud application:</p>
+<p>The <a href="https://github.com/Open-CMSIS-Pack/devtools/tree/main/tools">**CMSIS-Toolbox**</a> can be used as stand-alone tools with command line interface (CLI) but will be integrated into several other Arm toolkits such as:</p>
 <ul>
-<li>The <b>Board I/O</b> layer contains the drivers and device configuration for a specific evaluation board.</li>
-<li>The <b>Cloud</b> layer implements the software components that are required to connect to a Cloud Service Provider (CSP).</li>
-<li>The <b>Application Code</b> may start with a reference example and is expanded to application specific requirements that access specialized peripherals.</li>
+<li><a href="https://www.arm.com/virtual-hardware">**Arm Virtual Hardware**</a> to manage the build process in CI workflows.</li>
+<li><a href="https://www.keil.arm.com">**Keil Studio**</a> as integral part of the project management.</li>
+<li><a href="https://www.keil.com/mdk5/">**Keil MDK**</a> to provide CLI tools for project generation.</li>
 </ul>
+<h2>Development Workflow</h2>
+<p>The following diagram shows the development workflow using the CMSIS-Toolbox.</p>
 <div class="image">
-<img src="Layer.png" alt="Layer.png"/>
+<img src="CMSIS-Toolbox.png" alt="CMSIS-Toolbox.png"/>
 <div class="caption">
-Software Layers and Virtual I/O</div></div>
-<p>Software layers and Virtual I/O simplify these use cases:</p>
-<p><b>Port software from evaluation board to custom hardware:</b><br/>
-</p>
-<ul>
-<li>Frequently, the software development starts on an evaluation board, for example because production hardware is not yet available. The <a href="../../Driver/html/group__vio__interface__gr.html"><b>VIO component</b></a> allows you to use the I/O capabilities of an evaluation kit and disconnect it when moving to production hardware. In case the production hardware uses a different device configuration or different I/O drivers, the <b>Board I/O</b> layer may be swapped.</li>
-</ul>
-<p><b>Deliver reference examples for many different evaluation boards:</b><br/>
-</p>
-<ul>
-<li>Reference examples are a great way to demonstrate a software solution. It is however expensive to support many different evaluation boards. The VIO and CMSIS-Driver components give reference examples for a consistent interface to target hardware. When such a consistent set of components is available as a <b>Board I/O</b> layer for many different evaluation boards, it allows to run a <b>Cloud</b> layer together with a reference example. The tools for <a class="el" href="CmdLineBuild.html">Command Line Build</a> allow to combine various different layers and allow in this way to generate several different reference examples on a range of evaluation boards.</li>
-</ul>
-<h1><a class="anchor" id="CB_Components"></a>
-Components of CMSIS-Build</h1>
-<p><b>Specification</b> of a generic project file format:</p>
-<ul>
-<li><a class="el" href="cprjFormat_pg.html">Project Description (*.cprj) Format</a> describes all XML elements that are available for the project description and how to use them.</li>
-</ul>
-<p><b>Tools</b> that support <a class="el" href="CmdLineBuild.html">Command Line Build</a> with software packs and the generic project file format:</p>
-<ul>
-<li><a class="el" href="cbuildgen.html">cbuildgen: Build Process Manager</a> generates a standard CMakeLists.txt file and allows to manage software layers. </li>
-</ul>
+CMSIS-Toolbox Workflow</div></div>
+<p> A solution that manages several related projects and projects can be composed using an intuitive <code>*.yml</code> format. This solution and project files are then translated using <b>csolution</b> CLI tool to the <code>*.CPRJ</code> project file format.</p>
+<p>The individual <code>*.CPRJ</code> project files can be imported to an IDE or by using <b>cbuild</b> translated into executable binary images.</p>
+<p>The <a class="el" href="cprjFormat_pg.html">*.CPRJ Project Format</a> describes the <code>*.CPRJ</code> project file format that is used by <b>cbuild</b>.</p>
+<h2>Revision History</h2>
+<table class="doxtable">
+<tr>
+<th align="left">Version </th><th align="left">Description  </th></tr>
+<tr>
+<td align="left">replaced by </td><td align="left"><a href="https://github.com/Open-CMSIS-Pack/devtools/tree/main/tools">**CMSIS-Toolbox**</a> now contains the <b>cbuild</b> (aka CMSIS-Build) CLI tool. </td></tr>
+<tr>
+<td align="left">0.10.0 (beta) </td><td align="left">CMake back-end and support for more Cortex-M processors including ArmV8.1M architecture. </td></tr>
+<tr>
+<td align="left">0.9.0 (beta) </td><td align="left">Support for multiple compilers and commands for layer management </td></tr>
+<tr>
+<td align="left">0.1.0 (alpha) </td><td align="left">Release for alpha review </td></tr>
+</table>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

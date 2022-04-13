@@ -3,8 +3,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>Project Description (*.cprj) Format</title>
-<title>CMSIS-Build: Project Description (*.cprj) Format</title>
+<title>*.CPRJ Project Format</title>
+<title>CMSIS-Build: *.CPRJ Project Format</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="cmsis.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
@@ -108,13 +108,13 @@ $(document).ready(function(){initNavTree('cprjFormat_pg.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Project Description (*.cprj) Format </div>  </div>
+<div class="title">*.CPRJ Project Format </div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><h1><a class="anchor" id="section_overview"></a>
 Overview</h1>
-<p>The CMSIS Project description format is unifying the specification for the build of a software project. It is a public format to exchange project build information between tools that support the CMSIS-Pack based Run-Time Environment. In addition the format facilitates the tool driven construction of projects from partial projects, named project 'layers'. The project description is targeted to generate a single executable or library file.</p>
-<p>The specification of this CMSIS Project description format (*.cprj) is replacing the previous format (*.cpdsc). The most significant differences are:</p>
+<p>The *.CPRJ project description format is unifying the specification for the build of a software project. It is a public format to exchange project build information between tools that support the CMSIS-Pack based Run-Time Environment. In addition the format facilitates the tool driven construction of projects from partial projects, named project 'layers'. The project description is targeted to generate a single executable or library file.</p>
+<p>The specification of the *.CPRJ project format replaces the previous format (*.cpdsc). The most significant differences are:</p>
 <ul>
 <li>a new format specification which is independent from the CMSIS-Pack schema.</li>
 <li>the scope of the description is limited to building a single application or library (no debugger setup).</li>
@@ -140,7 +140,7 @@ Varieties of a build</h1>
 <p>&#160;</p>
 <hr/>
 <p>See <a class="el" href="element_cprj.html">Project Description Root</a> for details about the description format..</p>
-<p>See <a class="el" href="CmdLineBuild.html">CMSIS-Build</a> for further information how to build software based on the CMSIS Project description at the command line and how to create and manage projects using layers.</p>
+<p>See the <b>cbuild</b> documentation for further information how to build software based on the *.CPRJ project format.</p>
 <p>See <a class="el" href="projectDescriptionSchema.html">Project Description Schema file</a> for validation of project files. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
