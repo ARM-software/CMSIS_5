@@ -558,7 +558,7 @@ eclipsec.exe -noSplash -application com.arm.cmsis.zone.ui.headlessgen -azone Mus
 /**
 \page zTExamples Examples
 
-The following projects are available in the CMSIS-Zone repository on GitHub: https://github.com/ARM-software/CMSIS-Zone/tree/master/Examples.
+The following projects are available in the CMSIS-Zone repository on GitHub: https://github.com/ARM-software/CMSIS-Zone/tree/main/Examples.
 These examples demonstrate the usage of the CMSIS-Zone utility.
 
 | Example                    | Description                                                    |
