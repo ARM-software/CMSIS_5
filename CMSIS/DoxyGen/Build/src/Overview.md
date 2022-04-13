@@ -2,7 +2,7 @@
 
 CMSIS-Build is now replaced with the **[CMSIS-Toolbox](https://github.com/Open-CMSIS-Pack/devtools/tree/main/tools)** that is a set of tools for creating and building projects that are based on software packs. It also contains tools that help to create software packs.
 
-## Components of CMSIS-Toolbox {#Components_of_CMSIS_Toolbox}
+# Components of CMSIS-Toolbox {#Components_of_CMSIS_Toolbox}
 The **[CMSIS-Toolbox](https://github.com/Open-CMSIS-Pack/devtools/tree/main/tools)** is developed under the [Linaro Open-CMSIS-Pack](https://www.open-cmsis-pack.org/) project and contains these tools:
 
 - **cpackget** download, add and remove software packs.
@@ -17,7 +17,7 @@ The **[CMSIS-Toolbox](https://github.com/Open-CMSIS-Pack/devtools/tree/main/tool
 - **[Keil Studio](https://www.keil.arm.com)** as integral part of the project management.
 - **[Keil MDK](https://www.keil.com/mdk5/)** to provide CLI tools for project generation.
 
-## Development Workflow {#Development_Workflow}
+# Development Workflow {#Development_Workflow}
 
 The following diagram shows the development workflow using the CMSIS-Toolbox.  
 
@@ -29,7 +29,7 @@ The individual `*.CPRJ` project files can be imported to an IDE or by using **cb
 
 The \ref cprjFormat_pg describes the `*.CPRJ` project file format that is used by **cbuild**.
 
-## Revision History {#Revision_History}
+# Revision History {#Revision_History}
 
 Version       | Description
 :-------------|:---------------------------------
