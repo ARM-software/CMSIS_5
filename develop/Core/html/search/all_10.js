@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['scatter_2dloading_20description_20file_20_3cdevice_3e_5fac_3c5_7c6_3e_2esct',['Scatter-Loading description file &lt;device&gt;_ac&lt;5|6&gt;.sct',['../linker_sct_pg.html',1,'templates_pg']]],
+  ['scatter_2dloading_20description_20file_20_5c_3cdevice_5c_3e_5fac_3c5_7c6_3e_2esct',['Scatter-Loading description file \&lt;device\&gt;_ac&lt;5|6&gt;.sct',['../linker_sct_pg.html',1,'templates_pg']]],
   ['sau_20functions',['SAU Functions',['../group__sau__trustzone__functions.html',1,'']]],
   ['scb_5fcleandcache',['SCB_CleanDCache',['../group__Dcache__functions__m7.html#gaf5585be5547cc60585d702a6129f4c17',1,'core_cm7.txt']]],
   ['scb_5fcleandcache_5fby_5faddr',['SCB_CleanDCache_by_Addr',['../group__Dcache__functions__m7.html#gabc9e51347dca344c72948c3dba0364fd',1,'core_cm7.txt']]],
@@ -27,8 +27,8 @@ var searchData=
   ['spsel',['SPSEL',['../unionCONTROL__Type.html#a8cc085fea1c50a8bd9adea63931ee8e2',1,'CONTROL_Type']]],
   ['sspsr',['SSPSR',['../structTPI__Type.html#a7b72598e20066133e505bb781690dc22',1,'TPI_Type']]],
   ['stack_20sealing_20support_20functions',['Stack Sealing Support Functions',['../group__stacksealing__support__trustzone__functions.html',1,'']]],
-  ['startup_20file_20startup_5f_3cdevice_3e_2ec',['Startup File startup_&lt;device&gt;.c',['../startup_c_pg.html',1,'templates_pg']]],
-  ['startup_20file_20startup_5f_3cdevice_3e_2es_20_28deprecated_29',['Startup File startup_&lt;device&gt;.s (deprecated)',['../startup_s_pg.html',1,'templates_pg']]],
+  ['startup_20file_20startup_5f_5c_3cdevice_5c_3e_2ec',['Startup File startup_\&lt;device\&gt;.c',['../startup_c_pg.html',1,'templates_pg']]],
+  ['startup_20file_20startup_5f_5c_3cdevice_5c_3e_2es_20_28deprecated_29',['Startup File startup_\&lt;device\&gt;.s (deprecated)',['../startup_s_pg.html',1,'templates_pg']]],
   ['stir',['STIR',['../structNVIC__Type.html#a37de89637466e007171c6b135299bc75',1,'NVIC_Type']]],
   ['svcall_5firqn',['SVCall_IRQn',['../group__NVIC__gr.html#gga7e1129cd8a196f4284d41db3e82ad5c8a4ce820b3cc6cf3a796b41aadc0cf1237',1,'Ref_NVIC.txt']]],
   ['swinc',['SWINC',['../structPMU__Type.html#a2add0abae68f27801299d6dd4bfcde66',1,'PMU_Type']]],

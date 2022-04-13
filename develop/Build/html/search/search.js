@@ -7,8 +7,8 @@
 
 var indexSectionsWithContent =
 {
-  0: "cgop",
-  1: "cgop"
+  0: "cop",
+  1: "cop"
 };
 
 var indexSectionNames =

@@ -2,7 +2,7 @@ var NAVTREE =
 [
   [ "CMSIS-Build", "index.html", [
     [ "Overview", "index.html", null ],
-    [ "General", "md_src_General.html", null ],
+    [ "Overview", "md_src_Overview.html", null ],
     [ "*.CPRJ Project Format", "cprjFormat_pg.html", "cprjFormat_pg" ]
   ] ]
 ];
