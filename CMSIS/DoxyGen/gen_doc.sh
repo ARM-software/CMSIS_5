@@ -88,8 +88,8 @@ doxygen "${DIRNAME}/DSP/dsp.dxy" 1
 doxygen "${DIRNAME}/General/general.dxy" 0
 doxygen "${DIRNAME}/DAP/dap.dxy" 1
 doxygen "${DIRNAME}/NN/nn.dxy" 1
-mkdir -p "./../Documentation/Pack/html/"
-cp -r "${DIRNAME}/Pack/html/" "./../Documentation/Pack/"
+mkdir -p "${DIRNAME}/../Documentation/Pack/"
+cp -r "${DIRNAME}/Pack/html" "${DIRNAME}/../Documentation/Pack/"
 doxygen "${DIRNAME}/RTOS/rtos.dxy" 1
 doxygen "${DIRNAME}/RTOS2/rtos.dxy" 1
 doxygen "${DIRNAME}/SVD/svd.dxy" 0
