@@ -6,7 +6,6 @@ var NAVTREE =
       [ "Development Workflow", "index.html#Development_Workflow", null ],
       [ "Revision History", "index.html#Revision_History", null ]
     ] ],
-    [ "Overview", "md_src_Overview.html", null ],
     [ "*.CPRJ Project Format", "cprjFormat_pg.html", "cprjFormat_pg" ]
   ] ]
 ];
