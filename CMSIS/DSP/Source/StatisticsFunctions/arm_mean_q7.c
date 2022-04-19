@@ -113,7 +113,7 @@ void arm_mean_q7(
   while (blkCnt > 0U)
   {
     /* C = (A[0] + A[1] + A[2] + ... + A[blockSize-1]) */
-    in = read_q7x4_ia ((q7_t **) &pSrc);
+    in = read_q7x4_ia (&pSrc);
     sum += ((in << 24U) >> 24U);
     sum += ((in << 16U) >> 24U);
     sum += ((in <<  8U) >> 24U);

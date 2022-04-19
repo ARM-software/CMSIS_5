@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020-2021 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2020-2022 Arm Limited or its affiliates.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_nn_vec_mat_mult_t_s8
  * Description:  s8 vector by matrix (transposed) multiplication
  *
- * $Date:        19. August 2021
- * $Revision:    V.2.5.2
+ * $Date:        16 March 2022
+ * $Revision:    V.3.0.0
  *
  * Target Processor:  Cortex-M
  *
@@ -57,11 +57,13 @@ arm_status arm_nn_vec_mat_mult_t_s8(const q7_t *lhs,
                                     const int32_t rhs_cols,
                                     const int32_t rhs_rows,
                                     const int32_t activation_min,
-                                    const int32_t activation_max)
+                                    const int32_t activation_max,
+                                    const int32_t address_offset)
 {
     (void)rhs_offset;
 #if defined(ARM_MATH_MVEI)
     const int32_t row_loop_cnt = rhs_rows / 3;
+    const uint32x4_t address_offset_array = {0, address_offset, address_offset * 2, address_offset * 3};
 
     for (int i_row_loop_cnt = 0; i_row_loop_cnt < row_loop_cnt; i_row_loop_cnt++)
     {
@@ -123,8 +125,9 @@ arm_status arm_nn_vec_mat_mult_t_s8(const q7_t *lhs,
         acc = vaddq_s32(acc, vdupq_n_s32(dst_offset));
         acc = vmaxq_s32(acc, vdupq_n_s32(activation_min));
         acc = vminq_s32(acc, vdupq_n_s32(activation_max));
-        vstrbq_p_s32(dst, acc, p);
-        dst += 3;
+
+        vstrbq_scatter_offset_s32(dst, address_offset_array, acc);
+        dst += 3 * address_offset;
     }
 
     const int loop_cnt = rhs_rows % 3;
@@ -165,14 +168,12 @@ arm_status arm_nn_vec_mat_mult_t_s8(const q7_t *lhs,
         // Clamp the result
         acc_0 = MAX(acc_0, activation_min);
         *dst = MIN(acc_0, activation_max);
-        dst++;
+        dst += address_offset;
     }
 
 #elif defined(ARM_MATH_DSP)
     const int32_t row_loop_cnt = rhs_rows / 2;
-
     const int16_t lhs_offset_s16 = (int16_t)lhs_offset;
-
     const uint32_t lhs_offset_s16x2 = __PKHBT(lhs_offset_s16, lhs_offset_s16, 16);
 
     for (int32_t i = 0; i < row_loop_cnt; i++)
@@ -235,9 +236,9 @@ arm_status arm_nn_vec_mat_mult_t_s8(const q7_t *lhs,
         acc_0 = MIN(acc_0, activation_max);
         acc_1 = MAX(acc_1, activation_min);
         acc_1 = MIN(acc_1, activation_max);
-
-        *dst++ = (q7_t)acc_0;
-        *dst++ = (q7_t)acc_1;
+        *dst = (int8_t)acc_0;
+        *(dst + address_offset) = (int8_t)acc_1;
+        dst += 2 * address_offset;
     }
 
     if (rhs_rows & 0x1)
@@ -281,8 +282,8 @@ arm_status arm_nn_vec_mat_mult_t_s8(const q7_t *lhs,
         // Clamp the result
         acc_0 = MAX(acc_0, activation_min);
         acc_0 = MIN(acc_0, activation_max);
-
-        *dst++ = (q7_t)acc_0;
+        *dst = (int8_t)acc_0;
+        dst += address_offset;
     }
 
 #else
@@ -339,9 +340,10 @@ arm_status arm_nn_vec_mat_mult_t_s8(const q7_t *lhs,
         res02 = MAX(res02, activation_min);
         res02 = MIN(res02, activation_max);
 
-        *dst++ = (q7_t)res00;
-        *dst++ = (q7_t)res01;
-        *dst++ = (q7_t)res02;
+        *dst = (q7_t)res00;
+        *(dst + address_offset) = (q7_t)res01;
+        *(dst + 2 * address_offset) = (q7_t)res02;
+        dst += 3 * address_offset;
 
         rhs += 3 * rhs_cols;
     }
@@ -380,7 +382,8 @@ arm_status arm_nn_vec_mat_mult_t_s8(const q7_t *lhs,
         res00 = MAX(res00, activation_min);
         res00 = MIN(res00, activation_max);
 
-        *dst++ = (q7_t)res00;
+        *dst = (int8_t)res00;
+        dst += address_offset;
         rhs += rhs_cols;
     }
 #endif

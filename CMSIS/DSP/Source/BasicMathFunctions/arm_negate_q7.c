@@ -116,7 +116,7 @@ void arm_negate_q7(
 
 #if defined (ARM_MATH_DSP)
     /* Negate and store result in destination buffer (4 samples at a time). */
-    in1 = read_q7x4_ia ((q7_t **) &pSrc);
+    in1 = read_q7x4_ia (&pSrc);
     write_q7x4_ia (&pDst, __QSUB8(0, in1));
 #else
     in = *pSrc++;

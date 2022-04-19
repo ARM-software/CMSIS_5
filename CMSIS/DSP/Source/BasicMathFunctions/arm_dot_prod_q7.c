@@ -129,9 +129,9 @@ void arm_dot_prod_q7(
 
 #if defined (ARM_MATH_DSP)
     /* read 4 samples at a time from sourceA */
-    input1 = read_q7x4_ia ((q7_t **) &pSrcA);
+    input1 = read_q7x4_ia (&pSrcA);
     /* read 4 samples at a time from sourceB */
-    input2 = read_q7x4_ia ((q7_t **) &pSrcB);
+    input2 = read_q7x4_ia (&pSrcB);
 
     /* extract two q7_t samples to q15_t samples */
     inA1 = __SXTB16(__ROR(input1, 8));

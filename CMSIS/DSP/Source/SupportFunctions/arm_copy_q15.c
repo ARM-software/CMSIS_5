@@ -95,8 +95,8 @@ void arm_copy_q15(
     /* C = A */
 
     /* read 2 times 2 samples at a time */
-    write_q15x2_ia (&pDst, read_q15x2_ia ((q15_t **) &pSrc));
-    write_q15x2_ia (&pDst, read_q15x2_ia ((q15_t **) &pSrc));
+    write_q15x2_ia (&pDst, read_q15x2_ia (&pSrc));
+    write_q15x2_ia (&pDst, read_q15x2_ia (&pSrc));
 
     /* Decrement loop counter */
     blkCnt--;

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 Arm Limited. All rights reserved.
+ * Copyright (c) 2013-2022 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -339,8 +339,7 @@ void osRtxThreadDelayTick (void) {
           EvrRtxThreadFlagsWaitTimeout(thread);
           break;
         case osRtxThreadWaitingEventFlags:
-          object = osRtxObject(osRtxThreadListRoot(thread));
-          EvrRtxEventFlagsWaitTimeout(osRtxEventFlagsObject(object));
+          EvrRtxEventFlagsWaitTimeout((osEventFlagsId_t)osRtxThreadListRoot(thread));
           break;
         case osRtxThreadWaitingMutex:
           object = osRtxObject(osRtxThreadListRoot(thread));
@@ -348,20 +347,16 @@ void osRtxThreadDelayTick (void) {
           EvrRtxMutexAcquireTimeout(osRtxMutexObject(object));
           break;
         case osRtxThreadWaitingSemaphore:
-          object = osRtxObject(osRtxThreadListRoot(thread));
-          EvrRtxSemaphoreAcquireTimeout(osRtxSemaphoreObject(object));
+          EvrRtxSemaphoreAcquireTimeout((osSemaphoreId_t)osRtxThreadListRoot(thread));
           break;
         case osRtxThreadWaitingMemoryPool:
-          object = osRtxObject(osRtxThreadListRoot(thread));
-          EvrRtxMemoryPoolAllocTimeout(osRtxMemoryPoolObject(object));
+          EvrRtxMemoryPoolAllocTimeout((osMemoryPoolId_t)osRtxThreadListRoot(thread));
           break;
         case osRtxThreadWaitingMessageGet:
-          object = osRtxObject(osRtxThreadListRoot(thread));
-          EvrRtxMessageQueueGetTimeout(osRtxMessageQueueObject(object));
+          EvrRtxMessageQueueGetTimeout((osMessageQueueId_t)osRtxThreadListRoot(thread));
           break;
         case osRtxThreadWaitingMessagePut:
-          object = osRtxObject(osRtxThreadListRoot(thread));
-          EvrRtxMessageQueuePutTimeout(osRtxMessageQueueObject(object));
+          EvrRtxMessageQueuePutTimeout((osMessageQueueId_t)osRtxThreadListRoot(thread));
           break;
         default:
           // Invalid

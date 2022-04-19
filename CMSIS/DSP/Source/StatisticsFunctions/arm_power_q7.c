@@ -122,7 +122,7 @@ void arm_power_q7(
 
     /* Compute Power and store result in a temporary variable, sum. */
 #if defined (ARM_MATH_DSP)
-    in32 = read_q7x4_ia ((q7_t **) &pSrc);
+    in32 = read_q7x4_ia (&pSrc);
 
     in1 = __SXTB16(__ROR(in32, 8));
     in2 = __SXTB16(in32);

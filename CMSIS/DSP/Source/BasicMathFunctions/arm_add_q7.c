@@ -119,7 +119,7 @@ void arm_add_q7(
 
 #if defined (ARM_MATH_DSP)
     /* Add and store result in destination buffer (4 samples at a time). */
-    write_q7x4_ia (&pDst, __QADD8 (read_q7x4_ia ((q7_t **) &pSrcA), read_q7x4_ia ((q7_t **) &pSrcB)));
+    write_q7x4_ia (&pDst, __QADD8 (read_q7x4_ia (&pSrcA), read_q7x4_ia (&pSrcB)));
 #else
     *pDst++ = (q7_t) __SSAT ((q15_t) *pSrcA++ + *pSrcB++, 8);
     *pDst++ = (q7_t) __SSAT ((q15_t) *pSrcA++ + *pSrcB++, 8);

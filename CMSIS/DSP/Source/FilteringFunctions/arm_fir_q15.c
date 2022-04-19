@@ -525,7 +525,7 @@ void arm_fir_q15(
     while (tapCnt > 0U)
     {
       /* Read the first two coefficients using SIMD:  b[N] and b[N-1] coefficients */
-      c0 = read_q15x2_ia ((q15_t **) &pb);
+      c0 = read_q15x2_ia (&pb);
 
       /* acc0 +=  b[N] * x[n-N] + b[N-1] * x[n-N-1] */
       acc0 = __SMLALD(x0, c0, acc0);
@@ -557,7 +557,7 @@ void arm_fir_q15(
       acc3 = __SMLALDX(x1, c0, acc3);
 
       /* Read coefficients b[N-2], b[N-3] */
-      c0 = read_q15x2_ia ((q15_t **) &pb);
+      c0 = read_q15x2_ia (&pb);
 
       /* acc0 +=  b[N-2] * x[n-N-2] + b[N-3] * x[n-N-3] */
       acc0 = __SMLALD(x2, c0, acc0);
@@ -590,7 +590,7 @@ void arm_fir_q15(
     if ((numTaps & 0x3U) != 0U)
     {
       /* Read last two coefficients */
-      c0 = read_q15x2_ia ((q15_t **) &pb);
+      c0 = read_q15x2_ia (&pb);
 
       /* Perform the multiply-accumulates */
       acc0 = __SMLALD(x0, c0, acc0);

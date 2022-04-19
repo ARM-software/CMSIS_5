@@ -695,11 +695,11 @@ arm_status arm_mat_mult_q15(
           /* c(m,n) = a(1,1) * b(1,1) + a(1,2) * b(2,1) + .... + a(m,p) * b(p,n) */
 
           /* read real and imag values from pSrcA and pSrcB buffer */
-          inA1 = read_q15x2_ia ((q15_t **) &pInA);
-          inB1 = read_q15x2_ia ((q15_t **) &pInB);
+          inA1 = read_q15x2_ia (&pInA);
+          inB1 = read_q15x2_ia (&pInB);
 
-          inA2 = read_q15x2_ia ((q15_t **) &pInA);
-          inB2 = read_q15x2_ia ((q15_t **) &pInB);
+          inA2 = read_q15x2_ia (&pInA);
+          inB2 = read_q15x2_ia (&pInB);
 
           /* Multiply and Accumulates */
           sum = __SMLALD(inA1, inB1, sum);

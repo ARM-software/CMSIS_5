@@ -124,8 +124,8 @@ void arm_dot_prod_q15(
 
 #if defined (ARM_MATH_DSP)
     /* Calculate dot product and store result in a temporary buffer. */
-    sum = __SMLALD(read_q15x2_ia ((q15_t **) &pSrcA), read_q15x2_ia ((q15_t **) &pSrcB), sum);
-    sum = __SMLALD(read_q15x2_ia ((q15_t **) &pSrcA), read_q15x2_ia ((q15_t **) &pSrcB), sum);
+    sum = __SMLALD(read_q15x2_ia (&pSrcA), read_q15x2_ia (&pSrcB), sum);
+    sum = __SMLALD(read_q15x2_ia (&pSrcA), read_q15x2_ia (&pSrcB), sum);
 #else
     sum += (q63_t)((q31_t) *pSrcA++ * *pSrcB++);
     sum += (q63_t)((q31_t) *pSrcA++ * *pSrcB++);
