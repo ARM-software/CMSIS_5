@@ -21,8 +21,8 @@
  * Title:        arm_nn_vec_mat_mult_t_s8
  * Description:  s8 vector by matrix (transposed) multiplication
  *
- * $Date:        28 April 2022
- * $Revision:    V.3.0.1
+ * $Date:        2 May 2022
+ * $Revision:    V.4.0.1
  *
  * Target Processor:  Cortex-M
  *
@@ -45,20 +45,20 @@
  * Refer header file for details.
  *
  */
-arm_status arm_nn_vec_mat_mult_t_s8(const q7_t *lhs,
-                                    const q7_t *rhs,
-                                    const q31_t *bias,
-                                    q7_t *dst,
-                                    const int32_t lhs_offset,
-                                    const int32_t rhs_offset,
-                                    const int32_t dst_offset,
-                                    const int32_t dst_multiplier,
-                                    const int32_t dst_shift,
-                                    const int32_t rhs_cols,
-                                    const int32_t rhs_rows,
-                                    const int32_t activation_min,
-                                    const int32_t activation_max,
-                                    const int32_t address_offset)
+arm_cmsis_nn_status arm_nn_vec_mat_mult_t_s8(const q7_t *lhs,
+                                             const q7_t *rhs,
+                                             const q31_t *bias,
+                                             q7_t *dst,
+                                             const int32_t lhs_offset,
+                                             const int32_t rhs_offset,
+                                             const int32_t dst_offset,
+                                             const int32_t dst_multiplier,
+                                             const int32_t dst_shift,
+                                             const int32_t rhs_cols,
+                                             const int32_t rhs_rows,
+                                             const int32_t activation_min,
+                                             const int32_t activation_max,
+                                             const int32_t address_offset)
 {
     (void)rhs_offset;
 #if defined(ARM_MATH_MVEI)
@@ -394,7 +394,7 @@ arm_status arm_nn_vec_mat_mult_t_s8(const q7_t *lhs,
         rhs += rhs_cols;
     }
 #endif
-    return ARM_MATH_SUCCESS;
+    return ARM_CMSIS_NN_SUCCESS;
 }
 
 /**

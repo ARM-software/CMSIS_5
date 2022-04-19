@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2021 Arm Limited or its affiliates.
+ * Copyright (C) 2010-2022 Arm Limited or its affiliates.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -27,7 +27,7 @@ static const uint16_t dilation = 1;
 
 void depthwise_kernel_3x3_arm_depthwise_conv_3x3_s8(void)
 {
-    const arm_status expected = ARM_MATH_SUCCESS;
+    const arm_cmsis_nn_status expected = ARM_CMSIS_NN_SUCCESS;
     q7_t output[DEPTHWISE_KERNEL_3X3_DST_SIZE] = {0};
 
     cmsis_nn_context ctx;
@@ -71,17 +71,17 @@ void depthwise_kernel_3x3_arm_depthwise_conv_3x3_s8(void)
     ctx.buf = NULL;
     ctx.size = 0;
 
-    arm_status result = arm_depthwise_conv_3x3_s8(&ctx,
-                                                  &dw_conv_params,
-                                                  &quant_params,
-                                                  &input_dims,
-                                                  input_data,
-                                                  &filter_dims,
-                                                  kernel_data,
-                                                  &bias_dims,
-                                                  bias_data,
-                                                  &output_dims,
-                                                  output);
+    arm_cmsis_nn_status result = arm_depthwise_conv_3x3_s8(&ctx,
+                                                           &dw_conv_params,
+                                                           &quant_params,
+                                                           &input_dims,
+                                                           input_data,
+                                                           &filter_dims,
+                                                           kernel_data,
+                                                           &bias_dims,
+                                                           bias_data,
+                                                           &output_dims,
+                                                           output);
 
     free(ctx.buf);
     TEST_ASSERT_EQUAL(expected, result);
@@ -110,7 +110,7 @@ void depthwise_kernel_3x3_arm_depthwise_conv_3x3_s8(void)
 
 void depthwise_kernel_3x3_arm_depthwise_conv_3x3_1_s8(void)
 {
-    const arm_status expected = ARM_MATH_ARGUMENT_ERROR;
+    const arm_cmsis_nn_status expected = ARM_CMSIS_NN_ARG_ERROR;
     q7_t output[DEPTHWISE_KERNEL_3X3_DST_SIZE] = {0};
 
     cmsis_nn_context ctx;
@@ -154,22 +154,22 @@ void depthwise_kernel_3x3_arm_depthwise_conv_3x3_1_s8(void)
     ctx.buf = NULL;
     ctx.size = 0;
 
-    arm_status result = arm_depthwise_conv_3x3_s8(&ctx,
-                                                  &dw_conv_params,
-                                                  &quant_params,
-                                                  &input_dims,
-                                                  input_data,
-                                                  &filter_dims,
-                                                  kernel_data,
-                                                  &bias_dims,
-                                                  bias_data,
-                                                  &output_dims,
-                                                  output);
+    arm_cmsis_nn_status result = arm_depthwise_conv_3x3_s8(&ctx,
+                                                           &dw_conv_params,
+                                                           &quant_params,
+                                                           &input_dims,
+                                                           input_data,
+                                                           &filter_dims,
+                                                           kernel_data,
+                                                           &bias_dims,
+                                                           bias_data,
+                                                           &output_dims,
+                                                           output);
 
     free(ctx.buf);
     TEST_ASSERT_EQUAL(expected, result);
 
-    const arm_status expected_wrapper = ARM_MATH_SUCCESS;
+    const arm_cmsis_nn_status expected_wrapper = ARM_CMSIS_NN_SUCCESS;
     const int32_t buf_size =
         arm_depthwise_conv_wrapper_s8_get_buffer_size(&dw_conv_params, &input_dims, &filter_dims, &output_dims);
     ctx.buf = malloc(buf_size);
@@ -193,7 +193,7 @@ void depthwise_kernel_3x3_arm_depthwise_conv_3x3_1_s8(void)
 
 void depthwise_kernel_3x3_arm_depthwise_conv_3x3_2_s8(void)
 {
-    const arm_status expected = ARM_MATH_ARGUMENT_ERROR;
+    const arm_cmsis_nn_status expected = ARM_CMSIS_NN_ARG_ERROR;
     q7_t output[DEPTHWISE_KERNEL_3X3_DST_SIZE] = {0};
 
     cmsis_nn_context ctx;
@@ -237,17 +237,17 @@ void depthwise_kernel_3x3_arm_depthwise_conv_3x3_2_s8(void)
     ctx.buf = NULL;
     ctx.size = 0;
 
-    arm_status result = arm_depthwise_conv_3x3_s8(&ctx,
-                                                  &dw_conv_params,
-                                                  &quant_params,
-                                                  &input_dims,
-                                                  input_data,
-                                                  &filter_dims,
-                                                  kernel_data,
-                                                  &bias_dims,
-                                                  bias_data,
-                                                  &output_dims,
-                                                  output);
+    arm_cmsis_nn_status result = arm_depthwise_conv_3x3_s8(&ctx,
+                                                           &dw_conv_params,
+                                                           &quant_params,
+                                                           &input_dims,
+                                                           input_data,
+                                                           &filter_dims,
+                                                           kernel_data,
+                                                           &bias_dims,
+                                                           bias_data,
+                                                           &output_dims,
+                                                           output);
 
     free(ctx.buf);
     TEST_ASSERT_EQUAL(expected, result);

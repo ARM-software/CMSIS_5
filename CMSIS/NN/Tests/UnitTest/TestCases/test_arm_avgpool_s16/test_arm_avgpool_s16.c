@@ -24,7 +24,7 @@
 
 void avgpooling_int16_arm_avgpool_s16(void)
 {
-    const arm_status expected = ARM_MATH_SUCCESS;
+    const arm_cmsis_nn_status expected = ARM_CMSIS_NN_SUCCESS;
     q15_t output[AVGPOOLING_INT16_DST_SIZE] = {0};
 
     cmsis_nn_context ctx;
@@ -56,7 +56,7 @@ void avgpooling_int16_arm_avgpool_s16(void)
     ctx.size = arm_avgpool_s16_get_buffer_size(AVGPOOLING_INT16_OUTPUT_W, AVGPOOLING_INT16_IN_CH);
     ctx.buf = malloc(ctx.size);
 
-    arm_status result =
+    arm_cmsis_nn_status result =
         arm_avgpool_s16(&ctx, &pool_params, &input_dims, input_data, &filter_dims, &output_dims, output);
 
     free(ctx.buf);

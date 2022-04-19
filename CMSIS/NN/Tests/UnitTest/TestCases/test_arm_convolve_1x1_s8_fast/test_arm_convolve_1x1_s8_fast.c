@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2022 Arm Limited or its affiliates.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -25,7 +25,7 @@
 
 void kernel1x1_arm_convolve_1x1_s8_fast(void)
 {
-    const arm_status expected = ARM_MATH_SUCCESS;
+    const arm_cmsis_nn_status expected = ARM_CMSIS_NN_SUCCESS;
     q7_t output[KERNEL1X1_DST_SIZE] = {0};
 
     cmsis_nn_context ctx;
@@ -65,17 +65,17 @@ void kernel1x1_arm_convolve_1x1_s8_fast(void)
     ctx.buf = malloc(buf_size);
     ctx.size = 0;
 
-    arm_status result = arm_convolve_1x1_s8_fast(&ctx,
-                                                 &conv_params,
-                                                 &quant_params,
-                                                 &input_dims,
-                                                 input_data,
-                                                 &filter_dims,
-                                                 kernel1x1_weights,
-                                                 &bias_dims,
-                                                 bias_data,
-                                                 &output_dims,
-                                                 output);
+    arm_cmsis_nn_status result = arm_convolve_1x1_s8_fast(&ctx,
+                                                          &conv_params,
+                                                          &quant_params,
+                                                          &input_dims,
+                                                          input_data,
+                                                          &filter_dims,
+                                                          kernel1x1_weights,
+                                                          &bias_dims,
+                                                          bias_data,
+                                                          &output_dims,
+                                                          output);
 
     free(ctx.buf);
     TEST_ASSERT_EQUAL(expected, result);

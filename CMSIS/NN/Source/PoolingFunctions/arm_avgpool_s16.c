@@ -21,8 +21,8 @@
  * Title:        arm_avgpool_s16.c
  * Description:  Pooling function implementations
  *
- * $Date:        3. February 2022
- * $Revision:    V.1.0.1
+ * $Date:        19 April 2022
+ * $Revision:    V.2.0.0
  *
  * Target Processor:  Cortex-M CPUs
  *
@@ -46,13 +46,13 @@
  * Refer to header file for details.
  *
  */
-arm_status arm_avgpool_s16(const cmsis_nn_context *ctx,
-                           const cmsis_nn_pool_params *pool_params,
-                           const cmsis_nn_dims *input_dims,
-                           const q15_t *src,
-                           const cmsis_nn_dims *filter_dims,
-                           const cmsis_nn_dims *output_dims,
-                           q15_t *dst)
+arm_cmsis_nn_status arm_avgpool_s16(const cmsis_nn_context *ctx,
+                                    const cmsis_nn_pool_params *pool_params,
+                                    const cmsis_nn_dims *input_dims,
+                                    const q15_t *src,
+                                    const cmsis_nn_dims *filter_dims,
+                                    const cmsis_nn_dims *output_dims,
+                                    q15_t *dst)
 {
     (void)ctx;
     const int32_t input_y = input_dims->h;
@@ -101,7 +101,7 @@ arm_status arm_avgpool_s16(const cmsis_nn_context *ctx,
                 // Prevent static code issue DIVIDE_BY_ZERO.
                 if (count == 0)
                 {
-                    return ARM_MATH_ARGUMENT_ERROR;
+                    return ARM_CMSIS_NN_ARG_ERROR;
                 }
 
                 sum = sum > 0 ? (sum + count / 2) / count : (sum - count / 2) / count;
@@ -113,7 +113,7 @@ arm_status arm_avgpool_s16(const cmsis_nn_context *ctx,
         }
     }
 
-    return ARM_MATH_SUCCESS;
+    return ARM_CMSIS_NN_SUCCESS;
 }
 
 int32_t arm_avgpool_s16_get_buffer_size(const int output_x, const int ch_src)

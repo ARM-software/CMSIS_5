@@ -21,8 +21,8 @@
  * Title:        arm_depthwise_conv_s16.c
  * Description:  s16 version of depthwise convolution.
  *
- * $Date:        26. Jan 2022
- * $Revision:    V.1.0.0
+ * $Date:        19 April 2022
+ * $Revision:    V.2.0.0
  *
  * Target Processor:  Cortex-M CPUs
  *
@@ -241,17 +241,17 @@ static void depthwise_conv_s16_generic_s16(const int16_t *input,
  *  Refer header file for details.
  *
  */
-arm_status arm_depthwise_conv_s16(const cmsis_nn_context *ctx,
-                                  const cmsis_nn_dw_conv_params *dw_conv_params,
-                                  const cmsis_nn_per_channel_quant_params *quant_params,
-                                  const cmsis_nn_dims *input_dims,
-                                  const q15_t *input,
-                                  const cmsis_nn_dims *filter_dims,
-                                  const q7_t *kernel,
-                                  const cmsis_nn_dims *bias_dims,
-                                  const int64_t *bias,
-                                  const cmsis_nn_dims *output_dims,
-                                  q15_t *output)
+arm_cmsis_nn_status arm_depthwise_conv_s16(const cmsis_nn_context *ctx,
+                                           const cmsis_nn_dw_conv_params *dw_conv_params,
+                                           const cmsis_nn_per_channel_quant_params *quant_params,
+                                           const cmsis_nn_dims *input_dims,
+                                           const q15_t *input,
+                                           const cmsis_nn_dims *filter_dims,
+                                           const q7_t *kernel,
+                                           const cmsis_nn_dims *bias_dims,
+                                           const int64_t *bias,
+                                           const cmsis_nn_dims *output_dims,
+                                           q15_t *output)
 {
     const uint16_t dilation_x = dw_conv_params->dilation.w;
     const uint16_t dilation_y = dw_conv_params->dilation.h;
@@ -284,7 +284,7 @@ arm_status arm_depthwise_conv_s16(const cmsis_nn_context *ctx,
                                    dilation_y);
 
     /* Return to application */
-    return ARM_MATH_SUCCESS;
+    return ARM_CMSIS_NN_SUCCESS;
 }
 
 /**

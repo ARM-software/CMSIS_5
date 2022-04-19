@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2021-2022 Arm Limited or its affiliates.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -22,8 +22,8 @@
  * Description:  s8 vector by matrix (transposed) multiplication with
  *               s16 output. Targetted at SVDF operator.
  *
- * $Date:        15. April 2021
- * $Revision:    V.1.0.0
+ * $Date:        19 April 2022
+ * $Revision:    V.2.0.0
  *
  * Target Processor:  Cortex-M
  *
@@ -46,23 +46,23 @@
  * Refer header file for details.
  *
  */
-arm_status arm_nn_vec_mat_mult_t_svdf_s8(const q7_t *lhs,
-                                         const q7_t *rhs,
-                                         q15_t *dst,
-                                         const int32_t lhs_offset,
-                                         const int32_t rhs_offset,
-                                         const int32_t dst_offset,
-                                         const int32_t dst_multiplier,
-                                         const int32_t dst_shift,
-                                         const int32_t rhs_cols,
-                                         const int32_t rhs_rows,
-                                         const int32_t activation_min,
-                                         const int32_t activation_max)
+arm_cmsis_nn_status arm_nn_vec_mat_mult_t_svdf_s8(const q7_t *lhs,
+                                                  const q7_t *rhs,
+                                                  q15_t *dst,
+                                                  const int32_t lhs_offset,
+                                                  const int32_t rhs_offset,
+                                                  const int32_t dst_offset,
+                                                  const int32_t dst_multiplier,
+                                                  const int32_t dst_shift,
+                                                  const int32_t rhs_cols,
+                                                  const int32_t rhs_rows,
+                                                  const int32_t activation_min,
+                                                  const int32_t activation_max)
 {
     (void)rhs_offset;
     if (rhs_cols < 0 || (NN_Q31_MAX - rhs_cols) < 16 || dst_offset < 0)
     {
-        return ARM_MATH_ARGUMENT_ERROR;
+        return ARM_CMSIS_NN_ARG_ERROR;
     }
 
     (void)rhs_offset;
@@ -333,7 +333,7 @@ arm_status arm_nn_vec_mat_mult_t_svdf_s8(const q7_t *lhs,
     }
 #endif
 
-    return ARM_MATH_SUCCESS;
+    return ARM_CMSIS_NN_SUCCESS;
 }
 
 /**

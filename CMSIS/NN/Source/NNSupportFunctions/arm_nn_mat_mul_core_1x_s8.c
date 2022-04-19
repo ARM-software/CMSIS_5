@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2022 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2022 Arm Limited or its affiliates.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_nn_mat_mul_core_1x_s8.c
  * Description:  General Matrix-multiplication function
  *
- * $Date:        19. April 2022
- * $Revision:    V.1.0.3
+ * $Date:        20 April 2022
+ * $Revision:    V.2.0.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -45,11 +45,11 @@
  *
  */
 
-arm_status arm_nn_mat_mul_core_1x_s8(int32_t row_elements,
-                                     const int8_t *row_base,
-                                     const int8_t *col_base,
-                                     int32_t *const sum_col,
-                                     int32_t *const output)
+arm_cmsis_nn_status arm_nn_mat_mul_core_1x_s8(int32_t row_elements,
+                                              const int8_t *row_base,
+                                              const int8_t *col_base,
+                                              int32_t *const sum_col,
+                                              int32_t *const output)
 {
     int32_t acc_n0 = 0;
     int32_t sum_tmp = 0;
@@ -78,7 +78,7 @@ arm_status arm_nn_mat_mul_core_1x_s8(int32_t row_elements,
 
     *sum_col = sum_tmp;
     *output = acc_n0;
-    return ARM_MATH_SUCCESS;
+    return ARM_CMSIS_NN_SUCCESS;
 }
 
 /**

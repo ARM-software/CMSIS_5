@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2022 Arm Limited or its affiliates.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_depthwise_separable_conv_HWC_q7.c
  * Description:  Q7 depthwise separable convolution function
  *
- * $Date:        July 20, 2021
- * $Revision:    V.1.1.2
+ * $Date:        19 April 2022
+ * $Revision:    V.2.0.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -58,7 +58,8 @@
  * @param[in,out]   bufferA     pointer to buffer space for input
  * @param[in,out]   bufferB     pointer to buffer space for output
  * @return     The function returns either
- * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
+ * <code>ARM_CMSIS_NN_ARG_ERROR</code> or <code>ARM_CMSIS_NN_SUCCESS</code> based on the outcome of input arguments
+ * constraints checking.
  *
  * @details
  *
@@ -79,21 +80,21 @@
  * Outer loop: loop over different output (x, y)
  */
 
-arm_status arm_depthwise_separable_conv_HWC_q7(const q7_t *Im_in,
-                                               const uint16_t dim_im_in,
-                                               const uint16_t ch_im_in,
-                                               const q7_t *wt,
-                                               const uint16_t ch_im_out,
-                                               const uint16_t dim_kernel,
-                                               const uint16_t padding,
-                                               const uint16_t stride,
-                                               const q7_t *bias,
-                                               const uint16_t bias_shift,
-                                               const uint16_t out_shift,
-                                               q7_t *Im_out,
-                                               const uint16_t dim_im_out,
-                                               q15_t *bufferA,
-                                               q7_t *bufferB)
+arm_cmsis_nn_status arm_depthwise_separable_conv_HWC_q7(const q7_t *Im_in,
+                                                        const uint16_t dim_im_in,
+                                                        const uint16_t ch_im_in,
+                                                        const q7_t *wt,
+                                                        const uint16_t ch_im_out,
+                                                        const uint16_t dim_kernel,
+                                                        const uint16_t padding,
+                                                        const uint16_t stride,
+                                                        const q7_t *bias,
+                                                        const uint16_t bias_shift,
+                                                        const uint16_t out_shift,
+                                                        q7_t *Im_out,
+                                                        const uint16_t dim_im_out,
+                                                        q15_t *bufferA,
+                                                        q7_t *bufferB)
 {
     (void)bufferB;
 #if defined(ARM_MATH_DSP) && !defined(ARM_MATH_MVEI)
@@ -111,7 +112,7 @@ arm_status arm_depthwise_separable_conv_HWC_q7(const q7_t *Im_in,
     /* do some checking here, basically ch_im_in == ch_im_out */
     if (ch_im_in != ch_im_out)
     {
-        return ARM_MATH_SIZE_MISMATCH;
+        return ARM_CMSIS_NN_ARG_ERROR;
     }
 
     for (i_out_y = 0; i_out_y < dim_im_out; i_out_y++)
@@ -381,7 +382,7 @@ arm_status arm_depthwise_separable_conv_HWC_q7(const q7_t *Im_in,
     /* do some checking here, basically ch_im_in == ch_im_out */
     if (ch_im_in != ch_im_out)
     {
-        return ARM_MATH_SIZE_MISMATCH;
+        return ARM_CMSIS_NN_ARG_ERROR;
     }
 
     for (i_out_y = 0; i_out_y < dim_im_out; i_out_y++)
@@ -414,7 +415,7 @@ arm_status arm_depthwise_separable_conv_HWC_q7(const q7_t *Im_in,
 #endif /* ARM_MATH_DSP */
 
     /* Return to application */
-    return ARM_MATH_SUCCESS;
+    return ARM_CMSIS_NN_SUCCESS;
 }
 
 /**

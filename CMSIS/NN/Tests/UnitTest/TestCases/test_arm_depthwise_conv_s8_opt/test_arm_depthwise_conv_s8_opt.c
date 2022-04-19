@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2022 Arm Limited or its affiliates.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -30,7 +30,7 @@ static const uint16_t dilation = 1;
 
 void basic_arm_depthwise_conv_s8_opt(void)
 {
-    const arm_status expected = ARM_MATH_SUCCESS;
+    const arm_cmsis_nn_status expected = ARM_CMSIS_NN_SUCCESS;
     q7_t output[BASIC_DST_SIZE] = {0};
 
     cmsis_nn_context ctx;
@@ -74,17 +74,17 @@ void basic_arm_depthwise_conv_s8_opt(void)
     ctx.size = arm_depthwise_conv_s8_opt_get_buffer_size(&input_dims, &filter_dims);
     ctx.buf = malloc(ctx.size);
 
-    arm_status result = arm_depthwise_conv_s8_opt(&ctx,
-                                                  &dw_conv_params,
-                                                  &quant_params,
-                                                  &input_dims,
-                                                  input_data,
-                                                  &filter_dims,
-                                                  kernel_data,
-                                                  &bias_dims,
-                                                  bias_data,
-                                                  &output_dims,
-                                                  output);
+    arm_cmsis_nn_status result = arm_depthwise_conv_s8_opt(&ctx,
+                                                           &dw_conv_params,
+                                                           &quant_params,
+                                                           &input_dims,
+                                                           input_data,
+                                                           &filter_dims,
+                                                           kernel_data,
+                                                           &bias_dims,
+                                                           bias_data,
+                                                           &output_dims,
+                                                           output);
 
     free(ctx.buf);
     TEST_ASSERT_EQUAL(expected, result);
@@ -93,7 +93,7 @@ void basic_arm_depthwise_conv_s8_opt(void)
 
 void stride2pad1_arm_depthwise_conv_s8_opt(void)
 {
-    const arm_status expected = ARM_MATH_SUCCESS;
+    const arm_cmsis_nn_status expected = ARM_CMSIS_NN_SUCCESS;
     q7_t output[STRIDE2PAD1_DST_SIZE] = {0};
 
     cmsis_nn_context ctx;
@@ -137,17 +137,17 @@ void stride2pad1_arm_depthwise_conv_s8_opt(void)
     ctx.size = arm_depthwise_conv_s8_opt_get_buffer_size(&input_dims, &filter_dims);
     ctx.buf = malloc(ctx.size);
 
-    arm_status result = arm_depthwise_conv_s8_opt(&ctx,
-                                                  &dw_conv_params,
-                                                  &quant_params,
-                                                  &input_dims,
-                                                  input_data,
-                                                  &filter_dims,
-                                                  kernel_data,
-                                                  &bias_dims,
-                                                  bias_data,
-                                                  &output_dims,
-                                                  output);
+    arm_cmsis_nn_status result = arm_depthwise_conv_s8_opt(&ctx,
+                                                           &dw_conv_params,
+                                                           &quant_params,
+                                                           &input_dims,
+                                                           input_data,
+                                                           &filter_dims,
+                                                           kernel_data,
+                                                           &bias_dims,
+                                                           bias_data,
+                                                           &output_dims,
+                                                           output);
 
     free(ctx.buf);
     TEST_ASSERT_EQUAL(expected, result);
@@ -156,7 +156,7 @@ void stride2pad1_arm_depthwise_conv_s8_opt(void)
 
 void depthwise_eq_in_out_ch_arm_depthwise_conv_s8_opt(void)
 {
-    const arm_status expected = ARM_MATH_SUCCESS;
+    const arm_cmsis_nn_status expected = ARM_CMSIS_NN_SUCCESS;
     q7_t output[DEPTHWISE_EQ_IN_OUT_CH_DST_SIZE] = {0};
 
     cmsis_nn_context ctx;
@@ -200,17 +200,17 @@ void depthwise_eq_in_out_ch_arm_depthwise_conv_s8_opt(void)
     ctx.size = arm_depthwise_conv_s8_opt_get_buffer_size(&input_dims, &filter_dims);
     ctx.buf = malloc(ctx.size);
 
-    arm_status result = arm_depthwise_conv_s8_opt(&ctx,
-                                                  &dw_conv_params,
-                                                  &quant_params,
-                                                  &input_dims,
-                                                  input_data,
-                                                  &filter_dims,
-                                                  kernel_data,
-                                                  &bias_dims,
-                                                  bias_data,
-                                                  &output_dims,
-                                                  output);
+    arm_cmsis_nn_status result = arm_depthwise_conv_s8_opt(&ctx,
+                                                           &dw_conv_params,
+                                                           &quant_params,
+                                                           &input_dims,
+                                                           input_data,
+                                                           &filter_dims,
+                                                           kernel_data,
+                                                           &bias_dims,
+                                                           bias_data,
+                                                           &output_dims,
+                                                           output);
 
     free(ctx.buf);
     TEST_ASSERT_EQUAL(expected, result);

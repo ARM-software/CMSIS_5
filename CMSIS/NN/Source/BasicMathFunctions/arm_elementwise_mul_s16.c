@@ -21,8 +21,8 @@
  * Title:        arm_elementwise_mul_s16
  * Description:  Element wise multiplication
  *
- * $Date:        14 Februari 2022
- * $Revision:    V.1.0.0
+ * $Date:        19 April 2022
+ * $Revision:    V.2.0.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -46,17 +46,17 @@
  * @note   Refer header file for details.
  *
  */
-arm_status arm_elementwise_mul_s16(const int16_t *input_1_vect,
-                                   const int16_t *input_2_vect,
-                                   const int32_t input_1_offset,
-                                   const int32_t input_2_offset,
-                                   int16_t *output,
-                                   const int32_t out_offset,
-                                   const int32_t out_mult,
-                                   const int32_t out_shift,
-                                   const int32_t out_activation_min,
-                                   const int32_t out_activation_max,
-                                   const int32_t block_size)
+arm_cmsis_nn_status arm_elementwise_mul_s16(const int16_t *input_1_vect,
+                                            const int16_t *input_2_vect,
+                                            const int32_t input_1_offset,
+                                            const int32_t input_2_offset,
+                                            int16_t *output,
+                                            const int32_t out_offset,
+                                            const int32_t out_mult,
+                                            const int32_t out_shift,
+                                            const int32_t out_activation_min,
+                                            const int32_t out_activation_max,
+                                            const int32_t block_size)
 {
     (void)input_1_offset;
     (void)input_2_offset;
@@ -87,7 +87,7 @@ arm_status arm_elementwise_mul_s16(const int16_t *input_1_vect,
         loop_count--;
     }
 
-    return ARM_MATH_SUCCESS;
+    return ARM_CMSIS_NN_SUCCESS;
 }
 
 /**

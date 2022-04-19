@@ -26,7 +26,7 @@
 
 void dw_int16xint8_arm_depthwise_conv_s16(void)
 {
-    const arm_status expected = ARM_MATH_SUCCESS;
+    const arm_cmsis_nn_status expected = ARM_CMSIS_NN_SUCCESS;
     q15_t output[DW_INT16XINT8_DST_SIZE] = {0};
 
     cmsis_nn_context ctx;
@@ -69,17 +69,17 @@ void dw_int16xint8_arm_depthwise_conv_s16(void)
     ctx.buf = NULL;
     ctx.size = 0;
 
-    arm_status result = arm_depthwise_conv_s16(&ctx,
-                                               &dw_conv_params,
-                                               &quant_params,
-                                               &input_dims,
-                                               input_data,
-                                               &filter_dims,
-                                               dw_int16xint8_weights,
-                                               &bias_dims,
-                                               bias_data,
-                                               &output_dims,
-                                               output);
+    arm_cmsis_nn_status result = arm_depthwise_conv_s16(&ctx,
+                                                        &dw_conv_params,
+                                                        &quant_params,
+                                                        &input_dims,
+                                                        input_data,
+                                                        &filter_dims,
+                                                        dw_int16xint8_weights,
+                                                        &bias_dims,
+                                                        bias_data,
+                                                        &output_dims,
+                                                        output);
 
     free(ctx.buf);
     TEST_ASSERT_EQUAL(expected, result);
@@ -88,7 +88,7 @@ void dw_int16xint8_arm_depthwise_conv_s16(void)
 
 void dw_int16xint8_dilation_arm_depthwise_conv_s16(void)
 {
-    const arm_status expected = ARM_MATH_SUCCESS;
+    const arm_cmsis_nn_status expected = ARM_CMSIS_NN_SUCCESS;
     q15_t output[DW_INT16XINT8_DILATION_DST_SIZE] = {0};
 
     cmsis_nn_context ctx;
@@ -131,17 +131,17 @@ void dw_int16xint8_dilation_arm_depthwise_conv_s16(void)
     ctx.buf = NULL;
     ctx.size = 0;
 
-    arm_status result = arm_depthwise_conv_s16(&ctx,
-                                               &dw_conv_params,
-                                               &quant_params,
-                                               &input_dims,
-                                               input_data,
-                                               &filter_dims,
-                                               dw_int16xint8_dilation_weights,
-                                               &bias_dims,
-                                               bias_data,
-                                               &output_dims,
-                                               output);
+    arm_cmsis_nn_status result = arm_depthwise_conv_s16(&ctx,
+                                                        &dw_conv_params,
+                                                        &quant_params,
+                                                        &input_dims,
+                                                        input_data,
+                                                        &filter_dims,
+                                                        dw_int16xint8_dilation_weights,
+                                                        &bias_dims,
+                                                        bias_data,
+                                                        &output_dims,
+                                                        output);
 
     free(ctx.buf);
     TEST_ASSERT_EQUAL(expected, result);
@@ -150,7 +150,7 @@ void dw_int16xint8_dilation_arm_depthwise_conv_s16(void)
 
 void dw_int16xint8_mult4_arm_depthwise_conv_s16(void)
 {
-    const arm_status expected = ARM_MATH_SUCCESS;
+    const arm_cmsis_nn_status expected = ARM_CMSIS_NN_SUCCESS;
     q15_t output[DW_INT16XINT8_MULT4_DST_SIZE] = {0};
 
     cmsis_nn_context ctx;
@@ -193,17 +193,17 @@ void dw_int16xint8_mult4_arm_depthwise_conv_s16(void)
     ctx.buf = NULL;
     ctx.size = 0;
 
-    arm_status result = arm_depthwise_conv_s16(&ctx,
-                                               &dw_conv_params,
-                                               &quant_params,
-                                               &input_dims,
-                                               input_data,
-                                               &filter_dims,
-                                               dw_int16xint8_mult4_weights,
-                                               &bias_dims,
-                                               bias_data,
-                                               &output_dims,
-                                               output);
+    arm_cmsis_nn_status result = arm_depthwise_conv_s16(&ctx,
+                                                        &dw_conv_params,
+                                                        &quant_params,
+                                                        &input_dims,
+                                                        input_data,
+                                                        &filter_dims,
+                                                        dw_int16xint8_mult4_weights,
+                                                        &bias_dims,
+                                                        bias_data,
+                                                        &output_dims,
+                                                        output);
 
     free(ctx.buf);
     TEST_ASSERT_EQUAL(expected, result);

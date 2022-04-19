@@ -73,19 +73,19 @@ void int16xint8_arm_convolve_s16(void)
     int buf_size = arm_convolve_s16_get_buffer_size(&input_dims, &filter_dims);
     ctx.buf = malloc(buf_size);
 
-    arm_status result = arm_convolve_s16(&ctx,
-                                         &conv_params,
-                                         &quant_params,
-                                         &input_dims,
-                                         input_data,
-                                         &filter_dims,
-                                         kernel_data,
-                                         &bias_dims,
-                                         bias_data,
-                                         &output_dims,
-                                         output);
+    arm_cmsis_nn_status result = arm_convolve_s16(&ctx,
+                                                  &conv_params,
+                                                  &quant_params,
+                                                  &input_dims,
+                                                  input_data,
+                                                  &filter_dims,
+                                                  kernel_data,
+                                                  &bias_dims,
+                                                  bias_data,
+                                                  &output_dims,
+                                                  output);
     free(ctx.buf);
-    TEST_ASSERT_EQUAL(ARM_MATH_SUCCESS, result);
+    TEST_ASSERT_EQUAL(ARM_CMSIS_NN_SUCCESS, result);
     TEST_ASSERT_TRUE(validate_s16(output, output_ref, output_ref_size));
 
     buf_size = arm_convolve_wrapper_s16_get_buffer_size(&conv_params, &input_dims, &filter_dims, &output_dims);
@@ -104,7 +104,7 @@ void int16xint8_arm_convolve_s16(void)
                                       output);
 
     free(ctx.buf);
-    TEST_ASSERT_EQUAL(ARM_MATH_SUCCESS, result);
+    TEST_ASSERT_EQUAL(ARM_CMSIS_NN_SUCCESS, result);
     TEST_ASSERT_TRUE(validate_s16(output, output_ref, output_ref_size));
 }
 
@@ -153,19 +153,19 @@ void requantize_s64_arm_convolve_s16(void)
     int buf_size = arm_convolve_s16_get_buffer_size(&input_dims, &filter_dims);
     ctx.buf = malloc(buf_size);
 
-    arm_status result = arm_convolve_s16(&ctx,
-                                         &conv_params,
-                                         &quant_params,
-                                         &input_dims,
-                                         input_data,
-                                         &filter_dims,
-                                         kernel_data,
-                                         &bias_dims,
-                                         bias_data,
-                                         &output_dims,
-                                         output);
+    arm_cmsis_nn_status result = arm_convolve_s16(&ctx,
+                                                  &conv_params,
+                                                  &quant_params,
+                                                  &input_dims,
+                                                  input_data,
+                                                  &filter_dims,
+                                                  kernel_data,
+                                                  &bias_dims,
+                                                  bias_data,
+                                                  &output_dims,
+                                                  output);
     free(ctx.buf);
-    TEST_ASSERT_EQUAL(ARM_MATH_SUCCESS, result);
+    TEST_ASSERT_EQUAL(ARM_CMSIS_NN_SUCCESS, result);
     TEST_ASSERT_TRUE(validate_s16(output, output_ref, output_ref_size));
 
     buf_size = arm_convolve_wrapper_s16_get_buffer_size(&conv_params, &input_dims, &filter_dims, &output_dims);
@@ -184,7 +184,7 @@ void requantize_s64_arm_convolve_s16(void)
                                       output);
 
     free(ctx.buf);
-    TEST_ASSERT_EQUAL(ARM_MATH_SUCCESS, result);
+    TEST_ASSERT_EQUAL(ARM_CMSIS_NN_SUCCESS, result);
     TEST_ASSERT_TRUE(validate_s16(output, output_ref, output_ref_size));
 }
 
@@ -233,19 +233,19 @@ void int16xint8_dilation_1_arm_convolve_s16(void)
     int buf_size = arm_convolve_s16_get_buffer_size(&input_dims, &filter_dims);
     ctx.buf = malloc(buf_size);
 
-    arm_status result = arm_convolve_s16(&ctx,
-                                         &conv_params,
-                                         &quant_params,
-                                         &input_dims,
-                                         input_data,
-                                         &filter_dims,
-                                         kernel_data,
-                                         &bias_dims,
-                                         bias_data,
-                                         &output_dims,
-                                         output);
+    arm_cmsis_nn_status result = arm_convolve_s16(&ctx,
+                                                  &conv_params,
+                                                  &quant_params,
+                                                  &input_dims,
+                                                  input_data,
+                                                  &filter_dims,
+                                                  kernel_data,
+                                                  &bias_dims,
+                                                  bias_data,
+                                                  &output_dims,
+                                                  output);
     free(ctx.buf);
-    TEST_ASSERT_EQUAL(ARM_MATH_SUCCESS, result);
+    TEST_ASSERT_EQUAL(ARM_CMSIS_NN_SUCCESS, result);
     TEST_ASSERT_TRUE(validate_s16(output, output_ref, output_ref_size));
 
     buf_size = arm_convolve_wrapper_s16_get_buffer_size(&conv_params, &input_dims, &filter_dims, &output_dims);
@@ -264,7 +264,7 @@ void int16xint8_dilation_1_arm_convolve_s16(void)
                                       output);
 
     free(ctx.buf);
-    TEST_ASSERT_EQUAL(ARM_MATH_SUCCESS, result);
+    TEST_ASSERT_EQUAL(ARM_CMSIS_NN_SUCCESS, result);
     TEST_ASSERT_TRUE(validate_s16(output, output_ref, output_ref_size));
 }
 
@@ -313,19 +313,19 @@ void int16xint8_dilation_2_arm_convolve_s16(void)
     int buf_size = arm_convolve_s16_get_buffer_size(&input_dims, &filter_dims);
     ctx.buf = malloc(buf_size);
 
-    arm_status result = arm_convolve_s16(&ctx,
-                                         &conv_params,
-                                         &quant_params,
-                                         &input_dims,
-                                         input_data,
-                                         &filter_dims,
-                                         kernel_data,
-                                         &bias_dims,
-                                         bias_data,
-                                         &output_dims,
-                                         output);
+    arm_cmsis_nn_status result = arm_convolve_s16(&ctx,
+                                                  &conv_params,
+                                                  &quant_params,
+                                                  &input_dims,
+                                                  input_data,
+                                                  &filter_dims,
+                                                  kernel_data,
+                                                  &bias_dims,
+                                                  bias_data,
+                                                  &output_dims,
+                                                  output);
     free(ctx.buf);
-    TEST_ASSERT_EQUAL(ARM_MATH_SUCCESS, result);
+    TEST_ASSERT_EQUAL(ARM_CMSIS_NN_SUCCESS, result);
     TEST_ASSERT_TRUE(validate_s16(output, output_ref, output_ref_size));
 
     buf_size = arm_convolve_wrapper_s16_get_buffer_size(&conv_params, &input_dims, &filter_dims, &output_dims);
@@ -344,7 +344,7 @@ void int16xint8_dilation_2_arm_convolve_s16(void)
                                       output);
 
     free(ctx.buf);
-    TEST_ASSERT_EQUAL(ARM_MATH_SUCCESS, result);
+    TEST_ASSERT_EQUAL(ARM_CMSIS_NN_SUCCESS, result);
     TEST_ASSERT_TRUE(validate_s16(output, output_ref, output_ref_size));
 }
 
@@ -393,19 +393,19 @@ void int16xint8_dilation_3_arm_convolve_s16(void)
     int buf_size = arm_convolve_s16_get_buffer_size(&input_dims, &filter_dims);
     ctx.buf = malloc(buf_size);
 
-    arm_status result = arm_convolve_s16(&ctx,
-                                         &conv_params,
-                                         &quant_params,
-                                         &input_dims,
-                                         input_data,
-                                         &filter_dims,
-                                         kernel_data,
-                                         &bias_dims,
-                                         bias_data,
-                                         &output_dims,
-                                         output);
+    arm_cmsis_nn_status result = arm_convolve_s16(&ctx,
+                                                  &conv_params,
+                                                  &quant_params,
+                                                  &input_dims,
+                                                  input_data,
+                                                  &filter_dims,
+                                                  kernel_data,
+                                                  &bias_dims,
+                                                  bias_data,
+                                                  &output_dims,
+                                                  output);
     free(ctx.buf);
-    TEST_ASSERT_EQUAL(ARM_MATH_SUCCESS, result);
+    TEST_ASSERT_EQUAL(ARM_CMSIS_NN_SUCCESS, result);
     TEST_ASSERT_TRUE(validate_s16(output, output_ref, output_ref_size));
 
     buf_size = arm_convolve_wrapper_s16_get_buffer_size(&conv_params, &input_dims, &filter_dims, &output_dims);
@@ -424,6 +424,6 @@ void int16xint8_dilation_3_arm_convolve_s16(void)
                                       output);
 
     free(ctx.buf);
-    TEST_ASSERT_EQUAL(ARM_MATH_SUCCESS, result);
+    TEST_ASSERT_EQUAL(ARM_CMSIS_NN_SUCCESS, result);
     TEST_ASSERT_TRUE(validate_s16(output, output_ref, output_ref_size));
 }

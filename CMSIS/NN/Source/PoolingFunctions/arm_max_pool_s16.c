@@ -21,8 +21,8 @@
  * Title:        arm_max_pool_s16.c
  * Description:  Pooling function implementations
  *
- * $Date:        24. January 2022
- * $Revision:    V.1.0.0
+ * $Date:        19 April 2022
+ * $Revision:    V.2.0.0
  *
  * Target Processor:  Cortex-M CPUs
  *
@@ -110,13 +110,13 @@ static void clamp_output(int16_t *source, int32_t length, const int16_t act_min,
  *
  */
 
-arm_status arm_max_pool_s16(const cmsis_nn_context *ctx,
-                            const cmsis_nn_pool_params *pool_params,
-                            const cmsis_nn_dims *input_dims,
-                            const int16_t *src,
-                            const cmsis_nn_dims *filter_dims,
-                            const cmsis_nn_dims *output_dims,
-                            int16_t *dst)
+arm_cmsis_nn_status arm_max_pool_s16(const cmsis_nn_context *ctx,
+                                     const cmsis_nn_pool_params *pool_params,
+                                     const cmsis_nn_dims *input_dims,
+                                     const int16_t *src,
+                                     const cmsis_nn_dims *filter_dims,
+                                     const cmsis_nn_dims *output_dims,
+                                     int16_t *dst)
 {
     const int32_t input_y = input_dims->h;
     const int32_t input_x = input_dims->w;
@@ -172,7 +172,7 @@ arm_status arm_max_pool_s16(const cmsis_nn_context *ctx,
 
     clamp_output(dst_base, output_x * output_y * channel_in, act_min, act_max);
 
-    return ARM_MATH_SUCCESS;
+    return ARM_CMSIS_NN_SUCCESS;
 }
 
 /**

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2021 Arm Limited or its affiliates.
+ * Copyright (C) 2010-2022 Arm Limited or its affiliates.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_max_pool_s8.c
  * Description:  Pooling function implementations
  *
- * $Date:        20. July 2021
- * $Revision:    V.2.0.3
+ * $Date:        19 April 2022
+ * $Revision:    V.3.0.0
  *
  * Target Processor:  Cortex-M CPUs
  *
@@ -159,13 +159,13 @@ static void clamp_output(q7_t *source, int32_t length, const int32_t act_min, co
  *
  */
 
-arm_status arm_max_pool_s8(const cmsis_nn_context *ctx,
-                           const cmsis_nn_pool_params *pool_params,
-                           const cmsis_nn_dims *input_dims,
-                           const q7_t *src,
-                           const cmsis_nn_dims *filter_dims,
-                           const cmsis_nn_dims *output_dims,
-                           q7_t *dst)
+arm_cmsis_nn_status arm_max_pool_s8(const cmsis_nn_context *ctx,
+                                    const cmsis_nn_pool_params *pool_params,
+                                    const cmsis_nn_dims *input_dims,
+                                    const q7_t *src,
+                                    const cmsis_nn_dims *filter_dims,
+                                    const cmsis_nn_dims *output_dims,
+                                    q7_t *dst)
 {
     const int32_t input_y = input_dims->h;
     const int32_t input_x = input_dims->w;
@@ -221,7 +221,7 @@ arm_status arm_max_pool_s8(const cmsis_nn_context *ctx,
 
     clamp_output(dst_base, output_x * output_y * channel_in, act_min, act_max);
 
-    return ARM_MATH_SUCCESS;
+    return ARM_CMSIS_NN_SUCCESS;
 }
 
 /**

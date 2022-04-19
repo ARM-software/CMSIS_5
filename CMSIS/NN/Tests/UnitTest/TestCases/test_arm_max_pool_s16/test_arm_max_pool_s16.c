@@ -28,7 +28,7 @@
 
 void maxpool_int16_arm_max_pool_s16(void)
 {
-    const arm_status expected = ARM_MATH_SUCCESS;
+    const arm_cmsis_nn_status expected = ARM_CMSIS_NN_SUCCESS;
     int16_t output[MAXPOOL_INT16_DST_SIZE] = {0};
 
     cmsis_nn_context ctx;
@@ -59,7 +59,7 @@ void maxpool_int16_arm_max_pool_s16(void)
 
     for (int i = 0; i < REPEAT_NUM; i++)
     {
-        arm_status result =
+        arm_cmsis_nn_status result =
             arm_max_pool_s16(&ctx, &pool_params, &input_dims, input_data, &filter_dims, &output_dims, output);
 
         TEST_ASSERT_EQUAL(expected, result);
@@ -69,7 +69,7 @@ void maxpool_int16_arm_max_pool_s16(void)
 
 void maxpool_int16_1_arm_max_pool_s16(void)
 {
-    const arm_status expected = ARM_MATH_SUCCESS;
+    const arm_cmsis_nn_status expected = ARM_CMSIS_NN_SUCCESS;
     int16_t output[MAXPOOL_INT16_1_DST_SIZE] = {0};
 
     cmsis_nn_context ctx;
@@ -100,7 +100,7 @@ void maxpool_int16_1_arm_max_pool_s16(void)
 
     for (int i = 0; i < REPEAT_NUM; i++)
     {
-        arm_status result =
+        arm_cmsis_nn_status result =
             arm_max_pool_s16(&ctx, &pool_params, &input_dims, input_data, &filter_dims, &output_dims, output);
 
         TEST_ASSERT_EQUAL(expected, result);
@@ -110,7 +110,7 @@ void maxpool_int16_1_arm_max_pool_s16(void)
 
 void maxpool_int16_2_arm_max_pool_s16(void)
 {
-    const arm_status expected = ARM_MATH_SUCCESS;
+    const arm_cmsis_nn_status expected = ARM_CMSIS_NN_SUCCESS;
     int16_t output[MAXPOOL_INT16_2_DST_SIZE] = {0};
 
     cmsis_nn_context ctx;
@@ -141,7 +141,7 @@ void maxpool_int16_2_arm_max_pool_s16(void)
 
     for (int i = 0; i < REPEAT_NUM; i++)
     {
-        arm_status result =
+        arm_cmsis_nn_status result =
             arm_max_pool_s16(&ctx, &pool_params, &input_dims, input_data, &filter_dims, &output_dims, output);
 
         TEST_ASSERT_EQUAL(expected, result);
