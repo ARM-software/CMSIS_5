@@ -23,6 +23,7 @@
        - Support for int16 average and max pooling for reference implementation
        - Support for elementwise add and mul int16 scalar version
        - Support for softmax int16 scalar version
+       - Support for SVDF with 8 bit state tensor
       CMSIS-RTOS2:
         - RTX 5.5.4 (see revision history for details)
     </release>
@@ -2242,6 +2243,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="source" name="CMSIS/NN/Source/ConcatenationFunctions/arm_concatenation_s8_y.c"/>
         <file category="source" name="CMSIS/NN/Source/ConcatenationFunctions/arm_concatenation_s8_z.c"/>
         <file category="source" name="CMSIS/NN/Source/SVDFunctions/arm_svdf_s8.c"/>
+        <file category="source" name="CMSIS/NN/Source/SVDFunctions/arm_svdf_state_s16_s8.c"/>
         <file category="source" name="CMSIS/NN/Source/PoolingFunctions/arm_max_pool_s8.c"/>
         <file category="source" name="CMSIS/NN/Source/PoolingFunctions/arm_max_pool_s16.c"/>
         <file category="source" name="CMSIS/NN/Source/PoolingFunctions/arm_avgpool_s8.c"/>
