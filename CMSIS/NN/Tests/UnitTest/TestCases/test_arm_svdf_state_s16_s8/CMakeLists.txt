@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
+# Copyright (C) 2010-2022 Arm Limited or its affiliates.
 #
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -16,8 +16,8 @@
 # limitations under the License.
 #
 
-add_cmsis_nn_unit_test_executable(test_arm_svdf_s8)
+add_cmsis_nn_unit_test_executable(test_arm_svdf_state_s16_s8)
 
-target_sources(test_arm_svdf_s8 PRIVATE
-    Unity/unity_test_arm_svdf_s8.c
-    Unity/TestRunner/unity_test_arm_svdf_s8_runner.c)
+target_sources(test_arm_svdf_state_s16_s8 PRIVATE
+    Unity/unity_test_arm_svdf_state_s16_s8.c
+    Unity/TestRunner/unity_test_arm_svdf_state_s16_s8_runner.c)
