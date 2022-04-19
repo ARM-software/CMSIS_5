@@ -718,7 +718,7 @@ void arm_cfft_radix4by2_q15(
 
   for (i = n2; i > 0; i--)
   {
-      coeff = read_q15x2_ia ((q15_t **) &pC);
+      coeff = read_q15x2_ia (&pC);
 
       T = read_q15x2 (pSi);
       T = __SHADD16(T, 0); /* this is just a SIMD arithmetic shift right by 1 */
@@ -817,7 +817,7 @@ void arm_cfft_radix4by2_inverse_q15(
 
   for (i = n2; i > 0; i--)
   {
-     coeff = read_q15x2_ia ((q15_t **) &pC);
+     coeff = read_q15x2_ia (&pC);
 
      T = read_q15x2 (pSi);
      T = __SHADD16(T, 0); /* this is just a SIMD arithmetic shift right by 1 */

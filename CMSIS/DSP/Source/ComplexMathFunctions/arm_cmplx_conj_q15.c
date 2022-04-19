@@ -122,11 +122,11 @@ void arm_cmplx_conj_q15(
 
     /* Calculate Complex Conjugate and store result in destination buffer. */
 
-    #if defined (ARM_MATH_DSP)
-    in1 = read_q15x2_ia ((q15_t **) &pSrc);
-    in2 = read_q15x2_ia ((q15_t **) &pSrc);
-    in3 = read_q15x2_ia ((q15_t **) &pSrc);
-    in4 = read_q15x2_ia ((q15_t **) &pSrc);
+#if defined (ARM_MATH_DSP)
+    in1 = read_q15x2_ia (&pSrc);
+    in2 = read_q15x2_ia (&pSrc);
+    in3 = read_q15x2_ia (&pSrc);
+    in4 = read_q15x2_ia (&pSrc);
 
 #ifndef ARM_MATH_BIG_ENDIAN
     in1 = __QASX(0, in1);
