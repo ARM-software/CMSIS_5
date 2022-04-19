@@ -1,14 +1,14 @@
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\page cprjFormat_pg Project Description (*.cprj) Format
+\page cprjFormat_pg *.CPRJ Project Format
 
 \section section_overview Overview
-The CMSIS Project description format is unifying the specification for the build of a software project.
+The *.CPRJ project description format is unifying the specification for the build of a software project.
 It is a public format to exchange project build information between tools that support the CMSIS-Pack based
 Run-Time Environment. In addition the format facilitates the tool driven construction of projects from partial projects, 
 named project 'layers'. The project description is targeted to generate a single executable or library file.
 
-The specification of this CMSIS Project description format (*.cprj) is replacing the previous format (*.cpdsc).
+The specification of the *.CPRJ project format replaces the previous format (*.cpdsc).
 The most significant differences are:
 - a new format specification which is independent from the CMSIS-Pack schema.
 - the scope of the description is limited to building a single application or library (no debugger setup).
@@ -43,8 +43,7 @@ options related to the processor and it's features are automatically derived fro
 
 See \subpage element_cprj "Project Description Root" for details about the description format..
 
-See \ref CmdLineBuild "CMSIS-Build" for further information how to build software based on the CMSIS Project description at
-the command line and how to create and manage projects using layers.
+See the <b>cbuild</b> documentation for further information how to build software based on the *.CPRJ project format.
 
 See \subpage projectDescriptionSchema "Project Description Schema file" for validation of project files.
 

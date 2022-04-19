@@ -668,6 +668,6 @@ The option is currently in experimental status.
 /**
 \page dbg_sqns_ds Use of debug descriptions in Arm DS
 
-<a href="https://developer.arm.com/tools-and-software/embedded/arm-development-studio" target="__blank"><b>Arm Development Studio</b></a> provides support for CMSIS Device Family Packs (DFPs) including the debug descriptions. For more information <a href="https://support.developer.arm.com/my-cases/open-case/" target="__blank"><b>contact our support</b></a>.
+<a href="https://developer.arm.com/tools-and-software/embedded/arm-development-studio" target="__blank"><b>Arm Development Studio</b></a> provides support for CMSIS Device Family Packs (DFPs) including the debug descriptions.
 
 */
