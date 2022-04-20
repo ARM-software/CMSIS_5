@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<cprj schemaVersion="0.0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="CPRJ.xsd">
+
+  <created timestamp="2021-02-01T10:00:00" tool="hand made"/>
+
+  <info>
+    <name>STM32G4xx Flash Algorithm</name>
+    <description>
+      Flash Programming Algorithm for STMicroelectronics STM32G4xx 512 KB Flash
+    </description>
+  </info>
+
+  <packages>
+    <package name="CMSIS" vendor="ARM"/>
+  </packages>
+
+  <compilers>
+    <compiler name="AC6" version="6.0.0:6.99.99"/>
+    <compiler name="GCC" version="10.2.1"/>
+  </compilers>
+
+  <target Ddsp="NO_DSP" Dendian="Little-endian" Dfpu="NO_FPU" Dmve="NO_MVE" Dname="ARMCM4" Dsecure="Non-secure" Dtz="NO_TZ" Dvendor="ARM:82">
+    <output intdir="./Out/" name="STM32G4xx_512" outdir="./Out/" type="exe"/>
+    <cflags  compiler="AC6" add="-O1 -fno-function-sections -fno-rtti -fropi -frwpi -funsigned-char -gdwarf-3 -std=c99 -xc"/>
+    <ldflags compiler="AC6" file="./Target.lin" add="--diag_suppress L6305 --info sizes,summarysizes,totals --load_addr_map_info --map --strict --summary_stderr --symbols"/>
+    <asflags compiler="AC6" use="armasm"/>
+    <cflags  compiler="GCC" add="-O1 -Wall -fpic -gdwarf-2 -mapcs-frame -mthumb"/>
+    <ldflags compiler="GCC" file="./Target.ld"  add="-mthumb -nodefaultlibs -nostartfiles"/>
+    <asflags compiler="GCC"/>
+  </target>
+
+  <files>
+    <group name="Documentation">
+      <file category="doc" name="./Abstract.txt"/>
+    </group>
+    <group name="Program Functions">
+      <file category="sourceC" name="./FlashPrg.c"/>
+    </group>
+    <group name="Device Description">
+      <file category="sourceC" name="./FlashDev.c"/>
+    </group>
+  </files>
+
+</cprj>

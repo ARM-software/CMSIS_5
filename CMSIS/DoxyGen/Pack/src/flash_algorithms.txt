@@ -1,84 +1,175 @@
-/**************************************************************************************************/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\page flashAlgorithm  Flash Programming
+\page flashAlgorithm Flash programming
 
-<b>Flash Programming Algorithms</b> are a piece of software to erase or download applications to Flash devices. A \ref createPack_DFP
-usually contains predefined Flash algorithms for programming the devices that are supported by the DFP. A template for
-creating new algorithms are available in the <b>ARM:CMSIS</b> Pack. The following section describes the process in more detail.
+<b>Flash programming algorithms</b> are position-independent software to erase, download, and verify applications 
+in Flash devices of an MCU. They are intended to be used by a debugger. The characteristics
+of the Flash are passed via a structure, which is part of the <b>Flash programming algorithm</b>, to the debugger.
+A \ref createPack_DFP usually contains predefined Flash algorithms for programming the devices that are supported by the DFP.<br>
+A Flash programming algorithm template and an example using  
+<a href="../../Build/html/index.html"><b>CMSIS-Build</b></a> are available in the <b>ARM:CMSIS</b> Pack.
 
 
-\section CreateFPA Creating a new Algorithm
+\section algorithmComponents Algorithm components
 
-Flash programming algorithms are defined with functions to erase and program the Flash device. Special compiler and linker
-settings are required. Follow these steps to create and configure a new Flash programming algorithm:
--# Copy the content from the <b>ARM:CMSIS</b> Pack folder (usually
-   C:\\Keil\\ARM\\Pack\\ARM\\CMSIS\\<i>version</i>\\Device\\\_Template_Flash) to a new folder.
--# Rename the project file \b NewDevice.uvprojx to represent the new Flash ROM device name, for example \b MyDevice.uvprojx.
--# Open the project with uVision. From the toolbar, use the drop-down <b>Select Target</b> to define the processor
-   architecture. \b Cortex-M fits for all Cortex-M0/M0+, M3, and M4 devices. The configuration assumes a little-endian
-   microcontroller. In case of a big-endian microcontroller, select the correct processor core with \b Project -
-   <b>Options for Target</b> - \b Device.
--# Open the dialog \b Project - <b>Options for Target</b> - \b Output and change the content of the field
-   <b>Name of Executable</b> to represent the device, for example \b MyDevice.
--# Adapt the programming algorithms in the file \ref FlashPrg.
--# Adapt the device parameters in the file \ref FlashDev.
--# Use \b Project - <b>Build Target</b> to generate the new Flash programming algorithm. The output file (for example
-   \b MyDevice.FLM) has to be \ref AddFPA "added" to the \b DFP.
+A <b>Flash programming algorithm</b> consists of Flash programming functions (\ref FlashPrg "FlashPrg.c"),
+macros and definitions (\ref FlashOS "FlashOS.h"), and a description of the Flash device (\ref FlashDev "FlashDev.c").
+
+\subsection flashTerms Terminology
+
+- <b>Flash Page</b>: Smallest Flash memory range being programmed with a single flash controller operation.
+- <b>Flash Sector</b>: Smallest Flash memory range that can be erased with a single flash controller operation.
+  Normally, a sector contains multiple pages.
+- <b>Flash Device</b>: A Flash device with its own properties and Flash algorithm. A Flash device normally contains multiple
+  sectors. Sectors can have a varying size.
+
+
+\subsection FlashPrg FlashPrg.c
+
+The file \b FlashPrg.c contains the Flash programming functions to use. The Flash programming functions are divided in
+mandatory and optional functions:
+- Mandatory functions (\ref Init, \ref UnInit, \ref EraseSector, \ref ProgramPage) must be implemented. 
+- Optional functions (\ref EraseChip, \ref BlankCheck, \ref Verify) may be implemented, depending on the device features 
+  (or to speed-up execution). If an optional function is not implemented than a debugger internal replacement is used. 
 
 \note
-- Creating a Flash programming algorithm with
-  <a class="el" href="https://www.keil.com/arm/selector.asp" target="_blank">MDK-Lite</a> is not supported.
-- Flash programming algorithms use <b>Read-Only Position Independent</b> and <b>Read-Write Position Independent</b> program
-  code. These options are set in the dialogs \b Project - <b>Options for Target</b> - \b C/C++ and \b Project -
-  <b>Options for Target</b> - \b Asm.
-- The dialog \b Project - <b>Options for Target</b> - \b Linker defines the linker scatter file \b Target.lin. The error
-  L6305 is disabled with \c --diag_suppress \c L6305.
-- The \subpage algorithmFunc "Flash Algorithm Functions" section contains reference for all the available functions.
+µVision requires the functions \ref BlankCheck and \ref Verify to be implemented if the Flash memory is not completely
+accessible via <b>memory read</b/> operations in the linear address space of the device. The internal implementations from
+µVision basically just read from the Flash memory.
 
-\anchor FlashPrg
-FlashPrg.c
-----------
-The file \b FlashPrg.c contains the mandatory Flash programming functions \ref Init, \ref UnInit, \ref EraseSector, and
-\ref ProgramPage. Optionally, depending on the device features (or to speed-up execution), the functions \ref EraseChip,
-\ref BlankCheck, and \ref Verify can be implemented.
+\subsection  FlashOS FlashOS.h
 
-\anchor FlashDev
-FlashDev.c
-----------
-The file \b FlashDev.c contains parameter definitions for:
--# the Flash programming functions.
--# the \b FlashDevice structure:
+The file \b FlashOS.h contains macros, as well as structure and function definitions. It is the general header file for the
+algorithm and must not be changed.
+
+
+\subsection  FlashDev FlashDev.c
+
+The file \b FlashDev.c holds the \b FlashDevice structure. This structure contains Flash device parameters and 
+information to be used by the debugger to call the <b>Flash programming algorithm</b> functions.
+
 \code
 struct FlashDevice const FlashDevice  =  {
-   FLASH_DRV_VERS,             // Driver Version, do not modify!
-   "New Device 256kB Flash",   // Device Name 
-   ONCHIP,                     // Device Type
-   0x00000000,                 // Device Start Address
-   0x00040000,                 // Device Size in Bytes (256kB)
-   1024,                       // Programming Page Size
-   0,                          // Reserved, must be 0
-   0xFF,                       // Initial Content of Erased Memory
-   100,                        // Program Page Timeout 100 mSec
-   3000,                       // Erase Sector Timeout 3000 mSec
- 
-// Specify Size and Address of Sectors
-   0x002000, 0x000000,         // Sector Size  8kB (8 Sectors)
-   0x010000, 0x010000,         // Sector Size 64kB (2 Sectors) 
-   0x002000, 0x030000,         // Sector Size  8kB (8 Sectors)
-   SECTOR_END
+  FLASH_DRV_VERS,                        /* Driver Version, do not modify! */
+  "New Device 256kB Flash",              /* Device Name */
+  ONCHIP,                                /* Device Type */
+  0x00000000,                            /* Device Start Address */
+  0x00106000,                            /* Device Size for test purpose */
+  0x00000400,                            /* Programming Page Size for test purpose */
+  0,                                     /* Reserved, must be 0 */
+  0xFF,                                  /* Initial Content of Erased Memory */
+  100,                                   /* Program Page Timeout 100 mSec */
+  3000,                                  /* Erase Sector Timeout 3000 mSec */
+
+  /* Specify Size and Address of Sectors */
+  {
+    {0x00002000, 0x00000000},            /* Sector Size  8kB (8 Sectors) */
+    {0x00010000, 0x00010000},            /* Sector Size 64kB (2 Sectors) */
+    {0x00002000, 0x00030000},            /* Sector Size  8kB (8 Sectors) */
+    {SECTOR_END            }
+  }
 };
 \endcode
 
-\note
-The <b>Device Name</b> is usually be shown in tools to identify the Flash algorithm. Make sure that this name reflects the device name.
+- <b>Driver Version</b>: defined in \ref FlashOS "FlashOS.h" and needs not to be changed.
+- <b>Device Name</b>: used to be shown in tools to identify the Flash algorithm. It is good practice that this name
+  reflects the device name.
+- <b>Device Type</b>: one of the types specified in \ref FlashOS "FlashOS.h".
+- <b>Device Start Address</b>: start address of the Flash device.
+- <b>Device Size in Bytes</b>: size in bytes of the Flash device.
+- <b>Programming Page Size</b>: specifies the size of memory junks copied to the target RAM for using with function
+  \ref ProgramPage, parameter \b sz and \b buf. For devices with small <b>Flash Page</b> sizes, it might be better
+  to specify a multiple of the <b>Flash Page</b> size as this reduces the communication overhead to the target. 
+  An optimal block size for fast programming is 1024 bytes. However, the algorithm itself does not restrict this size value.
+- <b>Initial Content of Erased Memory</b>: corresponds to the bit pattern that resides in blank flash memory.
+   Hence it can also be referred to as the "blank value".
+- <b>Program Page Timeout</b>: timeout value in milliseconds for programming a single Flash page.
+- <b>Erase Sector Timeout</b>: timeout value in milliseconds for erasing a single Flash sector
+- <b>Sector layout</b>: table of sector descriptions. Each sector description consists of a start address, relative
+  to the <b>Device Start Address</b>, and a sector size. The sector size is valid from the start address of the current 
+  sector description until the start address of the following sector description or until the end of the Flash. 
+
+
+\section algorithmImageLayout Algorithm image layout
+
+Flash programming algorithms use a special linker script which splits the image into 2 load regions:
+- PRG (flashprg.o) which contains the PI (position independent) load region with programming functions (code and read/write data)
+  - region name is not specified
+  - downloaded to target RAM
+  - contains a section for code [+RO / .text, .rodata] (section name is not specified)
+  - contains a section for read/write data [+RW,+ZI / .data, .bss] (section name is not specified)
+  - contains symbols for functions:
+    - mandatory: \ref Init, \ref UnInit, \ref EraseSector, \ref ProgramPage
+    - optional: \ref EraseChip, \ref BlankCheck, \ref Verify
+- DSCR (flashdev.o) which contains the device description load region.
+  - region name is not specified
+  - not downloaded to target RAM (used by debugger only).
+  - contains a symbol for "FlashDevice"
+
+
+\section algorithmTheoryOfOperation  Theory of operation
+
+The <b>Flash programming algorithm</b> functions are downloaded into the target’s RAM and are executed by a CPU in the
+target system. Download and execution are controlled by the debugger which takes over control of the CPU and manipulates the
+PC, SP, LR, and general-purpose registers to select the appropriate algorithm function and to pass arguments to it. LR is
+programmed with the address of a BKPT instruction to ensure that the CPU stops after finishing a function. Results can be
+read back via R0 as per the Arm Procedure Call Standard (APCS).
+
+µVision uses the format below for information and functions downloaded into target RAM. It is not mandatory that other
+debuggers follow exactly the same layout.
+
+\image html flash_algorithms_ram.png
 
 \note
-The <b>Programming Page Size</b> specifies the block size for programming using the function \ref ProgramPage.  For devices with small block sizes
-it might be better to specify a multiple of the physical block size as this reduces the communication overhead to the target.
-An optimal block size for fast programming is 1024 bytes, however the system itself does not restrict this size value.
- 
+The <b>Flash programming algorithm</b> functions need to run without any toolchains library initialization. Global variables are not
+initialized. All global variables need to be initialized in the \ref Init function before using them.
 
-\section AddFPA Adding an Algorithm to a Pack
+
+\section algorithmRAMUsage Algorithm RAM usage
+
+The maximum of usable RAM for a <b>Flash programming algorithm</b> is limited to  2^16-1 (64 KB).
+The total amount of necessary RAM can be calculated as sum of:
+- Size of Flash Algorithms (from map file).
+  - Code
+  - RO, RW, ZI data
+  - padding bytes
+- Size of internal algorithm functions.
+  - Breakpoint (2 bytes)
+  - Calculate CRC (30 bytes)
+  - \ref BlankCheck, if not provided by the algorithm (22 bytes). 
+- Programming page size (from FlashDev.c)
+- Stack (minimum 64 byte)
+
+\note
+The memory from <b>End of RAM used for algorithm</b> downwards is used for stack.
+
+
+\section CreateFPA Creating a new algorithm
+
+Flash programming algorithms are defined with functions to erase and program the Flash device. Special compiler
+and linker settings are required. Follow these steps to create and configure a new Flash programming algorithm using
+the template <a href="../../Build/html/index.html"><b>CMSIS-Build</b></a> project:
+-# Copy the content from the <b>ARM:CMSIS</b> Pack folder (usually
+   \%LOCALAPPDATA%\\Arm\\Packs\\ARM\\CMSIS\\<i>version</i>\\Device\\\_Template_Flash) to a new folder.
+-# Rename the project file \b FlashAlgorithm.cprj to represent the new Flash ROM device name (for example \b MyDevice.cprj).
+-# Open the project file with an editor and adapt the project settings to your needs.
+  - select an appropriate Arm device (attribute \b Dname). ArmCM0 fits for all Cortex-M cores.
+  - change <b>Name of Executable</b> (attribute \b name) to represent the device (for example \b MyDevice). 
+  - Current configuration assumes a little-endian microcontroller.
+    In case of a big-endian microcontroller, set the correct endianness (attribute \b Dendian) and compiler, linker flags.
+-# Adapt the programming algorithms in the file \ref FlashPrg "FlashPrg.c".
+-# Adapt the device parameters in the file \ref FlashDev "FlashDev.c".
+-# Execute the <a href="../../Build/html/index.html"><b>CMSIS-Build</b></a> project to generate the new Flash programming algorithm.
+-# Rename the generated executable (AXF or ELF depending on the used toolchain) to \b FLM (for example \b MyDevice.FLM).
+-# \ref AddFPA "Add" the renamed executable (for example \b MyDevice.FLM) to the \b DFP.
+
+\note
+- Flash programming algorithms use <b>Read-Only Position Independent</b> and <b>Read-Write Position Independent</b> program
+  code. These options must be supported by the used toolchain.
+- Linker warning about missing entry points can be ignored.
+- The \subpage algorithmFunc "Flash Algorithm Functions" section contains reference for all the available functions.
+
+\section AddFPA Adding an algorithm to a pack
 The generated <b>*.FLM</b> file needs to be added to the \ref createPack_DFP, so that it is available to the tool user for programming
 his device. Usually, a directory \b Flash is created and the algorithm is saved in this directory.
 
@@ -87,10 +178,10 @@ The algorithm is specified within the the \ref element_family level:
 <family Dfamily="STM32F4" Dvendor="STMicroelectronics:13">
   ...
   <algorithm name="Flash/STM32F2xx_512.flm" start=0x08000000 size=0x10000 default="1"/>         <!-- valid for all devices of the family  -->
- 
+
   <subFamily DsubFamily="STM32F405">
     <algorithm name="Flash/STM32F2xx_1024.flm" start=0x08000000 size=0x20000 default="1"/>       <!-- valid for all devices of a subFamily -->
- 
+
     <device Dname="STM32F405OE">
       <algorithm name="Flash/STM32F2xx_2048.flm" start=0x08000000 size=0x40000 default="1"/>     <!-- finally, this is the default for the device -->
     </device>
@@ -104,16 +195,16 @@ The argument \a size specifies the size covered by the Flash programming algorit
 
 The argument \a default specifies whether a Flash programming algorithm is set as the default algorithm in a project (when
 \token{true}). If \a default is not set or false, the Flash programming algorithm can be configured on a lower level.
-However, the Flash programming algorithm of a project can be changed manually at any time during development. 
+However, the Flash programming algorithm of a project can be changed manually at any time during development.
 */
 
 
-/**************************************************************************************************/
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
 \page algorithmFunc Algorithm Functions
 
 The following functions are available for creating new Flash programming algorithms:
-Function Name    |Indication |Description 
+Function Name    |Indication |Description
 -----------------|-----------|-----------
 \ref BlankCheck  |optional   |Check and compare patterns.
 \ref EraseChip   |optional   |Delete entire Flash memory content.
@@ -123,7 +214,7 @@ Function Name    |Indication |Description
 \ref UnInit      |mandatory  |De-initialize the microcontroller after one of the Flash programming steps.
 \ref Verify      |optional   |Compare Flash memory content with the program code.
 
-The following diagrams show how the functions of the <b>Flash Programming Algorithms</b> are executed by a development tool.
+The following diagrams show how the functions of the <b>Flash programming algorithms</b> are executed by a development tool.
 
 The <b>Flash Erase</b> sequence is executed to erase the Flash content.
 
@@ -162,26 +253,26 @@ The argument \a sz specifies the size of the block that is to be verified.
 <b>Code Example</b>
 \code
 int BlankCheck (unsigned long adr, unsigned long sz, unsigned char pat) {
- 
+
   unsigned long i, j, k;
- 
+
   // Recalculate address for External SDRAM addresses
   if (adr >= SDRAM_START)
     adr = adr - SDRAM_START + USER_OFFSET;
- 
+
   for (i = 0; i < sz; i += 256) {
     // Read 256 bytes
     ReadPage_HW (adr+i, 256, &rd_buf[0]);
- 
+
     // Determine size to compare
     if ((sz-i) >= 256) k = 256;
     else               k = (sz-i);
- 
+
     // Check up to 256 bytes if equal to pattern "pat"
     for (j = 0; j < k; j++)
       if (rd_buf[j] != pat) return (1); // Memory is not blank
   }
- 
+
   return (0);                           // Memory is blank
 }
 \endcode
@@ -206,16 +297,16 @@ deleted.
 <b>Code Example</b>
 \code
 int EraseChip (void) {
- 
+
   FLASH->CR |=  FLASH_MER;                      // Mass Erase Enabled
   FLASH->CR |=  FLASH_STRT;                     // Start Erase
- 
+
   while (FLASH->SR & FLASH_BSY) {
     IWDG->KR = 0xAAAA;                          // Reload IWDG
   }
- 
+
   FLASH->CR &= ~FLASH_MER;                      // Mass Erase Disabled
- 
+
   return (0);                                   // Done
 }
 \endcode
@@ -240,17 +331,17 @@ program to Flash and the option <b>Erase Sectors</b> has been set in the <b>Flas
 <b>Code Example</b>
 \code
 int EraseSector (unsigned long adr) {
- 
+
   FLASH->CR |=  FLASH_PER;                      // Page Erase Enabled
   FLASH->AR  =  adr;                            // Page Address
   FLASH->CR |=  FLASH_STRT;                     // Start Erase
- 
+
   while (FLASH->SR & FLASH_BSY) {
     IWDG->KR = 0xAAAA;                          // Reload IWDG
   }
- 
+
   FLASH->CR &= ~FLASH_PER;                      // Page Erase Disabled
- 
+
   return (0);                                   // Done
 }
 \endcode
@@ -287,14 +378,14 @@ Thus, different initialization sections can be implemented for each individual F
 <b>Code Example</b>
 \code
 int Init (unsigned long adr, unsigned long clk, unsigned long fnc) {
- 
+
   // Zero Wait State
   FLASH->ACR  = 0x00000000;
- 
+
   // Unlock Flash
   FLASH->KEYR = FLASH_KEY1;
   FLASH->KEYR = FLASH_KEY2;
- 
+
   // Test if IWDG is running (IWDG in HW mode)
   if ((FLASH->OBR & 0x04) == 0x00) {
     // Set IWDG time out to ~32.768 second
@@ -302,7 +393,7 @@ int Init (unsigned long adr, unsigned long clk, unsigned long fnc) {
     IWDG->PR  = 0x06;   // Set prescaler to 256
     IWDG->RLR = 4095;   // Set reload value to 4095
   }
- 
+
   return (0);
 }
 \endcode
@@ -323,7 +414,7 @@ int ProgramPage (unsigned long adr, unsigned long sz, unsigned char *buf);
 
 \details
 The function \b ProgramPage is used to write code into the Flash memory. It is invoked  to
-download a program to Flash. As Flash memory is typically organized in blocks or pages, the parameters to the function \b ProgramPage 
+download a program to Flash. As Flash memory is typically organized in blocks or pages, the parameters to the function \b ProgramPage
 must not cross alignment boundaries of these flash pages.  The page size is specified in the struct FlashDevice with the value
 <b>Program Page Size</b>.
 
@@ -341,31 +432,31 @@ require any provisions for that.
 <b>Code Example</b>
 \code
 int ProgramPage (unsigned long adr, unsigned long sz, unsigned char *buf) {
- 
+
   sz = (sz + 1) & ~1;                           // Adjust size for Half Words
- 
+
   while (sz) {
- 
+
     FLASH->CR |=  FLASH_PG;                     // Programming Enabled
- 
+
     M16(adr) = *((unsigned short *)buf);        // Program Half Word
     while (FLASH->SR & FLASH_BSY);
- 
+
     FLASH->CR &= ~FLASH_PG;                     // Programming Disabled
- 
+
     // Check for Errors
     if (FLASH->SR & (FLASH_PGERR | FLASH_WRPRTERR)) {
       FLASH->SR |= FLASH_PGERR | FLASH_WRPRTERR;
       return (1);                               // Failed
     }
- 
+
     // Go to next Half Word
     adr += 2;
     buf += 2;
     sz  -= 2;
- 
+
   }
- 
+
   return (0);                                   // Done
 }
 \endcode
@@ -396,10 +487,10 @@ Thus, different de-initialization sections can be implemented for each individua
 <b>Code Example</b>
 \code
 int UnInit (unsigned long fnc) {
- 
+
   // Lock Flash
   FLASH->CR |=  FLASH_LOCK;
- 
+
   return (0);
 }
 \endcode
@@ -431,7 +522,7 @@ The argument \a buf points to the buffer containing the data to be verified.
 \code
 unsigned long Verify (unsigned long adr, unsigned long sz, unsigned char *buf) {
   unsigned long i, adr_dest, in_page_ofs;
- 
+
   if (adr < block_size) {               // Verifying 2-nd level bootloader data
     adr_dest = adr + page_usr_size;     // skip page 0 of block 0
   } else {                              // Verifying program data
@@ -439,12 +530,12 @@ unsigned long Verify (unsigned long adr, unsigned long sz, unsigned char *buf) {
     adr_dest  = nand_block_offset + (adr & (block_size-1));
   }
   in_page_ofs = adr_dest & (page_usr_size-1);
- 
+
   if (ReadPage_HW(adr_dest, page_usr_size, data_buf)) return (1);
   for (i=0; i<sz; i++)
     if (buf[i] != data_buf[i+in_page_ofs])
       break;
- 
+
   return (adr+i);
 }
 \endcode

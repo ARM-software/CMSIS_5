@@ -1,6 +1,6 @@
 /**************************************************************************//**
  * @file     FlashDev.c
- * @brief    Flash Device Description for New Device Flash
+ * @brief    Flash Device Description for ST STM32G4xx 512 Kb Flash
  * @version  V1.0.0
  * @date     10. February 2021
  ******************************************************************************/
@@ -28,21 +28,19 @@ extern
 struct FlashDevice const FlashDevice;
 struct FlashDevice const FlashDevice  =  {
   FLASH_DRV_VERS,                        /* Driver Version, do not modify! */
-  "New Device 256kB Flash",              /* Device Name */
+  "STM32G4xx 512 KB Flash",              /* Device Name */
   ONCHIP,                                /* Device Type */
-  0x00000000,                            /* Device Start Address */
-  0x00106000,                            /* Device Size for test purpose */
-  0x00000400,                            /* Programming Page Size for test purpose */
+  0x08000000,                            /* Device Start Address */
+  0x00080000,                            /* Device Size */
+  1024,                                  /* Programming Page Size */
   0,                                     /* Reserved, must be 0 */
   0xFF,                                  /* Initial Content of Erased Memory */
-  100,                                   /* Program Page Timeout 100 mSec */
-  3000,                                  /* Erase Sector Timeout 3000 mSec */
-
+  400,                                   /* Program Page Timeout 400 mSec */
+  400,                                   /* Erase Sector Timeout 400 mSec */
+  
   /* Specify Size and Address of Sectors */
   {
-    {0x00002000, 0x00000000},            /* Sector Size  8kB (8 Sectors) */
-    {0x00010000, 0x00010000},            /* Sector Size 64kB (2 Sectors) */
-    {0x00002000, 0x00030000},            /* Sector Size  8kB (8 Sectors) */
+    {0x00001000, 0x00000000},            /* Sector Size  4kB */
     {SECTOR_END            }
   }
 };
