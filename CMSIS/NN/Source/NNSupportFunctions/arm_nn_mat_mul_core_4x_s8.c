@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2021 Arm Limited or its affiliates.
+ * Copyright (C) 2010-2022 Arm Limited or its affiliates.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_nn_mat_mul_core_4x_s8.c
  * Description:  General matrix multiplication function for MVE extension
  *
- * $Date:        12. November 2021
- * $Revision:    V.3.0.0
+ * $Date:        19. April 2022
+ * $Revision:    V.3.0.1
  *
  * Target Processor:  Cortex-M processors
  * -------------------------------------------------------------------- */
@@ -70,19 +70,19 @@ int8_t *arm_nn_mat_mul_core_4x_s8(const int32_t row_elements,
         const int8_t *col_base = col_base_ref + i * row_elements;
         int32_t sum_tmp = 0;
 
-        __ASM volatile("   vldrb.8         q0, [%[col]], 16     \n"
+        __ASM volatile("   vldrb.8         q0, [%[col]], #16     \n"
                        "   wlstp.8         lr, %[cnt], 1f       \n"
                        "2:                                      \n"
                        "   vaddva.s8      %[sum], q0            \n"
-                       "   vldrb.8         q1, [%[row0]], 16    \n"
+                       "   vldrb.8         q1, [%[row0]], #16    \n"
                        "   vmladava.s8    %[out0], q0, q1       \n"
-                       "   vldrb.8         q2, [%[row1]], 16    \n"
+                       "   vldrb.8         q2, [%[row1]], #16    \n"
                        "   vmladava.s8     %[out1], q0, q2      \n"
-                       "   vldrb.8         q3, [%[row2]], 16    \n"
+                       "   vldrb.8         q3, [%[row2]], #16    \n"
                        "   vmladava.s8     %[out2], q0, q3      \n"
-                       "   vldrb.8         q4, [%[row3]], 16    \n"
+                       "   vldrb.8         q4, [%[row3]], #16    \n"
                        "   vmladava.s8     %[out3], q0, q4      \n"
-                       "   vldrb.8         q0, [%[col]], 16     \n"
+                       "   vldrb.8         q0, [%[col]], #16     \n"
                        "   letp            lr, 2b               \n"
                        "1:                                      \n"
                        : [col] "+r"(col_base),
