@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     core_cm55.h
  * @brief    CMSIS Cortex-M55 Core Peripheral Access Layer Header File
- * @version  V1.2.3
- * @date     04. February 2022
+ * @version  V1.2.4
+ * @date     21. April 2022
  ******************************************************************************/
 /*
  * Copyright (c) 2018-2022 Arm Limited. All rights reserved.
@@ -1420,7 +1420,7 @@ typedef struct
   __IOM uint32_t ITGU_CFG;               /*!< Offset: 0x504 (R/W)  ITGU Configuration Register */
         uint32_t RESERVED3[2U];
   __IOM uint32_t ITGU_LUT[16U];          /*!< Offset: 0x510 (R/W)  ITGU Look Up Table Register */
-        uint32_t RESERVED4[59U];
+        uint32_t RESERVED4[44U];
   __IOM uint32_t DTGU_CTRL;              /*!< Offset: 0x600 (R/W)  DTGU Control Registers */
   __IOM uint32_t DTGU_CFG;               /*!< Offset: 0x604 (R/W)  DTGU Configuration Register */
         uint32_t RESERVED5[2U];
