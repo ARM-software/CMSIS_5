@@ -147,9 +147,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga721f565a0b8015a3d6d46535cadf63d3"><td class="memItemLeft" align="right" valign="top">arm_status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NNBasicMath.html#ga721f565a0b8015a3d6d46535cadf63d3">arm_nn_vec_mat_mult_t_s16</a> (const q15_t *lhs, const q7_t *rhs, const q63_t *bias, q15_t *dst, const int32_t dst_multiplier, const int32_t dst_shift, const int32_t rhs_cols, const int32_t rhs_rows, const int32_t activation_min, const int32_t activation_max)</td></tr>
 <tr class="memdesc:ga721f565a0b8015a3d6d46535cadf63d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">s16 Vector by Matrix (transposed) multiplication  <a href="#ga721f565a0b8015a3d6d46535cadf63d3">More...</a><br/></td></tr>
 <tr class="separator:ga721f565a0b8015a3d6d46535cadf63d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacbc28cf23c7549bcf89d1e8f1481c389"><td class="memItemLeft" align="right" valign="top">arm_status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NNBasicMath.html#gacbc28cf23c7549bcf89d1e8f1481c389">arm_nn_vec_mat_mult_t_s8</a> (const q7_t *lhs, const q7_t *rhs, const q31_t *bias, q7_t *dst, const int32_t lhs_offset, const int32_t rhs_offset, const int32_t dst_offset, const int32_t dst_multiplier, const int32_t dst_shift, const int32_t rhs_cols, const int32_t rhs_rows, const int32_t activation_min, const int32_t activation_max)</td></tr>
-<tr class="memdesc:gacbc28cf23c7549bcf89d1e8f1481c389"><td class="mdescLeft">&#160;</td><td class="mdescRight">s8 Vector by Matrix (transposed) multiplication  <a href="#gacbc28cf23c7549bcf89d1e8f1481c389">More...</a><br/></td></tr>
-<tr class="separator:gacbc28cf23c7549bcf89d1e8f1481c389"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga140e5a1a4c146c8e90491792ed104d70"><td class="memItemLeft" align="right" valign="top">arm_status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NNBasicMath.html#ga140e5a1a4c146c8e90491792ed104d70">arm_nn_vec_mat_mult_t_s8</a> (const q7_t *lhs, const q7_t *rhs, const q31_t *bias, q7_t *dst, const int32_t lhs_offset, const int32_t rhs_offset, const int32_t dst_offset, const int32_t dst_multiplier, const int32_t dst_shift, const int32_t rhs_cols, const int32_t rhs_rows, const int32_t activation_min, const int32_t activation_max, const int32_t address_offset)</td></tr>
+<tr class="memdesc:ga140e5a1a4c146c8e90491792ed104d70"><td class="mdescLeft">&#160;</td><td class="mdescRight">s8 Vector by Matrix (transposed) multiplication  <a href="#ga140e5a1a4c146c8e90491792ed104d70">More...</a><br/></td></tr>
+<tr class="separator:ga140e5a1a4c146c8e90491792ed104d70"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac0675e8069a303ce2e8f8ed2a9320859"><td class="memItemLeft" align="right" valign="top">arm_status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NNBasicMath.html#gac0675e8069a303ce2e8f8ed2a9320859">arm_nn_vec_mat_mult_t_svdf_s8</a> (const q7_t *lhs, const q7_t *rhs, q15_t *dst, const int32_t lhs_offset, const int32_t rhs_offset, const int32_t dst_offset, const int32_t dst_multiplier, const int32_t dst_shift, const int32_t rhs_cols, const int32_t rhs_rows, const int32_t activation_min, const int32_t activation_max)</td></tr>
 <tr class="memdesc:gac0675e8069a303ce2e8f8ed2a9320859"><td class="mdescLeft">&#160;</td><td class="mdescRight">s8 Vector by Matrix (transposed) multiplication with s16 output  <a href="#gac0675e8069a303ce2e8f8ed2a9320859">More...</a><br/></td></tr>
 <tr class="separator:gac0675e8069a303ce2e8f8ed2a9320859"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -962,7 +962,7 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="gacbc28cf23c7549bcf89d1e8f1481c389"></a>
+<a class="anchor" id="ga140e5a1a4c146c8e90491792ed104d70"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -1042,7 +1042,13 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const int32_t&#160;</td>
-          <td class="paramname"><em>activation_max</em>&#160;</td>
+          <td class="paramname"><em>activation_max</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>address_offset</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1065,7 +1071,8 @@ Functions</h2></td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">rhs_cols</td><td>Number of columns in the right-hand side input matrix </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">rhs_rows</td><td>Number of rows in the right-hand side input matrix </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">activation_min</td><td>Minimum value to clamp the output to. Range: int8 </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">activation_max</td><td>Maximum value to clamp the output to. Range: int8</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">activation_max</td><td>Maximum value to clamp the output to. Range: int8 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">address_offset</td><td>Memory position offset for dst. First output is stored at 'dst', the second at 'dst + address_offset' and so on. Default value is typically 1.</td></tr>
   </table>
   </dd>
 </dl>
@@ -1073,7 +1080,7 @@ Functions</h2></td></tr>
 
 <p>References <a class="el" href="arm__nnsupportfunctions_8h.html#ac9f7be20432a6926ac07c1f44b1b02fe">arm_nn_read_q7x4_ia()</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#a6a13b7a567485da5fc7f0d311318886d">arm_nn_requantize()</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#ad935f1ff1a50822e317bdb321ce991ad">MAX</a>, and <a class="el" href="arm__nnsupportfunctions_8h.html#adcd021ac91d43a62b2cdecf9a5b971a7">MIN</a>.</p>
 
-<p>Referenced by <a class="el" href="group__FC.html#ga30d44fed122f2e159a417f9c12181ded">arm_fully_connected_s8()</a>.</p>
+<p>Referenced by <a class="el" href="group__FC.html#ga30d44fed122f2e159a417f9c12181ded">arm_fully_connected_s8()</a>, and <a class="el" href="group__SVDF.html#gafbf5ad3c931103dff943fc39f8f9d519">arm_svdf_s8()</a>.</p>
 
 </div>
 </div>
@@ -1181,7 +1188,7 @@ Functions</h2></td></tr>
 
 <p>References <a class="el" href="arm__nnsupportfunctions_8h.html#ac9f7be20432a6926ac07c1f44b1b02fe">arm_nn_read_q7x4_ia()</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#a6a13b7a567485da5fc7f0d311318886d">arm_nn_requantize()</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#ad935f1ff1a50822e317bdb321ce991ad">MAX</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#adcd021ac91d43a62b2cdecf9a5b971a7">MIN</a>, and <a class="el" href="arm__nn__math__types_8h.html#a602e8d32c870d50039bbd651fd9b4544">NN_Q31_MAX</a>.</p>
 
-<p>Referenced by <a class="el" href="group__SVDF.html#ga9c4e7065f10d63b269f82b8e4e8afa04">arm_svdf_s8()</a>.</p>
+<p>Referenced by <a class="el" href="group__SVDF.html#ga3dc1b94f56e80e5b80b353ce8d9650b3">arm_svdf_state_s16_s8()</a>.</p>
 
 </div>
 </div>

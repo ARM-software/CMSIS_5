@@ -88,5 +88,6 @@ var searchData=
   ['arm_5fsoftmax_5fu8_2ec',['arm_softmax_u8.c',['../arm__softmax__u8_8c.html',1,'']]],
   ['arm_5fsoftmax_5fwith_5fbatch_5fq7_2ec',['arm_softmax_with_batch_q7.c',['../arm__softmax__with__batch__q7_8c.html',1,'']]],
   ['arm_5fsvdf_5fs8_2ec',['arm_svdf_s8.c',['../arm__svdf__s8_8c.html',1,'']]],
+  ['arm_5fsvdf_5fstate_5fs16_5fs8_2ec',['arm_svdf_state_s16_s8.c',['../arm__svdf__state__s16__s8_8c.html',1,'']]],
   ['cmakelists_2etxt',['CMakeLists.txt',['../ActivationFunctions_2CMakeLists_8txt.html',1,'']]]
 ];

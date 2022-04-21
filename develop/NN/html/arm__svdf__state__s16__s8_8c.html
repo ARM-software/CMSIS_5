@@ -3,8 +3,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>arm_svdf_s8.c File Reference</title>
-<title>CMSIS-NN: arm_svdf_s8.c File Reference</title>
+<title>arm_svdf_state_s16_s8.c File Reference</title>
+<title>CMSIS-NN: arm_svdf_state_s16_s8.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="cmsis.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
@@ -90,7 +90,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('arm__svdf__s8_8c.html','');});
+$(document).ready(function(){initNavTree('arm__svdf__state__s16__s8_8c.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -111,22 +111,22 @@ $(document).ready(function(){initNavTree('arm__svdf__s8_8c.html','');});
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">arm_svdf_s8.c File Reference</div>  </div>
+<div class="title">arm_svdf_state_s16_s8.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gafbf5ad3c931103dff943fc39f8f9d519"><td class="memItemLeft" align="right" valign="top">arm_status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SVDF.html#gafbf5ad3c931103dff943fc39f8f9d519">arm_svdf_s8</a> (const <a class="el" href="structcmsis__nn__context.html">cmsis_nn_context</a> *input_ctx, const <a class="el" href="structcmsis__nn__context.html">cmsis_nn_context</a> *output_ctx, const <a class="el" href="structcmsis__nn__svdf__params.html">cmsis_nn_svdf_params</a> *svdf_params, const <a class="el" href="structcmsis__nn__per__tensor__quant__params.html">cmsis_nn_per_tensor_quant_params</a> *input_quant_params, const <a class="el" href="structcmsis__nn__per__tensor__quant__params.html">cmsis_nn_per_tensor_quant_params</a> *output_quant_params, const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *input_dims, const q7_t *input_data, const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *state_dims, q7_t *state_data, const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *weights_feature_dims, const q7_t *weights_feature_data, const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *weights_time_dims, const q7_t *weights_time_data, const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *bias_dims, const q31_t *bias_data, const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *output_dims, q7_t *output_data)</td></tr>
-<tr class="memdesc:gafbf5ad3c931103dff943fc39f8f9d519"><td class="mdescLeft">&#160;</td><td class="mdescRight">s8 SVDF function with 8 bit state tensor and 8 bit time weights  <a href="group__SVDF.html#gafbf5ad3c931103dff943fc39f8f9d519">More...</a><br/></td></tr>
-<tr class="separator:gafbf5ad3c931103dff943fc39f8f9d519"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3dc1b94f56e80e5b80b353ce8d9650b3"><td class="memItemLeft" align="right" valign="top">arm_status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__SVDF.html#ga3dc1b94f56e80e5b80b353ce8d9650b3">arm_svdf_state_s16_s8</a> (const <a class="el" href="structcmsis__nn__context.html">cmsis_nn_context</a> *input_ctx, const <a class="el" href="structcmsis__nn__context.html">cmsis_nn_context</a> *output_ctx, const <a class="el" href="structcmsis__nn__svdf__params.html">cmsis_nn_svdf_params</a> *svdf_params, const <a class="el" href="structcmsis__nn__per__tensor__quant__params.html">cmsis_nn_per_tensor_quant_params</a> *input_quant_params, const <a class="el" href="structcmsis__nn__per__tensor__quant__params.html">cmsis_nn_per_tensor_quant_params</a> *output_quant_params, const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *input_dims, const q7_t *input_data, const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *state_dims, q15_t *state_data, const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *weights_feature_dims, const q7_t *weights_feature_data, const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *weights_time_dims, const q15_t *weights_time_data, const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *bias_dims, const q31_t *bias_data, const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *output_dims, q7_t *output_data)</td></tr>
+<tr class="memdesc:ga3dc1b94f56e80e5b80b353ce8d9650b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">s8 SVDF function with 16 bit state tensor and 16 bit time weights  <a href="group__SVDF.html#ga3dc1b94f56e80e5b80b353ce8d9650b3">More...</a><br/></td></tr>
+<tr class="separator:ga3dc1b94f56e80e5b80b353ce8d9650b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_06560e3359c5da94845158f0031c08e8.html">NN</a></li><li class="navelem"><a class="el" href="dir_13dc9928808d08450b31fdaf572dfc8e.html">Source</a></li><li class="navelem"><a class="el" href="dir_2aee9156192d99f0fbf3cc910890e5a9.html">SVDFunctions</a></li><li class="navelem"><a class="el" href="arm__svdf__s8_8c.html">arm_svdf_s8.c</a></li>
+    <li class="navelem"><a class="el" href="dir_06560e3359c5da94845158f0031c08e8.html">NN</a></li><li class="navelem"><a class="el" href="dir_13dc9928808d08450b31fdaf572dfc8e.html">Source</a></li><li class="navelem"><a class="el" href="dir_2aee9156192d99f0fbf3cc910890e5a9.html">SVDFunctions</a></li><li class="navelem"><a class="el" href="arm__svdf__state__s16__s8_8c.html">arm_svdf_state_s16_s8.c</a></li>
     <li class="footer">
       <script type="text/javascript">
         <!--
