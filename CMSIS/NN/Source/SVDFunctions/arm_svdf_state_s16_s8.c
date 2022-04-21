@@ -19,10 +19,10 @@
 /* ----------------------------------------------------------------------
  * Project:      CMSIS NN Library
  * Title:        arm_svdf_s8.c
- * Description:  S8 basic SVDF layer function
+ * Description:  S8 basic SVDF layer function with s16 state tensor
  *
- * $Date:        8 April 2022
- * $Revision:    V.1.0.0
+ * $Date:        28 April 2022
+ * $Revision:    V.1.0.1
  *
  * Target Processor:  Cortex-M processors
  *
@@ -99,10 +99,12 @@ arm_status arm_svdf_state_s16_s8(const cmsis_nn_context *input_ctx,
     }
     q31_t *buffer_b = (q31_t *)output_ctx->buf;
 
+    // Left shift state
     memmove((q15_t *)state_data,
             (q15_t *)state_data + 1,
             (size_t)((input_batches * feature_batches * time_batches - 1) * (int32_t)sizeof(int16_t)));
 
+    // Matrix multiplication input * feature weight
     for (int i_batch = 0; i_batch < input_batches; i_batch++)
     {
         q15_t *res_ptr = state_data + (time_batches * i_batch * feature_batches) + (time_batches - 1);
@@ -129,6 +131,7 @@ arm_status arm_svdf_state_s16_s8(const cmsis_nn_context *input_ctx,
     }
 
     {
+        // Matrix multiplication time weight * state tensors
         q31_t *ptr_a = buffer_a;
         const q15_t *v2 = state_data;
         for (int i_batch = 0; i_batch < input_batches; i_batch++)
@@ -140,6 +143,7 @@ arm_status arm_svdf_state_s16_s8(const cmsis_nn_context *input_ctx,
                 *ptr_a = 0;
                 int32_t sum = 0;
 #if defined(ARM_MATH_DSP) && !defined(ARM_MATH_MVEI)
+                // Perform matrix multiplication in blocks of two
                 int j = 0;
                 int32_t block_count = time_batches >> 1;
                 for (int i = 0; i < block_count; i++)
