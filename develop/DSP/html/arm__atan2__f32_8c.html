@@ -3,8 +3,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>CMakeLists.txt File Reference</title>
-<title>CMSIS-DSP: CMakeLists.txt File Reference</title>
+<title>arm_atan2_f32.c File Reference</title>
+<title>CMSIS-DSP: arm_atan2_f32.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="cmsis.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
@@ -90,7 +90,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('Source_2FastMathFunctions_2CMakeLists_8txt.html','');});
+$(document).ready(function(){initNavTree('arm__atan2__f32_8c.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -109,29 +109,79 @@ $(document).ready(function(){initNavTree('Source_2FastMathFunctions_2CMakeLists_
 
 <div class="header">
   <div class="summary">
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">CMakeLists.txt File Reference</div>  </div>
+<div class="title">arm_atan2_f32.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a982995fa2a2732db5e0ddce2dfe0a45c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__atan2__f32_8c.html#a982995fa2a2732db5e0ddce2dfe0a45c">ATANHALFF32</a></td></tr>
+<tr class="separator:a982995fa2a2732db5e0ddce2dfe0a45c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d8cd7333c325dd285d43d1fec257f46"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__atan2__f32_8c.html#a3d8cd7333c325dd285d43d1fec257f46">PIHALFF32</a></td></tr>
+<tr class="separator:a3d8cd7333c325dd285d43d1fec257f46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae8caaf27ae8b1479a85d4fb0e042180f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__atan2__f32_8c.html#ae8caaf27ae8b1479a85d4fb0e042180f">ATAN2_NB_COEFS_F32</a></td></tr>
+<tr class="separator:ae8caaf27ae8b1479a85d4fb0e042180f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:adf1de96cabdde40df08c58c37795404b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Source_2FastMathFunctions_2CMakeLists_8txt.html#adf1de96cabdde40df08c58c37795404b">cmake_minimum_required</a> (VERSION 3.14) project(CMSISDSPFastMath) <a class="el" href="Source_2CMakeLists_8txt.html#abe658af24e68335d143536fb31fa1158">include</a>(configLib) <a class="el" href="Source_2CMakeLists_8txt.html#abe658af24e68335d143536fb31fa1158">include</a>(<a class="el" href="Source_2TransformFunctions_2CMakeLists_8txt.html#ae6d7ba4710aac973ef55978a7d3570f2">configDsp</a>) add_library(CMSISDSPFastMath STATIC) configLib(CMSISDSPFastMath $</td></tr>
-<tr class="separator:adf1de96cabdde40df08c58c37795404b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad29714d29f23e9029175291d9bd8a2e0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Source_2FastMathFunctions_2CMakeLists_8txt.html#ad29714d29f23e9029175291d9bd8a2e0">configDsp</a> (CMSISDSPFastMath ${ROOT}) <a class="el" href="Source_2CMakeLists_8txt.html#abe658af24e68335d143536fb31fa1158">include</a>(interpol) interpol(CMSISDSPFastMath) <a class="el" href="Source_2CommonTables_2CMakeLists_8txt.html#a5d12404fe73258d7cfdcd0e7ac149b70">if</a>(CONFIGTABLE AND ALLFAST) target_compile_definitions(CMSISDSPFastMath PUBLIC ARM_ALL_FAST_TABLES) <a class="el" href="Source_2CommonTables_2CMakeLists_8txt.html#a9bfe5507f01ede692c9058575b1728fc">endif</a>() <a class="el" href="Source_2CommonTables_2CMakeLists_8txt.html#a5d12404fe73258d7cfdcd0e7ac149b70">if</a>(NOT CONFIGTABLE OR ALLFAST OR ARM_COS_F32) target_sources(CMSISDSPFastMath PRIVATE arm_cos_f32.c) <a class="el" href="Source_2CommonTables_2CMakeLists_8txt.html#a9bfe5507f01ede692c9058575b1728fc">endif</a>() <a class="el" href="Source_2CommonTables_2CMakeLists_8txt.html#a5d12404fe73258d7cfdcd0e7ac149b70">if</a>(NOT CONFIGTABLE OR ALLFAST OR ARM_COS_Q15) target_sources(CMSISDSPFastMath PRIVATE arm_cos_q15.c) <a class="el" href="Source_2CommonTables_2CMakeLists_8txt.html#a9bfe5507f01ede692c9058575b1728fc">endif</a>() <a class="el" href="Source_2CommonTables_2CMakeLists_8txt.html#a5d12404fe73258d7cfdcd0e7ac149b70">if</a>(NOT CONFIGTABLE OR ALLFAST OR ARM_COS_Q31) target_sources(CMSISDSPFastMath PRIVATE arm_cos_q31.c) <a class="el" href="Source_2CommonTables_2CMakeLists_8txt.html#a9bfe5507f01ede692c9058575b1728fc">endif</a>() <a class="el" href="Source_2CommonTables_2CMakeLists_8txt.html#a5d12404fe73258d7cfdcd0e7ac149b70">if</a>(NOT CONFIGTABLE OR ALLFAST OR ARM_SIN_F32) target_sources(CMSISDSPFastMath PRIVATE arm_sin_f32.c) <a class="el" href="Source_2CommonTables_2CMakeLists_8txt.html#a9bfe5507f01ede692c9058575b1728fc">endif</a>() <a class="el" href="Source_2CommonTables_2CMakeLists_8txt.html#a5d12404fe73258d7cfdcd0e7ac149b70">if</a>(NOT CONFIGTABLE OR ALLFAST OR ARM_SIN_Q15) target_sources(CMSISDSPFastMath PRIVATE arm_sin_q15.c) <a class="el" href="Source_2CommonTables_2CMakeLists_8txt.html#a9bfe5507f01ede692c9058575b1728fc">endif</a>() <a class="el" href="Source_2CommonTables_2CMakeLists_8txt.html#a5d12404fe73258d7cfdcd0e7ac149b70">if</a>(NOT CONFIGTABLE OR ALLFAST OR ARM_SIN_Q31) target_sources(CMSISDSPFastMath PRIVATE arm_sin_q31.c) <a class="el" href="Source_2CommonTables_2CMakeLists_8txt.html#a9bfe5507f01ede692c9058575b1728fc">endif</a>() <a class="el" href="Source_2CommonTables_2CMakeLists_8txt.html#a5d12404fe73258d7cfdcd0e7ac149b70">if</a>(NOT CONFIGTABLE OR ALLFAST OR ARM_SQRT_Q31) target_sources(CMSISDSPFastMath PRIVATE arm_sqrt_q31.c) <a class="el" href="Source_2CommonTables_2CMakeLists_8txt.html#a9bfe5507f01ede692c9058575b1728fc">endif</a>() <a class="el" href="Source_2CommonTables_2CMakeLists_8txt.html#a5d12404fe73258d7cfdcd0e7ac149b70">if</a>(NOT CONFIGTABLE OR ALLFAST OR ARM_SQRT_Q15) target_sources(CMSISDSPFastMath PRIVATE arm_sqrt_q15.c) <a class="el" href="Source_2CommonTables_2CMakeLists_8txt.html#a9bfe5507f01ede692c9058575b1728fc">endif</a>() target_sources(CMSISDSPFastMath PRIVATE arm_vlog_f32.c) target_sources(CMSISDSPFastMath PRIVATE arm_vlog_f64.c) target_sources(CMSISDSPFastMath PRIVATE arm_vexp_f32.c) target_sources(CMSISDSPFastMath PRIVATE arm_vexp_f64.c) target_sources(CMSISDSPFastMath PRIVATE arm_vlog_q31.c) target_sources(CMSISDSPFastMath PRIVATE arm_vlog_q15.c) <a class="el" href="Source_2CommonTables_2CMakeLists_8txt.html#a5d12404fe73258d7cfdcd0e7ac149b70">if</a>((NOT ARMAC5) AND(NOT DISABLEFLOAT16)) target_sources(CMSISDSPFastMath PRIVATE arm_vlog_f16.c) target_sources(CMSISDSPFastMath PRIVATE arm_vexp_f16.c) target_sources(CMSISDSPFastMath PRIVATE arm_vinverse_f16.c) target_sources(CMSISDSPFastMath PRIVATE arm_atan2_f16.c) <a class="el" href="Source_2CommonTables_2CMakeLists_8txt.html#a9bfe5507f01ede692c9058575b1728fc">endif</a>() target_sources(CMSISDSPFastMath PRIVATE arm_divide_q15.c) target_sources(CMSISDSPFastMath PRIVATE arm_divide_q31.c) target_sources(CMSISDSPFastMath PRIVATE arm_atan2_f32.c) target_sources(CMSISDSPFastMath PRIVATE arm_atan2_q31.c) target_sources(CMSISDSPFastMath PRIVATE arm_atan2_q15.c) target_include_directories(CMSISDSPFastMath PUBLIC&quot;$</td></tr>
-<tr class="separator:ad29714d29f23e9029175291d9bd8a2e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac27cef442fb0f8b5861f624a874152b0"><td class="memItemLeft" align="right" valign="top">__STATIC_FORCEINLINE <a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__atan2__f32_8c.html#ac27cef442fb0f8b5861f624a874152b0">arm_atan_limited_f32</a> (<a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> x)</td></tr>
+<tr class="separator:ac27cef442fb0f8b5861f624a874152b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ec1846617f78a3d1285a23bb1d1cb64"><td class="memItemLeft" align="right" valign="top">__STATIC_FORCEINLINE <a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__atan2__f32_8c.html#a9ec1846617f78a3d1285a23bb1d1cb64">arm_atan_f32</a> (<a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> x)</td></tr>
+<tr class="separator:a9ec1846617f78a3d1285a23bb1d1cb64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa7fbd2bb45df78860dd3a0293391096f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__math__types_8h.html#a5e459c6409dfcd2927bb8a57491d7cf6">arm_status</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__atan2.html#gaa7fbd2bb45df78860dd3a0293391096f">arm_atan2_f32</a> (<a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> y, <a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> x, <a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> *result)</td></tr>
+<tr class="memdesc:gaa7fbd2bb45df78860dd3a0293391096f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Arc Tangent of y/x using sign of y and x to get right quadrant.  <a href="group__atan2.html#gaa7fbd2bb45df78860dd3a0293391096f">More...</a><br/></td></tr>
+<tr class="separator:gaa7fbd2bb45df78860dd3a0293391096f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="adf1de96cabdde40df08c58c37795404b"></a>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="ae8caaf27ae8b1479a85d4fb0e042180f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">cmake_minimum_required </td>
+          <td class="memname">#define ATAN2_NB_COEFS_F32</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a982995fa2a2732db5e0ddce2dfe0a45c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ATANHALFF32</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a3d8cd7333c325dd285d43d1fec257f46"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PIHALFF32</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="a9ec1846617f78a3d1285a23bb1d1cb64"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_FORCEINLINE <a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> arm_atan_f32 </td>
           <td>(</td>
-          <td class="paramtype">VERSION 3.&#160;</td>
-          <td class="paramname"><em>14</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a>&#160;</td>
+          <td class="paramname"><em>x</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -139,15 +189,15 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ad29714d29f23e9029175291d9bd8a2e0"></a>
+<a class="anchor" id="ac27cef442fb0f8b5861f624a874152b0"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">configDsp </td>
+          <td class="memname">__STATIC_FORCEINLINE <a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a> arm_atan_limited_f32 </td>
           <td>(</td>
-          <td class="paramtype">CMSISDSPFastMath ${ROOT}&#160;</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype"><a class="el" href="arm__math__types_8h.html#a4611b605e45ab401f02cab15c5e38715">float32_t</a>&#160;</td>
+          <td class="paramname"><em>x</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -160,7 +210,7 @@ Functions</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="Source_2FastMathFunctions_2CMakeLists_8txt.html">CMakeLists.txt</a></li>
+    <li class="navelem"><a class="el" href="dir_650d82db24a6311fa7658fced19ae149.html">DSP</a></li><li class="navelem"><a class="el" href="dir_cf3b734d050ceea02fbfb06f215bbc8f.html">Source</a></li><li class="navelem"><a class="el" href="dir_a7aea38f75b0edaf61d4d95d1f19ac9f.html">FastMathFunctions</a></li><li class="navelem"><a class="el" href="arm__atan2__f32_8c.html">arm_atan2_f32.c</a></li>
     <li class="footer">
       <script type="text/javascript">
         <!--
