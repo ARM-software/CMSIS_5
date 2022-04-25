@@ -3,13 +3,13 @@
  * Title:        arm_atan2_q31.c
  * Description:  float32 Arc tangent of y/x
  *
- * $Date:        06 July 2021
+ * $Date:        22 April 2022
  * $Revision:    V1.10.0
  *
  * Target Processor: Cortex-M and Cortex-A cores
  * -------------------------------------------------------------------- */
 /*
- * Copyright (C) 2010-2021 ARM Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2022 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *

@@ -512,6 +512,83 @@ cmsis_arm_vlog_f64(PyObject *obj, PyObject *args)
   return(NULL);
 }
 
+static PyObject *
+cmsis_arm_atan2_q31(PyObject *obj, PyObject *args)
+{
+
+  q31_t x,y; // input
+  q31_t pOut;
+
+  if (PyArg_ParseTuple(args,"ii",&y,&x))
+  {
+
+
+
+    arm_status returnValue = arm_atan2_q31(y,x,&pOut);
+    PyObject* theReturnOBJ=Py_BuildValue("i",returnValue);
+    PyObject* pOutOBJ=Py_BuildValue("i",pOut);
+
+    PyObject *pythonResult = Py_BuildValue("OO",theReturnOBJ,pOutOBJ);
+
+    Py_DECREF(theReturnOBJ);
+    Py_DECREF(pOutOBJ);
+    return(pythonResult);
+
+  }
+  return(NULL);
+}
+
+static PyObject *
+cmsis_arm_atan2_q15(PyObject *obj, PyObject *args)
+{
+
+  q15_t x,y; // input
+  q15_t pOut;
+
+  if (PyArg_ParseTuple(args,"hh",&y,&x))
+  {
+
+
+
+    arm_status returnValue = arm_atan2_q15(y,x,&pOut);
+    PyObject* theReturnOBJ=Py_BuildValue("i",returnValue);
+    PyObject* pOutOBJ=Py_BuildValue("h",pOut);
+
+    PyObject *pythonResult = Py_BuildValue("OO",theReturnOBJ,pOutOBJ);
+
+    Py_DECREF(theReturnOBJ);
+    Py_DECREF(pOutOBJ);
+    return(pythonResult);
+
+  }
+  return(NULL);
+}
+
+static PyObject *
+cmsis_arm_atan2_f32(PyObject *obj, PyObject *args)
+{
+
+  float32_t x,y; // input
+  float32_t pOut;
+
+  if (PyArg_ParseTuple(args,"ff",&y,&x))
+  {
+
+
+
+    arm_status returnValue = arm_atan2_f32(y,x,&pOut);
+    PyObject* theReturnOBJ=Py_BuildValue("i",returnValue);
+    PyObject* pOutOBJ=Py_BuildValue("f",pOut);
+
+    PyObject *pythonResult = Py_BuildValue("OO",theReturnOBJ,pOutOBJ);
+
+    Py_DECREF(theReturnOBJ);
+    Py_DECREF(pOutOBJ);
+    return(pythonResult);
+
+  }
+  return(NULL);
+}
 
 
 static PyMethodDef CMSISDSPMethods[] = {
@@ -538,6 +615,9 @@ static PyMethodDef CMSISDSPMethods[] = {
 {"arm_vlog_f32",  cmsis_arm_vlog_f32, METH_VARARGS,""},
 {"arm_vexp_f64",  cmsis_arm_vexp_f64, METH_VARARGS,""},
 {"arm_vlog_f64",  cmsis_arm_vlog_f64, METH_VARARGS,""},
+{"arm_atan2_f32",  cmsis_arm_atan2_f32, METH_VARARGS,""},
+{"arm_atan2_q31",  cmsis_arm_atan2_q31, METH_VARARGS,""},
+{"arm_atan2_q15",  cmsis_arm_atan2_q15, METH_VARARGS,""},
     {"error_out", (PyCFunction)error_out, METH_NOARGS, NULL},
     {NULL, NULL, 0, NULL}        /* Sentinel */
 };

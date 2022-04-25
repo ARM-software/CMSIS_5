@@ -129,18 +129,18 @@ except:
 transformMod = transform + common + basic + complexf + fastmath + matrix + statistics
 statisticsMod = statistics + common + fastmath + basic
 interpolationMod = interpolation + common
-filteringMod = filtering + common + support + fastmath
+filteringMod = filtering + common + support + fastmath + basic
 controllerMod = controller + common
 
 matrixMod = matrix 
 supportMod = support 
-complexfMod = complexf + fastmath + common
+complexfMod = complexf + fastmath + common + basic
 basicMod = basic
 quaternionMod = quaternion
-fastmathMod = fastmath + common
+fastmathMod = basic + fastmath + common
 distanceMod = distance + common + basic + statistics + fastmath
 bayesMod = bayes + fastmath + common + statistics + basic
-svmMod = svm + fastmath + common
+svmMod = svm + fastmath + common + basic
 
 
 filteringMod.append(os.path.join("PythonWrapper","cmsisdsp_pkg","src","cmsisdsp_filtering.c"))
