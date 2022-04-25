@@ -21,8 +21,8 @@
  * Title:        arm_nnfunctions.h
  * Description:  Public header file for CMSIS NN Library
  *
- * $Date:        17 May 2022
- * $Revision:    V.10.0.1
+ * $Date:        19 May 2022
+ * $Revision:    V.10.1.0
  *
  * Target Processor:  Cortex-M CPUs
  * -------------------------------------------------------------------- */
@@ -1116,7 +1116,6 @@ arm_cmsis_nn_status arm_depthwise_conv_wrapper_s8(const cmsis_nn_context *ctx,
  * @brief Get size of additional buffer required by arm_depthwise_conv_wrapper_s8()
  *
  * @param[in]      dw_conv_params Depthwise convolution parameters (e.g. strides, dilations, pads,...)
- *                                dw_conv_params->dilation is not used.
  *                                Range of dw_conv_params->input_offset : [-127, 128]
  *                                Range of dw_conv_params->input_offset : [-128, 127]
  * @param[in]      input_dims     Input (activation) tensor dimensions. Format: [H, W, C_IN]
@@ -1213,6 +1212,112 @@ arm_cmsis_nn_status arm_depthwise_conv_s16(const cmsis_nn_context *ctx,
                                            const int64_t *bias_data,
                                            const cmsis_nn_dims *output_dims,
                                            q15_t *output_data);
+
+/**
+ * @brief Wrapper function to pick the right optimized s16 depthwise convolution function
+ *
+ * @param[in, out] ctx            Function context (e.g. temporary buffer). Check the function
+ *                                definition file to see if an additional buffer is required.
+ *                                Optional function {API}_get_buffer_size() provides the buffer
+ *                                size if required.
+ * @param[in]      dw_conv_params Depthwise convolution parameters (e.g. strides, dilations, pads,...)
+ *                                dw_conv_params->dilation is not used.
+ *                                Range of dw_conv_params->input_offset : Not used
+ *                                Range of dw_conv_params->output_offset : Not used
+ * @param[in]      quant_params   Per-channel quantization info.
+ *                                It contains the multiplier and shift values to be applied to each
+ *                                output channel
+ * @param[in]      input_dims     Input (activation) tensor dimensions. Format: [H, W, C_IN]
+ *                                Batch argument N is not used and assumed to be 1.
+ * @param[in]      input_data     Input (activation) data pointer. Data type: int16
+ * @param[in]      filter_dims    Filter tensor dimensions. Format: [1, H, W, C_OUT]
+ * @param[in]      filter_data    Filter data pointer. Data type: int8
+ * @param[in]      bias_dims      Bias tensor dimensions. Format: [C_OUT]
+ * @param[in]      bias_data      Bias data pointer. Data type: int64
+ * @param[in]      output_dims    Output tensor dimensions. Format: [1, H, W, C_OUT]
+ * @param[in, out] output_data    Output data pointer. Data type: int16
+ * @return     The function returns
+ *                <code>ARM_CMSIS_NN_SUCCESS</code>   -  Successful completion.
+ *
+ * @details
+ *    - Supported framework: TensorFlow Lite
+ *    - Picks one of the the following functions
+ *        -# arm_depthwise_conv_s16()
+ *        -# arm_depthwise_conv_fast_s16()  - Cortex-M CPUs with DSP extension only
+ *    - q7 is used as data type eventhough it is s8 data. It is done so to be consistent with existing APIs.
+ */
+arm_cmsis_nn_status arm_depthwise_conv_wrapper_s16(const cmsis_nn_context *ctx,
+                                                   const cmsis_nn_dw_conv_params *dw_conv_params,
+                                                   const cmsis_nn_per_channel_quant_params *quant_params,
+                                                   const cmsis_nn_dims *input_dims,
+                                                   const q15_t *input_data,
+                                                   const cmsis_nn_dims *filter_dims,
+                                                   const q7_t *filter_data,
+                                                   const cmsis_nn_dims *bias_dims,
+                                                   const int64_t *bias_data,
+                                                   const cmsis_nn_dims *output_dims,
+                                                   q15_t *output_data);
+
+/**
+ * @brief Get size of additional buffer required by arm_depthwise_conv_wrapper_s16()
+ *
+ * @param[in]      dw_conv_params Depthwise convolution parameters (e.g. strides, dilations, pads,...)
+ *                                Range of dw_conv_params->input_offset : Not used
+ *                                Range of dw_conv_params->input_offset : Not used
+ * @param[in]      input_dims     Input (activation) tensor dimensions. Format: [H, W, C_IN]
+ *                                Batch argument N is not used and assumed to be 1.
+ * @param[in]      filter_dims    Filter tensor dimensions. Format: [1, H, W, C_OUT]
+ * @param[in]      output_dims    Output tensor dimensions. Format: [1, H, W, C_OUT]
+ * @return                        Size of additional memory required for optimizations in bytes.
+ *
+ */
+int32_t arm_depthwise_conv_wrapper_s16_get_buffer_size(const cmsis_nn_dw_conv_params *dw_conv_params,
+                                                       const cmsis_nn_dims *input_dims,
+                                                       const cmsis_nn_dims *filter_dims,
+                                                       const cmsis_nn_dims *output_dims);
+
+/**
+ * @brief Optimized s16 depthwise convolution function with constraint that in_channel equals out_channel.
+ *        Refer arm_depthwise_conv_s16() for function argument details.
+ *
+ * @return     The function returns one of the following
+ *                <code>ARM_CMSIS_NN_ARG_ERROR</code> - ctx-buff == NULL and
+ *                                                      arm_depthwise_conv_fast_s16_get_buffer_size() > 0 or
+ *                                                      input channel != output channel or
+ *                                                      ch_mult != 1
+ *
+ *                <code>ARM_CMSIS_NN_SUCCESS</code> - Successful operation
+ *
+ * @details
+ *    - Supported framework: TensorFlow Lite
+ *    - The following constrains on the arguments apply
+ *        -# Number of input channel equals number of output channels or ch_mult equals 1
+ *    - q7 is used as data type eventhough it is s8 data. It is done so to be consistent with existing APIs.
+ *    - Reccomended when number of channels is 4 or greater.
+ *
+ */
+arm_cmsis_nn_status arm_depthwise_conv_fast_s16(const cmsis_nn_context *ctx,
+                                                const cmsis_nn_dw_conv_params *dw_conv_params,
+                                                const cmsis_nn_per_channel_quant_params *quant_params,
+                                                const cmsis_nn_dims *input_dims,
+                                                const q15_t *input_data,
+                                                const cmsis_nn_dims *filter_dims,
+                                                const q7_t *filter_data,
+                                                const cmsis_nn_dims *bias_dims,
+                                                const int64_t *bias_data,
+                                                const cmsis_nn_dims *output_dims,
+                                                q15_t *output_data);
+
+/**
+ * @brief Get the required buffer size for optimized s16 depthwise convolution
+ * function with constraint that in_channel equals out_channel.
+ * @param[in]       input_dims     Input (activation) tensor dimensions. Format: [1, H, W, C_IN]
+ *                                 Batch argument N is not used.
+ * @param[in]       filter_dims    Filter tensor dimensions. Format: [1, H, W, C_OUT]
+ * @return          The function returns  required buffer size in bytes
+ *
+ */
+int32_t arm_depthwise_conv_fast_s16_get_buffer_size(const cmsis_nn_dims *input_dims, const cmsis_nn_dims *filter_dims);
 
 /**
  * @brief Optimized s8 depthwise convolution function for 3x3 kernel size with some constraints on

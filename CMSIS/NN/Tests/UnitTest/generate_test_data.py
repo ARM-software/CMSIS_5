@@ -37,7 +37,7 @@ except Exception as e:
     sys.exit(1)
 
 REQUIRED_MINIMUM_TENSORFLOW_VERSION = version.parse("2.5")
-ALL_TESTDATA_SETS = {}
+TESTDATA_SETS = {}
 CLANG_FORMAT = 'clang-format-9 -i'
 
 INT32_MAX = 2147483647
@@ -1158,264 +1158,278 @@ def load_all_testdatasets():
 
     type_of_test = 'conv'
     dataset = 'basic'
-    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=1, out_ch=1, x_in=5,
-                                              y_in=8, w_x=2, w_y=4, stride_x=1, stride_y=1, pad=False)
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=1, out_ch=1, x_in=5,
+                                          y_in=8, w_x=2, w_y=4, stride_x=1, stride_y=1, pad=False)
     dataset = 'stride2pad1'
-    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=1, out_ch=1, x_in=7,
-                                              y_in=7, w_x=3, w_y=3, stride_x=2, stride_y=2, pad=True)
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=1, out_ch=1, x_in=7,
+                                          y_in=7, w_x=3, w_y=3, stride_x=2, stride_y=2, pad=True)
     dataset = 'kernel1x1'
-    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=4, out_ch=17, x_in=15,
-                                              y_in=15, w_x=1, w_y=1, stride_x=1, stride_y=1, pad=False,
-                                              out_activation_min=-126, out_activation_max=127)
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=4, out_ch=17, x_in=15,
+                                          y_in=15, w_x=1, w_y=1, stride_x=1, stride_y=1, pad=False,
+                                          out_activation_min=-126, out_activation_max=127)
     dataset = 'conv_3'
-    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=3, out_ch=1, x_in=10, y_in=49, w_x=4,
-                                              w_y=10, stride_x=1, stride_y=2, pad=True,
-                                              out_activation_min=-127, out_activation_max=127)
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=3, out_ch=1, x_in=10, y_in=49, w_x=4,
+                                          w_y=10, stride_x=1, stride_y=2, pad=True,
+                                          out_activation_min=-127, out_activation_max=127)
     dataset = 'conv_1_x_n_1'
-    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=3, out_ch=3, x_in=5, y_in=5, w_x=2,
-                                              w_y=1, stride_x=2, stride_y=1, pad=False, out_activation_min=-127,
-                                              out_activation_max=127, batches=2)
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=3, out_ch=3, x_in=5, y_in=5, w_x=2,
+                                          w_y=1, stride_x=2, stride_y=1, pad=False, out_activation_min=-127,
+                                          out_activation_max=127, batches=2)
     dataset = 'conv_1_x_n_2'
-    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=3, out_ch=1, x_in=11, y_in=11, w_x=11,
-                                              w_y=1, stride_x=1, stride_y=1, pad=True,
-                                              out_activation_min=-111, out_activation_max=127)
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=3, out_ch=1, x_in=11, y_in=11, w_x=11,
+                                          w_y=1, stride_x=1, stride_y=1, pad=True,
+                                          out_activation_min=-111, out_activation_max=127)
     dataset = 'conv_1_x_n_3'
-    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=1, out_ch=3, x_in=11, y_in=11, w_x=1,
-                                              w_y=11, stride_x=1, stride_y=1, pad=True,
-                                              out_activation_min=-88, out_activation_max=127)
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=1, out_ch=3, x_in=11, y_in=11, w_x=1,
+                                          w_y=11, stride_x=1, stride_y=1, pad=True,
+                                          out_activation_min=-88, out_activation_max=127)
     dataset = 'conv_2'
-    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=2, out_ch=4, x_in=6, y_in=3, w_x=3,
-                                              w_y=3, stride_x=1, stride_y=1, pad=True, out_activation_min=-101,
-                                              out_activation_max=127)
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=2, out_ch=4, x_in=6, y_in=3, w_x=3,
+                                          w_y=3, stride_x=1, stride_y=1, pad=True, out_activation_min=-101,
+                                          out_activation_max=127)
     dataset = 'conv_4'  # batches > 2
-    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=3, out_ch=3, x_in=5, y_in=5, w_x=2,
-                                              w_y=3, stride_x=2, stride_y=2, pad=False,
-                                              out_activation_min=-109, out_activation_max=127, batches=3)
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=3, out_ch=3, x_in=5, y_in=5, w_x=2,
+                                          w_y=3, stride_x=2, stride_y=2, pad=False,
+                                          out_activation_min=-109, out_activation_max=127, batches=3)
     dataset = 'conv_out_activation'
-    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=2, out_ch=2, x_in=3, y_in=3, w_x=3,
-                                              w_y=3, stride_x=1, stride_y=1, pad=True, out_activation_min=-61,
-                                              out_activation_max=107)
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=2, out_ch=2, x_in=3, y_in=3, w_x=3,
+                                          w_y=3, stride_x=1, stride_y=1, pad=True, out_activation_min=-61,
+                                          out_activation_max=107)
     dataset = 'conv_dilation_golden'
-    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=1, batches=2, out_ch=3, x_in=6, y_in=4,
-                                              w_x=2, w_y=2, stride_x=1, stride_y=1, pad=True, out_activation_min=-128,
-                                              out_activation_max=127, dilation_x=3, dilation_y=2)
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=1, batches=2, out_ch=3, x_in=6, y_in=4,
+                                          w_x=2, w_y=2, stride_x=1, stride_y=1, pad=True, out_activation_min=-128,
+                                          out_activation_max=127, dilation_x=3, dilation_y=2)
     dataset = 'conv_2x2_dilation'
-    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=2, out_ch=2, x_in=10, y_in=10, w_x=3,
-                                              w_y=3, stride_x=1, stride_y=1, pad=False, out_activation_min=-61,
-                                              out_activation_max=107, dilation_x=2, dilation_y=2)
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=2, out_ch=2, x_in=10, y_in=10, w_x=3,
+                                          w_y=3, stride_x=1, stride_y=1, pad=False, out_activation_min=-61,
+                                          out_activation_max=107, dilation_x=2, dilation_y=2)
     dataset = 'conv_2x3_dilation'
-    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=2, out_ch=2, x_in=3, y_in=3, w_x=3,
-                                              w_y=3, stride_x=1, stride_y=1, pad=True, out_activation_min=-61,
-                                              out_activation_max=107, dilation_x=2, dilation_y=2)
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=2, out_ch=2, x_in=3, y_in=3, w_x=3,
+                                          w_y=3, stride_x=1, stride_y=1, pad=True, out_activation_min=-61,
+                                          out_activation_max=107, dilation_x=2, dilation_y=2)
     dataset = 'conv_3x2_dilation'
-    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=2, out_ch=2, x_in=3, y_in=3, w_x=3,
-                                              w_y=3, stride_x=1, stride_y=1, pad=True, out_activation_min=-61,
-                                              out_activation_max=107, dilation_x=3, dilation_y=2)
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=2, out_ch=2, x_in=3, y_in=3, w_x=3,
+                                          w_y=3, stride_x=1, stride_y=1, pad=True, out_activation_min=-61,
+                                          out_activation_max=107, dilation_x=3, dilation_y=2)
     dataset = 'conv_2x2_dilation_5x5_input'
-    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=2, out_ch=2, x_in=5, y_in=5, w_x=3,
-                                              w_y=3, stride_x=1, stride_y=1, pad=True, out_activation_min=-61,
-                                              out_activation_max=107, dilation_x=2, dilation_y=2)
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=2, out_ch=2, x_in=5, y_in=5, w_x=3,
+                                          w_y=3, stride_x=1, stride_y=1, pad=True, out_activation_min=-61,
+                                          out_activation_max=107, dilation_x=2, dilation_y=2)
     dataset = 'conv_3x3_dilation_5x5_input'
-    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=2, out_ch=2, x_in=9, y_in=11, w_x=3,
-                                              w_y=3, stride_x=1, stride_y=1, pad=True, out_activation_min=-61,
-                                              out_activation_max=107, dilation_x=2, dilation_y=2)
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=2, out_ch=2, x_in=9, y_in=11, w_x=3,
+                                          w_y=3, stride_x=1, stride_y=1, pad=True, out_activation_min=-61,
+                                          out_activation_max=107, dilation_x=2, dilation_y=2)
     dataset = 'int16xint8'
-    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=3, out_ch=4, x_in=7,
-                                              y_in=8, w_x=2, w_y=4, stride_x=2, stride_y=3, pad=True,
-                                              randmin=INT16_MIN, randmax=INT16_MAX, out_activation_min=-13335,
-                                              out_activation_max=32767, int16xint8=True)
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=3, out_ch=4, x_in=7,
+                                          y_in=8, w_x=2, w_y=4, stride_x=2, stride_y=3, pad=True,
+                                          randmin=INT16_MIN, randmax=INT16_MAX, out_activation_min=-13335,
+                                          out_activation_max=32767, int16xint8=True)
     dataset = 'requantize_s64'
-    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=2, out_ch=2, x_in=3,
-                                              y_in=2, w_x=2, w_y=2, stride_x=1, stride_y=1, pad=False,
-                                              out_activation_min=INT16_MIN, out_activation_max=INT16_MAX,
-                                              int16xint8=True, bias_min=-0x300, bias_max=0x9fff)
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=2, out_ch=2, x_in=3,
+                                          y_in=2, w_x=2, w_y=2, stride_x=1, stride_y=1, pad=False,
+                                          out_activation_min=INT16_MIN, out_activation_max=INT16_MAX,
+                                          int16xint8=True, bias_min=-0x300, bias_max=0x9fff)
     dataset = 'int16xint8_dilation_1'
-    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=2, out_ch=2, x_in=32,
-                                              y_in=32, w_x=2, w_y=2, stride_x=1, stride_y=1, pad=False,
-                                              out_activation_min=INT16_MIN, out_activation_max=INT16_MAX,
-                                              int16xint8=True, bias_min=-0x300, dilation_x=2, dilation_y=2)
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=2, out_ch=2, x_in=32,
+                                          y_in=32, w_x=2, w_y=2, stride_x=1, stride_y=1, pad=False,
+                                          out_activation_min=INT16_MIN, out_activation_max=INT16_MAX,
+                                          int16xint8=True, bias_min=-0x300, dilation_x=2, dilation_y=2)
     dataset = 'int16xint8_dilation_2'
-    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=3, out_ch=4, x_in=7,
-                                              y_in=8, w_x=2, w_y=4, stride_x=1, stride_y=1, pad=True,
-                                              randmin=INT16_MIN, randmax=INT16_MAX, out_activation_min=-13335,
-                                              out_activation_max=32767, int16xint8=True, dilation_x=2, dilation_y=2)
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=3, out_ch=4, x_in=7,
+                                          y_in=8, w_x=2, w_y=4, stride_x=1, stride_y=1, pad=True,
+                                          randmin=INT16_MIN, randmax=INT16_MAX, out_activation_min=-13335,
+                                          out_activation_max=32767, int16xint8=True, dilation_x=2, dilation_y=2)
     dataset = 'int16xint8_dilation_3'
-    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=3, out_ch=4, x_in=7,
-                                              y_in=8, w_x=2, w_y=4, stride_x=1, stride_y=1, pad=True,
-                                              randmin=INT16_MIN, randmax=INT16_MAX, out_activation_min=-13335,
-                                              out_activation_max=32767, int16xint8=True, dilation_x=2)
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=3, out_ch=4, x_in=7,
+                                          y_in=8, w_x=2, w_y=4, stride_x=1, stride_y=1, pad=True,
+                                          randmin=INT16_MIN, randmax=INT16_MAX, out_activation_min=-13335,
+                                          out_activation_max=32767, int16xint8=True, dilation_x=2)
 
     type_of_test = 'depthwise_conv'
     dataset = 'depthwise_2'
-    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=3, out_ch=9, x_in=6, y_in=5, w_x=3,
-                                              w_y=4, stride_x=2, stride_y=2, pad=True,
-                                              out_activation_min=-73, out_activation_max=127)
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=3, out_ch=9, x_in=6, y_in=5, w_x=3,
+                                          w_y=4, stride_x=2, stride_y=2, pad=True,
+                                          out_activation_min=-73, out_activation_max=127)
     dataset = 'depthwise_kernel_3x3'
-    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=5, out_ch=5, x_in=4, y_in=5, w_x=3,
-                                              w_y=3, stride_x=2, stride_y=2, pad=True,
-                                              out_activation_min=-104, out_activation_max=127)
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=5, out_ch=5, x_in=4, y_in=5, w_x=3,
+                                          w_y=3, stride_x=2, stride_y=2, pad=True,
+                                          out_activation_min=-104, out_activation_max=127)
     dataset = 'depthwise_eq_in_out_ch'
-    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=6, out_ch=6, x_in=4, y_in=5, w_x=2,
-                                              w_y=3, stride_x=1, stride_y=1, pad=True,
-                                              out_activation_min=-86, out_activation_max=127)
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=6, out_ch=6, x_in=4, y_in=5, w_x=2,
+                                          w_y=3, stride_x=1, stride_y=1, pad=True,
+                                          out_activation_min=-86, out_activation_max=127)
     dataset = 'depthwise_out_activation'
-    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=3, out_ch=3, x_in=6, y_in=5, w_x=3,
-                                              w_y=4, pad=False, out_activation_min=-45,
-                                              out_activation_max=103)
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=3, out_ch=3, x_in=6, y_in=5, w_x=3,
+                                          w_y=4, pad=False, out_activation_min=-45,
+                                          out_activation_max=103)
     dataset = 'depthwise_mult_batches'
-    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=3, out_ch=3, x_in=3, y_in=5, w_x=2,
-                                              w_y=4, stride_x=2, stride_y=2, pad=True,
-                                              batches=2)
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=3, out_ch=3, x_in=3, y_in=5, w_x=2,
+                                          w_y=4, stride_x=2, stride_y=2, pad=True,
+                                          batches=2)
     dataset = 'depthwise_null_bias_0'
-    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=2, out_ch=2, x_in=4, y_in=5, w_x=2,
-                                              w_y=2, stride_x=1, stride_y=1, pad=True, generate_bias=False,
-                                              batches=1)
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=2, out_ch=2, x_in=4, y_in=5, w_x=2,
+                                          w_y=2, stride_x=1, stride_y=1, pad=True, generate_bias=False,
+                                          batches=1)
     dataset = 'depthwise_null_bias_1'
-    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=2, out_ch=8, x_in=4, y_in=5, w_x=2,
-                                              w_y=2, stride_x=1, stride_y=1, pad=True, generate_bias=False,
-                                              batches=1)
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=2, out_ch=8, x_in=4, y_in=5, w_x=2,
+                                          w_y=2, stride_x=1, stride_y=1, pad=True, generate_bias=False,
+                                          batches=1)
     dataset = 'depthwise_dilation'
-    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=3, out_ch=9, x_in=6, y_in=5, w_x=3,
-                                              w_y=4, stride_x=2, stride_y=2, pad=True,
-                                              out_activation_min=-70, out_activation_max=127, dilation_x=2,
-                                              dilation_y=3)
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=3, out_ch=9, x_in=6, y_in=5, w_x=3,
+                                          w_y=4, stride_x=2, stride_y=2, pad=True, out_activation_min=-70,
+                                          out_activation_max=127, dilation_x=2, dilation_y=3)
     dataset = 'dw_int16xint8'
-    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=4, out_ch=8, x_in=9, y_in=5, w_x=3,
-                                              w_y=4, stride_x=3, stride_y=2, pad=True, randmin=INT16_MIN,
-                                              randmax=INT16_MAX, out_activation_min=-21111,
-                                              out_activation_max=32767, int16xint8=True)
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=4, out_ch=8, x_in=9, y_in=5, w_x=3,
+                                          w_y=4, stride_x=3, stride_y=2, pad=True, randmin=INT16_MIN,
+                                          randmax=INT16_MAX, out_activation_min=-21111,
+                                          out_activation_max=32767, int16xint8=True)
     dataset = 'dw_int16xint8_dilation'
-    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=4, out_ch=8, x_in=9, y_in=5, w_x=4,
-                                              w_y=4, stride_x=1, stride_y=1, pad=True, randmin=INT16_MIN,
-                                              randmax=INT16_MAX, out_activation_min=-32700, dilation_x=3, dilation_y=2,
-                                              out_activation_max=32767, int16xint8=True)
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=4, out_ch=8, x_in=9, y_in=5, w_x=4,
+                                          w_y=4, stride_x=1, stride_y=1, pad=True, randmin=INT16_MIN,
+                                          randmax=INT16_MAX, out_activation_min=-32700, dilation_x=3, dilation_y=2,
+                                          out_activation_max=32767, int16xint8=True)
     dataset = 'dw_int16xint8_mult4'
-    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=2, out_ch=8, x_in=4, y_in=5, w_x=3,
-                                              w_y=4, stride_x=3, stride_y=2, pad=False, randmin=INT16_MIN,
-                                              randmax=INT16_MAX, out_activation_min=-32767,
-                                              out_activation_max=32767, int16xint8=True)
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=2, out_ch=8, x_in=4, y_in=5, w_x=3,
+                                          w_y=4, stride_x=3, stride_y=2, pad=False, randmin=INT16_MIN,
+                                          randmax=INT16_MAX, out_activation_min=-32767,
+                                          out_activation_max=32767, int16xint8=True)
+    dataset = 'dw_int16xint8_fast'
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=8, out_ch=8, x_in=4, y_in=4, w_x=2,
+                                          w_y=2, stride_x=1, stride_y=1, pad=False, randmin=INT16_MIN,
+                                          randmax=INT16_MAX, out_activation_min=-17000,
+                                          out_activation_max=32767, int16xint8=True)
+    dataset = 'dw_int16xint8_fast_stride'
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=8, out_ch=8, x_in=4, y_in=4, w_x=2,
+                                          w_y=2, stride_x=2, stride_y=2, pad=True, randmin=INT16_MIN,
+                                          randmax=INT16_MAX, batches=2, out_activation_min=INT16_MIN,
+                                          out_activation_max=16000, int16xint8=True)
+    dataset = 'dw_int16xint8_fast_spill'
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=5, out_ch=5, x_in=4, y_in=4, w_x=3,
+                                          w_y=3, stride_x=2, stride_y=1, pad=True, randmin=INT16_MIN,
+                                          randmax=INT16_MAX, batches=3, out_activation_min=-30000,
+                                          out_activation_max=32767, int16xint8=True)
 
     type_of_test = 'fully_connected'
     dataset = 'fully_connected'
-    ALL_TESTDATA_SETS[dataset] = FullyConnectedSettings(dataset, type_of_test, args, in_ch=10, out_ch=6, x_in=2, y_in=1,
-                                                        batches=3)
+    TESTDATA_SETS[dataset] = FullyConnectedSettings(dataset, type_of_test, args, in_ch=10, out_ch=6, x_in=2, y_in=1,
+                                                    batches=3)
     dataset = 'fully_connected_mve_0'
-    ALL_TESTDATA_SETS[dataset] = FullyConnectedSettings(dataset, type_of_test, args, in_ch=16, out_ch=9, x_in=1, y_in=1,
-                                                        batches=1)
+    TESTDATA_SETS[dataset] = FullyConnectedSettings(dataset, type_of_test, args, in_ch=16, out_ch=9, x_in=1, y_in=1,
+                                                    batches=1)
     dataset = 'fully_connected_mve_1'
-    ALL_TESTDATA_SETS[dataset] = FullyConnectedSettings(dataset, type_of_test, args, in_ch=20, out_ch=4, x_in=1, y_in=1,
-                                                        batches=1)
+    TESTDATA_SETS[dataset] = FullyConnectedSettings(dataset, type_of_test, args, in_ch=20, out_ch=4, x_in=1, y_in=1,
+                                                    batches=1)
     dataset = 'fully_connected_null_bias_0'
-    ALL_TESTDATA_SETS[dataset] = FullyConnectedSettings(dataset, type_of_test, args, in_ch=33, out_ch=5,
-                                                        batches=2, generate_bias=False)
+    TESTDATA_SETS[dataset] = FullyConnectedSettings(dataset, type_of_test, args, in_ch=33, out_ch=5, batches=2,
+                                                    generate_bias=False)
     dataset = 'fully_connected_out_activation'
-    ALL_TESTDATA_SETS[dataset] = FullyConnectedSettings(dataset, type_of_test, args, in_ch=10, out_ch=4,
-                                                        out_activation_min=-70, out_activation_max=100)
+    TESTDATA_SETS[dataset] = FullyConnectedSettings(dataset, type_of_test, args, in_ch=10, out_ch=4,
+                                                    out_activation_min=-70, out_activation_max=100)
     dataset = 'fully_connected_int16'
-    ALL_TESTDATA_SETS[dataset] = FullyConnectedSettings(dataset, type_of_test, args, in_ch=7, out_ch=11, x_in=3, y_in=3,
-                                                        batches=2, randmin=INT16_MIN, randmax=INT16_MAX,
-                                                        out_activation_min=-9999, out_activation_max=32767,
-                                                        int16xint8=True)
+    TESTDATA_SETS[dataset] = FullyConnectedSettings(dataset, type_of_test, args, in_ch=7, out_ch=11, x_in=3, y_in=3,
+                                                    batches=2, randmin=INT16_MIN, randmax=INT16_MAX,
+                                                    out_activation_min=-9999, out_activation_max=32767,
+                                                    int16xint8=True)
     dataset = 'fully_connected_int16_big'
-    ALL_TESTDATA_SETS[dataset] = FullyConnectedSettings(dataset, type_of_test, args, in_ch=7, out_ch=11, x_in=10,
-                                                        y_in=10, batches=3, out_activation_min=-1444,
-                                                        out_activation_max=32767, int16xint8=True)
+    TESTDATA_SETS[dataset] = FullyConnectedSettings(dataset, type_of_test, args, in_ch=7, out_ch=11, x_in=10,
+                                                    y_in=10, batches=3, out_activation_min=-1444,
+                                                    out_activation_max=32767, int16xint8=True)
     dataset = 'fc_int16_slow'
-    ALL_TESTDATA_SETS[dataset] = FullyConnectedSettings(dataset, type_of_test, args, in_ch=7, out_ch=11, x_in=10,
-                                                        y_in=8, batches=3, randmin=(INT16_MAX-100), randmax=INT16_MAX,
-                                                        int16xint8=True)
+    TESTDATA_SETS[dataset] = FullyConnectedSettings(dataset, type_of_test, args, in_ch=7, out_ch=11, x_in=10,
+                                                    y_in=8, batches=3, randmin=(INT16_MAX-100), randmax=INT16_MAX,
+                                                    int16xint8=True)
 
     type_of_test = 'avgpool'
     dataset = 'avgpooling'
-    ALL_TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=8, x_in=22, y_in=12, stride_x=9,
-                                                 stride_y=5, w_x=6, w_y=5, pad=True)
+    TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=8, x_in=22, y_in=12, stride_x=9,
+                                             stride_y=5, w_x=6, w_y=5, pad=True)
     dataset = 'avgpooling_1'
-    ALL_TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=3, x_in=9, y_in=5, stride_x=1,
-                                                 stride_y=2, w_x=9, w_y=5, pad=False)
+    TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=3, x_in=9, y_in=5, stride_x=1,
+                                             stride_y=2, w_x=9, w_y=5, pad=False)
     dataset = 'avgpooling_2'
-    ALL_TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=5, x_in=12, y_in=1, stride_x=1,
-                                                 stride_y=2, w_x=3, w_y=1, pad=True)
+    TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=5, x_in=12, y_in=1, stride_x=1,
+                                             stride_y=2, w_x=3, w_y=1, pad=True)
     dataset = 'avgpooling_3'
-    ALL_TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=2, x_in=9, y_in=1, stride_x=2,
-                                                 stride_y=1, w_x=1, w_y=1, pad=False)
+    TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=2, x_in=9, y_in=1, stride_x=2,
+                                             stride_y=1, w_x=1, w_y=1, pad=False)
     dataset = 'avgpooling_4'
-    ALL_TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=2, x_in=1, y_in=20, stride_x=1,
-                                                 stride_y=3, w_x=1, w_y=3, pad=True)
+    TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=2, x_in=1, y_in=20, stride_x=1,
+                                             stride_y=3, w_x=1, w_y=3, pad=True)
     dataset = 'avgpooling_5'
-    ALL_TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=1, x_in=3, y_in=3,
-                                                 stride_x=1, stride_y=1, w_x=1, w_y=3, pad=True, relu6=True)
+    TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=1, x_in=3, y_in=3,
+                                             stride_x=1, stride_y=1, w_x=1, w_y=3, pad=True, relu6=True)
     dataset = 'avgpooling_int16'
-    ALL_TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=2, x_in=6, y_in=4,
-                                                 stride_x=2, stride_y=1, w_x=2, w_y=3, pad=True,
-                                                 randmin=INT16_MIN, randmax=INT16_MAX, int16xint8=True)
+    TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=2, x_in=6, y_in=4,
+                                             stride_x=2, stride_y=1, w_x=2, w_y=3, pad=True,
+                                             randmin=INT16_MIN, randmax=INT16_MAX, int16xint8=True)
 
     type_of_test = 'maxpool'
     dataset = 'maxpooling'
-    ALL_TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=8, x_in=22, y_in=12, stride_x=9,
-                                                 stride_y=5, w_x=6, w_y=5, pad=True)
+    TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=8, x_in=22, y_in=12, stride_x=9,
+                                             stride_y=5, w_x=6, w_y=5, pad=True)
     dataset = 'maxpooling_1'
-    ALL_TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=3, x_in=9, y_in=5, stride_x=1,
-                                                 stride_y=2, w_x=9, w_y=5, pad=False)
+    TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=3, x_in=9, y_in=5, stride_x=1,
+                                             stride_y=2, w_x=9, w_y=5, pad=False)
     dataset = 'maxpooling_2'
-    ALL_TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=5, x_in=12, y_in=1, stride_x=1,
-                                                 stride_y=2, w_x=3, w_y=1, pad=True)
+    TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=5, x_in=12, y_in=1, stride_x=1,
+                                             stride_y=2, w_x=3, w_y=1, pad=True)
     dataset = 'maxpooling_3'
-    ALL_TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=2, x_in=9, y_in=1, stride_x=2,
-                                                 stride_y=1, w_x=1, w_y=1, pad=False)
+    TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=2, x_in=9, y_in=1, stride_x=2,
+                                             stride_y=1, w_x=1, w_y=1, pad=False)
     dataset = 'maxpooling_4'
-    ALL_TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=2, x_in=1, y_in=20, stride_x=1,
-                                                 stride_y=3, w_x=1, w_y=3, pad=True)
+    TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=2, x_in=1, y_in=20, stride_x=1,
+                                             stride_y=3, w_x=1, w_y=3, pad=True)
     dataset = 'maxpooling_5'
-    ALL_TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=20, x_in=1, y_in=1, stride_x=1,
-                                                 stride_y=1, w_x=1, w_y=1, pad=True)
+    TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=20, x_in=1, y_in=1, stride_x=1,
+                                             stride_y=1, w_x=1, w_y=1, pad=True)
     dataset = 'maxpooling_6'
-    ALL_TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=17, x_in=1, y_in=5, stride_x=1,
-                                                 stride_y=3, w_x=3, w_y=4, pad=True)
+    TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=17, x_in=1, y_in=5, stride_x=1,
+                                             stride_y=3, w_x=3, w_y=4, pad=True)
     dataset = 'maxpooling_7'
-    ALL_TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=1, x_in=4, y_in=2, stride_x=2,
-                                                 stride_y=2, w_x=2, w_y=2, pad=False, relu6=True)
+    TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=1, x_in=4, y_in=2, stride_x=2,
+                                             stride_y=2, w_x=2, w_y=2, pad=False, relu6=True)
     dataset = 'maxpool_int16'
-    ALL_TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=2, x_in=4, y_in=3, stride_x=2,
-                                                 stride_y=2, w_x=2, w_y=2, pad=False, randmin=INT16_MIN,
-                                                 randmax=INT16_MAX, int16xint8=True)
+    TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=2, x_in=4, y_in=3, stride_x=2,
+                                             stride_y=2, w_x=2, w_y=2, pad=False, randmin=INT16_MIN,
+                                             randmax=INT16_MAX, int16xint8=True)
     dataset = 'maxpool_int16_1'
-    ALL_TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=2, x_in=4, y_in=5, stride_x=2,
-                                                 stride_y=1, w_x=3, w_y=3, pad=True, randmin=INT16_MIN,
-                                                 randmax=INT16_MAX, out_activation_min=-30000, out_activation_max=30000,
-                                                 int16xint8=True)
+    TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=2, x_in=4, y_in=5, stride_x=2,
+                                             stride_y=1, w_x=3, w_y=3, pad=True, randmin=INT16_MIN,
+                                             randmax=INT16_MAX, out_activation_min=-30000, out_activation_max=30000,
+                                             int16xint8=True)
     dataset = 'maxpool_int16_2'
-    ALL_TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=3, x_in=7, y_in=7, stride_x=1,
-                                                 stride_y=1, w_x=3, w_y=3, pad=False, randmin=INT16_MIN,
-                                                 randmax=INT16_MAX, out_activation_min=-30000, out_activation_max=30000,
-                                                 int16xint8=True)
+    TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=3, x_in=7, y_in=7, stride_x=1,
+                                             stride_y=1, w_x=3, w_y=3, pad=False, randmin=INT16_MIN,
+                                             randmax=INT16_MAX, out_activation_min=-30000, out_activation_max=30000,
+                                             int16xint8=True)
 
     type_of_test = 'softmax'
     dataset = 'softmax'
-    ALL_TESTDATA_SETS[dataset] = SoftmaxSettings(dataset, type_of_test, args, x_in=5, y_in=2)
+    TESTDATA_SETS[dataset] = SoftmaxSettings(dataset, type_of_test, args, x_in=5, y_in=2)
     dataset = 'softmax_s16'
-    ALL_TESTDATA_SETS[dataset] = SoftmaxSettings(dataset, type_of_test, args, x_in=10, y_in=3, int16xint8=True,
-                                                 randmin=INT16_MIN, randmax=INT16_MAX)
+    TESTDATA_SETS[dataset] = SoftmaxSettings(dataset, type_of_test, args, x_in=10, y_in=3, int16xint8=True,
+                                             randmin=INT16_MIN, randmax=INT16_MAX)
     dataset = 'softmax_s8_s16'
-    ALL_TESTDATA_SETS[dataset] = SoftmaxSettings(dataset, type_of_test, args, x_in=12, y_in=2, inInt8outInt16=True)
+    TESTDATA_SETS[dataset] = SoftmaxSettings(dataset, type_of_test, args, x_in=12, y_in=2, inInt8outInt16=True)
 
     type_of_test = 'svdf'
     dataset = 'svdf'
-    ALL_TESTDATA_SETS[dataset] = SVDFSettings(dataset, type_of_test, args, batches=2, number_inputs=2, rank=8,
-                                              memory_size=8, input_size=3, number_units=3)
+    TESTDATA_SETS[dataset] = SVDFSettings(dataset, type_of_test, args, batches=2, number_inputs=2, rank=8,
+                                          memory_size=8, input_size=3, number_units=3)
     dataset = 'svdf_1'
-    ALL_TESTDATA_SETS[dataset] = SVDFSettings(dataset, type_of_test, args, batches=3, number_inputs=2, rank=1,
-                                              memory_size=2, input_size=7, number_units=5)
+    TESTDATA_SETS[dataset] = SVDFSettings(dataset, type_of_test, args, batches=3, number_inputs=2, rank=1,
+                                          memory_size=2, input_size=7, number_units=5)
     dataset = 'svdf_2'
-    ALL_TESTDATA_SETS[dataset] = SVDFSettings(dataset, type_of_test, args, batches=3, number_inputs=2, rank=2,
-                                              memory_size=2, input_size=7, number_units=5, generate_bias=False)
+    TESTDATA_SETS[dataset] = SVDFSettings(dataset, type_of_test, args, batches=3, number_inputs=2, rank=2,
+                                          memory_size=2, input_size=7, number_units=5, generate_bias=False)
     dataset = 'svdf_3'
-    ALL_TESTDATA_SETS[dataset] = SVDFSettings(dataset, type_of_test, args, batches=1, number_inputs=2, rank=1,
-                                              memory_size=2, input_size=20, number_units=12, generate_bias=False)
+    TESTDATA_SETS[dataset] = SVDFSettings(dataset, type_of_test, args, batches=1, number_inputs=2, rank=1,
+                                          memory_size=2, input_size=20, number_units=12, generate_bias=False)
 
     type_of_test = 'add'
     dataset = 'add'
-    ALL_TESTDATA_SETS[dataset] = AddMulSettings(dataset, type_of_test, args, channels=8, x_in=4, y_in=4,
-                                                randmin=INT8_MIN, randmax=INT8_MAX)
+    TESTDATA_SETS[dataset] = AddMulSettings(dataset, type_of_test, args, channels=8, x_in=4, y_in=4,
+                                            randmin=INT8_MIN, randmax=INT8_MAX)
     dataset = 'add_s16'
     ALL_TESTDATA_SETS[dataset] = AddMulSettings(dataset, type_of_test, args, channels=8, x_in=4, y_in=4,
                                                 randmin=INT16_MIN, randmax=INT16_MAX, out_activation_min=INT16_MIN,
@@ -1427,8 +1441,8 @@ def load_all_testdatasets():
 
     type_of_test = 'mul'
     dataset = 'mul'
-    ALL_TESTDATA_SETS[dataset] = AddMulSettings(dataset, type_of_test, args, channels=8, x_in=4, y_in=5,
-                                                randmin=INT8_MIN, randmax=INT8_MAX)
+    TESTDATA_SETS[dataset] = AddMulSettings(dataset, type_of_test, args, channels=8, x_in=4, y_in=5,
+                                            randmin=INT8_MIN, randmax=INT8_MAX)
     dataset = 'mul_s16'
     ALL_TESTDATA_SETS[dataset] = AddMulSettings(dataset, type_of_test, args, channels=8, x_in=5, y_in=4,
                                                 randmin=INT16_MIN, randmax=INT16_MAX, out_activation_min=INT16_MIN,
@@ -1451,7 +1465,7 @@ if __name__ == '__main__':
     load_all_testdatasets()
 
     if (args.run_all_testsets):
-        for testset_name, testset_generator in ALL_TESTDATA_SETS.items():
+        for testset_name, testset_generator in TESTDATA_SETS.items():
             if test_type and testset_generator.test_type != test_type:
                 continue
             print("Generating testset {}..".format(testset_name))
@@ -1464,13 +1478,13 @@ if __name__ == '__main__':
         for dir in next(os.walk(directory))[1]:
             found_test_data_sets.append(dir)
         for testset_name in found_test_data_sets:
-            if testset_name not in ALL_TESTDATA_SETS:
+            if testset_name not in TESTDATA_SETS:
                 print("WARNING: Testset {} in {} was not loaded".format(testset_name, directory))
     else:
         try:
             if not testdataset:
-                raise RuntimeError("Please select testdataset or use --run_all_testsets")
-            generator = ALL_TESTDATA_SETS[testdataset]
+                raise RuntimeError("Please select testdataset or use --run-all-testsets")
+            generator = TESTDATA_SETS[testdataset]
         except KeyError:
             print("WARNING: testset {} not in testset list".format(testdataset))
             if args.testtype == 'conv' or args.testtype == 'depthwise_conv':

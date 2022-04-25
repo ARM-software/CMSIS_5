@@ -12,6 +12,7 @@
     <ul>
       <li> Replaced arm_status with arm_cmsis_nn_status struct </li>
       <li> Added DSP support in arm_avgpool_s16.c </li>
+      <li> Added support for DSP extension optimization for int16 depthwise_conv </li>
       </ul>
     </td>
   </tr>
