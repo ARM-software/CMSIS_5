@@ -21,8 +21,8 @@
  * Title:        arm_nnfunctions.h
  * Description:  Public header file for CMSIS NN Library
  *
- * $Date:        19 April 2022
- * $Revision:    V.10.0.0
+ * $Date:        10 May 2022
+ * $Revision:    V.11.0.0
  *
  * Target Processor:  Cortex-M CPUs
  * -------------------------------------------------------------------- */
@@ -1936,6 +1936,7 @@ int32_t arm_avgpool_s8_get_buffer_size(const int dim_dst_width, const int ch_src
  * @param[in, out] output_data    Output data pointer. Data type: int16
  * @return                        The function returns
  *                                    <code>ARM_CMSIS_NN_SUCCESS</code> - Successful operation
+ *                                    <code>ARM_CMSIS_NN_ARG_ERROR</code> - In case of invalid arguments
  *
  * @details
  *    - Supported Framework: TensorFlow Lite
