@@ -10,9 +10,7 @@ var NAVTREE =
       [ "Using a CMSIS-RTOS2 Implementation", "genRTOS2IF.html#usingOS2", null ]
     ] ],
     [ "Function Overview", "functionOverview.html", "functionOverview" ],
-    [ "RTOS Validation", "rtosValidation.html", [
-      [ "Sample Test Output", "rtosValidation.html#test_output", null ]
-    ] ],
+    [ "RTOS Validation", "rtosValidation.html", null ],
     [ "Migration from API v1 to API v2", "os2Migration.html", "os2Migration" ],
     [ "RTX v5 Implementation", "rtx5_impl.html", "rtx5_impl" ],
     [ "Coding Rules", "CodingRules.html", null ],
