@@ -1,7 +1,7 @@
 #!/bin/bash
 
 PACKCHK_VERSION=1.3.95
-SVDCONV_VERSION=3.3.41
+SVDCONV_VERSION=3.3.42
 
 REPO_URL=https://github.com/Open-CMSIS-Pack/devtools
 DOWNLOAD_URL=${REPO_URL}/releases/download/
