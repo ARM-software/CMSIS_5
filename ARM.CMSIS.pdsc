@@ -13,6 +13,8 @@
       CMSIS-Core(M): 5.6.0
        - Arm China STAR-MC1 cpu support
        - Updated system_ARMCM55.c
+      CMSIS-DAP: 2.1.1 (see revision history for details)
+       - Allow default clock frequency to use fast clock mode
       CMSIS-DSP: 1.10.0 (see revision history for details)
       CMSIS-NN: 3.1.0 (see revision history for details)
        - Support for int16 convolution and fully connected for reference implementation
