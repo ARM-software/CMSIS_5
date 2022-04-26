@@ -115,6 +115,7 @@ void arm_mse_f32(
     float32x4_t vecA, vecB;
     float32x4_t vecSum;
     uint32_t blkCnt; 
+    float32_t inA, inB;
     float32_t sum = 0.0f;  
     vecSum = vdupq_n_f32(0.0f);
 #if !defined(__aarch64__)
