@@ -37,7 +37,7 @@
       arm_mse_(q7|q15|q31|f16|f32|f64)
 
       Trigonometric functions:
-      - atan2 in f32, f16.
+      - atan2 in f32, f16, q31 and q15.
     </td>
   </tr>
   <tr>
