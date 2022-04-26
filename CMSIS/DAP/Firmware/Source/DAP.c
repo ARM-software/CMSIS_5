@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 ARM Limited. All rights reserved.
+ * Copyright (c) 2013-2022 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -17,7 +17,7 @@
  *
  * ----------------------------------------------------------------------
  *
- * $Date:        7. September 2021
+ * $Date:        26. April 2022
  * $Revision:    V2.1.1
  *
  * Project:      CMSIS-DAP Source
@@ -45,7 +45,6 @@
 
 
 // Clock Macros
-
 #define MAX_SWJ_CLOCK(delay_cycles) \
   ((CPU_CLOCK/2U) / (IO_PORT_WRITE_CYCLES + delay_cycles))
 
@@ -56,6 +55,29 @@ volatile uint8_t    DAP_TransferAbort;  // Transfer Abort Flag
 
 static const char DAP_FW_Ver [] = DAP_FW_VER;
 
+
+// Common clock delay calculation routine
+//   clock:    requested SWJ frequency in Hertz
+static void Set_Clock_Delay(uint32_t clock) {
+  uint32_t delay;
+
+  if (clock >= MAX_SWJ_CLOCK(DELAY_FAST_CYCLES)) {
+    DAP_Data.fast_clock  = 1U;
+    DAP_Data.clock_delay = 1U;
+  } else {
+    DAP_Data.fast_clock  = 0U;
+
+    delay = ((CPU_CLOCK/2U) + (clock - 1U)) / clock;
+    if (delay > IO_PORT_WRITE_CYCLES) {
+      delay -= IO_PORT_WRITE_CYCLES;
+      delay  = (delay + (DELAY_SLOW_CYCLES - 1U)) / DELAY_SLOW_CYCLES;
+    } else {
+      delay  = 1U;
+    }
+
+    DAP_Data.clock_delay = delay;
+  }
+}
 
 
 // Get DAP Information
@@ -375,31 +397,6 @@ static uint32_t DAP_SWJ_Pins(const uint8_t *request, uint8_t *response) {
 }
 
 
-// Common clock delay calculation routine
-//   clock:    requested SWJ frequency in Hertz
-//   return:   void
-static void Set_DAP_Clock_Delay(uint32_t clock) {
-  uint32_t delay;
-
-  if (clock >= MAX_SWJ_CLOCK(DELAY_FAST_CYCLES)) {
-    DAP_Data.fast_clock  = 1U;
-    DAP_Data.clock_delay = 1U;
-  } else {
-    DAP_Data.fast_clock  = 0U;
-
-    delay = ((CPU_CLOCK/2U) + (clock - 1U)) / clock;
-    if (delay > IO_PORT_WRITE_CYCLES) {
-      delay -= IO_PORT_WRITE_CYCLES;
-      delay  = (delay + (DELAY_SLOW_CYCLES - 1U)) / DELAY_SLOW_CYCLES;
-    } else {
-      delay  = 1U;
-    }
-
-    DAP_Data.clock_delay = delay;
-  }
-}
-
-
 // Process SWJ Clock command and prepare response
 //   request:  pointer to request data
 //   response: pointer to response data
@@ -420,7 +417,7 @@ static uint32_t DAP_SWJ_Clock(const uint8_t *request, uint8_t *response) {
     return ((4U << 16) | 1U);
   }
 
-  Set_DAP_Clock_Delay(clock);
+  Set_Clock_Delay(clock);
 
   *response = DAP_OK;
 #else
@@ -1809,7 +1806,7 @@ void DAP_Setup(void) {
 #endif
 
   // Sets DAP_Data.fast_clock and DAP_Data.clock_delay.
-  Set_DAP_Clock_Delay(DAP_DEFAULT_SWJ_CLOCK);
+  Set_Clock_Delay(DAP_DEFAULT_SWJ_CLOCK);
 
   DAP_SETUP();  // Device specific setup
 }
