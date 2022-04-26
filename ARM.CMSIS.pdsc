@@ -11,6 +11,7 @@
     <release version="5.9.0">
       Active development ...
       CMSIS-Core(M): 5.6.0
+       - Arm Cortex-M85 cpu support
        - Arm China STAR-MC1 cpu support
        - Updated system_ARMCM55.c
       CMSIS-DAP: 2.1.1 (see revision history for details)
@@ -691,6 +692,32 @@ The Cortex-M55 processor achieves high compute performance across scalar and vec
       </device>
     </family>
 
+    <!-- ******************************  Cortex-M85  ****************************** -->
+    <family Dfamily="ARM Cortex M85" Dvendor="ARM:82">
+      <!--book name="Device/ARM/Documents/Arm Cortex-M55 Processor Datasheet.pdf" title="Arm Cortex-M55 Processor Datasheet"/-->
+      <description>
+The Arm Cortex-M85 processor is a fully synthesizable high-performance microcontroller class processor that implements the Armv8.1-M Mainline architecture which includes support for the M-profile Vector Extension (MVE).
+The processor also supports previous Armv8-M architectural features.
+The design is focused on compute applications such as Digital Signal Processing (DSP) and machine learning.
+The Arm Cortex-M85 processor is energy efficient and achieves high compute performance across scalar and vector operations while maintaining low power consumption.
+      </description>
+
+      <!-- debug svd="Device/ARM/SVD/ARMCM85.svd"/ SVD files do not contain any peripheral -->
+      <memory name="ROM_NS" access="rxn"  start="0x00000000" size="0x00200000" startup="1" default="1" alias="ROM_S"/>
+      <memory name="RAM_NS" access="rwxn" start="0x20000000" size="0x00020000" init   ="0" default="1" alias="RAM_S"/>
+      <memory name="ROM_S"  access="rxn"  start="0x10000000" size="0x00200000" startup="1" default="1"/>
+      <memory name="RAM_S"  access="rwxn" start="0x30000000" size="0x00020000" init   ="0" default="1"/>
+      <!--algorithm name="Device/ARM/Flash/NEW_DEVICE.FLM" start="0x00000000" size="0x00040000"             default="1"/-->
+
+      <device Dname="ARMCM85">
+        <processor Dcore="Cortex-M85" DcoreVersion="r0p0" Dpacbti="PACBTI" Dmpu="MPU" Dfpu="DP_FPU" Dmve="FP_MVE" Ddsp="DSP" Dtz="TZ" Dendian="Configurable" Dclock="10000000"/>
+        <description>
+          Floating Point Vector Extensions, DSP Instructions, Double Precision Floating Point Unit, TrustZone, PACBTI
+        </description>
+        <compile header="Device/ARM/ARMCM85/Include/ARMCM85.h" define="ARMCM85"/>
+      </device>
+    </family>
+
     <!-- ******************************  ARMSC000  ****************************** -->
     <family Dfamily="ARM SC000" Dvendor="ARM:82">
       <description>
@@ -1095,6 +1122,7 @@ and 8-bit Java bytecodes in Jazelle state.
       <description>Armv8.1-M main line architecture based device</description>
       <accept Dcore="ARMV81MML"/>
       <accept Dcore="Cortex-M55"/>
+      <accept Dcore="Cortex-M85"/>
     </condition>    
     <condition id="ARMv8x-MML Device">
       <description>Armv8-M/Armv8.1-M architecture based device</description>
@@ -1211,6 +1239,12 @@ and 8-bit Java bytecodes in Jazelle state.
     <condition id="ARMCM55 CMSIS">
       <description>Generic Arm Cortex-M55 device startup and depends on CMSIS Core</description>
       <require Dvendor="ARM:82" Dname="ARMCM55*"/>
+      <require Cclass="CMSIS" Cgroup="CORE"/>
+    </condition>
+
+    <condition id="ARMCM85 CMSIS">
+      <description>Generic Arm Cortex-M85 device startup and depends on CMSIS Core</description>
+      <require Dvendor="ARM:82" Dname="ARMCM85*"/>
       <require Cclass="CMSIS" Cgroup="CORE"/>
     </condition>
 
@@ -1936,6 +1970,23 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="sourceC"      name="Device/ARM/ARMCM55/Source/system_ARMCM55.c"              version="1.1.0" attr="config"/>
         <!-- SAU configuration -->
         <file category="header"       name="Device/ARM/ARMCM55/Include/Template/partition_ARMCM55.h" version="1.0.0" attr="config" condition="TZ Secure"/>
+      </files>
+    </component>
+
+    <!-- Cortex-M85 -->
+    <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cversion="1.0.0" condition="ARMCM85 CMSIS" isDefaultVariant="true">
+      <description>System and Startup for Generic Cortex-M85 device</description>
+      <files>
+        <!-- include folder / device header file -->
+        <file category="include"      name="Device/ARM/ARMCM85/Include/"/>
+        <!-- startup / system file -->
+        <file category="sourceC"      name="Device/ARM/ARMCM85/Source/startup_ARMCM85.c"             version="1.0.0" attr="config"/>
+        <file category="linkerScript" name="Device/ARM/ARMCM85/Source/ARM/ARMCM85_ac6_s.sct"         version="1.0.0" attr="config" condition="Startup ARMCC6 Secure"/>
+        <file category="linkerScript" name="Device/ARM/ARMCM85/Source/ARM/ARMCM85_ac6.sct"           version="1.0.0" attr="config" condition="Startup ARMCC6 Unsecure"/>
+        <file category="linkerScript" name="Device/ARM/ARMCM85/Source/GCC/gcc_arm.ld"                version="1.0.0" attr="config" condition="GCC"/>
+        <file category="sourceC"      name="Device/ARM/ARMCM85/Source/system_ARMCM85.c"              version="1.0.0" attr="config"/>
+        <!-- SAU configuration -->
+        <file category="header"       name="Device/ARM/ARMCM85/Include/Template/partition_ARMCM85.h" version="1.0.0" attr="config" condition="TZ Secure"/>
       </files>
     </component>
 
