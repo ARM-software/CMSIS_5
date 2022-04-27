@@ -30,7 +30,7 @@
                 #if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
                 #define __STACK_SEAL     Image$$STACKSEAL$$ZI$$Base
                 #endif
-
+                .eabi_attribute Tag_ABI_align_preserved, 1
                 .section RESET
                 .align   2
                 .globl   __Vectors
