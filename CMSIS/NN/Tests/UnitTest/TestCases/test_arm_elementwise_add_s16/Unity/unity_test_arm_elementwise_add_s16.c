@@ -45,3 +45,4 @@ void setUp(void)
 void tearDown(void) {}
 
 void test_add_s16_arm_elementwise_add_s16(void) { add_s16_arm_elementwise_add_s16(); }
+void test_add_s16_spill_arm_elementwise_add_s16(void) { add_s16_spill_arm_elementwise_add_s16(); }

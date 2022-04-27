@@ -45,3 +45,5 @@ void setUp(void)
 void tearDown(void) {}
 
 void test_mul_s16_arm_elementwise_mul_s16(void) { mul_s16_arm_elementwise_mul_s16(); }
+
+void test_mul_s16_spill_arm_elementwise_mul_s16(void) { mul_s16_spill_arm_elementwise_mul_s16(); }

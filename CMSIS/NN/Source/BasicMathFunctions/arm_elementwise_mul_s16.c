@@ -21,8 +21,8 @@
  * Title:        arm_elementwise_mul_s16
  * Description:  Element wise multiplication
  *
- * $Date:        19 April 2022
- * $Revision:    V.2.0.0
+ * $Date:        10 May 2022
+ * $Revision:    V.2.1.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -61,12 +61,39 @@ arm_cmsis_nn_status arm_elementwise_mul_s16(const int16_t *input_1_vect,
     (void)input_1_offset;
     (void)input_2_offset;
     (void)out_offset;
-    int32_t loop_count;
     int32_t input_1;
     int32_t input_2;
     int32_t mul_res;
+    int32_t two_halfword_1, two_halfword_2;
+    int16_t mul_1, mul_2;
+    int32_t loop_count = block_size / 2;
 
-    loop_count = block_size;
+    while (loop_count > 0)
+    {
+        two_halfword_1 = arm_nn_read_q15x2_ia(&input_1_vect);
+        two_halfword_2 = arm_nn_read_q15x2_ia(&input_2_vect);
+
+        input_1 = (int16_t)(two_halfword_1 & 0xFFFF);
+        input_2 = (int16_t)(two_halfword_2 & 0xFFFF);
+        mul_res = input_1 * input_2;
+        mul_res = arm_nn_requantize(mul_res, out_mult, out_shift);
+        mul_res = MAX(mul_res, out_activation_min);
+        mul_res = MIN(mul_res, out_activation_max);
+        mul_1 = (int16_t)mul_res;
+
+        input_1 = (int16_t)(two_halfword_1 >> 16);
+        input_2 = (int16_t)(two_halfword_2 >> 16);
+        mul_res = input_1 * input_2;
+        mul_res = arm_nn_requantize(mul_res, out_mult, out_shift);
+        mul_res = MAX(mul_res, out_activation_min);
+        mul_res = MIN(mul_res, out_activation_max);
+        mul_2 = (int16_t)mul_res;
+
+        arm_nn_write_q15x2_ia(&output, PACK_Q15x2_32x1(mul_1, mul_2));
+
+        loop_count--;
+    }
+    loop_count = block_size & 0x1;
 
     while (loop_count > 0)
     {
