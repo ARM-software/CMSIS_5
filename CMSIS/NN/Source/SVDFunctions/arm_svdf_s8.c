@@ -21,8 +21,8 @@
  * Title:        arm_svdf_s8.c
  * Description:  S8 basic SVDF layer function
  *
- * $Date:        16 March 2022
- * $Revision:    V.3.0.0
+ * $Date:        28 April 2022
+ * $Revision:    V.3.0.1
  *
  * Target Processor:  Cortex-M processors
  *
@@ -99,10 +99,12 @@ arm_status arm_svdf_s8(const cmsis_nn_context *input_ctx,
     }
     q31_t *buffer_b = (q31_t *)output_ctx->buf;
 
+    // Left shift state
     memmove((int8_t *)state_data,
             (int8_t *)state_data + 1,
             (size_t)((input_batches * feature_batches * time_batches - 1) * (int32_t)sizeof(int8_t)));
 
+    // Matrix multiplication input * feature weight
     for (int i_batch = 0; i_batch < input_batches; i_batch++)
     {
         q7_t *res_ptr = state_data + (time_batches * i_batch * feature_batches) + (time_batches - 1);
@@ -130,6 +132,7 @@ arm_status arm_svdf_s8(const cmsis_nn_context *input_ctx,
         }
     }
 
+    // Matrix multiplicate time weight * state tensors
     {
         q31_t *ptr_a = buffer_a;
         const int8_t *v2 = state_data;
@@ -142,19 +145,18 @@ arm_status arm_svdf_s8(const cmsis_nn_context *input_ctx,
                 *ptr_a = 0;
                 int32_t sum = 0;
 #if defined(ARM_MATH_DSP) && !defined(ARM_MATH_MVEI)
+                // Perform matrix multiplication in blocks of four
                 int j = 0;
-                int32_t block_count = time_batches >> 1;
+                int32_t block_count = time_batches >> 2;
                 for (int i = 0; i < block_count; i++)
                 {
-                    j += 2;
+                    j += 4;
 
-                    q31_t r1 = arm_nn_read_q7x4_ia(&v1);
-                    r1 = __SXTB16(r1);
-
-                    q31_t r2 = arm_nn_read_q7x4_ia(&v2);
-                    r2 = __SXTB16(r2);
-
-                    sum = __SMLAD(r1, r2, sum);
+                    q31_t r1_1, r1_2, r2_1, r2_2;
+                    v1 = read_and_pad_reordered(v1, &r1_1, &r1_2);
+                    v2 = read_and_pad_reordered(v2, &r2_1, &r2_2);
+                    sum = __SMLAD(r1_1, r2_1, sum);
+                    sum = __SMLAD(r1_2, r2_2, sum);
                 }
 
                 // Process the remaining data
