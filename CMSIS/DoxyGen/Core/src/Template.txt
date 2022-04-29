@@ -35,6 +35,9 @@ core_cm35p.h      | for the Cortex-M35P processor
 core_cm55.h       | for the Cortex-M55 processor
 core_cm85.h       | for the Cortex-M85 processor
 \endif
+\if STAR
+core_starmc1.h    | for the STAR-MC1 processor
+\endif
 \if ARMSC
 core_sc000.h      | for the SecurCore SC000 processor
 core_sc300.h      | for the SecurCore SC300 processor
