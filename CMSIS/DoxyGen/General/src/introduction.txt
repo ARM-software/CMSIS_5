@@ -150,7 +150,7 @@ Directory                 |Content
 \b NN                     |<a href="../../NN/html/index.html"><b>CMSIS-NN</b></a> software library source code
 \b Pack                   |<a href="../../Pack/html/index.html"><b>CMSIS-Pack</b></a>
 \b RTOS                   |<a href="../../RTOS/html/index.html"><b>CMSIS-RTOS Version 1</b></a> along with RTX4 reference implementation
-\b RTOS2                  |<a href="../../RTOS/html/index.html"><b>CMSIS-RTOS Version 2</b></a> along with RTX5 reference implementation
+\b RTOS2                  |<a href="../../RTOS2/html/index.html"><b>CMSIS-RTOS Version 2</b></a> along with RTX5 reference implementation
 \b SVD                    |<a href="../../SVD/html/index.html"><b>CMSIS-SVD</b></a>
 \b Utilities              |PACK.xsd (<a href="../../Pack/html/packFormat.html#PackSchema"><b>CMSIS-Pack</b> schema file</a>), PackChk.exe (checking tool for software packs), \n CMSIS-SVD.xsd (<a href="../../SVD/html/schema_1_2_gr.html"><b>CMSIS-SVD</b> schema file</a>), SVDConv.exe (conversion tool for SVD files), \n CPRJ.xsd (<a href="../../Build/html/projectDescriptionSchema.html"><b>CMSIS-Build</b> schema file</a>)
 */
