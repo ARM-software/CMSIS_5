@@ -135,6 +135,9 @@ Macros</h2></td></tr>
 <tr class="memitem:gaeaaf66c86e5ae02a0e1fe542cb7f4d8c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__version__control__gr.html#gaeaaf66c86e5ae02a0e1fe542cb7f4d8c">__CORTEX_SC</a></td></tr>
 <tr class="memdesc:gaeaaf66c86e5ae02a0e1fe542cb7f4d8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contains the core version for a Cortex Secure Core controller.  <a href="#gaeaaf66c86e5ae02a0e1fe542cb7f4d8c">More...</a><br/></td></tr>
 <tr class="separator:gaeaaf66c86e5ae02a0e1fe542cb7f4d8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9db417c20fe833187e2f2b8aeb14e94e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__version__control__gr.html#ga9db417c20fe833187e2f2b8aeb14e94e">__STAR_MC</a></td></tr>
+<tr class="memdesc:ga9db417c20fe833187e2f2b8aeb14e94e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contains the core version for a STAR-MC controller.  <a href="#ga9db417c20fe833187e2f2b8aeb14e94e">More...</a><br/></td></tr>
+<tr class="separator:ga9db417c20fe833187e2f2b8aeb14e94e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <p>Version #define symbols for CMSIS release specific C/C++ source code. </p>
@@ -256,6 +259,30 @@ Macros</h2></td></tr>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#error Yes, we have an Cortex SC300 controller.</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#else</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#error We need a Cortex SC300 controller!</span></div>
+<div class="line"><span class="preprocessor">#endif</span></div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a class="anchor" id="ga9db417c20fe833187e2f2b8aeb14e94e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define __STAR_MC</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Contains the core version for a STAR-MC controller. </p>
+<p>This define can be used to differentiate between the various available STAR-MC controllers. Possible values are:</p>
+<ul>
+<li>1 for a STAR-MC1</li>
+</ul>
+<p>This define is only available for STAR-MC controllers. <b>Code Example:</b> </p>
+<div class="fragment"><div class="line"><span class="preprocessor">#if defined(__STAR_MC) &amp;&amp; (__STAR_MC == 1U)</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#error Yes, we have a STAR-MC1 controller.</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#else</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#error We need a STAR-MC1 controller!</span></div>
 <div class="line"><span class="preprocessor">#endif</span></div>
 </div><!-- fragment --> 
 </div>

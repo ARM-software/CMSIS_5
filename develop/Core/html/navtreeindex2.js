@@ -65,6 +65,7 @@ var NAVTREEINDEX2 =
 "group__version__control__gr.html#ga39f3d64ff95fb58feccc7639e537ff89":[8,1,0],
 "group__version__control__gr.html#ga63ea62503c88acab19fcf3d5743009e3":[8,1,3],
 "group__version__control__gr.html#ga85987c5fcc1e012d7ac01369ee6ca2b5":[8,1,1],
+"group__version__control__gr.html#ga9db417c20fe833187e2f2b8aeb14e94e":[8,1,5],
 "group__version__control__gr.html#gaeaaf66c86e5ae02a0e1fe542cb7f4d8c":[8,1,4],
 "index.html":[],
 "index.html":[0],
@@ -91,8 +92,8 @@ var NAVTREEINDEX2 =
 "startup_s_pg.html#startup_s_sec":[4,4,0],
 "structARM__MPU__Region__t.html":[8,11,2],
 "structARM__MPU__Region__t.html":[8,12,0],
-"structARM__MPU__Region__t.html#a6a3e404b403c8df611f27d902d745d8d":[8,12,0,0],
 "structARM__MPU__Region__t.html#a6a3e404b403c8df611f27d902d745d8d":[8,11,2,0],
+"structARM__MPU__Region__t.html#a6a3e404b403c8df611f27d902d745d8d":[8,12,0,0],
 "structARM__MPU__Region__t.html#ab5d3a650dbffd0b272bf7df5b140e8a8":[8,11,2,2],
 "structARM__MPU__Region__t.html#ab5d3a650dbffd0b272bf7df5b140e8a8":[8,12,0,2],
 "structARM__MPU__Region__t.html#afe7a7721aa08988d915670efa432cdd2":[8,11,2,1],
@@ -248,6 +249,5 @@ var NAVTREEINDEX2 =
 "structSysTick__Type.html#a875e7afa5c4fd43997fb544a4ac6e37e":[9,14,1],
 "structSysTick__Type.html#a9b5420d17e8e43104ddd4ae5a610af93":[9,14,3],
 "structSysTick__Type.html#afcadb0c6d35b21cdc0018658a13942de":[9,14,0],
-"structTPI__Type.html":[9,15],
-"structTPI__Type.html#a061372fcd72f1eea871e2d9c1be849bc":[9,15,9]
+"structTPI__Type.html":[9,15]
 };

@@ -138,6 +138,7 @@ var searchData=
   ['_5f_5fssub8',['__SSUB8',['../group__intrinsic__SIMD__gr.html#gaba63bb52e1e93fb527e26f3d474da12e',1,'Ref_cm4_simd.txt']]],
   ['_5f_5fstack_5flimit',['__STACK_LIMIT',['../group__compiler__conntrol__gr.html#ga84b0bad4aa39632d3faea46aa1e102a8',1,'Ref_CompilerControl.txt']]],
   ['_5f_5fstack_5fseal',['__STACK_SEAL',['../group__stacksealing__support__trustzone__functions.html#gacc36ddac1642fe80a690364911542d79',1,'Ref_Trustzone.txt']]],
+  ['_5f_5fstar_5fmc',['__STAR_MC',['../group__version__control__gr.html#ga9db417c20fe833187e2f2b8aeb14e94e',1,'Ref_VersionControl.txt']]],
   ['_5f_5fstatic_5fforceinline',['__STATIC_FORCEINLINE',['../group__compiler__conntrol__gr.html#gab904513442afdf77d4f8c74f23cbb040',1,'Ref_CompilerControl.txt']]],
   ['_5f_5fstatic_5finline',['__STATIC_INLINE',['../group__compiler__conntrol__gr.html#gaba87361bfad2ae52cfe2f40c1a1dbf9c',1,'Ref_CompilerControl.txt']]],
   ['_5f_5fstl',['__STL',['../group__intrinsic__CPU__gr.html#ga5429d7083fb8d30c43cecd3a861e1672',1,'Ref_cmInstr.txt']]],
