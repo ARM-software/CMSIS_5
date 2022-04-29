@@ -1636,6 +1636,7 @@ functionality provided by CMSIS-Core(M) dependent on the device capabilities.
 #define __CM33_REV                    /*!< \brief Cortex-M33 Core revision r0p1 \details ([15:8] revision number, [7:0] patch number) */
 #define __CM35P_REV                   /*!< \brief Cortex-M35P Core revision r0p1 \details ([15:8] revision number, [7:0] patch number) */
 #define __CM55_REV                    /*!< \brief Cortex-M55 Core revision r0p1 \details ([15:8] revision number, [7:0] patch number) */
+#define __CM85_REV                    /*!< \brief Cortex-M85 Core revision r0p1 \details ([15:8] revision number, [7:0] patch number) */
 #define __ARMv8MBL_REV                /*!< \brief Armv8-M Baseline device Core revision r0p1 \details ([15:8] revision number, [7:0] patch number) */
 #define __ARMv8MML_REV                /*!< \brief Armv8-M Mainline device Core revision r0p1 \details ([15:8] revision number, [7:0] patch number) */
 #define __ARMv81MML_REV               /*!< \brief Armv8.1-M Baseline device Core revision r0p1 \details ([15:8] revision number, [7:0] patch number) */
