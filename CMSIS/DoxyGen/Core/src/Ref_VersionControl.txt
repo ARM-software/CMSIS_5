@@ -102,6 +102,29 @@ This define is only available for Cortex Secure Core controllers.
 \endcond
 */
 
+/**
+\cond (STAR)
+*/
+/**
+\brief Contains the core version for a STAR-MC controller.
+\details This define can be used to differentiate between the various available STAR-MC controllers.
+Possible values are:
+ - 1 for a STAR-MC1
+ 
+This define is only available for STAR-MC controllers.
+<b>Code Example:</b>
+\code
+#if defined(__STAR_MC) && (__STAR_MC == 1U)
+#error Yes, we have a STAR-MC1 controller.
+#else
+#error We need a STAR-MC1 controller!
+#endif
+\endcode
+*/
+#define __STAR_MC
+/**
+\endcond
+*/
 
 /**
 @}

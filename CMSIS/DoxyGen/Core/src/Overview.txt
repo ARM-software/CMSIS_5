@@ -58,7 +58,9 @@ CMSIS also supports the following Cortex-M processor variants:
 - <a href="https://developer.arm.com/products/processors/cortex-m/cortex-m1"       target="_blank"><b>Cortex-M1</b></a> is a processor designed specifically for implementation in FPGAs (Armv6-M architecture).
 - <a href="https://developer.arm.com/products/processors/cortex-m/sc000-processor" target="_blank"><b>SecurCore SC000</b></a> is designed specifically for smartcard and security applications (Armv6-M architecture).
 - <a href="https://developer.arm.com/products/processors/cortex-m/sc300-processor" target="_blank"><b>SecurCore SC300</b></a> is designed specifically for smartcard and security applications (Armv7-M architecture).
-- <a href="https://developer.arm.com/products/processors/cortex-m/cortex-m35p"     target="_blank"><b>Cortex-M35P</b></a> is a temper resistant Cortex-M processor with optional software isolation using TrustZone for Armv8-M.  
+- <a href="https://developer.arm.com/products/processors/cortex-m/cortex-m35p"     target="_blank"><b>Cortex-M35P</b></a> is a temper resistant Cortex-M processor with optional software isolation using TrustZone for Armv8-M.
+- <a href="https://www.armchina.com/mountain?infoId=160"                           target="_blank"><b>STAR-MC1</b></a> is a variant of Armv8-M with TrustZone designed by Arm China.
+
 
 \subsection ARMv8M Armv8-M and Armv8.1-M Architecture
 
