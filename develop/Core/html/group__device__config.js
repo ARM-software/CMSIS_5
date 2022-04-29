@@ -13,6 +13,7 @@ var group__device__config =
     [ "__CM4_REV", "group__device__config.html#ga45a97e4bb8b6ce7c334acc5f45ace3ba", null ],
     [ "__CM55_REV", "group__device__config.html#gaea2d16e963063038cde86cee33c4ef37", null ],
     [ "__CM7_REV", "group__device__config.html#ga8eb40c0d30a09a0ae388e56b21d8f22c", null ],
+    [ "__CM85_REV", "group__device__config.html#gab1efd620a97f291faa1092e10e693bd3", null ],
     [ "__DCACHE_PRESENT", "group__device__config.html#ga11d3ac679daeb58d0cec0a4e6ca59010", null ],
     [ "__DSP_PRESENT", "group__device__config.html#ga165f052f5641898a02bb07096dc177b6", null ],
     [ "__DTCM_PRESENT", "group__device__config.html#gacbb998663708df6626abb09378303019", null ],

@@ -1,5 +1,6 @@
 var NAVTREEINDEX1 =
 {
+"group__intrinsic__SIMD__gr.html#ga980353d2c72ebb879282e49f592fddc0":[8,8,43],
 "group__intrinsic__SIMD__gr.html#ga9c286d330f4fb29b256335add91eec9f":[8,8,21],
 "group__intrinsic__SIMD__gr.html#ga9d3bc5c539f9bd50f7d59ffa37ac6a65":[8,8,34],
 "group__intrinsic__SIMD__gr.html#ga9e2cc5117e79578a08b25f1e89022966":[8,8,50],
@@ -248,6 +249,5 @@ var NAVTREEINDEX1 =
 "group__pmu8__events__armv81.html#gabfa921c85a61f0a21c9bee289e63c102":[8,13,0,4],
 "group__pmu8__events__armv81.html#gac11cbc6849dbad7bd8b64ab6e2a3f8d5":[8,13,0,42],
 "group__pmu8__events__armv81.html#gac2dc7d92627b3caa391725a3f080288c":[8,13,0,55],
-"group__pmu8__events__armv81.html#gac43e0e0f9e385ea66402bdeebf3fea3e":[8,13,0,34],
-"group__pmu8__events__armv81.html#gac714f988ae45871b2865f82c11383b36":[8,13,0,112]
+"group__pmu8__events__armv81.html#gac43e0e0f9e385ea66402bdeebf3fea3e":[8,13,0,34]
 };

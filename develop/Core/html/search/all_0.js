@@ -23,6 +23,7 @@ var searchData=
   ['_5f_5fcm4_5frev',['__CM4_REV',['../group__device__config.html#ga45a97e4bb8b6ce7c334acc5f45ace3ba',1,'Template.txt']]],
   ['_5f_5fcm55_5frev',['__CM55_REV',['../group__device__config.html#gaea2d16e963063038cde86cee33c4ef37',1,'Template.txt']]],
   ['_5f_5fcm7_5frev',['__CM7_REV',['../group__device__config.html#ga8eb40c0d30a09a0ae388e56b21d8f22c',1,'Template.txt']]],
+  ['_5f_5fcm85_5frev',['__CM85_REV',['../group__device__config.html#gab1efd620a97f291faa1092e10e693bd3',1,'Template.txt']]],
   ['_5f_5fcm_5fcmsis_5fversion',['__CM_CMSIS_VERSION',['../group__version__control__gr.html#ga39f3d64ff95fb58feccc7639e537ff89',1,'Ref_VersionControl.txt']]],
   ['_5f_5fcm_5fcmsis_5fversion_5fmain',['__CM_CMSIS_VERSION_MAIN',['../group__version__control__gr.html#ga85987c5fcc1e012d7ac01369ee6ca2b5',1,'Ref_VersionControl.txt']]],
   ['_5f_5fcm_5fcmsis_5fversion_5fsub',['__CM_CMSIS_VERSION_SUB',['../group__version__control__gr.html#ga22083cbe7f0606cfd538ec12b2e41608',1,'Ref_VersionControl.txt']]],

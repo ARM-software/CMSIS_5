@@ -1,5 +1,6 @@
 var NAVTREEINDEX2 =
 {
+"group__pmu8__events__armv81.html#gac714f988ae45871b2865f82c11383b36":[8,13,0,112],
 "group__pmu8__events__armv81.html#gac97858bd621eab4592569444f0a5c37f":[8,13,0,23],
 "group__pmu8__events__armv81.html#gaca14907c5a1e1f9915159bc4cf323cf0":[8,13,0,11],
 "group__pmu8__events__armv81.html#gacb3c0b922eae9aac321df97ec889e0ed":[8,13,0,90],
@@ -92,8 +93,8 @@ var NAVTREEINDEX2 =
 "startup_s_pg.html#startup_s_sec":[4,4,0],
 "structARM__MPU__Region__t.html":[8,11,2],
 "structARM__MPU__Region__t.html":[8,12,0],
-"structARM__MPU__Region__t.html#a6a3e404b403c8df611f27d902d745d8d":[8,11,2,0],
 "structARM__MPU__Region__t.html#a6a3e404b403c8df611f27d902d745d8d":[8,12,0,0],
+"structARM__MPU__Region__t.html#a6a3e404b403c8df611f27d902d745d8d":[8,11,2,0],
 "structARM__MPU__Region__t.html#ab5d3a650dbffd0b272bf7df5b140e8a8":[8,11,2,2],
 "structARM__MPU__Region__t.html#ab5d3a650dbffd0b272bf7df5b140e8a8":[8,12,0,2],
 "structARM__MPU__Region__t.html#afe7a7721aa08988d915670efa432cdd2":[8,11,2,1],
@@ -248,6 +249,5 @@ var NAVTREEINDEX2 =
 "structSysTick__Type.html#a4780a489256bb9f54d0ba8ed4de191cd":[9,14,2],
 "structSysTick__Type.html#a875e7afa5c4fd43997fb544a4ac6e37e":[9,14,1],
 "structSysTick__Type.html#a9b5420d17e8e43104ddd4ae5a610af93":[9,14,3],
-"structSysTick__Type.html#afcadb0c6d35b21cdc0018658a13942de":[9,14,0],
-"structTPI__Type.html":[9,15]
+"structSysTick__Type.html#afcadb0c6d35b21cdc0018658a13942de":[9,14,0]
 };
