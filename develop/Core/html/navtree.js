@@ -38,8 +38,8 @@ var NAVTREEINDEX =
 [
 "annotated.html",
 "group__intrinsic__SIMD__gr.html#ga9c286d330f4fb29b256335add91eec9f",
-"group__pmu8__events__armv81.html#gaf9424157e9c5dca3a3689d181005c4f8",
-"templates_pg.html"
+"group__pmu8__events__armv81.html#gac97858bd621eab4592569444f0a5c37f",
+"structTPI__Type.html#a0e10e292cb019a832b03ddd055b2f6ac"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -91,10 +91,17 @@ $(document).ready(function(){initNavTree('cm_revisionHistory.html','');});
 <tr>
 <th>Version </th><th>Description  </th></tr>
 <tr>
-<td>5.9.0 </td><td>CMSIS-Core(M): 5.6.0<ul>
+<td>5.9.0 </td><td><ul>
+<li>CMSIS-Core(M): 5.6.0 (see revision history for details)<ul>
 <li>Arm Cortex-M85 cpu support</li>
 <li>Arm China STAR-MC1 cpu support</li>
-<li>Updated system_ARMCM55.c CMSIS-Core(A): 1.2.1 (unchanged) CMSIS-Driver: 2.8.0 (unchanged) CMSIS-DSP: 1.10.0 (see revision history for details) CMSIS-NN: 3.1.0 (see revision history for details)</li>
+<li>Updated system_ARMCM55.c</li>
+</ul>
+</li>
+<li>CMSIS-Core(A): 1.2.1 (unchanged)</li>
+<li>CMSIS-Driver: 2.8.0 (unchanged)</li>
+<li>CMSIS-DSP: 1.10.0 (see revision history for details)</li>
+<li>CMSIS-NN: 3.1.0 (see revision history for details)<ul>
 <li>Support for int16 convolution and fully connected for reference implementation</li>
 <li>Support for DSP extension optimization for int16 convolution and fully connected</li>
 <li>Support dilation for int8 convolution</li>
@@ -103,12 +110,26 @@ $(document).ready(function(){initNavTree('cm_revisionHistory.html','');});
 <li>Support for int16 average and max pooling for reference implementation</li>
 <li>Support for elementwise add and mul int16 scalar version</li>
 <li>Support for softmax int16 scalar version</li>
-<li>Support for SVDF with 8 bit state tensor CMSIS-RTOS2: 2.1.3 (unchanged)<ul>
-<li>RTX 5.5.4 (see revision history for details) CMSIS-Pack: deprecated (moved to Open-CMSIS-Pack) CMSIS-SVD: 1.3.9 (see revision history for details) CMSIS-DAP: 2.1.1 (see revision history for details)</li>
+<li>Support for SVDF with 8 bit state tensor</li>
 </ul>
 </li>
-<li>Allow default clock frequency to use fast clock mode CMSIS-Zone: 1.0.0 (unchanged) Devices</li>
-<li>Support for Cortex-M85 Utilities<ul>
+<li>CMSIS-RTOS2: 2.1.3 (unchanged)<ul>
+<li>RTX 5.5.4 (see revision history for details)</li>
+</ul>
+</li>
+<li>CMSIS-Pack: deprecated (moved to Open-CMSIS-Pack)</li>
+<li>CMSIS-Build: deprecated (moved to CMSIS-Toolbox in Open-CMSIS-Pack)</li>
+<li>CMSIS-SVD: 1.3.9 (see revision history for details)</li>
+<li>CMSIS-DAP: 2.1.1 (see revision history for details)<ul>
+<li>Allow default clock frequency to use fast clock mode</li>
+</ul>
+</li>
+<li>CMSIS-Zone: 1.0.0 (unchanged)</li>
+<li>Devices<ul>
+<li>Support for Cortex-M85</li>
+</ul>
+</li>
+<li>Utilities<ul>
 <li>SVDConv 3.3.42</li>
 <li>PackChk 1.3.95   </li>
 </ul>

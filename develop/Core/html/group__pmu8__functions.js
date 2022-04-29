@@ -2,6 +2,7 @@ var group__pmu8__functions =
 [
     [ "PMU Events for Armv8.1-M", "group__pmu8__events__armv81.html", "group__pmu8__events__armv81" ],
     [ "PMU Events for Cortex-M55", "group__pmu8__events__armcm55.html", "group__pmu8__events__armcm55" ],
+    [ "PMU Events for Cortex-M85", "group__pmu8__events__armcm85.html", "group__pmu8__events__armcm85" ],
     [ "PMU_Type", "structPMU__Type.html", [
       [ "AUTHSTATUS", "structPMU__Type.html#a60a8296d51236329e79d1604080aa9c1", null ],
       [ "CCFILTR", "structPMU__Type.html#a61fea523ea0f4e9242101cb09fc6f6a8", null ],

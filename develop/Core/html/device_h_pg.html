@@ -321,6 +321,31 @@ Configuration of the Processor and Core Peripherals</h1>
 <tr>
 <td><a class="el" href="group__device__config.html#gab58771b4ec03f9bdddc84770f7c95c68">__Vendor_SysTickConfig</a> </td><td>0 .. 1 </td><td>0 </td><td>Vendor defined <b>SysTick_Config</b> function.  </td></tr>
 </table>
+<p><b>core_CM85.h</b> </p>
+<table  class="cmtable">
+<tr>
+<th>#define </th><th>Value Range </th><th>Default </th><th>Description  </th></tr>
+<tr>
+<td>__CM85_REV </td><td>0x0001 </td><td>0x0001 </td><td>Core revision number ([15:8] revision number, [7:0] patch number)  </td></tr>
+<tr>
+<td><a class="el" href="group__device__config.html#ga4127d1b31aaf336fab3d7329d117f448">__MPU_PRESENT</a> </td><td>0 .. 1 </td><td>0 </td><td>Defines if a MPU is present or not  </td></tr>
+<tr>
+<td><a class="el" href="group__device__config.html#gadae9d54c744e525135b097c618bae3c4">__SAUREGION_PRESENT</a> </td><td>0 .. 1 </td><td>0 </td><td>Defines if SAU regions are present or not  </td></tr>
+<tr>
+<td><a class="el" href="group__device__config.html#gac1ba8a48ca926bddc88be9bfd7d42641">__FPU_PRESENT</a> </td><td>0 .. 1 </td><td>0 </td><td>Defines if a FPU is present or not  </td></tr>
+<tr>
+<td><a class="el" href="group__device__config.html#ga2a528de57b6217f9fc9d4487d0db6328">__FPU_DP</a> </td><td>0 .. 1 </td><td>0 </td><td>The combination of the defines <a class="el" href="group__device__config.html#gac1ba8a48ca926bddc88be9bfd7d42641">__FPU_PRESENT</a> and <a class="el" href="group__device__config.html#ga2a528de57b6217f9fc9d4487d0db6328">__FPU_DP</a> determine whether the FPU is with single or double precision.   </td></tr>
+<tr>
+<td><a class="el" href="group__device__config.html#ga3580fa1aeb7c2ed580904f8f70f8a919">__ICACHE_PRESENT</a> </td><td>0 .. 1 </td><td>1 </td><td>Instruction Chache present or not  </td></tr>
+<tr>
+<td><a class="el" href="group__device__config.html#ga11d3ac679daeb58d0cec0a4e6ca59010">__DCACHE_PRESENT</a> </td><td>0 .. 1 </td><td>1 </td><td>Data Chache present or not  </td></tr>
+<tr>
+<td><a class="el" href="group__device__config.html#gaddbae1a1b57539f398eb5546a17de8f6">__VTOR_PRESENT</a> </td><td>0 .. 1 </td><td>1 </td><td>Defines if a VTOR register is present or not  </td></tr>
+<tr>
+<td><a class="el" href="group__device__config.html#gae3fe3587d5100c787e02102ce3944460">__NVIC_PRIO_BITS</a> </td><td>2 .. 8 </td><td>3 </td><td>Number of priority bits implemented in the NVIC (device specific)  </td></tr>
+<tr>
+<td><a class="el" href="group__device__config.html#gab58771b4ec03f9bdddc84770f7c95c68">__Vendor_SysTickConfig</a> </td><td>0 .. 1 </td><td>0 </td><td>Vendor defined <b>SysTick_Config</b> function.  </td></tr>
+</table>
 <p><b>Example</b> </p>
 <p>The following code exemplifies the configuration of the Cortex-M4 Processor and Core Peripherals.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#define __CM4_REV                 0x0001U   </span><span class="comment">/* Core revision r0p1                                 */</span><span class="preprocessor"></span></div>

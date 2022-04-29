@@ -19,6 +19,7 @@ var searchData=
   ['pidr4',['PIDR4',['../structPMU__Type.html#abe4612a6387c5be0e56898bfa6b16902',1,'PMU_Type']]],
   ['pmu',['PMU',['../group__pmu8__functions.html#gad19c25be8565f2791aca1a96d1847516',1,'Ref_PMU8.txt']]],
   ['pmu_20events_20for_20cortex_2dm55',['PMU Events for Cortex-M55',['../group__pmu8__events__armcm55.html',1,'']]],
+  ['pmu_20events_20for_20cortex_2dm85',['PMU Events for Cortex-M85',['../group__pmu8__events__armcm85.html',1,'']]],
   ['pmu_20events_20for_20armv8_2e1_2dm',['PMU Events for Armv8.1-M',['../group__pmu8__events__armv81.html',1,'']]],
   ['pmu_20functions_20for_20armv8_2e1_2dm',['PMU Functions for Armv8.1-M',['../group__pmu8__functions.html',1,'']]],
   ['pmu_5ftype',['PMU_Type',['../structPMU__Type.html',1,'']]],

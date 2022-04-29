@@ -168,6 +168,18 @@ Macros</h2></td></tr>
 <tr class="memitem:gaadf0341d6a67cd30481201e7a3c7e77b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__pmu8__events__armcm55.html#gaadf0341d6a67cd30481201e7a3c7e77b">ARMCM55_PMU_SAHB_ACCESS</a>&#160;&#160;&#160;0xC300</td></tr>
 <tr class="memdesc:gaadf0341d6a67cd30481201e7a3c7e77b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read or write access on the S-AHB interface to the TCM.  <a href="#gaadf0341d6a67cd30481201e7a3c7e77b">More...</a><br/></td></tr>
 <tr class="separator:gaadf0341d6a67cd30481201e7a3c7e77b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaadf0341d6a67cd30481201e7a3c7e77b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__pmu8__events__armcm55.html#gaadf0341d6a67cd30481201e7a3c7e77b">ARMCM55_PMU_SAHB_ACCESS</a>&#160;&#160;&#160;0xC300</td></tr>
+<tr class="memdesc:gaadf0341d6a67cd30481201e7a3c7e77b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read or write access on the S-AHB interface to the TCM.  <a href="#gaadf0341d6a67cd30481201e7a3c7e77b">More...</a><br/></td></tr>
+<tr class="separator:gaadf0341d6a67cd30481201e7a3c7e77b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4b3797dce1999fc331ab03acfd2f135f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__pmu8__events__armcm55.html#ga4b3797dce1999fc331ab03acfd2f135f">ARMCM55_PMU_PAHB_ACCESS</a>&#160;&#160;&#160;0xC301</td></tr>
+<tr class="memdesc:ga4b3797dce1999fc331ab03acfd2f135f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read or write access on the P-AHB interface.  <a href="#ga4b3797dce1999fc331ab03acfd2f135f">More...</a><br/></td></tr>
+<tr class="separator:ga4b3797dce1999fc331ab03acfd2f135f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8e3f50182b0fdacab4b09bb0e4007136"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__pmu8__events__armcm55.html#ga8e3f50182b0fdacab4b09bb0e4007136">ARMCM55_PMU_AXI_WRITE_ACCESS</a>&#160;&#160;&#160;0xC302</td></tr>
+<tr class="memdesc:ga8e3f50182b0fdacab4b09bb0e4007136"><td class="mdescLeft">&#160;</td><td class="mdescRight">Any beat access to M-AXI write interface.  <a href="#ga8e3f50182b0fdacab4b09bb0e4007136">More...</a><br/></td></tr>
+<tr class="separator:ga8e3f50182b0fdacab4b09bb0e4007136"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga49e8162cf70ec75017dee7428462f38f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__pmu8__events__armcm55.html#ga49e8162cf70ec75017dee7428462f38f">ARMCM55_PMU_AXI_READ_ACCESS</a>&#160;&#160;&#160;0xC303</td></tr>
+<tr class="memdesc:ga49e8162cf70ec75017dee7428462f38f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Any beat access to M-AXI read interface.  <a href="#ga49e8162cf70ec75017dee7428462f38f">More...</a><br/></td></tr>
+<tr class="separator:ga49e8162cf70ec75017dee7428462f38f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8b005f5e47bc8bf9ee8d84a43b798ca9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__pmu8__events__armcm55.html#ga8b005f5e47bc8bf9ee8d84a43b798ca9">ARMCM55_PMU_DOSTIMEOUT_DOUBLE</a>&#160;&#160;&#160;0xC400</td></tr>
 <tr class="memdesc:ga8b005f5e47bc8bf9ee8d84a43b798ca9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Denial of Service timeout has fired twice and caused buffers to drain to allow forward progress.  <a href="#ga8b005f5e47bc8bf9ee8d84a43b798ca9">More...</a><br/></td></tr>
 <tr class="separator:ga8b005f5e47bc8bf9ee8d84a43b798ca9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -179,6 +191,34 @@ Macros</h2></td></tr>
 <p>IDs for additional events defined for Cortex-M55. </p>
 <p>These events are available on a Cortex-M55 device including a PMU. </p>
 <h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="ga49e8162cf70ec75017dee7428462f38f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ARMCM55_PMU_AXI_READ_ACCESS&#160;&#160;&#160;0xC303</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Any beat access to M-AXI read interface. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga8e3f50182b0fdacab4b09bb0e4007136"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ARMCM55_PMU_AXI_WRITE_ACCESS&#160;&#160;&#160;0xC302</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Any beat access to M-AXI write interface. </p>
+
+</div>
+</div>
 <a class="anchor" id="ga8b005f5e47bc8bf9ee8d84a43b798ca9"></a>
 <div class="memitem">
 <div class="memproto">
@@ -375,6 +415,20 @@ Macros</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="ga4b3797dce1999fc331ab03acfd2f135f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ARMCM55_PMU_PAHB_ACCESS&#160;&#160;&#160;0xC301</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Read or write access on the P-AHB interface. </p>
+
+</div>
+</div>
 <a class="anchor" id="gad10f5c84036644353ee2dfb14b8e9f48"></a>
 <div class="memitem">
 <div class="memproto">
@@ -414,6 +468,20 @@ Macros</h2></td></tr>
 </div><div class="memdoc">
 
 <p>A prefetcher starts a line-fill. </p>
+
+</div>
+</div>
+<a class="anchor" id="gaadf0341d6a67cd30481201e7a3c7e77b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ARMCM55_PMU_SAHB_ACCESS&#160;&#160;&#160;0xC300</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Read or write access on the S-AHB interface to the TCM. </p>
 
 </div>
 </div>
