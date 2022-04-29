@@ -276,6 +276,14 @@ The table below lists the folder and device names of the Arm processors.
         This device is only available with TrustZone.
       </td>
     </tr>
+    <tr>
+      <td>".\Device\ARM\ARMCM85"</td>
+      <td>Cortex-M85</td>
+      <td>Contains \b Include and \b Source template files configured for the Cortex-M85 processor.
+        The device name is ARMCM85 and the name of the \ref device_h_pg is <ARMCM85.h>.
+        This device is only available with TrustZone.
+      </td>
+    </tr>
 \endif
 \if ARMSC 
     <tr>

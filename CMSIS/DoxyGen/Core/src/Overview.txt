@@ -52,6 +52,7 @@ The Cortex-M Device Generic User Guides contain the programmers model and detail
 - <a href="https://developer.arm.com/documentation/dui1095/latest/"  target="_blank"><b>Cortex-M23 Devices Generic User Guide</b></a> (Armv8-M architecture)
 - <a href="https://developer.arm.com/documentation/100235/latest/"   target="_blank"><b>Cortex-M33 Devices Generic User Guide</b></a> (Armv8-M architecture)
 - <a href="https://developer.arm.com/documentation/101273/latest/"   target="_blank"><b>Cortex-M55 Devices Generic User Guide</b></a> (Armv8.1-M architecture)
+- <a href="https://developer.arm.com/documentation/101928/latest"   target="_blank"><b>Cortex-M85 Devices Generic User Guide</b></a> (Armv8.1-M architecture)
 
 CMSIS also supports the following Cortex-M processor variants:
 - <a href="https://developer.arm.com/products/processors/cortex-m/cortex-m1"       target="_blank"><b>Cortex-M1</b></a> is a processor designed specifically for implementation in FPGAs (Armv6-M architecture).
@@ -74,9 +75,9 @@ More information about Armv8.1-M architecture is available under <a href="https:
 \section tested_tools_sec Tested and Verified Toolchains
 
 The \ref templates_pg supplied by Arm have been tested and verified with the following toolchains:
- - Arm: Arm Compiler 5.06 update 7 (not for Cortex-M23/33/35P/55, Armv8-M, Armv8.1-M)
+ - Arm: Arm Compiler 5.06 update 7 (not for Cortex-M23/33/35P/55/85, Armv8-M, Armv8.1-M)
  - Arm: Arm Compiler 6.16
- - Arm: Arm Compiler 6.6.4 (not for Cortex-M0/23/33/35P/55, Armv8-M, Armv8.1-M)
+ - Arm: Arm Compiler 6.6.4 (not for Cortex-M0/23/33/35P/55/85, Armv8-M, Armv8.1-M)
  - GNU: GNU Arm Embedded Toolchain 10-2020-q4-major (10.2.1 20201103)
  - IAR: IAR ANSI C/C++ Compiler for Arm 8.20.1.14183
 */
@@ -94,7 +95,9 @@ The \ref templates_pg supplied by Arm have been tested and verified with the fol
       <td>V5.6.0</td>
       <td>
         <ul>
-          <li>Arm China Star-MC1 cpu support</li>
+          <li>Added: Arm Cortex-M85 cpu support</li>
+          <li>Added: Arm China Star-MC1 cpu support</li>
+          <li>Updated: system_ARMCM55.c</li>
         </ul>
       </td>
     </tr>

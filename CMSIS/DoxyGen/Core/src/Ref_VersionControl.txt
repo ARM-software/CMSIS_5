@@ -57,6 +57,7 @@ Possible values are:
  - 33 for a Cortex-M33
  - 35 for a Cortex-M35P
  - 55 for a Cortex-M55
+ - 85 for a Cortex-M85
  - 2  for a Armv8-M Base Line device
  - 80 for a Armv8-M Main Line device
  - 81 for a Armv8.1-M Main Line device

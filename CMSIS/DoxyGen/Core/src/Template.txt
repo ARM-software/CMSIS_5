@@ -33,6 +33,7 @@ core_cm23.h       | for the Cortex-M23 processor
 core_cm33.h       | for the Cortex-M33 processor
 core_cm35p.h      | for the Cortex-M35P processor
 core_cm55.h       | for the Cortex-M55 processor
+core_cm85.h       | for the Cortex-M85 processor
 \endif
 \if ARMSC
 core_sc000.h      | for the SecurCore SC000 processor
@@ -71,6 +72,7 @@ ARM Cortex-M35P    | ARMCM35P_TZ             | Cortex-M35P based device with Tru
 ARM Cortex-M35P    | ARMCM35P_DSP_FP         | Cortex-M35P based device with SIMD, FPU, no TrustZone
 ARM Cortex-M35P    | ARMCM35P_DSP_FP_TZ      | Cortex-M35P based device with TrustZone, SIMD, FPU
 ARM Cortex-M55     | ARMCM55                 | Cortex-M55 based device with TrustZone, SIMD, double precision FPU, and floating-point MVE
+ARM Cortex-M85     | ARMCM85                 | Cortex-M85 based device with TrustZone, PACBTI, SIMD, double precision FPU, and floating-point MVE
 \endif
 \if ARMSC
 ARM SC000          | ARM SC000               | SC000 based device
@@ -947,6 +949,81 @@ If these <i>\#defines</i> are missing default values are used.
       <td>\ref __ARMv81MML_REV or \ref __CM55_REV</td>
       <td>0x0000</td>
       <td>0x0000</td>
+      <td>Core revision number ([15:8] revision number, [7:0] patch number)</td>
+    </tr>
+    <tr>
+      <td>\ref __MPU_PRESENT</td>
+      <td>0 .. 1</td>
+      <td>0</td>
+      <td>Defines if a MPU is present or not</td>
+    </tr>
+    <tr>
+      <td>\ref __SAUREGION_PRESENT</td>
+      <td>0 .. 1</td>
+      <td>0</td>
+      <td>Defines if SAU regions are present or not</td>
+    </tr>
+    <tr>
+      <td>\ref __FPU_PRESENT</td>
+      <td>0 .. 1</td>
+      <td>0</td>
+      <td>Defines if a FPU is present or not</td>
+    </tr>
+    <tr>
+      <td>\ref __FPU_DP</td>
+      <td>0 .. 1</td>
+      <td>0</td>
+      <td>
+        The combination of the defines \ref __FPU_PRESENT and \ref __FPU_DP determine
+        whether the FPU is with single or double precision.
+      </td>
+    </tr>
+    <tr>
+      <td>\ref __ICACHE_PRESENT</td>
+      <td>0 .. 1</td>
+      <td>1</td>
+      <td>Instruction Chache present or not</td>
+    </tr>
+    <tr>
+      <td>\ref __DCACHE_PRESENT</td>
+      <td>0 .. 1</td>
+      <td>1</td>
+      <td>Data Chache present or not</td>
+    </tr>
+    <tr>
+      <td>\ref __VTOR_PRESENT</td>
+      <td>0 .. 1</td>
+      <td>1</td>
+      <td>Defines if a VTOR register is present or not</td>
+    </tr>
+    <tr>
+      <td>\ref __NVIC_PRIO_BITS</td>
+      <td>2 .. 8</td>
+      <td>3</td>
+      <td>Number of priority bits implemented in the NVIC (device specific)</td>
+    </tr>
+    <tr>
+      <td>\ref __Vendor_SysTickConfig</td>
+      <td>0 .. 1</td>
+      <td>0</td>
+      <td>Vendor defined <b>SysTick_Config</b> function.</td>
+    </tr>
+</table>
+\endif
+
+\if ARMv8M
+\b core_CM85.h
+<table class="cmtable">
+    <tr>
+      <th>\#define</th>
+      <th>Value Range</th>
+      <th>Default</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td>\ref __CM85_REV</td>
+      <td>0x0001</td>
+      <td>0x0001</td>
       <td>Core revision number ([15:8] revision number, [7:0] patch number)</td>
     </tr>
     <tr>

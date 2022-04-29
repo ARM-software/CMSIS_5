@@ -146,7 +146,7 @@ typedef struct
 
 /**************************************************************************************************/
 /** \brief  Structure type to access the Implementation Control Block Register (ICB).
-    \note replaces SCnSCB_Type (only Cortex-M55)
+    \note replaces SCnSCB_Type (only on Cortex-M55/M85)
  */
 typedef struct
 {
