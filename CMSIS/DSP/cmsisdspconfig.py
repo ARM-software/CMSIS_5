@@ -40,10 +40,12 @@ config["SIN_Q31"]=False
 config["SIN_Q15"]=False
 config["SIN_COS_F32"]=False
 config["SIN_COS_Q31"]=False
+config["SQRT_Q31"]=False
 config["LMS_NORM_Q31"]=False
 config["LMS_NORM_Q15"]=False
 config["CMPLX_MAG_Q31"]=False
 config["CMPLX_MAG_Q15"]=False
+config["CMPLX_MAG_FAST_Q15"]=False
 
 config["CFFT_RADIX2_Q15"]=False
 config["CFFT_RADIX4_Q15"]=False
@@ -81,10 +83,12 @@ realname["SIN_Q31"]="ARM_SIN_Q31"
 realname["SIN_Q15"]="ARM_SIN_Q15"
 realname["SIN_COS_F32"]="ARM_SIN_COS_F32"
 realname["SIN_COS_Q31"]="ARM_SIN_COS_Q31"
+realname["SQRT_Q31"]="ARM_SQRT_Q31"
 realname["LMS_NORM_Q31"]="ARM_LMS_NORM_Q31"
 realname["LMS_NORM_Q15"]="ARM_LMS_NORM_Q15"
 realname["CMPLX_MAG_Q31"]="ARM_CMPLX_MAG_Q31"
 realname["CMPLX_MAG_Q15"]="ARM_CMPLX_MAG_Q15"
+realname["CMPLX_MAG_FAST_Q15"]="ARM_CMPLX_MAG_FAST_Q15"
 realname["CFFT_RADIX2_Q15"]="ARM_CFFT_RADIX2_Q15"
 realname["CFFT_RADIX4_Q15"]="ARM_CFFT_RADIX4_Q15"
 realname["CFFT_RADIX2_Q31"]="ARM_CFFT_RADIX2_Q31"
@@ -360,6 +364,9 @@ def interpretCmakeOptions(cmake):
     if test(cmake,"ARM_SIN_COS_Q31"):
         r.append("-DARM_TABLE_SIN_Q31")
 
+    if test(cmake,"ARM_SQRT_Q31"):
+        r.append("-DARM_TABLE_SQRT_Q31")
+
     if test(cmake,"ARM_LMS_NORM_Q31"):
         r.append("-DARM_TABLE_RECIP_Q31")
 
@@ -370,6 +377,9 @@ def interpretCmakeOptions(cmake):
         r.append("-DARM_TABLE_FAST_SQRT_Q31_MVE")
 
     if test(cmake,"ARM_CMPLX_MAG_Q15"):
+        r.append("-DARM_TABLE_FAST_SQRT_Q31_MVE")
+
+    if test(cmake,"ARM_CMPLX_MAG_FAST_Q15"):
         r.append("-DARM_TABLE_FAST_SQRT_Q15_MVE")
 
     if test(cmake,"MVEI"):
@@ -494,7 +504,7 @@ def configMake(config):
 
            if config["MVEI"]:
               st.sidebar.markdown("#### Complex Magnitude")
-              multiselect(config,"Complex Magnitude",["CMPLX_MAG_Q31","CMPLX_MAG_Q15"])
+              multiselect(config,"Complex Magnitude",["CMPLX_MAG_Q31","CMPLX_MAG_Q15","CMPLX_MAG_FAST_Q15"])
 
 
 

@@ -59,7 +59,7 @@ MSVC is not going to be used to cross-compile to ARM. So, having a MSVC
 compiler file in Core or Core_A would not make sense.
 
 */
-#if defined ( _MSC_VER ) || defined(__GNUC_PYTHON__)
+#if defined ( _MSC_VER ) || defined(__GNUC_PYTHON__) || defined(__APPLE_CC__)
     __STATIC_FORCEINLINE uint8_t __CLZ(uint32_t data)
     {
       if (data == 0U) { return 32U; }

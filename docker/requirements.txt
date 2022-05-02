@@ -3,3 +3,4 @@ junit-xml~=1.9
 jira~=2.0
 junitparser~=1.4
 Jinja2~=2.11
+python-matrix-runner~=1.0

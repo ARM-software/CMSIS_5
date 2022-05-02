@@ -113,7 +113,7 @@ float32_t arm_logsumexp_f32(const float32_t *in, uint32_t blockSize)
     
     }
 
-    accum = maxVal + log(accum);
+    accum = maxVal + logf(accum);
 
     return (accum);
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2022 Arm Limited or its affiliates.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_elementwise_mul_s8
  * Description:  Element wise multiplication
  *
- * $Date:        January 26, 2021
- * $Revision:    V.1.0.5
+ * $Date:        3 Februari 2022
+ * $Revision:    V.1.1.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -57,7 +57,7 @@ arm_status arm_elementwise_mul_s8(const int8_t *input_1_vect,
                                   const int32_t out_shift,
                                   const int32_t out_activation_min,
                                   const int32_t out_activation_max,
-                                  const uint32_t block_size)
+                                  const int32_t block_size)
 {
 
     int32_t loop_count;
@@ -163,7 +163,7 @@ arm_status arm_elementwise_mul_s8(const int8_t *input_1_vect,
         mul_res = MIN(mul_res, out_activation_max);
         r4 = (q7_t)mul_res;
 
-        write_q7x4_ia(&output, __PACKq7(r1, r2, r3, r4));
+        arm_nn_write_q7x4_ia(&output, PACK_Q7x4_32x1(r1, r2, r3, r4));
 
         loop_count--;
     }

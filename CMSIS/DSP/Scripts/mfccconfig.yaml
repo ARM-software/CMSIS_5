@@ -1,0 +1,134 @@
+dct:
+  config1_f32: 
+    melFilters: 20 
+    dctOutputs: 13
+    type: "f32"
+
+  config1_q31: 
+    melFilters: 20 
+    dctOutputs: 13
+    type: "q31"
+
+  config1_q15: 
+    melFilters: 20 
+    dctOutputs: 13
+    type: "q15"
+  
+melfilter:
+  config1_f32: 
+    fftlength: 1024 
+    fmin: 64 
+    fmax: 8000 
+    samplingRate : 16000 
+    melFilters: 20 
+    type: "f32"
+
+  config1_q31: 
+    fftlength: 1024 
+    fmin: 64 
+    fmax: 8000 
+    samplingRate : 16000 
+    melFilters: 20 
+    type: "q31"
+
+  config1_q15: 
+    fftlength: 1024 
+    fmin: 64 
+    fmax: 8000 
+    samplingRate : 16000 
+    melFilters: 20 
+    type: "q15"
+  
+  config2_f32: 
+    fftlength: 512 
+    fmin: 64 
+    fmax: 8000 
+    samplingRate : 16000 
+    melFilters: 20 
+    type: "f32"
+
+  config2_q31: 
+    fftlength: 512 
+    fmin: 64 
+    fmax: 8000 
+    samplingRate : 16000 
+    melFilters: 20 
+    type: "q31"
+
+  config2_q15: 
+    fftlength: 512 
+    fmin: 64 
+    fmax: 8000 
+    samplingRate : 16000 
+    melFilters: 20 
+    type: "q15"
+
+  config3_f32 : 
+    fftlength: 256 
+    fmin: 64 
+    fmax: 8000 
+    samplingRate : 16000 
+    melFilters: 20 
+    type: "f32"  
+
+  config3_q31 : 
+    fftlength: 256 
+    fmin: 64 
+    fmax: 8000 
+    samplingRate : 16000 
+    melFilters: 20 
+    type: "q31" 
+
+  config3_q15 : 
+    fftlength: 256 
+    fmin: 64 
+    fmax: 8000 
+    samplingRate : 16000 
+    melFilters: 20 
+    type: "q15" 
+
+window:
+  config1_f32:
+    fftlength: 1024 
+    type: "f32"  
+    win: "hamming"
+
+  config1_q31:
+    fftlength: 1024 
+    type: "q31"  
+    win: "hamming"
+
+  config1_q15:
+    fftlength: 1024 
+    type: "q15"  
+    win: "hamming"
+
+  config2_f32:
+    fftlength: 512 
+    type: "f32"  
+    win: "hamming"
+
+  config2_q31:
+    fftlength: 512 
+    type: "q31"  
+    win: "hamming"
+
+  config2_q15:
+    fftlength: 512 
+    type: "q15"  
+    win: "hamming"
+
+  config3_f32:
+    fftlength: 256 
+    type: "f32"  
+    win: "hamming"
+
+  config3_q31:
+    fftlength: 256 
+    type: "q31"  
+    win: "hamming"
+
+  config3_q15:
+    fftlength: 256 
+    type: "q15"  
+    win: "hamming"

@@ -12,7 +12,7 @@ configDsp(CMSISDSPComplexMath ${ROOT})
 
 
 include(interpol)
-interpol(CMSISDSPFastMath)
+interpol(CMSISDSPComplexMath)
 
 
 if (CONFIGTABLE AND ALLFAST)
@@ -37,6 +37,10 @@ if (NOT CONFIGTABLE OR ALLFAST OR ARM_CMPLX_MAG_Q15 OR (NOT HELIUM AND NOT MVEI)
 target_sources(CMSISDSPComplexMath PRIVATE arm_cmplx_mag_q15.c)
 endif()
 
+if (NOT CONFIGTABLE OR ALLFAST OR ARM_CMPLX_MAG_FAST_Q15 OR (NOT HELIUM AND NOT MVEI))
+target_sources(CMSISDSPComplexMath PRIVATE arm_cmplx_mag_fast_q15.c)
+endif()
+
 target_sources(CMSISDSPComplexMath PRIVATE arm_cmplx_conj_f32.c)
 target_sources(CMSISDSPComplexMath PRIVATE arm_cmplx_conj_q15.c)
 target_sources(CMSISDSPComplexMath PRIVATE arm_cmplx_conj_q31.c)
@@ -44,10 +48,13 @@ target_sources(CMSISDSPComplexMath PRIVATE arm_cmplx_dot_prod_f32.c)
 target_sources(CMSISDSPComplexMath PRIVATE arm_cmplx_dot_prod_q15.c)
 target_sources(CMSISDSPComplexMath PRIVATE arm_cmplx_dot_prod_q31.c)
 target_sources(CMSISDSPComplexMath PRIVATE arm_cmplx_mag_f32.c)
+target_sources(CMSISDSPComplexMath PRIVATE arm_cmplx_mag_f64.c)
 target_sources(CMSISDSPComplexMath PRIVATE arm_cmplx_mag_squared_f32.c)
+target_sources(CMSISDSPComplexMath PRIVATE arm_cmplx_mag_squared_f64.c)
 target_sources(CMSISDSPComplexMath PRIVATE arm_cmplx_mag_squared_q15.c)
 target_sources(CMSISDSPComplexMath PRIVATE arm_cmplx_mag_squared_q31.c)
 target_sources(CMSISDSPComplexMath PRIVATE arm_cmplx_mult_cmplx_f32.c)
+target_sources(CMSISDSPComplexMath PRIVATE arm_cmplx_mult_cmplx_f64.c)
 target_sources(CMSISDSPComplexMath PRIVATE arm_cmplx_mult_cmplx_q15.c)
 target_sources(CMSISDSPComplexMath PRIVATE arm_cmplx_mult_cmplx_q31.c)
 target_sources(CMSISDSPComplexMath PRIVATE arm_cmplx_mult_real_f32.c)

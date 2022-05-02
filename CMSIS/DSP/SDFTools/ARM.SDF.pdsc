@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<package schemaVersion="1.3" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="PACK.xsd">
+  <name>SDF</name>
+  <description>Synchronous Data Flow for CMSIS-DSP</description>
+  <vendor>ARM</vendor>
+  <!-- <license>license.txt</license> -->
+  <url>http://www.keil.com/pack/</url>
+
+  <releases>
+    <release version="0.3.0" date="2021-11-08">
+      Refactor of the pack
+    </release>
+    <release version="0.2.0" date="2021-10-20">
+      Adding support for VHT platform
+    </release>
+    <release version="0.1.0" date="2021-08-02">
+      First version of Synchronous Data Flow
+    </release>
+  </releases>
+
+  
+<conditions>
+   <condition id="CMSIS-DSP">
+        <require Cclass="CMSIS" Cgroup="DSP"/>
+    </condition>
+
+    <condition id="SDF">
+        <require Cclass="Data Processing" Cgroup="Synchronous Data Flow" Csub="Core"/>
+        <require condition="CMSIS-DSP"/>
+    </condition>
+
+    <condition id="RTOS2">
+        <require Cclass="CMSIS" Cgroup="RTOS2" Capiversion="2.1.3"/>
+    </condition>
+
+    <condition id="SDFRTOS2">
+        <require condition="SDF"/>
+        <require condition="RTOS2"/>
+    </condition>
+
+    <condition id="StreamingVHT">
+        <require Cclass="Data Processing" Cgroup="Synchronous Data Flow" Csub="Streaming Nodes"/>
+        <require condition="SDF"/>
+        <require condition="RTOS2"/>
+    </condition>
+
+    
+</conditions>
+
+  <components>
+  <component Cclass="Data Processing" Cgroup="Synchronous Data Flow" Csub="Core" Cvariant="Source"  Cversion="0.3.0-dev" isDefaultVariant="true" condition="CMSIS-DSP">
+      <description>SDF core files for CMSIS-DSP</description>
+      <files>
+        <file category="header"   name="sdf/src/GenericNodes.h"/>
+        <file category="include"  name="sdf/nodes/cpp/"/>
+        <file category="include"  name="sdf/src/"/>
+
+      </files>
+    </component>
+
+  <component Cclass="Data Processing" Cgroup="Synchronous Data Flow" Csub="Streaming Nodes" Cversion="0.3.0-dev" Cvariant="CMSIS-RTOS"
+    isDefaultVariant="true" condition="SDFRTOS2">
+      <description>Streaming nodes for SDF</description>
+      <files>
+        <file category="include"  name="sdf/nodes/cpp/StreamingNodes/RingBuffer/"/>
+        <file category="header"  name="sdf/nodes/cpp/StreamingNodes/RingBuffer/RingInit.h"/>
+        <file category="header"  name="sdf/nodes/cpp/StreamingNodes/RingBuffer/RingBuffer.h"/>
+
+        <file category="sourceCpp"  name="sdf/nodes/cpp/StreamingNodes/RingBuffer/RingBuffer.cpp"/>
+        <file category="sourceCpp"  name="sdf/nodes/cpp/StreamingNodes/RingBuffer/RingInit.cpp"/>
+        <file category="include"  name="sdf/nodes/cpp/StreamingNodes/CMSIS_RTOS/"/>
+        <file category="other"  name="sdf/nodes/cpp/StreamingNodes/CMSIS_RTOS/ring.scvd" />
+
+        <file category="header"   name="sdf/nodes/cpp/StreamingNodes/Config/RingConfig.h" attr="config" version="1.0.0"/>
+
+      </files>
+    </component>
+
+  <component Cclass="Data Processing" Cgroup="Synchronous Data Flow" Csub="AudioNodes" Cvariant="VHT"  Cversion="0.3.0-dev" isDefaultVariant="true" condition="StreamingVHT">
+      <description>Audio Source and Sink for VHT</description>
+      <files>
+
+        <file category="header"   name="sdf/nodes/cpp/StreamingNodes/Config/AudioConfig.h" attr="config" version="1.0.0"/>
+        
+        <file category="sourceCpp"   name="sdf/nodes/cpp/StreamingNodes/VHT/audio/AudioInterrupt.cpp"/>
+
+        <file category="source"   name="sdf/nodes/cpp/StreamingNodes/VHT/audio/audio_drv.c"/>
+
+        <file category="header"   name="sdf/nodes/cpp/StreamingNodes/VHT/audio/audio_drv.h"/>
+
+
+      </files>
+    </component>
+
+
+<component Cclass="Data Processing" Cgroup="Synchronous Data Flow" Csub="VideoNodes" Cvariant="VHT"  Cversion="0.3.0-dev" isDefaultVariant="true" condition="StreamingVHT">
+      <description>Video Source for VHT</description>
+      <files>
+
+        <file category="header"   name="sdf/nodes/cpp/StreamingNodes/Config/VideoConfig.h" attr="config" version="1.0.0"/>
+        
+        <file category="sourceCpp"   name="sdf/nodes/cpp/StreamingNodes/VHT/video/VideoInterrupt.cpp"/>
+
+        <file category="source"   name="sdf/nodes/cpp/StreamingNodes/VHT/video/video_drv.c"/>
+
+        <file category="header"   name="sdf/nodes/cpp/StreamingNodes/VHT/video/video_drv.h"/>
+
+
+      </files>
+    </component>
+
+  </components>
+</package>

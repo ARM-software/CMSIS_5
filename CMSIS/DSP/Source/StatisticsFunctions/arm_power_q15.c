@@ -122,10 +122,10 @@ void arm_power_q15(
 
     /* Compute Power and store result in a temporary variable, sum. */
 #if defined (ARM_MATH_DSP)
-    in32 = read_q15x2_ia ((q15_t **) &pSrc);
+    in32 = read_q15x2_ia (&pSrc);
     sum = __SMLALD(in32, in32, sum);
 
-    in32 = read_q15x2_ia ((q15_t **) &pSrc);
+    in32 = read_q15x2_ia (&pSrc);
     sum = __SMLALD(in32, in32, sum);
 #else
     in = *pSrc++;

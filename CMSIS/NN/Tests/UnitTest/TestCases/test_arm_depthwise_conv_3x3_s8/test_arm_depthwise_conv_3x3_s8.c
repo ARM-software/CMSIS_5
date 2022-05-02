@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 Arm Limited or its affiliates.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -56,6 +56,9 @@ void depthwise_kernel_3x3_arm_depthwise_conv_3x3_s8(void)
     dw_conv_params.padding.h = DEPTHWISE_KERNEL_3X3_PAD_Y;
     dw_conv_params.stride.w = DEPTHWISE_KERNEL_3X3_STRIDE_X;
     dw_conv_params.stride.h = DEPTHWISE_KERNEL_3X3_STRIDE_Y;
+    dw_conv_params.dilation.w = DEPTHWISE_KERNEL_3X3_DILATION_X;
+    dw_conv_params.dilation.h = DEPTHWISE_KERNEL_3X3_DILATION_Y;
+
     dw_conv_params.ch_mult = DEPTHWISE_KERNEL_3X3_CH_MULT;
 
     dw_conv_params.input_offset = DEPTHWISE_KERNEL_3X3_INPUT_OFFSET;
@@ -79,6 +82,26 @@ void depthwise_kernel_3x3_arm_depthwise_conv_3x3_s8(void)
                                                   bias_data,
                                                   &output_dims,
                                                   output);
+
+    free(ctx.buf);
+    TEST_ASSERT_EQUAL(expected, result);
+    TEST_ASSERT_TRUE(validate(output, depthwise_kernel_3x3_output_ref, DEPTHWISE_KERNEL_3X3_DST_SIZE));
+
+    const int32_t buf_size =
+        arm_depthwise_conv_wrapper_s8_get_buffer_size(&dw_conv_params, &input_dims, &filter_dims, &output_dims);
+    ctx.buf = malloc(buf_size);
+    ctx.size = 0;
+    result = arm_depthwise_conv_wrapper_s8(&ctx,
+                                           &dw_conv_params,
+                                           &quant_params,
+                                           &input_dims,
+                                           input_data,
+                                           &filter_dims,
+                                           kernel_data,
+                                           &bias_dims,
+                                           bias_data,
+                                           &output_dims,
+                                           output);
 
     free(ctx.buf);
     TEST_ASSERT_EQUAL(expected, result);
@@ -116,6 +139,9 @@ void depthwise_kernel_3x3_arm_depthwise_conv_3x3_1_s8(void)
     dw_conv_params.padding.h = DEPTHWISE_KERNEL_3X3_PAD_Y;
     dw_conv_params.stride.w = DEPTHWISE_KERNEL_3X3_STRIDE_X;
     dw_conv_params.stride.h = DEPTHWISE_KERNEL_3X3_STRIDE_Y;
+    dw_conv_params.dilation.w = DEPTHWISE_KERNEL_3X3_DILATION_X;
+    dw_conv_params.dilation.h = DEPTHWISE_KERNEL_3X3_DILATION_Y;
+
     dw_conv_params.ch_mult = DEPTHWISE_KERNEL_3X3_CH_MULT;
 
     dw_conv_params.input_offset = DEPTHWISE_KERNEL_3X3_INPUT_OFFSET;
@@ -142,6 +168,27 @@ void depthwise_kernel_3x3_arm_depthwise_conv_3x3_1_s8(void)
 
     free(ctx.buf);
     TEST_ASSERT_EQUAL(expected, result);
+
+    const arm_status expected_wrapper = ARM_MATH_SUCCESS;
+    const int32_t buf_size =
+        arm_depthwise_conv_wrapper_s8_get_buffer_size(&dw_conv_params, &input_dims, &filter_dims, &output_dims);
+    ctx.buf = malloc(buf_size);
+    ctx.size = 0;
+
+    result = arm_depthwise_conv_wrapper_s8(&ctx,
+                                           &dw_conv_params,
+                                           &quant_params,
+                                           &input_dims,
+                                           input_data,
+                                           &filter_dims,
+                                           kernel_data,
+                                           &bias_dims,
+                                           bias_data,
+                                           &output_dims,
+                                           output);
+
+    free(ctx.buf);
+    TEST_ASSERT_EQUAL(expected_wrapper, result);
 }
 
 void depthwise_kernel_3x3_arm_depthwise_conv_3x3_2_s8(void)
@@ -175,6 +222,9 @@ void depthwise_kernel_3x3_arm_depthwise_conv_3x3_2_s8(void)
     dw_conv_params.padding.h = DEPTHWISE_KERNEL_3X3_PAD_Y;
     dw_conv_params.stride.w = DEPTHWISE_KERNEL_3X3_STRIDE_X;
     dw_conv_params.stride.h = DEPTHWISE_KERNEL_3X3_STRIDE_Y;
+    dw_conv_params.dilation.w = DEPTHWISE_KERNEL_3X3_DILATION_X;
+    dw_conv_params.dilation.h = DEPTHWISE_KERNEL_3X3_DILATION_Y;
+
     dw_conv_params.ch_mult = DEPTHWISE_KERNEL_3X3_CH_MULT;
 
     dw_conv_params.input_offset = DEPTHWISE_KERNEL_3X3_INPUT_OFFSET;

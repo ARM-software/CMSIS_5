@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2019-2021 Arm Limited. All rights reserved.
+# Copyright (c) 2019-2022 Arm Limited.
 #
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -16,15 +16,7 @@
 # limitations under the License.
 #
 
-project(CMSISNNSoftmax)
-
 file(GLOB SRC "./*_s8.c")
-add_library(CMSISNNSoftmax STATIC ${SRC})
-
-### Includes
-target_include_directories(CMSISNNSoftmax PUBLIC "${NN}/Include")
-target_include_directories(CMSISNNSoftmax PUBLIC "${ROOT}/CMSIS/Core/Include")
-target_include_directories(CMSISNNSoftmax PUBLIC "${ROOT}/CMSIS/DSP/Include")
-
-
-
+target_sources(cmsis-nn PRIVATE ${SRC} arm_softmax_s8_s16.c
+                                       arm_softmax_s16.c
+                                       arm_nn_softmax_common_s8.c)

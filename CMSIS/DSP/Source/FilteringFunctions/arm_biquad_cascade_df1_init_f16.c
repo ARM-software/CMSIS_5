@@ -96,29 +96,35 @@ void arm_biquad_cascade_df1_init_f16(
 
 #if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
 
+/*
+
+The computation of the coefficients is done in float32 otherwise the
+resulting filter is too different from the expected one.
+
+*/
 static void generateCoefsFastBiquadF16(float16_t b0, float16_t b1, float16_t b2, float16_t a1, float16_t a2,
                                 arm_biquad_mod_coef_f16 * newCoef)
 {
     float32_t coeffs[8][12] = {
-        {0, 0, 0, 0, 0, 0, 0, b0, b1, b2, a1, a2},
-        {0, 0, 0, 0, 0, 0, b0, b1, b2, 0, a2, 0},
-        {0, 0, 0, 0, 0, b0, b1, b2, 0, 0, 0, 0},
-        {0, 0, 0, 0, b0, b1, b2, 0, 0, 0, 0, 0},
-        {0, 0, 0, b0, b1, b2, 0, 0, 0, 0, 0, 0},
-        {0, 0, b0, b1, b2, 0, 0, 0, 0, 0, 0, 0},
-        {0, b0, b1, b2, 0, 0, 0, 0, 0, 0, 0, 0},
-        {b0, b1, b2, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+        {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, (float32_t)b0, (float32_t)b1, (float32_t)b2, (float32_t)a1, (float32_t)a2},
+        {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, (float32_t)b0, (float32_t)b1, (float32_t)b2, 0.0f, (float32_t)a2, 0.0f},
+        {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, (float32_t)b0, (float32_t)b1, (float32_t)b2, 0.0f, 0.0f, 0.0f, 0.0f},
+        {0.0f, 0.0f, 0.0f, 0.0f, (float32_t)b0, (float32_t)b1, (float32_t)b2, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f},
+        {0.0f, 0.0f, 0.0f, (float32_t)b0, (float32_t)b1, (float32_t)b2, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f},
+        {0.0f, 0.0f, (float32_t)b0, (float32_t)b1, (float32_t)b2, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f},
+        {0.0f, (float32_t)b0, (float32_t)b1, (float32_t)b2, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f},
+        {(float32_t)b0, (float32_t)b1, (float32_t)b2, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f}
     };
 
     for (int i = 0; i < 12; i++)
     {
-        coeffs[1][i] += (a1 * coeffs[0][i]);
-        coeffs[2][i] += (a1 * coeffs[1][i]) + (a2 * coeffs[0][i]);
-        coeffs[3][i] += (a1 * coeffs[2][i]) + (a2 * coeffs[1][i]);
-        coeffs[4][i] += (a1 * coeffs[3][i]) + (a2 * coeffs[2][i]);
-        coeffs[5][i] += (a1 * coeffs[4][i]) + (a2 * coeffs[3][i]);
-        coeffs[6][i] += (a1 * coeffs[5][i]) + (a2 * coeffs[4][i]);
-        coeffs[7][i] += (a1 * coeffs[6][i]) + (a2 * coeffs[5][i]);
+        coeffs[1][i] += ((float32_t)a1 * coeffs[0][i]);
+        coeffs[2][i] += ((float32_t)a1 * coeffs[1][i]) + ((float32_t)a2 * coeffs[0][i]);
+        coeffs[3][i] += ((float32_t)a1 * coeffs[2][i]) + ((float32_t)a2 * coeffs[1][i]);
+        coeffs[4][i] += ((float32_t)a1 * coeffs[3][i]) + ((float32_t)a2 * coeffs[2][i]);
+        coeffs[5][i] += ((float32_t)a1 * coeffs[4][i]) + ((float32_t)a2 * coeffs[3][i]);
+        coeffs[6][i] += ((float32_t)a1 * coeffs[5][i]) + ((float32_t)a2 * coeffs[4][i]);
+        coeffs[7][i] += ((float32_t)a1 * coeffs[6][i]) + ((float32_t)a2 * coeffs[5][i]);
 
         /*
          * transpose
@@ -157,4 +163,4 @@ void arm_biquad_cascade_df1_mve_init_f16(arm_biquad_casd_df1_inst_f16 * S,
 /**
   @} end of BiquadCascadeDF1 group
  */
-#endif /* #if defined(ARM_FLOAT16_SUPPORTED) */
+#endif /* #if defined(ARMfloat16_t_SUPPORTED) */

@@ -1,0 +1,7 @@
+{
+  "cpu": {
+    "fqbn": "arduino:mbed_nano:nano33ble",
+    "name": "Arduino Nano 33 BLE",
+    "port": "serial://COM6"
+  }
+}

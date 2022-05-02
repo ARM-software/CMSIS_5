@@ -1,5 +1,58 @@
 # README
 
+## Folders and files
+
+### Folders
+
+* cmsisdsp
+  * Require to build the CMSIS-DSP PythonWrapper for the Python repository
+  * It contains all Python packages
+* ComputeLibrary:
+  * Some kernels required when building CMSIS-DSP with Neon acceleration
+* Examples:
+  * Examples of use of CMSIS-DSP
+* Include:
+  * Include files for CMSIS-DSP
+* Platforms:
+  * Used for running the CMSIS-DSP test framework on Arm IPSS
+* PrivateInclude:
+  * Some include needed to build CMSIS-DSP
+* PythonWrapper:
+  * C code for the CMSIS-DSP PythonWrapper
+  * Examples for the PythonWrapper
+* Scripts:
+  * Debugging scripts
+  * Script to generate some coefficient tables used by CMSIS-DSP
+* SDFTools:
+  * Examples for the Synchronous Data Flow
+  * C++ templates for the Synchronous Data Flow
+* Source:
+  * CMSIS-DSP source
+* Testing:
+  * CMSIS-DSP Test frameworks
+* Toolchain:
+  * cmake files for building with gcc or Arm clang
+
+### Files
+
+Some files are needed to generate the PythonWrapper:
+
+* PythonWrapper_README.md
+* LICENSE.txt
+* MANIFEST.in
+* pyproject.toml
+* setup.py
+
+cmake files are useful to build CMSIS-DSP and the Test framework.
+
+filterLinkScript.py is used by the cmake build.
+
+cmsisdspconfig.py:
+
+* Web browser UI to generate build configurations
+
+
+
 ## How to use
 
 This document is explaining how to use cmake with CMSIS-DSP.
@@ -24,7 +77,7 @@ The cmake command is requiring several arguments. For instance, to build for m7 
     -DROOT="../../../../../.." \
     -DPLATFORM="FVP" \
     -G "Unix Makefiles" ..
-  
+
 DCMAKE_PREFIX_PATH is the path to the compiler toolchain. This folder should contain the bin folder where are the compiler executables.
 
 ROOT is pointing to the root CMSIS folder (the one containing CMSIS and Device).
@@ -45,7 +98,7 @@ To build for A5, you need to change DCMAKE_TOOLCHAIN_FILE and ARM_CPU:
     -DARM_CPU="cortex-a5"
 
 To build for A5 with Neon acceleration, you need to add:
-  
+
     -DNEON=ON
 
 ### Building 
@@ -119,18 +172,18 @@ Some new compilations symbols have been introduced to avoid including all the ta
 
 If no new symbol is defined, everything will behave as usual. If ARM_DSP_CONFIG_TABLES is defined then the new symbols will be taken into account.
 
-Then you can select all FFT tables or all interpolation tables by defining following compilation symbols:
+It is strongly suggested to use the new Python script cmsisdspconfig.py to generate the -D options to use on the compiler command line.
 
-* ARM_ALL_FFT_TABLES : All FFT tables are included 
-* ARM_ALL_FAST_TABLES : All interpolation tables are included
+    pip install streamlit
+    streamlit run cmsisdspconfig.py
 
-If more control is required, there are other symbols but it is not always easy to know which ones need to be enabled for a given use case.
-
-If you use cmake, it is easy since high level options are defined and they will select the right compilation symbols. If you don't use cmake, you can just look at fft.cmake to see which compilation symbols are needed.
+If you use cmake, it is also easy since high level options are defined and they will select the right compilation symbols. 
 
 For instance, if you want to use the arm_rfft_fast_f32, in fft.cmake you'll see an option RFFT_FAST_F32_32.
 
-We see that following symbols need to be enabled :
+If you don't use cmake nor the Python script, you can just look at fft.cmake or interpol.cmake in Source to see which compilation symbols are needed.
+
+We see, for arm_rfft_fast_f32, that the following symbols need to be enabled :
 
 * ARM_TABLE_TWIDDLECOEF_F32_16 
 * ARM_TABLE_BITREVIDX_FLT_16

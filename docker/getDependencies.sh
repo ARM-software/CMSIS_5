@@ -62,6 +62,5 @@ downloadFromDepot "fvp-11.12-linux-x86_64.tar.gz"
 downloadFromArtifactory "mcu.promoted/staging/devtools/tools/packchk/${PACKCHK_VERSION}/linux64/PackChk"
 
 gitClone "ssh://${USER}@eu-gerrit-1.euhpc.arm.com:29418/dsg/cmsis/buildtools" "buildtools" "master"
-gitClone "ssh://${USER}@eu-gerrit-1.euhpc.arm.com:29418/scratch/jonant01/python-matrix-runner" "python-matrix-runner" "master"
 
 popd || exit

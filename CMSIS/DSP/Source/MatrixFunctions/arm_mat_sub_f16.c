@@ -168,10 +168,10 @@ arm_status arm_mat_sub_f16(
       /* C(m,n) = A(m,n) - B(m,n) */
 
       /* Subtract and store result in destination buffer. */
-      *pOut++ = (*pInA++) - (*pInB++);
-      *pOut++ = (*pInA++) - (*pInB++);
-      *pOut++ = (*pInA++) - (*pInB++);
-      *pOut++ = (*pInA++) - (*pInB++);
+      *pOut++ = (_Float16)(*pInA++) - (_Float16)(*pInB++);
+      *pOut++ = (_Float16)(*pInA++) - (_Float16)(*pInB++);
+      *pOut++ = (_Float16)(*pInA++) - (_Float16)(*pInB++);
+      *pOut++ = (_Float16)(*pInA++) - (_Float16)(*pInB++);
 
       /* Decrement loop counter */
       blkCnt--;
@@ -192,7 +192,7 @@ arm_status arm_mat_sub_f16(
       /* C(m,n) = A(m,n) - B(m,n) */
 
       /* Subtract and store result in destination buffer. */
-      *pOut++ = (*pInA++) - (*pInB++);
+      *pOut++ = (_Float16)(*pInA++) - (_Float16)(*pInB++);
 
       /* Decrement loop counter */
       blkCnt--;

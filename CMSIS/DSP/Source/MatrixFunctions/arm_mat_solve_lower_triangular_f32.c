@@ -63,7 +63,6 @@
 
   /* Check for matrix mismatch condition */
   if ((lt->numRows != lt->numCols) ||
-      (a->numRows != a->numCols) ||
       (lt->numRows != a->numRows)   )
   {
     /* Set status as ARM_MATH_SIZE_MISMATCH */
@@ -82,9 +81,10 @@
     x2 = (a2 - c2 x3) / b2
 
     */
-    int i,j,k,n;
+    int i,j,k,n,cols;
 
     n = dst->numRows;
+    cols = dst->numCols;
 
     float32_t *pX = dst->pData;
     float32_t *pLT = lt->pData;
@@ -101,13 +101,13 @@
     for(i=0; i < n ; i++)
     {
 
-      for(j=0; j+3 < n; j += 4)
+      for(j=0; j+3 < cols; j += 4)
       {
-            vecA = vld1q_f32(&pA[i * n + j]);
+            vecA = vld1q_f32(&pA[i * cols + j]);
 
             for(k=0; k < i; k++)
             {
-                vecX = vld1q_f32(&pX[n*k+j]);
+                vecX = vld1q_f32(&pX[cols*k+j]);
                 vecA = vfmsq(vecA,vdupq_n_f32(pLT[n*i + k]),vecX);
             }
 
@@ -118,20 +118,20 @@
 
             invLT = 1.0f / pLT[n*i + i];
             vecA = vmulq(vecA,vdupq_n_f32(invLT));
-            vst1q(&pX[i*n+j],vecA);
+            vst1q(&pX[i*cols+j],vecA);
 
        }
 
-       for(; j < n; j ++)
+       for(; j < cols; j ++)
        {
             a_col = &pA[j];
             lt_row = &pLT[n*i];
 
-            float32_t tmp=a_col[i * n];
+            float32_t tmp=a_col[i * cols];
             
             for(k=0; k < i; k++)
             {
-                tmp -= lt_row[k] * pX[n*k+j];
+                tmp -= lt_row[k] * pX[cols*k+j];
             }
 
             if (lt_row[i]==0.0f)
@@ -139,7 +139,7 @@
               return(ARM_MATH_SINGULAR);
             }
             tmp = tmp / lt_row[i];
-            pX[i*n+j] = tmp;
+            pX[i*cols+j] = tmp;
         }
 
     }
@@ -164,7 +164,6 @@
 
   /* Check for matrix mismatch condition */
   if ((lt->numRows != lt->numCols) ||
-      (a->numRows != a->numCols) ||
       (lt->numRows != a->numRows)   )
   {
     /* Set status as ARM_MATH_SIZE_MISMATCH */
@@ -183,9 +182,10 @@
     x2 = (a2 - c2 x3) / b2
 
     */
-    int i,j,k,n;
+    int i,j,k,n,cols;
 
     n = dst->numRows;
+    cols = dst->numCols;
 
     float32_t *pX = dst->pData;
     float32_t *pLT = lt->pData;
@@ -202,13 +202,13 @@
     for(i=0; i < n ; i++)
     {
 
-      for(j=0; j+3 < n; j += 4)
+      for(j=0; j+3 < cols; j += 4)
       {
-            vecA = vld1q_f32(&pA[i * n + j]);
+            vecA = vld1q_f32(&pA[i * cols + j]);
 
             for(k=0; k < i; k++)
             {
-                vecX = vld1q_f32(&pX[n*k+j]);
+                vecX = vld1q_f32(&pX[cols*k+j]);
                 vecA = vfmsq_f32(vecA,vdupq_n_f32(pLT[n*i + k]),vecX);
             }
 
@@ -219,20 +219,20 @@
 
             invLT = 1.0f / pLT[n*i + i];
             vecA = vmulq_f32(vecA,vdupq_n_f32(invLT));
-            vst1q_f32(&pX[i*n+j],vecA);
+            vst1q_f32(&pX[i*cols+j],vecA);
 
        }
 
-       for(; j < n; j ++)
+       for(; j < cols; j ++)
        {
             a_col = &pA[j];
             lt_row = &pLT[n*i];
 
-            float32_t tmp=a_col[i * n];
+            float32_t tmp=a_col[i * cols];
             
             for(k=0; k < i; k++)
             {
-                tmp -= lt_row[k] * pX[n*k+j];
+                tmp -= lt_row[k] * pX[cols*k+j];
             }
 
             if (lt_row[i]==0.0f)
@@ -240,7 +240,7 @@
               return(ARM_MATH_SINGULAR);
             }
             tmp = tmp / lt_row[i];
-            pX[i*n+j] = tmp;
+            pX[i*cols+j] = tmp;
         }
 
     }
@@ -263,7 +263,6 @@
 #ifdef ARM_MATH_MATRIX_CHECK
   /* Check for matrix mismatch condition */
   if ((lt->numRows != lt->numCols) ||
-      (a->numRows != a->numCols) ||
       (lt->numRows != a->numRows)   )
   {
     /* Set status as ARM_MATH_SIZE_MISMATCH */
@@ -282,9 +281,7 @@
     x2 = (a2 - c2 x3) / b2
 
     */
-    int i,j,k,n;
-
-    n = dst->numRows;
+    int i,j,k,n,cols;
 
     float32_t *pX = dst->pData;
     float32_t *pLT = lt->pData;
@@ -293,19 +290,23 @@
     float32_t *lt_row;
     float32_t *a_col;
 
-    for(j=0; j < n; j ++)
+    n = dst->numRows;
+    cols = dst -> numCols;
+
+
+    for(j=0; j < cols; j ++)
     {
        a_col = &pA[j];
 
        for(i=0; i < n ; i++)
        {
-            lt_row = &pLT[n*i];
+            float32_t tmp=a_col[i * cols];
 
-            float32_t tmp=a_col[i * n];
+            lt_row = &pLT[n*i];
             
             for(k=0; k < i; k++)
             {
-                tmp -= lt_row[k] * pX[n*k+j];
+                tmp -= lt_row[k] * pX[cols*k+j];
             }
 
             if (lt_row[i]==0.0f)
@@ -313,7 +314,7 @@
               return(ARM_MATH_SINGULAR);
             }
             tmp = tmp / lt_row[i];
-            pX[i*n+j] = tmp;
+            pX[i*cols+j] = tmp;
        }
 
     }

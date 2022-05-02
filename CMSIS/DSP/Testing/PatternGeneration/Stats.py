@@ -132,7 +132,9 @@ def writeF32OnlyTests(config,nb):
 
 def writeF64OnlyTests(config,nb):
     entropyTest(config,nb)
+    logsumexpTest(config,nb+1)
     klTest(config,nb+2)
+    logSumExpDotTest(config,nb+3)
     return(nb+4)
 
 # For index in min and max we need to ensure that the difference between values
@@ -354,6 +356,11 @@ def powerTest(format,data):
    else:
        return(np.dot(data,data))
 
+def mseTest(format,data1,data2):
+   nb = len(data1)
+   err = data1 - data2
+   return(np.dot(err,err) / nb)
+
 def rmsTest(format,data):
    return(math.sqrt(np.dot(data,data)/data.size))
 
@@ -381,6 +388,29 @@ def generateFuncTests(config,nb,format,data,func,name):
 
     nbiters = 100
     funcvalue=func(format,data[0:nbiters])
+    funcvals.append(funcvalue)
+
+    config.writeReference(nb, funcvals,name)
+    return(nb+1)
+
+def generateOperatorTests(config,nb,format,data1,data2,func,name):
+
+    funcvals=[]
+
+    nbiters = Tools.loopnb(format,Tools.TAILONLY)
+    funcvalue=func(format,data1[0:nbiters],data2[0:nbiters])
+    funcvals.append(funcvalue)
+
+    nbiters = Tools.loopnb(format,Tools.BODYONLY)
+    funcvalue=func(format,data1[0:nbiters],data2[0:nbiters])
+    funcvals.append(funcvalue)
+
+    nbiters = Tools.loopnb(format,Tools.BODYANDTAIL)
+    funcvalue=func(format,data1[0:nbiters],data2[0:nbiters])
+    funcvals.append(funcvalue)
+
+    nbiters = 100
+    funcvalue=func(format,data1[0:nbiters],data2[0:nbiters])
     funcvals.append(funcvalue)
 
     config.writeReference(nb, funcvals,name)
@@ -446,17 +476,24 @@ def writeTests(config,nb,format):
 # We don't want to change ID number of existing tests.
 # So new tests have to be added after existing ones
 def writeNewsTests(config,nb,format):
-    config.setOverwrite(True)
     NBSAMPLES = 300
+    if format==Tools.F16:
+       config.setOverwrite(True)
     data1=np.random.randn(NBSAMPLES)
-    
     data1 = Tools.normalize(data1)
 
+    data2=np.random.randn(NBSAMPLES)
+    data2 = Tools.normalize(data2)
+
     config.writeInput(1, data1,"InputNew")
+
     nb=generateMaxAbsTests(config,nb,format,data1)
     nb=generateMinAbsTests(config,nb,format,data1)
 
+    config.writeInput(2, data2,"InputNew")
+    nb=generateOperatorTests(config,nb,format,data1,data2,mseTest,"MSEVals")
     config.setOverwrite(False)
+
 
 def generateBenchmark(config,format):
     NBSAMPLES = 256
@@ -483,16 +520,16 @@ def generatePatterns():
     PATTERNDIR = os.path.join("Patterns","DSP","Stats","Stats")
     PARAMDIR = os.path.join("Parameters","DSP","Stats","Stats")
     
+    configf64=Tools.Config(PATTERNDIR,PARAMDIR,"f64")
     configf32=Tools.Config(PATTERNDIR,PARAMDIR,"f32")
     configf16=Tools.Config(PATTERNDIR,PARAMDIR,"f16")
-    configf64=Tools.Config(PATTERNDIR,PARAMDIR,"f64")
     configq31=Tools.Config(PATTERNDIR,PARAMDIR,"q31")
     configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
     configq7 =Tools.Config(PATTERNDIR,PARAMDIR,"q7")
     
+    configf64.setOverwrite(False)
     configf32.setOverwrite(False)
     configf16.setOverwrite(False)
-    configf64.setOverwrite(False)
     configq31.setOverwrite(False)
     configq15.setOverwrite(False)
     configq7.setOverwrite(False)
@@ -501,7 +538,9 @@ def generatePatterns():
     nb=writeF32OnlyTests(configf32,22)
     writeNewsTests(configf32,nb,Tools.F32)
 
-    writeF64OnlyTests(configf64,22)
+    nb=writeTests(configf64,1,Tools.F64)
+    nb=writeF64OnlyTests(configf64,22)
+    writeNewsTests(configf64,nb,Tools.F64)
 
     nb=writeTests(configq31,1,31)
     writeNewsTests(configq31,nb,Tools.Q31)

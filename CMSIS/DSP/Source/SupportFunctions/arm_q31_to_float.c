@@ -33,7 +33,7 @@
  */
 
 /**
- * @defgroup q31_to_x  Convert 32-bit Integer value
+ * @defgroup q31_to_x  Convert 32-bit fixed point value
  */
 
 /**

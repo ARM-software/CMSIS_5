@@ -7,79 +7,70 @@
 
     void DistanceF16::test_braycurtis_distance_f16()
     {
-       float16_t outp;
        
-       outp = arm_braycurtis_distance_f16(inpA, inpB, this->vecDim);
+       (void)arm_braycurtis_distance_f16(inpA, inpB, this->vecDim);
          
       
     } 
  
     void DistanceF16::test_canberra_distance_f16()
     {
-       float16_t outp;
        
-       outp = arm_canberra_distance_f16(inpA, inpB, this->vecDim);
+       (void)arm_canberra_distance_f16(inpA, inpB, this->vecDim);
         
     } 
 
     void DistanceF16::test_chebyshev_distance_f16()
     {
-       float16_t outp;
        
-       outp = arm_chebyshev_distance_f16(inpA, inpB, this->vecDim);
+       (void)arm_chebyshev_distance_f16(inpA, inpB, this->vecDim);
          
         
     } 
 
     void DistanceF16::test_cityblock_distance_f16()
     {
-       float16_t outp;
        
-       outp = arm_cityblock_distance_f16(inpA, inpB, this->vecDim);
+       (void)arm_cityblock_distance_f16(inpA, inpB, this->vecDim);
          
 
     } 
 
     void DistanceF16::test_correlation_distance_f16()
     {
-        float16_t outp;
        
         memcpy(tmpAp, inpA, sizeof(float16_t) * this->vecDim);
         memcpy(tmpBp, inpB, sizeof(float16_t) * this->vecDim);
           
-        outp = arm_correlation_distance_f16(tmpAp, tmpBp, this->vecDim);
+        (void)arm_correlation_distance_f16(tmpAp, tmpBp, this->vecDim);
      
     } 
 
     void DistanceF16::test_cosine_distance_f16()
     {
-       float16_t outp;
        
-       outp = arm_cosine_distance_f16(inpA, inpB, this->vecDim);
+       (void)arm_cosine_distance_f16(inpA, inpB, this->vecDim);
          
     } 
 
     void DistanceF16::test_euclidean_distance_f16()
     {
-       float16_t outp;
        
-       outp = arm_euclidean_distance_f16(inpA, inpB, this->vecDim);
+       (void)arm_euclidean_distance_f16(inpA, inpB, this->vecDim);
          
     } 
 
     void DistanceF16::test_jensenshannon_distance_f16()
     {
-       float16_t outp;
 
-       outp = arm_jensenshannon_distance_f16(inpA, inpB, this->vecDim);
+       (void)arm_jensenshannon_distance_f16(inpA, inpB, this->vecDim);
          
     } 
 
     void DistanceF16::test_minkowski_distance_f16()
     {
-       float16_t outp;
        
-       outp = arm_minkowski_distance_f16(inpA, inpB, 2,this->vecDim);
+       (void)arm_minkowski_distance_f16(inpA, inpB, 2,this->vecDim);
   
     } 
   

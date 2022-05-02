@@ -1,8 +1,8 @@
 /******************************************************************************
  * @file     distance_functions.h
  * @brief    Public header file for CMSIS DSP Library
- * @version  V1.9.0
- * @date     23 April 2021
+ * @version  V1.10.0
+ * @date     08 July 2021
  * Target Processor: Cortex-M and Cortex-A cores
  ******************************************************************************/
 /*
@@ -70,6 +70,17 @@ __attribute__((weak)) float __powisf2(float a, int b);
 float32_t arm_euclidean_distance_f32(const float32_t *pA,const float32_t *pB, uint32_t blockSize);
 
 /**
+ * @brief        Euclidean distance between two vectors
+ * @param[in]    pA         First vector
+ * @param[in]    pB         Second vector
+ * @param[in]    blockSize  vector length
+ * @return distance
+ *
+ */
+
+float64_t arm_euclidean_distance_f64(const float64_t *pA,const float64_t *pB, uint32_t blockSize);
+
+/**
  * @brief        Bray-Curtis distance between two vectors
  * @param[in]    pA         First vector
  * @param[in]    pB         Second vector
@@ -107,6 +118,17 @@ float32_t arm_chebyshev_distance_f32(const float32_t *pA,const float32_t *pB, ui
 
 
 /**
+ * @brief        Chebyshev distance between two vectors
+ * @param[in]    pA         First vector
+ * @param[in]    pB         Second vector
+ * @param[in]    blockSize  vector length
+ * @return distance
+ *
+ */
+float64_t arm_chebyshev_distance_f64(const float64_t *pA,const float64_t *pB, uint32_t blockSize);
+
+
+/**
  * @brief        Cityblock (Manhattan) distance between two vectors
  * @param[in]    pA         First vector
  * @param[in]    pB         Second vector
@@ -115,6 +137,16 @@ float32_t arm_chebyshev_distance_f32(const float32_t *pA,const float32_t *pB, ui
  *
  */
 float32_t arm_cityblock_distance_f32(const float32_t *pA,const float32_t *pB, uint32_t blockSize);
+
+/**
+ * @brief        Cityblock (Manhattan) distance between two vectors
+ * @param[in]    pA         First vector
+ * @param[in]    pB         Second vector
+ * @param[in]    blockSize  vector length
+ * @return distance
+ *
+ */
+float64_t arm_cityblock_distance_f64(const float64_t *pA,const float64_t *pB, uint32_t blockSize);
 
 /**
  * @brief        Correlation distance between two vectors
@@ -140,6 +172,18 @@ float32_t arm_correlation_distance_f32(float32_t *pA,float32_t *pB, uint32_t blo
  */
 
 float32_t arm_cosine_distance_f32(const float32_t *pA,const float32_t *pB, uint32_t blockSize);
+
+/**
+ * @brief        Cosine distance between two vectors
+ *
+ * @param[in]    pA         First vector
+ * @param[in]    pB         Second vector
+ * @param[in]    blockSize  vector length
+ * @return distance
+ *
+ */
+
+float64_t arm_cosine_distance_f64(const float64_t *pA,const float64_t *pB, uint32_t blockSize);
 
 /**
  * @brief        Jensen-Shannon distance between two vectors

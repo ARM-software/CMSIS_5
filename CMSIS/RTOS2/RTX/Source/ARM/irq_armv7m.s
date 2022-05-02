@@ -28,7 +28,7 @@
 RTX_STACK_CHECK EQU      0
                 ENDIF
 
-                IF       ({FPU}="FPv4-SP")
+                IF       ({FPU}="FPv4-SP") || ({FPU}="VFPv4_D16") || ({FPU}="VFPv4_SP_D16") || ({FPU}="FPv5-SP") || ({FPU}="FPv5_D16")
 FPU_USED        EQU      1
                 ELSE
 FPU_USED        EQU      0
@@ -79,7 +79,7 @@ SVC_Handler     PROC
                 LDM      R0,{R0-R3,R12}         ; Load function parameters and address from stack
                 BLX      R12                    ; Call service function
                 POP      {R12,LR}               ; Restore SP and EXC_RETURN
-                STM      R12,{R0-R1}            ; Store function return values
+                STR      R0,[R12]               ; Store function return value
 
 SVC_Context
                 LDR      R3,=osRtxInfo+I_T_RUN_OFS; Load address of osRtxInfo.thread.run

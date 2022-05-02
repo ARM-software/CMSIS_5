@@ -47,6 +47,11 @@
   @par           Scaling and Overflow Behavior
                    The function implements 1.15 by 1.15 multiplications and finally output is converted into 2.14 format.
  */
+
+/* Sqrt q31 is used otherwise accuracy is not good enough
+           for small values and for some applications it is
+           an issue.
+        */
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #include "arm_helium_utils.h"
@@ -60,23 +65,52 @@ void arm_cmplx_mag_q15(
     int32_t blockSize = numSamples;  /* loop counters */
     uint32_t  blkCnt;           /* loop counters */
     q15x8x2_t vecSrc;
-    q15x8_t sum;
+    q31x4_t prod0;
+    q31x4_t prod1;
+
     q31_t in;
     q31_t acc0;
+    q31x4_t acc0V;
+    q31x4_t acc1V;
+
+    q31_t res;
+    q15x8_t resV;
 
     blkCnt = blockSize >> 3;
     while (blkCnt > 0U)
     {
         vecSrc = vld2q(pSrc);  
         pSrc += 16;
-        sum = vqaddq(vmulhq(vecSrc.val[0], vecSrc.val[0]),
-                     vmulhq(vecSrc.val[1], vecSrc.val[1]));
 
-        sum = vshrq(sum, 1);
+        acc0V = vdupq_n_s32(0);
+        acc1V = vdupq_n_s32(0);
 
-        sum = FAST_VSQRT_Q15(sum);
+        prod0 = vmullbq_int_s16(vecSrc.val[0], vecSrc.val[0]);
+        acc0V = vqaddq_s32(acc0V,prod0);
 
-        vst1q(pDst, sum); 
+        prod0 = vmullbq_int_s16(vecSrc.val[1], vecSrc.val[1]);
+        acc0V = vqaddq_s32(acc0V,prod0);
+
+
+        prod1 = vmulltq_int_s16(vecSrc.val[0], vecSrc.val[0]);
+        acc1V = vqaddq_s32(acc1V,prod1);
+
+        prod1 = vmulltq_int_s16(vecSrc.val[1], vecSrc.val[1]);
+        acc1V = vqaddq_s32(acc1V,prod1);
+
+       
+
+        acc0V = vshrq(acc0V, 1);
+        acc1V = vshrq(acc1V, 1);
+
+        acc0V = FAST_VSQRT_Q31(acc0V);
+        acc1V = FAST_VSQRT_Q31(acc1V);
+
+        resV = vdupq_n_s16(0);
+        resV = vqshrnbq_n_s32(resV,acc0V,16);
+        resV = vqshrntq_n_s32(resV,acc1V,16);
+
+        vst1q(pDst, resV); 
         pDst += 8;
         /*
          * Decrement the blockSize loop counter
@@ -97,7 +131,8 @@ void arm_cmplx_mag_q15(
       acc0 = __SMUAD(in, in);
   
       /* store result in 2.14 format in destination buffer. */
-      arm_sqrt_q15((q15_t) (acc0 >> 17), pDst++);
+      arm_sqrt_q31(acc0  >> 1 , &res);
+      *pDst++ = res >> 16;
   
   
       /* Decrement loop counter */
@@ -111,6 +146,7 @@ void arm_cmplx_mag_q15(
         q15_t * pDst,
         uint32_t numSamples)
 {
+        q31_t res; /* temporary result */
         uint32_t blkCnt;                               /* Loop counter */
 
 #if defined (ARM_MATH_DSP)
@@ -131,22 +167,26 @@ void arm_cmplx_mag_q15(
     /* C[0] = sqrt(A[0] * A[0] + A[1] * A[1]) */
 
 #if defined (ARM_MATH_DSP)
-    in = read_q15x2_ia ((q15_t **) &pSrc);
+    in = read_q15x2_ia (&pSrc);
     acc0 = __SMUAD(in, in);
     /* store result in 2.14 format in destination buffer. */
-    arm_sqrt_q15((q15_t) (acc0 >> 17), pDst++);
+    arm_sqrt_q31(acc0  >> 1 , &res);
+    *pDst++ = res >> 16;
 
-    in = read_q15x2_ia ((q15_t **) &pSrc);
+    in = read_q15x2_ia (&pSrc);
     acc0 = __SMUAD(in, in);
-    arm_sqrt_q15((q15_t) (acc0 >> 17), pDst++);
+    arm_sqrt_q31(acc0  >> 1 , &res);
+    *pDst++ = res >> 16;
 
-    in = read_q15x2_ia ((q15_t **) &pSrc);
+    in = read_q15x2_ia (&pSrc);
     acc0 = __SMUAD(in, in);
-    arm_sqrt_q15((q15_t) (acc0 >> 17), pDst++);
+    arm_sqrt_q31(acc0  >> 1 , &res);
+    *pDst++ = res >> 16;
 
-    in = read_q15x2_ia ((q15_t **) &pSrc);
+    in = read_q15x2_ia (&pSrc);
     acc0 = __SMUAD(in, in);
-    arm_sqrt_q15((q15_t) (acc0 >> 17), pDst++);
+    arm_sqrt_q31(acc0  >> 1 , &res);
+    *pDst++ = res >> 16;
 #else
     real = *pSrc++;
     imag = *pSrc++;
@@ -154,25 +194,29 @@ void arm_cmplx_mag_q15(
     acc1 = ((q31_t) imag * imag);
 
     /* store result in 2.14 format in destination buffer. */
-    arm_sqrt_q15((q15_t) (((q63_t) acc0 + acc1) >> 17), pDst++);
+    arm_sqrt_q31((acc0 + acc1) >> 1 , &res);
+    *pDst++ = res >> 16;
 
     real = *pSrc++;
     imag = *pSrc++;
     acc0 = ((q31_t) real * real);
     acc1 = ((q31_t) imag * imag);
-    arm_sqrt_q15((q15_t) (((q63_t) acc0 + acc1) >> 17), pDst++);
+    arm_sqrt_q31((acc0 + acc1) >> 1 , &res);
+    *pDst++ = res >> 16;
 
     real = *pSrc++;
     imag = *pSrc++;
     acc0 = ((q31_t) real * real);
     acc1 = ((q31_t) imag * imag);
-    arm_sqrt_q15((q15_t) (((q63_t) acc0 + acc1) >> 17), pDst++);
+    arm_sqrt_q31((acc0 + acc1) >> 1 , &res);
+    *pDst++ = res >> 16;
 
     real = *pSrc++;
     imag = *pSrc++;
     acc0 = ((q31_t) real * real);
     acc1 = ((q31_t) imag * imag);
-    arm_sqrt_q15((q15_t) (((q63_t) acc0 + acc1) >> 17), pDst++);
+    arm_sqrt_q31((acc0 + acc1) >> 1 , &res);
+    *pDst++ = res >> 16;
 #endif /* #if defined (ARM_MATH_DSP) */
 
     /* Decrement loop counter */
@@ -194,11 +238,12 @@ void arm_cmplx_mag_q15(
     /* C[0] = sqrt(A[0] * A[0] + A[1] * A[1]) */
 
 #if defined (ARM_MATH_DSP)
-    in = read_q15x2_ia ((q15_t **) &pSrc);
+    in = read_q15x2_ia (&pSrc);
     acc0 = __SMUAD(in, in);
 
     /* store result in 2.14 format in destination buffer. */
-    arm_sqrt_q15((q15_t) (acc0 >> 17), pDst++);
+    arm_sqrt_q31(acc0  >> 1 , &res);
+    *pDst++ = res >> 16;
 #else
     real = *pSrc++;
     imag = *pSrc++;
@@ -206,7 +251,9 @@ void arm_cmplx_mag_q15(
     acc1 = ((q31_t) imag * imag);
 
     /* store result in 2.14 format in destination buffer. */
-    arm_sqrt_q15((q15_t) (((q63_t) acc0 + acc1) >> 17), pDst++);
+    arm_sqrt_q31((acc0 + acc1) >> 1 , &res);
+    *pDst++ = res >> 16;
+ 
 #endif
 
     /* Decrement loop counter */

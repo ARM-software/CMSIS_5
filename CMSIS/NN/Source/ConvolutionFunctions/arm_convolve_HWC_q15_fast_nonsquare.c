@@ -21,8 +21,8 @@
  * Title:        arm_convolve_HWC_q15_fast.c
  * Description:  Fast Q15 version of convolution
  *
- * $Date:        January 26, 2021
- * $Revision:    V.1.0.2
+ * $Date:        July 20, 2021
+ * $Revision:    V.1.1.2
  *
  * Target Processor:  Cortex-M cores
  *
@@ -103,7 +103,7 @@ arm_status arm_convolve_HWC_q15_fast_nonsquare(const q15_t *Im_in,
                                                q7_t *bufferB)
 {
     (void)bufferB;
-#if defined(ARM_MATH_DSP)
+#if defined(ARM_MATH_DSP) && !defined(ARM_MATH_MVEI)
     int16_t i_out_y, i_out_x, i_ker_y, i_ker_x;
 
     q15_t *pBuffer = bufferA;

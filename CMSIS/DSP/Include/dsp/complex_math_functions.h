@@ -1,8 +1,8 @@
 /******************************************************************************
  * @file     complex_math_functions.h
  * @brief    Public header file for CMSIS DSP Library
- * @version  V1.9.0
- * @date     23 April 2021
+ * @version  V1.10.0
+ * @date     08 July 2021
  * Target Processor: Cortex-M and Cortex-A cores
  ******************************************************************************/
 /*
@@ -97,6 +97,18 @@ extern "C"
 
 
   /**
+   * @brief  Floating-point complex magnitude squared
+   * @param[in]  pSrc        points to the complex input vector
+   * @param[out] pDst        points to the real output vector
+   * @param[in]  numSamples  number of complex samples in the input vector
+   */
+  void arm_cmplx_mag_squared_f64(
+  const float64_t * pSrc,
+        float64_t * pDst,
+        uint32_t numSamples);
+
+
+  /**
    * @brief  Q31 complex magnitude squared
    * @param[in]  pSrc        points to the complex input vector
    * @param[out] pDst        points to the real output vector
@@ -132,6 +144,18 @@ extern "C"
         uint32_t numSamples);
 
 
+/**
+   * @brief  Floating-point complex magnitude
+   * @param[in]  pSrc        points to the complex input vector
+   * @param[out] pDst        points to the real output vector
+   * @param[in]  numSamples  number of complex samples in the input vector
+   */
+  void arm_cmplx_mag_f64(
+  const float64_t * pSrc,
+        float64_t * pDst,
+        uint32_t numSamples);
+
+
   /**
    * @brief  Q31 complex magnitude
    * @param[in]  pSrc        points to the complex input vector
@@ -151,6 +175,17 @@ extern "C"
    * @param[in]  numSamples  number of complex samples in the input vector
    */
   void arm_cmplx_mag_q15(
+  const q15_t * pSrc,
+        q15_t * pDst,
+        uint32_t numSamples);
+
+  /**
+   * @brief  Q15 complex magnitude
+   * @param[in]  pSrc        points to the complex input vector
+   * @param[out] pDst        points to the real output vector
+   * @param[in]  numSamples  number of complex samples in the input vector
+   */
+  void arm_cmplx_mag_fast_q15(
   const q15_t * pSrc,
         q15_t * pDst,
         uint32_t numSamples);
@@ -285,6 +320,21 @@ extern "C"
   const float32_t * pSrcB,
         float32_t * pDst,
         uint32_t numSamples);
+
+
+
+/**
+ * @brief  Floating-point complex-by-complex multiplication
+ * @param[in]  pSrcA       points to the first input vector
+ * @param[in]  pSrcB       points to the second input vector
+ * @param[out] pDst        points to the output vector
+ * @param[in]  numSamples  number of complex samples in each vector
+ */
+void arm_cmplx_mult_cmplx_f64(
+const float64_t * pSrcA,
+const float64_t * pSrcB,
+	  float64_t * pDst,
+	  uint32_t numSamples);
 
 
 

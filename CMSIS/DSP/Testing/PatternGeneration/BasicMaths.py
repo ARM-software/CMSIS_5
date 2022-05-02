@@ -132,7 +132,7 @@ def writeTests(config,format):
     # This function is used in other test functions for q31 and q15
     # So we can't add tests here for q15 and q31.
     # But we can for f32:
-    if format == Tools.F32 or format==Tools.F16:
+    if format == Tools.F64 or format == Tools.F32 or format==Tools.F16:
        clipTest(config,format,12)
        return(13)
 
@@ -301,18 +301,20 @@ def generatePatterns():
     PATTERNDIR = os.path.join("Patterns","DSP","BasicMaths","BasicMaths")
     PARAMDIR = os.path.join("Parameters","DSP","BasicMaths","BasicMaths")
     
+    configf64=Tools.Config(PATTERNDIR,PARAMDIR,"f64")
     configf32=Tools.Config(PATTERNDIR,PARAMDIR,"f32")
     configf16=Tools.Config(PATTERNDIR,PARAMDIR,"f16")
     configq31=Tools.Config(PATTERNDIR,PARAMDIR,"q31")
     configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
     configq7=Tools.Config(PATTERNDIR,PARAMDIR,"q7")
 
-    #configf32.setOverwrite(False)
-    #configf16.setOverwrite(False)
-    #configq31.setOverwrite(False)
-    #configq15.setOverwrite(False)
-    #configq7.setOverwrite(False)
+    configf32.setOverwrite(False)
+    configf16.setOverwrite(False)
+    configq31.setOverwrite(False)
+    configq15.setOverwrite(False)
+    configq7.setOverwrite(False)
     
+    writeTests(configf64,Tools.F64)
     writeTests(configf32,0)
     writeTests(configf16,16)
 

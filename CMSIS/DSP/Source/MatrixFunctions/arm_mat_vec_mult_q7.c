@@ -301,15 +301,15 @@ void arm_mat_vec_mult_q7(const arm_matrix_instance_q7 *pSrcMat, const q7_t *pVec
 
     /* The following loop performs the dot-product of each row in pSrcA with the vector */
     while (row > 0) {
-        /* For every row wise process, the pInVec pointer is set
-         ** to the starting address of the vector */
-        pInVec = pVec;
-
         /* Initialize accumulators */
         q31_t sum1 = 0;
         q31_t sum2 = 0;
         q31_t sum3 = 0;
         q31_t sum4 = 0;
+
+        /* For every row wise process, the pInVec pointer is set
+         ** to the starting address of the vector */
+        pInVec = pVec;
 
         /* Loop unrolling: process 4 columns per iteration */
         colCnt = numCols >> 2;
@@ -325,26 +325,26 @@ void arm_mat_vec_mult_q7(const arm_matrix_instance_q7 *pSrcMat, const q7_t *pVec
 
         while (colCnt > 0u) {
             // Read 4 values from vector
-            vecData = read_q7x4_ia ((q7_t **) &pInVec);
+            vecData = read_q7x4_ia (&pInVec);
             vecData2 = __SXTB16(__ROR(vecData, 8));
             vecData = __SXTB16(vecData);
             // Read 16 values from the matrix - 4 values from each of 4 rows, and do multiply accumulate
-            matData = read_q7x4_ia ((q7_t **) &pInA1);
+            matData = read_q7x4_ia (&pInA1);
             matData2 = __SXTB16(__ROR(matData, 8));
             matData = __SXTB16(matData);
             sum1 = __SMLAD(matData, vecData, sum1);
             sum1 = __SMLAD(matData2, vecData2, sum1);
-            matData = read_q7x4_ia ((q7_t **) &pInA2);
+            matData = read_q7x4_ia (&pInA2);
             matData2 = __SXTB16(__ROR(matData, 8));
             matData = __SXTB16(matData);
             sum2 = __SMLAD(matData, vecData, sum2);
             sum2 = __SMLAD(matData2, vecData2, sum2);
-            matData = read_q7x4_ia ((q7_t **) &pInA3);
+            matData = read_q7x4_ia (&pInA3);
             matData2 = __SXTB16(__ROR(matData, 8));
             matData = __SXTB16(matData);
             sum3 = __SMLAD(matData, vecData, sum3);
             sum3 = __SMLAD(matData2, vecData2, sum3);
-            matData = read_q7x4_ia ((q7_t **) &pInA4);
+            matData = read_q7x4_ia (&pInA4);
             matData2 = __SXTB16(__ROR(matData, 8));
             matData = __SXTB16(matData);
             sum4 = __SMLAD(matData, vecData, sum4);
@@ -391,10 +391,10 @@ void arm_mat_vec_mult_q7(const arm_matrix_instance_q7 *pSrcMat, const q7_t *pVec
         colCnt = numCols >> 2;
 
         while (colCnt > 0) {
-            vecData = read_q7x4_ia ((q7_t **) &pInVec);
+            vecData = read_q7x4_ia (&pInVec);
             vecData2 = __SXTB16(__ROR(vecData, 8));
             vecData = __SXTB16(vecData);
-            matData = read_q7x4_ia ((q7_t **) &pInA1);
+            matData = read_q7x4_ia (&pInA1);
             matData2 = __SXTB16(__ROR(matData, 8));
             matData = __SXTB16(matData);
             sum = __SMLAD(matData, vecData, sum);

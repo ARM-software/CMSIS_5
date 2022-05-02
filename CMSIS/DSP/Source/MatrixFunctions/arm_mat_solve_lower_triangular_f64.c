@@ -58,7 +58,6 @@
 
   /* Check for matrix mismatch condition */
   if ((lt->numRows != lt->numCols) ||
-      (a->numRows != a->numCols) ||
       (lt->numRows != a->numRows)   )
   {
     /* Set status as ARM_MATH_SIZE_MISMATCH */
@@ -77,9 +76,7 @@
     x2 = (a2 - c2 x3) / b2
 
     */
-    int i,j,k,n;
-
-    n = dst->numRows;
+    int i,j,k,n,cols;
 
     float64_t *pX = dst->pData;
     float64_t *pLT = lt->pData;
@@ -88,27 +85,30 @@
     float64_t *lt_row;
     float64_t *a_col;
 
-    for(j=0; j < n; j ++)
+    n = dst->numRows;
+    cols = dst->numCols;
+
+    for(j=0; j < cols; j ++)
     {
        a_col = &pA[j];
 
        for(i=0; i < n ; i++)
        {
+            float64_t tmp=a_col[i * cols];
+
             lt_row = &pLT[n*i];
 
-            float64_t tmp=a_col[i * n];
-            
             for(k=0; k < i; k++)
             {
-                tmp -= lt_row[k] * pX[n*k+j];
+                tmp -= lt_row[k] * pX[cols*k+j];
             }
 
-            if (lt_row[i]==0.0f)
+            if (lt_row[i]==0.0)
             {
               return(ARM_MATH_SINGULAR);
             }
             tmp = tmp / lt_row[i];
-            pX[i*n+j] = tmp;
+            pX[i*cols+j] = tmp;
        }
 
     }

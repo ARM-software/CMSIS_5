@@ -136,7 +136,7 @@ void arm_f16_to_q15(
         /*
          * convert from float to Q31 and then store the results in the destination buffer
          */
-        *pDst++ = clip_q31_to_q15((q31_t) (*pIn++ * 32768.0));
+        *pDst++ = clip_q31_to_q15((q31_t) ((_Float16)*pIn++ * 32768.0f16));
 
 #endif                          /*      #ifdef ARM_MATH_ROUNDING        */
 

@@ -1,8 +1,8 @@
 /******************************************************************************
  * @file     arm_math_types.h
  * @brief    Public header file for CMSIS DSP Library
- * @version  V1.9.0
- * @date     23 April 2021
+ * @version  V1.10.0
+ * @date     08 July 2021
  * Target Processor: Cortex-M and Cortex-A cores
  ******************************************************************************/
 /*
@@ -37,6 +37,9 @@ extern "C"
 
 #elif defined ( __ARMCC_VERSION ) && ( __ARMCC_VERSION >= 6010050 )
 
+#elif defined ( __APPLE_CC__ )
+  #pragma GCC diagnostic ignored "-Wold-style-cast"
+
 #elif defined ( __GNUC__ )
   #pragma GCC diagnostic push
   #pragma GCC diagnostic ignored "-Wsign-conversion"
@@ -64,7 +67,11 @@ extern "C"
 #define __STATIC_FORCEINLINE static __forceinline
 #define __STATIC_INLINE static __inline
 #define __ALIGNED(x) __declspec(align(x))
-
+#elif defined ( __APPLE_CC__ )
+#include <stdint.h>
+#define  __ALIGNED(x) __attribute__((aligned(x)))
+#define __STATIC_FORCEINLINE static inline __attribute__((always_inline)) 
+#define __STATIC_INLINE static inline
 #elif defined (__GNUC_PYTHON__)
 #include <stdint.h>
 #define  __ALIGNED(x) __attribute__((aligned(x)))
@@ -88,16 +95,22 @@ extern "C"
 #endif
 
 #if defined(ARM_MATH_NEON)
-#include <arm_neon.h>
-#if __ARM_FEATURE_FP16_VECTOR_ARITHMETIC
-  #if !defined(ARM_MATH_NEON_FLOAT16)
-  #define ARM_MATH_NEON_FLOAT16
+  #if defined(_MSC_VER) && defined(_M_ARM64EC)
+    #include <arm64_neon.h>
+  #else
+    #include <arm_neon.h>
   #endif
-#endif
+  #if defined(__ARM_FEATURE_FP16_VECTOR_ARITHMETIC) && __ARM_FEATURE_FP16_VECTOR_ARITHMETIC
+    #if !defined(ARM_MATH_NEON_FLOAT16)
+      #define ARM_MATH_NEON_FLOAT16
+    #endif
+  #endif
 #endif
 
 #if !defined(ARM_MATH_AUTOVECTORIZE)
 
+
+#if defined(__ARM_FEATURE_MVE)
 #if __ARM_FEATURE_MVE
   #if !defined(ARM_MATH_MVEI)
     #define ARM_MATH_MVEI
@@ -113,6 +126,7 @@ extern "C"
   #endif
 #endif
 
+#endif /*defined(__ARM_FEATURE_MVE)*/
 #endif /*!defined(ARM_MATH_AUTOVECTORIZE)*/
 
 
@@ -157,6 +171,12 @@ extern "C"
   #define IAR_ONLY_LOW_OPTIMIZATION_EXIT
 
 #elif defined (__ARMCC_VERSION ) && ( __ARMCC_VERSION >= 6010050 )
+  #define LOW_OPTIMIZATION_ENTER
+  #define LOW_OPTIMIZATION_EXIT
+  #define IAR_ONLY_LOW_OPTIMIZATION_ENTER
+  #define IAR_ONLY_LOW_OPTIMIZATION_EXIT
+  
+#elif defined ( __APPLE_CC__ )
   #define LOW_OPTIMIZATION_ENTER
   #define LOW_OPTIMIZATION_EXIT
   #define IAR_ONLY_LOW_OPTIMIZATION_ENTER
@@ -224,6 +244,8 @@ extern "C"
 
 #elif defined ( __ARMCC_VERSION ) && ( __ARMCC_VERSION >= 6010050 )
 
+#elif defined ( __APPLE_CC__ )
+
 #elif defined ( __GNUC__ )
 #pragma GCC diagnostic pop
 
@@ -245,7 +267,7 @@ extern "C"
 }
 #endif
 
-#if __ARM_FEATURE_MVE
+#if defined(__ARM_FEATURE_MVE) && __ARM_FEATURE_MVE
 #include <arm_mve.h>
 #endif
 
@@ -277,7 +299,9 @@ extern "C"
   /**
    * @brief 32-bit floating-point type definition.
    */
+#if !defined(__ICCARM__) || !(__ARM_FEATURE_MVE & 2)
   typedef float float32_t;
+#endif
 
   /**
    * @brief 64-bit floating-point type definition.

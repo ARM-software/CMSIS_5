@@ -79,7 +79,9 @@ if [[ $REGEN != 0 ]]; then
 fi
 
 echo "Generating documentation ..."
-doxygen "${DIRNAME}/Build/Build.dxy" 1
+echo "Copying Build html"
+mkdir -p "${DIRNAME}/../Documentation/Build/"
+cp -r "${DIRNAME}/Build/html/" "${DIRNAME}/../Documentation/Build/"
 doxygen "${DIRNAME}/Core/core.dxy" 1
 doxygen "${DIRNAME}/Core_A/core_A.dxy" 1
 doxygen "${DIRNAME}/DAP/dap.dxy" 1
@@ -88,7 +90,9 @@ doxygen "${DIRNAME}/DSP/dsp.dxy" 1
 doxygen "${DIRNAME}/General/general.dxy" 0
 doxygen "${DIRNAME}/DAP/dap.dxy" 1
 doxygen "${DIRNAME}/NN/nn.dxy" 1
-doxygen "${DIRNAME}/Pack/Pack.dxy" 1
+echo "Copying Pack html"
+mkdir -p "${DIRNAME}/../Documentation/Pack/"
+cp -r "${DIRNAME}/Pack/html" "${DIRNAME}/../Documentation/Pack/"
 doxygen "${DIRNAME}/RTOS/rtos.dxy" 1
 doxygen "${DIRNAME}/RTOS2/rtos.dxy" 1
 doxygen "${DIRNAME}/SVD/svd.dxy" 0

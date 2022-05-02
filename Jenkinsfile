@@ -19,6 +19,7 @@ DOCKERINFO = [
         'label': 'latest'
     ]
 ]
+HADOLINT_VERSION = '2.6.0-alpine'
 
 dockerinfo = DOCKERINFO['production']
 
@@ -131,13 +132,11 @@ pipeline {
                 script {
                     COMMIT = checkoutScmWithRetry(3)
                     echo "COMMIT: ${COMMIT}"
-                    VERSION = (sh(returnStdout: true, script: 'git describe --always')).trim()
+                    VERSION = (sh(returnStdout: true, script: 'git describe --tags --always')).trim()
                     echo "VERSION: '${VERSION}'"
                 }
 
-                dir('docker') {
-                    stash name: 'dockerfile', includes: '**'
-                }
+                stash name: 'dockerfile', includes: 'docker/**'
             }
         }
 
@@ -206,7 +205,7 @@ echo """Stage schedule:
                             runAsGroup: 1000
                           containers:
                             - name: hadolint
-                              image: mcu--docker.eu-west-1.artifactory.aws.arm.com/hadolint/hadolint:v1.19.0-alpine
+                              image: mcu--docker.eu-west-1.artifactory.aws.arm.com/hadolint/hadolint:${HADOLINT_VERSION}
                               alwaysPullImage: true
                               imagePullPolicy: Always
                               command:
@@ -221,15 +220,13 @@ echo """Stage schedule:
                 }
             }
             steps {
-                dir('docker') {
-                    unstash 'dockerfile'
+                unstash 'dockerfile'
 
-                    sh 'hadolint --format json dockerfile | tee hadolint.log'
+                sh 'hadolint --format json docker/dockerfile* | tee hadolint.log'
 
-                    recordIssues tools: [hadoLint(id: 'hadolint', pattern: 'hadolint.log')],
-                                 qualityGates: [[threshold: 1, type: 'DELTA', unstable: true]],
-                                 referenceJobName: 'nightly', ignoreQualityGate: true
-                }
+                recordIssues tools: [hadoLint(id: 'hadolint', pattern: 'hadolint.log')],
+                             qualityGates: [[threshold: 1, type: 'DELTA', unstable: true]],
+                             referenceJobName: 'nightly', ignoreQualityGate: true
             }
         }
 
@@ -265,9 +262,9 @@ echo """Stage schedule:
             steps {
                 sh('apk add bash curl git')
                 script {
-                    dir('docker') {
-                        unstash 'dockerfile'
+                    unstash 'dockerfile'
 
+                    dir('docker') {
                         dockerinfo = DOCKERINFO['staging']
                         withCredentials([sshUserPrivateKey(credentialsId: 'grasci_with_pk',
                                 keyFileVariable: 'grasciPk',
@@ -316,6 +313,7 @@ echo """Stage schedule:
             }
             steps {
                 checkoutScmWithRetry(3)
+                sh('./CMSIS/Utilities/fetch_devtools.sh')
                 sh('./CMSIS/RTOS/RTX/LIB/fetch_libs.sh')
                 sh('./CMSIS/RTOS2/RTX/Library/fetch_libs.sh')
 

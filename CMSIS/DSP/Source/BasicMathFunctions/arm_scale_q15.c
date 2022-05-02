@@ -136,8 +136,8 @@ void arm_scale_q15(
 
 #if defined (ARM_MATH_DSP)
     /* read 2 times 2 samples at a time from source */
-    inA1 = read_q15x2_ia ((q15_t **) &pSrc);
-    inA2 = read_q15x2_ia ((q15_t **) &pSrc);
+    inA1 = read_q15x2_ia (&pSrc);
+    inA2 = read_q15x2_ia (&pSrc);
 
     /* Scale inputs and store result in temporary variables
      * in single cycle by packing the outputs */

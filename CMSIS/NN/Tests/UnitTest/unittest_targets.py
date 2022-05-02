@@ -305,7 +305,7 @@ def print_summary(targets):
         verdict = verdict_pass
     else:
         verdict = verdict_fail
-    print("{} Summary: {} tests in total passed on {} targets ({})".
+    print("{} Summary: {} tests in total passed on {} target(s) ({})".
           format(verdict, passed, len(targets), ', '.join([t['name'] for t in targets])))
     print("{} {:.0f}% tests passed, {} tests failed out of {}".format(verdict, total*100, failed, expected))
 

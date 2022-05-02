@@ -10,7 +10,7 @@ option(HARDFP "Hard floating point" ON)
 option(LITTLEENDIAN "Little endian" ON)
 option(FASTMATHCOMPUTATIONS "Fast Math enabled" OFF)
 option(FLOAT16 "Scalar float16 supported by the core" OFF)
-option(HYBRID "Hybrid instrinsics" ON)
+option(HYBRID "Hybrid instrinsics" OFF)
 
 # More detailed identification for benchmark results
 SET(COREID ARMCM7)

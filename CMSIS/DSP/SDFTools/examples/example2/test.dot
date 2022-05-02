@@ -1,0 +1,187 @@
+
+
+
+digraph structs {
+    node [shape=plaintext]
+    rankdir=LR
+    edge [arrowsize=0.5]
+    fontname="times"
+
+
+TFLite [label=<
+<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+  <TR>
+    <TD ALIGN="CENTER" PORT="i">TFLite<BR/>(TFLite)</TD>
+  </TR>
+</TABLE>>];
+
+
+arm_add_f321 [label=<
+<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+  <TR>
+    <TD PORT="ia"><FONT POINT-SIZE="9.0">ia</FONT></TD>
+    <TD ALIGN="CENTER" ROWSPAN="2">arm_add_f32<BR/>(CMSIS-DSP)</TD>
+    <TD PORT="o"><FONT POINT-SIZE="9.0">o</FONT></TD>
+  </TR>
+<TR>
+<TD PORT="ib"><FONT POINT-SIZE="9.0">ib</FONT></TD>
+
+ 
+<TD></TD></TR>
+
+</TABLE>>];
+
+
+arm_scale_f321 [label=<
+<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+  <TR>
+    <TD PORT="ia"><FONT POINT-SIZE="9.0">ia</FONT></TD>
+    <TD ALIGN="CENTER" ROWSPAN="2">arm_scale_f32<BR/>(CMSIS-DSP)</TD>
+    <TD PORT="o"><FONT POINT-SIZE="9.0">o</FONT></TD>
+  </TR>
+<TR>
+<TD PORT="ib"><FONT POINT-SIZE="9.0">ib</FONT></TD>
+
+ 
+<TD></TD></TR>
+
+</TABLE>>];
+
+
+arm_scale_f322 [label=<
+<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+  <TR>
+    <TD PORT="ia"><FONT POINT-SIZE="9.0">ia</FONT></TD>
+    <TD ALIGN="CENTER" ROWSPAN="2">arm_scale_f32<BR/>(CMSIS-DSP)</TD>
+    <TD PORT="o"><FONT POINT-SIZE="9.0">o</FONT></TD>
+  </TR>
+<TR>
+<TD PORT="ib"><FONT POINT-SIZE="9.0">ib</FONT></TD>
+
+ 
+<TD></TD></TR>
+
+</TABLE>>];
+
+audioWin [label=<
+<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+  <TR>
+    <TD ALIGN="CENTER" PORT="i">audioWin<BR/>(SlidingBuffer)</TD>
+  </TR>
+</TABLE>>];
+
+mfcc [label=<
+<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+  <TR>
+    <TD ALIGN="CENTER" PORT="i">mfcc<BR/>(MFCC)</TD>
+  </TR>
+</TABLE>>];
+
+mfccWind [label=<
+<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+  <TR>
+    <TD ALIGN="CENTER" PORT="i">mfccWind<BR/>(SlidingBuffer)</TD>
+  </TR>
+</TABLE>>];
+
+src [label=<
+<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+  <TR>
+    <TD ALIGN="CENTER" PORT="i">src<BR/>(StereoSource)</TD>
+  </TR>
+</TABLE>>];
+
+
+toMono [label=<
+<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+  <TR>
+    <TD PORT="i"><FONT POINT-SIZE="9.0">i</FONT></TD>
+    <TD ALIGN="CENTER" ROWSPAN="2">toMono<BR/>(Unzip)</TD>
+    <TD PORT="o1"><FONT POINT-SIZE="9.0">o1</FONT></TD>
+  </TR>
+<TR>
+ 
+<TD></TD>
+<TD PORT="o2"><FONT POINT-SIZE="9.0">o2</FONT></TD>
+</TR>
+
+</TABLE>>];
+
+
+srcDelay [label=<
+<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+  <TR>
+    <TD ALIGN="CENTER" PORT="i">10</TD>
+  </TR>
+</TABLE>>];
+
+
+src:i -> srcDelay:i [taillabel=<
+<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >320</FONT>
+</TD></TR></TABLE>>]
+
+srcDelay:i -> toMono:i [headlabel=<
+<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >320</FONT>
+</TD></TR></TABLE>>,label="f32(330)"]
+
+
+toMono:o1 -> arm_scale_f321:ia [headlabel=<
+<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >160</FONT>
+</TD></TR></TABLE>>,taillabel=<
+<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >160</FONT>
+</TD></TR></TABLE>>,label="f32(160)"]
+
+toMono:o2 -> arm_scale_f322:ia [headlabel=<
+<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >160</FONT>
+</TD></TR></TABLE>>,taillabel=<
+<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >160</FONT>
+</TD></TR></TABLE>>,label="f32(160)"]
+
+arm_scale_f321:o -> arm_add_f321:ia [headlabel=<
+<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >160</FONT>
+</TD></TR></TABLE>>,taillabel=<
+<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >160</FONT>
+</TD></TR></TABLE>>,label="f32(160)"]
+
+arm_scale_f322:o -> arm_add_f321:ib [headlabel=<
+<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >160</FONT>
+</TD></TR></TABLE>>,taillabel=<
+<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >160</FONT>
+</TD></TR></TABLE>>,label="f32(160)"]
+
+arm_add_f321:o -> audioWin:i [headlabel=<
+<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >320</FONT>
+</TD></TR></TABLE>>,taillabel=<
+<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >160</FONT>
+</TD></TR></TABLE>>,label="f32(320)"]
+
+audioWin:i -> mfcc:i [headlabel=<
+<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >640</FONT>
+</TD></TR></TABLE>>,taillabel=<
+<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >640</FONT>
+</TD></TR></TABLE>>,label="f32(640)"]
+
+mfcc:i -> mfccWind:i [headlabel=<
+<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >250</FONT>
+</TD></TR></TABLE>>,taillabel=<
+<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >10</FONT>
+</TD></TR></TABLE>>,label="f32(250)"]
+
+mfccWind:i -> TFLite:i [headlabel=<
+<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >500</FONT>
+</TD></TR></TABLE>>,taillabel=<
+<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >500</FONT>
+</TD></TR></TABLE>>,label="f32(500)"]
+
+HALF [label=<
+<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+  <TR>
+    <TD ALIGN="CENTER" PORT="i">HALF</TD>
+  </TR>
+</TABLE>>];
+
+HALF:i -> arm_scale_f321:ib
+
+HALF:i -> arm_scale_f322:ib
+
+}

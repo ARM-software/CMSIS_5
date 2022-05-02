@@ -374,8 +374,7 @@ register uint32_t __rf   __ASM(SVC_RegF) = (uint32_t)f
 #define SVC_Out1 "=r"(__r0)
 
 #define SVC_CL0
-#define SVC_CL1 "r1"
-#define SVC_CL2 "r0","r1"
+#define SVC_CL1 "r0"
 
 #define SVC_Call0(in, out, cl)                                                 \
   __ASM volatile ("svc 0" : out : in : cl)
@@ -384,7 +383,7 @@ register uint32_t __rf   __ASM(SVC_RegF) = (uint32_t)f
 __attribute__((always_inline))                                                 \
 __STATIC_INLINE t __svc##f (void) {                                            \
   SVC_ArgF(svcRtx##f);                                                         \
-  SVC_Call0(SVC_In0, SVC_Out0, SVC_CL2);                                       \
+  SVC_Call0(SVC_In0, SVC_Out0, SVC_CL1);                                       \
 }
 
 #define SVC0_0(f,t)                                                            \
@@ -392,7 +391,7 @@ __attribute__((always_inline))                                                 \
 __STATIC_INLINE t __svc##f (void) {                                            \
   SVC_ArgN(0);                                                                 \
   SVC_ArgF(svcRtx##f);                                                         \
-  SVC_Call0(SVC_In0, SVC_Out1, SVC_CL1);                                       \
+  SVC_Call0(SVC_In0, SVC_Out1, SVC_CL0);                                       \
   return (t) __r0;                                                             \
 }
 
@@ -401,7 +400,7 @@ __attribute__((always_inline))                                                 \
 __STATIC_INLINE t __svc##f (t1 a1) {                                           \
   SVC_ArgR(0,a1);                                                              \
   SVC_ArgF(svcRtx##f);                                                         \
-  SVC_Call0(SVC_In1, SVC_Out0, SVC_CL1);                                       \
+  SVC_Call0(SVC_In1, SVC_Out1, SVC_CL0);                                       \
 }
 
 #define SVC0_1(f,t,t1)                                                         \
@@ -409,7 +408,7 @@ __attribute__((always_inline))                                                 \
 __STATIC_INLINE t __svc##f (t1 a1) {                                           \
   SVC_ArgR(0,a1);                                                              \
   SVC_ArgF(svcRtx##f);                                                         \
-  SVC_Call0(SVC_In1, SVC_Out1, SVC_CL1);                                       \
+  SVC_Call0(SVC_In1, SVC_Out1, SVC_CL0);                                       \
   return (t) __r0;                                                             \
 }
 

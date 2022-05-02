@@ -33,12 +33,41 @@
 #include <limits.h>
 #include <math.h>
 
+#if !defined(ARM_MATH_MVE_FLOAT16) || defined(ARM_MATH_AUTOVECTORIZE)
+
+/*
+
+_Float16 is not supported in g++ so we avoid putting _Float16 definitions
+in the public headers.
+
+This function should at some point be moved in FastMath.
+
+*/
+__STATIC_INLINE float16_t arm_exponent_f16(float16_t x, int32_t nb)
+{
+    float16_t r = x;
+    nb --;
+    while(nb > 0)
+    {
+        r = (_Float16)r * (_Float16)x;
+        nb--;
+    }
+    return(r);
+}
+#endif
 
 /**
  * @addtogroup polysvm
  * @{
  */
 
+
+
+
+#if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
+
+#include "arm_helium_utils.h"
+#include "arm_vec_math_f16.h"
 
 /**
  * @brief SVM polynomial prediction
@@ -48,12 +77,6 @@
  * @return none.
  *
  */
-
-#if defined(ARM_MATH_MVE_FLOAT16) && !defined(ARM_MATH_AUTOVECTORIZE)
-
-#include "arm_helium_utils.h"
-#include "arm_vec_math_f16.h"
-
 void arm_svm_polynomial_predict_f16(
     const arm_svm_polynomial_instance_f16 *S,
     const float16_t * in,
@@ -303,6 +326,16 @@ void arm_svm_polynomial_predict_f16(
 }
 
 #else
+
+
+/**
+ * @brief SVM polynomial prediction
+ * @param[in]    S          Pointer to an instance of the polynomial SVM structure.
+ * @param[in]    in         Pointer to input vector
+ * @param[out]   pResult    Decision value
+ * @return none.
+ *
+ */
 void arm_svm_polynomial_predict_f16(
     const arm_svm_polynomial_instance_f16 *S,
     const float16_t * in,
@@ -318,9 +351,9 @@ void arm_svm_polynomial_predict_f16(
         dot=0;
         for(j=0; j < S->vectorDimension; j++)
         {
-            dot = dot + (_Float16)in[j]* (_Float16)*pSupport++;
+            dot = (_Float16)dot + (_Float16)in[j]* (_Float16)*pSupport++;
         }
-        sum += S->dualCoefficients[i] * (_Float16)arm_exponent_f16(S->gamma * dot + S->coef0, S->degree);
+        sum += (_Float16)S->dualCoefficients[i] * (_Float16)arm_exponent_f16((_Float16)S->gamma * (_Float16)dot + (_Float16)S->coef0, S->degree);
     }
 
     *pResult=S->classes[STEP(sum)];

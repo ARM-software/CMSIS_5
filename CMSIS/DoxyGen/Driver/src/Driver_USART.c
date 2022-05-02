@@ -112,7 +112,7 @@ Note that the USART driver also returns the common \ref execution_status.
 The \b mode requested with the function \ref ARM_USART_Control is not supported by this driver.
 
 \def ARM_USART_ERROR_BAUDRATE
-The <b>baude rate</b> requested with the function \ref ARM_USART_Control is not supported by this driver.
+The <b>baud rate</b> requested with the function \ref ARM_USART_Control is not supported by this driver.
 
 \def ARM_USART_ERROR_DATA_BITS
 The number of <b>data bits</b> requested with the function \ref ARM_USART_Control is not supported by this driver.
@@ -376,8 +376,8 @@ ARM_USART_CAPABILITIES ARM_USART_GetCapabilities (void)  {
 \fn       ARM_USART_CAPABILITIES ARM_USART_GetCapabilities (void)
 \details
 The function \b ARM_USART_GetCapabilities returns information about capabilities in this driver implementation.
-The data fields of the structure \ref ARM_USART_CAPABILITIES encode various capabilities, for example
-supported modes, if a hardware is capable to create signal events using the \ref ARM_USART_SignalEvent 
+The data fields of the structure \ref ARM_USART_CAPABILITIES encode various capabilities, for example: 
+supported modes, if hardware and driver are capable of signaling events using the \ref ARM_USART_SignalEvent 
 callback function ...
  
 Example:
@@ -617,7 +617,7 @@ The table lists the available \em control operations.
 <TR><TD>\ref ARM_USART_FLOW_CONTROL_RTS</TD>      <TD>Set to use the RTS flow control signal</TD></TR>
 <TR><TD>\ref ARM_USART_FLOW_CONTROL_RTS_CTS</TD>  <TD>Set to use the RTS and CTS flow control signal</TD></TR> 
 <TR><TD>\ref ARM_USART_CPOL0</TD>              <td rowspan="2" style="text-align:right"> 18     </td>  <td rowspan="2"> Clock Polarity  </td><TD>CPOL=\token{0} (default) : data are captured on rising edge (low->high transition)</TD></TR> 
-<TR><TD>\ref ARM_USART_CPOL1</TD>                 <TD>CPOL=\token{1} : data are captured on falling edge (high->lowh transition)</TD></TR> 
+<TR><TD>\ref ARM_USART_CPOL1</TD>                 <TD>CPOL=\token{1} : data are captured on falling edge (high->low transition)</TD></TR> 
 <TR><TD>\ref ARM_USART_CPHA0</TD>              <td rowspan="2" style="text-align:right"> 19     </td>  <td rowspan="2"> Clock Phase  </td><TD>CPHA=\token{0} (default) : sample on first (leading) edge</TD></TR>
 <TR><TD>\ref ARM_USART_CPHA1</TD>                 <TD>CPHA=\token{1} : sample on second (trailing) edge</TD></TR>
 <TR><TD>\ref ARM_USART_ABORT_RECEIVE</TD>      <td rowspan="11" style="text-align:right"> 0..19  </td>  <td rowspan="11"> \anchor usart_misc_tab Miscellaneous Operations <br>(cannot be ORed)  </td><TD>Abort receive operation (see also: \ref ARM_USART_Receive)</TD></TR>
@@ -730,8 +730,8 @@ The following events can be generated:
   <td> <i>always supported</i> </td>
 </tr>
 <tr>
-  <td> \ref ARM_USART_EVENT_TX_COMPLETE         </td><td>  3  </td><td> Occurs after call to \ref ARM_USART_Transfer to indicate that all the data has been 
-                                                                        transferred. The driver is ready for the next call to \ref ARM_USART_Transfer. </td>     
+  <td> \ref ARM_USART_EVENT_TX_COMPLETE         </td><td>  3  </td><td> Occurs after call to \ref ARM_USART_Send to indicate that all the data has been
+                                                                        physically transmitted on the wires. </td>
   <td> data field \em event_tx_complete = \token{1} </td>
 </tr>
 <tr>
@@ -769,25 +769,26 @@ The following events can be generated:
 </tr>
 <tr>
   <td> ARM_USART_EVENT_CTS                      </td><td>  10 </td><td> Indicates that CTS modem line state has changed.
-                                                                        Data field \em  cts = \token{1} of \ref ARM_USART_MODEM_STATUS. </td>     
+                                                                        Data field \em  cts of \ref ARM_USART_MODEM_STATUS has changed. </td>     
   <td> data field \em event_cts = \token{1} and <br>
        data field \em cts = \token{1}           </td>
 </tr>
 <tr>
   <td> ARM_USART_EVENT_DSR                      </td><td>  11 </td><td> Indicates that DSR modem line state has changed.
-                                                                        Data field \em  dsr = \token{1} of \ref ARM_USART_MODEM_STATUS. </td>     
+                                                                        Data field \em  dsr of \ref ARM_USART_MODEM_STATUS has changed. </td>     
   <td> data field \em event_dsr = \token{1} and <br>
        data field \em dsr = \token{1}           </td>
 </tr>
 <tr>
   <td> ARM_USART_EVENT_DCD                      </td><td>  12 </td><td> Indicates that DCD modem line state has changed.
-                                                                        Data field \em  dcd = \token{1} of \ref ARM_USART_MODEM_STATUS. </td>     
+                                                                        Data field \em  dcd of \ref ARM_USART_MODEM_STATUS has changed. </td>     
   <td> data field \em event_dcd = \token{1} and <br>
        data field \em dcd = \token{1}           </td>
 </tr>
 <tr>
-  <td> ARM_USART_EVENT_RI                       </td><td>  13 </td><td> Indicates that RI modem line state has changed.
-                                                                        Data field \em  ri = \token{1} of \ref ARM_USART_MODEM_STATUS. </td>     
+  <td> ARM_USART_EVENT_RI                       </td><td>  13 </td><td> Indicates that RI modem line state has changed from active to inactive 
+                                                                        (trailing edge on RI).
+                                                                        Data field \em  ri of \ref ARM_USART_MODEM_STATUS has changed from \token{1} to \token{0}. </td>     
   <td> data field \em event_ri = \token{1} and  <br>
        data field \em ri = \token{1}            </td>
 </tr>

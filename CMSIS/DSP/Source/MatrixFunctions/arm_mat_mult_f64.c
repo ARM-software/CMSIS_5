@@ -114,7 +114,7 @@ arm_status arm_mat_mult_f64(
       do
       {
         /* Set the variable sum, that acts as accumulator, to zero */
-        sum = 0.0f;
+        sum = 0.0;
 
         /* Initialize pointer pIn1 to point to starting address of column being processed */
         pIn1 = pInA;

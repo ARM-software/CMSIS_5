@@ -743,7 +743,7 @@ Sets the SWO transport mode for reading trace data.
   - \b Transport:
     - 0 - None (default)
     - 1 - Read trace data via DAP_SWO_Data command
-    - 2 - Send trace data via separate \ref WinUSB "WinUSB" endpoint (requires CMSIS-DAP v2 configuration)
+    - 2 - Send trace data via separate \ref BulkUSB "USB bulk endpoint" (requires CMSIS-DAP v2 configuration)
     - ... - reserved
 
 <b>DAP_SWO_Transport Response:</b>

@@ -161,10 +161,10 @@ arm_status arm_mat_scale_f16(
       /* C(m,n) = A(m,n) * scale */
 
       /* Scale and store result in destination buffer. */
-      *pOut++ = (*pIn++) * scale;
-      *pOut++ = (*pIn++) * scale;
-      *pOut++ = (*pIn++) * scale;
-      *pOut++ = (*pIn++) * scale;
+      *pOut++ = (_Float16)(*pIn++) * (_Float16)scale;
+      *pOut++ = (_Float16)(*pIn++) * (_Float16)scale;
+      *pOut++ = (_Float16)(*pIn++) * (_Float16)scale;
+      *pOut++ = (_Float16)(*pIn++) * (_Float16)scale;
 
       /* Decrement loop counter */
       blkCnt--;
@@ -185,7 +185,7 @@ arm_status arm_mat_scale_f16(
       /* C(m,n) = A(m,n) * scale */
 
       /* Scale and store result in destination buffer. */
-      *pOut++ = (*pIn++) * scale;
+      *pOut++ = (_Float16)(*pIn++) * (_Float16)scale;
 
       /* Decrement loop counter */
       blkCnt--;

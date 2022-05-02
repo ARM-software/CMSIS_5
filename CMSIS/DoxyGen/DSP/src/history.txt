@@ -7,6 +7,40 @@
     <th>Description</th>
   </tr>
   <tr>
+    <td>V1.10.0</td>
+    <td>
+      Float promotion issues:
+      - Removed remaining issues of implicit float promotion (mainly in f16 code)
+
+      Scalar versions of arm_vlog_q31 and arm_vlog_q15
+
+      Synchronous Data Flow (scripts in github repository)
+
+      Python wrapper available on official Python repository
+
+      MFCC F32, F16, Q31 and Q15
+
+      Typecasting functions for converting between f16 and s16 in scalar.
+
+      More f64 functions
+
+      arm_cmplx_mag_fast_q15:
+      The original arm_cmplx_mag_q15 is now more accurate but slower.
+
+      Added arm_mat_mult_opt_q31 for a faster version of arm_mat_mult_q31
+      when using Helium (but requiring more storage for intermediate results).
+
+      arm_(min|max)_no_idx_(q7|q15|q31|f16|f32|f64)
+      
+      arm_abs(min|max)_no_idx_(q7|q15|q31|f16|f32|f64)
+
+      arm_mse_(q7|q15|q31|f16|f32|f64)
+
+      Trigonometric functions:
+      - atan2 in f32, f16, q31 and q15.
+    </td>
+  </tr>
+  <tr>
     <td>V1.9.0</td>
     <td>
       Re-organization of arm_math.h

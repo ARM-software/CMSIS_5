@@ -251,7 +251,8 @@ endif()
 if (STANDARDTEST)
 
 if (BASICMATH)
-  set(BASICMATHSRC Source/Tests/BasicTestsF32.cpp
+  set(BASICMATHSRC Source/Tests/BasicTestsF64.cpp
+  Source/Tests/BasicTestsF32.cpp
   Source/Tests/BasicTestsQ31.cpp
   Source/Tests/BasicTestsQ15.cpp
   Source/Tests/BasicTestsQ7.cpp)
@@ -263,7 +264,8 @@ if (QUATERNIONMATH)
 endif()
 
 if (COMPLEXMATH)
-  set(COMPLEXMATHSRC Source/Tests/ComplexTestsF32.cpp
+  set(COMPLEXMATHSRC Source/Tests/ComplexTestsF64.cpp
+  Source/Tests/ComplexTestsF32.cpp
   Source/Tests/ComplexTestsQ31.cpp
   Source/Tests/ComplexTestsQ15.cpp)
 endif()
@@ -273,7 +275,8 @@ if (CONTROLLER)
 endif()
 
 if (FASTMATH)
-  set(FASTMATHSRC Source/Tests/FastMathF32.cpp
+  set(FASTMATHSRC Source/Tests/FastMathF64.cpp
+  Source/Tests/FastMathF32.cpp
   Source/Tests/FastMathQ31.cpp
   Source/Tests/FastMathQ15.cpp)
 endif()
@@ -282,10 +285,12 @@ if (FILTERING)
   set(FILTERINGSRC Source/Tests/DECIMF32.cpp
   Source/Tests/DECIMQ31.cpp
   Source/Tests/DECIMQ15.cpp
+  Source/Tests/MISCF64.cpp
   Source/Tests/MISCF32.cpp
   Source/Tests/MISCQ31.cpp
   Source/Tests/MISCQ15.cpp
   Source/Tests/MISCQ7.cpp
+  Source/Tests/FIRF64.cpp
   Source/Tests/FIRF32.cpp
   Source/Tests/FIRQ31.cpp
   Source/Tests/FIRQ15.cpp
@@ -318,7 +323,8 @@ if (STATISTICS)
 endif()
 
 if (SUPPORT)
-  set(SUPPORTSRC Source/Tests/SupportTestsF32.cpp
+  set(SUPPORTSRC Source/Tests/SupportTestsF64.cpp
+  Source/Tests/SupportTestsF32.cpp
   Source/Tests/SupportTestsQ31.cpp
   Source/Tests/SupportTestsQ15.cpp
   Source/Tests/SupportTestsQ7.cpp
@@ -333,7 +339,12 @@ if (TRANSFORM)
   Source/Tests/TransformCQ31.cpp
   Source/Tests/TransformRQ31.cpp
   Source/Tests/TransformCQ15.cpp
-  Source/Tests/TransformRQ15.cpp)
+  Source/Tests/TransformRQ15.cpp
+  Source/Tests/MFCCF32.cpp
+  Source/Tests/MFCCQ31.cpp
+  Source/Tests/MFCCQ15.cpp
+  Source/Tests/mfccdata.c
+  )
 endif()
 
 if (SVM)
@@ -345,7 +356,8 @@ if (BAYES)
 endif()
 
 if (DISTANCE)
-  set(DISTANCESRC Source/Tests/DistanceTestsF32.cpp
+  set(DISTANCESRC Source/Tests/DistanceTestsF64.cpp
+  Source/Tests/DistanceTestsF32.cpp
   Source/Tests/DistanceTestsU32.cpp)
 endif()
 
@@ -397,6 +409,8 @@ set(TESTSRC16
   Source/Tests/DistanceTestsF16.cpp
   Source/Tests/SVMF16.cpp
   Source/Tests/BayesF16.cpp
+  Source/Tests/MFCCF16.cpp
+  Source/Tests/mfccdata_f16.c
   )
 endif()
 endif() 

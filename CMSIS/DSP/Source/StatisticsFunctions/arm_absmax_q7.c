@@ -74,7 +74,7 @@ static void arm_small_blk_absmax_q7(
         mve_pred16_t    p = vctp8q(blkCnt);
         q7x16_t         extremIdxVal = vld1q_z_s8(pSrc, p);
 
-        extremIdxVal = vabsq(extremIdxVal);
+        extremIdxVal = vqabsq(extremIdxVal);
         /*
          * Get current max per lane and current index per lane
          * when a max is selected

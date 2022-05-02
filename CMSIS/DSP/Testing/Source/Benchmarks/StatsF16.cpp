@@ -146,17 +146,15 @@
 
     void StatsF16::test_entropy_f16()
     {
-      float16_t out;
-      out = arm_entropy_f16(inap,this->nb);
+      (void)arm_entropy_f16(inap,this->nb);
       
 
     } 
 
     void StatsF16::test_logsumexp_f16()
     {
-       float16_t out;
 
-       out  = arm_logsumexp_f16(inap,this->nb);
+       (void)arm_logsumexp_f16(inap,this->nb);
      
     } 
 
@@ -164,17 +162,15 @@
     void StatsF16::test_kullback_leibler_f16()
     {
       
-      float16_t out;
 
-      out = arm_kullback_leibler_f16(inap,inbp,this->nb);
+      (void)arm_kullback_leibler_f16(inap,inbp,this->nb);
      
     } 
 
     void StatsF16::test_logsumexp_dot_prod_f16()
     {
-      float16_t out;
 
-      out = arm_logsumexp_dot_prod_f16(inap,inbp,this->nb,tmpp);
+      (void)arm_logsumexp_dot_prod_f16(inap,inbp,this->nb,tmpp);
       
     } 
 

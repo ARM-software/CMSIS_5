@@ -1,8 +1,8 @@
 /******************************************************************************
  * @file     matrix_functions.h
  * @brief    Public header file for CMSIS DSP Library
- * @version  V1.9.0
- * @date     23 April 2021
+ * @version  V1.10.0
+ * @date     08 July 2021
  * Target Processor: Cortex-M and Cortex-A cores
  ******************************************************************************/
 /*
@@ -443,6 +443,21 @@ arm_status arm_mat_mult_q31(
   const arm_matrix_instance_q31 * pSrcA,
   const arm_matrix_instance_q31 * pSrcB,
         arm_matrix_instance_q31 * pDst);
+
+  /**
+   * @brief Q31 matrix multiplication
+   * @param[in]  pSrcA  points to the first input matrix structure
+   * @param[in]  pSrcB  points to the second input matrix structure
+   * @param[out] pDst   points to output matrix structure
+   * @param[in]  pState  points to the array for storing intermediate results
+   * @return     The function returns either
+   * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
+   */
+arm_status arm_mat_mult_opt_q31(
+  const arm_matrix_instance_q31 * pSrcA,
+  const arm_matrix_instance_q31 * pSrcB,
+        arm_matrix_instance_q31 * pDst,
+        q31_t *pState);
 
   /**
    * @brief Q31 matrix and vector multiplication

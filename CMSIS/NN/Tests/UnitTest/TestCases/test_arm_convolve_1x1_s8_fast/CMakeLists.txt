@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
+# Copyright (C) 2010-2022 Arm Limited or its affiliates.
 #
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -19,7 +19,7 @@
 add_cmsis_nn_unit_test_executable(test_arm_convolve_1x1_s8_fast)
 
 target_sources(test_arm_convolve_1x1_s8_fast PRIVATE
-    Unity/unity_test_arm_convolve_1x1_s8_fast
+    Unity/unity_test_arm_convolve_1x1_s8_fast.c
     Unity/TestRunner/unity_test_arm_convolve_1x1_s8_fast_runner.c)
 
 

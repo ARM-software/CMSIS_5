@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 Arm Limited. All rights reserved.
+ * Copyright (c) 2013-2022 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -23,8 +23,13 @@
  * -----------------------------------------------------------------------------
  */
 
-#include "cmsis_compiler.h"
 #include "rtx_os.h"
+
+#ifdef    CMSIS_device_header
+#include  CMSIS_device_header
+#else
+#include "cmsis_compiler.h"
+#endif
 
 #ifdef    RTE_Compiler_EventRecorder
 #include "EventRecorder.h"
@@ -653,6 +658,30 @@ void osRtxKernelPreInit (void) {
     evr_initialize();
   }
 }
+#endif
+
+
+// C/C++ Standard Library Floating-point Initialization
+// ====================================================
+
+#if ( !defined(RTX_NO_FP_INIT_CLIB) && \
+     ( defined(__CC_ARM) || \
+      (defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050))) && \
+      !defined(__MICROLIB))
+
+#if  ((defined(__FPU_PRESENT) && (__FPU_PRESENT == 1U)) && \
+      (defined(__FPU_USED   ) && (__FPU_USED    == 1U)))
+
+extern void $Super$$_fp_init (void);
+
+void $Sub$$_fp_init (void);
+void $Sub$$_fp_init (void) {
+  $Super$$_fp_init();
+  FPU->FPDSCR = __get_FPSCR();
+}
+
+#endif
+
 #endif
 
 

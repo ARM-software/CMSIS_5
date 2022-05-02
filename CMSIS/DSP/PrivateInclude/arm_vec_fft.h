@@ -40,8 +40,8 @@ extern "C"
 #define MVE_CMPLX_MULT_FLT_AxB(A,B)         vcmlaq_rot90(vcmulq(A, B), A, B)
 #define MVE_CMPLX_MULT_FLT_Conj_AxB(A,B)    vcmlaq_rot270(vcmulq(A, B), A, B)
 
-#define MVE_CMPLX_MULT_FX_AxB(A,B)          vqdmladhxq(vqdmlsdhq((__typeof(A))vuninitializedq_s32(), A, B), A, B)
-#define MVE_CMPLX_MULT_FX_AxConjB(A,B)      vqdmladhq(vqdmlsdhxq((__typeof(A))vuninitializedq_s32(), A, B), A, B)
+#define MVE_CMPLX_MULT_FX_AxB(A,B,TyA)      vqdmladhxq(vqdmlsdhq((TyA)vuninitializedq_s32(), A, B), A, B)
+#define MVE_CMPLX_MULT_FX_AxConjB(A,B,TyA)  vqdmladhq(vqdmlsdhxq((TyA)vuninitializedq_s32(), A, B), A, B)
 
 #define MVE_CMPLX_ADD_FX_A_ixB(A, B)        vhcaddq_rot90(A,B)
 #define MVE_CMPLX_SUB_FX_A_ixB(A,B)         vhcaddq_rot270(A,B)
@@ -150,20 +150,20 @@ __STATIC_INLINE void arm_bitreversal_16_inpl_mve(
     bitRevTabOff = vldrhq_u16(pBitRevTab);
     pBitRevTab += 8;
 
-    bitRevOff0Low = vmullbq_int_u16(bitRevTabOff, one);
-    bitRevOff0High = vmulltq_int_u16(bitRevTabOff, one);
-    bitRevOff0Low = vshrq_n_u16(bitRevOff0Low, 3);
-    bitRevOff0High = vshrq_n_u16(bitRevOff0High, 3);
+    bitRevOff0Low = vmullbq_int_u16((uint16x8_t)bitRevTabOff, one);
+    bitRevOff0High = vmulltq_int_u16((uint16x8_t)bitRevTabOff, one);
+    bitRevOff0Low = vshrq_n_u16((uint16x8_t)bitRevOff0Low, 3);
+    bitRevOff0High = vshrq_n_u16((uint16x8_t)bitRevOff0High, 3);
 
     blkCnt = (bitRevLen / 16);
     while (blkCnt > 0) {
         bitRevTabOff = vldrhq_u16(pBitRevTab);
         pBitRevTab += 8;
 
-        bitRevOff1Low = vmullbq_int_u16(bitRevTabOff, one);
-        bitRevOff1High = vmulltq_int_u16(bitRevTabOff, one);
-        bitRevOff1Low = vshrq_n_u16(bitRevOff1Low, 3);
-        bitRevOff1High = vshrq_n_u16(bitRevOff1High, 3);
+        bitRevOff1Low = vmullbq_int_u16((uint16x8_t)bitRevTabOff, one);
+        bitRevOff1High = vmulltq_int_u16((uint16x8_t)bitRevTabOff, one);
+        bitRevOff1Low = vshrq_n_u16((uint16x8_t)bitRevOff1Low, 3);
+        bitRevOff1High = vshrq_n_u16((uint16x8_t)bitRevOff1High, 3);
 
         inLow = vldrwq_gather_shifted_offset_u32(src, bitRevOff0Low);
         inHigh = vldrwq_gather_shifted_offset_u32(src, bitRevOff0High);
@@ -175,10 +175,10 @@ __STATIC_INLINE void arm_bitreversal_16_inpl_mve(
         bitRevTabOff = vldrhq_u16(pBitRevTab);
         pBitRevTab += 8;
 
-        bitRevOff0Low = vmullbq_int_u16(bitRevTabOff, one);
-        bitRevOff0High = vmulltq_int_u16(bitRevTabOff, one);
-        bitRevOff0Low = vshrq_n_u16(bitRevOff0Low, 3);
-        bitRevOff0High = vshrq_n_u16(bitRevOff0High, 3);
+        bitRevOff0Low = vmullbq_int_u16((uint16x8_t)bitRevTabOff, one);
+        bitRevOff0High = vmulltq_int_u16((uint16x8_t)bitRevTabOff, one);
+        bitRevOff0Low = vshrq_n_u16((uint16x8_t)bitRevOff0Low, 3);
+        bitRevOff0High = vshrq_n_u16((uint16x8_t)bitRevOff0High, 3);
 
         inLow = vldrwq_gather_shifted_offset_u32(src, bitRevOff1Low);
         inHigh = vldrwq_gather_shifted_offset_u32(src, bitRevOff1High);
@@ -209,10 +209,10 @@ __STATIC_INLINE void arm_bitreversal_16_inpl_mve(
         vstrwq_scatter_shifted_offset_u32(src, bitRevOff0Low, inHigh);
         vstrwq_scatter_shifted_offset_u32(src, bitRevOff0High, inLow);
 
-        bitRevOff0Low = vmullbq_int_u16(bitRevTabOff, one);
-        bitRevOff0High = vmulltq_int_u16(bitRevTabOff, one);
-        bitRevOff0Low = vshrq_n_u16(bitRevOff0Low, 3);
-        bitRevOff0High = vshrq_n_u16(bitRevOff0High, 3);
+        bitRevOff0Low = vmullbq_int_u16((uint16x8_t)bitRevTabOff, one);
+        bitRevOff0High = vmulltq_int_u16((uint16x8_t)bitRevTabOff, one);
+        bitRevOff0Low = vshrq_n_u16((uint16x8_t)bitRevOff0Low, 3);
+        bitRevOff0High = vshrq_n_u16((uint16x8_t)bitRevOff0High, 3);
 
         inLow = vldrwq_gather_shifted_offset_z_u32(src, bitRevOff0Low, p);
         inHigh = vldrwq_gather_shifted_offset_z_u32(src, bitRevOff0High, p);
@@ -251,13 +251,13 @@ __STATIC_INLINE void arm_bitreversal_32_outpl_mve(void *pDst, void *pSrc, uint32
     while (blkCnt > 0) {
         uint64x2_t      vecIn;
 
-        vecIn = vldrdq_gather_offset_u64(pSrc, (int64x2_t) bitRevOffs0);
+        vecIn = vldrdq_gather_offset_u64(pSrc, (uint64x2_t) bitRevOffs0);
         idxOffs0 = idxOffs0 + 16;
         vst1q(pDst32, (uint32x4_t) vecIn);
         pDst32 += 4;
         bitRevOffs0 = vbrsrq(idxOffs0, bitRevPos);
 
-        vecIn = vldrdq_gather_offset_u64(pSrc, (int64x2_t) bitRevOffs1);
+        vecIn = vldrdq_gather_offset_u64(pSrc, (uint64x2_t) bitRevOffs1);
         idxOffs1 = idxOffs1 + 16;
         vst1q(pDst32, (uint32x4_t) vecIn);
         pDst32 += 4;

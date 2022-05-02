@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 #
-# Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
+# Copyright (C) 2010-2022 Arm Limited or its affiliates.
 #
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -18,15 +18,17 @@
 #
 import os
 import sys
+import json
 import math
-import random
 import argparse
 import subprocess
 import numpy as np
 
-from collections import deque
 from packaging import version
 from abc import ABC, abstractmethod
+from tensorflow.lite.python.interpreter import Interpreter
+from tensorflow.lite.python.interpreter import OpResolverType
+
 
 try:
     import tensorflow as tf
@@ -34,45 +36,35 @@ except Exception as e:
     print(e)
     sys.exit(1)
 
-REQUIRED_MINIMUM_TENSORFLOW_VERSION = version.parse("2.1.0")
-DEFAULT_TESTDATA_SET = 'basic'
+REQUIRED_MINIMUM_TENSORFLOW_VERSION = version.parse("2.5")
 ALL_TESTDATA_SETS = {}
 CLANG_FORMAT = 'clang-format-9 -i'
-LICENSE = """/*
- * Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
- *
- * SPDX-License-Identifier: Apache-2.0
- *
- * Licensed under the Apache License, Version 2.0 (the License); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an AS IS BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-"""
+
+INT32_MAX = 2147483647
+INT32_MIN = -2147483648
+INT16_MAX = 32767
+INT16_MIN = -32768
+INT8_MAX = 127
+INT8_MIN = -128
 
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Generate input and refererence output data for unittests."
                                      " It can regenerate all data, load all stored data or a combination of it.")
-    parser.add_argument('--dataset', type=str, default=DEFAULT_TESTDATA_SET, help="Name of generated test set.")
+    parser.add_argument('--dataset', type=str, default=None, help="Name of generated test set.")
     parser.add_argument('--regenerate-weights', action='store_true', help="Regenerate and store new weights.")
     parser.add_argument('--regenerate-input', action='store_true', help="Regenerate and store new input.")
     parser.add_argument('--regenerate-biases', action='store_true', help="Regenerate and store new biases.")
     parser.add_argument('-a', '--regenerate-all', action='store_true', help="Regenerate and store all data.")
-    parser.add_argument('-t', '--testtype', type=str, default='conv', choices=['conv', 'depthwise_conv', 'avgpool',
-                                                                               'maxpool', 'fully_connected', 'softmax',
-                                                                               'svdf'],
-                        help='Type of test.')
+    parser.add_argument('-t', '--testtype', type=str, default=None, choices=['conv', 'depthwise_conv', 'avgpool',
+                                                                             'maxpool', 'fully_connected', 'softmax',
+                                                                             'svdf', 'add', 'mul'],
+                        help='Type of test. There are the operators that have unit tests.')
     parser.add_argument('--run-all-testsets', action='store_true', help="Run the script for all existing test "
                         "sets. Regenerate all, partially all or no input data (output may still change, depending on"
-                        " changes in script) depending on regenerate flags.")
+                        " changes in script) depending on regenerate flags. If used together with the -t flag, only"
+                        " tests of that type will be run.")
+    parser.add_argument('--schema-file', type=str, help="Path to schema file. This may be needed for some tests.")
 
     args = parser.parse_args()
     return args
@@ -85,23 +77,15 @@ class TestSettings(ABC):
 
     # This is input to the data generation. If everything or something is regenerated then it is overwritten.
     # So it always has the same data as the OUTDIR.
-    # The purpose of the pregen is primarily for debugging, as it enables to change a single parameter and see how the
-    # output changes, without regenerating all input data.
+    # The purpose of the pregen is primarily for debugging, as it is enabling to change a single parameter and see how
+    # output changes (or not changes), without regenerating all input data.
     # It also convinient when tesing changes in the script, to be able to run all test sets again.
     PREGEN = 'PregeneratedData/'
 
-    INT32_MAX = 2147483647
-    INT32_MIN = -2147483648
-    INT16_MAX = 32767
-    INT16_MIN = -32767
-    INT8_MAX = 127
-    INT8_MIN = -128
-    UINT8_MAX = 255
-    UINT8_MIN = 0
-
-    def __init__(self, dataset, testtype, args, in_ch, out_ch, x_in, y_in, w_x, w_y, stride_x, stride_y, pad, randmin,
-                 randmax, outminrange=-128, outmaxrange=127, batches=1, generate_bias=True, relu6=False,
-                 out_activation_min=None, out_activation_max=None):
+    def __init__(self, dataset, testtype, args, in_ch, out_ch, x_in, y_in, w_x, w_y, stride_x=1, stride_y=1, pad=False,
+                 randmin=INT8_MIN, randmax=INT8_MAX, batches=1, generate_bias=True, relu6=False,
+                 out_activation_min=None, out_activation_max=None, int16xint8=False, bias_min=None, bias_max=None,
+                 dilation_x=1, dilation_y=1):
 
         self.tensor_flow_reference_version = ("// Generated by {} using TFL version {} as reference.\n".
                                               format(os.path.basename(__file__), tf.__version__))
@@ -110,7 +94,9 @@ class TestSettings(ABC):
         self.mins = randmin
         self.maxs = randmax
 
-        self.relu6 = relu6
+        self.bias_mins = bias_min
+        self.bias_maxs = bias_max
+
         self.input_ch = in_ch
         self.output_ch = out_ch
         self.x_input = x_in
@@ -119,74 +105,57 @@ class TestSettings(ABC):
         self.filter_y = w_y
         self.stride_x = stride_x
         self.stride_y = stride_y
+        self.dilation_x = dilation_x
+        self.dilation_y = dilation_y
         self.batches = batches
         self.test_type = testtype
         self.has_padding = pad
 
-        if out_activation_min:
-            self.out_activation_min = out_activation_min
-        else:
-            self.out_activation_min = self.INT8_MIN
-        if out_activation_max:
-            self.out_activation_max = out_activation_max
-        else:
-            self.out_activation_max = self.INT8_MAX
+        self.is_int16xint8 = int16xint8
 
-        minrange = randmin - 1
-        maxrange = randmax + 1
-        (self.input_scale, self.input_zero_point) = self.derive_scale_and_zeropoint_from_min_max(minrange, maxrange)
-        (self.output_scale, self.output_zero_point) = self.derive_scale_and_zeropoint_from_min_max(outminrange,
-                                                                                                   outmaxrange)
-
-        # Always use output scale of 1, when derived it sometimes gets slighly smaller than 1,
-        # which may cause output to differ.
-        self.output_scale = 1.0
+        if relu6:
+            self.out_activation_max = 6
+            self.out_activation_min = 0
+        else:
+            if out_activation_min is not None:
+                self.out_activation_min = out_activation_min
+            else:
+                self.out_activation_min = INT16_MIN if self.is_int16xint8 else INT8_MIN
+            if out_activation_max is not None:
+                self.out_activation_max = out_activation_max
+            else:
+                self.out_activation_max = INT16_MAX if self.is_int16xint8 else INT8_MAX
 
         # Bias is optional.
         self.generate_bias = generate_bias
 
         self.generated_header_files = []
         self.pregenerated_data_dir = self.PREGEN
-        self.testdataset = DEFAULT_TESTDATA_SET
 
         self.config_data = "config_data.h"
+
         self.testdataset = dataset
+
         self.kernel_table_file = self.pregenerated_data_dir + self.testdataset + '/' + 'kernel.txt'
         self.inputs_table_file = self.pregenerated_data_dir + self.testdataset + '/' + 'input.txt'
         self.bias_table_file = self.pregenerated_data_dir + self.testdataset + '/' + 'bias.txt'
-        self.parameters_file = self.pregenerated_data_dir + self.testdataset + '/' + 'params.txt'
 
-        self.set_output_dims_and_padding()
+        if self.has_padding:
+            self.padding = 'SAME'
+        else:
+            self.padding = 'VALID'
 
         self.regenerate_new_weights = args.regenerate_weights
         self.regenerate_new_input = args.regenerate_input
         self.regenerate_new_bias = args.regenerate_biases
-        if not os.path.exists(self.parameters_file) or args.regenerate_all:
+        if args.regenerate_all:
             self.regenerate_new_bias = True
             self.regenerate_new_weights = True
             self.regenerate_new_input = True
-            self.save_parameters()
-        else:
-            self.load_parameters()
 
         self.headers_dir = self.OUTDIR + self.testdataset + '/'
-
-    def clamp(self, result, smallest, largest):
-        return max(smallest, min(result, largest))
-
-    def quantize_input(self, value):
-        result = round(value / self.input_scale) + self.input_zero_point
-        return self.clamp(result, self.INT8_MIN, self.INT8_MAX)
-
-    def derive_scale_from_min_max(self, minrange, maxrange):
-        scale = (maxrange - minrange) / ((self.INT8_MAX * 1.0) - self.INT8_MIN)
-        return scale
-
-    def derive_scale_and_zeropoint_from_min_max(self, minrange, maxrange):
-        scale = self.derive_scale_from_min_max(minrange, maxrange)
-        zeropoint = self.INT8_MIN + int(-minrange / scale + 0.5)
-        zeropoint = max(self.INT8_MIN, min(zeropoint, -self.INT8_MIN))
-        return (scale, zeropoint)
+        self.model_path = "{}model_{}".format(self.headers_dir, self.testdataset)
+        self.model_path_tflite = self.model_path + '.tflite'
 
     def save_multiple_dim_array_in_txt(self, file, data):
         header = ','.join(map(str, data.shape))
@@ -199,29 +168,18 @@ class TestSettings(ABC):
             data = np.genfromtxt(f, delimiter=',').reshape(shape)
         return data.astype(np.float32)
 
-    def save_parameters(self):
-        regendir = os.path.dirname(self.parameters_file)
-        if not os.path.exists(regendir):
-            os.makedirs(regendir)
-        params = np.array([self.input_ch, self.output_ch, self.x_input, self.y_input, self.filter_x, self.filter_y,
-                           self.stride_x, self.stride_y, self.pad_x, self.pad_y, self.batches, self.has_padding])
-        np.savetxt(self.parameters_file, params, fmt='%i')
-
-    def load_parameters(self):
-        params = np.loadtxt(self.parameters_file).astype(int)
-        (self.input_ch, self.output_ch, self.x_input, self.y_input, self.filter_x, self.filter_y,
-         self.stride_x, self.stride_y, self.pad_x, self.pad_y, self.batches, self.has_padding) = \
-            (map(lambda x: x, params))
-
-    def convert_tensor_np(self, tensor_in, converter):
+    def convert_tensor_np(self, tensor_in, converter, *qminmax):
         w = tensor_in.numpy()
         shape = w.shape
         w = w.ravel()
-        fw = converter(w)
+        if len(qminmax) == 2:
+            fw = converter(w, qminmax[0], qminmax[1])
+        else:
+            fw = converter(w)
         fw.shape = shape
         return tf.convert_to_tensor(fw)
 
-    def convert_tensor(self, tensor_in, converter, params=None):
+    def convert_tensor(self, tensor_in, converter, *qminmax):
         w = tensor_in.numpy()
         shape = w.shape
         w = w.ravel()
@@ -229,8 +187,8 @@ class TestSettings(ABC):
         float_normal = []
 
         for i in normal:
-            if params:
-                float_normal.append(converter(i, params))
+            if len(qminmax) == 2:
+                float_normal.append(converter(i, qminmax[0], qminmax[1]))
             else:
                 float_normal.append(converter(i))
 
@@ -246,10 +204,9 @@ class TestSettings(ABC):
             maxrange = self.maxs
         if not os.path.exists(npfile) or regenerate:
             regendir = os.path.dirname(npfile)
-            if not os.path.exists(regendir):
-                os.makedirs(regendir)
+            os.makedirs(regendir, exist_ok=True)
             if decimals == 0:
-                data = tf.Variable(tf.random.uniform(dims, minval=minrange, maxval=maxrange, dtype=tf.dtypes.int32))
+                data = tf.Variable(tf.random.uniform(dims, minval=minrange, maxval=maxrange, dtype=tf.dtypes.int64))
                 data = tf.cast(data, dtype=tf.float32)
             else:
                 data = tf.Variable(tf.random.uniform(dims, minval=minrange, maxval=maxrange, dtype=tf.dtypes.float32))
@@ -263,12 +220,14 @@ class TestSettings(ABC):
             data = tf.convert_to_tensor(self.load_multiple_dim_array_from_txt(npfile))
         return data
 
-    def get_randomized_input_data(self, input_data):
+    def get_randomized_input_data(self, input_data, input_shape=None):
         # Generate or load saved input data unless hardcoded data provided
+        if input_shape is None:
+            input_shape = [self.batches, self.y_input, self.x_input, self.input_ch]
         if input_data is not None:
-            input_data = tf.reshape(input_data, [self.batches, self.y_input, self.x_input, self.input_ch])
+            input_data = tf.reshape(input_data, input_shape)
         else:
-            input_data = self.get_randomized_data([self.batches, self.y_input, self.x_input, self.input_ch],
+            input_data = self.get_randomized_data(input_shape,
                                                   self.inputs_table_file,
                                                   regenerate=self.regenerate_new_input)
         return input_data
@@ -282,7 +241,9 @@ class TestSettings(ABC):
         else:
             biases = self.get_randomized_data([self.output_ch],
                                               self.bias_table_file,
-                                              regenerate=self.regenerate_new_bias)
+                                              regenerate=self.regenerate_new_bias,
+                                              minrange=self.bias_mins,
+                                              maxrange=self.bias_maxs)
         return biases
 
     def format_output_file(self, file):
@@ -299,7 +260,6 @@ class TestSettings(ABC):
 
         print("Generating C header wrapper {}...".format(filepath))
         with open(filepath, 'w+') as f:
-            f.write("{}\n\n".format(LICENSE))
             f.write(self.tensor_flow_reference_version)
             while len(self.generated_header_files) > 0:
                 f.write('#include "{}"\n'.format(self.generated_header_files.pop()))
@@ -319,13 +279,8 @@ class TestSettings(ABC):
         f.write("#define {}_OUTPUT_H {}\n".format(prefix, self.y_output))
 
     def write_c_common_header(self, f):
-        f.write("{}\n\n".format(LICENSE))
         f.write(self.tensor_flow_reference_version)
         f.write("#pragma once\n")
-
-    def write_c_header_offsets(self, f, prefix):
-        f.write("#define {}_INPUT_OFFSET {}\n".format(prefix, -self.input_zero_point))
-        f.write("#define {}_OUTPUT_OFFSET {}\n".format(prefix, self.output_zero_point))
 
     def write_c_config_header(self, write_common_parameters=True):
         filename = self.config_data
@@ -346,23 +301,22 @@ class TestSettings(ABC):
                 f.write("#define {}_DST_SIZE {}\n".format(prefix, self.x_output * self.y_output * self.output_ch
                                                           * self.batches))
                 f.write("#define {}_INPUT_SIZE {}\n".format(prefix, self.x_input * self.y_input * self.input_ch))
-                if self.relu6:
-                    f.write("#define {}_OUT_ACTIVATION_MIN {}\n".format(prefix, 0))
-                    f.write("#define {}_OUT_ACTIVATION_MAX {}\n".format(prefix, 6))
-                else:
-                    f.write("#define {}_OUT_ACTIVATION_MIN {}\n".format(prefix, self.out_activation_min))
-                    f.write("#define {}_OUT_ACTIVATION_MAX {}\n".format(prefix, self.out_activation_max))
+                f.write("#define {}_OUT_ACTIVATION_MIN {}\n".format(prefix, self.out_activation_min))
+                f.write("#define {}_OUT_ACTIVATION_MAX {}\n".format(prefix, self.out_activation_max))
                 f.write("#define {}_INPUT_BATCHES {}\n".format(prefix, self.batches))
         self.format_output_file(filepath)
 
     def generate_c_array(self, name, array, datatype="q7_t", const="const "):
-        if not os.path.exists(self.headers_dir):
-            os.makedirs(self.headers_dir)
+        os.makedirs(self.headers_dir, exist_ok=True)
 
         w = None
         if type(array) is list:
             w = array
             size = len(array)
+        elif type(array) is np.ndarray:
+            w = array
+            w = w.ravel()
+            size = w.size
         else:
             w = array.numpy()
             w = w.ravel()
@@ -383,25 +337,21 @@ class TestSettings(ABC):
             f.write("};\n")
         self.format_output_file(filepath)
 
-    def quantize_output(self, value):
-        result = round(value / self.output_scale) + self.output_zero_point
-        return self.clamp(result, self.out_activation_min, self.out_activation_max)
-
-    def set_output_dims_and_padding(self):
+    def set_output_dims_and_padding(self, output_x, output_y):
+        self.x_output = output_x
+        self.y_output = output_y
         if self.has_padding:
-            self.x_output = math.ceil(float(self.x_input) / float(self.stride_x))
-            self.y_output = math.ceil(float(self.y_input) / float(self.stride_y))
-            self.padding = 'SAME'
-            pad_along_width = max((self.x_output - 1) * self.stride_x + self.filter_x - self.x_input, 0)
-            pad_along_height = max((self.y_output - 1) * self.stride_y + self.filter_y - self.y_input, 0)
+            # Take dilation into account.
+            filter_x = (self.filter_x - 1) * self.dilation_x + 1
+            filter_y = (self.filter_y - 1) * self.dilation_y + 1
+
+            pad_along_width = max((self.x_output - 1) * self.stride_x + filter_x - self.x_input, 0)
+            pad_along_height = max((self.y_output - 1) * self.stride_y + filter_y - self.y_input, 0)
             pad_top = pad_along_height // 2
             pad_left = pad_along_width // 2
             self.pad_x = pad_left
             self.pad_y = pad_top
         else:
-            self.x_output = math.ceil(float(self.x_input - self.filter_x + 1) / float(self.stride_x))
-            self.y_output = math.ceil(float(self.y_input - self.filter_y + 1) / float(self.stride_y))
-            self.padding = 'VALID'
             self.pad_x = 0
             self.pad_y = 0
 
@@ -409,71 +359,142 @@ class TestSettings(ABC):
     def generate_data(self, input_data=None, weights=None, biases=None):
         ''' Must be overriden '''
 
-    def reshape_conv_kernel(self, kernel):
-        """
-        TFL & TFLu conv weight format: kOHWI
-        Tensorflow conv weight format: kHWIO
-        """
-        kernel = tf.reshape(kernel, [self.output_ch, self.filter_y, self.filter_x, self.input_ch])
-        kernel = tf.transpose(kernel, (1, 2, 0, 3))
-        kernel = tf.transpose(kernel, (0, 1, 3, 2))
-        return kernel
-
-    def reshape_depthwise_conv_kernel(self, kernel):
-        """
-        TFL & TFLu depthwise conv weight format: k1HWO
-        Tensorflow depthwise conv weight format: kHWIM
-        """
-        kernel = tf.reshape(kernel, [1, self.filter_y, self.filter_x, self.output_ch])
-        kernel = tf.transpose(kernel, (1, 0, 2, 3))
-        kernel = tf.transpose(kernel, (0, 2, 1, 3))
-        kernel = tf.reshape(kernel, [self.filter_y, self.filter_x, self.input_ch, self.channel_multiplier])
-        return kernel
-
-    def conv2d(self, indata, weights, bias=None):
-        """
-        There is no tf.nn.fully_connected so this is used by fully_connected tests as well.
-        """
-        indata = tf.cast(indata, dtype=tf.dtypes.float32)
-        weights = tf.cast(weights, dtype=tf.dtypes.float32)
-        bias = tf.cast(bias, dtype=tf.dtypes.float32)
-
-        out = tf.nn.conv2d(indata, weights, strides=[1, self.stride_y, self.stride_x, 1], padding=self.padding)
-
-        if tf.TensorShape([self.batches, self.y_output, self.x_output, self.output_ch]).as_list() != \
-           out.shape.as_list():
-            raise RuntimeError("Shape mismatch, need to regenerate data?")
-
-        out = tf.nn.bias_add(out, bias)
-        out = tf.clip_by_value(out, self.out_activation_min, self.out_activation_max)
-        return out
-
     def quantize_scale(self, scale):
         significand, shift = math.frexp(scale)
         significand_q31 = round(significand * (1 << 31))
         return significand_q31, shift
 
+    def get_convolving_calib_data_func(self, n_inputs):
+        def representative_data_gen():
+            representative_testsets = []
+            if n_inputs > 0:
+                for i in range(n_inputs):
+                    representative_testsets.append(np.ones((self.batches, self.y_input, self.x_input, self.input_ch),
+                                                           dtype=np.float32))
+                yield representative_testsets
+            else:
+                raise RuntimeError("Invalid number of representative test sets: {}. Must be more than 0".
+                                   format(self.test_type))
+        return representative_data_gen
+
+    def convert_and_interpret(self, model, inttype, input_data=None):
+        """
+        Compile and convert a model to Tflite format, run interpreter and allocate tensors.
+        """
+        model.compile(loss=tf.keras.losses.categorical_crossentropy,
+                      optimizer=tf.keras.optimizers.Adam(),
+                      metrics=['accuracy'])
+        n_inputs = len(model.inputs)
+
+        converter = tf.lite.TFLiteConverter.from_keras_model(model)
+        converter.optimizations = [tf.lite.Optimize.DEFAULT]
+        converter.representative_dataset = self.get_convolving_calib_data_func(n_inputs)
+        if self.is_int16xint8:
+            converter.target_spec.supported_ops = [
+                tf.lite.OpsSet.EXPERIMENTAL_TFLITE_BUILTINS_ACTIVATIONS_INT16_WEIGHTS_INT8]
+        else:
+            converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS_INT8]
+        converter.inference_input_type = inttype
+        converter.inference_output_type = inttype
+        tflite_model = converter.convert()
+
+        os.makedirs(os.path.dirname(self.model_path_tflite), exist_ok=True)
+        with open(self.model_path_tflite, "wb") as model:
+            model.write(tflite_model)
+
+        interpreter = Interpreter(
+            model_path=str(self.model_path_tflite), experimental_op_resolver_type=OpResolverType.BUILTIN_REF)
+        interpreter.allocate_tensors()
+
+        output_details = interpreter.get_output_details()
+        (self.output_scale, self.output_zero_point) = output_details[0]['quantization']
+
+        if input_data is not None:
+            input_details = interpreter.get_input_details()
+            (self.input_scale, self.input_zero_point) = input_details[0]['quantization']
+
+            # Set input tensors
+            interpreter.set_tensor(input_details[0]["index"], tf.cast(input_data, inttype))
+
+        return interpreter
+
+    def generate_json_from_template(self, weights_feature_data=None, weights_time_data=None, bias_data=None):
+        """
+        Takes a json template and parameters as input and creates a new json file.
+        """
+        generated_json_file = self.model_path + '.json'
+
+        with open(self.json_template, 'r') as in_file, open(generated_json_file, 'w') as out_file:
+            # Update shapes, scales and zero points
+            data = in_file.read()
+            for item, to_replace in self.json_replacements.items():
+                data = data.replace(item, str(to_replace))
+
+            data = json.loads(data)
+
+            # Update weights and bias data
+            if weights_feature_data is not None:
+                w_1_buffer_index = 1
+                data["buffers"][w_1_buffer_index]["data"] = self.to_bytes(weights_feature_data.numpy().ravel(), 1)
+            if weights_time_data is not None:
+                w_2_buffer_index = 2
+                data["buffers"][w_2_buffer_index]["data"] = self.to_bytes(weights_time_data.numpy().ravel(), 2)
+            if bias_data is not None:
+                bias_buffer_index = 3
+                data["buffers"][bias_buffer_index]["data"] = self.to_bytes(bias_data.numpy().ravel(), 4)
+
+            json.dump(data, out_file, indent=2)
+
+        return generated_json_file
+
+    def flatc_generate_tflite(self, json_input, schema):
+        flatc = 'flatc'
+        if schema is None:
+            raise RuntimeError("A schema file is required.")
+        command = "{} -o {} -c -b {} {}".format(flatc, self.headers_dir, schema, json_input)
+        command_list = command.split(' ')
+        process = subprocess.run(command_list)
+        if process.returncode != 0:
+            raise RuntimeError("The following command failed: {}. Did you install flatc?".format(command))
+
+    def to_bytes(self, tensor_data, type_size):
+        result_bytes = []
+
+        if type_size == 1:
+            tensor_type = np.uint8
+        elif type_size == 2:
+            tensor_type = np.uint16
+        elif type_size == 4:
+            tensor_type = np.uint32
+        else:
+            raise RuntimeError("Size not supported: {}".format(type_size))
+
+        for val in tensor_data:
+            for byte in int(tensor_type(val)).to_bytes(type_size, 'little'):
+                result_bytes.append(byte)
+
+        return result_bytes
+
 
 class ConvSettings(TestSettings):
 
     def __init__(self, dataset, testtype, args, in_ch=1, out_ch=1, x_in=7, y_in=7, w_x=3, w_y=3, stride_x=2, stride_y=2,
-                 pad=True, randmin=-7, randmax=7, outminrange=-128, outmaxrange=127, batches=1, generate_bias=True,
-                 relu6=False, out_activation_min=None, out_activation_max=None):
+                 pad=True, randmin=INT8_MIN, randmax=INT8_MAX, batches=1, generate_bias=True, relu6=False,
+                 out_activation_min=None, out_activation_max=None, int16xint8=False, bias_min=None,
+                 bias_max=None, dilation_x=1, dilation_y=1):
         super().__init__(dataset, testtype, args, in_ch, out_ch, x_in, y_in, w_x, w_y, stride_x, stride_y, pad,
-                         randmin, randmax, outminrange, outmaxrange, batches, generate_bias=generate_bias, relu6=relu6,
-                         out_activation_min=out_activation_min, out_activation_max=out_activation_max)
+                         randmin, randmax, batches, generate_bias=generate_bias, relu6=relu6,
+                         out_activation_min=out_activation_min, out_activation_max=out_activation_max,
+                         int16xint8=int16xint8, bias_min=bias_min, bias_max=bias_max, dilation_x=dilation_x,
+                         dilation_y=dilation_y)
 
         self.scaling_factors = []
 
-        if self.test_type == 'conv':
-            self.quantized_dimension = 0
-        elif self.test_type == 'depthwise_conv':
-            self.quantized_dimension = 3
+        if self.test_type == 'depthwise_conv':
             self.channel_multiplier = self.output_ch // self.input_ch
             if self.output_ch % self.input_ch != 0:
                 raise RuntimeError("out channel ({}) is not multiple of in channel ({})".format(out_ch, in_ch))
-
-        else:
+        elif self.test_type != 'conv':
             raise RuntimeError("Invalid test type {}".format(self.test_type))
 
     def write_c_config_header(self):
@@ -484,72 +505,13 @@ class ConvSettings(TestSettings):
         prefix = self.testdataset.upper()
 
         with open(filepath, "a") as f:
-            self.write_c_header_offsets(f, prefix)
             self.write_common_config(f, prefix)
             if self.test_type == 'depthwise_conv':
                 f.write("#define {}_CH_MULT {}\n".format(prefix, self.channel_multiplier))
-
-    def quantize_bias(self, nparray):
-        num_channels = self.output_ch
-        quantized_values = []
-
-        values = np.array(nparray)
-
-        def quantize_float_to_int(value, scale):
-            if scale == 0:
-                print("WARNING: scale is 0")
-                scale = 0.0000001
-            quantized = round(value / scale)
-            if quantized > self.INT16_MAX:
-                quantized = self.INT16_MAX
-            elif quantized < self.INT16_MIN:
-                quantized = self.INT16_MIN
-            return quantized
-
-        for x in range(num_channels):
-            quantized_values.append(quantize_float_to_int(values[x], self.scaling_factors[x]*self.input_scale))
-
-        return np.asarray(quantized_values)
-
-    def quantize_filter(self, nparray):
-        channel_count = self.output_ch
-
-        if self.quantized_dimension == 0:
-            input_size = self.filter_y * self.filter_x * self.input_ch * self.output_ch
-        elif self.quantized_dimension == 3:
-            input_size = self.filter_y * self.filter_x * self.input_ch * self.channel_multiplier
-
-        per_channel_size = input_size // channel_count
-
-        if self.quantized_dimension == 0:
-            stride = 1
-            channel_stride = per_channel_size
-        elif self.quantized_dimension == 3:
-            stride = channel_count
-            channel_stride = 1
-
-        values = np.array(nparray)
-        quantized_values = values.copy()
-
-        for channel in range(channel_count):
-            fmin = 0
-            fmax = 0
-            for i in range(per_channel_size):
-                idx = channel * channel_stride + i * stride
-                fmin = min(fmin, values[idx])
-                fmax = max(fmax, values[idx])
-
-            self.scaling_factors.append(max(abs(fmin), abs(fmax)) / self.INT8_MAX)
-
-            for x in range(per_channel_size):
-                chs = channel * channel_stride + x * stride
-                quantized_value = round(round(values[chs]) / self.scaling_factors[channel])
-
-                # Clamp
-                quantized_value = min(127, max(-127, quantized_value))
-                quantized_values[chs] = quantized_value
-
-        return np.asarray(quantized_values)
+            f.write("#define {}_INPUT_OFFSET {}\n".format(prefix, -self.input_zero_point))
+            f.write("#define {}_OUTPUT_OFFSET {}\n".format(prefix, self.output_zero_point))
+            f.write("#define {}_DILATION_X {}\n".format(prefix, self.dilation_x))
+            f.write("#define {}_DILATION_Y {}\n".format(prefix, self.dilation_y))
 
     def generate_quantize_per_channel_multiplier(self):
         num_channels = self.output_ch
@@ -569,27 +531,15 @@ class ConvSettings(TestSettings):
         self.generate_c_array("output_mult", per_channel_multiplier, datatype='int32_t')
         self.generate_c_array("output_shift", per_channel_shift, datatype='int32_t')
 
-    def depthwise_conv2d(self, indata, weights, bias=None):
-        indata = tf.cast(indata, dtype=tf.dtypes.float32)
-        weights = tf.cast(weights, dtype=tf.dtypes.float32)
-        bias = tf.cast(bias, dtype=tf.dtypes.float32)
-
-        out = tf.nn.depthwise_conv2d(indata,
-                                     weights,
-                                     strides=[1, self.stride_y, self.stride_x, 1],
-                                     padding=self.padding)
-
-        if tf.TensorShape([self.batches, self.y_output, self.x_output, self.output_ch]) \
-             .as_list() != out.shape.as_list():
-            raise RuntimeError("Shape mismatch, regenerate data?")
-
-        out = tf.nn.bias_add(out, bias)
-        out = tf.clip_by_value(out, self.out_activation_min, self.out_activation_max)
-        return out
-
     def generate_data(self, input_data=None, weights=None, biases=None):
-        # Tensorflow Lite has a different kernel format compared to Tensorflow
-        reshaped_weights = None
+        if self.is_int16xint8:
+            inttype = tf.int16
+            datatype = "q15_t"
+            bias_datatype = "int64_t"
+        else:
+            inttype = tf.int8
+            datatype = "q7_t"
+            bias_datatype = "int32_t"
 
         input_data = self.get_randomized_input_data(input_data)
 
@@ -605,25 +555,53 @@ class ConvSettings(TestSettings):
                                                self.kernel_table_file,
                                                regenerate=self.regenerate_new_weights)
 
-        if self.test_type == 'conv':
-            reshaped_weights = self.reshape_conv_kernel(weights)
-        elif self.test_type == 'depthwise_conv':
-            reshaped_weights = self.reshape_depthwise_conv_kernel(weights)
-
         biases = self.get_randomized_bias_data(biases)
 
-        # Generate reference
+        # Create a one layer Keras model.
+        model = tf.keras.models.Sequential()
+        input_shape = (self.batches, self.y_input, self.x_input, self.input_ch)
+        model.add(tf.keras.layers.InputLayer(
+            input_shape=input_shape[1:], batch_size=self.batches))
         if self.test_type == 'conv':
-            conv = self.conv2d(input_data, reshaped_weights, biases)
+            conv_layer = tf.keras.layers.Conv2D(self.output_ch, kernel_size=(self.filter_y, self.filter_x),
+                                                strides=(self.stride_y, self.stride_x),
+                                                padding=self.padding, input_shape=input_shape[1:],
+                                                dilation_rate=(self.dilation_y, self.dilation_x))
+            model.add(conv_layer)
+            conv_layer.set_weights([weights, biases])
         elif self.test_type == 'depthwise_conv':
-            conv = self.depthwise_conv2d(input_data, reshaped_weights, biases)
+            depthwise_layer = tf.keras.layers.DepthwiseConv2D(
+                kernel_size=(self.filter_y, self.filter_x),
+                strides=(self.stride_y, self.stride_x),
+                padding=self.padding, depth_multiplier=self.channel_multiplier,
+                input_shape=input_shape[1:], dilation_rate=(self.dilation_y, self.dilation_x))
+            model.add(depthwise_layer)
+            depthwise_layer.set_weights([weights, biases])
+        interpreter = self.convert_and_interpret(model, inttype, input_data)
 
-        # Quantize and write to C headers
-        self.generate_c_array("input", self.convert_tensor(input_data, self.quantize_input))
-        self.generate_c_array("weights", self.convert_tensor_np(weights, self.quantize_filter))
-        self.generate_c_array("biases", self.convert_tensor_np(biases, self.quantize_bias), "int32_t")
+        all_layers_details = interpreter.get_tensor_details()
+        filter_layer = all_layers_details[1]
+        bias_layer = all_layers_details[2]
+        if weights.numpy().size != interpreter.get_tensor(filter_layer['index']).size or \
+           (self.generate_bias and biases.numpy().size != interpreter.get_tensor(bias_layer['index']).size):
+            raise RuntimeError("Dimension mismatch")
+
+        output_details = interpreter.get_output_details()
+        self.set_output_dims_and_padding(output_details[0]['shape'][2], output_details[0]['shape'][1])
+
+        self.generate_c_array("input", input_data, datatype=datatype)
+        self.generate_c_array("weights", interpreter.get_tensor(filter_layer['index']))
+
+        self.scaling_factors = filter_layer['quantization_parameters']['scales']
         self.generate_quantize_per_channel_multiplier()
-        self.generate_c_array("output_ref", self.convert_tensor(conv, self.quantize_output))
+
+        self.generate_c_array("biases", interpreter.get_tensor(bias_layer['index']), bias_datatype)
+
+        # Generate reference
+        interpreter.invoke()
+        output_data = interpreter.get_tensor(output_details[0]["index"])
+        self.generate_c_array("output_ref", np.clip(output_data, self.out_activation_min, self.out_activation_max),
+                              datatype=datatype)
 
         self.write_c_config_header()
         self.write_c_header_wrapper()
@@ -631,29 +609,52 @@ class ConvSettings(TestSettings):
 
 class PoolingSettings(TestSettings):
 
-    def __init__(self, dataset, testtype, args, randmin=-7, randmax=7, channels=8, x_in=4, y_in=4, w_x=4, w_y=4,
-                 stride_x=1, stride_y=1, batches=1, pad=False, relu6=False):
+    def __init__(self, dataset, testtype, args, channels=8, x_in=4, y_in=4, w_x=4, w_y=4, stride_x=1, stride_y=1,
+                 randmin=INT8_MIN, randmax=INT8_MAX, batches=1, pad=False, relu6=False, out_activation_min=None,
+                 out_activation_max=None, int16xint8=False):
         super().__init__(dataset, testtype, args, channels, channels, x_in, y_in, w_x, w_y, stride_x, stride_y, pad,
-                         randmin, randmax, relu6=relu6)
+                         randmin=randmin, randmax=randmax, relu6=relu6, out_activation_min=out_activation_min,
+                         out_activation_max=out_activation_max, int16xint8=int16xint8)
 
     def generate_data(self, input_data=None):
+        if self.is_int16xint8:
+            datatype = "int16_t"
+            inttype = tf.int16
+        else:
+            datatype = "int8_t"
+            inttype = tf.int8
+
         input_data = self.get_randomized_input_data(input_data)
-        input_data = self.convert_tensor(input_data, self.quantize_input)
-        self.generate_c_array("input", input_data, datatype="int8_t")
+        self.generate_c_array("input", input_data, datatype=datatype)
 
         input_data = tf.cast(input_data, tf.float32)
 
+        # Create a one-layer Keras model
+        model = tf.keras.models.Sequential()
+        input_shape = (self.batches, self.y_input, self.x_input, self.input_ch)
+        model.add(tf.keras.layers.InputLayer(
+            input_shape=input_shape[1:], batch_size=self.batches))
         if self.test_type == 'avgpool':
-            pooling = self.average_pooling(input_data)
+            model.add(tf.keras.layers.AveragePooling2D(pool_size=(self.filter_y, self.filter_x),
+                                                       strides=(self.stride_y, self.stride_x),
+                                                       padding=self.padding, input_shape=input_shape[1:]))
         elif self.test_type == 'maxpool':
-            pooling = self.max_pooling(input_data)
+            model.add(tf.keras.layers.MaxPooling2D(pool_size=(self.filter_y, self.filter_x),
+                                                   strides=(self.stride_y, self.stride_x),
+                                                   padding=self.padding, input_shape=input_shape[1:]))
         else:
             raise RuntimeError("Wrong test type")
 
-        if self.y_output != pooling.shape[1] or self.x_output != pooling.shape[2] or self.output_ch != pooling.shape[3]:
-            raise RuntimeError("Mismatching output dimensions")
+        interpreter = self.convert_and_interpret(model, inttype, input_data)
 
-        self.generate_c_array("output_ref", self.convert_tensor(pooling, self.quantize_output), datatype="int8_t")
+        output_details = interpreter.get_output_details()
+        self.set_output_dims_and_padding(output_details[0]['shape'][2], output_details[0]['shape'][1])
+
+        # Generate reference
+        interpreter.invoke()
+        output_data = interpreter.get_tensor(output_details[0]["index"])
+        self.generate_c_array("output_ref", np.clip(output_data, self.out_activation_min, self.out_activation_max),
+                              datatype=datatype)
 
         self.write_c_config_header()
         self.write_c_header_wrapper()
@@ -668,48 +669,19 @@ class PoolingSettings(TestSettings):
         with open(filepath, "a") as f:
             self.write_common_config(f, prefix)
 
-    def average_pooling(self, x):
-        result = tf.nn.avg_pool(x,
-                                ksize=[1, self.filter_y, self.filter_x, 1],
-                                strides=[1, self.stride_y, self.stride_x, 1],
-                                padding=self.padding)
-        if self.relu6:
-            return tf.nn.relu6(result)
-        else:
-            return result
-
-    def max_pooling(self, x):
-        maxpool = tf.nn.max_pool(x,
-                                 ksize=[1, self.filter_y, self.filter_x, 1],
-                                 strides=[1, self.stride_y, self.stride_x, 1],
-                                 padding=self.padding)
-        if self.relu6:
-            return tf.nn.relu6(maxpool)
-        else:
-            return maxpool
-
 
 class FullyConnectedSettings(TestSettings):
 
     def __init__(self, dataset, testtype, args, in_ch=1, out_ch=1, x_in=1, y_in=1, w_x=1, w_y=1, stride_x=1, stride_y=1,
-                 pad=False, randmin=-4, randmax=4, outminrange=-128, outmaxrange=127, batches=1, input_scale=1.0,
-                 input_zero_point=0, weights_scale=1.0, bias_scale=1.0, output_scale=1.0,
-                 output_zero_point=0, generate_bias=True, out_activation_min=None, out_activation_max=None):
-        super().__init__(dataset, testtype, args, in_ch, out_ch, x_in, y_in, w_x, w_y, stride_x, stride_y, pad, randmin,
-                         randmax, outminrange, outmaxrange, batches, generate_bias=generate_bias,
-                         out_activation_min=out_activation_min, out_activation_max=out_activation_max)
+                 pad=False, randmin=INT8_MIN, randmax=INT8_MAX, batches=1, generate_bias=True, out_activation_min=None,
+                 out_activation_max=None, int16xint8=False, bias_min=None, bias_max=None):
+        super().__init__(dataset, testtype, args, in_ch, out_ch, x_in, y_in, x_in, y_in, stride_x, stride_y, pad,
+                         randmin, randmax, batches, generate_bias=generate_bias, out_activation_min=out_activation_min,
+                         out_activation_max=out_activation_max, int16xint8=int16xint8, bias_min=bias_min,
+                         bias_max=bias_min)
 
         if not self.test_type == 'fully_connected':
             raise RuntimeError("Invalid test type {}".format(self.test_type))
-        if x_in != w_x or y_in != w_y:
-            raise RuntimeError("Mismatching input and filter dimensions")
-
-        self.input_scale = input_scale
-        self.input_zero_point = input_zero_point
-        self.weights_scale = weights_scale
-        self.bias_scale = bias_scale
-        self.output_scale = output_scale
-        self.output_zero_point = output_zero_point
 
     def write_c_config_header(self):
         super().write_c_config_header()
@@ -719,10 +691,11 @@ class FullyConnectedSettings(TestSettings):
         prefix = self.testdataset.upper()
 
         with open(filepath, "a") as f:
-            self.write_c_header_offsets(f, prefix)
             f.write("#define {}_OUTPUT_MULTIPLIER {}\n".format(prefix, self.quantized_multiplier))
             f.write("#define {}_OUTPUT_SHIFT {}\n".format(prefix, self.quantized_shift))
             f.write("#define {}_ACCUMULATION_DEPTH {}\n".format(prefix, self.input_ch*self.x_input*self.y_input))
+            f.write("#define {}_INPUT_OFFSET {}\n".format(prefix, -self.input_zero_point))
+            f.write("#define {}_OUTPUT_OFFSET {}\n".format(prefix, self.output_zero_point))
 
     def quantize_multiplier(self):
         input_product_scale = self.input_scale * self.weights_scale
@@ -731,39 +704,75 @@ class FullyConnectedSettings(TestSettings):
         real_multipler = input_product_scale / self.output_scale
         (self.quantized_multiplier, self.quantized_shift) = self.quantize_scale(real_multipler)
 
-    def derive_filter_scale_and_zeropoint_from_min_max(self, mini, maxi):
-        scale = self.derive_scale_from_min_max(mini, maxi)
-        zero = int(self.INT8_MIN + (-mini/scale + 0.5))
-        return (scale, zero)
-
-    def quantize_bias(self, value):
-        result = int(value / self.bias_scale)
-        return self.clamp(result, self.INT32_MIN, self.INT32_MAX)
-
-    def quantize_weights(self, value):
-        result = round(value / self.weights_scale)
-        return self.clamp(result, self.INT8_MIN, self.INT8_MAX)
-
     def generate_data(self, input_data=None, weights=None, biases=None):
-        input_data = self.get_randomized_input_data(input_data)
+        input_data = self.get_randomized_input_data(input_data,
+                                                    [self.batches, self.input_ch * self.x_input * self.y_input])
+
+        if self.is_int16xint8:
+            inttype = tf.int16
+            datatype = "q15_t"
+            bias_datatype = "int64_t"
+        else:
+            inttype = tf.int8
+            datatype = "q7_t"
+            bias_datatype = "int32_t"
+
+        fc_weights_format = [self.input_ch * self.y_input * self.x_input, self.output_ch]
 
         if weights is not None:
-            weights = tf.reshape(weights, [self.filter_y, self.filter_x, self.input_ch, self.output_ch])
+            weights = tf.reshape(weights, fc_weights_format)
         else:
-            weights = self.get_randomized_data([self.filter_y, self.filter_x, self.input_ch, self.output_ch],
+            weights = self.get_randomized_data(fc_weights_format,
                                                self.kernel_table_file,
                                                regenerate=self.regenerate_new_weights)
 
         biases = self.get_randomized_bias_data(biases)
 
-        conv = self.conv2d(input_data, self.reshape_conv_kernel(weights), biases)
+        # Create model with one fully_connected layer.
+        model = tf.keras.models.Sequential()
+        model.add(tf.keras.layers.InputLayer(
+            input_shape=(self.y_input * self.x_input * self.input_ch,), batch_size=self.batches))
+        fully_connected_layer = tf.keras.layers.Dense(self.output_ch, activation=None)
+        model.add(fully_connected_layer)
+        fully_connected_layer.set_weights([weights, biases])
 
-        self.generate_c_array("input", self.convert_tensor(input_data, self.quantize_input))
-        self.generate_c_array("weights", self.convert_tensor(weights, self.quantize_weights))
-        self.generate_c_array("biases", self.convert_tensor(biases, self.quantize_bias), "int32_t")
-        self.generate_c_array("output_ref", self.convert_tensor(conv, self.quantize_output))
+        interpreter = self.convert_and_interpret(model, inttype, input_data)
 
+        all_layers_details = interpreter.get_tensor_details()
+        if self.is_int16xint8:
+            filter_layer = all_layers_details[2]
+            bias_layer = all_layers_details[1]
+        else:
+            filter_layer = all_layers_details[1]
+            bias_layer = all_layers_details[2]
+        if weights.numpy().size != interpreter.get_tensor(filter_layer['index']).size or \
+           (self.generate_bias and biases.numpy().size != interpreter.get_tensor(bias_layer['index']).size):
+            raise RuntimeError("Dimension mismatch")
+
+        # The generic destination size calculation for these tests are: self.x_output * self.y_output * self.output_ch
+        # * self.batches.
+        self.x_output = 1
+        self.y_output = 1
+        output_details = interpreter.get_output_details()
+        if self.output_ch != output_details[0]['shape'][1] or self.batches != output_details[0]['shape'][0]:
+            raise RuntimeError("Fully connected out dimension mismatch")
+
+        self.weights_scale = filter_layer['quantization_parameters']['scales'][0]
         self.quantize_multiplier()
+
+        self.generate_c_array("input", input_data, datatype=datatype)
+        self.generate_c_array("weights", interpreter.get_tensor(filter_layer['index']))
+
+        if self.generate_bias:
+            self.generate_c_array("biases", interpreter.get_tensor(bias_layer['index']), bias_datatype)
+        else:
+            self.generate_c_array("biases", biases, bias_datatype)
+
+        # Generate reference
+        interpreter.invoke()
+        output_data = interpreter.get_tensor(output_details[0]["index"])
+        self.generate_c_array("output_ref", np.clip(output_data, self.out_activation_min, self.out_activation_max),
+                              datatype=datatype)
 
         self.write_c_config_header()
         self.write_c_header_wrapper()
@@ -772,22 +781,38 @@ class FullyConnectedSettings(TestSettings):
 class SoftmaxSettings(TestSettings):
     softmax_input_integer_bits = 5
 
-    def __init__(self, dataset, testtype, args, x_in=5, y_in=1, randmin=-7, randmax=7):
+    def __init__(self, dataset, testtype, args, x_in=5, y_in=1, randmin=INT8_MIN, randmax=INT8_MAX, int16xint8=False,
+                 inInt8outInt16=False, input_scale=0.003922, input_zp=-128):
         super().__init__(dataset, testtype, args, 1, 1, x_in, y_in, 1, 1, 1, 1, False, randmin,
-                         randmax)
-        self.output_scale = 1 / 256
-        self.output_zero_point = -128
+                         randmax, int16xint8=int16xint8)
         self.x_input = self.x_output = x_in
         self.y_input = self.y_output = y_in
+        self.inInt8outInt16 = inInt8outInt16
 
-        input_real_multiplier = min(self.input_scale * (1 << (31 - self.softmax_input_integer_bits)),
-                                    (1 << 31) - 1)
-        (self.input_multiplier, self.input_left_shift) = self.quantize_scale(input_real_multiplier)
+        if self.inInt8outInt16 and self.is_int16xint8:
+            raise RuntimeError("Specify input as either s8 or s16")
 
-        self.diff_min = ((1 << self.softmax_input_integer_bits) - 1) * \
-                        (1 << (31 - self.softmax_input_integer_bits)) / \
-                        (1 << self.input_left_shift)
-        self.diff_min = math.floor(self.diff_min)
+        if self.inInt8outInt16:
+            self.input_scale = input_scale
+            self.json_template = "TestCases/Common/Softmax/softmax_int8_to_int16_template.json"
+            self.json_replacements = {"num_rows": self.y_input,
+                                      "row_size": self.x_input,
+                                      "input_scale": input_scale,
+                                      "input_zp": input_zp}
+
+    def calc_softmax_params(self):
+        if self.is_int16xint8:
+            input_scale_beta_rescale = self.input_scale / (10.0 / 65535.0)
+            (self.input_multiplier, self.input_left_shift) = self.quantize_scale(input_scale_beta_rescale)
+        else:
+            input_real_multiplier = min(self.input_scale * (1 << (31 - self.softmax_input_integer_bits)),
+                                        (1 << 31) - 1)
+            (self.input_multiplier, self.input_left_shift) = self.quantize_scale(input_real_multiplier)
+
+            self.diff_min = ((1 << self.softmax_input_integer_bits) - 1) * \
+                            (1 << (31 - self.softmax_input_integer_bits)) / \
+                            (1 << self.input_left_shift)
+            self.diff_min = math.floor(self.diff_min)
 
     def write_c_config_header(self):
         super().write_c_config_header(write_common_parameters=False)
@@ -801,30 +826,65 @@ class SoftmaxSettings(TestSettings):
             f.write("#define {}_ROW_SIZE {}\n".format(prefix, self.x_input))
             f.write("#define {}_INPUT_MULT {}\n".format(prefix, self.input_multiplier))
             f.write("#define {}_INPUT_LEFT_SHIFT {}\n".format(prefix, self.input_left_shift))
-            f.write("#define {}_DIFF_MIN {}\n".format(prefix, -self.diff_min))
+            if not self.is_int16xint8:
+                f.write("#define {}_DIFF_MIN {}\n".format(prefix, -self.diff_min))
             f.write("#define {}_DST_SIZE {}\n".format(prefix, self.x_output * self.y_output))
 
-    def get_softmax_randomized_input_data(self, input_data):
+    def get_softmax_randomized_input_data(self, input_data, input_shape):
         # Generate or load saved input data unless hardcoded data provided.
         if input_data is not None:
-            input_data = tf.reshape(input_data, [self.y_input, self.x_input])
+            input_data = tf.reshape(input_data, input_shape)
         else:
-            input_data = self.get_randomized_data([self.y_input, self.x_input],
+            input_data = self.get_randomized_data(input_shape,
                                                   self.inputs_table_file,
                                                   regenerate=self.regenerate_new_input)
         return input_data
 
-    def softmax(self, indata):
-        indata = tf.cast(indata, dtype=tf.dtypes.float32)
-        out = tf.nn.softmax(indata)
-        return out
-
     def generate_data(self, input_data=None, weights=None, biases=None):
-        input_data = self.get_softmax_randomized_input_data(input_data)
-        result = self.softmax(input_data)
+        input_data = self.get_softmax_randomized_input_data(input_data, [self.y_input, self.x_input])
 
-        self.generate_c_array("input", self.convert_tensor(input_data, self.quantize_input))
-        self.generate_c_array("output_ref", self.convert_tensor(result, self.quantize_output))
+        if self.is_int16xint8:
+            inttype = tf.int16
+            datatype = "q15_t"
+        else:
+            inttype = tf.int8
+            datatype = "q7_t"
+
+        self.generate_c_array("input", input_data, datatype=datatype)
+
+        # Generate reference.
+        if self.inInt8outInt16:
+            # Output is int16.
+            datatype = "q15_t"
+
+            # Keras does not support int8 input and int16 output for Softmax.
+            # Using a template json instead.
+            generated_json = self.generate_json_from_template()
+            self.flatc_generate_tflite(generated_json, args.schema_file)
+
+            interpreter = Interpreter(
+                model_path=str(self.model_path_tflite), experimental_op_resolver_type=OpResolverType.BUILTIN_REF)
+            interpreter.allocate_tensors()
+            all_layers_details = interpreter.get_tensor_details()
+            input_layer = all_layers_details[0]
+            output_layer = all_layers_details[1]
+
+            interpreter.set_tensor(input_layer["index"], tf.cast(input_data, tf.int8))
+            interpreter.invoke()
+            output_data = interpreter.get_tensor(output_layer["index"])
+        else:
+            # Create a one-layer Keras model.
+            model = tf.keras.models.Sequential()
+            input_shape = (self.y_input, self.x_input)
+            model.add(tf.keras.layers.Softmax(input_shape=input_shape))
+
+            interpreter = self.convert_and_interpret(model, inttype, tf.expand_dims(input_data, axis=0))
+            output_details = interpreter.get_output_details()
+            interpreter.invoke()
+            output_data = interpreter.get_tensor(output_details[0]["index"])
+
+        self.calc_softmax_params()
+        self.generate_c_array("output_ref", output_data, datatype=datatype)
 
         self.write_c_config_header()
         self.write_c_header_wrapper()
@@ -832,8 +892,10 @@ class SoftmaxSettings(TestSettings):
 
 class SVDFSettings(TestSettings):
 
-    def __init__(self, dataset, testtype, args, batches=2, number_inputs=2, rank=8, memory_size=10, randmin=-4,
-                 randmax=4, input_size=3, number_units=4, generate_bias=True):
+    def __init__(self, dataset, testtype, args, batches=2, number_inputs=2, rank=8, memory_size=10, randmin=INT8_MIN,
+                 randmax=INT8_MAX, input_size=3, number_units=4, generate_bias=True, input_scale=0.1, input_zp=0,
+                 w_1_scale=0.005, w_1_zp=0, w_2_scale=0.005, w_2_zp=0, bias_scale=0.000001, bias_zp=0,
+                 state_scale=0.005, state_zp=0, output_scale=0.1, output_zp=0):
         super().__init__(dataset, testtype, args, 1, 1, 1, 1, 1, 1, 1, 1, False, randmin,
                          randmax, generate_bias=generate_bias)
         self.batches = batches
@@ -843,24 +905,39 @@ class SVDFSettings(TestSettings):
         self.rank = rank
         self.number_filters = self.number_units * self.rank
         self.time_table_file = self.pregenerated_data_dir + self.testdataset + '/' + 'time_data.txt'
-        self.state_table_file = self.pregenerated_data_dir + self.testdataset + '/' + 'state_data.txt'
-
-        self.weights_feature_scale = 1
-        self.weights_feature_scale = 1
-        self.weights_time_scale = 1
-        self.state_scale = 1
-        self.bias_scale = 1
 
         self.number_inputs = number_inputs
         self.input_sequence_length = self.number_inputs * self.input_size * self.batches
 
-        effective_scale_1 = self.weights_feature_scale * self.input_scale / self.state_scale
-        effective_scale_2 = self.state_scale * self.weights_time_scale / self.output_scale
+        self.in_activation_max = INT16_MAX
+        self.in_activation_min = INT16_MIN
+
+        self.json_template = "TestCases/Common/svdf_template.json"
+        self.json_replacements = {"memory_sizeXnumber_filters": self.memory_size * self.number_filters,
+                                  "batches": self.batches,
+                                  "input_size": self.input_size,
+                                  "number_filters": self.number_filters,
+                                  "memory_size": self.memory_size,
+                                  "number_units": self.number_units,
+                                  "rank_value": self.rank,
+                                  "input_scale": input_scale,
+                                  "input_zp": input_zp,
+                                  "w_1_scale": w_1_scale,
+                                  "w_1_zp": w_1_zp,
+                                  "w_2_scale": w_2_scale,
+                                  "w_2_zp": w_2_zp,
+                                  "bias_scale": bias_scale,
+                                  "bias_zp": bias_zp,
+                                  "state_scale": state_scale,
+                                  "state_zp": state_zp,
+                                  "output_scale": output_scale,
+                                  "output_zp": output_zp}
+
+    def calc_multipliers_and_shifts(self, input_scale, weights_1_scale, weights_2_scale, state_scale, output_scale):
+        effective_scale_1 = weights_1_scale * input_scale / state_scale
+        effective_scale_2 = state_scale * weights_2_scale / output_scale
         (self.multiplier_in, self.shift_1) = self.quantize_scale(effective_scale_1)
         (self.multiplier_out, self.shift_2) = self.quantize_scale(effective_scale_2)
-
-        self.in_activation_max = self.INT16_MAX
-        self.in_activation_min = self.INT16_MIN
 
     def write_c_config_header(self):
         super().write_c_config_header(write_common_parameters=False)
@@ -870,7 +947,6 @@ class SVDFSettings(TestSettings):
         prefix = self.testdataset.upper()
 
         with open(filepath, "a") as f:
-            self.write_c_header_offsets(f, prefix)
             f.write("#define {}_MULTIPLIER_IN {}\n".format(prefix, self.multiplier_in))
             f.write("#define {}_MULTIPLIER_OUT {}\n".format(prefix, self.multiplier_out))
             f.write("#define {}_SHIFT_1 {}\n".format(prefix, self.shift_1))
@@ -885,46 +961,8 @@ class SVDFSettings(TestSettings):
             f.write("#define {}_OUT_ACTIVATION_MIN {}\n".format(prefix, self.out_activation_min))
             f.write("#define {}_OUT_ACTIVATION_MAX {}\n".format(prefix, self.out_activation_max))
             f.write("#define {}_INPUT_BATCHES {}\n".format(prefix, self.batches))
-
-    def quantize_weights_feature(self, value):
-        result = round(value / self.weights_feature_scale)
-        return self.clamp(result, self.INT8_MIN, self.INT8_MAX)
-
-    def quantize_weights_time(self, value):
-        result = round(value / self.weights_time_scale)
-        return self.clamp(result, self.INT16_MIN, self.INT16_MAX)
-
-    def quantize_state(self, value):
-        result = round(value / self.state_scale)
-        return self.clamp(result, self.INT16_MIN, self.INT16_MAX)
-
-    def quantize_bias(self, value):
-        result = round(value / self.bias_scale)
-        return result
-
-    def get_randomized_state_data(self, length, npfile, regenerate, minrange=None, maxrange=None):
-        if not minrange:
-            minrange = self.mins
-        if not maxrange:
-            maxrange = self.maxs
-        data = []
-        if not os.path.exists(npfile) or regenerate:
-            regendir = os.path.dirname(npfile)
-            if not os.path.exists(regendir):
-                os.makedirs(regendir)
-            for i in range(length):
-                data.append(random.randint(self.mins, self.maxs))
-
-            print("Saving data to {}".format(npfile))
-            with open(npfile, 'w') as f:
-                for listitem in data:
-                    f.write(str(listitem) + '\n')
-        else:
-            print("Loading data from {}".format(npfile))
-            with open(npfile, 'r') as f:
-                for line in f:
-                    data.append(int(line.strip()))
-        return data
+            f.write("#define {}_INPUT_OFFSET {}\n".format(prefix, self.input_zero_point))
+            f.write("#define {}_OUTPUT_OFFSET {}\n".format(prefix, self.output_zero_point))
 
     def generate_data(self, input_data=None, weights=None, biases=None, time_data=None, state_data=None):
         if input_data is not None:
@@ -933,8 +971,7 @@ class SVDFSettings(TestSettings):
             input_data = self.get_randomized_data([self.input_sequence_length],
                                                   self.inputs_table_file,
                                                   regenerate=self.regenerate_new_input)
-
-        self.generate_c_array("input_sequence", self.convert_tensor(input_data, self.quantize_input))
+        self.generate_c_array("input_sequence", input_data)
 
         if weights is not None:
             weights_feature_data = tf.reshape(weights, [self.number_filters, self.input_size])
@@ -942,8 +979,6 @@ class SVDFSettings(TestSettings):
             weights_feature_data = self.get_randomized_data([self.number_filters, self.input_size],
                                                             self.kernel_table_file,
                                                             regenerate=self.regenerate_new_weights)
-        self.generate_c_array("weights_feature",
-                              self.convert_tensor(weights_feature_data, self.quantize_weights_feature))
 
         if time_data is not None:
             weights_time_data = tf.reshape(time_data, [self.number_filters, self.memory_size])
@@ -951,16 +986,6 @@ class SVDFSettings(TestSettings):
             weights_time_data = self.get_randomized_data([self.number_filters, self.memory_size],
                                                          self.time_table_file,
                                                          regenerate=self.regenerate_new_weights)
-        self.generate_c_array("weights_time",
-                              self.convert_tensor(weights_time_data, self.quantize_weights_time), datatype='q15_t')
-
-        if state_data is None:
-            state_data = self.get_randomized_state_data(self.batches * self.memory_size * self.number_filters,
-                                                        self.state_table_file,
-                                                        regenerate=self.regenerate_new_weights)
-        self.state_data = state_data
-        state_data = tf.reshape(state_data, [self.batches, self.memory_size*self.number_filters])
-        self.generate_c_array("state", self.convert_tensor(state_data, self.quantize_state), "q15_t")
 
         if not self.generate_bias:
             biases = [0] * self.number_units
@@ -970,68 +995,160 @@ class SVDFSettings(TestSettings):
             biases = self.get_randomized_data([self.number_units],
                                               self.bias_table_file,
                                               regenerate=self.regenerate_new_weights)
-        self.generate_c_array("biases", self.convert_tensor(biases, self.quantize_bias), "int32_t")
 
-        # Generate reference output.
-        svdf = None
+        # Generate tflite model
+        generated_json = self.generate_json_from_template(weights_feature_data, weights_time_data, biases)
+        self.flatc_generate_tflite(generated_json, args.schema_file)
+
+        # Run TFL interpreter
+        interpreter = Interpreter(
+            model_path=str(self.model_path_tflite), experimental_op_resolver_type=OpResolverType.BUILTIN_REF)
+        interpreter.allocate_tensors()
+
+        # Read back scales and zero points from tflite model
+        all_layers_details = interpreter.get_tensor_details()
+        input_layer = all_layers_details[0]
+        weights_1_layer = all_layers_details[1]
+        weights_2_layer = all_layers_details[2]
+        bias_layer = all_layers_details[3]
+        state_layer = all_layers_details[4]
+        output_layer = all_layers_details[5]
+        (input_scale, self.input_zero_point) = self.get_scale_and_zp(input_layer)
+        (weights_1_scale, zero_point) = self.get_scale_and_zp(weights_1_layer)
+        (weights_2_scale, zero_point) = self.get_scale_and_zp(weights_2_layer)
+        (bias_scale, zero_point) = self.get_scale_and_zp(bias_layer)
+        (state_scale, zero_point) = self.get_scale_and_zp(state_layer)
+        (output_scale, self.output_zero_point) = self.get_scale_and_zp(output_layer)
+
+        self.calc_multipliers_and_shifts(input_scale, weights_1_scale, weights_2_scale, state_scale, output_scale)
+
+        # Generate unit test C headers
+        self.generate_c_array("weights_feature", interpreter.get_tensor(weights_1_layer['index']))
+        self.generate_c_array("weights_time", interpreter.get_tensor(weights_2_layer['index']), datatype='q15_t')
+        self.generate_c_array("biases", interpreter.get_tensor(bias_layer['index']), "int32_t")
+        self.generate_c_array("state", interpreter.get_tensor(state_layer['index']), "q15_t")
+
+        # Generate reference output
+        svdf_ref = None
         for i in range(self.number_inputs):
             start = i * self.input_size * self.batches
             end = i * self.input_size * self.batches + self.input_size * self.batches
             input_sequence = input_data[start:end]
-            svdf = self.svdf(input_sequence, weights_feature_data, weights_time_data, biases)
-        self.generate_c_array("output_ref", self.convert_tensor(svdf, self.quantize_output))
+            input_sequence = tf.reshape(input_sequence, [self.batches, self.input_size])
+            interpreter.set_tensor(input_layer["index"], tf.cast(input_sequence, tf.int8))
+            interpreter.invoke()
+            svdf_ref = interpreter.get_tensor(output_layer["index"])
+        self.generate_c_array("output_ref", svdf_ref)
 
         self.write_c_config_header()
         self.write_c_header_wrapper()
 
-    def svdf(self, indata, weights_feature, time_feature, bias=None):
-        indata = tf.cast(indata, dtype=tf.dtypes.float32)
-        weights_feature = tf.cast(weights_feature, dtype=tf.dtypes.float32)
-        time_feature = tf.cast(time_feature, dtype=tf.dtypes.float32)
-        bias = tf.cast(bias, dtype=tf.dtypes.float32)
+    def get_scale_and_zp(self, layer):
+        return (layer['quantization_parameters']['scales'][0], layer['quantization_parameters']['zero_points'][0])
 
-        state_data = deque(self.state_data)
-        state_data.rotate(-1)
-        self.state_data = list(state_data)
 
-        indata = tf.reshape(indata, [self.batches, 1, self.input_size])
-        weights_feature = tf.reshape(weights_feature, [self.number_filters, self.input_size, 1])
-        weights_feature = tf.transpose(weights_feature)
-        scratch = tf.nn.conv1d(indata, weights_feature, stride=self.memory_size-1, padding=self.padding)
-        out_size = self.batches * self.number_filters
-        scratch = tf.reshape(scratch, [out_size])
-        state_counter = self.memory_size - 1
-        for i in range(out_size):
-            self.state_data[state_counter] = scratch[i].numpy().ravel()[0]
-            state_counter += self.memory_size
+class AddMulSettings(TestSettings):
 
-        time_feature = tf.reshape(time_feature, [self.number_filters * self.memory_size])
-        scratch = []
-        for b in range(self.batches):
-            counter_t = 0
-            counter_s = b * self.memory_size * self.number_filters
-            for i in range(self.number_filters):
-                dot_prod = 0
-                for j in range(self.memory_size):
-                    dot_prod += self.state_data[counter_s] * time_feature[counter_t].numpy().ravel()[0]
-                    counter_t += 1
-                    counter_s += 1
-                scratch.append(dot_prod)
-        out = tf.constant(scratch, dtype=tf.dtypes.float32)
+    def __init__(self, dataset, testtype, args, channels=1, x_in=4, y_in=4, decimal_input=6, randmin=INT8_MIN,
+                 randmax=INT8_MAX, out_activation_min=INT8_MIN, out_activation_max=INT8_MAX, int16xint8=False):
+        super().__init__(dataset, testtype, args, in_ch=channels, out_ch=channels, x_in=x_in, y_in=y_in, w_x=1, w_y=1,
+                         stride_x=1, stride_y=1, pad=False, randmin=randmin, randmax=randmax, batches=1,
+                         generate_bias=False, relu6=False, out_activation_min=out_activation_min,
+                         out_activation_max=out_activation_max, int16xint8=int16xint8)
 
-        out = tf.reshape(out, [self.number_units * self.batches, self.rank])
-        out = tf.reduce_sum(out, axis=1)
+        self.x_input = self.x_output = x_in
+        self.y_input = self.y_output = y_in
+        self.decimal_input = decimal_input
 
-        if self.generate_bias:
-            out = tf.reshape(out, [self.batches, self.number_units])
-            output_list = []
-            for b in range(self.batches):
-                output_list.append(tf.add(out[b], bias))
-            outputs = tf.stack(output_list)
-            out = outputs
+        self.left_shift = 15 if self.is_int16xint8 else 20
 
-        out = tf.clip_by_value(out, self.out_activation_min, self.out_activation_max)
-        return out
+    def generate_data(self, input_data1=None, input_data2=None):
+        input_shape = (1, self.y_input, self.x_input, self.input_ch)
+
+        input_data1 = self.get_randomized_data(list(input_shape),
+                                               self.inputs_table_file,
+                                               regenerate=self.regenerate_new_input,
+                                               decimals=self.decimal_input)
+        input_data2 = self.get_randomized_data(list(input_shape),
+                                               self.kernel_table_file,
+                                               regenerate=self.regenerate_new_weights,
+                                               decimals=self.decimal_input)
+
+        if self.is_int16xint8:
+            inttype = "int16_t"
+            inttype_tf = tf.int16
+        else:
+            inttype = "int8_t"
+            inttype_tf = tf.int8
+
+        # Create a one-layer functional Keras model as add/mul cannot use a sequntial Keras model.
+        input1 = tf.keras.layers.Input(shape=input_shape[1:])
+        input2 = tf.keras.layers.Input(shape=input_shape[1:])
+        if self.test_type == 'add':
+            layer = tf.keras.layers.Add()([input1, input2])
+        elif self.test_type == 'mul':
+            layer = tf.keras.layers.Multiply()([input1, input2])
+        else:
+            raise RuntimeError("Wrong test type")
+        out = tf.keras.layers.Lambda(function=lambda x: x)(layer)
+        model = tf.keras.models.Model(inputs=[input1, input2], outputs=out)
+
+        interpreter = self.convert_and_interpret(model, inttype_tf)
+
+        input_details = interpreter.get_input_details()
+        interpreter.set_tensor(input_details[0]["index"], tf.cast(input_data1, inttype_tf))
+        interpreter.set_tensor(input_details[1]["index"], tf.cast(input_data2, inttype_tf))
+
+        # Calculate multipliers, shifts and offsets.
+        (input1_scale, self.input1_zero_point) = input_details[0]['quantization']
+        (input2_scale, self.input2_zero_point) = input_details[1]['quantization']
+        self.input1_zero_point = -self.input1_zero_point
+        self.input2_zero_point = -self.input2_zero_point
+        double_max_input_scale = max(input1_scale, input2_scale) * 2
+        (self.input1_mult, self.input1_shift) = self.quantize_scale(input1_scale/double_max_input_scale)
+        (self.input2_mult, self.input2_shift) = self.quantize_scale(input2_scale/double_max_input_scale)
+
+        if self.test_type == 'add':
+            actual_output_scale = double_max_input_scale / ((1 << self.left_shift) * self.output_scale)
+        elif self.test_type == 'mul':
+            actual_output_scale = input1_scale * input2_scale / self.output_scale
+        (self.output_mult, self.output_shift) = self.quantize_scale(actual_output_scale)
+
+        # Generate reference.
+        interpreter.invoke()
+        output_details = interpreter.get_output_details()
+        output_data = interpreter.get_tensor(output_details[0]["index"])
+        self.generate_c_array("input1", input_data1, datatype=inttype)
+        self.generate_c_array("input2", input_data2, datatype=inttype)
+        self.generate_c_array("output_ref", np.clip(output_data, self.out_activation_min, self.out_activation_max),
+                              datatype=inttype)
+
+        self.write_c_config_header()
+        self.write_c_header_wrapper()
+
+    def write_c_config_header(self):
+        super().write_c_config_header(write_common_parameters=False)
+
+        filename = self.config_data
+        filepath = self.headers_dir + filename
+        prefix = self.testdataset.upper()
+
+        with open(filepath, "a") as f:
+            f.write("#define {}_DST_SIZE {}\n".format(prefix,
+                                                      self.batches * self.y_input * self.x_input * self.input_ch))
+            f.write("#define {}_OUT_ACTIVATION_MIN {}\n".format(prefix, self.out_activation_min))
+            f.write("#define {}_OUT_ACTIVATION_MAX {}\n".format(prefix, self.out_activation_max))
+            f.write("#define {}_INPUT1_OFFSET {}\n".format(prefix, self.input1_zero_point))
+            f.write("#define {}_INPUT2_OFFSET {}\n".format(prefix, self.input2_zero_point))
+            f.write("#define {}_OUTPUT_MULT {}\n".format(prefix, self.output_mult))
+            f.write("#define {}_OUTPUT_SHIFT {}\n".format(prefix, self.output_shift))
+            f.write("#define {}_OUTPUT_OFFSET {}\n".format(prefix, self.output_zero_point))
+            if self.test_type == 'add':
+                f.write("#define {}_LEFT_SHIFT {}\n".format(prefix, self.left_shift))
+                f.write("#define {}_INPUT1_SHIFT {}\n".format(prefix, self.input1_shift))
+                f.write("#define {}_INPUT2_SHIFT {}\n".format(prefix, self.input2_shift))
+                f.write("#define {}_INPUT1_MULT {}\n".format(prefix, self.input1_mult))
+                f.write("#define {}_INPUT2_MULT {}\n".format(prefix, self.input2_mult))
 
 
 def load_all_testdatasets():
@@ -1042,87 +1159,171 @@ def load_all_testdatasets():
     type_of_test = 'conv'
     dataset = 'basic'
     ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=1, out_ch=1, x_in=5,
-                                              y_in=8, w_x=2, w_y=4, stride_x=1, stride_y=1, pad=False,
-                                              randmin=1, randmax=4)
+                                              y_in=8, w_x=2, w_y=4, stride_x=1, stride_y=1, pad=False)
     dataset = 'stride2pad1'
     ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=1, out_ch=1, x_in=7,
-                                              y_in=7, w_x=3, w_y=3, stride_x=2, stride_y=2, pad=True,
-                                              randmin=1, randmax=4)
+                                              y_in=7, w_x=3, w_y=3, stride_x=2, stride_y=2, pad=True)
     dataset = 'kernel1x1'
     ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=4, out_ch=17, x_in=15,
                                               y_in=15, w_x=1, w_y=1, stride_x=1, stride_y=1, pad=False,
-                                              randmin=1, randmax=4, outminrange=-126, outmaxrange=127)
+                                              out_activation_min=-126, out_activation_max=127)
     dataset = 'conv_3'
     ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=3, out_ch=1, x_in=10, y_in=49, w_x=4,
-                                              w_y=10, stride_x=1, stride_y=2, pad=True, randmin=-2, randmax=2,
-                                              outminrange=-127, outmaxrange=127)
+                                              w_y=10, stride_x=1, stride_y=2, pad=True,
+                                              out_activation_min=-127, out_activation_max=127)
     dataset = 'conv_1_x_n_1'
     ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=3, out_ch=3, x_in=5, y_in=5, w_x=2,
-                                              w_y=1, stride_x=2, stride_y=1, pad=False, randmin=-2, randmax=2,
-                                              outminrange=-127, outmaxrange=127, batches=2)
+                                              w_y=1, stride_x=2, stride_y=1, pad=False, out_activation_min=-127,
+                                              out_activation_max=127, batches=2)
     dataset = 'conv_1_x_n_2'
     ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=3, out_ch=1, x_in=11, y_in=11, w_x=11,
-                                              w_y=1, stride_x=1, stride_y=1, pad=True, randmin=-2, randmax=2,
-                                              outminrange=-127, outmaxrange=127)
+                                              w_y=1, stride_x=1, stride_y=1, pad=True,
+                                              out_activation_min=-111, out_activation_max=127)
     dataset = 'conv_1_x_n_3'
     ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=1, out_ch=3, x_in=11, y_in=11, w_x=1,
-                                              w_y=11, stride_x=1, stride_y=1, pad=True, randmin=-2, randmax=2,
-                                              outminrange=-127, outmaxrange=127)
+                                              w_y=11, stride_x=1, stride_y=1, pad=True,
+                                              out_activation_min=-88, out_activation_max=127)
     dataset = 'conv_2'
     ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=2, out_ch=4, x_in=6, y_in=3, w_x=3,
-                                              w_y=3, stride_x=1, stride_y=1, pad=True, randmin=1, randmax=4,
-                                              outminrange=-126, outmaxrange=127)
+                                              w_y=3, stride_x=1, stride_y=1, pad=True, out_activation_min=-101,
+                                              out_activation_max=127)
     dataset = 'conv_4'  # batches > 2
     ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=3, out_ch=3, x_in=5, y_in=5, w_x=2,
-                                              w_y=3, stride_x=2, stride_y=2, pad=False, randmin=-2, randmax=2,
-                                              outminrange=-127, outmaxrange=127, batches=3)
+                                              w_y=3, stride_x=2, stride_y=2, pad=False,
+                                              out_activation_min=-109, out_activation_max=127, batches=3)
     dataset = 'conv_out_activation'
     ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=2, out_ch=2, x_in=3, y_in=3, w_x=3,
-                                              w_y=3, stride_x=1, stride_y=1, pad=True, randmin=-5, randmax=5,
-                                              out_activation_min=-55, out_activation_max=55)
+                                              w_y=3, stride_x=1, stride_y=1, pad=True, out_activation_min=-61,
+                                              out_activation_max=107)
+    dataset = 'conv_dilation_golden'
+    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=1, batches=2, out_ch=3, x_in=6, y_in=4,
+                                              w_x=2, w_y=2, stride_x=1, stride_y=1, pad=True, out_activation_min=-128,
+                                              out_activation_max=127, dilation_x=3, dilation_y=2)
+    dataset = 'conv_2x2_dilation'
+    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=2, out_ch=2, x_in=10, y_in=10, w_x=3,
+                                              w_y=3, stride_x=1, stride_y=1, pad=False, out_activation_min=-61,
+                                              out_activation_max=107, dilation_x=2, dilation_y=2)
+    dataset = 'conv_2x3_dilation'
+    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=2, out_ch=2, x_in=3, y_in=3, w_x=3,
+                                              w_y=3, stride_x=1, stride_y=1, pad=True, out_activation_min=-61,
+                                              out_activation_max=107, dilation_x=2, dilation_y=2)
+    dataset = 'conv_3x2_dilation'
+    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=2, out_ch=2, x_in=3, y_in=3, w_x=3,
+                                              w_y=3, stride_x=1, stride_y=1, pad=True, out_activation_min=-61,
+                                              out_activation_max=107, dilation_x=3, dilation_y=2)
+    dataset = 'conv_2x2_dilation_5x5_input'
+    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=2, out_ch=2, x_in=5, y_in=5, w_x=3,
+                                              w_y=3, stride_x=1, stride_y=1, pad=True, out_activation_min=-61,
+                                              out_activation_max=107, dilation_x=2, dilation_y=2)
+    dataset = 'conv_3x3_dilation_5x5_input'
+    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=2, out_ch=2, x_in=9, y_in=11, w_x=3,
+                                              w_y=3, stride_x=1, stride_y=1, pad=True, out_activation_min=-61,
+                                              out_activation_max=107, dilation_x=2, dilation_y=2)
+    dataset = 'int16xint8'
+    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=3, out_ch=4, x_in=7,
+                                              y_in=8, w_x=2, w_y=4, stride_x=2, stride_y=3, pad=True,
+                                              randmin=INT16_MIN, randmax=INT16_MAX, out_activation_min=-13335,
+                                              out_activation_max=32767, int16xint8=True)
+    dataset = 'requantize_s64'
+    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=2, out_ch=2, x_in=3,
+                                              y_in=2, w_x=2, w_y=2, stride_x=1, stride_y=1, pad=False,
+                                              out_activation_min=INT16_MIN, out_activation_max=INT16_MAX,
+                                              int16xint8=True, bias_min=-0x300, bias_max=0x9fff)
+    dataset = 'int16xint8_dilation_1'
+    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=2, out_ch=2, x_in=32,
+                                              y_in=32, w_x=2, w_y=2, stride_x=1, stride_y=1, pad=False,
+                                              out_activation_min=INT16_MIN, out_activation_max=INT16_MAX,
+                                              int16xint8=True, bias_min=-0x300, dilation_x=2, dilation_y=2)
+    dataset = 'int16xint8_dilation_2'
+    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=3, out_ch=4, x_in=7,
+                                              y_in=8, w_x=2, w_y=4, stride_x=1, stride_y=1, pad=True,
+                                              randmin=INT16_MIN, randmax=INT16_MAX, out_activation_min=-13335,
+                                              out_activation_max=32767, int16xint8=True, dilation_x=2, dilation_y=2)
+    dataset = 'int16xint8_dilation_3'
+    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=3, out_ch=4, x_in=7,
+                                              y_in=8, w_x=2, w_y=4, stride_x=1, stride_y=1, pad=True,
+                                              randmin=INT16_MIN, randmax=INT16_MAX, out_activation_min=-13335,
+                                              out_activation_max=32767, int16xint8=True, dilation_x=2)
 
     type_of_test = 'depthwise_conv'
     dataset = 'depthwise_2'
     ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=3, out_ch=9, x_in=6, y_in=5, w_x=3,
-                                              w_y=4, stride_x=2, stride_y=2, pad=True, randmin=-2, randmax=2,
-                                              outminrange=-126, outmaxrange=127)
+                                              w_y=4, stride_x=2, stride_y=2, pad=True,
+                                              out_activation_min=-73, out_activation_max=127)
     dataset = 'depthwise_kernel_3x3'
     ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=5, out_ch=5, x_in=4, y_in=5, w_x=3,
-                                              w_y=3, stride_x=2, stride_y=2, pad=True, randmin=-2, randmax=2,
-                                              outminrange=-126, outmaxrange=127)
+                                              w_y=3, stride_x=2, stride_y=2, pad=True,
+                                              out_activation_min=-104, out_activation_max=127)
     dataset = 'depthwise_eq_in_out_ch'
     ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=6, out_ch=6, x_in=4, y_in=5, w_x=2,
-                                              w_y=3, stride_x=1, stride_y=1, pad=True, randmin=-2, randmax=2,
-                                              outminrange=-126, outmaxrange=127)
+                                              w_y=3, stride_x=1, stride_y=1, pad=True,
+                                              out_activation_min=-86, out_activation_max=127)
     dataset = 'depthwise_out_activation'
     ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=3, out_ch=3, x_in=6, y_in=5, w_x=3,
-                                              w_y=4, pad=False, randmin=-7, randmax=7, out_activation_min=-31,
-                                              out_activation_max=24)
+                                              w_y=4, pad=False, out_activation_min=-45,
+                                              out_activation_max=103)
     dataset = 'depthwise_mult_batches'
     ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=3, out_ch=3, x_in=3, y_in=5, w_x=2,
-                                              w_y=4, stride_x=2, stride_y=2, pad=True, randmin=-2, randmax=2,
+                                              w_y=4, stride_x=2, stride_y=2, pad=True,
                                               batches=2)
+    dataset = 'depthwise_null_bias_0'
+    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=2, out_ch=2, x_in=4, y_in=5, w_x=2,
+                                              w_y=2, stride_x=1, stride_y=1, pad=True, generate_bias=False,
+                                              batches=1)
+    dataset = 'depthwise_null_bias_1'
+    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=2, out_ch=8, x_in=4, y_in=5, w_x=2,
+                                              w_y=2, stride_x=1, stride_y=1, pad=True, generate_bias=False,
+                                              batches=1)
+    dataset = 'depthwise_dilation'
+    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=3, out_ch=9, x_in=6, y_in=5, w_x=3,
+                                              w_y=4, stride_x=2, stride_y=2, pad=True,
+                                              out_activation_min=-70, out_activation_max=127, dilation_x=2,
+                                              dilation_y=3)
+    dataset = 'dw_int16xint8'
+    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=4, out_ch=8, x_in=9, y_in=5, w_x=3,
+                                              w_y=4, stride_x=3, stride_y=2, pad=True, randmin=INT16_MIN,
+                                              randmax=INT16_MAX, out_activation_min=-21111,
+                                              out_activation_max=32767, int16xint8=True)
+    dataset = 'dw_int16xint8_dilation'
+    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=4, out_ch=8, x_in=9, y_in=5, w_x=4,
+                                              w_y=4, stride_x=1, stride_y=1, pad=True, randmin=INT16_MIN,
+                                              randmax=INT16_MAX, out_activation_min=-32700, dilation_x=3, dilation_y=2,
+                                              out_activation_max=32767, int16xint8=True)
+    dataset = 'dw_int16xint8_mult4'
+    ALL_TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=2, out_ch=8, x_in=4, y_in=5, w_x=3,
+                                              w_y=4, stride_x=3, stride_y=2, pad=False, randmin=INT16_MIN,
+                                              randmax=INT16_MAX, out_activation_min=-32767,
+                                              out_activation_max=32767, int16xint8=True)
 
     type_of_test = 'fully_connected'
     dataset = 'fully_connected'
     ALL_TESTDATA_SETS[dataset] = FullyConnectedSettings(dataset, type_of_test, args, in_ch=10, out_ch=6, x_in=2, y_in=1,
-                                                        w_x=2, w_y=1, batches=3, input_zero_point=-50,
-                                                        output_zero_point=-2)
+                                                        batches=3)
     dataset = 'fully_connected_mve_0'
     ALL_TESTDATA_SETS[dataset] = FullyConnectedSettings(dataset, type_of_test, args, in_ch=16, out_ch=9, x_in=1, y_in=1,
-                                                        input_zero_point=-3, w_x=1, w_y=1, batches=1,
-                                                        output_zero_point=-2)
+                                                        batches=1)
     dataset = 'fully_connected_mve_1'
     ALL_TESTDATA_SETS[dataset] = FullyConnectedSettings(dataset, type_of_test, args, in_ch=20, out_ch=4, x_in=1, y_in=1,
-                                                        input_zero_point=-1, w_x=1, w_y=1, batches=1,
-                                                        output_zero_point=3)
+                                                        batches=1)
     dataset = 'fully_connected_null_bias_0'
     ALL_TESTDATA_SETS[dataset] = FullyConnectedSettings(dataset, type_of_test, args, in_ch=33, out_ch=5,
-                                                        input_zero_point=-1, batches=2, generate_bias=False)
+                                                        batches=2, generate_bias=False)
     dataset = 'fully_connected_out_activation'
-    ALL_TESTDATA_SETS[dataset] = FullyConnectedSettings(dataset, type_of_test, args, in_ch=10, out_ch=4, randmin=-15,
-                                                        randmax=15, input_zero_point=0, output_zero_point=0,
-                                                        out_activation_min=-105, out_activation_max=120)
+    ALL_TESTDATA_SETS[dataset] = FullyConnectedSettings(dataset, type_of_test, args, in_ch=10, out_ch=4,
+                                                        out_activation_min=-70, out_activation_max=100)
+    dataset = 'fully_connected_int16'
+    ALL_TESTDATA_SETS[dataset] = FullyConnectedSettings(dataset, type_of_test, args, in_ch=7, out_ch=11, x_in=3, y_in=3,
+                                                        batches=2, randmin=INT16_MIN, randmax=INT16_MAX,
+                                                        out_activation_min=-9999, out_activation_max=32767,
+                                                        int16xint8=True)
+    dataset = 'fully_connected_int16_big'
+    ALL_TESTDATA_SETS[dataset] = FullyConnectedSettings(dataset, type_of_test, args, in_ch=7, out_ch=11, x_in=10,
+                                                        y_in=10, batches=3, out_activation_min=-1444,
+                                                        out_activation_max=32767, int16xint8=True)
+    dataset = 'fc_int16_slow'
+    ALL_TESTDATA_SETS[dataset] = FullyConnectedSettings(dataset, type_of_test, args, in_ch=7, out_ch=11, x_in=10,
+                                                        y_in=8, batches=3, randmin=(INT16_MAX-100), randmax=INT16_MAX,
+                                                        int16xint8=True)
 
     type_of_test = 'avgpool'
     dataset = 'avgpooling'
@@ -1141,8 +1342,12 @@ def load_all_testdatasets():
     ALL_TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=2, x_in=1, y_in=20, stride_x=1,
                                                  stride_y=3, w_x=1, w_y=3, pad=True)
     dataset = 'avgpooling_5'
-    ALL_TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, randmin=0, channels=1, x_in=3, y_in=3,
+    ALL_TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=1, x_in=3, y_in=3,
                                                  stride_x=1, stride_y=1, w_x=1, w_y=3, pad=True, relu6=True)
+    dataset = 'avgpooling_int16'
+    ALL_TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=2, x_in=6, y_in=4,
+                                                 stride_x=2, stride_y=1, w_x=2, w_y=3, pad=True,
+                                                 randmin=INT16_MIN, randmax=INT16_MAX, int16xint8=True)
 
     type_of_test = 'maxpool'
     dataset = 'maxpooling'
@@ -1168,30 +1373,62 @@ def load_all_testdatasets():
                                                  stride_y=3, w_x=3, w_y=4, pad=True)
     dataset = 'maxpooling_7'
     ALL_TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=1, x_in=4, y_in=2, stride_x=2,
-                                                 stride_y=2, w_x=2, w_y=2, pad=False, randmin=-20, randmax=-5,
-                                                 relu6=True)
+                                                 stride_y=2, w_x=2, w_y=2, pad=False, relu6=True)
+    dataset = 'maxpool_int16'
+    ALL_TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=2, x_in=4, y_in=3, stride_x=2,
+                                                 stride_y=2, w_x=2, w_y=2, pad=False, randmin=INT16_MIN,
+                                                 randmax=INT16_MAX, int16xint8=True)
+    dataset = 'maxpool_int16_1'
+    ALL_TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=2, x_in=4, y_in=5, stride_x=2,
+                                                 stride_y=1, w_x=3, w_y=3, pad=True, randmin=INT16_MIN,
+                                                 randmax=INT16_MAX, out_activation_min=-30000, out_activation_max=30000,
+                                                 int16xint8=True)
+    dataset = 'maxpool_int16_2'
+    ALL_TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=3, x_in=7, y_in=7, stride_x=1,
+                                                 stride_y=1, w_x=3, w_y=3, pad=False, randmin=INT16_MIN,
+                                                 randmax=INT16_MAX, out_activation_min=-30000, out_activation_max=30000,
+                                                 int16xint8=True)
+
     type_of_test = 'softmax'
     dataset = 'softmax'
-    ALL_TESTDATA_SETS[dataset] = SoftmaxSettings(dataset, type_of_test, args, x_in=5, y_in=1)
+    ALL_TESTDATA_SETS[dataset] = SoftmaxSettings(dataset, type_of_test, args, x_in=5, y_in=2)
+    dataset = 'softmax_s16'
+    ALL_TESTDATA_SETS[dataset] = SoftmaxSettings(dataset, type_of_test, args, x_in=10, y_in=3, int16xint8=True,
+                                                 randmin=INT16_MIN, randmax=INT16_MAX)
+    dataset = 'softmax_s8_s16'
+    ALL_TESTDATA_SETS[dataset] = SoftmaxSettings(dataset, type_of_test, args, x_in=12, y_in=2, inInt8outInt16=True)
 
     type_of_test = 'svdf'
     dataset = 'svdf'
-    ALL_TESTDATA_SETS[dataset] = SVDFSettings(dataset, type_of_test, args,  batches=2, number_inputs=2, rank=8,
+    ALL_TESTDATA_SETS[dataset] = SVDFSettings(dataset, type_of_test, args, batches=2, number_inputs=2, rank=8,
                                               memory_size=8, input_size=3, number_units=3)
-    type_of_test = 'svdf'
     dataset = 'svdf_1'
-    ALL_TESTDATA_SETS[dataset] = SVDFSettings(dataset, type_of_test, args,  batches=3, number_inputs=2, rank=1,
+    ALL_TESTDATA_SETS[dataset] = SVDFSettings(dataset, type_of_test, args, batches=3, number_inputs=2, rank=1,
                                               memory_size=2, input_size=7, number_units=5)
-
-    type_of_test = 'svdf'
     dataset = 'svdf_2'
-    ALL_TESTDATA_SETS[dataset] = SVDFSettings(dataset, type_of_test, args,  batches=3, number_inputs=2, rank=2,
+    ALL_TESTDATA_SETS[dataset] = SVDFSettings(dataset, type_of_test, args, batches=3, number_inputs=2, rank=2,
                                               memory_size=2, input_size=7, number_units=5, generate_bias=False)
-
-    type_of_test = 'svdf'
     dataset = 'svdf_3'
-    ALL_TESTDATA_SETS[dataset] = SVDFSettings(dataset, type_of_test, args,  batches=1, number_inputs=2, rank=1,
+    ALL_TESTDATA_SETS[dataset] = SVDFSettings(dataset, type_of_test, args, batches=1, number_inputs=2, rank=1,
                                               memory_size=2, input_size=20, number_units=12, generate_bias=False)
+
+    type_of_test = 'add'
+    dataset = 'add'
+    ALL_TESTDATA_SETS[dataset] = AddMulSettings(dataset, type_of_test, args, channels=8, x_in=4, y_in=4,
+                                                randmin=INT8_MIN, randmax=INT8_MAX)
+    dataset = 'add_s16'
+    ALL_TESTDATA_SETS[dataset] = AddMulSettings(dataset, type_of_test, args, channels=8, x_in=4, y_in=4,
+                                                randmin=INT16_MIN, randmax=INT16_MAX, out_activation_min=INT16_MIN,
+                                                out_activation_max=INT16_MAX, int16xint8=True)
+
+    type_of_test = 'mul'
+    dataset = 'mul'
+    ALL_TESTDATA_SETS[dataset] = AddMulSettings(dataset, type_of_test, args, channels=8, x_in=4, y_in=5,
+                                                randmin=INT8_MIN, randmax=INT8_MAX)
+    dataset = 'mul_s16'
+    ALL_TESTDATA_SETS[dataset] = AddMulSettings(dataset, type_of_test, args, channels=8, x_in=5, y_in=4,
+                                                randmin=INT16_MIN, randmax=INT16_MAX, out_activation_min=INT16_MIN,
+                                                out_activation_max=INT16_MAX, int16xint8=True)
 
 
 if __name__ == '__main__':
@@ -1207,6 +1444,8 @@ if __name__ == '__main__':
 
     if (args.run_all_testsets):
         for testset_name, testset_generator in ALL_TESTDATA_SETS.items():
+            if test_type and testset_generator.test_type != test_type:
+                continue
             print("Generating testset {}..".format(testset_name))
             testset_generator.generate_data()
             print()
@@ -1221,6 +1460,8 @@ if __name__ == '__main__':
                 print("WARNING: Testset {} in {} was not loaded".format(testset_name, directory))
     else:
         try:
+            if not testdataset:
+                raise RuntimeError("Please select testdataset or use --run_all_testsets")
             generator = ALL_TESTDATA_SETS[testdataset]
         except KeyError:
             print("WARNING: testset {} not in testset list".format(testdataset))
@@ -1230,4 +1471,12 @@ if __name__ == '__main__':
                 generator = FullyConnectedSettings(testdataset, test_type, args)
             elif args.testtype == 'avgpool' or args.testtype == 'maxpool':
                 generator = PoolingSettings(testdataset, test_type, args)
+            elif args.testtype == 'softmax':
+                generator = SoftmaxSettings(testdataset, test_type, args)
+            elif args.testtype == 'svdf':
+                generator = SVDFSettings(testdataset, test_type, args)
+            elif args.testtype == 'add' or args.testtype == 'mul':
+                generator = AddMulSettings(testdataset, test_type, args)
+            else:
+                raise RuntimeError("Please specify type of test with -t")
         generator.generate_data()

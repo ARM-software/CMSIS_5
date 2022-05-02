@@ -15,6 +15,7 @@ group Root {
 
               Pattern INPUT1_F16_ID : Input1_f16.txt 
               Pattern INPUTNEW1_F16_ID : InputNew1_f16.txt 
+              Pattern INPUTNEW2_F16_ID : InputNew2_f16.txt 
 
               Pattern INPUT2_F16_ID : Input2_f16.txt 
               Pattern MAXINDEXES_S16_ID : MaxIndexes1_s16.txt
@@ -50,6 +51,8 @@ group Root {
 
               Pattern ABSMININDEXES_S16_ID : AbsMinIndexes27_s16.txt
               Pattern ABSMINVALS_F16_ID : AbsMinVals27_f16.txt
+
+              Pattern MSE_F16_ID : MSEVals28_f16.txt
 
               Output  OUT_F16_ID : Output
               Output  OUT_S16_ID : Index
@@ -100,13 +103,30 @@ group Root {
 
                 Test stability  arm_std_f16:test_std_stability_f16
 
-                Test nb=3    arm_absmax_f16:test_absmax_f16
-                Test nb=4n   arm_absmax_f16:test_absmax_f16
-                Test nb=4n+1 arm_absmax_f16:test_absmax_f16
+                Test nb=7    arm_absmax_f16:test_absmax_f16
+                Test nb=8n   arm_absmax_f16:test_absmax_f16
+                Test nb=8n+1 arm_absmax_f16:test_absmax_f16
 
-                Test nb=3    arm_absmin_f16:test_absmin_f16
-                Test nb=4n   arm_absmin_f16:test_absmin_f16
-                Test nb=4n+1 arm_absmin_f16:test_absmin_f16
+                Test nb=7    arm_absmin_f16:test_absmin_f16
+                Test nb=8n   arm_absmin_f16:test_absmin_f16
+                Test nb=8n+1 arm_absmin_f16:test_absmin_f16
+
+                Test nb=7    arm_min_no_idx_f16:test_min_no_idx_f16
+                Test nb=8n   arm_min_no_idx_f16:test_min_no_idx_f16
+                Test nb=8n+1 arm_min_no_idx_f16:test_min_no_idx_f16
+
+                Test nb=7    arm_absmax_no_idx_f16:test_absmax_no_idx_f16
+                Test nb=8n   arm_absmax_no_idx_f16:test_absmax_no_idx_f16
+                Test nb=8n+1 arm_absmax_no_idx_f16:test_absmax_no_idx_f16
+
+                Test nb=7    arm_absmin_no_idx_f16:test_absmin_no_idx_f16
+                Test nb=8n   arm_absmin_no_idx_f16:test_absmin_no_idx_f16
+                Test nb=8n+1 arm_absmin_no_idx_f16:test_absmin_no_idx_f16
+
+                Test nb=7    arm_mse_f16:test_mse_f16
+                Test nb=8n   arm_mse_f16:test_mse_f16
+                Test nb=8n+1 arm_mse_f16:test_mse_f16
+                Test long    arm_mse_f16:test_mse_f16
               }
            }
         }
@@ -380,6 +400,7 @@ group Root {
               Pattern LOGINPUT1_F16_ID : LogInput1_f16.txt
               Pattern EXPINPUT1_F16_ID : ExpInput1_f16.txt
               Pattern INPUT1_F16_ID : Samples1_f16.txt
+              Pattern ATAN2INPUT1_F16_ID : Atan2Input1_f16.txt 
 
               Pattern COS1_F16_ID : Cos1_f16.txt 
               Pattern SIN1_F16_ID : Sin1_f16.txt 
@@ -387,6 +408,7 @@ group Root {
               Pattern LOG1_F16_ID : Log1_f16.txt 
               Pattern EXP1_F16_ID : Exp1_f16.txt 
               Pattern INVERSE1_F16_ID : Inverse1_f16.txt
+              Pattern ATAN2_F16_ID : Atan2Ref1_f16.txt
 
               Output  OUT_F16_ID : Output
 
@@ -403,6 +425,7 @@ group Root {
                 test_vexp_f16 nb=4n:test_vexp_f16
                 test_vexp_f16 nb=4n+1:test_vexp_f16
                 test_inverse_f16:test_inverse_f16
+                test_atan2_scalar_f16:test_atan2_scalar_f16
               }
           }
         }
@@ -797,6 +820,13 @@ group Root {
                 Pattern REF_LTINV_DPO_F16_ID : Ref_LTINV_DPO1_f16.txt
                 Pattern REF_CHOLINV_DPO_F16_ID : Ref_CHOLINV_DPO1_f16.txt
 
+                Pattern DIM_LTSOLVE_F16_ID : DimsLTSolve1_s16.txt
+                Pattern INPUT_MAT_LTSOLVE_F16_ID : InputMatrixLTSolve1_f16.txt
+                Pattern INPUT_MAT_UTSOLVE_F16_ID : InputMatrixUTSolve1_f16.txt
+                Pattern INPUT_VEC_LTSOLVE_F16_ID : InputVectorLTSolve1_f16.txt
+                Pattern REF_LT_SOLVE_F16_ID : RefLTSolve1_f16.txt
+                Pattern REF_UT_SOLVE_F16_ID : RefUTSolve1_f16.txt
+
                 Output  D_F16_ID : Output
                 Output  LL_F16_ID : Output
                 Output  PERM_S16_ID : Output
@@ -859,6 +889,44 @@ group Root {
            class = TransformTests
            folder = Transform 
 
+           suite MFCC F16 {
+              class = MFCCF16
+              folder = MFCCF16
+
+              Pattern INPUTS_MFCC_NOISE_256_F16_ID : MFCCNoiseInput_256_1_f16.txt 
+              Pattern REF_MFCC_NOISE_256_F16_ID : MFCCNoiseRef_256_1_f16.txt 
+
+              Pattern INPUTS_MFCC_NOISE_512_F16_ID : MFCCNoiseInput_512_1_f16.txt 
+              Pattern REF_MFCC_NOISE_512_F16_ID : MFCCNoiseRef_512_1_f16.txt 
+
+              Pattern INPUTS_MFCC_NOISE_1024_F16_ID : MFCCNoiseInput_1024_1_f16.txt 
+              Pattern REF_MFCC_NOISE_1024_F16_ID : MFCCNoiseRef_1024_1_f16.txt 
+
+              Pattern INPUTS_MFCC_SINE_256_F16_ID : MFCCSineInput_256_1_f16.txt 
+              Pattern REF_MFCC_SINE_256_F16_ID : MFCCSineRef_256_1_f16.txt 
+
+              Pattern INPUTS_MFCC_SINE_512_F16_ID : MFCCSineInput_512_1_f16.txt 
+              Pattern REF_MFCC_SINE_512_F16_ID : MFCCSineRef_512_1_f16.txt 
+
+              Pattern INPUTS_MFCC_SINE_1024_F16_ID : MFCCSineInput_1024_1_f16.txt 
+              Pattern REF_MFCC_SINE_1024_F16_ID : MFCCSineRef_1024_1_f16.txt 
+
+              
+              Output  OUTPUT_MFCC_F16_ID : MFCCOutputs
+              Output  TMP_MFCC_F16_ID : MFCCTmp
+              Output  TMPIN_MFCC_F16_ID : MFCCTmpIn
+
+              Functions {
+                 mfcc_noise_256_f16:test_mfcc_f16
+                 mfcc_noise_512_f16:test_mfcc_f16
+                 mfcc_noise_1024_f16:test_mfcc_f16
+                 mfcc_sine_256_f16:test_mfcc_f16
+                 mfcc_sine_512_f16:test_mfcc_f16
+                 mfcc_sine_1024_f16:test_mfcc_f16
+              }
+
+            }
+            
            suite Transform Complex F16 {
               class = TransformCF16
               folder = TransformF16

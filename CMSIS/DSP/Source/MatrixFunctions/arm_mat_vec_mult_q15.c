@@ -289,15 +289,15 @@ void arm_mat_vec_mult_q15(const arm_matrix_instance_q15 *pSrcMat, const q15_t *p
     /* The following loop performs the dot-product of each row in pSrcA with the vector */
     /* row loop */
     while (row > 0) {
-        /* For every row wise process, the pInVec pointer is set
-         ** to the starting address of the vector */
-        pInVec = pVec;
-
         /* Initialize accumulators */
         q63_t sum1 = 0;
         q63_t sum2 = 0;
         q63_t sum3 = 0;
         q63_t sum4 = 0;
+
+        /* For every row wise process, the pInVec pointer is set
+         ** to the starting address of the vector */
+        pInVec = pVec;
 
         /* Loop unrolling: process 2 columns per iteration */
         colCnt = numCols >> 1;
@@ -311,16 +311,16 @@ void arm_mat_vec_mult_q15(const arm_matrix_instance_q15 *pSrcMat, const q15_t *p
         // Main loop: matrix-vector multiplication
         while (colCnt > 0u) {
             // Read 2 values from vector
-            vecData = read_q15x2_ia ((q15_t **) &pInVec);
+            vecData = read_q15x2_ia (&pInVec);
 
             // Read 8 values from the matrix - 2 values from each of 4 rows, and do multiply accumulate
-            matData =  read_q15x2_ia ((q15_t **) &pInA1);
+            matData =  read_q15x2_ia (&pInA1);
             sum1 = __SMLALD(matData, vecData, sum1);
-            matData = read_q15x2_ia ((q15_t **) &pInA2);
+            matData = read_q15x2_ia (&pInA2);
             sum2 = __SMLALD(matData, vecData, sum2);
-            matData = read_q15x2_ia ((q15_t **) &pInA3);
+            matData = read_q15x2_ia (&pInA3);
             sum3 = __SMLALD(matData, vecData, sum3);
-            matData = read_q15x2_ia ((q15_t **) &pInA4);
+            matData = read_q15x2_ia (&pInA4);
             sum4 = __SMLALD(matData, vecData, sum4);
 
             // Decrement the loop counter
@@ -361,10 +361,10 @@ void arm_mat_vec_mult_q15(const arm_matrix_instance_q15 *pSrcMat, const q15_t *p
         colCnt = numCols >> 2;
 
         while (colCnt > 0) {
-            vecData = read_q15x2_ia ((q15_t **) &pInVec);
-            vecData2 = read_q15x2_ia ((q15_t **) &pInVec);
-            matData = read_q15x2_ia ((q15_t **) &pInA1);
-            matData2 = read_q15x2_ia ((q15_t **) &pInA1);
+            vecData = read_q15x2_ia (&pInVec);
+            vecData2 = read_q15x2_ia (&pInVec);
+            matData = read_q15x2_ia (&pInA1);
+            matData2 = read_q15x2_ia (&pInA1);
             sum = __SMLALD(matData, vecData, sum);
             sum = __SMLALD(matData2, vecData2, sum);
             colCnt--;

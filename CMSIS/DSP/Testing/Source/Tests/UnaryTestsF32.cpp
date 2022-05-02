@@ -46,6 +46,14 @@ Comparison for Cholesky
 /* Upper bound of maximum matrix dimension used by Python */
 #define MAXMATRIXDIM 40
 
+static void checkInnerTailOverflow(float32_t *b)
+{
+    ASSERT_TRUE(b[0] == 0);
+    ASSERT_TRUE(b[1] == 0);
+    ASSERT_TRUE(b[2] == 0);
+    ASSERT_TRUE(b[3] == 0);
+}
+
 #define LOADDATA2()                          \
       const float32_t *inp1=input1.ptr();    \
       const float32_t *inp2=input2.ptr();    \
@@ -74,6 +82,21 @@ Comparison for Cholesky
       in1.numRows=rows;                                                  \
       in1.numCols=columns;                                               \
       memcpy((void*)ap,(const void*)inp1,sizeof(float32_t)*rows*columns);\
+      in1.pData = ap;                                                    \
+                                                                         \
+      in2.numRows=rows;                                                  \
+      in2.numCols=columns;                                               \
+      memcpy((void*)bp,(const void*)inp2,sizeof(float32_t)*rows*columns);\
+      in2.pData = bp;                                                    \
+                                                                         \
+      out.numRows=rows;                                                  \
+      out.numCols=columns;                                               \
+      out.pData = outp;
+
+#define PREPAREDATALT()                                                  \
+      in1.numRows=rows;                                                  \
+      in1.numCols=rows;                                                  \
+      memcpy((void*)ap,(const void*)inp1,sizeof(float32_t)*rows*rows);   \
       in1.pData = ap;                                                    \
                                                                          \
       in2.numRows=rows;                                                  \
@@ -134,13 +157,13 @@ Comparison for Cholesky
       int rows,internal;                      \
       int i;
 
-#define PREPAREVECDATA2()                                                   \
-      in1.numRows=rows;                                                  \
+#define PREPAREVECDATA2()                                                 \
+      in1.numRows=rows;                                                   \
       in1.numCols=internal;                                               \
-      memcpy((void*)ap,(const void*)inp1,2*sizeof(float32_t)*rows*internal);\
-      in1.pData = ap;                                                    \
-                                                                         \
-      memcpy((void*)bp,(const void*)inp2,2*sizeof(float32_t)*internal);
+      memcpy((void*)ap,(const void*)inp1,sizeof(float32_t)*rows*internal);\
+      in1.pData = ap;                                                     \
+                                                                          \
+      memcpy((void*)bp,(const void*)inp2,sizeof(float32_t)*internal);
                             
 #define PREPAREDATALL1()                                                 \
       in1.numRows=rows;                                                  \
@@ -177,6 +200,7 @@ void UnaryTestsF32::test_mat_vec_mult_f32()
           arm_mat_vec_mult_f32(&this->in1, bp, outp);
 
           outp += rows ;
+          checkInnerTailOverflow(outp);
 
       }
 
@@ -204,6 +228,7 @@ void UnaryTestsF32::test_mat_vec_mult_f32()
           ASSERT_TRUE(status==ARM_MATH_SUCCESS);
 
           outp += (rows * columns);
+          checkInnerTailOverflow(outp);
 
       }
 
@@ -231,6 +256,7 @@ void UnaryTestsF32::test_mat_sub_f32()
           ASSERT_TRUE(status==ARM_MATH_SUCCESS);
 
           outp += (rows * columns);
+          checkInnerTailOverflow(outp);
 
       }
 
@@ -258,6 +284,7 @@ void UnaryTestsF32::test_mat_scale_f32()
           ASSERT_TRUE(status==ARM_MATH_SUCCESS);
 
           outp += (rows * columns);
+          checkInnerTailOverflow(outp);
 
       }
 
@@ -285,6 +312,7 @@ void UnaryTestsF32::test_mat_trans_f32()
           ASSERT_TRUE(status==ARM_MATH_SUCCESS);
 
           outp += (rows * columns);
+          checkInnerTailOverflow(outp);
 
       }
 
@@ -312,6 +340,7 @@ void UnaryTestsF32::test_mat_cmplx_trans_f32()
           ASSERT_TRUE(status==ARM_MATH_SUCCESS);
 
           outp += 2*(rows * columns);
+          checkInnerTailOverflow(outp);
 
       }
 
@@ -406,6 +435,7 @@ void UnaryTestsF32::test_mat_inverse_f32()
 
           outp += (rows * columns);
           inp1 += (rows * columns);
+          checkInnerTailOverflow(outp);
 
       }
 
@@ -427,7 +457,7 @@ void UnaryTestsF32::test_mat_inverse_f32()
                                              
       float32_t *outp=output.ptr();     
       int16_t *dimsp = dims.ptr();           
-      int nbMatrixes = dims.nbSamples();
+      int nbMatrixes = dims.nbSamples()>>1;
 
       int rows,columns;                      
       int i;
@@ -436,16 +466,17 @@ void UnaryTestsF32::test_mat_inverse_f32()
       for(i=0;i < nbMatrixes ; i ++)
       {
           rows = *dimsp++;
-          columns = rows;
+          columns = *dimsp++;
 
-          PREPAREDATA2();
+          PREPAREDATALT();
 
           status=arm_mat_solve_upper_triangular_f32(&this->in1,&this->in2,&this->out);
           ASSERT_TRUE(status==ARM_MATH_SUCCESS);
 
           outp += (rows * columns);
-          inp1 += (rows * columns);
+          inp1 += (rows * rows);
           inp2 += (rows * columns);
+          checkInnerTailOverflow(outp);
 
       }
 
@@ -467,7 +498,7 @@ void UnaryTestsF32::test_mat_inverse_f32()
                                              
       float32_t *outp=output.ptr();     
       int16_t *dimsp = dims.ptr();           
-      int nbMatrixes = dims.nbSamples();
+      int nbMatrixes = dims.nbSamples() >> 1;
 
       int rows,columns;                      
       int i;
@@ -476,16 +507,17 @@ void UnaryTestsF32::test_mat_inverse_f32()
       for(i=0;i < nbMatrixes ; i ++)
       {
           rows = *dimsp++;
-          columns = rows;
+          columns = *dimsp++;
 
-          PREPAREDATA2();
+          PREPAREDATALT();
 
           status=arm_mat_solve_lower_triangular_f32(&this->in1,&this->in2,&this->out);
           ASSERT_TRUE(status==ARM_MATH_SUCCESS);
 
           outp += (rows * columns);
-          inp1 += (rows * columns);
+          inp1 += (rows * rows);
           inp2 += (rows * columns);
+          checkInnerTailOverflow(outp);
 
       }
 
@@ -653,6 +685,9 @@ void UnaryTestsF32::test_mat_inverse_f32()
 
           inp1 += (rows * columns);
 
+          checkInnerTailOverflow(outllp);
+          checkInnerTailOverflow(outdp);
+
 
       }
 
@@ -765,11 +800,11 @@ void UnaryTestsF32::test_mat_inverse_f32()
          break;
 
          case TEST_SOLVE_UPPER_TRIANGULAR_F32_9:
-            input1.reload(UnaryTestsF32::INPUT_UT_DPO_F32_ID,mgr);
-            dims.reload(UnaryTestsF32::DIMSCHOLESKY1_DPO_S16_ID,mgr);
-            input2.reload(UnaryTestsF32::INPUT_RNDA_DPO_F32_ID,mgr);
+            input1.reload(UnaryTestsF32::INPUT_MAT_UTSOLVE_F32_ID,mgr);
+            input2.reload(UnaryTestsF32::INPUT_VEC_LTSOLVE_F32_ID,mgr);
+            dims.reload(UnaryTestsF32::DIM_LTSOLVE_F32_ID,mgr);
 
-            ref.reload(UnaryTestsF32::REF_UTINV_DPO_F32_ID,mgr);
+            ref.reload(UnaryTestsF32::REF_UT_SOLVE_F32_ID,mgr);
 
             output.create(ref.nbSamples(),UnaryTestsF32::OUT_F32_ID,mgr);
             a.create(MAXMATRIXDIM*MAXMATRIXDIM,UnaryTestsF32::TMPA_F32_ID,mgr);
@@ -777,11 +812,11 @@ void UnaryTestsF32::test_mat_inverse_f32()
          break;
 
          case TEST_SOLVE_LOWER_TRIANGULAR_F32_10:
-            input1.reload(UnaryTestsF32::INPUT_LT_DPO_F32_ID,mgr);
-            dims.reload(UnaryTestsF32::DIMSCHOLESKY1_DPO_S16_ID,mgr);
-            input2.reload(UnaryTestsF32::INPUT_RNDA_DPO_F32_ID,mgr);
+            input1.reload(UnaryTestsF32::INPUT_MAT_LTSOLVE_F32_ID,mgr);
+            input2.reload(UnaryTestsF32::INPUT_VEC_LTSOLVE_F32_ID,mgr);
+            dims.reload(UnaryTestsF32::DIM_LTSOLVE_F32_ID,mgr);
 
-            ref.reload(UnaryTestsF32::REF_LTINV_DPO_F32_ID,mgr);
+            ref.reload(UnaryTestsF32::REF_LT_SOLVE_F32_ID,mgr);
 
             output.create(ref.nbSamples(),UnaryTestsF32::OUT_F32_ID,mgr);
             a.create(MAXMATRIXDIM*MAXMATRIXDIM,UnaryTestsF32::TMPA_F32_ID,mgr);

@@ -129,17 +129,17 @@ void arm_levinson_durbin_f32(const float32_t *phi,
       k = (phi[p+1] - suma)/(phi[0] - sumb);
 
       f32x4_t vecRevA,tmp;
-      static uint32_t orgOffsetArray[4]={0,1,-1,-2};
-      static const uint32_t offsetIncArray[4]={2,2,-2,-2};
+      static int32_t orgOffsetArray[4]={0,1,-1,-2};
+      static const int32_t offsetIncArray[4]={2,2,-2,-2};
 
       uint32x4_t offset,offsetInc,vecTmp;
 
 
-      offset = vld1q(orgOffsetArray);
+      offset = vld1q_u32((uint32_t*)orgOffsetArray);
       vecTmp = vdupq_n_u32(p);
 
       offset = vaddq_m_u32(offset,offset,vecTmp,LANE23_MASK);
-      offsetInc = vld1q(offsetIncArray);
+      offsetInc = vld1q_u32((uint32_t*)offsetIncArray);
 
       nb = p >> 2;
       j=0;
@@ -223,18 +223,19 @@ void arm_levinson_durbin_f32(const float32_t *phi,
   int nbCoefs)
 {
    float32_t e;
+   int p;
 
    a[0] = phi[1] / phi[0];
 
    e = phi[0] - phi[1] * a[0];
-   for(int p=1; p < nbCoefs; p++)
+   for(p=1; p < nbCoefs; p++)
    {
       float32_t suma=0.0f;
       float32_t sumb=0.0f;
       float32_t k;
-      int nb,j;
+      int nb,j,i;
 
-      for(int i=0; i < p; i++)
+      for(i=0; i < p; i++)
       {
          suma += a[i] * phi[p - i];
          sumb += a[i] * phi[i + 1];
@@ -245,7 +246,7 @@ void arm_levinson_durbin_f32(const float32_t *phi,
 
       nb = p >> 1;
       j=0;
-      for(int i =0; i < nb ; i++)
+      for(i =0; i < nb ; i++)
       {
           float32_t x,y;
 

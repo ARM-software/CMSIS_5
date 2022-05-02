@@ -63,7 +63,6 @@ arm_status status;                             /* status of matrix inverse */
 
   /* Check for matrix mismatch condition */
   if ((ut->numRows != ut->numCols) ||
-      (a->numRows != a->numCols) ||
       (ut->numRows != a->numRows)   )
   {
     /* Set status as ARM_MATH_SIZE_MISMATCH */
@@ -75,9 +74,10 @@ arm_status status;                             /* status of matrix inverse */
 
   {
 
-    int i,j,k,n;
+    int i,j,k,n,cols;
 
     n = dst->numRows;
+    cols = dst->numCols;
 
     float32_t *pX = dst->pData;
     float32_t *pUT = ut->pData;
@@ -93,13 +93,13 @@ arm_status status;                             /* status of matrix inverse */
     
     for(i=n-1; i >= 0 ; i--)
     {
-      for(j=0; j+3 < n; j +=4)
+      for(j=0; j+3 < cols; j +=4)
       {
-            vecA = vld1q_f32(&pA[i * n + j]);
+            vecA = vld1q_f32(&pA[i * cols + j]);
             
             for(k=n-1; k > i; k--)
             {
-                vecX = vld1q_f32(&pX[n*k+j]);          
+                vecX = vld1q_f32(&pX[cols*k+j]);          
                 vecA = vfmsq(vecA,vdupq_n_f32(pUT[n*i + k]),vecX);
             }
 
@@ -112,20 +112,20 @@ arm_status status;                             /* status of matrix inverse */
             vecA = vmulq(vecA,vdupq_n_f32(invUT));
            
 
-            vst1q(&pX[i*n+j],vecA);
+            vst1q(&pX[i*cols+j],vecA);
       }
 
-      for(; j < n; j ++)
+      for(; j < cols; j ++)
       {
             a_col = &pA[j];
 
             ut_row = &pUT[n*i];
 
-            float32_t tmp=a_col[i * n];
+            float32_t tmp=a_col[i * cols];
             
             for(k=n-1; k > i; k--)
             {
-                tmp -= ut_row[k] * pX[n*k+j];
+                tmp -= ut_row[k] * pX[cols*k+j];
             }
 
             if (ut_row[i]==0.0f)
@@ -133,7 +133,7 @@ arm_status status;                             /* status of matrix inverse */
               return(ARM_MATH_SINGULAR);
             }
             tmp = tmp / ut_row[i];
-            pX[i*n+j] = tmp;
+            pX[i*cols+j] = tmp;
        }
 
     }
@@ -160,7 +160,6 @@ arm_status status;                             /* status of matrix inverse */
 
   /* Check for matrix mismatch condition */
   if ((ut->numRows != ut->numCols) ||
-      (a->numRows != a->numCols) ||
       (ut->numRows != a->numRows)   )
   {
     /* Set status as ARM_MATH_SIZE_MISMATCH */
@@ -172,9 +171,10 @@ arm_status status;                             /* status of matrix inverse */
 
   {
 
-    int i,j,k,n;
+    int i,j,k,n,cols;
 
     n = dst->numRows;
+    cols = dst->numCols;
 
     float32_t *pX = dst->pData;
     float32_t *pUT = ut->pData;
@@ -190,13 +190,13 @@ arm_status status;                             /* status of matrix inverse */
     
     for(i=n-1; i >= 0 ; i--)
     {
-      for(j=0; j+3 < n; j +=4)
+      for(j=0; j+3 < cols; j +=4)
       {
-            vecA = vld1q_f32(&pA[i * n + j]);
+            vecA = vld1q_f32(&pA[i * cols + j]);
             
             for(k=n-1; k > i; k--)
             {
-                vecX = vld1q_f32(&pX[n*k+j]);          
+                vecX = vld1q_f32(&pX[cols*k+j]);          
                 vecA = vfmsq_f32(vecA,vdupq_n_f32(pUT[n*i + k]),vecX);
             }
 
@@ -209,20 +209,20 @@ arm_status status;                             /* status of matrix inverse */
             vecA = vmulq_f32(vecA,vdupq_n_f32(invUT));
            
 
-            vst1q_f32(&pX[i*n+j],vecA);
+            vst1q_f32(&pX[i*cols+j],vecA);
       }
 
-      for(; j < n; j ++)
+      for(; j < cols; j ++)
       {
             a_col = &pA[j];
 
             ut_row = &pUT[n*i];
 
-            float32_t tmp=a_col[i * n];
+            float32_t tmp=a_col[i * cols];
             
             for(k=n-1; k > i; k--)
             {
-                tmp -= ut_row[k] * pX[n*k+j];
+                tmp -= ut_row[k] * pX[cols*k+j];
             }
 
             if (ut_row[i]==0.0f)
@@ -230,7 +230,7 @@ arm_status status;                             /* status of matrix inverse */
               return(ARM_MATH_SINGULAR);
             }
             tmp = tmp / ut_row[i];
-            pX[i*n+j] = tmp;
+            pX[i*cols+j] = tmp;
        }
 
     }
@@ -256,7 +256,6 @@ arm_status status;                             /* status of matrix inverse */
 
   /* Check for matrix mismatch condition */
   if ((ut->numRows != ut->numCols) ||
-      (a->numRows != a->numCols) ||
       (ut->numRows != a->numRows)   )
   {
     /* Set status as ARM_MATH_SIZE_MISMATCH */
@@ -268,9 +267,7 @@ arm_status status;                             /* status of matrix inverse */
 
   {
 
-    int i,j,k,n;
-
-    n = dst->numRows;
+    int i,j,k,n,cols;
 
     float32_t *pX = dst->pData;
     float32_t *pUT = ut->pData;
@@ -279,19 +276,22 @@ arm_status status;                             /* status of matrix inverse */
     float32_t *ut_row;
     float32_t *a_col;
 
-    for(j=0; j < n; j ++)
+    n = dst->numRows;
+    cols = dst->numCols;
+
+    for(j=0; j < cols; j ++)
     {
        a_col = &pA[j];
 
        for(i=n-1; i >= 0 ; i--)
        {
+            float32_t tmp=a_col[i * cols];
+
             ut_row = &pUT[n*i];
 
-            float32_t tmp=a_col[i * n];
-            
             for(k=n-1; k > i; k--)
             {
-                tmp -= ut_row[k] * pX[n*k+j];
+                tmp -= ut_row[k] * pX[cols*k+j];
             }
 
             if (ut_row[i]==0.0f)
@@ -299,7 +299,7 @@ arm_status status;                             /* status of matrix inverse */
               return(ARM_MATH_SINGULAR);
             }
             tmp = tmp / ut_row[i];
-            pX[i*n+j] = tmp;
+            pX[i*cols+j] = tmp;
        }
 
     }

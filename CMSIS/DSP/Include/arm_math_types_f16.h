@@ -1,8 +1,8 @@
 /******************************************************************************
  * @file     arm_math_types_f16.h
  * @brief    Public header file for f16 function of the CMSIS DSP Library
- * @version  V1.9.0
- * @date     23 April 2021
+ * @version  V1.10.0
+ * @date     08 July 2021
  * Target Processor: Cortex-M and Cortex-A cores
  ******************************************************************************/
 /*
@@ -62,7 +62,7 @@ won't be built.
 #endif
 
 #if defined(ARM_MATH_NEON) || (defined(ARM_MATH_MVEF)  && !defined(ARM_MATH_AUTOVECTORIZE)) /* floating point vector*/
-  
+
 #if defined(ARM_MATH_MVE_FLOAT16) || defined(ARM_MATH_NEON_FLOAT16)
 
   /**
@@ -93,7 +93,7 @@ won't be built.
 #endif
 
 #if defined(ARM_MATH_NEON)
- 
+
 
 #if defined(ARM_MATH_NEON_FLOAT16)
   /**
@@ -129,21 +129,30 @@ won't be built.
       float16x4_t     f;
       int16x4_t       i;
   } any16x4_t;
-#endif 
+#endif
 
 #endif
 
 
 
 #if defined(ARM_FLOAT16_SUPPORTED)
+
+#if defined(__ICCARM__)
+
+#define F16INFINITY   ((float16_t) INFINITY)
+
+#else
+
+#define F16INFINITY ((float16_t)__builtin_inf())
+
+#endif
+
 #define F16_MAX   ((float16_t)__FLT16_MAX__)
-#define F16_MIN   (-(float16_t)__FLT16_MAX__)
+#define F16_MIN   (-(_Float16)__FLT16_MAX__)
 
 #define F16_ABSMAX   ((float16_t)__FLT16_MAX__)
 #define F16_ABSMIN   ((float16_t)0.0f16)
 
-#define F16INFINITY ((float16_t)__builtin_inf())
-  
 #endif /* ARM_FLOAT16_SUPPORTED*/
 #endif /* !defined( __CC_ARM ) */
 
@@ -152,5 +161,3 @@ won't be built.
 #endif
 
 #endif /* _ARM_MATH_F16_H */
-
-

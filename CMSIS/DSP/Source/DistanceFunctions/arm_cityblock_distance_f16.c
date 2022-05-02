@@ -111,7 +111,7 @@ float16_t arm_cityblock_distance_f16(const float16_t *pA,const float16_t *pB, ui
    {
       tmpA = *pA++;
       tmpB = *pB++;
-      accum  += (_Float16)fabsf(tmpA - tmpB);
+      accum  += (_Float16)fabsf((float32_t)((_Float16)tmpA - (_Float16)tmpB));
       
       blockSize --;
    }

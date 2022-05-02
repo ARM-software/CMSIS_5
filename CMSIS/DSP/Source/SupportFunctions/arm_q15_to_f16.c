@@ -36,7 +36,7 @@
  */
 
 /**
- * @defgroup q15_to_x  Convert 16-bit Integer value
+ * @defgroup q15_to_x  Convert 16-bit fixed point value
  */
 
 /**
@@ -114,10 +114,10 @@ void arm_q15_to_f16(
     /* C = (float16_t) A / 32768 */
 
     /* Convert from q15 to float and store result in destination buffer */
-    *pDst++ = ((float16_t) * pIn++ / 32768.0f);
-    *pDst++ = ((float16_t) * pIn++ / 32768.0f);
-    *pDst++ = ((float16_t) * pIn++ / 32768.0f);
-    *pDst++ = ((float16_t) * pIn++ / 32768.0f);
+    *pDst++ = ((_Float16) * pIn++ / 32768.0f16);
+    *pDst++ = ((_Float16) * pIn++ / 32768.0f16);
+    *pDst++ = ((_Float16) * pIn++ / 32768.0f16);
+    *pDst++ = ((_Float16) * pIn++ / 32768.0f16);
 
     /* Decrement loop counter */
     blkCnt--;
@@ -138,7 +138,7 @@ void arm_q15_to_f16(
     /* C = (float16_t) A / 32768 */
 
     /* Convert from q15 to float and store result in destination buffer */
-    *pDst++ = ((float16_t) *pIn++ / 32768.0f);
+    *pDst++ = ((_Float16) *pIn++ / 32768.0f16);
 
     /* Decrement loop counter */
     blkCnt--;

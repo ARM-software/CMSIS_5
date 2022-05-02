@@ -17,6 +17,11 @@
       arm_mat_mult_fast_q31(&this->in1,&this->in2,&this->out);
     }
 
+    void BinaryQ31::test_mat_mult_opt_q31()
+    {     
+      arm_mat_mult_opt_q31(&this->in1,&this->in2,&this->out,this->tmpPtr);
+    }
+
     
     void BinaryQ31::setUp(Testing::testID_t id,std::vector<Testing::param_t>& params,Client::PatternMgr *mgr)
     {
@@ -33,6 +38,14 @@
             input1.reload(BinaryQ31::INPUTAC_Q31_ID,mgr,2*this->nbr*this->nbi);
             input2.reload(BinaryQ31::INPUTBC_Q31_ID,mgr,2*this->nbi*this->nbc);
             output.create(2*this->nbr*this->nbc,BinaryQ31::OUT_Q31_ID,mgr);
+          break;
+
+          case BinaryQ31::TEST_MAT_MULT_OPT_Q31_4:
+            input1.reload(BinaryQ31::INPUTA_Q31_ID,mgr,this->nbr*this->nbi);
+            input2.reload(BinaryQ31::INPUTB_Q31_ID,mgr,this->nbi*this->nbc);
+            output.create(this->nbr*this->nbc,BinaryQ31::OUT_Q31_ID,mgr);
+            tmp.create(this->nbi*this->nbc,BinaryQ31::TMP_Q31_ID,mgr);
+            this->tmpPtr=tmp.ptr();
           break;
 
           default:

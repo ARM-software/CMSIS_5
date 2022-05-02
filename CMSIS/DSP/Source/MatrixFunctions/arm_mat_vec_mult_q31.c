@@ -286,15 +286,15 @@ void arm_mat_vec_mult_q31(const arm_matrix_instance_q31 *pSrcMat, const q31_t *p
     /* The following loop performs the dot-product of each row in pSrcA with the vector */
     /* row loop */
     while (row > 0) {
-        /* For every row wise process, the pInVec pointer is set
-         ** to the starting address of the vector */
-        pInVec = pVec;
-
         /* Initialize accumulators */
         q63_t sum1 = 0;
         q63_t sum2 = 0;
         q63_t sum3 = 0;
         q63_t sum4 = 0;
+
+        /* For every row wise process, the pInVec pointer is set
+         ** to the starting address of the vector */
+        pInVec = pVec;
 
         /* Loop unrolling: process 2 columns per iteration */
         colCnt = numCols;

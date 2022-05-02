@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2020 Arm Limited. All rights reserved.
+ * Copyright (c) 2019-2022 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * $Date:        24. January 2020
+ * $Date:        30. March 2022
  * $Revision:    V1.1
  *
  * Project:      WiFi (Wireless Fidelity Interface) Driver definitions
@@ -23,7 +23,7 @@
 
 /* History:
  *  Version 1.1
- *    Extended Socket Receive/Send (support for polling)
+ *    Extended Socket Receive/RecvFrom/Send/SendTo (support for polling)
  *  Version 1.0
  *    Initial release
  */
@@ -254,7 +254,7 @@ typedef struct ARM_WIFI_NET_INFO_s {
                    - \ref ARM_DRIVER_ERROR_PARAMETER   : Parameter error (NULL scan_info pointer or max_num equal to 0)
 */
 /**
-  \fn            int32_t ARM_WIFI_Activate (uint32_t interface, ARM_WIFI_CONFIG_t *config)
+  \fn            int32_t ARM_WIFI_Activate (uint32_t interface, const ARM_WIFI_CONFIG_t *config)
   \brief         Activate interface (Connect to a wireless network or activate an access point).
   \param[in]     interface Interface (0 = Station, 1 = Access Point)
   \param[in]     config    Pointer to ARM_WIFI_CONFIG_t structure where Configuration parameters are located
@@ -416,12 +416,13 @@ typedef struct ARM_WIFI_NET_INFO_s {
 */
 /**
   \fn            int32_t ARM_WIFI_SocketRecv (int32_t socket, void *buf, uint32_t len)
-  \brief         Receive data on a connected socket.
+  \brief         Receive data or check if data is available on a connected socket.
   \param[in]     socket   Socket identification number
   \param[out]    buf      Pointer to buffer where data should be stored
-  \param[in]     len      Length of buffer (in bytes)
+  \param[in]     len      Length of buffer (in bytes), set len = 0 to check if data is available
   \return        status information
-                   - number of bytes received (>=0)
+                   - number of bytes received (>=0), if len != 0
+                   - 0                                 : Data is available (len = 0)
                    - \ref ARM_SOCKET_ESOCK             : Invalid socket
                    - \ref ARM_SOCKET_EINVAL            : Invalid argument (pointer to buffer or length)
                    - \ref ARM_SOCKET_ENOTCONN          : Socket is not connected
@@ -432,17 +433,18 @@ typedef struct ARM_WIFI_NET_INFO_s {
 */
 /**
   \fn            int32_t ARM_WIFI_SocketRecvFrom (int32_t socket, void *buf, uint32_t len, uint8_t *ip, uint32_t *ip_len, uint16_t *port)
-  \brief         Receive data on a socket.
+  \brief         Receive data or check if data is available on a socket.
   \param[in]     socket   Socket identification number
   \param[out]    buf      Pointer to buffer where data should be stored
-  \param[in]     len      Length of buffer (in bytes)
+  \param[in]     len      Length of buffer (in bytes), set len = 0 to check if data is available
   \param[out]    ip       Pointer to buffer where remote source address shall be returned (NULL for none)
   \param[in,out] ip_len   Pointer to length of 'ip' (or NULL if 'ip' is NULL)
                    - length of supplied 'ip' on input
                    - length of stored 'ip' on output
   \param[out]    port     Pointer to buffer where remote source port shall be returned (NULL for none)
   \return        status information
-                   - number of bytes received (>=0)
+                   - number of bytes received (>=0), if len != 0
+                   - 0                                 : Data is available (len = 0)
                    - \ref ARM_SOCKET_ESOCK             : Invalid socket
                    - \ref ARM_SOCKET_EINVAL            : Invalid argument (pointer to buffer or length)
                    - \ref ARM_SOCKET_ENOTCONN          : Socket is not connected
@@ -453,12 +455,13 @@ typedef struct ARM_WIFI_NET_INFO_s {
 */
 /**
   \fn            int32_t ARM_WIFI_SocketSend (int32_t socket, const void *buf, uint32_t len)
-  \brief         Send data on a connected socket.
+  \brief         Send data or check if data can be sent on a connected socket.
   \param[in]     socket   Socket identification number
   \param[in]     buf      Pointer to buffer containing data to send
-  \param[in]     len      Length of data (in bytes)
+  \param[in]     len      Length of data (in bytes), set len = 0 to check if data can be sent
   \return        status information
-                   - number of bytes sent (>=0)
+                   - number of bytes sent (>=0), if len != 0
+                   - 0                                 : Data can be sent (len = 0)
                    - \ref ARM_SOCKET_ESOCK             : Invalid socket
                    - \ref ARM_SOCKET_EINVAL            : Invalid argument (pointer to buffer or length)
                    - \ref ARM_SOCKET_ENOTCONN          : Socket is not connected
@@ -469,15 +472,16 @@ typedef struct ARM_WIFI_NET_INFO_s {
 */
 /**
   \fn            int32_t ARM_WIFI_SocketSendTo (int32_t socket, const void *buf, uint32_t len, const uint8_t *ip, uint32_t ip_len, uint16_t port)
-  \brief         Send data on a socket.
+  \brief         Send data or check if data can be sent on a socket.
   \param[in]     socket   Socket identification number
   \param[in]     buf      Pointer to buffer containing data to send
-  \param[in]     len      Length of data (in bytes)
+  \param[in]     len      Length of data (in bytes), set len = 0 to check if data can be sent
   \param[in]     ip       Pointer to remote destination IP address
   \param[in]     ip_len   Length of 'ip' address in bytes
   \param[in]     port     Remote destination port number
   \return        status information
-                   - number of bytes sent (>=0)
+                   - number of bytes sent (>=0), if len != 0
+                   - 0                                 : Data can be sent (len = 0)
                    - \ref ARM_SOCKET_ESOCK             : Invalid socket
                    - \ref ARM_SOCKET_EINVAL            : Invalid argument (pointer to buffer or length)
                    - \ref ARM_SOCKET_ENOTCONN          : Socket is not connected
@@ -503,7 +507,7 @@ typedef struct ARM_WIFI_NET_INFO_s {
 */
 /**
   \fn            int32_t ARM_WIFI_SocketGetPeerName (int32_t socket, uint8_t *ip, uint32_t *ip_len, uint16_t *port)
-  \brief         Retrieve remote IP address and port of a socket
+  \brief         Retrieve remote IP address and port of a socket.
   \param[in]     socket   Socket identification number
   \param[out]    ip       Pointer to buffer where remote address shall be returned (NULL for none)
   \param[in,out] ip_len   Pointer to length of 'ip' (or NULL if 'ip' is NULL)

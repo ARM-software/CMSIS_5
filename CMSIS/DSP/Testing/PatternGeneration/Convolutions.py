@@ -38,12 +38,6 @@ def writeTests(config,format):
     config.writeInput(1, inputsA,"InputsA")
     config.writeInput(1, inputsB,"InputsB")
 
-    a = [1,2,3,Tools.loopnb(format,Tools.TAILONLY),
-    Tools.loopnb(format,Tools.BODYONLY),
-    Tools.loopnb(format,Tools.BODYANDTAIL)
-    ]
-
-    a = list(np.unique(np.array(a)))
 
     if format == 15:
        nbs = [(14, 15), (14, 16), (14, 17), (14, 18), (14, 33), (15, 15), 
@@ -157,13 +151,20 @@ def generatePatterns():
     PATTERNDIR = os.path.join("Patterns","DSP","Filtering","MISC","MISC")
     PARAMDIR = os.path.join("Parameters","DSP","Filtering","MISC","MISC")
     
+    configf64=Tools.Config(PATTERNDIR,PARAMDIR,"f64")
     configf32=Tools.Config(PATTERNDIR,PARAMDIR,"f32")
     configf16=Tools.Config(PATTERNDIR,PARAMDIR,"f16")
     configq31=Tools.Config(PATTERNDIR,PARAMDIR,"q31")
     configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
     configq7=Tools.Config(PATTERNDIR,PARAMDIR,"q7")
 
-    
+    configf32.setOverwrite(False)
+    configf16.setOverwrite(False)
+    configq31.setOverwrite(False)
+    configq15.setOverwrite(False)
+    configq7.setOverwrite(False)
+
+    writeTests(configf64,Tools.F64)
     writeTests(configf32,0)
     writeTests(configf16,16)
     writeTests(configq31,31)

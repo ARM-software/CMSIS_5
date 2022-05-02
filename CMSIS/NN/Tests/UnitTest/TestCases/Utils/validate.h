@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -22,6 +22,35 @@
 #include <stdio.h>
 
 static inline int validate(int8_t *act, const int8_t *ref, int size)
+{
+    int test_passed = true;
+    int count = 0;
+    int total = 0;
+
+    for (int i = 0; i < size; ++i)
+    {
+        total++;
+        if (act[i] != ref[i])
+        {
+            count++;
+            printf("ERROR at pos %d: Act: %d Ref: %d\r\n", i, act[i], ref[i]);
+            test_passed = false;
+        }
+        else
+        {
+            // printf("PASS at pos %d: %d\r\n", i, act[i]);
+        }
+    }
+
+    if (!test_passed)
+    {
+        printf("%d of %d failed\r\n", count, total);
+    }
+
+    return test_passed;
+}
+
+static inline int validate_s16(int16_t *act, const int16_t *ref, int size)
 {
     int test_passed = true;
     int count = 0;

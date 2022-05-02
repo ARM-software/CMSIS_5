@@ -114,11 +114,11 @@ void arm_mean_q15(
   while (blkCnt > 0U)
   {
     /* C = (A[0] + A[1] + A[2] + ... + A[blockSize-1]) */
-    in = read_q15x2_ia ((q15_t **) &pSrc);
+    in = read_q15x2_ia (&pSrc);
     sum += ((in << 16U) >> 16U);
     sum +=  (in >> 16U);
 
-    in = read_q15x2_ia ((q15_t **) &pSrc);
+    in = read_q15x2_ia (&pSrc);
     sum += ((in << 16U) >> 16U);
     sum +=  (in >> 16U);
 

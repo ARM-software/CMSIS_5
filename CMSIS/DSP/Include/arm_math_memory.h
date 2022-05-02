@@ -1,8 +1,8 @@
 /******************************************************************************
  * @file     arm_math_memory.h
  * @brief    Public header file for CMSIS DSP Library
- * @version  V1.9.0
- * @date     23 April 2021
+ * @version  V1.10.0
+ * @date     08 July 2021
  * Target Processor: Cortex-M and Cortex-A cores
  ******************************************************************************/
 /*
@@ -74,7 +74,7 @@ extern "C"
   @return        Q31 value
  */
 __STATIC_FORCEINLINE q31_t read_q15x2 (
-  q15_t * pQ15)
+  q15_t const * pQ15)
 {
   q31_t val;
 
@@ -92,40 +92,14 @@ __STATIC_FORCEINLINE q31_t read_q15x2 (
   @param[in]     pQ15      points to input value
   @return        Q31 value
  */
-__STATIC_FORCEINLINE q31_t read_q15x2_ia (
-  q15_t ** pQ15)
-{
-  q31_t val;
-
-#ifdef __ARM_FEATURE_UNALIGNED
-  memcpy (&val, *pQ15, 4);
-#else
-  val = ((*pQ15)[1] << 16) | ((*pQ15)[0] & 0x0FFFF);
-#endif
-
- *pQ15 += 2;
- return (val);
-}
+#define read_q15x2_ia(pQ15) read_q15x2((*(pQ15) += 2) - 2)
 
 /**
   @brief         Read 2 Q15 from Q15 pointer and decrement pointer afterwards.
   @param[in]     pQ15      points to input value
   @return        Q31 value
  */
-__STATIC_FORCEINLINE q31_t read_q15x2_da (
-  q15_t ** pQ15)
-{
-  q31_t val;
-
-#ifdef __ARM_FEATURE_UNALIGNED
-  memcpy (&val, *pQ15, 4);
-#else
-  val = ((*pQ15)[1] << 16) | ((*pQ15)[0] & 0x0FFFF);
-#endif
-
-  *pQ15 -= 2;
-  return (val);
-}
+#define read_q15x2_da(pQ15) read_q15x2((*(pQ15) -= 2) + 2)
 
 /**
   @brief         Write 2 Q15 to Q15 pointer and increment pointer afterwards.
@@ -141,8 +115,8 @@ __STATIC_FORCEINLINE void write_q15x2_ia (
 #ifdef __ARM_FEATURE_UNALIGNED
   memcpy (*pQ15, &val, 4);
 #else
-  (*pQ15)[0] = (val & 0x0FFFF);
-  (*pQ15)[1] = (val >> 16) & 0x0FFFF;
+  (*pQ15)[0] = (q15_t)(val & 0x0FFFF);
+  (*pQ15)[1] = (q15_t)((val >> 16) & 0x0FFFF);
 #endif
 
  *pQ15 += 2;
@@ -163,52 +137,43 @@ __STATIC_FORCEINLINE void write_q15x2 (
 #ifdef __ARM_FEATURE_UNALIGNED
   memcpy (pQ15, &val, 4);
 #else
-  pQ15[0] = val & 0x0FFFF;
-  pQ15[1] = val >> 16;
+  pQ15[0] = (q15_t)(val & 0x0FFFF);
+  pQ15[1] = (q15_t)(val >> 16);
 #endif
 }
 
+
+/**
+  @brief         Read 4 Q7 from Q7 pointer
+  @param[in]     pQ7       points to input value
+  @return        Q31 value
+ */
+__STATIC_FORCEINLINE q31_t read_q7x4 (
+  q7_t const * pQ7)
+{
+  q31_t val;
+
+#ifdef __ARM_FEATURE_UNALIGNED
+  memcpy (&val, pQ7, 4);
+#else
+  val =((pQ7[3] & 0x0FF) << 24)  | ((pQ7[2] & 0x0FF) << 16)  | ((pQ7[1] & 0x0FF) << 8)  | (pQ7[0] & 0x0FF);
+#endif 
+  return (val);
+}
 
 /**
   @brief         Read 4 Q7 from Q7 pointer and increment pointer afterwards.
   @param[in]     pQ7       points to input value
   @return        Q31 value
  */
-__STATIC_FORCEINLINE q31_t read_q7x4_ia (
-  q7_t ** pQ7)
-{
-  q31_t val;
-
-
-#ifdef __ARM_FEATURE_UNALIGNED
-  memcpy (&val, *pQ7, 4);
-#else
-  val =(((*pQ7)[3] & 0x0FF) << 24)  | (((*pQ7)[2] & 0x0FF) << 16)  | (((*pQ7)[1] & 0x0FF) << 8)  | ((*pQ7)[0] & 0x0FF);
-#endif 
-
-  *pQ7 += 4;
-
-  return (val);
-}
+#define read_q7x4_ia(pQ7) read_q7x4((*(pQ7) += 4) - 4)
 
 /**
   @brief         Read 4 Q7 from Q7 pointer and decrement pointer afterwards.
   @param[in]     pQ7       points to input value
   @return        Q31 value
  */
-__STATIC_FORCEINLINE q31_t read_q7x4_da (
-  q7_t ** pQ7)
-{
-  q31_t val;
-#ifdef __ARM_FEATURE_UNALIGNED
-  memcpy (&val, *pQ7, 4);
-#else
-  val = ((((*pQ7)[3]) & 0x0FF) << 24) | ((((*pQ7)[2]) & 0x0FF) << 16)   | ((((*pQ7)[1]) & 0x0FF) << 8)  | ((*pQ7)[0] & 0x0FF);
-#endif 
-  *pQ7 -= 4;
-
-  return (val);
-}
+#define read_q7x4_da(pQ7) read_q7x4((*(pQ7) -= 4) + 4)
 
 /**
   @brief         Write 4 Q7 to Q7 pointer and increment pointer afterwards.
@@ -224,10 +189,10 @@ __STATIC_FORCEINLINE void write_q7x4_ia (
 #ifdef __ARM_FEATURE_UNALIGNED
   memcpy (*pQ7, &val, 4);
 #else
-  (*pQ7)[0] = val & 0x0FF;
-  (*pQ7)[1] = (val >> 8) & 0x0FF;
-  (*pQ7)[2] = (val >> 16) & 0x0FF;
-  (*pQ7)[3] = (val >> 24) & 0x0FF;
+  (*pQ7)[0] = (q7_t)(val & 0x0FF);
+  (*pQ7)[1] = (q7_t)((val >> 8) & 0x0FF);
+  (*pQ7)[2] = (q7_t)((val >> 16) & 0x0FF);
+  (*pQ7)[3] = (q7_t)((val >> 24) & 0x0FF);
 
 #endif
   *pQ7 += 4;

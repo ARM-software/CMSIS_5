@@ -141,18 +141,19 @@
 
     /* Calculation of intermediate values */
     b1 = f00;
-    b2 = f01 - f00;
-    b3 = f10 - f00;
-    b4 = f00 - f01 - f10 + f11;
+    b2 = (_Float16)f01 - (_Float16)f00;
+    b3 = (_Float16)f10 - (_Float16)f00;
+    b4 = (_Float16)f00 - (_Float16)f01 - (_Float16)f10 + (_Float16)f11;
 
     /* Calculation of fractional part in X */
-    xdiff = X - xIndex;
+    xdiff = (_Float16)X - (_Float16)xIndex;
 
     /* Calculation of fractional part in Y */
-    ydiff = Y - yIndex;
+    ydiff = (_Float16)Y - (_Float16)yIndex;
 
     /* Calculation of bi-linear interpolated output */
-    out = b1 + b2 * xdiff + b3 * ydiff + b4 * xdiff * ydiff;
+    out = (_Float16)b1 + (_Float16)b2 * (_Float16)xdiff + 
+    (_Float16)b3 * (_Float16)ydiff + (_Float16)b4 * (_Float16)xdiff * (_Float16)ydiff;
 
     /* return to application */
     return (out);
