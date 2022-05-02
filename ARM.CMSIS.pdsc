@@ -8,6 +8,9 @@
   <url>http://www.keil.com/pack/</url>
 
   <releases>
+    <release version="5.9.1">
+      Active development ...
+    </release>
     <release version="5.9.0" date="2022-05-02">
       CMSIS-Core(M): 5.6.0
        - Arm Cortex-M85 cpu support
