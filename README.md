@@ -30,22 +30,6 @@ The following is an list of all CMSIS components that are available.
 |[DAP](http://arm-software.github.io/CMSIS_5/DAP/html/index.html)      | All Cortex | Firmware for a debug unit that interfaces to the CoreSight Debug Access Port. |
 |[Zone](http://arm-software.github.io/CMSIS_5/Zone/html/index.html)    | All Cortex-M | Defines methods to describe system resources and to partition these resources into multiple projects and execution areas. |
 
-## Implemented Enhancements
- - CMSIS-Pack generation with [shell script template](https://arm-software.github.io/CMSIS_5/Pack/html/bash_script.html) for Windows and Linux
- - CMSIS-Pack: [Git workflow](https://arm-software.github.io/CMSIS_5/Pack/html/element_repository.html) via Eclipse menu *Window - Preferences - CMSIS Packs - Manage Local Repositories* and [MDK](http://www.keil.com/support/man/docs/uv4/uv4_ca_packinst_repo.htm)
- - [CMSIS-Zone release 1.0](https://arm-software.github.io/CMSIS_5/Zone/html/index.html) with support for multi-processor, TrustZone, and MPU configuration
- - Support for Armv8.1M Architecture and Cortex-M55 (release in March 2020)
- - CMSIS-DSP is fully ported to SIMD for Cortex-M family (Armv8.1-M)  and Cortex-A & Cortex-R with NEON, using the same APIs.
-
-## Further Planned Enhancements
- - CMSIS-Pack:
-   - System Description SDF Format: describe more complex debug topologies than with a Debug Description in a tool agnostic way
-   - CPDSC project file format: allows project templates that are agnostic of an IDE
-   - Minimize need for IDE specific settings: CMSIS-Pack supports IDE specific parameters. Analyze and minimize
- - CMSIS-Build: command-line driven make system for CMSIS-Pack based projects (to support CI tests)
-
-For further details see also the [Slides of the Embedded World CMSIS Partner Meeting](https://github.com/ARM-software/CMSIS_5/blob/develop/CMSIS_Review_Meeting_2020.pdf).
-
 ## Other related GitHub repositories
 
 | Repository                  | Description                                               |
