@@ -296,7 +296,7 @@ void arm_biquad_cas_df1_32x64_q31(
     q31_t     b0, b1, b2, a1, a2;   /*  Filter coefficients           */
     int32_t   shift = (int32_t) S->postShift + 1;   /*  Shift to be applied to the output */
     uint32_t  sample, stage = S->numStages; /*  loop counters                     */
-    q31x4_t vecCoef, vecIn;
+    q31x4_t vecCoef = { 0 }, vecIn;
     q63_t     acc;
 
     if (blockSize <= 3)

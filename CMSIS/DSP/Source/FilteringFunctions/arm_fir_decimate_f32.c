@@ -142,7 +142,7 @@ void arm_fir_decimate_f32(
     uint32_t  i, tapCnt, blkCnt, outBlockSize = blockSize / S->M;   /* Loop counters */
     uint32_t  blkCntN4;
     const float32_t *px0, *px1, *px2, *px3;
-    f32x4_t accv, acc0v, acc1v, acc2v, acc3v;
+    f32x4_t accv = { 0 }, acc0v, acc1v, acc2v, acc3v;
     f32x4_t x0v, x1v, x2v, x3v;
     f32x4_t c0v;
 
