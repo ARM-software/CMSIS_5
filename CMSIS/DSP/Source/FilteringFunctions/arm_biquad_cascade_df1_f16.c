@@ -63,7 +63,7 @@ void arm_biquad_cascade_df1_f16(
     const float16_t *pCoeffs = S->pCoeffs;    /*  coefficient pointer       */
     float16_t Xn1, Xn2, Yn1, Yn2;   /*  Filter pState variables   */
     float16_t X0, X1, X2, X3;   /*  temporary input           */
-    float16_t X4, X5, X6, X7;   /*  temporary input           */
+    float16_t X4, X5, X6, X7 = 0;   /*  temporary input           */
     _Float16 lastX, lastY;             /*  X,Y history for tail handling */
     f16x8_t coeffs;
     f16x8_t accVec;           /* accumultor vector */
