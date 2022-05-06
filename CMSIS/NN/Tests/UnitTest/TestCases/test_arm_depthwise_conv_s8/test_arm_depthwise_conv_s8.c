@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2021 Arm Limited or its affiliates.
+ * Copyright (C) 2010-2022 Arm Limited or its affiliates.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -53,7 +53,7 @@ void basic_arm_depthwise_conv_s8(void)
     cmsis_nn_per_channel_quant_params quant_params;
     cmsis_nn_dims input_dims;
     cmsis_nn_dims filter_dims;
-    cmsis_nn_dims bias_dims;
+    cmsis_nn_dims bias_dims = {};
     cmsis_nn_dims output_dims;
 
     const q31_t *bias_data = get_bias_address(basic_biases, BASIC_OUT_CH);
@@ -135,7 +135,7 @@ void stride2pad1_arm_depthwise_conv_s8(void)
     cmsis_nn_per_channel_quant_params quant_params;
     cmsis_nn_dims input_dims;
     cmsis_nn_dims filter_dims;
-    cmsis_nn_dims bias_dims;
+    cmsis_nn_dims bias_dims = {};
     cmsis_nn_dims output_dims;
 
     const q31_t *bias_data = get_bias_address(stride2pad1_biases, STRIDE2PAD1_OUT_CH);
@@ -218,7 +218,7 @@ void depthwise_2_arm_depthwise_conv_s8(void)
     cmsis_nn_per_channel_quant_params quant_params;
     cmsis_nn_dims input_dims;
     cmsis_nn_dims filter_dims;
-    cmsis_nn_dims bias_dims;
+    cmsis_nn_dims bias_dims = {};
     cmsis_nn_dims output_dims;
 
     const q31_t *bias_data = get_bias_address(depthwise_2_biases, DEPTHWISE_2_OUT_CH);
@@ -302,7 +302,7 @@ void depthwise_out_activation_arm_depthwise_conv_s8(void)
     cmsis_nn_per_channel_quant_params quant_params;
     cmsis_nn_dims input_dims;
     cmsis_nn_dims filter_dims;
-    cmsis_nn_dims bias_dims;
+    cmsis_nn_dims bias_dims = {};
     cmsis_nn_dims output_dims;
 
     const q31_t *bias_data = get_bias_address(depthwise_out_activation_biases, DEPTHWISE_OUT_ACTIVATION_OUT_CH);
@@ -383,7 +383,7 @@ void depthwise_mult_batches_arm_depthwise_conv_s8(void)
     cmsis_nn_per_channel_quant_params quant_params;
     cmsis_nn_dims input_dims;
     cmsis_nn_dims filter_dims;
-    cmsis_nn_dims bias_dims;
+    cmsis_nn_dims bias_dims = {};
     cmsis_nn_dims output_dims;
 
     const q31_t *bias_data = get_bias_address(depthwise_mult_batches_biases, DEPTHWISE_MULT_BATCHES_OUT_CH);
@@ -465,7 +465,7 @@ void depthwise_null_bias_0_arm_depthwise_conv_s8(void)
     cmsis_nn_per_channel_quant_params quant_params;
     cmsis_nn_dims input_dims;
     cmsis_nn_dims filter_dims;
-    cmsis_nn_dims bias_dims;
+    cmsis_nn_dims bias_dims = {};
     cmsis_nn_dims output_dims;
 
     const q31_t *bias_data = get_bias_address(depthwise_null_bias_0_biases, DEPTHWISE_NULL_BIAS_0_OUT_CH);
@@ -528,7 +528,7 @@ void depthwise_null_bias_1_arm_depthwise_conv_s8(void)
     cmsis_nn_per_channel_quant_params quant_params;
     cmsis_nn_dims input_dims;
     cmsis_nn_dims filter_dims;
-    cmsis_nn_dims bias_dims;
+    cmsis_nn_dims bias_dims = {};
     cmsis_nn_dims output_dims;
 
     const q31_t *bias_data = get_bias_address(depthwise_null_bias_1_biases, DEPTHWISE_NULL_BIAS_1_OUT_CH);
@@ -591,7 +591,7 @@ void depthwise_dilation_arm_depthwise_conv_s8(void)
     cmsis_nn_per_channel_quant_params quant_params;
     cmsis_nn_dims input_dims;
     cmsis_nn_dims filter_dims;
-    cmsis_nn_dims bias_dims;
+    cmsis_nn_dims bias_dims = {};
     cmsis_nn_dims output_dims;
 
     const q31_t *bias_data = get_bias_address(depthwise_dilation_biases, DEPTHWISE_DILATION_OUT_CH);
