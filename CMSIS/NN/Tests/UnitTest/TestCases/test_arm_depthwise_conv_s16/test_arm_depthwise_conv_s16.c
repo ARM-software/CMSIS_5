@@ -34,7 +34,7 @@ void dw_int16xint8_arm_depthwise_conv_s16(void)
     cmsis_nn_per_channel_quant_params quant_params;
     cmsis_nn_dims input_dims;
     cmsis_nn_dims filter_dims;
-    cmsis_nn_dims bias_dims;
+    cmsis_nn_dims bias_dims = {};
     cmsis_nn_dims output_dims;
 
     const q63_t *bias_data = dw_int16xint8_biases;
@@ -96,7 +96,7 @@ void dw_int16xint8_dilation_arm_depthwise_conv_s16(void)
     cmsis_nn_per_channel_quant_params quant_params;
     cmsis_nn_dims input_dims;
     cmsis_nn_dims filter_dims;
-    cmsis_nn_dims bias_dims;
+    cmsis_nn_dims bias_dims = {};
     cmsis_nn_dims output_dims;
 
     const q63_t *bias_data = dw_int16xint8_dilation_biases;
@@ -158,7 +158,7 @@ void dw_int16xint8_mult4_arm_depthwise_conv_s16(void)
     cmsis_nn_per_channel_quant_params quant_params;
     cmsis_nn_dims input_dims;
     cmsis_nn_dims filter_dims;
-    cmsis_nn_dims bias_dims;
+    cmsis_nn_dims bias_dims = {};
     cmsis_nn_dims output_dims;
 
     const q63_t *bias_data = dw_int16xint8_mult4_biases;

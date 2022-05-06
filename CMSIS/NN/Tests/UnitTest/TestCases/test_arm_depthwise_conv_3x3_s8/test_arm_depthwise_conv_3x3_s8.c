@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2021 Arm Limited or its affiliates.
+ * Copyright (C) 2010-2022 Arm Limited or its affiliates.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -35,7 +35,7 @@ void depthwise_kernel_3x3_arm_depthwise_conv_3x3_s8(void)
     cmsis_nn_per_channel_quant_params quant_params;
     cmsis_nn_dims input_dims;
     cmsis_nn_dims filter_dims;
-    cmsis_nn_dims bias_dims;
+    cmsis_nn_dims bias_dims = {};
     cmsis_nn_dims output_dims;
 
     const q31_t *bias_data = depthwise_kernel_3x3_biases;
@@ -118,7 +118,7 @@ void depthwise_kernel_3x3_arm_depthwise_conv_3x3_1_s8(void)
     cmsis_nn_per_channel_quant_params quant_params;
     cmsis_nn_dims input_dims;
     cmsis_nn_dims filter_dims;
-    cmsis_nn_dims bias_dims;
+    cmsis_nn_dims bias_dims = {};
     cmsis_nn_dims output_dims;
 
     const q31_t *bias_data = depthwise_kernel_3x3_biases;
@@ -201,7 +201,7 @@ void depthwise_kernel_3x3_arm_depthwise_conv_3x3_2_s8(void)
     cmsis_nn_per_channel_quant_params quant_params;
     cmsis_nn_dims input_dims;
     cmsis_nn_dims filter_dims;
-    cmsis_nn_dims bias_dims;
+    cmsis_nn_dims bias_dims = {};
     cmsis_nn_dims output_dims;
 
     const q31_t *bias_data = depthwise_kernel_3x3_biases;
