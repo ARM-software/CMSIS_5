@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-NN
-   &#160;<span id="projectnumber">Version 3.1.0</span>
+   &#160;<span id="projectnumber">Version 4.0.0</span>
    </div>
    <div id="projectbrief">CMSIS NN Software Library</div>
   </td>
@@ -126,9 +126,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga89aff212a97a3cf32d9d7ddf11a8f43e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Softmax.html#ga89aff212a97a3cf32d9d7ddf11a8f43e">arm_softmax_q7</a> (const q7_t *vec_in, const uint16_t dim_vec, q7_t *p_out)</td></tr>
 <tr class="memdesc:ga89aff212a97a3cf32d9d7ddf11a8f43e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Q7 softmax function.  <a href="#ga89aff212a97a3cf32d9d7ddf11a8f43e">More...</a><br/></td></tr>
 <tr class="separator:ga89aff212a97a3cf32d9d7ddf11a8f43e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3bc3ad13727a8a9d2cf7d0fba1209879"><td class="memItemLeft" align="right" valign="top">arm_status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Softmax.html#ga3bc3ad13727a8a9d2cf7d0fba1209879">arm_softmax_s16</a> (const int16_t *input, const int32_t num_rows, const int32_t row_size, const int32_t mult, const int32_t shift, const <a class="el" href="structcmsis__nn__softmax__lut__s16.html">cmsis_nn_softmax_lut_s16</a> *softmax_params, int16_t *output)</td></tr>
-<tr class="memdesc:ga3bc3ad13727a8a9d2cf7d0fba1209879"><td class="mdescLeft">&#160;</td><td class="mdescRight">S16 softmax function.  <a href="#ga3bc3ad13727a8a9d2cf7d0fba1209879">More...</a><br/></td></tr>
-<tr class="separator:ga3bc3ad13727a8a9d2cf7d0fba1209879"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6baa03c1cb473b02abe83ed2c9d41d66"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__nn__math__types_8h.html#a67ac3e1e650a7040b0f706fb83ea6184">arm_cmsis_nn_status</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Softmax.html#ga6baa03c1cb473b02abe83ed2c9d41d66">arm_softmax_s16</a> (const int16_t *input, const int32_t num_rows, const int32_t row_size, const int32_t mult, const int32_t shift, const <a class="el" href="structcmsis__nn__softmax__lut__s16.html">cmsis_nn_softmax_lut_s16</a> *softmax_params, int16_t *output)</td></tr>
+<tr class="memdesc:ga6baa03c1cb473b02abe83ed2c9d41d66"><td class="mdescLeft">&#160;</td><td class="mdescRight">S16 softmax function.  <a href="#ga6baa03c1cb473b02abe83ed2c9d41d66">More...</a><br/></td></tr>
+<tr class="separator:ga6baa03c1cb473b02abe83ed2c9d41d66"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf309cdd53978a85a39c9bfdc476aea17"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Softmax.html#gaf309cdd53978a85a39c9bfdc476aea17">arm_softmax_s8</a> (const int8_t *input, const int32_t num_rows, const int32_t row_size, const int32_t mult, const int32_t shift, const int32_t diff_min, int8_t *output)</td></tr>
 <tr class="memdesc:gaf309cdd53978a85a39c9bfdc476aea17"><td class="mdescLeft">&#160;</td><td class="mdescRight">S8 softmax function.  <a href="#gaf309cdd53978a85a39c9bfdc476aea17">More...</a><br/></td></tr>
 <tr class="separator:gaf309cdd53978a85a39c9bfdc476aea17"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -313,12 +313,12 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ga3bc3ad13727a8a9d2cf7d0fba1209879"></a>
+<a class="anchor" id="ga6baa03c1cb473b02abe83ed2c9d41d66"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">arm_status arm_softmax_s16 </td>
+          <td class="memname"><a class="el" href="arm__nn__math__types_8h.html#a67ac3e1e650a7040b0f706fb83ea6184">arm_cmsis_nn_status</a> arm_softmax_s16 </td>
           <td>(</td>
           <td class="paramtype">const int16_t *&#160;</td>
           <td class="paramname"><em>input</em>, </td>
@@ -382,10 +382,10 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The function returns <code>ARM_MATH_ARGUMENT_ERROR</code> if LUTs are NULL <code>ARM_MATH_SUCCESS</code> - Successful operation</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The function returns <code>ARM_CMSIS_NN_ARG_ERROR</code> Argument error check failed <code>ARM_CMSIS_NN_SUCCESS</code> - Successful operation</dd></dl>
 <dl class="section note"><dt>Note</dt><dd>Supported framework: TensorFlow Lite micro (bit-accurate) </dd></dl>
 
-<p>References <a class="el" href="arm__nnsupportfunctions_8h.html#a6a13b7a567485da5fc7f0d311318886d">arm_nn_requantize()</a>, <a class="el" href="structcmsis__nn__softmax__lut__s16.html#a0efa8f93962010b589115d62bc8b1492">cmsis_nn_softmax_lut_s16::exp_lut</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#ad935f1ff1a50822e317bdb321ce991ad">MAX</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#adcd021ac91d43a62b2cdecf9a5b971a7">MIN</a>, <a class="el" href="arm__nn__math__types_8h.html#a30fe8775d9c28c72fb7c336ab4751269">NN_Q15_MAX</a>, <a class="el" href="arm__nn__math__types_8h.html#a51e8177e289decc5ccf94be9c160064d">NN_Q15_MIN</a>, and <a class="el" href="structcmsis__nn__softmax__lut__s16.html#a7bbf8c62fe03de10c44fb29ee97934c6">cmsis_nn_softmax_lut_s16::one_by_one_lut</a>.</p>
+<p>References <a class="el" href="arm__nn__math__types_8h.html#a67ac3e1e650a7040b0f706fb83ea6184a36cebf184635d8a5c74c0057fa64e042">ARM_CMSIS_NN_ARG_ERROR</a>, <a class="el" href="arm__nn__math__types_8h.html#a67ac3e1e650a7040b0f706fb83ea6184a3ba593df6b92214112a5e752c95ae016">ARM_CMSIS_NN_SUCCESS</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#a6a13b7a567485da5fc7f0d311318886d">arm_nn_requantize()</a>, <a class="el" href="structcmsis__nn__softmax__lut__s16.html#a0efa8f93962010b589115d62bc8b1492">cmsis_nn_softmax_lut_s16::exp_lut</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#ad935f1ff1a50822e317bdb321ce991ad">MAX</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#adcd021ac91d43a62b2cdecf9a5b971a7">MIN</a>, <a class="el" href="arm__nn__math__types_8h.html#a30fe8775d9c28c72fb7c336ab4751269">NN_Q15_MAX</a>, <a class="el" href="arm__nn__math__types_8h.html#a51e8177e289decc5ccf94be9c160064d">NN_Q15_MIN</a>, and <a class="el" href="structcmsis__nn__softmax__lut__s16.html#a7bbf8c62fe03de10c44fb29ee97934c6">cmsis_nn_softmax_lut_s16::one_by_one_lut</a>.</p>
 
 </div>
 </div>

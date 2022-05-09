@@ -1,7 +1,7 @@
 var group__BasicMath =
 [
-    [ "arm_elementwise_add_s16", "group__BasicMath.html#ga9e988362b8860a0108e62caf03e19b45", null ],
-    [ "arm_elementwise_add_s8", "group__BasicMath.html#ga19f5c245db9ecfb7918fe1fc4f16af2b", null ],
-    [ "arm_elementwise_mul_s16", "group__BasicMath.html#gab38457329632897eb6efedf9dfcef1e4", null ],
-    [ "arm_elementwise_mul_s8", "group__BasicMath.html#ga345f342f6368a715ca3816c3cc3b7f70", null ]
+    [ "arm_elementwise_add_s16", "group__BasicMath.html#ga451e24fa9bf97b58d9da95ed8bbf5438", null ],
+    [ "arm_elementwise_add_s8", "group__BasicMath.html#ga8f59d6176c7a049cfe8605c80e6e7e8c", null ],
+    [ "arm_elementwise_mul_s16", "group__BasicMath.html#ga30d6345a9dd6754bb39a6237b6068f5e", null ],
+    [ "arm_elementwise_mul_s8", "group__BasicMath.html#ga0ac27a4f45de0738632abe89fc1418e7", null ]
 ];

@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-NN
-   &#160;<span id="projectnumber">Version 3.1.0</span>
+   &#160;<span id="projectnumber">Version 4.0.0</span>
    </div>
    <div id="projectbrief">CMSIS NN Software Library</div>
   </td>
@@ -121,9 +121,9 @@ Functions</h2></td></tr>
 <tr class="separator:a61d8f1ffa151d8a3327aea577f8c63a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a464e5d2cf70e82eb27be23b94a793cf6"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__max__pool__s16_8c.html#a464e5d2cf70e82eb27be23b94a793cf6">clamp_output</a> (int16_t *source, int32_t length, const int16_t act_min, const int16_t act_max)</td></tr>
 <tr class="separator:a464e5d2cf70e82eb27be23b94a793cf6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8bc3b3dd1fcf5ac462aa28bdddc0e3bb"><td class="memItemLeft" align="right" valign="top">arm_status&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Pooling.html#ga8bc3b3dd1fcf5ac462aa28bdddc0e3bb">arm_max_pool_s16</a> (const <a class="el" href="structcmsis__nn__context.html">cmsis_nn_context</a> *ctx, const <a class="el" href="structcmsis__nn__pool__params.html">cmsis_nn_pool_params</a> *pool_params, const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *input_dims, const int16_t *src, const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *filter_dims, const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *output_dims, int16_t *dst)</td></tr>
-<tr class="memdesc:ga8bc3b3dd1fcf5ac462aa28bdddc0e3bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">s16 max pooling function.  <a href="group__Pooling.html#ga8bc3b3dd1fcf5ac462aa28bdddc0e3bb">More...</a><br/></td></tr>
-<tr class="separator:ga8bc3b3dd1fcf5ac462aa28bdddc0e3bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga62bc8df39f9b77ad1bccb5dea081b68a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__nn__math__types_8h.html#a67ac3e1e650a7040b0f706fb83ea6184">arm_cmsis_nn_status</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Pooling.html#ga62bc8df39f9b77ad1bccb5dea081b68a">arm_max_pool_s16</a> (const <a class="el" href="structcmsis__nn__context.html">cmsis_nn_context</a> *ctx, const <a class="el" href="structcmsis__nn__pool__params.html">cmsis_nn_pool_params</a> *pool_params, const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *input_dims, const int16_t *src, const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *filter_dims, const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *output_dims, int16_t *dst)</td></tr>
+<tr class="memdesc:ga62bc8df39f9b77ad1bccb5dea081b68a"><td class="mdescLeft">&#160;</td><td class="mdescRight">s16 max pooling function.  <a href="group__Pooling.html#ga62bc8df39f9b77ad1bccb5dea081b68a">More...</a><br/></td></tr>
+<tr class="separator:ga62bc8df39f9b77ad1bccb5dea081b68a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="a464e5d2cf70e82eb27be23b94a793cf6"></a>
@@ -172,7 +172,7 @@ Functions</h2></td></tr>
 
 <p>References <a class="el" href="arm__nnsupportfunctions_8h.html#a9d505dfe68f4486c2327df8a857a89ad">arm_nn_read_q15x2()</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#a9477fb2f82284ac4fe20b2efb721f5f5">arm_nn_write_q15x2_ia()</a>, <a class="el" href="unionarm__nnword.html#a9b5e49e4e2c4b7203e07b305386bb2ba">arm_nnword::half_words</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#ad935f1ff1a50822e317bdb321ce991ad">MAX</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#adcd021ac91d43a62b2cdecf9a5b971a7">MIN</a>, and <a class="el" href="unionarm__nnword.html#a35c7b2ae25e35e0ddcd9ec0a1a6f8d18">arm_nnword::word</a>.</p>
 
-<p>Referenced by <a class="el" href="group__Pooling.html#ga8bc3b3dd1fcf5ac462aa28bdddc0e3bb">arm_max_pool_s16()</a>.</p>
+<p>Referenced by <a class="el" href="group__Pooling.html#ga62bc8df39f9b77ad1bccb5dea081b68a">arm_max_pool_s16()</a>.</p>
 
 </div>
 </div>
@@ -216,7 +216,7 @@ Functions</h2></td></tr>
 
 <p>References <a class="el" href="arm__nnsupportfunctions_8h.html#a9d505dfe68f4486c2327df8a857a89ad">arm_nn_read_q15x2()</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#afdda94a339b76615d3161e9fc63f4d21">arm_nn_read_q15x2_ia()</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#a9477fb2f82284ac4fe20b2efb721f5f5">arm_nn_write_q15x2_ia()</a>, <a class="el" href="unionarm__nnword.html#a9b5e49e4e2c4b7203e07b305386bb2ba">arm_nnword::half_words</a>, and <a class="el" href="unionarm__nnword.html#a35c7b2ae25e35e0ddcd9ec0a1a6f8d18">arm_nnword::word</a>.</p>
 
-<p>Referenced by <a class="el" href="group__Pooling.html#ga8bc3b3dd1fcf5ac462aa28bdddc0e3bb">arm_max_pool_s16()</a>.</p>
+<p>Referenced by <a class="el" href="group__Pooling.html#ga62bc8df39f9b77ad1bccb5dea081b68a">arm_max_pool_s16()</a>.</p>
 
 </div>
 </div>
