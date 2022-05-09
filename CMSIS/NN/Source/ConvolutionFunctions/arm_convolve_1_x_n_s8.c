@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2021 Arm Limited or its affiliates.
+ * Copyright (C) 2010-2022 Arm Limited or its affiliates.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_convolve_1_x_n_s8.c
  * Description:  s8 version of 1xN convolution using symmetric quantization.
  *
- * $Date:        December 14, 2021
- * $Revision:    V.2.1.0
+ * $Date:        19 April 2022
+ * $Revision:    V.3.0.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -47,23 +47,23 @@
  *
  */
 
-arm_status arm_convolve_1_x_n_s8(const cmsis_nn_context *ctx,
-                                 const cmsis_nn_conv_params *conv_params,
-                                 const cmsis_nn_per_channel_quant_params *quant_params,
-                                 const cmsis_nn_dims *input_dims,
-                                 const q7_t *input_data,
-                                 const cmsis_nn_dims *filter_dims,
-                                 const q7_t *filter_data,
-                                 const cmsis_nn_dims *bias_dims,
-                                 const int32_t *bias_data,
-                                 const cmsis_nn_dims *output_dims,
-                                 q7_t *output_data)
+arm_cmsis_nn_status arm_convolve_1_x_n_s8(const cmsis_nn_context *ctx,
+                                          const cmsis_nn_conv_params *conv_params,
+                                          const cmsis_nn_per_channel_quant_params *quant_params,
+                                          const cmsis_nn_dims *input_dims,
+                                          const q7_t *input_data,
+                                          const cmsis_nn_dims *filter_dims,
+                                          const q7_t *filter_data,
+                                          const cmsis_nn_dims *bias_dims,
+                                          const int32_t *bias_data,
+                                          const cmsis_nn_dims *output_dims,
+                                          q7_t *output_data)
 {
     (void)bias_dims;
-    arm_status status = ARM_MATH_SUCCESS;
+    arm_cmsis_nn_status status = ARM_CMSIS_NN_SUCCESS;
     if (output_dims->w % 4 != 0)
     {
-        status = ARM_MATH_SIZE_MISMATCH;
+        status = ARM_CMSIS_NN_ARG_ERROR;
         goto out;
     }
 

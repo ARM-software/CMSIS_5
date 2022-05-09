@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2022 Arm Limited or its affiliates.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -29,7 +29,7 @@
 
 void avgpooling_arm_avgpool_s8(void)
 {
-    const arm_status expected = ARM_MATH_SUCCESS;
+    const arm_cmsis_nn_status expected = ARM_CMSIS_NN_SUCCESS;
     q7_t output[AVGPOOLING_DST_SIZE] = {0};
 
     cmsis_nn_context ctx;
@@ -61,7 +61,8 @@ void avgpooling_arm_avgpool_s8(void)
     ctx.size = arm_avgpool_s8_get_buffer_size(AVGPOOLING_OUTPUT_W, AVGPOOLING_IN_CH);
     ctx.buf = malloc(ctx.size);
 
-    arm_status result = arm_avgpool_s8(&ctx, &pool_params, &input_dims, input_data, &filter_dims, &output_dims, output);
+    arm_cmsis_nn_status result =
+        arm_avgpool_s8(&ctx, &pool_params, &input_dims, input_data, &filter_dims, &output_dims, output);
 
     free(ctx.buf);
     TEST_ASSERT_EQUAL(expected, result);
@@ -70,7 +71,7 @@ void avgpooling_arm_avgpool_s8(void)
 
 void avgpooling_1_arm_avgpool_s8(void)
 {
-    const arm_status expected = ARM_MATH_SUCCESS;
+    const arm_cmsis_nn_status expected = ARM_CMSIS_NN_SUCCESS;
     q7_t output[AVGPOOLING_1_DST_SIZE] = {0};
 
     cmsis_nn_context ctx;
@@ -102,7 +103,8 @@ void avgpooling_1_arm_avgpool_s8(void)
     ctx.size = arm_avgpool_s8_get_buffer_size(AVGPOOLING_1_OUTPUT_W, AVGPOOLING_1_IN_CH);
     ctx.buf = malloc(ctx.size);
 
-    arm_status result = arm_avgpool_s8(&ctx, &pool_params, &input_dims, input_data, &filter_dims, &output_dims, output);
+    arm_cmsis_nn_status result =
+        arm_avgpool_s8(&ctx, &pool_params, &input_dims, input_data, &filter_dims, &output_dims, output);
 
     free(ctx.buf);
     TEST_ASSERT_EQUAL(expected, result);
@@ -111,7 +113,7 @@ void avgpooling_1_arm_avgpool_s8(void)
 
 void avgpooling_2_arm_avgpool_s8(void)
 {
-    const arm_status expected = ARM_MATH_SUCCESS;
+    const arm_cmsis_nn_status expected = ARM_CMSIS_NN_SUCCESS;
     q7_t output[AVGPOOLING_2_DST_SIZE] = {0};
 
     cmsis_nn_context ctx;
@@ -143,7 +145,8 @@ void avgpooling_2_arm_avgpool_s8(void)
     ctx.size = arm_avgpool_s8_get_buffer_size(AVGPOOLING_2_OUTPUT_W, AVGPOOLING_2_IN_CH);
     ctx.buf = malloc(ctx.size);
 
-    arm_status result = arm_avgpool_s8(&ctx, &pool_params, &input_dims, input_data, &filter_dims, &output_dims, output);
+    arm_cmsis_nn_status result =
+        arm_avgpool_s8(&ctx, &pool_params, &input_dims, input_data, &filter_dims, &output_dims, output);
 
     free(ctx.buf);
     TEST_ASSERT_EQUAL(expected, result);
@@ -152,7 +155,7 @@ void avgpooling_2_arm_avgpool_s8(void)
 
 void avgpooling_3_arm_avgpool_s8(void)
 {
-    const arm_status expected = ARM_MATH_SUCCESS;
+    const arm_cmsis_nn_status expected = ARM_CMSIS_NN_SUCCESS;
     q7_t output[AVGPOOLING_3_DST_SIZE] = {0};
 
     cmsis_nn_context ctx;
@@ -184,7 +187,8 @@ void avgpooling_3_arm_avgpool_s8(void)
     ctx.size = arm_avgpool_s8_get_buffer_size(AVGPOOLING_3_OUTPUT_W, AVGPOOLING_3_IN_CH);
     ctx.buf = malloc(ctx.size);
 
-    arm_status result = arm_avgpool_s8(&ctx, &pool_params, &input_dims, input_data, &filter_dims, &output_dims, output);
+    arm_cmsis_nn_status result =
+        arm_avgpool_s8(&ctx, &pool_params, &input_dims, input_data, &filter_dims, &output_dims, output);
 
     free(ctx.buf);
     TEST_ASSERT_EQUAL(expected, result);
@@ -193,7 +197,7 @@ void avgpooling_3_arm_avgpool_s8(void)
 
 void avgpooling_4_arm_avgpool_s8(void)
 {
-    const arm_status expected = ARM_MATH_SUCCESS;
+    const arm_cmsis_nn_status expected = ARM_CMSIS_NN_SUCCESS;
     q7_t output[AVGPOOLING_4_DST_SIZE] = {0};
 
     cmsis_nn_context ctx;
@@ -225,7 +229,8 @@ void avgpooling_4_arm_avgpool_s8(void)
     ctx.size = arm_avgpool_s8_get_buffer_size(AVGPOOLING_4_OUTPUT_W, AVGPOOLING_4_IN_CH);
     ctx.buf = malloc(ctx.size);
 
-    arm_status result = arm_avgpool_s8(&ctx, &pool_params, &input_dims, input_data, &filter_dims, &output_dims, output);
+    arm_cmsis_nn_status result =
+        arm_avgpool_s8(&ctx, &pool_params, &input_dims, input_data, &filter_dims, &output_dims, output);
 
     free(ctx.buf);
     TEST_ASSERT_EQUAL(expected, result);
@@ -234,7 +239,7 @@ void avgpooling_4_arm_avgpool_s8(void)
 
 void avgpooling_5_arm_avgpool_s8(void)
 {
-    const arm_status expected = ARM_MATH_SUCCESS;
+    const arm_cmsis_nn_status expected = ARM_CMSIS_NN_SUCCESS;
     q7_t output[AVGPOOLING_5_DST_SIZE] = {0};
 
     cmsis_nn_context ctx;
@@ -266,7 +271,8 @@ void avgpooling_5_arm_avgpool_s8(void)
     ctx.size = arm_avgpool_s8_get_buffer_size(AVGPOOLING_5_OUTPUT_W, AVGPOOLING_5_IN_CH);
     ctx.buf = malloc(ctx.size);
 
-    arm_status result = arm_avgpool_s8(&ctx, &pool_params, &input_dims, input_data, &filter_dims, &output_dims, output);
+    arm_cmsis_nn_status result =
+        arm_avgpool_s8(&ctx, &pool_params, &input_dims, input_data, &filter_dims, &output_dims, output);
 
     free(ctx.buf);
     TEST_ASSERT_EQUAL(expected, result);

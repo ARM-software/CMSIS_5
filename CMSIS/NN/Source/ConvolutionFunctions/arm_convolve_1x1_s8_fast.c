@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2021 Arm Limited or its affiliates.
+ * Copyright (C) 2010-2022 Arm Limited or its affiliates.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_convolve_1x1_s8_fast.c
  * Description:  Fast q7 version of 1x1 convolution (non-square shape)
  *
- * $Date:        12. November 2021
- * $Revision:    V.2.0.4
+ * $Date:        19 April 2022
+ * $Revision:    V.3.0.0
  *
  * Target Processor:  Cortex-M Processors
  *
@@ -51,22 +51,22 @@
  *
  */
 
-arm_status arm_convolve_1x1_s8_fast(const cmsis_nn_context *ctx,
-                                    const cmsis_nn_conv_params *conv_params,
-                                    const cmsis_nn_per_channel_quant_params *quant_params,
-                                    const cmsis_nn_dims *input_dims,
-                                    const q7_t *input_data,
-                                    const cmsis_nn_dims *filter_dims,
-                                    const q7_t *filter_data,
-                                    const cmsis_nn_dims *bias_dims,
-                                    const int32_t *bias_data,
-                                    const cmsis_nn_dims *output_dims,
-                                    q7_t *output_data)
+arm_cmsis_nn_status arm_convolve_1x1_s8_fast(const cmsis_nn_context *ctx,
+                                             const cmsis_nn_conv_params *conv_params,
+                                             const cmsis_nn_per_channel_quant_params *quant_params,
+                                             const cmsis_nn_dims *input_dims,
+                                             const q7_t *input_data,
+                                             const cmsis_nn_dims *filter_dims,
+                                             const q7_t *filter_data,
+                                             const cmsis_nn_dims *bias_dims,
+                                             const int32_t *bias_data,
+                                             const cmsis_nn_dims *output_dims,
+                                             q7_t *output_data)
 {
     if (input_dims->c % 4 != 0 || conv_params->padding.w != 0 || conv_params->padding.h != 0 ||
         conv_params->stride.w != 1 || conv_params->stride.h != 1)
     {
-        return ARM_MATH_SIZE_MISMATCH;
+        return ARM_CMSIS_NN_ARG_ERROR;
     }
 
     (void)ctx;
@@ -147,7 +147,7 @@ arm_status arm_convolve_1x1_s8_fast(const cmsis_nn_context *ctx,
 #endif
 
     /* Return to application */
-    return ARM_MATH_SUCCESS;
+    return ARM_CMSIS_NN_SUCCESS;
 }
 
 int32_t arm_convolve_1x1_s8_fast_get_buffer_size(const cmsis_nn_dims *input_dims)

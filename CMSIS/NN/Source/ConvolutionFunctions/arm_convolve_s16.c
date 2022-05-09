@@ -21,8 +21,8 @@
  * Title:        arm_convolve_s16.c
  * Description:  s16 version of convolution using symmetric quantization.
  *
- * $Date:        January 13, 2022
- * $Revision:    V.1.1.0
+ * $Date:        19 April 2022
+ * $Revision:    V.2.0.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -48,17 +48,17 @@
  *
  */
 
-arm_status arm_convolve_s16(const cmsis_nn_context *ctx,
-                            const cmsis_nn_conv_params *conv_params,
-                            const cmsis_nn_per_channel_quant_params *quant_params,
-                            const cmsis_nn_dims *input_dims,
-                            const q15_t *input_data,
-                            const cmsis_nn_dims *filter_dims,
-                            const q7_t *filter_data,
-                            const cmsis_nn_dims *bias_dims,
-                            const int64_t *bias_data,
-                            const cmsis_nn_dims *output_dims,
-                            q15_t *output_data)
+arm_cmsis_nn_status arm_convolve_s16(const cmsis_nn_context *ctx,
+                                     const cmsis_nn_conv_params *conv_params,
+                                     const cmsis_nn_per_channel_quant_params *quant_params,
+                                     const cmsis_nn_dims *input_dims,
+                                     const q15_t *input_data,
+                                     const cmsis_nn_dims *filter_dims,
+                                     const q7_t *filter_data,
+                                     const cmsis_nn_dims *bias_dims,
+                                     const int64_t *bias_data,
+                                     const cmsis_nn_dims *output_dims,
+                                     q15_t *output_data)
 {
     (void)bias_dims;
     (void)ctx;
@@ -141,7 +141,7 @@ arm_status arm_convolve_s16(const cmsis_nn_context *ctx,
     }
 
     /* Return to application */
-    return ARM_MATH_SUCCESS;
+    return ARM_CMSIS_NN_SUCCESS;
 }
 
 int32_t arm_convolve_s16_get_buffer_size(const cmsis_nn_dims *input_dims, const cmsis_nn_dims *filter_dims)

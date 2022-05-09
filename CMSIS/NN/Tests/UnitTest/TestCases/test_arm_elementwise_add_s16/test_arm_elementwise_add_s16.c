@@ -24,7 +24,7 @@
 
 void add_s16_arm_elementwise_add_s16(void)
 {
-    const arm_status expected = ARM_MATH_SUCCESS;
+    const arm_cmsis_nn_status expected = ARM_CMSIS_NN_SUCCESS;
     int16_t output[ADD_S16_DST_SIZE] = {0};
 
     const int16_t *input_data1 = add_s16_input1;
@@ -46,22 +46,22 @@ void add_s16_arm_elementwise_add_s16(void)
     const int32_t out_activation_min = ADD_S16_OUT_ACTIVATION_MIN;
     const int32_t out_activation_max = ADD_S16_OUT_ACTIVATION_MAX;
 
-    arm_status result = arm_elementwise_add_s16(input_data1,
-                                                input_data2,
-                                                input_1_offset,
-                                                input_1_mult,
-                                                input_1_shift,
-                                                input_2_offset,
-                                                input_2_mult,
-                                                input_2_shift,
-                                                left_shift,
-                                                output,
-                                                out_offset,
-                                                out_mult,
-                                                out_shift,
-                                                out_activation_min,
-                                                out_activation_max,
-                                                ADD_S16_DST_SIZE);
+    arm_cmsis_nn_status result = arm_elementwise_add_s16(input_data1,
+                                                         input_data2,
+                                                         input_1_offset,
+                                                         input_1_mult,
+                                                         input_1_shift,
+                                                         input_2_offset,
+                                                         input_2_mult,
+                                                         input_2_shift,
+                                                         left_shift,
+                                                         output,
+                                                         out_offset,
+                                                         out_mult,
+                                                         out_shift,
+                                                         out_activation_min,
+                                                         out_activation_max,
+                                                         ADD_S16_DST_SIZE);
 
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate_s16(output, add_s16_output_ref, ADD_S16_DST_SIZE));

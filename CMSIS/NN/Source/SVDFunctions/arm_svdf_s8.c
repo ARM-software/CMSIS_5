@@ -21,8 +21,8 @@
  * Title:        arm_svdf_s8.c
  * Description:  S8 basic SVDF layer function
  *
- * $Date:        28 April 2022
- * $Revision:    V.3.0.1
+ * $Date:        4 May 2022
+ * $Revision:    V.4.0.1
  *
  * Target Processor:  Cortex-M processors
  *
@@ -47,23 +47,23 @@
  *
  */
 
-arm_status arm_svdf_s8(const cmsis_nn_context *input_ctx,
-                       const cmsis_nn_context *output_ctx,
-                       const cmsis_nn_svdf_params *svdf_params,
-                       const cmsis_nn_per_tensor_quant_params *input_quant_params,
-                       const cmsis_nn_per_tensor_quant_params *output_quant_params,
-                       const cmsis_nn_dims *input_dims,
-                       const q7_t *input_data,
-                       const cmsis_nn_dims *state_dims,
-                       q7_t *state_data,
-                       const cmsis_nn_dims *weights_feature_dims,
-                       const q7_t *weights_feature_data,
-                       const cmsis_nn_dims *weights_time_dims,
-                       const q7_t *weights_time_data,
-                       const cmsis_nn_dims *bias_dims,
-                       const q31_t *bias_data,
-                       const cmsis_nn_dims *output_dims,
-                       q7_t *output_data)
+arm_cmsis_nn_status arm_svdf_s8(const cmsis_nn_context *input_ctx,
+                                const cmsis_nn_context *output_ctx,
+                                const cmsis_nn_svdf_params *svdf_params,
+                                const cmsis_nn_per_tensor_quant_params *input_quant_params,
+                                const cmsis_nn_per_tensor_quant_params *output_quant_params,
+                                const cmsis_nn_dims *input_dims,
+                                const q7_t *input_data,
+                                const cmsis_nn_dims *state_dims,
+                                q7_t *state_data,
+                                const cmsis_nn_dims *weights_feature_dims,
+                                const q7_t *weights_feature_data,
+                                const cmsis_nn_dims *weights_time_dims,
+                                const q7_t *weights_time_data,
+                                const cmsis_nn_dims *bias_dims,
+                                const q31_t *bias_data,
+                                const cmsis_nn_dims *output_dims,
+                                q7_t *output_data)
 {
     (void)bias_dims;
     (void)state_dims;
@@ -89,13 +89,13 @@ arm_status arm_svdf_s8(const cmsis_nn_context *input_ctx,
 
     if (input_ctx->buf == NULL)
     {
-        return ARM_MATH_ARGUMENT_ERROR;
+        return ARM_CMSIS_NN_ARG_ERROR;
     }
     q31_t *buffer_a = (q31_t *)input_ctx->buf;
 
     if (output_ctx->buf == NULL)
     {
-        return ARM_MATH_ARGUMENT_ERROR;
+        return ARM_CMSIS_NN_ARG_ERROR;
     }
     q31_t *buffer_b = (q31_t *)output_ctx->buf;
 
@@ -111,22 +111,22 @@ arm_status arm_svdf_s8(const cmsis_nn_context *input_ctx,
         const q7_t *weight = weights_feature_data;
         const q7_t *input = input_data + i_batch * input_height;
 
-        arm_status res = arm_nn_vec_mat_mult_t_s8(input,
-                                                  weight,
-                                                  NULL,
-                                                  res_ptr,
-                                                  -zp_in,
-                                                  0,
-                                                  0,
-                                                  multiplier_in,
-                                                  shift_in,
-                                                  input_height,
-                                                  feature_batches,
-                                                  in_activation_min,
-                                                  in_activation_max,
-                                                  time_batches);
+        arm_cmsis_nn_status res = arm_nn_vec_mat_mult_t_s8(input,
+                                                           weight,
+                                                           NULL,
+                                                           res_ptr,
+                                                           -zp_in,
+                                                           0,
+                                                           0,
+                                                           multiplier_in,
+                                                           shift_in,
+                                                           input_height,
+                                                           feature_batches,
+                                                           in_activation_min,
+                                                           in_activation_max,
+                                                           time_batches);
 
-        if (res != ARM_MATH_SUCCESS)
+        if (res != ARM_CMSIS_NN_SUCCESS)
         {
             return res;
         }
@@ -263,7 +263,7 @@ arm_status arm_svdf_s8(const cmsis_nn_context *input_ctx,
     }
 #endif
 
-    return (ARM_MATH_SUCCESS);
+    return (ARM_CMSIS_NN_SUCCESS);
 }
 
 /**

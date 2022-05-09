@@ -7,6 +7,14 @@
     <th>Description</th>
   </tr>
   <tr>
+    <td>V4.0.0</td>
+    <td>
+    <ul>
+      <li> Replaced arm_status with arm_cmsis_nn_status struct </li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
     <td>V3.1.0</td>
     <td>
     <ul>

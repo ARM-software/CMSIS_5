@@ -21,8 +21,8 @@
  * Title:        arm_nn_vec_mat_mult_t_s16
  * Description:  s16 vector by matrix (transposed) multiplication
  *
- * $Date:        04. January 2022
- * $Revision:    V.1.2.0
+ * $Date:        19 April 2022
+ * $Revision:    V.2.0.0
  *
  * Target Processor:  Cortex-M
  *
@@ -44,16 +44,16 @@
  * Refer header file for details.
  *
  */
-arm_status arm_nn_vec_mat_mult_t_s16(const q15_t *lhs,
-                                     const q7_t *rhs,
-                                     const q63_t *bias,
-                                     q15_t *dst,
-                                     const int32_t dst_multiplier,
-                                     const int32_t dst_shift,
-                                     const int32_t rhs_cols,
-                                     const int32_t rhs_rows,
-                                     const int32_t activation_min,
-                                     const int32_t activation_max)
+arm_cmsis_nn_status arm_nn_vec_mat_mult_t_s16(const q15_t *lhs,
+                                              const q7_t *rhs,
+                                              const q63_t *bias,
+                                              q15_t *dst,
+                                              const int32_t dst_multiplier,
+                                              const int32_t dst_shift,
+                                              const int32_t rhs_cols,
+                                              const int32_t rhs_rows,
+                                              const int32_t activation_min,
+                                              const int32_t activation_max)
 {
 #if defined(ARM_MATH_DSP) && !defined(ARM_MATH_MVEI)
     const int32_t row_loop_cnt = rhs_rows / 2;
@@ -203,7 +203,7 @@ arm_status arm_nn_vec_mat_mult_t_s16(const q15_t *lhs,
     }
 #endif
 
-    return ARM_MATH_SUCCESS;
+    return ARM_CMSIS_NN_SUCCESS;
 }
 
 /**

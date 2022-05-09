@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2021 Arm Limited or its affiliates.
+ * Copyright (C) 2010-2022 Arm Limited or its affiliates.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -22,8 +22,8 @@
  * Description:  Optimized s8 depthwise separable convolution function for
  *               channel multiplier of 1.
  *
- * $Date:        January 26, 2021
- * $Revision:    V.2.0.3
+ * $Date:        19 April 2022
+ * $Revision:    V.3.0.0
  *
  * Target Processor:  Cortex-M CPUs
  *
@@ -48,17 +48,17 @@
  *
  */
 
-arm_status arm_depthwise_conv_s8_opt(const cmsis_nn_context *ctx,
-                                     const cmsis_nn_dw_conv_params *dw_conv_params,
-                                     const cmsis_nn_per_channel_quant_params *quant_params,
-                                     const cmsis_nn_dims *input_dims,
-                                     const q7_t *input,
-                                     const cmsis_nn_dims *filter_dims,
-                                     const q7_t *kernel,
-                                     const cmsis_nn_dims *bias_dims,
-                                     const int32_t *bias,
-                                     const cmsis_nn_dims *output_dims,
-                                     q7_t *output)
+arm_cmsis_nn_status arm_depthwise_conv_s8_opt(const cmsis_nn_context *ctx,
+                                              const cmsis_nn_dw_conv_params *dw_conv_params,
+                                              const cmsis_nn_per_channel_quant_params *quant_params,
+                                              const cmsis_nn_dims *input_dims,
+                                              const q7_t *input,
+                                              const cmsis_nn_dims *filter_dims,
+                                              const q7_t *kernel,
+                                              const cmsis_nn_dims *bias_dims,
+                                              const int32_t *bias,
+                                              const cmsis_nn_dims *output_dims,
+                                              q7_t *output)
 {
 
     const int32_t input_ch = input_dims->c;
@@ -67,12 +67,12 @@ arm_status arm_depthwise_conv_s8_opt(const cmsis_nn_context *ctx,
     /* Check input constraints input_ch == output_ch */
     if (input_ch != output_ch)
     {
-        return ARM_MATH_SIZE_MISMATCH;
+        return ARM_CMSIS_NN_ARG_ERROR;
     }
 
     if (ctx->buf == NULL && arm_depthwise_conv_s8_opt_get_buffer_size(input_dims, filter_dims) > 0)
     {
-        return ARM_MATH_ARGUMENT_ERROR;
+        return ARM_CMSIS_NN_ARG_ERROR;
     }
 #ifdef ARM_MATH_DSP
     const int32_t input_x = input_dims->w;
@@ -411,7 +411,7 @@ arm_status arm_depthwise_conv_s8_opt(const cmsis_nn_context *ctx,
 #endif /* ARM_MATH_MVEI | ARM_MATH_DSP */
 
     /* Return to application */
-    return ARM_MATH_SUCCESS;
+    return ARM_CMSIS_NN_SUCCESS;
 }
 
 int32_t arm_depthwise_conv_s8_opt_get_buffer_size(const cmsis_nn_dims *input_dims, const cmsis_nn_dims *filter_dims)
