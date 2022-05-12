@@ -1420,6 +1420,10 @@ def load_all_testdatasets():
     ALL_TESTDATA_SETS[dataset] = AddMulSettings(dataset, type_of_test, args, channels=8, x_in=4, y_in=4,
                                                 randmin=INT16_MIN, randmax=INT16_MAX, out_activation_min=INT16_MIN,
                                                 out_activation_max=INT16_MAX, int16xint8=True)
+    dataset = 'add_s16_spill'
+    ALL_TESTDATA_SETS[dataset] = AddMulSettings(dataset, type_of_test, args, channels=7, x_in=5, y_in=3,
+                                                randmin=INT16_MIN, randmax=INT16_MAX, out_activation_min=-2000,
+                                                out_activation_max=INT16_MAX, int16xint8=True)
 
     type_of_test = 'mul'
     dataset = 'mul'
@@ -1429,6 +1433,10 @@ def load_all_testdatasets():
     ALL_TESTDATA_SETS[dataset] = AddMulSettings(dataset, type_of_test, args, channels=8, x_in=5, y_in=4,
                                                 randmin=INT16_MIN, randmax=INT16_MAX, out_activation_min=INT16_MIN,
                                                 out_activation_max=INT16_MAX, int16xint8=True)
+    dataset = 'mul_s16_spill'
+    ALL_TESTDATA_SETS[dataset] = AddMulSettings(dataset, type_of_test, args, channels=7, x_in=5, y_in=7,
+                                                randmin=INT16_MIN, randmax=INT16_MAX, out_activation_min=INT16_MIN,
+                                                out_activation_max=1000, int16xint8=True)
 
 
 if __name__ == '__main__':
