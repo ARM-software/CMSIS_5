@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     core_cm85.h
  * @brief    CMSIS Cortex-M85 Core Peripheral Access Layer Header File
- * @version  V1.0.4
- * @date     21. April 2022
+ * @version  V1.0.5
+ * @date     12. May 2022
  ******************************************************************************/
 /*
  * Copyright (c) 2022 Arm Limited. All rights reserved.
@@ -1130,13 +1130,15 @@ typedef struct
   __IOM uint32_t TPR;                    /*!< Offset: 0xE40 (R/W)  ITM Trace Privilege Register */
         uint32_t RESERVED2[15U];
   __IOM uint32_t TCR;                    /*!< Offset: 0xE80 (R/W)  ITM Trace Control Register */
-        uint32_t RESERVED3[32U];
-        uint32_t RESERVED4[43U];
-  __OM  uint32_t LAR;                    /*!< Offset: 0xFB0 ( /W)  ITM Lock Access Register */
-  __IM  uint32_t LSR;                    /*!< Offset: 0xFB4 (R/ )  ITM Lock Status Register */
+        uint32_t RESERVED3[27U];
+  __IM  uint32_t ITREAD;                 /*!< Offset: 0xEF0 (R/ )  ITM Integration Read Register */
+        uint32_t RESERVED4[1U];
+  __OM  uint32_t ITWRITE;                /*!< Offset: 0xEF8 ( /W)  ITM Integration Write Register */
         uint32_t RESERVED5[1U];
+  __IOM uint32_t ITCTRL;                 /*!< Offset: 0xF00 (R/W)  ITM Integration Mode Control Register */
+        uint32_t RESERVED6[46U];
   __IM  uint32_t DEVARCH;                /*!< Offset: 0xFBC (R/ )  ITM Device Architecture Register */
-        uint32_t RESERVED6[3U];
+        uint32_t RESERVED7[3U];
   __IM  uint32_t DEVTYPE;                /*!< Offset: 0xFCC (R/ )  ITM Device Type Register */
   __IM  uint32_t PID4;                   /*!< Offset: 0xFD0 (R/ )  ITM Peripheral Identification Register #4 */
   __IM  uint32_t PID5;                   /*!< Offset: 0xFD4 (R/ )  ITM Peripheral Identification Register #5 */
@@ -1194,15 +1196,23 @@ typedef struct
 #define ITM_TCR_ITMENA_Pos                  0U                                            /*!< ITM TCR: ITM Enable bit Position */
 #define ITM_TCR_ITMENA_Msk                 (1UL /*<< ITM_TCR_ITMENA_Pos*/)                /*!< ITM TCR: ITM Enable bit Mask */
 
-/* ITM Lock Status Register Definitions */
-#define ITM_LSR_ByteAcc_Pos                 2U                                            /*!< ITM LSR: ByteAcc Position */
-#define ITM_LSR_ByteAcc_Msk                (1UL << ITM_LSR_ByteAcc_Pos)                   /*!< ITM LSR: ByteAcc Mask */
+/* ITM Integration Read Register Definitions */
+#define ITM_ITREAD_AFVALID_Pos              1U                                            /*!< ITM ITREAD: AFVALID Position */
+#define ITM_ITREAD_AFVALID_Msk             (0x1UL << ITM_ITREAD_AFVALID_Pos)              /*!< ITM ITREAD: AFVALID Mask */
 
-#define ITM_LSR_Access_Pos                  1U                                            /*!< ITM LSR: Access Position */
-#define ITM_LSR_Access_Msk                 (1UL << ITM_LSR_Access_Pos)                    /*!< ITM LSR: Access Mask */
+#define ITM_ITREAD_ATREADY_Pos              0U                                            /*!< ITM ITREAD: ATREADY Position */
+#define ITM_ITREAD_ATREADY_Msk             (0x1UL /*<< ITM_ITREAD_ATREADY_Pos*/)          /*!< ITM ITREAD: ATREADY Mask */
 
-#define ITM_LSR_Present_Pos                 0U                                            /*!< ITM LSR: Present Position */
-#define ITM_LSR_Present_Msk                (1UL /*<< ITM_LSR_Present_Pos*/)               /*!< ITM LSR: Present Mask */
+/* ITM Integration Write Register Definitions */
+#define ITM_ITWRITE_AFVALID_Pos             1U                                            /*!< ITM ITWRITE: AFVALID Position */
+#define ITM_ITWRITE_AFVALID_Msk            (0x1UL << ITM_ITWRITE_AFVALID_Pos)             /*!< ITM ITWRITE: AFVALID Mask */
+
+#define ITM_ITWRITE_ATREADY_Pos             0U                                            /*!< ITM ITWRITE: ATREADY Position */
+#define ITM_ITWRITE_ATREADY_Msk            (0x1UL /*<< ITM_ITWRITE_ATREADY_Pos*/)         /*!< ITM ITWRITE: ATREADY Mask */
+
+/* ITM Integration Mode Control Register Definitions */
+#define ITM_ITCTRL_IME_Pos                  0U                                            /*!< ITM ITCTRL: IME Position */
+#define ITM_ITCTRL_IME_Msk                 (0x1UL /*<< ITM_ITCTRL_IME_Pos*/)              /*!< ITM ITCTRL: IME Mask */
 
 /*@}*/ /* end of group CMSIS_ITM */
 
@@ -1234,66 +1244,34 @@ typedef struct
   __IOM uint32_t COMP1;                  /*!< Offset: 0x030 (R/W)  Comparator Register 1 */
         uint32_t RESERVED3[1U];
   __IOM uint32_t FUNCTION1;              /*!< Offset: 0x038 (R/W)  Function Register 1 */
-        uint32_t RESERVED4[1U];
+  __IOM uint32_t VMASK1;                 /*!< Offset: 0x03C (R/W)  Comparator Value Mask 1 */
   __IOM uint32_t COMP2;                  /*!< Offset: 0x040 (R/W)  Comparator Register 2 */
-        uint32_t RESERVED5[1U];
+        uint32_t RESERVED4[1U];
   __IOM uint32_t FUNCTION2;              /*!< Offset: 0x048 (R/W)  Function Register 2 */
-        uint32_t RESERVED6[1U];
+        uint32_t RESERVED5[1U];
   __IOM uint32_t COMP3;                  /*!< Offset: 0x050 (R/W)  Comparator Register 3 */
-        uint32_t RESERVED7[1U];
+        uint32_t RESERVED6[1U];
   __IOM uint32_t FUNCTION3;              /*!< Offset: 0x058 (R/W)  Function Register 3 */
-        uint32_t RESERVED8[1U];
+  __IOM uint32_t VMASK3;                 /*!< Offset: 0x05C (R/W)  Comparator Value Mask 3 */
   __IOM uint32_t COMP4;                  /*!< Offset: 0x060 (R/W)  Comparator Register 4 */
-        uint32_t RESERVED9[1U];
+        uint32_t RESERVED7[1U];
   __IOM uint32_t FUNCTION4;              /*!< Offset: 0x068 (R/W)  Function Register 4 */
-        uint32_t RESERVED10[1U];
+        uint32_t RESERVED8[1U];
   __IOM uint32_t COMP5;                  /*!< Offset: 0x070 (R/W)  Comparator Register 5 */
-        uint32_t RESERVED11[1U];
+        uint32_t RESERVED9[1U];
   __IOM uint32_t FUNCTION5;              /*!< Offset: 0x078 (R/W)  Function Register 5 */
-        uint32_t RESERVED12[1U];
+        uint32_t RESERVED10[1U];
   __IOM uint32_t COMP6;                  /*!< Offset: 0x080 (R/W)  Comparator Register 6 */
-        uint32_t RESERVED13[1U];
+        uint32_t RESERVED11[1U];
   __IOM uint32_t FUNCTION6;              /*!< Offset: 0x088 (R/W)  Function Register 6 */
-        uint32_t RESERVED14[1U];
+        uint32_t RESERVED12[1U];
   __IOM uint32_t COMP7;                  /*!< Offset: 0x090 (R/W)  Comparator Register 7 */
-        uint32_t RESERVED15[1U];
+        uint32_t RESERVED13[1U];
   __IOM uint32_t FUNCTION7;              /*!< Offset: 0x098 (R/W)  Function Register 7 */
-        uint32_t RESERVED16[1U];
-  __IOM uint32_t COMP8;                  /*!< Offset: 0x0A0 (R/W)  Comparator Register 8 */
-        uint32_t RESERVED17[1U];
-  __IOM uint32_t FUNCTION8;              /*!< Offset: 0x0A8 (R/W)  Function Register 8 */
-        uint32_t RESERVED18[1U];
-  __IOM uint32_t COMP9;                  /*!< Offset: 0x0B0 (R/W)  Comparator Register 9 */
-        uint32_t RESERVED19[1U];
-  __IOM uint32_t FUNCTION9;              /*!< Offset: 0x0B8 (R/W)  Function Register 9 */
-        uint32_t RESERVED20[1U];
-  __IOM uint32_t COMP10;                 /*!< Offset: 0x0C0 (R/W)  Comparator Register 10 */
-        uint32_t RESERVED21[1U];
-  __IOM uint32_t FUNCTION10;             /*!< Offset: 0x0C8 (R/W)  Function Register 10 */
-        uint32_t RESERVED22[1U];
-  __IOM uint32_t COMP11;                 /*!< Offset: 0x0D0 (R/W)  Comparator Register 11 */
-        uint32_t RESERVED23[1U];
-  __IOM uint32_t FUNCTION11;             /*!< Offset: 0x0D8 (R/W)  Function Register 11 */
-        uint32_t RESERVED24[1U];
-  __IOM uint32_t COMP12;                 /*!< Offset: 0x0E0 (R/W)  Comparator Register 12 */
-        uint32_t RESERVED25[1U];
-  __IOM uint32_t FUNCTION12;             /*!< Offset: 0x0E8 (R/W)  Function Register 12 */
-        uint32_t RESERVED26[1U];
-  __IOM uint32_t COMP13;                 /*!< Offset: 0x0F0 (R/W)  Comparator Register 13 */
-        uint32_t RESERVED27[1U];
-  __IOM uint32_t FUNCTION13;             /*!< Offset: 0x0F8 (R/W)  Function Register 13 */
-        uint32_t RESERVED28[1U];
-  __IOM uint32_t COMP14;                 /*!< Offset: 0x100 (R/W)  Comparator Register 14 */
-        uint32_t RESERVED29[1U];
-  __IOM uint32_t FUNCTION14;             /*!< Offset: 0x108 (R/W)  Function Register 14 */
-        uint32_t RESERVED30[1U];
-  __IOM uint32_t COMP15;                 /*!< Offset: 0x110 (R/W)  Comparator Register 15 */
-        uint32_t RESERVED31[1U];
-  __IOM uint32_t FUNCTION15;             /*!< Offset: 0x118 (R/W)  Function Register 15 */
-        uint32_t RESERVED32[934U];
-  __IM  uint32_t LSR;                    /*!< Offset: 0xFB4 (R  )  Lock Status Register */
-        uint32_t RESERVED33[1U];
-  __IM  uint32_t DEVARCH;                /*!< Offset: 0xFBC (R/ )  Device Architecture Register */
+        uint32_t RESERVED14[968U];
+  __IM  uint32_t DEVARCH;                /*!< Offset: 0xFBC (R/ )  Device Type Architecture Register */
+        uint32_t RESERVED15[3U];
+  __IM  uint32_t DEVTYPE;                /*!< Offset: 0xFCC (R/ )  Device Type Identifier Register */
 } DWT_Type;
 
 /* DWT Control Register Definitions */
@@ -1385,7 +1363,7 @@ typedef struct
 #define DWT_FUNCTION_DATAVSIZE_Msk         (0x3UL << DWT_FUNCTION_DATAVSIZE_Pos)       /*!< DWT FUNCTION: DATAVSIZE Mask */
 
 #define DWT_FUNCTION_ACTION_Pos             4U                                         /*!< DWT FUNCTION: ACTION Position */
-#define DWT_FUNCTION_ACTION_Msk            (0x1UL << DWT_FUNCTION_ACTION_Pos)          /*!< DWT FUNCTION: ACTION Mask */
+#define DWT_FUNCTION_ACTION_Msk            (0x3UL << DWT_FUNCTION_ACTION_Pos)          /*!< DWT FUNCTION: ACTION Mask */
 
 #define DWT_FUNCTION_MATCH_Pos              0U                                         /*!< DWT FUNCTION: MATCH Position */
 #define DWT_FUNCTION_MATCH_Msk             (0xFUL /*<< DWT_FUNCTION_MATCH_Pos*/)       /*!< DWT FUNCTION: MATCH Mask */
@@ -3385,26 +3363,12 @@ typedef struct
  */
 typedef struct
 {
-  __OM  uint32_t DLAR;                   /*!< Offset: 0x000 ( /W)  SCS Software Lock Access Register */
-  __IM  uint32_t DLSR;                   /*!< Offset: 0x004 (R/ )  SCS Software Lock Status Register */
+        uint32_t RESERVED0[2U];
   __IM  uint32_t DAUTHSTATUS;            /*!< Offset: 0x008 (R/ )  Debug Authentication Status Register */
   __IM  uint32_t DDEVARCH;               /*!< Offset: 0x00C (R/ )  SCS Device Architecture Register */
-  __IM  uint32_t DDEVTYPE;               /*!< Offset: 0x010 (R/ )  SCS Device Type Register */
+        uint32_t RESERVED1[3U];
+  __IM  uint32_t DDEVTYPE;               /*!< Offset: 0x01C (R/ )  SCS Device Type Register */
 } DIB_Type;
-
-/* DLAR, SCS Software Lock Access Register Definitions */
-#define DIB_DLAR_KEY_Pos                    0U                                            /*!< DIB DLAR: KEY Position */
-#define DIB_DLAR_KEY_Msk                   (0xFFFFFFFFUL /*<< DIB_DLAR_KEY_Pos */)        /*!< DIB DLAR: KEY Mask */
-
-/* DLSR, SCS Software Lock Status Register Definitions */
-#define DIB_DLSR_nTT_Pos                    2U                                            /*!< DIB DLSR: Not thirty-two bit Position */
-#define DIB_DLSR_nTT_Msk                   (0x1UL << DIB_DLSR_nTT_Pos )                   /*!< DIB DLSR: Not thirty-two bit Mask */
-
-#define DIB_DLSR_SLK_Pos                    1U                                            /*!< DIB DLSR: Software Lock status Position */
-#define DIB_DLSR_SLK_Msk                   (0x1UL << DIB_DLSR_SLK_Pos )                   /*!< DIB DLSR: Software Lock status Mask */
-
-#define DIB_DLSR_SLI_Pos                    0U                                            /*!< DIB DLSR: Software Lock implemented Position */
-#define DIB_DLSR_SLI_Msk                   (0x1UL /*<< DIB_DLSR_SLI_Pos*/)                /*!< DIB DLSR: Software Lock implemented Mask */
 
 /* DAUTHSTATUS, Debug Authentication Status Register Definitions */
 #define DIB_DAUTHSTATUS_SUNID_Pos          22U                                            /*!< DIB DAUTHSTATUS: Secure Unprivileged Non-invasive Debug Allowed Position */
