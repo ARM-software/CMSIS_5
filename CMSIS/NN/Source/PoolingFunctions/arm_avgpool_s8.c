@@ -21,8 +21,8 @@
  * Title:        arm_avgpool_s8.c
  * Description:  Pooling function implementations
  *
- * $Date:        19 April 2022
- * $Revision:    V.3.0.0
+ * $Date:        17 May 2022
+ * $Revision:    V.3.0.1
  *
  * Target Processor:  Cortex-M CPUs
  *
@@ -41,12 +41,6 @@ static void scale_q31_to_q7_and_clamp(const q31_t *buffer,
                                       const int act_max)
 {
     const int half_count = count / 2;
-
-    // Prevent static code issue DIVIDE_BY_ZERO.
-    if (count == 0)
-    {
-        return;
-    }
 
     for (int i = 0; i < length; i++)
     {
