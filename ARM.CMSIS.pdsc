@@ -13,6 +13,7 @@
       CMSIS-NN: 4.0.0 (see revision history for details)
        - Changed return types of all API's
        - Support for int16 average pooling DSP implementation
+       - Support for DSP extension optimization for int16 depthwise_conv
     </release>
     <release version="5.9.0" date="2022-05-02">
       CMSIS-Core(M): 5.6.0
@@ -2311,6 +2312,8 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_1x1_s8_fast.c"/>
         <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_conv_s8.c"/>
         <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_conv_s16.c"/>
+        <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_conv_fast_s16.c"/>
+        <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_conv_wrapper_s16.c"/>
         <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_fast_s16.c"/>
         <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q15_fast_nonsquare.c"/>
         <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_s8.c"/>
