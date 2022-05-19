@@ -39,6 +39,9 @@ void dw_int16xint8_arm_depthwise_conv_s16(void)
 
     const q63_t *bias_data = dw_int16xint8_biases;
     const q15_t *input_data = dw_int16xint8_input;
+    const q7_t *kernel_data = dw_int16xint8_weights;
+    const q15_t *output_ref = dw_int16xint8_output_ref;
+    const int32_t output_ref_size = DW_INT16XINT8_DST_SIZE;
 
     input_dims.n = DW_INT16XINT8_INPUT_BATCHES;
     input_dims.w = DW_INT16XINT8_INPUT_W;
@@ -80,10 +83,29 @@ void dw_int16xint8_arm_depthwise_conv_s16(void)
                                                         bias_data,
                                                         &output_dims,
                                                         output);
+    free(ctx.buf);
+    TEST_ASSERT_EQUAL(expected, result);
+    TEST_ASSERT_TRUE(validate_s16(output, output_ref, output_ref_size));
+
+    int buf_size =
+        arm_depthwise_conv_wrapper_s16_get_buffer_size(&dw_conv_params, &input_dims, &filter_dims, &output_dims);
+    ctx.buf = malloc(buf_size);
+
+    result = arm_depthwise_conv_wrapper_s16(&ctx,
+                                            &dw_conv_params,
+                                            &quant_params,
+                                            &input_dims,
+                                            input_data,
+                                            &filter_dims,
+                                            kernel_data,
+                                            &bias_dims,
+                                            bias_data,
+                                            &output_dims,
+                                            output);
 
     free(ctx.buf);
     TEST_ASSERT_EQUAL(expected, result);
-    TEST_ASSERT_TRUE(validate_s16(output, dw_int16xint8_output_ref, DW_INT16XINT8_DST_SIZE));
+    TEST_ASSERT_TRUE(validate_s16(output, output_ref, output_ref_size));
 }
 
 void dw_int16xint8_dilation_arm_depthwise_conv_s16(void)
@@ -101,6 +123,9 @@ void dw_int16xint8_dilation_arm_depthwise_conv_s16(void)
 
     const q63_t *bias_data = dw_int16xint8_dilation_biases;
     const q15_t *input_data = dw_int16xint8_dilation_input;
+    const q7_t *kernel_data = dw_int16xint8_dilation_weights;
+    const q15_t *output_ref = dw_int16xint8_dilation_output_ref;
+    const int32_t output_ref_size = DW_INT16XINT8_DILATION_DST_SIZE;
 
     input_dims.n = DW_INT16XINT8_DILATION_INPUT_BATCHES;
     input_dims.w = DW_INT16XINT8_DILATION_INPUT_W;
@@ -145,7 +170,27 @@ void dw_int16xint8_dilation_arm_depthwise_conv_s16(void)
 
     free(ctx.buf);
     TEST_ASSERT_EQUAL(expected, result);
-    TEST_ASSERT_TRUE(validate_s16(output, dw_int16xint8_dilation_output_ref, DW_INT16XINT8_DILATION_DST_SIZE));
+    TEST_ASSERT_TRUE(validate_s16(output, output_ref, output_ref_size));
+
+    int buf_size =
+        arm_depthwise_conv_wrapper_s16_get_buffer_size(&dw_conv_params, &input_dims, &filter_dims, &output_dims);
+    ctx.buf = malloc(buf_size);
+
+    result = arm_depthwise_conv_wrapper_s16(&ctx,
+                                            &dw_conv_params,
+                                            &quant_params,
+                                            &input_dims,
+                                            input_data,
+                                            &filter_dims,
+                                            kernel_data,
+                                            &bias_dims,
+                                            bias_data,
+                                            &output_dims,
+                                            output);
+
+    free(ctx.buf);
+    TEST_ASSERT_EQUAL(expected, result);
+    TEST_ASSERT_TRUE(validate_s16(output, output_ref, output_ref_size));
 }
 
 void dw_int16xint8_mult4_arm_depthwise_conv_s16(void)
@@ -163,6 +208,9 @@ void dw_int16xint8_mult4_arm_depthwise_conv_s16(void)
 
     const q63_t *bias_data = dw_int16xint8_mult4_biases;
     const q15_t *input_data = dw_int16xint8_mult4_input;
+    const q7_t *kernel_data = dw_int16xint8_mult4_weights;
+    const q15_t *output_ref = dw_int16xint8_mult4_output_ref;
+    const int32_t output_ref_size = DW_INT16XINT8_MULT4_DST_SIZE;
 
     input_dims.n = DW_INT16XINT8_MULT4_INPUT_BATCHES;
     input_dims.w = DW_INT16XINT8_MULT4_INPUT_W;
@@ -207,5 +255,25 @@ void dw_int16xint8_mult4_arm_depthwise_conv_s16(void)
 
     free(ctx.buf);
     TEST_ASSERT_EQUAL(expected, result);
-    TEST_ASSERT_TRUE(validate_s16(output, dw_int16xint8_mult4_output_ref, DW_INT16XINT8_MULT4_DST_SIZE));
+    TEST_ASSERT_TRUE(validate_s16(output, output_ref, output_ref_size));
+
+    int buf_size =
+        arm_depthwise_conv_wrapper_s16_get_buffer_size(&dw_conv_params, &input_dims, &filter_dims, &output_dims);
+    ctx.buf = malloc(buf_size);
+
+    result = arm_depthwise_conv_wrapper_s16(&ctx,
+                                            &dw_conv_params,
+                                            &quant_params,
+                                            &input_dims,
+                                            input_data,
+                                            &filter_dims,
+                                            kernel_data,
+                                            &bias_dims,
+                                            bias_data,
+                                            &output_dims,
+                                            output);
+
+    free(ctx.buf);
+    TEST_ASSERT_EQUAL(expected, result);
+    TEST_ASSERT_TRUE(validate_s16(output, output_ref, output_ref_size));
 }

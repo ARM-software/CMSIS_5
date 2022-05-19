@@ -29,17 +29,19 @@ Group | API | Base Operator | Input Constraints | Additional memory required for
 ||arm_convolve_s8()|CONV| None |4 * (ker_x * ker_y * input_ch + delta)| Yes | Yes |delta - MVE only|
 ||arm_convolve_1x1_s8_fast() | CONV | dilation = 1 <br/> ker_x = 1, ker_y = 1 <br/> pad = 0<br/> stride = 1<br/> input_ch % 4 = 0| No | Yes |Yes ||
 ||arm_convolve_1_x_n_s8() | CONV | dilation = 1 <br/> output_y % 4 = 0 | 4 * ker_x * ker_y * input_ch |Yes |Yes||
-|| arm_depthwise_conv_wrapper_s8()| DEPTHWISE_CONV | None |n.a.| Yes| Yes| The additional memory required depends on the optimal convolution function called|
-|| arm_depthwise_conv_3x3_s8() | DEPTHWISE_CONV | dilation = 1 <br/> depth_multiplier = 1 <br/> pad_x <= 1 | No|No|No| Preferred function for 3x3 kernel size for DSP extension. </br> For MVE, use arm_depthwise_conv_s8_opt()||
-| | arm_depthwise_conv_s8() | DEPTHWISE_CONV | None | No|No|No||
-|| arm_depthwise_conv_s8_opt()| DEPTHWISE_CONV | dilation = 1 <br/> depth_multiplier = 1 | DSP: 2 * ker_x * ker_y * input_ch <br/> MVE: 2 * DSP + 4 | Yes| Yes| Best case is when channels are multiple of 4 or <br/>at the least >= 4 |
-||arm_convolve_wrapper_s16()|CONV|None|n.a.| Yes | No |The additional memory required depends on the optimal convolution function called|
+||arm_depthwise_conv_wrapper_s8()| DEPTHWISE_CONV | None |n.a.| Yes| Yes| The additional memory required depends on the optimal convolution function called|
+||arm_depthwise_conv_3x3_s8() | DEPTHWISE_CONV | dilation = 1 <br/> depth_multiplier = 1 <br/> pad_x <= 1 | No|No|No| Preferred function for 3x3 kernel size for DSP extension. </br> For MVE, use arm_depthwise_conv_s8_opt()||
+||arm_depthwise_conv_s8() | DEPTHWISE_CONV | None | No|No|No||
+||arm_depthwise_conv_s8_opt()| DEPTHWISE_CONV | dilation = 1 <br/> depth_multiplier = 1 | DSP: 2 * ker_x * ker_y * input_ch <br/> MVE: 2 * DSP + 4 | Yes| Yes| Best case is when channels are multiple of 4 or <br/>at the least >= 4 |
+||arm_convolve_wrapper_s16()|CONV|None|n.a.| Yes | No | The additional memory required depends on the optimal convolution function called |
 ||arm_convolve_s16()|CONV|None|No| No | No ||
 ||arm_convolve_fast_s16()|CONV|dilation = 1, <br/> ker_x * ker_y * input_ch < 512 <br/> |4 * ker_x * ker_y * input_ch| Yes | No ||
-| arm_depthwise_conv_s16() | DEPTHWISE_CONV | None | No|No|No||
+||arm_depthwise_conv_wrapper_s16() | DEPTHWISE_CONV | None | n.a. | Yes | No | The additional memory required depends on the optimal convolution function called |
+||arm_depthwise_conv_s16() | DEPTHWISE_CONV | None | No|No|No||
+||arm_depthwise_conv_fast_s16() | DEPTHWISE_CONV | Yes | 4 * ker_x * ker_y * input_ch | Yes | No ||
 |[Fully Connected](https://arm-software.github.io/CMSIS_5/NN/html/group__FC.html)||||| |  | |
-|| arm_fully_connected_s8() |FULLY CONNECTED & <br/> MAT MUL  | None | No | Yes | Yes | |
-|| arm_fully_connected_s16() |FULLY CONNECTED & <br/> MAT MUL  | None | No | Yes | No | |
+||arm_fully_connected_s8() |FULLY CONNECTED & <br/> MAT MUL  | None | No | Yes | Yes | |
+||arm_fully_connected_s16() |FULLY CONNECTED & <br/> MAT MUL  | None | No | Yes | No | |
 |[Pooling](https://arm-software.github.io/CMSIS_5/NN/html/group__Pooling.html)||||| |  ||
 || arm_avgpool_s8() | AVERAGE POOL | None | input_ch * 4<br/>(DSP only) | Yes| Yes| Best case is when channels are multiple of 4 or <br/> at the least >= 4 |
 || arm_avgpool_s16() | AVERAGE POOL | None | input_ch * 4<br/>(DSP only) | Yes| No| Best case is when channels are multiple of 4 or <br/> at the least >= 4 |
