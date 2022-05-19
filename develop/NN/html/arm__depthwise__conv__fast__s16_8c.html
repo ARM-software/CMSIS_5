@@ -3,8 +3,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>Revision History of CMSIS-NN</title>
-<title>CMSIS-NN: Revision History of CMSIS-NN</title>
+<title>arm_depthwise_conv_fast_s16.c File Reference</title>
+<title>CMSIS-NN: arm_depthwise_conv_fast_s16.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="cmsis.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="jquery.js"></script>
@@ -58,7 +58,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li class="current"><a href="pages.html"><span>Usage&#160;and&#160;Description</span></a></li>
+      <li><a href="pages.html"><span>Usage&#160;and&#160;Description</span></a></li>
       <li><a href="modules.html"><span>Reference</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -90,7 +90,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('ChangeLog_pg.html','');});
+$(document).ready(function(){initNavTree('arm__depthwise__conv__fast__s16_8c.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -108,205 +108,28 @@ $(document).ready(function(){initNavTree('ChangeLog_pg.html','');});
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">Revision History of CMSIS-NN </div>  </div>
+<div class="title">arm_depthwise_conv_fast_s16.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><table  class="cmtable" summary="Revision History">
-<tr>
-<th>Version </th><th>Description  </th></tr>
-<tr>
-<td>V4.0.0 </td><td><ul>
-<li>
-Replaced arm_status with arm_cmsis_nn_status struct  </li>
-<li>
-Added DSP support in <a class="el" href="arm__avgpool__s16_8c.html">arm_avgpool_s16.c</a>  </li>
-<li>
-Added support for DSP extension optimization for int16 depthwise_conv  </li>
-</ul>
-</td></tr>
-<tr>
-<td>V3.1.0 </td><td><ul>
-<li>
-Added arm_convolve_fast_s16  </li>
-<li>
-Added arm_nn_mat_mult_kernel_s16 DSP implementation  </li>
-<li>
-Added conv int16 DSP implementation  </li>
-<li>
-Added unit tests for int16 DSP conv kernel  </li>
-<li>
-Added arm_fully_connected_s16 and arm_fully_connected_wrapper_s16<br/>
- with support for int16.<br/>
- </li>
-<li>
-Added fully_connected int16 reference implementation  </li>
-<li>
-Added fully_connected int16 DSP implementation  </li>
-<li>
-Added unit tests for int16 fully_connected kernel  </li>
-<li>
-Added dilation support for int8 conv kernel  </li>
-<li>
-Added dilation support for int8 depthwise conv kernel  </li>
-</ul>
-</td></tr>
-<tr>
-<td>V3.0.1 </td><td><ul>
-<li>
-Added arm_convolve_s16 and arm_convolve_wrapper_s16<br/>
- with support for int16.<br/>
- </li>
-<li>
-Added conv int16 reference implementation  </li>
-<li>
-Added new requantization function for int16  </li>
-<li>
-Added unit tests for int16 conv kernel  </li>
-</ul>
-</td></tr>
-<tr>
-<td>V3.0.0 </td><td><ul>
-<li>
-Updated arm_fully_connected_s8 to use zero weight offset<br/>
- as per the TFLM int8 quantization spec. The API is the same but,<br/>
- the weight offset parameter is expected to be zero<br/>
-  </li>
-<li>
-Added unit test for Softmax  </li>
-<li>
-Added MVE optimiztion for SVDF operator  </li>
-<li>
-Removed Examples folder  </li>
-</ul>
-</td></tr>
-<tr>
-<td>V2.0.0 </td><td><p class="starttd">Added the following function for int8 SVDF operator.<br/>
- </p>
-<ul>
-<li>
-arm_svdf_s8 </li>
-</ul>
-<ul>
-<li>
-arm_depthwise_conv_wrapper_s8 </li>
-<li>
-arm_convolve_wrapper_s8 </li>
-<li>
-arm_nn_doubling_high_mult_no_sat </li>
-</ul>
-<p>Deleted functions </p>
-<ul>
-<li>
-arm_max_pool_s8_opt </li>
-</ul>
-<p class="endtd"></p>
-</td></tr>
-<tr>
-<td>V1.3.0 </td><td>Added following functions for int8 operators with symmetric quantization.<br/>
- <ul>
-<li>
-arm_convolve_s8 </li>
-<li>
-arm_convolve_1x1_s8_fast </li>
-<li>
-arm_depthwise_conv_3x3_s8 </li>
-<li>
-arm_depthwise_conv_s8 </li>
-<li>
-arm_depthwise_conv_s8_opt </li>
-<li>
-arm_fully_connected_s8 </li>
-<li>
-arm_softmax_q7 </li>
-<li>
-arm_softmax_s8 </li>
-<li>
-arm_softmax_u8 </li>
-<li>
-arm_elementwise_mul_s8 </li>
-<li>
-arm_elementwise_add_s8 </li>
-<li>
-arm_avgpool_s8 </li>
-<li>
-arm_maxpool_s8 </li>
-<li>
-arm_maxpool_s8_opt </li>
-<li>
-arm_relu6_s8 </li>
-<li>
-arm_reshape_s8 </li>
-<li>
-arm_fully_connected_s8 </li>
-<li>
-arm_concatenation_s8_w </li>
-<li>
-arm_concatenation_s8_x </li>
-<li>
-arm_concatenation_s8_y </li>
-<li>
-arm_concatenation_s8_z </li>
-</ul>
-Added following support functions.<br/>
- <ul>
-<li>
-arm_nn_mat_mul_kernel_s8_s16 </li>
-<li>
-arm_nn_mat_mul_kernel_s8_s16_reordered </li>
-<li>
-arm_nn_depthwise_conv_s8_core </li>
-<li>
-arm_nn_mat_mul_core_4x_s8 </li>
-<li>
-arm_nn_mat_mul_core_1x_s8 </li>
-<li>
-arm_convolve_1_x_n_s8 </li>
-<li>
-arm_nn_vec_mat_mult_t_s8 </li>
-<li>
-arm_nn_mat_mult_nt_t_s8 </li>
-<li>
-arm_nn_depthwise_conv_nt_t_s8 </li>
-<li>
-arm_nn_depthwise_conv_nt_t_padded_s8 </li>
-</ul>
-</td></tr>
-<tr>
-<td>V1.2.0 </td><td>Added depthwise convolution function with asymmetric quantization.<br/>
- <ul>
-<li>
-arm_depthwise_conv_u8_basic_ver1 </li>
-</ul>
-Added support functions for requantization.<br/>
- <ul>
-<li>
-arm_nn_sat_doubling_high_mult </li>
-<li>
-arm_nn_divide_by_power_of_two </li>
-</ul>
-</td></tr>
-<tr>
-<td>V1.1.0 </td><td>Added new math functions:<br/>
- <ul>
-<li>
-arm_convolve_HWC_q7_basic_nonsquare </li>
-<li>
-arm_convolve_HWC_q15_fast_nonsquare </li>
-<li>
-arm_nn_mult_q7 </li>
-<li>
-arm_nn_mult_q15 </li>
-</ul>
-Fixed minor issues.   </td></tr>
-<tr>
-<td>V1.0.0 </td><td>Initial version   </td></tr>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga91c418d3d08f2969137e08e713a33f7e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__nn__math__types_8h.html#a67ac3e1e650a7040b0f706fb83ea6184">arm_cmsis_nn_status</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NNConv.html#ga91c418d3d08f2969137e08e713a33f7e">arm_depthwise_conv_fast_s16</a> (const <a class="el" href="structcmsis__nn__context.html">cmsis_nn_context</a> *ctx, const <a class="el" href="structcmsis__nn__dw__conv__params.html">cmsis_nn_dw_conv_params</a> *dw_conv_params, const <a class="el" href="structcmsis__nn__per__channel__quant__params.html">cmsis_nn_per_channel_quant_params</a> *quant_params, const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *input_dims, const q15_t *input, const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *filter_dims, const q7_t *kernel, const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *bias_dims, const int64_t *bias, const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *output_dims, q15_t *output)</td></tr>
+<tr class="memdesc:ga91c418d3d08f2969137e08e713a33f7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Optimized s16 depthwise convolution function with constraint that in_channel equals out_channel. Refer <a class="el" href="group__NNConv.html#gae45c733ac486fe4d8c70ff0c8b6ab3fb" title="Basic s16 depthwise convolution function that doesn&#39;t have any constraints on the input dimensions...">arm_depthwise_conv_s16()</a> for function argument details.  <a href="group__NNConv.html#ga91c418d3d08f2969137e08e713a33f7e">More...</a><br/></td></tr>
+<tr class="separator:ga91c418d3d08f2969137e08e713a33f7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2b3661946b8466be10d28529a5328ee6"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NNConv.html#ga2b3661946b8466be10d28529a5328ee6">arm_depthwise_conv_fast_s16_get_buffer_size</a> (const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *input_dims, const <a class="el" href="structcmsis__nn__dims.html">cmsis_nn_dims</a> *filter_dims)</td></tr>
+<tr class="memdesc:ga2b3661946b8466be10d28529a5328ee6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the required buffer size for optimized s16 depthwise convolution function with constraint that in_channel equals out_channel.  <a href="group__NNConv.html#ga2b3661946b8466be10d28529a5328ee6">More...</a><br/></td></tr>
+<tr class="separator:ga2b3661946b8466be10d28529a5328ee6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-</div></div><!-- contents -->
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
+    <li class="navelem"><a class="el" href="dir_06560e3359c5da94845158f0031c08e8.html">NN</a></li><li class="navelem"><a class="el" href="dir_13dc9928808d08450b31fdaf572dfc8e.html">Source</a></li><li class="navelem"><a class="el" href="dir_44941783335eeef51fdbcde02b124fbf.html">ConvolutionFunctions</a></li><li class="navelem"><a class="el" href="arm__depthwise__conv__fast__s16_8c.html">arm_depthwise_conv_fast_s16.c</a></li>
     <li class="footer">
       <script type="text/javascript">
         <!--
