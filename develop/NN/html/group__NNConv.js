@@ -1,6 +1,7 @@
 var group__NNConv =
 [
     [ "__attribute__", "group__NNConv.html#ga43c4623c2553d09a59385aabe971d75d", null ],
+    [ "__attribute__", "group__NNConv.html#ga4779f7318779682e7789f1888d37e56b", null ],
     [ "arm_convolve_1_x_n_s8", "group__NNConv.html#ga6c569efc46ae1c38df1335888fc7873d", null ],
     [ "arm_convolve_1_x_n_s8_get_buffer_size", "group__NNConv.html#gaf87f133e81ee6c1fbde89fe44c35352e", null ],
     [ "arm_convolve_1x1_HWC_q7_fast_nonsquare", "group__NNConv.html#gaa016c4a0d907baebf48a0cf7c955de46", null ],
@@ -36,7 +37,6 @@ var group__NNConv =
     [ "arm_depthwise_separable_conv_HWC_q7_nonsquare", "group__NNConv.html#ga1e810a08ea1d94be440d027f93505bc6", null ],
     [ "depthwise_conv_s16_generic_s16", "group__NNConv.html#gadde7c225c29269334cd821ead685361d", null ],
     [ "depthwise_conv_s8_generic", "group__NNConv.html#ga8a0fd229483032bfe41183843e17f8f6", null ],
-    [ "depthwise_conv_s8_mult_4", "group__NNConv.html#ga06d7783f6788faad5165fd0ae583bc59", null ],
     [ "depthwise_conv_u8_generic", "group__NNConv.html#gab98fd934700dff7667131744c8972d91", null ],
     [ "depthwise_conv_u8_mult_4", "group__NNConv.html#ga4c54b5bdb38fc20c2167bdfa289f1a2b", null ]
 ];
