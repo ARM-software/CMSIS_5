@@ -5,7 +5,7 @@
   <description>CMSIS (Common Microcontroller Software Interface Standard)</description>
   <vendor>ARM</vendor>
   <!-- <license>license.txt</license> -->
-  <url>http://www.keil.com/pack/</url>
+  <url>https://www.keil.com/pack/</url>
 
   <releases>
     <release version="5.9.1">
