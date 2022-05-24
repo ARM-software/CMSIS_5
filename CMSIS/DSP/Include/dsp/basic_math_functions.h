@@ -872,6 +872,31 @@ void arm_clip_q7(const q7_t * pSrc,
   q7_t high, 
   uint32_t numSamples);
 
+/**
+ * @brief  Sum value of a floating-point vector.
+ * @param[in]  pSrc       is input pointer
+ * @param[in]  blockSize  is the number of samples to process
+ * @param[out] pResult    is output value.
+ */
+void arm_sum_f32(
+const float32_t * pSrc,
+      uint32_t blockSize,
+      float32_t * pResult);
+
+
+/**
+ * @brief  Sum value of a floating-point vector.
+ * @param[in]  pSrc       is input pointer
+ * @param[in]  blockSize  is the number of samples to process
+ * @param[out] pResult    is output value.
+ */
+void arm_sum_f64(
+const float64_t * pSrc,
+      uint32_t blockSize,
+      float64_t * pResult);
+
+
+
 
 #ifdef   __cplusplus
 }
