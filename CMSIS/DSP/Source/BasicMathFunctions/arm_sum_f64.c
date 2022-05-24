@@ -45,7 +45,7 @@
   @param[out]    pResult    sum value returned here.
   @return        none
  */
-void arm_mean_f64(
+void arm_sum_f64(
   const float64_t * pSrc,
         uint32_t blockSize,
         float64_t * pResult)
