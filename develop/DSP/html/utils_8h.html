@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-DSP
-   &#160;<span id="projectnumber">Version 1.10.0</span>
+   &#160;<span id="projectnumber">Version 1.11.0</span>
    </div>
    <div id="projectbrief">CMSIS DSP Software Library</div>
   </td>
@@ -129,16 +129,16 @@ Macros</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a3cedcf5a91d6c722c64330ec97e0853e"><td class="memItemLeft" align="right" valign="top">__STATIC_FORCEINLINE uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#a3cedcf5a91d6c722c64330ec97e0853e">arm_recip_q31</a> (<a class="el" href="arm__math__types_8h.html#adc89a3547f5324b7b3b95adec3806bc0">q31_t</a> in, <a class="el" href="arm__math__types_8h.html#adc89a3547f5324b7b3b95adec3806bc0">q31_t</a> *dst, const <a class="el" href="arm__math__types_8h.html#adc89a3547f5324b7b3b95adec3806bc0">q31_t</a> *pRecipTable)</td></tr>
-<tr class="memdesc:a3cedcf5a91d6c722c64330ec97e0853e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to Calculates 1/in (reciprocal) value of Q31 Data type.  <a href="#a3cedcf5a91d6c722c64330ec97e0853e">More...</a><br/></td></tr>
+<tr class="memdesc:a3cedcf5a91d6c722c64330ec97e0853e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to Calculates 1/in (reciprocal) value of Q31 Data type. It should not be used with negative values.  <a href="#a3cedcf5a91d6c722c64330ec97e0853e">More...</a><br/></td></tr>
 <tr class="separator:a3cedcf5a91d6c722c64330ec97e0853e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1e370c58e45bbe92bb7763fe59cf5e57"><td class="memItemLeft" align="right" valign="top">__STATIC_FORCEINLINE uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#a1e370c58e45bbe92bb7763fe59cf5e57">arm_recip_q15</a> (<a class="el" href="arm__math__types_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> in, <a class="el" href="arm__math__types_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *dst, const <a class="el" href="arm__math__types_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *pRecipTable)</td></tr>
-<tr class="memdesc:a1e370c58e45bbe92bb7763fe59cf5e57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to Calculates 1/in (reciprocal) value of Q15 Data type.  <a href="#a1e370c58e45bbe92bb7763fe59cf5e57">More...</a><br/></td></tr>
+<tr class="memdesc:a1e370c58e45bbe92bb7763fe59cf5e57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to Calculates 1/in (reciprocal) value of Q15 Data type. It should not be used with negative values.  <a href="#a1e370c58e45bbe92bb7763fe59cf5e57">More...</a><br/></td></tr>
 <tr class="separator:a1e370c58e45bbe92bb7763fe59cf5e57"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a26dcd84b178df7de44357bbfaaf8dfbc"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#a26dcd84b178df7de44357bbfaaf8dfbc">arm_norm_64_to_32u</a> (uint64_t in, int32_t *normalized, int32_t *norm)</td></tr>
 <tr class="memdesc:a26dcd84b178df7de44357bbfaaf8dfbc"><td class="mdescLeft">&#160;</td><td class="mdescRight">64-bit to 32-bit unsigned normalization  <a href="#a26dcd84b178df7de44357bbfaaf8dfbc">More...</a><br/></td></tr>
 <tr class="separator:a26dcd84b178df7de44357bbfaaf8dfbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac338a2101175ccd2a90ddee6290f6a7e"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE <a class="el" href="arm__math__types_8h.html#adc89a3547f5324b7b3b95adec3806bc0">q31_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#ac338a2101175ccd2a90ddee6290f6a7e">arm_div_q63_to_q31</a> (<a class="el" href="arm__math__types_8h.html#a5aea1cb12fc02d9d44c8abf217eaa5c6">q63_t</a> num, <a class="el" href="arm__math__types_8h.html#adc89a3547f5324b7b3b95adec3806bc0">q31_t</a> den)</td></tr>
-<tr class="separator:ac338a2101175ccd2a90ddee6290f6a7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1918d5856c8cd62fc8a878ab5109634f"><td class="memItemLeft" align="right" valign="top">__STATIC_INLINE int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#a1918d5856c8cd62fc8a878ab5109634f">arm_div_int64_to_int32</a> (int64_t num, int32_t den)</td></tr>
+<tr class="separator:a1918d5856c8cd62fc8a878ab5109634f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a class="anchor" id="a29f839928f4752b73c8858d6dbb55294"></a>
@@ -196,20 +196,20 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ac338a2101175ccd2a90ddee6290f6a7e"></a>
+<a class="anchor" id="a1918d5856c8cd62fc8a878ab5109634f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">__STATIC_INLINE <a class="el" href="arm__math__types_8h.html#adc89a3547f5324b7b3b95adec3806bc0">q31_t</a> arm_div_q63_to_q31 </td>
+          <td class="memname">__STATIC_INLINE int32_t arm_div_int64_to_int32 </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="arm__math__types_8h.html#a5aea1cb12fc02d9d44c8abf217eaa5c6">q63_t</a>&#160;</td>
+          <td class="paramtype">int64_t&#160;</td>
           <td class="paramname"><em>num</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="arm__math__types_8h.html#adc89a3547f5324b7b3b95adec3806bc0">q31_t</a>&#160;</td>
+          <td class="paramtype">int32_t&#160;</td>
           <td class="paramname"><em>den</em>&#160;</td>
         </tr>
         <tr>
