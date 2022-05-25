@@ -90,7 +90,7 @@ void arm_sum_q7(
 
     /* C = (A[0] + A[1] + A[2] + ... + A[blockSize-1])  */
     /* Store the result to the destination */
-    *pResult = (q7_t)sum;
+    *pResult = sum;
 }
 #else
 void arm_sum_q7(
@@ -144,7 +144,7 @@ void arm_sum_q7(
 
   /* C = (A[0] + A[1] + A[2] + ... + A[blockSize-1])  */
   /* Store result to destination */
-  *pResult = (q7_t)sum;
+  *pResult = sum;
 }
 #endif /* defined(ARM_MATH_MVEI) */
 

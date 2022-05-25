@@ -85,7 +85,7 @@ void arm_sum_f16(
     }
     while (blkCnt > 0);
 
-    *pResult = (_Float16)vecAddAcrossF16Mve(sumVec);
+    *pResult = vecAddAcrossF16Mve(sumVec);
 }
 
 
@@ -140,7 +140,7 @@ void arm_sum_f16(
 
   /* C = (A[0] + A[1] + A[2] + ... + A[blockSize-1]) */
   /* Store result to destination */
-  *pResult = (_Float16)sum ;
+  *pResult = sum ;
 }
 #endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 

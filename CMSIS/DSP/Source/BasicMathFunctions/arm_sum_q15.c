@@ -91,7 +91,7 @@ void arm_sum_q15(
 
     /* C = (A[0] + A[1] + A[2] + ... + A[blockSize-1])  */
     /* Store the result to the destination */
-    *pResult = (q15_t)sum;
+    *pResult = sum;
 }
 #else
 void arm_sum_q15(
@@ -147,7 +147,7 @@ void arm_sum_q15(
 
   /* C = (A[0] + A[1] + A[2] + ... + A[blockSize-1]) */
   /* Store result to destination */
-  *pResult = (q15_t)sum;
+  *pResult = sum;
 }
 #endif /* defined(ARM_MATH_MVEI) */
 
