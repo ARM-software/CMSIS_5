@@ -35,3 +35,4 @@
 #include "arm_scale_f16.c"
 #include "arm_sub_f16.c"
 #include "arm_clip_f16.c"
+#include "arm_sum_f16.c"

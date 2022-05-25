@@ -85,3 +85,8 @@
 #include "arm_clip_q31.c"
 #include "arm_clip_q15.c"
 #include "arm_clip_q7.c"
+#include "arm_sum_f32.c"
+#include "arm_sum_f64.c"
+#include "arm_sum_q7.c"
+#include "arm_sum_q15.c"
+#include "arm_sum_q31.c"

@@ -159,6 +159,18 @@ void arm_clip_f16(const float16_t * pSrc,
   float16_t high, 
   uint32_t numSamples);
 
+/**
+  * @brief  Sum value of a floating-point vector.
+  * @param[in]  pSrc       is input pointer
+  * @param[in]  blockSize  is the number of samples to process
+  * @param[out] pResult    is output value.
+  */
+ void arm_sum_f16(
+ const float16_t * pSrc,
+       uint32_t blockSize,
+       float16_t * pResult);
+
+
 #endif /* defined(ARM_FLOAT16_SUPPORTED)*/
 
 #ifdef   __cplusplus

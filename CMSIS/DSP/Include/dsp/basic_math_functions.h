@@ -1,8 +1,8 @@
 /******************************************************************************
  * @file     basic_math_functions.h
  * @brief    Public header file for CMSIS DSP Library
- * @version  V1.10.0
- * @date     08 July 2021
+ * @version  V1.11.0
+ * @date     25 May 2022
  * Target Processor: Cortex-M and Cortex-A cores
  ******************************************************************************/
 /*
@@ -872,6 +872,65 @@ void arm_clip_q7(const q7_t * pSrc,
   q7_t high, 
   uint32_t numSamples);
 
+/**
+ * @brief  Sum value of a floating-point vector.
+ * @param[in]  pSrc       is input pointer
+ * @param[in]  blockSize  is the number of samples to process
+ * @param[out] pResult    is output value.
+ */
+
+void arm_sum_f32(
+const float32_t * pSrc,
+      uint32_t blockSize,
+      float32_t * pResult);
+
+/**
+ * @brief  Sum value of a floating-point vector.
+ * @param[in]  pSrc       is input pointer
+ * @param[in]  blockSize  is the number of samples to process
+ * @param[out] pResult    is output value.
+ */
+
+void arm_sum_f64(
+const float64_t * pSrc,
+      uint32_t blockSize,
+      float64_t * pResult);
+
+/**
+ * @brief  Sum value of a Q7 vector.
+ * @param[in]  pSrc       is input pointer
+ * @param[in]  blockSize  is the number of samples to process
+ * @param[out] pResult    is output value.
+ */
+
+void arm_sum_q7(
+const q7_t * pSrc,
+      uint32_t blockSize,
+      q7_t * pResult);
+
+/**
+ * @brief  Sum value of a Q15 vector.
+ * @param[in]  pSrc       is input pointer
+ * @param[in]  blockSize  is the number of samples to process
+ * @param[out] pResult    is output value.
+ */
+
+void arm_sum_q15(
+const q15_t * pSrc,
+      uint32_t blockSize,
+      q15_t * pResult);
+
+/**
+ * @brief  Sum value of a Q31 vector.
+ * @param[in]  pSrc       is input pointer
+ * @param[in]  blockSize  is the number of samples to process
+ * @param[out] pResult    is output value.
+ */
+
+void arm_sum_q31(
+const q31_t * pSrc,
+      uint32_t blockSize,
+      q31_t * pResult);
 
 #ifdef   __cplusplus
 }
