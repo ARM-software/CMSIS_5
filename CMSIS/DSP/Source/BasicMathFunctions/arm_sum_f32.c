@@ -49,7 +49,7 @@
 
 #include "arm_helium_utils.h"
 
-void arm_suù_f32(
+void arm_sum_f32(
   const float32_t * pSrc,
   uint32_t blockSize,
   float32_t * pResult)

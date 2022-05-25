@@ -1,7 +1,7 @@
 /* ----------------------------------------------------------------------
  * Project:      CMSIS DSP Library
  * Title:        arm_sum_q7.c
- * Description:  Mean value of a Q7 vector
+ * Description:  Sum value of a Q7 vector
  *
  * $Date:        25 May 2022
  * $Revision:    V1.0.0

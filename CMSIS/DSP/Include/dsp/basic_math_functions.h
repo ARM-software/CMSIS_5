@@ -878,7 +878,7 @@ void arm_clip_q7(const q7_t * pSrc,
  * @param[in]  blockSize  is the number of samples to process
  * @param[out] pResult    is output value.
  */
-*
+
 void arm_sum_f32(
 const float32_t * pSrc,
       uint32_t blockSize,
