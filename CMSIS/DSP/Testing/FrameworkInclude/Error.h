@@ -202,7 +202,7 @@ void assert_equal(unsigned long nb,AnyPattern<T> &pa, AnyPattern<T> &pb)
        }
        catch(Error &err)
        {          
-          sprintf(id," (nb=%lu)",i+1);
+          sprintf(id," (nb=%lu)",i);
           strcat(err.details,id);
           throw(err);
        }
@@ -258,7 +258,7 @@ void assert_near_equal(unsigned long nb,AnyPattern<T> &pa, AnyPattern<T> &pb, T 
        }
        catch(Error &err)
        {          
-          sprintf(id," (nb=%lu)",i+1);
+          sprintf(id," (nb=%lu)",i);
           strcat(err.details,id);
           throw(err);
        }

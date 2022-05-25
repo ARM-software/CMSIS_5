@@ -94,6 +94,12 @@ def initLogValues(format):
         ref = ref / 16.0
     return(vals,ref)
 
+def normalizeToOne(x):
+    s = 0
+    while (abs(x)>1):
+        x = x /2.0 
+        s = s + 1 
+    return(int(s),x)
 
 def writeTests(config,format):
     
@@ -143,7 +149,7 @@ def writeTests(config,format):
     resultValue=[x[0] for x in result]
     resultShift=[x[1] for x in result]
 
-    config.setOverwrite(True)
+    config.setOverwrite(False)
     config.writeInput(1, numerator,"Numerator")
     config.writeInput(1, denominator,"Denominator")
     config.writeReference(1, resultValue,"DivisionValue")
@@ -185,8 +191,87 @@ def writeTests(config,format):
 
     config.setOverwrite(False)
 
+    if format == Tools.Q31 or format == Tools.Q15:
+
+       if format == Tools.Q31:
+          theInput=np.array([1.0-1e-6,0.6,0.5,0.3,0.25,0.1,1.0/(1<<31)])
+
+       if format == Tools.Q15:
+          theInput=np.array([1.0-1e-6,0.6,0.5,0.3,0.25,0.1,1.0/(1<<15)])
+
+       ref=1.0 / theInput
+       shiftAndScaled=np.array([normalizeToOne(x) for x in ref]).transpose()
+       shiftValues=shiftAndScaled[0].astype(np.int16)
+       scaledValues=shiftAndScaled[1]
+       #print(shiftAndScaled)
 
 
+       config.writeInput(1, np.array(theInput),"RecipInput")
+       config.writeReference(1, scaledValues,"RecipRef")
+       config.writeReferenceS16(1, shiftValues,"RecipShift")
+
+       
+
+def tocint32(x):
+    if x < 0:
+        return((0x10000000000000000 + x) & 0xFFFFFFFF)
+    else:
+        return(x & 0xFFFFFFFF)
+
+# C and Python are not rounding the integer division
+# in the same way
+def cdiv(a,b):
+    sign = 1
+    if ((a<0) and (b>0)) or ((a>0) and (b<0)):
+        sign = -1 
+
+    a= abs(a)
+    b = abs(b)
+
+    d = sign*(a // b)
+
+    return(d)
+
+def testInt64(config):
+    theInput=[0x1000000080000000,
+                 0x0000000080000000,
+                 0x0000000020000000,
+                 0x0000000000000000]
+
+    ref=[0x40000002,
+         0x40000000,
+         0x40000000,
+         0
+    ] 
+    norms=[-30,-1,1,0]
+    config.writeInputU64(1,np.array(theInput),"Norm64To32_Input")
+    config.writeReferenceS16(1,norms,"RefNorm64To32_Norms")
+    config.writeReferenceS32(1,ref,"RefNorm64To32_Vals")
+
+    config.setOverwrite(False)
+    
+    allCombinations=[(0x7FFFFFFFFFFFFFFF,2),
+    (-0x7FFFFFFFFFFFFFFF-1,2),
+    ( 0x4000000000000000,0x7FFFFFFF),
+    ( -0x4000000000000000,0x7FFFFFFF),
+    (  0x2000000000000000,0x7FFFFFFF),
+    ( -0x2000000000000000,0x7FFFFFFF),
+    (  0x1000000000000000,0x7FFFFFFF),
+    ( -0x1000000000000000,0x7FFFFFFF),
+    (  0x0000000080000000,2),
+    ( -0x0000000080000000,2),
+    (  0x0000000040000000,2),
+    ( -0x0000000080000000,2)
+    ]
+
+    res = [tocint32(cdiv(x,y))  for (x,y) in allCombinations]
+    
+    allCombinations=np.array(allCombinations,dtype=np.int64).flatten()
+    config.writeInputS64(1,allCombinations[0::2],"DivDenInput")
+    config.writeInputS32(1,allCombinations[1::2],"DivNumInput")
+
+    config.writeReferenceU32(1, res,"DivRef")
+    config.setOverwrite(False)
 
 
 def writeTestsFloat(config,format):
@@ -225,6 +310,9 @@ def generatePatterns():
     configf16=Tools.Config(PATTERNDIR,PARAMDIR,"f16")
     configq31=Tools.Config(PATTERNDIR,PARAMDIR,"q31")
     configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
+
+    configq64=Tools.Config(PATTERNDIR,PARAMDIR,"q63")
+
     
 
     configf64.setOverwrite(False)
@@ -232,12 +320,15 @@ def generatePatterns():
     configf16.setOverwrite(False)
     configq31.setOverwrite(False)
     configq15.setOverwrite(False)
+    configq64.setOverwrite(False)
 
     writeTestsFloat(configf64,Tools.F64)
     writeTestsFloat(configf32,0)
     writeTestsFloat(configf16,16)
     writeTests(configq31,31)
     writeTests(configq15,15)
+
+    testInt64(configq64)
 
 
 if __name__ == '__main__':

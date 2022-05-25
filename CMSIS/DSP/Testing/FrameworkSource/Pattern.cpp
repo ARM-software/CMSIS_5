@@ -80,6 +80,13 @@ q7_t *loadPattern(Testing::PatternID_t id, Client::PatternMgr *mgr,Testing::nbSa
 }
 
 template <> 
+uint64_t *loadPattern(Testing::PatternID_t id, Client::PatternMgr *mgr,Testing::nbSamples_t &nb, Testing::nbSamples_t maxSamples)
+{
+    return(mgr->load_u64(id,nb,maxSamples));
+}
+
+
+template <> 
 uint32_t *loadPattern(Testing::PatternID_t id, Client::PatternMgr *mgr,Testing::nbSamples_t &nb, Testing::nbSamples_t maxSamples)
 {
     return(mgr->load_u32(id,nb,maxSamples));
@@ -143,6 +150,12 @@ q7_t *localPattern(Testing::PatternID_t id, Client::PatternMgr *mgr)
 }
 
 template <> 
+uint64_t *localPattern(Testing::PatternID_t id, Client::PatternMgr *mgr)
+{
+    return(mgr->local_u64(id));
+}
+
+template <> 
 uint32_t *localPattern(Testing::PatternID_t id, Client::PatternMgr *mgr)
 {
     return(mgr->local_u32(id));
@@ -195,6 +208,11 @@ void dumpPattern(Testing::outputID_t id,Testing::nbSamples_t nbSamples,q15_t* da
 void dumpPattern(Testing::outputID_t id,Testing::nbSamples_t nbSamples,q7_t* data,PatternMgr *mgr)
 {
  mgr->dumpPattern_q7(id,nbSamples,data);
+}
+
+void dumpPattern(Testing::outputID_t id,Testing::nbSamples_t nbSamples,uint64_t* data,PatternMgr *mgr)
+{
+  mgr->dumpPattern_u64(id,nbSamples,data);
 }
 
 void dumpPattern(Testing::outputID_t id,Testing::nbSamples_t nbSamples,uint32_t* data,PatternMgr *mgr)

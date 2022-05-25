@@ -265,7 +265,7 @@ void assert_relative_error(unsigned long nb,AnyPattern<float64_t> &pa, AnyPatter
        }
        catch(Error &err)
        {          
-          sprintf(id," (nb=%lu)",i+1);
+          sprintf(id," (nb=%lu)",i);
           strcat(err.details,id);
           throw(err);
        }
@@ -296,7 +296,7 @@ void assert_relative_error(unsigned long nb,AnyPattern<float32_t> &pa, AnyPatter
        }
        catch(Error &err)
        {          
-          sprintf(id," (nb=%lu)",i+1);
+          sprintf(id," (nb=%lu)",i);
           strcat(err.details,id);
           throw(err);
        }
@@ -328,7 +328,7 @@ void assert_relative_error(unsigned long nb,AnyPattern<float16_t> &pa, AnyPatter
        }
        catch(Error &err)
        {          
-          sprintf(id," (nb=%lu)",i+1);
+          sprintf(id," (nb=%lu)",i);
           strcat(err.details,id);
           throw(err);
        }
@@ -371,7 +371,7 @@ void assert_close_error(unsigned long nb,AnyPattern<float64_t> &pref, AnyPattern
        }
        catch(Error &err)
        {          
-          sprintf(id," (nb=%lu)",i+1);
+          sprintf(id," (nb=%lu)",i);
           strcat(err.details,id);
           throw(err);
        }
@@ -414,7 +414,7 @@ void assert_close_error(unsigned long nb,AnyPattern<float32_t> &pref, AnyPattern
        }
        catch(Error &err)
        {          
-          sprintf(id," (nb=%lu)",i+1);
+          sprintf(id," (nb=%lu)",i);
           strcat(err.details,id);
           throw(err);
        }
@@ -458,7 +458,7 @@ void assert_close_error(unsigned long nb,AnyPattern<float16_t> &pref, AnyPattern
        }
        catch(Error &err)
        {          
-          sprintf(id," (nb=%lu)",i+1);
+          sprintf(id," (nb=%lu)",i);
           strcat(err.details,id);
           throw(err);
        }

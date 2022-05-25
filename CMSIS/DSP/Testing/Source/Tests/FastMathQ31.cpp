@@ -3,6 +3,8 @@
 #include "Error.h"
 #include "Test.h"
 
+#include "arm_common_tables.h"
+#include "dsp/utils.h"
 
 #define SNR_THRESHOLD 100
 /* 
@@ -18,6 +20,7 @@ a double precision computation.
 #define LOG_ABS_ERROR ((q31_t)2)
 
 #define ABS_ATAN_ERROR ((q31_t)3)
+#define RECIP_ERROR ((q31_t)10)
 
     void FastMathQ31::test_atan2_scalar_q31()
     {
@@ -127,6 +130,24 @@ a double precision computation.
 
     }
 
+    void FastMathQ31::test_recip_q31()
+    {
+        const q31_t *inp  = input.ptr();
+        q31_t *outp  = output.ptr();
+        int16_t *shiftp  = shift.ptr();
+
+      
+        for(unsigned long i=0; i < ref.nbSamples(); i++)
+        {
+          shiftp[i] = arm_recip_q31(inp[i],&outp[i],armRecipTableQ31);
+        }
+
+
+        ASSERT_SNR(ref,output,(float32_t)SNR_THRESHOLD);
+        ASSERT_NEAR_EQ(ref,output,RECIP_ERROR);
+        ASSERT_EQ(refShift,shift);
+
+    }
   
     void FastMathQ31::setUp(Testing::testID_t id,std::vector<Testing::param_t>& paramsArgs,Client::PatternMgr *mgr)
     {
@@ -210,11 +231,24 @@ a double precision computation.
             }
             break;
 
-           case FastMathQ31::TEST_ATAN2_SCALAR_Q31_9:
+            case FastMathQ31::TEST_ATAN2_SCALAR_Q31_9:
             {
                input.reload(FastMathQ31::ATAN2INPUT1_Q31_ID,mgr);
                ref.reload(FastMathQ31::ATAN2_Q31_ID,mgr);
                output.create(ref.nbSamples(),FastMathQ31::OUT_Q31_ID,mgr);
+            }
+            break;
+
+            case FastMathQ31::TEST_RECIP_Q31_10:
+            {
+               input.reload(FastMathQ31::RECIPINPUT1_Q31_ID,mgr);
+
+               ref.reload(FastMathQ31::RECIP_VAL_Q31_ID,mgr);
+               refShift.reload(FastMathQ31::RECIP_SHIFT_S16_ID,mgr);
+
+               output.create(ref.nbSamples(),FastMathQ31::OUT_Q31_ID,mgr);
+               shift.create(ref.nbSamples(),FastMathQ31::SHIFT_S16_ID,mgr);
+
             }
             break;
 

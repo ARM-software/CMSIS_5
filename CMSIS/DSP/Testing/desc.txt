@@ -1830,6 +1830,10 @@ group Root {
               
               Pattern ATAN2INPUT1_Q31_ID : Atan2Input1_q31.txt 
               Pattern ATAN2_Q31_ID : Atan2Ref1_q31.txt
+
+              Pattern RECIPINPUT1_Q31_ID : RecipInput1_q31.txt 
+              Pattern RECIP_VAL_Q31_ID : RecipRef1_q31.txt
+              Pattern RECIP_SHIFT_S16_ID : RecipShift1_s16.txt
               
               Pattern COS1_Q31_ID : Cos1_q31.txt 
               Pattern SIN1_Q31_ID : Sin1_q31.txt 
@@ -1856,6 +1860,7 @@ group Root {
                 test_vlog_q31 nb=4n:test_vlog_q31
                 test_vlog_q31 nb=4n+1:test_vlog_q31
                 test_atan2_scalar_q31:test_atan2_scalar_q31
+                test_recip_q31:test_recip_q31
               }
           }
 
@@ -1880,6 +1885,10 @@ group Root {
               Pattern ATAN2INPUT1_Q15_ID : Atan2Input1_q15.txt 
               Pattern ATAN2_Q15_ID : Atan2Ref1_q15.txt
 
+              Pattern RECIPINPUT1_Q15_ID : RecipInput1_q15.txt 
+              Pattern RECIP_VAL_Q15_ID : RecipRef1_q15.txt
+              Pattern RECIP_SHIFT_S16_ID : RecipShift1_s16.txt
+
               Output  OUT_Q15_ID : Output
               Output  SHIFT_S16_ID : Output
 
@@ -1893,6 +1902,28 @@ group Root {
                 test_vlog_q15 nb=4n:test_vlog_q15
                 test_vlog_q15 nb=4n+1:test_vlog_q15
                 test_atan2_scalar_q15:test_atan2_scalar_q15
+                test_recip_q15:test_recip_q15
+              }
+          }
+
+          suite Fast Maths Q63 {
+              class = FastMathQ63
+              folder = FastMathQ63
+
+              Pattern NORMINPUT1_U64_ID : Norm64To32_Input1_u64.txt
+              Pattern NORM_REF_S16_ID : RefNorm64To32_Norms1_s16.txt
+              Pattern NORM_REF_VALS_S32_ID :  RefNorm64To32_Vals1_s32.txt
+
+              Pattern DIV_DEN_INPUT1_S64_ID : DivDenInput1_s64.txt
+              Pattern DIV_NUM_INPUT1_S32_ID : DivNumInput1_s32.txt
+              Pattern DIV_REF_S32_ID : DivRef1_u32.txt
+
+              Output  OUT_S32_ID : Output
+              Output  NORMS_S16_ID : Output
+
+              Functions {
+                test_norm_64_to_32u:test_norm_64_to_32u
+                test_div_int64_to_int32:test_div_int64_to_int32
               }
           }
         }

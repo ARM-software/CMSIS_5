@@ -277,6 +277,7 @@ endif()
 if (FASTMATH)
   set(FASTMATHSRC Source/Tests/FastMathF64.cpp
   Source/Tests/FastMathF32.cpp
+  Source/Tests/FastMathQ63.cpp
   Source/Tests/FastMathQ31.cpp
   Source/Tests/FastMathQ15.cpp)
 endif()

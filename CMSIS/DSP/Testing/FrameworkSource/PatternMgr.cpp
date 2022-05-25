@@ -55,6 +55,7 @@ LOCAL(q63_t,q63)
 LOCAL(q31_t,q31)
 LOCAL(q15_t,q15)
 LOCAL(q7_t,q7)
+LOCAL(uint64_t,u64)
 LOCAL(uint32_t,u32)
 LOCAL(uint16_t,u16)
 LOCAL(uint8_t,u8)
@@ -185,6 +186,23 @@ q7_t *PatternMgr::load_q7(Testing::PatternID_t id,Testing::nbSamples_t& nbSample
     return((q7_t*)b);
 }
 
+uint64_t *PatternMgr::load_u64(Testing::PatternID_t id,Testing::nbSamples_t& nbSamples,Testing::nbSamples_t maxSamples)
+{
+    nbSamples=m_io->GetPatternSize(id);
+
+    if ((maxSamples != MAX_NB_SAMPLES) && (maxSamples < nbSamples))
+    {
+        nbSamples = maxSamples;
+    }
+
+    char *b = m_mem->NewBuffer(sizeof(uint64_t)*nbSamples);
+    if (b != NULL)
+    {
+       m_io->ImportPattern_u64(id,b,nbSamples);
+    }
+    return((uint64_t*)b);
+}
+
 uint32_t *PatternMgr::load_u32(Testing::PatternID_t id,Testing::nbSamples_t& nbSamples,Testing::nbSamples_t maxSamples)
 {
     nbSamples=m_io->GetPatternSize(id);
@@ -272,6 +290,11 @@ void PatternMgr::dumpPattern_q15(Testing::outputID_t id,Testing::nbSamples_t nbS
 void PatternMgr::dumpPattern_q7(Testing::outputID_t id,Testing::nbSamples_t nbSamples,q7_t* data)
 {
   m_io->DumpPattern_q7(id,nbSamples,data);
+}
+
+void PatternMgr::dumpPattern_u64(Testing::outputID_t id,Testing::nbSamples_t nbSamples,uint64_t* data)
+{
+ m_io->DumpPattern_u64(id,nbSamples,data);
 }
 
 void PatternMgr::dumpPattern_u32(Testing::outputID_t id,Testing::nbSamples_t nbSamples,uint32_t* data)

@@ -865,6 +865,44 @@ namespace Client
           
       }
 
+      void Semihosting::ImportPattern_u64(Testing::PatternID_t id,char* p,Testing::nbSamples_t nb)
+      {
+          char tmp[256];
+          Testing::nbSamples_t len;
+          Testing::nbSamples_t i=0;
+
+          uint64_t val;
+          uint64_t *ptr=(uint64_t*)p;
+
+          std::string fileName = this->getPatternPath(id);
+          FILE *pattern=fopen(fileName.c_str(), "r");
+          // Ignore word size format
+          fgets(tmp,256,pattern);
+          // Get nb of samples
+          fgets(tmp,256,pattern);
+          len=atoi(tmp);
+
+          if ((nb != MAX_NB_SAMPLES) && (nb < len))
+          {
+             len = nb;
+          }
+
+          if (ptr)
+          {
+              for(i=0;i<len;i++)
+              {
+                // Ignore comment
+                 fgets(tmp,256,pattern);
+                 fscanf(pattern,"0x%016llX\n",&val);
+                 *ptr = val;
+                 ptr++;
+              }
+          }
+
+          fclose(pattern);
+          
+      }
+
       void Semihosting::ImportPattern_u32(Testing::PatternID_t id,char* p,Testing::nbSamples_t nb)
       {
           char tmp[256];
@@ -1103,6 +1141,24 @@ namespace Client
                 fclose(f);
             }
       }
+
+      void Semihosting::DumpPattern_u64(Testing::outputID_t id,Testing::nbSamples_t nb, uint64_t* data)
+      {
+            std::string fileName = this->getOutputPath(id);
+            if (data)
+            {
+                FILE *f = fopen(fileName.c_str(),"w");
+                Testing::nbSamples_t i=0;
+                uint64_t t;
+                for(i=0; i < nb; i++)
+                {
+                   t = (uint64_t)data[i];
+                   fprintf(f,"0x%016llx\n",t);
+                }
+                fclose(f);
+            }
+      }
+
       void Semihosting::DumpPattern_u32(Testing::outputID_t id,Testing::nbSamples_t nb, uint32_t* data)
       {
             std::string fileName = this->getOutputPath(id);

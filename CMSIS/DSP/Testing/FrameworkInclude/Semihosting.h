@@ -74,6 +74,7 @@ Semihosting driver. Used to read a text file describing how to drive the test.
       virtual void ImportPattern_q31(Testing::PatternID_t,char*,Testing::nbSamples_t nb=0);
       virtual void ImportPattern_q15(Testing::PatternID_t,char*,Testing::nbSamples_t nb=0);
       virtual void ImportPattern_q7(Testing::PatternID_t,char*,Testing::nbSamples_t nb=0);
+      virtual void ImportPattern_u64(Testing::PatternID_t,char*,Testing::nbSamples_t nb=0);
       virtual void ImportPattern_u32(Testing::PatternID_t,char*,Testing::nbSamples_t nb=0);
       virtual void ImportPattern_u16(Testing::PatternID_t,char*,Testing::nbSamples_t nb=0);
       virtual void ImportPattern_u8(Testing::PatternID_t,char*,Testing::nbSamples_t nb=0);
@@ -93,6 +94,7 @@ Semihosting driver. Used to read a text file describing how to drive the test.
       virtual void DumpPattern_q31(Testing::outputID_t,Testing::nbSamples_t nb, q31_t*);
       virtual void DumpPattern_q15(Testing::outputID_t,Testing::nbSamples_t nb, q15_t*);
       virtual void DumpPattern_q7(Testing::outputID_t,Testing::nbSamples_t nb, q7_t*);
+      virtual void DumpPattern_u64(Testing::outputID_t,Testing::nbSamples_t nb, uint64_t*);
       virtual void DumpPattern_u32(Testing::outputID_t,Testing::nbSamples_t nb, uint32_t*);
       virtual void DumpPattern_u16(Testing::outputID_t,Testing::nbSamples_t nb, uint16_t*);
       virtual void DumpPattern_u8(Testing::outputID_t,Testing::nbSamples_t nb, uint8_t*);

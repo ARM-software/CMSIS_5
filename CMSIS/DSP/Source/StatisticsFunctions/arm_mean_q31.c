@@ -88,7 +88,7 @@ void arm_mean_q31(
       blkCnt --;
     }
 
-    *pResult = arm_div_q63_to_q31(sum, blockSize);
+    *pResult = arm_div_int64_to_int32(sum, blockSize);
 }
 #else
 void arm_mean_q31(
