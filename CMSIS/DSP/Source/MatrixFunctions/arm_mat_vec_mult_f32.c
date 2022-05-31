@@ -165,7 +165,7 @@ void arm_mat_vec_mult_f32(
     }
 
     /*
-     * compute 2 rows in parrallel
+     * compute 2 rows in parallel
      */
     if (row >= 2)
     {

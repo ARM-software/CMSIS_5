@@ -27,43 +27,11 @@
  */
 
 #include "dsp/matrix_functions.h"
-
-
+#include "dsp/matrix_utils.h"
 
 
 
 #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
-
-
-/// @private
-#define SWAP_ROWS_F32(A,i,j)                 \
-  {                                      \
-    int cnt = n;                         \
-                                         \
-    for(int w=0;w < n; w+=4)             \
-    {                                    \
-       f32x4_t tmpa,tmpb;                \
-       mve_pred16_t p0 = vctp32q(cnt);   \
-                                         \
-       tmpa=vldrwq_z_f32(&A[i*n + w],p0);\
-       tmpb=vldrwq_z_f32(&A[j*n + w],p0);\
-                                         \
-       vstrwq_p(&A[i*n + w], tmpb, p0);  \
-       vstrwq_p(&A[j*n + w], tmpa, p0);  \
-                                         \
-       cnt -= 4;                         \
-    }                                    \
-  }
-
-/// @private
-#define SWAP_COLS_F32(A,i,j)     \
-  for(int w=0;w < n; w++)    \
-  {                          \
-     float32_t tmp;          \
-     tmp = A[w*n + i];       \
-     A[w*n + i] = A[w*n + j];\
-     A[w*n + j] = tmp;       \
-  }
 
 /**
   @ingroup groupMatrix
@@ -157,8 +125,8 @@ arm_status arm_mat_ldlt_f32(
 
         if(j != k)
         {
-          SWAP_ROWS_F32(pA,k,j);
-          SWAP_COLS_F32(pA,k,j);
+          SWAP_ROWS_F32(pl,0,k,j);
+          SWAP_COLS_F32(pl,0,k,j);
         }
 
 
@@ -323,25 +291,6 @@ arm_status arm_mat_ldlt_f32(
 }
 #else
 
-/// @private
-#define SWAP_ROWS_F32(A,i,j)     \
-  for(w=0;w < n; w++)    \
-  {                          \
-     float32_t tmp;          \
-     tmp = A[i*n + w];       \
-     A[i*n + w] = A[j*n + w];\
-     A[j*n + w] = tmp;       \
-  }
-
-/// @private
-#define SWAP_COLS_F32(A,i,j)     \
-  for(w=0;w < n; w++)    \
-  {                          \
-     float32_t tmp;          \
-     tmp = A[w*n + i];       \
-     A[w*n + i] = A[w*n + j];\
-     A[w*n + j] = tmp;       \
-  }
 
 /**
   @ingroup groupMatrix
@@ -429,8 +378,8 @@ arm_status arm_mat_ldlt_f32(
 
         if(j != k)
         {
-          SWAP_ROWS_F32(pA,k,j);
-          SWAP_COLS_F32(pA,k,j);
+          SWAP_ROWS_F32(pl,0,k,j);
+          SWAP_COLS_F32(pl,0,k,j);
         }
 
 
