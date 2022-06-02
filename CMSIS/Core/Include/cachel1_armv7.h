@@ -1,8 +1,8 @@
 /******************************************************************************
  * @file     cachel1_armv7.h
  * @brief    CMSIS Level 1 Cache API for Armv7-M and later
- * @version  V1.0.1
- * @date     19. April 2021
+ * @version  V1.0.2
+ * @date     26. October 2021
  ******************************************************************************/
 /*
  * Copyright (c) 2020-2021 Arm Limited. All rights reserved.
@@ -181,9 +181,9 @@ __STATIC_FORCEINLINE void SCB_EnableDCache (void)
 __STATIC_FORCEINLINE void SCB_DisableDCache (void)
 {
   #if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
-    uint32_t ccsidr;
-    uint32_t sets;
-    uint32_t ways;
+    register uint32_t ccsidr;
+    register uint32_t sets;
+    register uint32_t ways;
 
     SCB->CSSELR = 0U;                       /* select Level 1 data cache */
     __DSB();
@@ -219,9 +219,9 @@ __STATIC_FORCEINLINE void SCB_DisableDCache (void)
 __STATIC_FORCEINLINE void SCB_InvalidateDCache (void)
 {
   #if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
-    uint32_t ccsidr;
-    uint32_t sets;
-    uint32_t ways;
+    register uint32_t ccsidr;
+    register uint32_t sets;
+    register uint32_t ways;
 
     SCB->CSSELR = 0U;                       /* select Level 1 data cache */
     __DSB();
@@ -254,9 +254,9 @@ __STATIC_FORCEINLINE void SCB_InvalidateDCache (void)
 __STATIC_FORCEINLINE void SCB_CleanDCache (void)
 {
   #if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
-    uint32_t ccsidr;
-    uint32_t sets;
-    uint32_t ways;
+    register uint32_t ccsidr;
+    register uint32_t sets;
+    register uint32_t ways;
 
     SCB->CSSELR = 0U;                       /* select Level 1 data cache */
     __DSB();
@@ -289,9 +289,9 @@ __STATIC_FORCEINLINE void SCB_CleanDCache (void)
 __STATIC_FORCEINLINE void SCB_CleanInvalidateDCache (void)
 {
   #if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
-    uint32_t ccsidr;
-    uint32_t sets;
-    uint32_t ways;
+    register uint32_t ccsidr;
+    register uint32_t sets;
+    register uint32_t ways;
 
     SCB->CSSELR = 0U;                       /* select Level 1 data cache */
     __DSB();
