@@ -253,7 +253,7 @@
   <!-- bitRangeType specifies the bit numbers to be restricted values from 0 - 69 -->
   <xs:simpleType name="bitRangeType">
     <xs:restriction base="xs:token">
-      <xs:pattern value="\[([0-4])?[0-9]:([0-4])?[0-9]\]"/>
+      <xs:pattern value="\[([0-6])?[0-9]:([0-6])?[0-9]\]"/>
     </xs:restriction>
   </xs:simpleType>
   <!-- writeContraintType specifies how to describe the restriction of the allowed values that can be written to a resource -->
