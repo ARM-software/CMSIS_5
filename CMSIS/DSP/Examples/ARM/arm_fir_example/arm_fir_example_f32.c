@@ -171,9 +171,9 @@ static float32_t testOutput[TEST_LENGTH_SAMPLES];
  * Declare State buffer of size (numTaps + blockSize - 1)
  * ------------------------------------------------------------------- */
 #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
-static float32_t firStateF32[2 * BLOCK_SIZE + NUM_TAPS - 1];
+static float32_t firStateF32[2 * BLOCK_SIZE + NUM_TAPS_ARRAY_SIZE - 1];
 #else
-static float32_t firStateF32[BLOCK_SIZE + NUM_TAPS - 1];
+static float32_t firStateF32[BLOCK_SIZE + NUM_TAPS_ARRAY_SIZE - 1];
 #endif 
 
 /* ----------------------------------------------------------------------
