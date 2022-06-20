@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2022 Arm Limited or its affiliates.
+ * SPDX-FileCopyrightText: Copyright 2010-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_convolve_1_x_n_s8.c
  * Description:  s8 version of 1xN convolution using symmetric quantization.
  *
- * $Date:        19 April 2022
- * $Revision:    V.3.0.0
+ * $Date:        20 June 2022
+ * $Revision:    V.3.1.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -61,7 +61,8 @@ arm_cmsis_nn_status arm_convolve_1_x_n_s8(const cmsis_nn_context *ctx,
 {
     (void)bias_dims;
     arm_cmsis_nn_status status = ARM_CMSIS_NN_SUCCESS;
-    if (output_dims->w % 4 != 0)
+    /* The wrapper API is the ultimate reference for argument check */
+    if ((input_dims->h != 1) || (output_dims->w % 4 != 0) || conv_params->dilation.w != 1)
     {
         status = ARM_CMSIS_NN_ARG_ERROR;
         goto out;
@@ -85,89 +86,96 @@ arm_cmsis_nn_status arm_convolve_1_x_n_s8(const cmsis_nn_context *ctx,
     int32_t *output_mult = quant_params->multiplier;
     int32_t *output_shift = quant_params->shift;
 
-    for (int i_out_x = 0; i_out_x <= (output_x - 4); i_out_x += 4)
+    int i_batch;
+    for (i_batch = 0; i_batch < input_dims->n; i_batch++)
     {
-        int32_t input_begin_idx[4];
-        int32_t ker_begin_idx[4];
-        int32_t ker_end_idx[4];
 
-        for (int i = 0; i < 4; i++)
+        for (int i_out_x = 0; i_out_x <= (output_x - 4); i_out_x += 4)
         {
-            const int32_t est_input_x_idx = stride_x * (i_out_x + i) - pad_x;
-            input_begin_idx[i] = MAX(0, est_input_x_idx);
-            ker_begin_idx[i] = MAX(0, -est_input_x_idx);
-            ker_end_idx[i] = MIN(kernel_x, input_x - est_input_x_idx);
-        }
+            int32_t input_begin_idx[4];
+            int32_t ker_begin_idx[4];
+            int32_t ker_end_idx[4];
 
-        if ((ker_begin_idx[0] != 0) || (ker_end_idx[3] != kernel_x))
-        {
-            for (int i_out_ch = 0; i_out_ch < output_ch; i_out_ch++)
+            for (int i = 0; i < 4; i++)
             {
-                int32x4_t s_offset;
-                int32_t acc[4];
-                {
-                    int32_t sum_row[4];
-
-                    (void)arm_nn_mat_mul_core_1x_s8((ker_end_idx[0] - ker_begin_idx[0]) * input_ch,
-                                                    input_data + input_begin_idx[0] * input_ch,
-                                                    filter_data + (input_ch * kernel_x * i_out_ch) +
-                                                        (ker_begin_idx[0] * input_ch),
-                                                    &sum_row[0],
-                                                    &acc[0]);
-                    (void)arm_nn_mat_mul_core_1x_s8((ker_end_idx[1] - ker_begin_idx[1]) * input_ch,
-                                                    input_data + input_begin_idx[1] * input_ch,
-                                                    filter_data + (input_ch * kernel_x * i_out_ch) +
-                                                        (ker_begin_idx[1] * input_ch),
-                                                    &sum_row[1],
-                                                    &acc[1]);
-
-                    (void)arm_nn_mat_mul_core_1x_s8((ker_end_idx[2] - ker_begin_idx[2]) * input_ch,
-                                                    input_data + input_begin_idx[2] * input_ch,
-                                                    filter_data + (input_ch * kernel_x * i_out_ch) +
-                                                        (ker_begin_idx[2] * input_ch),
-                                                    &sum_row[2],
-                                                    &acc[2]);
-
-                    (void)arm_nn_mat_mul_core_1x_s8((ker_end_idx[3] - ker_begin_idx[3]) * input_ch,
-                                                    input_data + input_begin_idx[3] * input_ch,
-                                                    filter_data + (input_ch * kernel_x * i_out_ch) +
-                                                        (ker_begin_idx[3] * input_ch),
-                                                    &sum_row[3],
-                                                    &acc[3]);
-
-                    s_offset = vldrwq_s32(sum_row);
-                }
-                int32x4_t res = vldrwq_s32(acc);
-                s_offset = vmulq_n_s32(s_offset, input_offset);
-                res = vaddq_s32(res, s_offset);
-                if (bias_data)
-                {
-                    res = vaddq_n_s32(res, bias_data[i_out_ch]);
-                }
-                res = arm_requantize_mve(res, output_mult[i_out_ch], output_shift[i_out_ch]);
-                res = vaddq_n_s32(res, out_offset);
-
-                res = vmaxq_s32(res, vdupq_n_s32(out_activation_min));
-                res = vminq_s32(res, vdupq_n_s32(out_activation_max));
-
-                const uint32x4_t scatter_offset = {0, output_ch, output_ch * 2, output_ch * 3};
-                vstrbq_scatter_offset_s32(output_data, scatter_offset, res);
-                output_data++;
+                const int32_t est_input_x_idx = stride_x * (i_out_x + i) - pad_x;
+                input_begin_idx[i] = MAX(0, est_input_x_idx);
+                ker_begin_idx[i] = MAX(0, -est_input_x_idx);
+                ker_end_idx[i] = MIN(kernel_x, input_x - est_input_x_idx);
             }
-            output_data += (3 * output_ch);
+
+            if ((ker_begin_idx[0] != 0) || (ker_end_idx[3] != kernel_x))
+            {
+                for (int i_out_ch = 0; i_out_ch < output_ch; i_out_ch++)
+                {
+                    int32x4_t s_offset;
+                    int32_t acc[4];
+                    {
+                        int32_t sum_row[4];
+
+                        (void)arm_nn_mat_mul_core_1x_s8((ker_end_idx[0] - ker_begin_idx[0]) * input_ch,
+                                                        input_data + input_begin_idx[0] * input_ch,
+                                                        filter_data + (input_ch * kernel_x * i_out_ch) +
+                                                            (ker_begin_idx[0] * input_ch),
+                                                        &sum_row[0],
+                                                        &acc[0]);
+                        (void)arm_nn_mat_mul_core_1x_s8((ker_end_idx[1] - ker_begin_idx[1]) * input_ch,
+                                                        input_data + input_begin_idx[1] * input_ch,
+                                                        filter_data + (input_ch * kernel_x * i_out_ch) +
+                                                            (ker_begin_idx[1] * input_ch),
+                                                        &sum_row[1],
+                                                        &acc[1]);
+
+                        (void)arm_nn_mat_mul_core_1x_s8((ker_end_idx[2] - ker_begin_idx[2]) * input_ch,
+                                                        input_data + input_begin_idx[2] * input_ch,
+                                                        filter_data + (input_ch * kernel_x * i_out_ch) +
+                                                            (ker_begin_idx[2] * input_ch),
+                                                        &sum_row[2],
+                                                        &acc[2]);
+
+                        (void)arm_nn_mat_mul_core_1x_s8((ker_end_idx[3] - ker_begin_idx[3]) * input_ch,
+                                                        input_data + input_begin_idx[3] * input_ch,
+                                                        filter_data + (input_ch * kernel_x * i_out_ch) +
+                                                            (ker_begin_idx[3] * input_ch),
+                                                        &sum_row[3],
+                                                        &acc[3]);
+
+                        s_offset = vldrwq_s32(sum_row);
+                    }
+                    int32x4_t res = vldrwq_s32(acc);
+                    s_offset = vmulq_n_s32(s_offset, input_offset);
+                    res = vaddq_s32(res, s_offset);
+                    if (bias_data)
+                    {
+                        res = vaddq_n_s32(res, bias_data[i_out_ch]);
+                    }
+                    res = arm_requantize_mve(res, output_mult[i_out_ch], output_shift[i_out_ch]);
+                    res = vaddq_n_s32(res, out_offset);
+
+                    res = vmaxq_s32(res, vdupq_n_s32(out_activation_min));
+                    res = vminq_s32(res, vdupq_n_s32(out_activation_max));
+
+                    const uint32x4_t scatter_offset = {0, output_ch, output_ch * 2, output_ch * 3};
+                    vstrbq_scatter_offset_s32(output_data, scatter_offset, res);
+                    output_data++;
+                }
+                output_data += (3 * output_ch);
+            }
+            else
+            {
+                output_data = arm_nn_mat_mul_core_4x_s8(kernel_x * input_ch,
+                                                        stride_x * input_ch,
+                                                        input_data + input_begin_idx[0] * input_ch,
+                                                        filter_data,
+                                                        output_ch,
+                                                        conv_params,
+                                                        quant_params,
+                                                        bias_data,
+                                                        output_data);
+            }
         }
-        else
-        {
-            output_data = arm_nn_mat_mul_core_4x_s8(kernel_x * input_ch,
-                                                    stride_x * input_ch,
-                                                    input_data + input_begin_idx[0] * input_ch,
-                                                    filter_data,
-                                                    output_ch,
-                                                    conv_params,
-                                                    quant_params,
-                                                    bias_data,
-                                                    output_data);
-        }
+        /* Advance to the next batch */
+        input_data += (input_x * input_ch);
     }
 
 #else
@@ -192,7 +200,7 @@ out:
 int32_t arm_convolve_1_x_n_s8_get_buffer_size(const cmsis_nn_dims *input_dims, const cmsis_nn_dims *filter_dims)
 {
 #if !defined(ARM_MATH_MVEI)
-    return (2 * input_dims->c * filter_dims->w * filter_dims->h) * sizeof(int16_t);
+    return arm_convolve_s8_get_buffer_size(input_dims, filter_dims);
 #else
     (void)input_dims;
     (void)filter_dims;
