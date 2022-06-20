@@ -79,17 +79,9 @@ arm_cmsis_nn_status arm_convolve_1_x_n_s8(const cmsis_nn_context *ctx,
     const uint16_t pad_x = conv_params->padding.w;
     const uint16_t stride_x = conv_params->stride.w;
 
-    const int32_t input_offset = conv_params->input_offset;
-    const int32_t out_offset = conv_params->output_offset;
-    const int32_t out_activation_min = conv_params->activation.min;
-    const int32_t out_activation_max = conv_params->activation.max;
-    int32_t *output_mult = quant_params->multiplier;
-    int32_t *output_shift = quant_params->shift;
-
     int i_batch;
     for (i_batch = 0; i_batch < input_dims->n; i_batch++)
     {
-
         for (int i_out_x = 0; i_out_x <= (output_x - 4); i_out_x += 4)
         {
             int32_t input_begin_idx[4];
@@ -106,60 +98,20 @@ arm_cmsis_nn_status arm_convolve_1_x_n_s8(const cmsis_nn_context *ctx,
 
             if ((ker_begin_idx[0] != 0) || (ker_end_idx[3] != kernel_x))
             {
-                for (int i_out_ch = 0; i_out_ch < output_ch; i_out_ch++)
+                for (int i = 0; i < 4; i++)
                 {
-                    int32x4_t s_offset;
-                    int32_t acc[4];
-                    {
-                        int32_t sum_row[4];
-
-                        (void)arm_nn_mat_mul_core_1x_s8((ker_end_idx[0] - ker_begin_idx[0]) * input_ch,
-                                                        input_data + input_begin_idx[0] * input_ch,
-                                                        filter_data + (input_ch * kernel_x * i_out_ch) +
-                                                            (ker_begin_idx[0] * input_ch),
-                                                        &sum_row[0],
-                                                        &acc[0]);
-                        (void)arm_nn_mat_mul_core_1x_s8((ker_end_idx[1] - ker_begin_idx[1]) * input_ch,
-                                                        input_data + input_begin_idx[1] * input_ch,
-                                                        filter_data + (input_ch * kernel_x * i_out_ch) +
-                                                            (ker_begin_idx[1] * input_ch),
-                                                        &sum_row[1],
-                                                        &acc[1]);
-
-                        (void)arm_nn_mat_mul_core_1x_s8((ker_end_idx[2] - ker_begin_idx[2]) * input_ch,
-                                                        input_data + input_begin_idx[2] * input_ch,
-                                                        filter_data + (input_ch * kernel_x * i_out_ch) +
-                                                            (ker_begin_idx[2] * input_ch),
-                                                        &sum_row[2],
-                                                        &acc[2]);
-
-                        (void)arm_nn_mat_mul_core_1x_s8((ker_end_idx[3] - ker_begin_idx[3]) * input_ch,
-                                                        input_data + input_begin_idx[3] * input_ch,
-                                                        filter_data + (input_ch * kernel_x * i_out_ch) +
-                                                            (ker_begin_idx[3] * input_ch),
-                                                        &sum_row[3],
-                                                        &acc[3]);
-
-                        s_offset = vldrwq_s32(sum_row);
-                    }
-                    int32x4_t res = vldrwq_s32(acc);
-                    s_offset = vmulq_n_s32(s_offset, input_offset);
-                    res = vaddq_s32(res, s_offset);
-                    if (bias_data)
-                    {
-                        res = vaddq_n_s32(res, bias_data[i_out_ch]);
-                    }
-                    res = arm_requantize_mve(res, output_mult[i_out_ch], output_shift[i_out_ch]);
-                    res = vaddq_n_s32(res, out_offset);
-
-                    res = vmaxq_s32(res, vdupq_n_s32(out_activation_min));
-                    res = vminq_s32(res, vdupq_n_s32(out_activation_max));
-
-                    const uint32x4_t scatter_offset = {0, output_ch, output_ch * 2, output_ch * 3};
-                    vstrbq_scatter_offset_s32(output_data, scatter_offset, res);
-                    output_data++;
+                    const int32_t actual_kernel_len = ker_end_idx[i] - ker_begin_idx[i];
+                    arm_nn_mat_mul_core_1x_s8(actual_kernel_len * input_ch,
+                                              (kernel_x - actual_kernel_len) * input_ch,
+                                              input_data + input_begin_idx[i] * input_ch,
+                                              filter_data + (ker_begin_idx[i] * input_ch),
+                                              output_ch,
+                                              conv_params,
+                                              quant_params,
+                                              bias_data,
+                                              output_data);
+                    output_data += output_ch;
                 }
-                output_data += (3 * output_ch);
             }
             else
             {
