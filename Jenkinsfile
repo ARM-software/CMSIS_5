@@ -214,8 +214,8 @@ echo """Stage schedule:
                                 - infinity
                               resources:
                                 requests:
-                                  cpu: 2
-                                  memory: 2Gi
+                                  cpu: 900m
+                                  memory: 3Gi
                         """.stripIndent()
                 }
             }
@@ -306,8 +306,8 @@ echo """Stage schedule:
                                 - infinity
                               resources:
                                 requests:
-                                  cpu: 2
-                                  memory: 2Gi
+                                  cpu: 900m
+                                  memory: 3Gi
                         """.stripIndent()
                 }
             }
@@ -376,8 +376,8 @@ echo """Stage schedule:
                                             - infinity
                                           resources:
                                             requests:
-                                              cpu: 2
-                                              memory: 2Gi
+                                              cpu: 900m
+                                              memory: 3Gi
                                     """.stripIndent()
                             }
                         }
