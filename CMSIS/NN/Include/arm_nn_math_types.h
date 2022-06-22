@@ -1,12 +1,5 @@
-/******************************************************************************
- * @file     arm_nn_math_types.h
- * @brief    Compiler include and basic types
- * @version  V1.1.0
- * @date     09 March 2022
- * Target Processor: Cortex-M
- ******************************************************************************/
 /*
- * Copyright (c) 2010-2022 Arm Limited or its affiliates.
+ * SPDX-FileCopyrightText: Copyright 2010-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -23,6 +16,14 @@
  * limitations under the License.
  */
 
+/******************************************************************************
+ * @file     arm_nn_math_types.h
+ * @brief    Compiler include and basic types
+ * @version  V1.2.0
+ * @date     20 June 2022
+ * Target Processor: Cortex-M
+ ******************************************************************************/
+
 /**
    Copied from CMSIS/DSP/arm_math_types.h and modified
 */
@@ -31,12 +32,21 @@
 
 #define _ARM_NN_MATH_TYPES_H_
 
-/* DSP inlcude for enum arm_status. */
-#include "arm_math_types.h"
-
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#include <float.h>
+#include <limits.h>
+#include <math.h>
+#include <stdint.h>
+#include <string.h>
+
+/* Integer aliases */
+typedef int8_t q7_t;
+typedef int16_t q15_t;
+typedef int32_t q31_t;
+typedef int64_t q63_t;
 
 /* Compiler specific diagnostic adjustment */
 #if defined(__CC_ARM)
@@ -61,7 +71,6 @@ extern "C" {
 
 /* Included for instrinsics definitions */
 #if defined(_MSC_VER)
-#include <stdint.h>
 #ifndef __STATIC_FORCEINLINE
 #define __STATIC_FORCEINLINE static __forceinline
 #endif
@@ -73,7 +82,6 @@ extern "C" {
 #endif
 
 #elif defined(__GNUC_PYTHON__)
-#include <stdint.h>
 #ifndef __ALIGNED
 #define __ALIGNED(x) __attribute__((aligned(x)))
 #endif
@@ -87,11 +95,6 @@ extern "C" {
 #else
 #include "cmsis_compiler.h"
 #endif
-
-#include <float.h>
-#include <limits.h>
-#include <math.h>
-#include <string.h>
 
 /* evaluate ARM DSP feature */
 #if (defined(__ARM_FEATURE_DSP) && (__ARM_FEATURE_DSP == 1))
