@@ -98,7 +98,7 @@ $(document).ready(function(){initNavTree('group__Softmax.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Data Structures</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -120,10 +120,10 @@ Functions</h2></td></tr>
 <tr class="memitem:gaa5632ba67b623b5dff0c4a2d8e2a9a3a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Softmax.html#gaa5632ba67b623b5dff0c4a2d8e2a9a3a">arm_nn_softmax_common_s8</a> (const int8_t *input, const int32_t num_rows, const int32_t row_size, const int32_t mult, const int32_t shift, const int32_t diff_min, const bool int16_output, void *output)</td></tr>
 <tr class="memdesc:gaa5632ba67b623b5dff0c4a2d8e2a9a3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Common softmax function for s8 input and s8 or s16 output.  <a href="#gaa5632ba67b623b5dff0c4a2d8e2a9a3a">More...</a><br/></td></tr>
 <tr class="separator:gaa5632ba67b623b5dff0c4a2d8e2a9a3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1cacd8b84b8363079311987d0016ebe5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Softmax.html#ga1cacd8b84b8363079311987d0016ebe5">arm_softmax_q15</a> (const q15_t *vec_in, const uint16_t dim_vec, q15_t *p_out)</td></tr>
+<tr class="memitem:ga1cacd8b84b8363079311987d0016ebe5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Softmax.html#ga1cacd8b84b8363079311987d0016ebe5">arm_softmax_q15</a> (const <a class="el" href="arm__nn__math__types_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *vec_in, const uint16_t dim_vec, <a class="el" href="arm__nn__math__types_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *p_out)</td></tr>
 <tr class="memdesc:ga1cacd8b84b8363079311987d0016ebe5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Q15 softmax function.  <a href="#ga1cacd8b84b8363079311987d0016ebe5">More...</a><br/></td></tr>
 <tr class="separator:ga1cacd8b84b8363079311987d0016ebe5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga89aff212a97a3cf32d9d7ddf11a8f43e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Softmax.html#ga89aff212a97a3cf32d9d7ddf11a8f43e">arm_softmax_q7</a> (const q7_t *vec_in, const uint16_t dim_vec, q7_t *p_out)</td></tr>
+<tr class="memitem:ga89aff212a97a3cf32d9d7ddf11a8f43e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Softmax.html#ga89aff212a97a3cf32d9d7ddf11a8f43e">arm_softmax_q7</a> (const <a class="el" href="arm__nn__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *vec_in, const uint16_t dim_vec, <a class="el" href="arm__nn__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *p_out)</td></tr>
 <tr class="memdesc:ga89aff212a97a3cf32d9d7ddf11a8f43e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Q7 softmax function.  <a href="#ga89aff212a97a3cf32d9d7ddf11a8f43e">More...</a><br/></td></tr>
 <tr class="separator:ga89aff212a97a3cf32d9d7ddf11a8f43e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6baa03c1cb473b02abe83ed2c9d41d66"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__nn__math__types_8h.html#a67ac3e1e650a7040b0f706fb83ea6184">arm_cmsis_nn_status</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Softmax.html#ga6baa03c1cb473b02abe83ed2c9d41d66">arm_softmax_s16</a> (const int16_t *input, const int32_t num_rows, const int32_t row_size, const int32_t mult, const int32_t shift, const <a class="el" href="structcmsis__nn__softmax__lut__s16.html">cmsis_nn_softmax_lut_s16</a> *softmax_params, int16_t *output)</td></tr>
@@ -138,7 +138,7 @@ Functions</h2></td></tr>
 <tr class="memitem:gaa1627ed96bd597a8046d00689f077dce"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Softmax.html#gaa1627ed96bd597a8046d00689f077dce">arm_softmax_u8</a> (const uint8_t *input, const int32_t num_rows, const int32_t row_size, const int32_t mult, const int32_t shift, const int32_t diff_min, uint8_t *output)</td></tr>
 <tr class="memdesc:gaa1627ed96bd597a8046d00689f077dce"><td class="mdescLeft">&#160;</td><td class="mdescRight">U8 softmax function.  <a href="#gaa1627ed96bd597a8046d00689f077dce">More...</a><br/></td></tr>
 <tr class="separator:gaa1627ed96bd597a8046d00689f077dce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga894cfd80c260b946702755b5754e520f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Softmax.html#ga894cfd80c260b946702755b5754e520f">arm_softmax_with_batch_q7</a> (const q7_t *vec_in, const uint16_t nb_batches, const uint16_t dim_vec, q7_t *p_out)</td></tr>
+<tr class="memitem:ga894cfd80c260b946702755b5754e520f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Softmax.html#ga894cfd80c260b946702755b5754e520f">arm_softmax_with_batch_q7</a> (const <a class="el" href="arm__nn__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *vec_in, const uint16_t nb_batches, const uint16_t dim_vec, <a class="el" href="arm__nn__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *p_out)</td></tr>
 <tr class="memdesc:ga894cfd80c260b946702755b5754e520f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Q7 softmax function with batch parameter.  <a href="#ga894cfd80c260b946702755b5754e520f">More...</a><br/></td></tr>
 <tr class="separator:ga894cfd80c260b946702755b5754e520f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -232,7 +232,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">void arm_softmax_q15 </td>
           <td>(</td>
-          <td class="paramtype">const q15_t *&#160;</td>
+          <td class="paramtype">const <a class="el" href="arm__nn__math__types_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *&#160;</td>
           <td class="paramname"><em>vec_in</em>, </td>
         </tr>
         <tr>
@@ -244,7 +244,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">q15_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="arm__nn__math__types_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *&#160;</td>
           <td class="paramname"><em>p_out</em>&#160;</td>
         </tr>
         <tr>
@@ -275,7 +275,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">void arm_softmax_q7 </td>
           <td>(</td>
-          <td class="paramtype">const q7_t *&#160;</td>
+          <td class="paramtype">const <a class="el" href="arm__nn__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *&#160;</td>
           <td class="paramname"><em>vec_in</em>, </td>
         </tr>
         <tr>
@@ -287,7 +287,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">q7_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="arm__nn__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *&#160;</td>
           <td class="paramname"><em>p_out</em>&#160;</td>
         </tr>
         <tr>
@@ -609,7 +609,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">void arm_softmax_with_batch_q7 </td>
           <td>(</td>
-          <td class="paramtype">const q7_t *&#160;</td>
+          <td class="paramtype">const <a class="el" href="arm__nn__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *&#160;</td>
           <td class="paramname"><em>vec_in</em>, </td>
         </tr>
         <tr>
@@ -627,7 +627,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">q7_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="arm__nn__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *&#160;</td>
           <td class="paramname"><em>p_out</em>&#160;</td>
         </tr>
         <tr>
