@@ -38,7 +38,6 @@ except Exception as e:
 
 REQUIRED_MINIMUM_TENSORFLOW_VERSION = version.parse("2.5")
 TESTDATA_SETS = {}
-ALL_TESTDATA_SETS = {}
 CLANG_FORMAT = 'clang-format-9 -i'
 
 INT32_MAX = 2147483647
@@ -1432,26 +1431,26 @@ def load_all_testdatasets():
     TESTDATA_SETS[dataset] = AddMulSettings(dataset, type_of_test, args, channels=8, x_in=4, y_in=4,
                                             randmin=INT8_MIN, randmax=INT8_MAX)
     dataset = 'add_s16'
-    ALL_TESTDATA_SETS[dataset] = AddMulSettings(dataset, type_of_test, args, channels=8, x_in=4, y_in=4,
-                                                randmin=INT16_MIN, randmax=INT16_MAX, out_activation_min=INT16_MIN,
-                                                out_activation_max=INT16_MAX, int16xint8=True)
+    TESTDATA_SETS[dataset] = AddMulSettings(dataset, type_of_test, args, channels=8, x_in=4, y_in=4,
+                                            randmin=INT16_MIN, randmax=INT16_MAX, out_activation_min=INT16_MIN,
+                                            out_activation_max=INT16_MAX, int16xint8=True)
     dataset = 'add_s16_spill'
-    ALL_TESTDATA_SETS[dataset] = AddMulSettings(dataset, type_of_test, args, channels=7, x_in=5, y_in=3,
-                                                randmin=INT16_MIN, randmax=INT16_MAX, out_activation_min=-2000,
-                                                out_activation_max=INT16_MAX, int16xint8=True)
+    TESTDATA_SETS[dataset] = AddMulSettings(dataset, type_of_test, args, channels=7, x_in=5, y_in=3,
+                                            randmin=INT16_MIN, randmax=INT16_MAX, out_activation_min=-2000,
+                                            out_activation_max=INT16_MAX, int16xint8=True)
 
     type_of_test = 'mul'
     dataset = 'mul'
     TESTDATA_SETS[dataset] = AddMulSettings(dataset, type_of_test, args, channels=8, x_in=4, y_in=5,
                                             randmin=INT8_MIN, randmax=INT8_MAX)
     dataset = 'mul_s16'
-    ALL_TESTDATA_SETS[dataset] = AddMulSettings(dataset, type_of_test, args, channels=8, x_in=5, y_in=4,
-                                                randmin=INT16_MIN, randmax=INT16_MAX, out_activation_min=INT16_MIN,
-                                                out_activation_max=INT16_MAX, int16xint8=True)
+    TESTDATA_SETS[dataset] = AddMulSettings(dataset, type_of_test, args, channels=8, x_in=5, y_in=4,
+                                            randmin=INT16_MIN, randmax=INT16_MAX, out_activation_min=INT16_MIN,
+                                            out_activation_max=INT16_MAX, int16xint8=True)
     dataset = 'mul_s16_spill'
-    ALL_TESTDATA_SETS[dataset] = AddMulSettings(dataset, type_of_test, args, channels=7, x_in=5, y_in=7,
-                                                randmin=INT16_MIN, randmax=INT16_MAX, out_activation_min=INT16_MIN,
-                                                out_activation_max=1000, int16xint8=True)
+    TESTDATA_SETS[dataset] = AddMulSettings(dataset, type_of_test, args, channels=7, x_in=5, y_in=7,
+                                            randmin=INT16_MIN, randmax=INT16_MAX, out_activation_min=INT16_MIN,
+                                            out_activation_max=1000, int16xint8=True)
 
 
 if __name__ == '__main__':
