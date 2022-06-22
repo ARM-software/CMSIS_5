@@ -2,7 +2,7 @@
  * @file     cachel1_armv7.h
  * @brief    CMSIS Level 1 Cache API for Armv7-M and later
  * @version  V1.0.2
- * @date     21. June 2022
+ * @date     22. June 2022
  ******************************************************************************/
 /*
  * Copyright (c) 2020-2021 Arm Limited. All rights reserved.
@@ -186,8 +186,8 @@ __STATIC_FORCEINLINE void SCB_DisableDCache (void)
       uint32_t sets;
       uint32_t ways;
     } locals
-    #if (defined(__GNUC__) && !defined(__OPTIMIZE__))
-       __attribute__((aligned(__SCB_DCACHE_LINE_SIZE)))
+    #if ((defined(__GNUC__) || defined(__clang__)) && !defined(__OPTIMIZE__))
+       __ALIGNED(__SCB_DCACHE_LINE_SIZE)
     #endif
     ;
 
@@ -197,12 +197,12 @@ __STATIC_FORCEINLINE void SCB_DisableDCache (void)
     SCB->CCR &= ~(uint32_t)SCB_CCR_DC_Msk;  /* disable D-Cache */
     __DSB();
 
-    #if (defined(__GNUC__) && !defined(__OPTIMIZE__))
+    #if ((defined(__GNUC__) || defined(__clang__)) && !defined(__OPTIMIZE__))
       /*
-       * For the endless loop issue with GCC O0.
+       * For the endless loop issue with GCC and clang with O0.
        * More details, see https://github.com/ARM-software/CMSIS_5/issues/620
        *
-       * The issue only happens when local variables are in stack (GCC O0). If
+       * The issue only happens when local variables are in stack (GCC/clang O0). If
        * local variables are saved in general purpose register, then the function
        * is OK.
        *
