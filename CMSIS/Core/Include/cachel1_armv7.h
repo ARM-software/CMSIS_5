@@ -1,8 +1,8 @@
 /******************************************************************************
  * @file     cachel1_armv7.h
  * @brief    CMSIS Level 1 Cache API for Armv7-M and later
- * @version  V1.0.1
- * @date     19. April 2021
+ * @version  V1.0.2
+ * @date     22. June 2022
  ******************************************************************************/
 /*
  * Copyright (c) 2020-2021 Arm Limited. All rights reserved.
@@ -181,9 +181,15 @@ __STATIC_FORCEINLINE void SCB_EnableDCache (void)
 __STATIC_FORCEINLINE void SCB_DisableDCache (void)
 {
   #if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
-    uint32_t ccsidr;
-    uint32_t sets;
-    uint32_t ways;
+    struct {
+      uint32_t ccsidr;
+      uint32_t sets;
+      uint32_t ways;
+    } locals
+    #if ((defined(__GNUC__) || defined(__clang__)) && !defined(__OPTIMIZE__))
+       __ALIGNED(__SCB_DCACHE_LINE_SIZE)
+    #endif
+    ;
 
     SCB->CSSELR = 0U;                       /* select Level 1 data cache */
     __DSB();
@@ -191,20 +197,37 @@ __STATIC_FORCEINLINE void SCB_DisableDCache (void)
     SCB->CCR &= ~(uint32_t)SCB_CCR_DC_Msk;  /* disable D-Cache */
     __DSB();
 
-    ccsidr = SCB->CCSIDR;
+    #if ((defined(__GNUC__) || defined(__clang__)) && !defined(__OPTIMIZE__))
+      /*
+       * For the endless loop issue with GCC and clang with O0.
+       * More details, see https://github.com/ARM-software/CMSIS_5/issues/620
+       *
+       * The issue only happens when local variables are in stack (GCC/clang O0). If
+       * local variables are saved in general purpose register, then the function
+       * is OK.
+       *
+       * When local variables are in stack, after disabling the cache, flush the
+       * local variables cache line for data consistency.
+       */
+      /* Clean and invalidate the local variable cache. */
+      SCB->DCCIMVAC = (uint32_t)&locals;
+      __DSB();
+      __ISB();
+    #endif
 
+    locals.ccsidr = SCB->CCSIDR;
                                             /* clean & invalidate D-Cache */
-    sets = (uint32_t)(CCSIDR_SETS(ccsidr));
+    locals.sets = (uint32_t)(CCSIDR_SETS(locals.ccsidr));
     do {
-      ways = (uint32_t)(CCSIDR_WAYS(ccsidr));
+      locals.ways = (uint32_t)(CCSIDR_WAYS(locals.ccsidr));
       do {
-        SCB->DCCISW = (((sets << SCB_DCCISW_SET_Pos) & SCB_DCCISW_SET_Msk) |
-                       ((ways << SCB_DCCISW_WAY_Pos) & SCB_DCCISW_WAY_Msk)  );
+        SCB->DCCISW = (((locals.sets << SCB_DCCISW_SET_Pos) & SCB_DCCISW_SET_Msk) |
+                       ((locals.ways << SCB_DCCISW_WAY_Pos) & SCB_DCCISW_WAY_Msk)  );
         #if defined ( __CC_ARM )
           __schedule_barrier();
         #endif
-      } while (ways-- != 0U);
-    } while(sets-- != 0U);
+      } while (locals.ways-- != 0U);
+    } while(locals.sets-- != 0U);
 
     __DSB();
     __ISB();
