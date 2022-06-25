@@ -2,11 +2,11 @@
  * @file     system_ARMCM55.c
  * @brief    CMSIS Device System Source File for
  *           ARMCM55 Device
- * @version  V1.0.1
- * @date     4. May 2021
+ * @version  V1.1.0
+ * @date     28. March 2022
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2021 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2022 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -83,7 +83,7 @@ void SystemInit (void)
   /*  0b11  | OFF                                 */
 
   /* Clear ELPSTATE, value is 0b11 on Cold reset */
-  PWRMODCTL->CPDLPSTATE &= ~(PWRMODCTL_CPDLPSTATE_ELPSTATE_Msk << PWRMODCTL_CPDLPSTATE_ELPSTATE_Pos);
+  PWRMODCTL->CPDLPSTATE &= ~(PWRMODCTL_CPDLPSTATE_ELPSTATE_Msk);
 
   /* Favor best FP/MVE performance by default, avoid EPU switch-ON delays */
   /* PDEPU ON, Clock OFF */
@@ -96,7 +96,8 @@ void SystemInit (void)
 
   /* Enable Loop and branch info cache */
   SCB->CCR |= SCB_CCR_LOB_Msk;
-__ISB();
+  __DSB();
+  __ISB();
 
 #if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
   TZ_SAU_Setup();

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <!--      
+   
+   Project:      CMSIS DSP Library
+   Title:        ring.SCVD
+   Description:  Event definitions for use in Keil MDK
+  
+   $Date:        30 July 2021
+   $Revision:    V1.10.0
+  
+   Target Processor: Cortex-M and Cortex-A cores
+   
+  
+   Copyright (C) 2010-2021 ARM Limited or its affiliates. All rights reserved.
+  
+   SPDX-License-Identifier: Apache-2.0
+  
+   Licensed under the Apache License, Version 2.0 (the License); you may
+   not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+  
+   www.apache.org/licenses/LICENSE-2.0
+  
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an AS IS BASIS, WITHOUT
+   WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+  
+-->
+
+<component_viewer schemaVersion="0.1" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="Component_Viewer.xsd">
+  <component name="SDFTools" version="1.0.0"/>    <!-- name and version of the component  -->
+ 
+    <events>
+      <group name="SDF Tools">
+         <component name="Node"   brief="NODE"    no="0x00" prefix="EvrNodeMM_"    info="Application nodes"/>
+         <component name="Ring USR"   brief="USR"    no="0x01" prefix="EvrRingUSRMM_"    info="Ring buffer USR"/>
+         <component name="Ring INT"   brief="INT"    no="0x02" prefix="EvrRingINTMM_"    info="Ring buffer INT"/>
+         <component name="Ring All"   brief="ALL"    no="0x03" prefix="EvrRingAllMM_"    info="Ring All"/>
+      </group>  
+ 
+      <event id="0" level="API" property="Sink Executed" info="Audio Sink" />
+      <event id="1" level="Op" property="Sink Value"  value="nbSink=%x[val1]" info="Sink value" />
+      <event id="2" level="API" property="Source Executed" />
+
+      
+
+
+      <event id="0x100" level="Op" property="Reserve" value="ID=%d[val1] CONF=%x[val2]" info="Reserve buffer" />
+      <event id="0x101" level="Op" property="Release" value="ID=%d[val1] CONF=%x[val2]" info="Release buffer" />
+      <event id="0x102" level="Op" property="Wait" value="ID=%d[val1] CONF=%x[val2]" info="Wait buffer" />
+      <event id="0x103" level="Op" property="Unblocked" value="ID=%d[val1] CONF=%x[val2]" info="Free buffer" />
+      <event id="0x104" level="Detail" property="Status" value="USR=%x[val1] INT=%x[val2] CONF=%x[val3]" info="Reservation status" />
+
+      <event id="0x200" level="Op" property="Reserve" value="ID=%d[val1] CONF=%x[val2]" info="Reserve buffer" />
+      <event id="0x201" level="Op" property="Release" value="ID=%d[val1] CONF=%x[val2]" info="Release buffer" />
+      <event id="0x202" level="Op" property="Release USR" value="CONF=%x[val1]" info="Release user" />
+      <event id="0x203" level="Detail" property="Status" value="USR=%x[val1] INT=%x[val2] CONF=%x[val3]" info="Reservation status" />
+      
+      
+      <event id="0x300" level="Error" property="Error" value="err=%d[val1] CONF=%x[val2]" info="Release buffer" />
+
+    </events>
+ 
+</component_viewer>

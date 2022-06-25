@@ -121,7 +121,7 @@ void arm_offset_q7(
 
 #if defined (ARM_MATH_DSP)
     /* Add offset and store result in destination buffer (4 samples at a time). */
-    write_q7x4_ia (&pDst, __QADD8(read_q7x4_ia ((q7_t **) &pSrc), offset_packed));
+    write_q7x4_ia (&pDst, __QADD8(read_q7x4_ia (&pSrc), offset_packed));
 #else
     *pDst++ = (q7_t) __SSAT((q15_t) *pSrc++ + offset, 8);
     *pDst++ = (q7_t) __SSAT((q15_t) *pSrc++ + offset, 8);

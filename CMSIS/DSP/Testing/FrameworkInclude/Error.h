@@ -116,7 +116,7 @@ extern void assert_snr_error(unsigned long nb,AnyPattern<q31_t> &pa,AnyPattern<q
 extern void assert_snr_error(unsigned long nb,AnyPattern<q15_t> &pa,AnyPattern<q15_t> &pb, float32_t threshold);
 extern void assert_snr_error(unsigned long nb,AnyPattern<q7_t> &pa,AnyPattern<q7_t> &pb, float32_t threshold);
 
-extern void assert_snr_error(unsigned long nb,float64_t pa,float64_t pb, float32_t threshold);
+extern void assert_snr_error(unsigned long nb,float64_t pa,float64_t pb, float64_t threshold);
 extern void assert_snr_error(unsigned long nb,float32_t pa,float32_t pb, float32_t threshold);
 
 #if !defined (__CC_ARM) && defined(ARM_FLOAT16_SUPPORTED)
@@ -202,7 +202,7 @@ void assert_equal(unsigned long nb,AnyPattern<T> &pa, AnyPattern<T> &pb)
        }
        catch(Error &err)
        {          
-          sprintf(id," (nb=%lu)",i+1);
+          sprintf(id," (nb=%lu)",i);
           strcat(err.details,id);
           throw(err);
        }
@@ -258,7 +258,7 @@ void assert_near_equal(unsigned long nb,AnyPattern<T> &pa, AnyPattern<T> &pb, T 
        }
        catch(Error &err)
        {          
-          sprintf(id," (nb=%lu)",i+1);
+          sprintf(id," (nb=%lu)",i);
           strcat(err.details,id);
           throw(err);
        }

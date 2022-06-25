@@ -1,0 +1,86 @@
+
+
+
+digraph structs {
+    node [shape=plaintext]
+    rankdir=LR
+    edge [arrowsize=0.5]
+    fontname="times"
+
+
+audioWin [label=<
+<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+  <TR>
+    <TD ALIGN="CENTER" PORT="i">audioWin<BR/>(SlidingBuffer)</TD>
+  </TR>
+</TABLE>>];
+
+mfcc [label=<
+<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+  <TR>
+    <TD ALIGN="CENTER" PORT="i">mfcc<BR/>(MFCC)</TD>
+  </TR>
+</TABLE>>];
+
+mfccWin [label=<
+<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+  <TR>
+    <TD ALIGN="CENTER" PORT="i">mfccWin<BR/>(SlidingBuffer)</TD>
+  </TR>
+</TABLE>>];
+
+sink [label=<
+<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+  <TR>
+    <TD ALIGN="CENTER" PORT="i">sink<BR/>(NumpySink)</TD>
+  </TR>
+</TABLE>>];
+
+src [label=<
+<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+  <TR>
+    <TD ALIGN="CENTER" PORT="i">src<BR/>(WavSource)</TD>
+  </TR>
+</TABLE>>];
+
+toMono [label=<
+<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+  <TR>
+    <TD ALIGN="CENTER" PORT="i">toMono<BR/>(StereoToMono)</TD>
+  </TR>
+</TABLE>>];
+
+
+
+src:i -> toMono:i [headlabel=<
+<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >384</FONT>
+</TD></TR></TABLE>>,taillabel=<
+<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >384</FONT>
+</TD></TR></TABLE>>,label="q15(384)"]
+
+toMono:i -> audioWin:i [headlabel=<
+<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >768</FONT>
+</TD></TR></TABLE>>,taillabel=<
+<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >192</FONT>
+</TD></TR></TABLE>>,label="q15(768)"]
+
+audioWin:i -> mfcc:i [headlabel=<
+<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >1024</FONT>
+</TD></TR></TABLE>>,taillabel=<
+<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >1024</FONT>
+</TD></TR></TABLE>>,label="q15(1024)"]
+
+mfcc:i -> mfccWin:i [headlabel=<
+<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >377</FONT>
+</TD></TR></TABLE>>,taillabel=<
+<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >13</FONT>
+</TD></TR></TABLE>>,label="q15(377)"]
+
+mfccWin:i -> sink:i [headlabel=<
+<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >754</FONT>
+</TD></TR></TABLE>>,taillabel=<
+<TABLE BORDER="0" CELLPADDING="2"><TR><TD><FONT COLOR="blue" POINT-SIZE="12.0" >754</FONT>
+</TD></TR></TABLE>>,label="q15(754)"]
+
+
+}

@@ -8,6 +8,8 @@
 
 
 #define SNR_THRESHOLD 119
+#define SNR_ATAN2_THRESHOLD 120
+
 /* 
 
 Reference patterns are generated with
@@ -16,6 +18,32 @@ a double precision computation.
 */
 #define REL_ERROR (1.0e-6)
 #define ABS_ERROR (1.0e-5)
+
+#define REL_ERROR_ATAN (5.0e-7)
+#define ABS_ERROR_ATAN (5.0e-7)
+
+    void FastMathF32::test_atan2_scalar_f32()
+    {
+        const float32_t *inp  = input.ptr();
+        float32_t *outp  = output.ptr();
+        float32_t res;
+        unsigned long i;
+        arm_status status=ARM_MATH_SUCCESS;
+
+        for(i=0; i < ref.nbSamples(); i++)
+        {
+          status=arm_atan2_f32(inp[2*i],inp[2*i+1],&res);
+          outp[i]=res;
+          ASSERT_TRUE((status == ARM_MATH_SUCCESS));
+
+        }
+        //printf("%f %f %f\n",inp[2*i],inp[2*i+1],outp[i]);
+
+        //ASSERT_SNR(ref,output,(float32_t)SNR_ATAN2_THRESHOLD);
+        ASSERT_CLOSE_ERROR(ref,output,ABS_ERROR_ATAN,REL_ERROR_ATAN);
+
+    }
+    
 
     void FastMathF32::test_cos_f32()
     {
@@ -199,6 +227,17 @@ a double precision computation.
 
             }
             break;
+
+            case FastMathF32::TEST_ATAN2_SCALAR_F32_12:
+            {
+               input.reload(FastMathF32::ATAN2INPUT1_F32_ID,mgr);
+               ref.reload(FastMathF32::ATAN2_F32_ID,mgr);
+               output.create(ref.nbSamples(),FastMathF32::OUT_F32_ID,mgr);
+            }
+            break;
+
+           
+
         }
         
     }

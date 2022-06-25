@@ -100,10 +100,7 @@ namespace Client
       delete(this->outputNames);
     }
 
-    /** Read word 64 from C array
-
-    */
-
+    
     /** Read word 32 from C array
 
     */
@@ -642,6 +639,26 @@ namespace Client
         }
     }
 
+    void FPGA::ImportPattern_u64(Testing::PatternID_t id,char* p,Testing::nbSamples_t nb)
+    {
+        unsigned long offset,i;
+
+        offset=this->getPatternOffset(id);
+
+        const char *patternStart = this->m_patterns + offset;
+        const uint64_t *src = (const uint64_t*)patternStart;
+        uint64_t *dst = (uint64_t*)p;
+
+        if (dst)
+        {
+            for(i=0; i < nb; i++)
+            {
+                *dst++ = *src++;
+            }
+        }
+    }
+
+
     void FPGA::ImportPattern_u32(Testing::PatternID_t id,char* p,Testing::nbSamples_t nb)
     {
         unsigned long offset,i;
@@ -841,6 +858,26 @@ namespace Client
             printf("D: END\n");
         }
     }
+
+    void FPGA::DumpPattern_u64(Testing::outputID_t id,Testing::nbSamples_t nb, uint64_t* data)
+    {
+        std::string fileName = this->getOutputPath(id); 
+        if (data)
+        {
+           printf("D: %s\n",fileName.c_str());
+           Testing::nbSamples_t i=0;
+           uint64_t t;
+           uint64_t v;
+           for(i=0; i < nb; i++)
+           {
+              v = data[i];
+              t = (uint64_t)v;
+              printf("D: 0x%016llx\n",t);
+           }
+           printf("D: END\n");
+        }
+    }
+
 
     void FPGA::DumpPattern_u32(Testing::outputID_t id,Testing::nbSamples_t nb, uint32_t* data)
     {

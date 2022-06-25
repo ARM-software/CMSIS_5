@@ -48,6 +48,15 @@
 #include "arm_rfft_fast_init_f32.c"
 #include "arm_rfft_fast_init_f64.c"
 
+#include "arm_mfcc_init_f32.c"
+#include "arm_mfcc_f32.c"
+
+#include "arm_mfcc_init_q31.c"
+#include "arm_mfcc_q31.c"
+
+#include "arm_mfcc_init_q15.c"
+#include "arm_mfcc_q15.c"
+
 /* Deprecated */
 
 #include "arm_dct4_f32.c"

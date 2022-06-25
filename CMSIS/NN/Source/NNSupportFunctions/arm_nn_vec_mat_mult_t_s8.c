@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020-2021 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2020-2022 Arm Limited or its affiliates.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_nn_vec_mat_mult_t_s8
  * Description:  s8 vector by matrix (transposed) multiplication
  *
- * $Date:        02. May 2021
- * $Revision:    V.2.5.0
+ * $Date:        2 May 2022
+ * $Revision:    V.4.0.1
  *
  * Target Processor:  Cortex-M
  *
@@ -45,23 +45,25 @@
  * Refer header file for details.
  *
  */
-arm_status arm_nn_vec_mat_mult_t_s8(const q7_t *lhs,
-                                    const q7_t *rhs,
-                                    const q31_t *bias,
-                                    q7_t *dst,
-                                    const int32_t lhs_offset,
-                                    const int32_t rhs_offset,
-                                    const int32_t dst_offset,
-                                    const int32_t dst_multiplier,
-                                    const int32_t dst_shift,
-                                    const int32_t rhs_cols,
-                                    const int32_t rhs_rows,
-                                    const int32_t activation_min,
-                                    const int32_t activation_max)
+arm_cmsis_nn_status arm_nn_vec_mat_mult_t_s8(const q7_t *lhs,
+                                             const q7_t *rhs,
+                                             const q31_t *bias,
+                                             q7_t *dst,
+                                             const int32_t lhs_offset,
+                                             const int32_t rhs_offset,
+                                             const int32_t dst_offset,
+                                             const int32_t dst_multiplier,
+                                             const int32_t dst_shift,
+                                             const int32_t rhs_cols,
+                                             const int32_t rhs_rows,
+                                             const int32_t activation_min,
+                                             const int32_t activation_max,
+                                             const int32_t address_offset)
 {
     (void)rhs_offset;
 #if defined(ARM_MATH_MVEI)
-    int32_t row_loop_cnt = rhs_rows / 3;
+    const int32_t row_loop_cnt = rhs_rows / 3;
+    const uint32x4_t address_offset_array = {0, address_offset, address_offset * 2, address_offset * 3};
 
     for (int i_row_loop_cnt = 0; i_row_loop_cnt < row_loop_cnt; i_row_loop_cnt++)
     {
@@ -123,8 +125,16 @@ arm_status arm_nn_vec_mat_mult_t_s8(const q7_t *lhs,
         acc = vaddq_s32(acc, vdupq_n_s32(dst_offset));
         acc = vmaxq_s32(acc, vdupq_n_s32(activation_min));
         acc = vminq_s32(acc, vdupq_n_s32(activation_max));
-        vstrbq_p_s32(dst, acc, p);
-        dst += 3;
+
+        if (address_offset > 1L)
+        {
+            vstrbq_scatter_offset_s32(dst, address_offset_array, acc);
+        }
+        else
+        {
+            vstrbq_p_s32(dst, acc, p);
+        }
+        dst += 3 * address_offset;
     }
 
     const int loop_cnt = rhs_rows % 3;
@@ -165,14 +175,12 @@ arm_status arm_nn_vec_mat_mult_t_s8(const q7_t *lhs,
         // Clamp the result
         acc_0 = MAX(acc_0, activation_min);
         *dst = MIN(acc_0, activation_max);
-        dst++;
+        dst += address_offset;
     }
 
 #elif defined(ARM_MATH_DSP)
-    int32_t row_loop_cnt = rhs_rows / 2;
-
+    const int32_t row_loop_cnt = rhs_rows / 2;
     const int16_t lhs_offset_s16 = (int16_t)lhs_offset;
-
     const uint32_t lhs_offset_s16x2 = __PKHBT(lhs_offset_s16, lhs_offset_s16, 16);
 
     for (int32_t i = 0; i < row_loop_cnt; i++)
@@ -235,9 +243,9 @@ arm_status arm_nn_vec_mat_mult_t_s8(const q7_t *lhs,
         acc_0 = MIN(acc_0, activation_max);
         acc_1 = MAX(acc_1, activation_min);
         acc_1 = MIN(acc_1, activation_max);
-
-        *dst++ = (q7_t)acc_0;
-        *dst++ = (q7_t)acc_1;
+        *dst = (int8_t)acc_0;
+        *(dst + address_offset) = (int8_t)acc_1;
+        dst += 2 * address_offset;
     }
 
     if (rhs_rows & 0x1)
@@ -281,13 +289,13 @@ arm_status arm_nn_vec_mat_mult_t_s8(const q7_t *lhs,
         // Clamp the result
         acc_0 = MAX(acc_0, activation_min);
         acc_0 = MIN(acc_0, activation_max);
-
-        *dst++ = (q7_t)acc_0;
+        *dst = (int8_t)acc_0;
+        dst += address_offset;
     }
 
 #else
 
-    int32_t row_loop_cnt = rhs_rows / 3;
+    const int32_t row_loop_cnt = rhs_rows / 3;
 
     for (int i_row_loop_cnt = 0; i_row_loop_cnt < row_loop_cnt; i_row_loop_cnt++)
     {
@@ -339,9 +347,10 @@ arm_status arm_nn_vec_mat_mult_t_s8(const q7_t *lhs,
         res02 = MAX(res02, activation_min);
         res02 = MIN(res02, activation_max);
 
-        *dst++ = (q7_t)res00;
-        *dst++ = (q7_t)res01;
-        *dst++ = (q7_t)res02;
+        *dst = (q7_t)res00;
+        *(dst + address_offset) = (q7_t)res01;
+        *(dst + 2 * address_offset) = (q7_t)res02;
+        dst += 3 * address_offset;
 
         rhs += 3 * rhs_cols;
     }
@@ -361,7 +370,7 @@ arm_status arm_nn_vec_mat_mult_t_s8(const q7_t *lhs,
 
         for (int32_t rhs_cols_idx = 0; rhs_cols_idx < rhs_cols; ++rhs_cols_idx)
         {
-            q31_t rhs_value0 = (int8_t)rhs_ptr[0] + rhs_offset;
+            q31_t rhs_value0 = (int8_t)rhs_ptr[0];
             q31_t lhs_value = (int8_t)lhs_ptr[0] + lhs_offset;
 
             res00 += lhs_value * rhs_value0;
@@ -380,11 +389,12 @@ arm_status arm_nn_vec_mat_mult_t_s8(const q7_t *lhs,
         res00 = MAX(res00, activation_min);
         res00 = MIN(res00, activation_max);
 
-        *dst++ = (q7_t)res00;
+        *dst = (int8_t)res00;
+        dst += address_offset;
         rhs += rhs_cols;
     }
 #endif
-    return ARM_MATH_SUCCESS;
+    return ARM_CMSIS_NN_SUCCESS;
 }
 
 /**

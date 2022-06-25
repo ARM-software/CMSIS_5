@@ -13,6 +13,7 @@ BODYANDTAIL = 3
 F64 = 64 
 F32 = 0
 F16 = 16
+Q63 = 63 
 Q31 = 31 
 Q15 = 15
 Q7 = 7
@@ -20,8 +21,8 @@ Q7 = 7
 def loopnb(format,loopkind):
     nb = 0
     if loopkind == TAILONLY:
-        if format == 64:
-            nb = 1 
+        if format == 64 or format == Tools.Q63:
+            nb = 2 
         if format == 0 or format == 31:
             nb = 3 
         if format == 15 or format == 16:
@@ -29,7 +30,7 @@ def loopnb(format,loopkind):
         if format == 7:
             nb = 15
     if loopkind == BODYONLY:
-        if format == 64:
+        if format == 64 or format == Tools.Q63:
             nb = 4 
         if format == 0 or format == 31:
             nb = 8 
@@ -38,7 +39,7 @@ def loopnb(format,loopkind):
         if format == 7:
             nb = 32
     if loopkind == BODYANDTAIL:
-        if format == 64:
+        if format == 64 or format == Tools.Q63:
             nb = 5
         if format == 0 or format == 31:
             nb = 11 # 9
@@ -146,14 +147,29 @@ def to_q7(v):
 def s8(r):
   return ("0x%s" % format(struct.unpack('<B', struct.pack('<b', r))[0],'02X'))
 
+def u8(r):
+  return ("0x%s" % format(struct.unpack('<B', struct.pack('<B', r))[0],'02X'))
+
 def s16(r):
   return ("0x%s" % format(struct.unpack('<H', struct.pack('<h', r))[0],'04X'))
+
+def u16(r):
+  return ("0x%s" % format(struct.unpack('<H', struct.pack('<H', r))[0],'04X'))
 
 def s32(r):
   return ("0x%s" % format(struct.unpack('<I', struct.pack('<i', r))[0],'08X'))
 
 def u32(r):
   return ("0x%s" % format(struct.unpack('<I', struct.pack('<I', r))[0],'08X'))
+
+def s64(r):
+  return ("0x%s" % format(struct.unpack('<Q', struct.pack('<q', r))[0],'016X'))
+
+def u32(r):
+  return ("0x%s" % format(struct.unpack('<I', struct.pack('<I', r))[0],'08X'))
+
+def u64(r):
+  return ("0x%s" % format(struct.unpack('<Q', struct.pack('<Q', r))[0],'016X'))
 
 class Config:
     def __init__(self,patternDir,paramDir,ext):
@@ -185,6 +201,22 @@ class Config:
           return(os.path.join(self._patternDir,"%s%d_%s.txt" % (name,i,self._ext)))
         else:
           return(os.path.join(self._patternDir,"Input%d_%s.txt" % (i,self._ext)))
+
+    def inputS64P(self,i,name=None):
+        """ Path to a reference pattern from the ID
+      
+        Args:
+          i (int): ID to the reference pattern
+        Raises:
+          Nothing 
+        Returns:
+          str : path to the file where to generate the pattern data
+        """
+        if name:
+          return(os.path.join(self._patternDir,"%s%d_%s.txt" % (name,i,"s64")))
+        else:
+          return(os.path.join(self._patternDir,"Input%d_%s.txt" % (i,"s64")))
+
 
     def inputS32P(self,i,name=None):
         """ Path to a reference pattern from the ID
@@ -261,6 +293,21 @@ class Config:
         else:
           return(os.path.join(self._patternDir,"Input%d_%s.txt" % (i,"f16")))
 
+    def inputQ63P(self,i,name=None):
+        """ Path to a reference pattern from the ID
+      
+        Args:
+          i (int): ID to the reference pattern
+        Raises:
+          Nothing 
+        Returns:
+          str : path to the file where to generate the pattern data
+        """
+        if name:
+          return(os.path.join(self._patternDir,"%s%d_%s.txt" % (name,i,"q63")))
+        else:
+          return(os.path.join(self._patternDir,"Input%d_%s.txt" % (i,"q63")))
+
     def inputQ31P(self,i,name=None):
         """ Path to a reference pattern from the ID
       
@@ -306,6 +353,23 @@ class Config:
         else:
           return(os.path.join(self._patternDir,"Input%d_%s.txt" % (i,"q7")))
 
+    def inputU64P(self,i,name=None):
+        """ Path to a reference pattern from the ID
+      
+        Args:
+          i (int): ID to the reference pattern
+        Raises:
+          Nothing 
+        Returns:
+          str : path to the file where to generate the pattern data
+        """
+        if name:
+          return(os.path.join(self._patternDir,"%s%d_%s.txt" % (name,i,"u64")))
+        else:
+          return(os.path.join(self._patternDir,"Input%d_%s.txt" % (i,"u64")))
+
+
+
     def inputU32P(self,i,name=None):
         """ Path to a reference pattern from the ID
       
@@ -321,6 +385,39 @@ class Config:
         else:
           return(os.path.join(self._patternDir,"Input%d_%s.txt" % (i,"u32")))
 
+    def inputU16P(self,i,name=None):
+        """ Path to a reference pattern from the ID
+      
+        Args:
+          i (int): ID to the reference pattern
+        Raises:
+          Nothing 
+        Returns:
+          str : path to the file where to generate the pattern data
+        """
+        if name:
+          return(os.path.join(self._patternDir,"%s%d_%s.txt" % (name,i,"u16")))
+        else:
+          return(os.path.join(self._patternDir,"Input%d_%s.txt" % (i,"u16")))
+
+
+    def inputU8P(self,i,name=None):
+        """ Path to a reference pattern from the ID
+      
+        Args:
+          i (int): ID to the reference pattern
+        Raises:
+          Nothing 
+        Returns:
+          str : path to the file where to generate the pattern data
+        """
+        if name:
+          return(os.path.join(self._patternDir,"%s%d_%s.txt" % (name,i,"u8")))
+        else:
+          return(os.path.join(self._patternDir,"Input%d_%s.txt" % (i,"u8")))
+
+
+    
     def refP(self,i,name=None):
         """ Path to a reference pattern from the ID
       
@@ -351,6 +448,22 @@ class Config:
         else:
           return(os.path.join(self._patternDir,"Reference%d_%s.txt" % (i,"s8")))
 
+    def refU8P(self,i,name=None):
+        """ Path to a reference pattern from the ID
+      
+        Args:
+          i (int): ID to the reference pattern
+        Raises:
+          Nothing 
+        Returns:
+          str : path to the file where to generate the pattern data
+        """
+        if name:
+          return(os.path.join(self._patternDir,"%s%d_%s.txt" % (name,i,"u8")))
+        else:
+          return(os.path.join(self._patternDir,"Reference%d_%s.txt" % (i,"u8")))
+
+
     def refS16P(self,i,name=None):
         """ Path to a reference pattern from the ID
       
@@ -366,6 +479,22 @@ class Config:
         else:
           return(os.path.join(self._patternDir,"Reference%d_%s.txt" % (i,"s16")))
 
+    def refU16P(self,i,name=None):
+        """ Path to a reference pattern from the ID
+      
+        Args:
+          i (int): ID to the reference pattern
+        Raises:
+          Nothing 
+        Returns:
+          str : path to the file where to generate the pattern data
+        """
+        if name:
+          return(os.path.join(self._patternDir,"%s%d_%s.txt" % (name,i,"u16")))
+        else:
+          return(os.path.join(self._patternDir,"Reference%d_%s.txt" % (i,"u16")))
+
+
     def refS32P(self,i,name=None):
         """ Path to a reference pattern from the ID
       
@@ -380,6 +509,55 @@ class Config:
           return(os.path.join(self._patternDir,"%s%d_%s.txt" % (name,i,"s32")))
         else:
           return(os.path.join(self._patternDir,"Reference%d_%s.txt" % (i,"s32")))
+
+    def refU32P(self,i,name=None):
+        """ Path to a reference pattern from the ID
+      
+        Args:
+          i (int): ID to the reference pattern
+        Raises:
+          Nothing 
+        Returns:
+          str : path to the file where to generate the pattern data
+        """
+        if name:
+          return(os.path.join(self._patternDir,"%s%d_%s.txt" % (name,i,"u32")))
+        else:
+          return(os.path.join(self._patternDir,"Reference%d_%s.txt" % (i,"u32")))
+
+
+    def refS64P(self,i,name=None):
+        """ Path to a reference pattern from the ID
+      
+        Args:
+          i (int): ID to the reference pattern
+        Raises:
+          Nothing 
+        Returns:
+          str : path to the file where to generate the pattern data
+        """
+        if name:
+          return(os.path.join(self._patternDir,"%s%d_%s.txt" % (name,i,"s64")))
+        else:
+          return(os.path.join(self._patternDir,"Reference%d_%s.txt" % (i,"s64")))
+
+
+    def refU64P(self,i,name=None):
+        """ Path to a reference pattern from the ID
+      
+        Args:
+          i (int): ID to the reference pattern
+        Raises:
+          Nothing 
+        Returns:
+          str : path to the file where to generate the pattern data
+        """
+        if name:
+          return(os.path.join(self._patternDir,"%s%d_%s.txt" % (name,i,"u64")))
+        else:
+          return(os.path.join(self._patternDir,"Reference%d_%s.txt" % (i,"u64")))
+
+
 
     def refQ63P(self,i,name=None):
         """ Path to a reference pattern from the ID
@@ -638,6 +816,85 @@ class Config:
                   f.write("// %d\n" % v)
                   f.write("%s\n" % s16(v))
 
+    def _writeVectorU16(self,i,data):
+        """ Write pattern data
+        
+        The format is recognized by the text framework script.
+        First line is the sample width (B,H or W for 8,16 or 32 bits)
+        Second line is number of samples
+        Other lines are hexadecimal representation of the samples in format
+        which can be read on big endian ARM.
+        
+          Args:
+            j (int): ID of pattern file
+            data (array): Vector containing the data
+          Raises:
+            Nothing 
+          Returns:
+            Nothing
+        """
+        if self.canOverwrite(i):
+          with open(i,"w") as f:
+              # Write sample dimension nb sample header
+              #np.savetxt(i, data, newline="\n", header="W\n%d" % len(data),comments ="" )
+              f.write("H\n%d\n" % len(data))
+              for v in data:
+                  f.write("// %d\n" % v)
+                  f.write("%s\n" % u16(v))
+
+    def _writeVectorS64(self,i,data):
+        """ Write pattern data
+        
+        The format is recognized by the text framework script.
+        First line is the sample width (B,H or W for 8,16 or 32 bits)
+        Second line is number of samples
+        Other lines are hexadecimal representation of the samples in format
+        which can be read on big endian ARM.
+        
+          Args:
+            j (int): ID of pattern file
+            data (array): Vector containing the data
+          Raises:
+            Nothing 
+          Returns:
+            Nothing
+        """
+        if self.canOverwrite(i):
+          with open(i,"w") as f:
+              # Write sample dimension nb sample header
+              #np.savetxt(i, data, newline="\n", header="W\n%d" % len(data),comments ="" )
+              f.write("D\n%d\n" % len(data))
+              for v in data:
+                  f.write("// %d\n" % v)
+                  f.write("%s\n" % s64(v))
+
+
+    def _writeVectorU64(self,i,data):
+        """ Write pattern data
+        
+        The format is recognized by the text framework script.
+        First line is the sample width (B,H or W for 8,16 or 32 bits)
+        Second line is number of samples
+        Other lines are hexadecimal representation of the samples in format
+        which can be read on big endian ARM.
+        
+          Args:
+            j (int): ID of pattern file
+            data (array): Vector containing the data
+          Raises:
+            Nothing 
+          Returns:
+            Nothing
+        """
+        if self.canOverwrite(i):
+          with open(i,"w") as f:
+              # Write sample dimension nb sample header
+              #np.savetxt(i, data, newline="\n", header="W\n%d" % len(data),comments ="" )
+              f.write("D\n%d\n" % len(data))
+              for v in data:
+                  f.write("// %d\n" % v)
+                  f.write("%s\n" % u64(v))
+
     def _writeVectorS32(self,i,data):
         """ Write pattern data
         
@@ -742,6 +999,32 @@ class Config:
                   f.write("// %d\n" % v)
                   f.write("%s\n" % s8(v))
 
+    def _writeVectorU8(self,i,data):
+        """ Write pattern data
+        
+        The format is recognized by the text framework script.
+        First line is the sample width (B,H or W for 8,16 or 32 bits)
+        Second line is number of samples
+        Other lines are hexadecimal representation of the samples in format
+        which can be read on big endian ARM.
+        
+          Args:
+            j (int): ID of pattern file
+            data (array): Vector containing the data
+          Raises:
+            Nothing 
+          Returns:
+            Nothing
+        """
+        if self.canOverwrite(i):
+          with open(i,"w") as f:
+              # Write sample dimension nb sample header
+              #np.savetxt(i, data, newline="\n", header="W\n%d" % len(data),comments ="" )
+              f.write("B\n%d\n" % len(data))
+              for v in data:
+                  f.write("// %d\n" % v)
+                  f.write("%s\n" % u8(v))
+
     def writeReference(self,j,data,name=None):
         if (self._ext == "f64"):
           self._writeVectorF64(self.refP(j,name),data)
@@ -757,10 +1040,22 @@ class Config:
           self._writeVectorQ15(self.refP(j,name),data)
         if (self._ext == "q7"):
           self._writeVectorQ7(self.refP(j,name),data)
+        if (self._ext == "s64"):
+          self._writeVectorS64(self.refP(j,name),data)
+        if (self._ext == "u64"):
+          self._writeVectorU64(self.refP(j,name),data)
+        if (self._ext == "s32"):
+          self._writeVectorS32(self.refP(j,name),data)
         if (self._ext == "u32"):
           self._writeVectorU32(self.refP(j,name),data)
+        if (self._ext == "s16"):
+          self._writeVectorS16(self.refP(j,name),data)
+        if (self._ext == "u16"):
+          self._writeVectorU16(self.refP(j,name),data)
         if (self._ext == "s8"):
           self._writeVectorS8(self.refP(j,name),data)
+        if (self._ext == "u8"):
+          self._writeVectorU8(self.refP(j,name),data)
 
     def writeReferenceQ63(self,j,data,name=None):
         self._writeVectorQ63(self.refQ63P(j,name),data)
@@ -777,6 +1072,21 @@ class Config:
     def writeReferenceS32(self,j,data,name=None):
         self._writeVectorS32(self.refS32P(j,name),data)
 
+    def writeReferenceS64(self,j,data,name=None):
+        self._writeVectorS64(self.refS64P(j,name),data)
+
+    def writeReferenceU8(self,j,data,name=None):
+        self._writeVectorU8(self.refU8P(j,name),data)
+
+    def writeReferenceU16(self,j,data,name=None):
+        self._writeVectorU16(self.refU16P(j,name),data)
+       
+    def writeReferenceU32(self,j,data,name=None):
+        self._writeVectorU32(self.refU32P(j,name),data)
+
+    def writeReferenceU64(self,j,data,name=None):
+        self._writeVectorU64(self.refU64P(j,name),data)
+
     def writeReferenceF32(self,j,data,name=None):
         self._writeVectorF32(self.refF32P(j,name),data)
 
@@ -790,22 +1100,35 @@ class Config:
           self._writeVectorF32(self.inputP(j,name),data)
         if (self._ext == "f16"):
           self._writeVectorF16(self.inputP(j,name),data)
+        if (self._ext == "q63"):
+          self._writeVectorQ63(self.inputP(j,name),data)
         if (self._ext == "q31"):
           self._writeVectorQ31(self.inputP(j,name),data)
         if (self._ext == "q15"):
           self._writeVectorQ15(self.inputP(j,name),data)
         if (self._ext == "q7"):
           self._writeVectorQ7(self.inputP(j,name),data)
+        if (self._ext == "s64"):
+          self._writeVectorS64(self.inputP(j,name),data)
+        if (self._ext == "u64"):
+          self._writeVectorU64(self.inputP(j,name),data)
+        if (self._ext == "s32"):
+          self._writeVectorS32(self.inputP(j,name),data)
         if (self._ext == "u32"):
           self._writeVectorU32(self.inputP(j,name),data)
         if (self._ext == "s8"):
           self._writeVectorS8(self.inputP(j,name),data)
+        if (self._ext == "u8"):
+          self._writeVectorU8(self.inputP(j,name),data)
 
     def writeInputF32(self,j,data,name=None):
         self._writeVectorF32(self.inputF32P(j,name),data)
 
     def writeInputF16(self,j,data,name=None):
         self._writeVectorF16(self.inputF16P(j,name),data)
+
+    def writeInputQ63(self,j,data,name=None):
+        self._writeVectorQ63(self.inputQ63P(j,name),data)
 
     def writeInputQ31(self,j,data,name=None):
         self._writeVectorQ31(self.inputQ31P(j,name),data)
@@ -816,6 +1139,9 @@ class Config:
     def writeInputQ7(self,j,data,name=None):
         self._writeVectorQ7(self.inputQ7P(j,name),data)
 
+    def writeInputS64(self,j,data,name=None):
+        self._writeVectorS64(self.inputS64P(j,name),data)
+
     def writeInputS32(self,j,data,name=None):
         self._writeVectorS32(self.inputS32P(j,name),data)
 
@@ -825,8 +1151,17 @@ class Config:
     def writeInputS8(self,j,data,name=None):
         self._writeVectorS8(self.inputS8P(j,name),data)
 
+    def writeInputU64(self,j,data,name=None):
+        self._writeVectorU64(self.inputU64P(j,name),data)
+
     def writeInputU32(self,j,data,name=None):
         self._writeVectorU32(self.inputU32P(j,name),data)
+
+    def writeInputU16(self,j,data,name=None):
+        self._writeVectorU16(self.inputU16P(j,name),data)
+
+    def writeInputU8(self,j,data,name=None):
+        self._writeVectorU8(self.inputU8P(j,name),data)
 
     def writeParam(self,j,data,name=None):
         """ Write pattern data

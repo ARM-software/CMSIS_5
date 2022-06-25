@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2022 Arm Limited or its affiliates.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -22,8 +22,8 @@
  * Description:  Optimized s8 depthwise convolution function for channel
  *               multiplier of 1 and 3x3 kernel size.
  *
- * $Date:        09. October 2020
- * $Revision:    V.2.0.1
+ * $Date:        19 April 2022
+ * $Revision:    V.3.0.0
  *
  * Target Processor:  Cortex-M CPUs
  *
@@ -49,17 +49,17 @@
  *
  */
 
-arm_status arm_depthwise_conv_3x3_s8(const cmsis_nn_context *ctx,
-                                     const cmsis_nn_dw_conv_params *dw_conv_params,
-                                     const cmsis_nn_per_channel_quant_params *quant_params,
-                                     const cmsis_nn_dims *input_dims,
-                                     const q7_t *input,
-                                     const cmsis_nn_dims *filter_dims,
-                                     const q7_t *kernel,
-                                     const cmsis_nn_dims *bias_dims,
-                                     const int32_t *bias,
-                                     const cmsis_nn_dims *output_dims,
-                                     q7_t *output)
+arm_cmsis_nn_status arm_depthwise_conv_3x3_s8(const cmsis_nn_context *ctx,
+                                              const cmsis_nn_dw_conv_params *dw_conv_params,
+                                              const cmsis_nn_per_channel_quant_params *quant_params,
+                                              const cmsis_nn_dims *input_dims,
+                                              const q7_t *input,
+                                              const cmsis_nn_dims *filter_dims,
+                                              const q7_t *kernel,
+                                              const cmsis_nn_dims *bias_dims,
+                                              const int32_t *bias,
+                                              const cmsis_nn_dims *output_dims,
+                                              q7_t *output)
 {
     (void)ctx;
     (void)bias_dims;
@@ -84,12 +84,12 @@ arm_status arm_depthwise_conv_3x3_s8(const cmsis_nn_context *ctx,
     /* Check input constraints input_ch == output_ch */
     if (input_ch != output_ch)
     {
-        return ARM_MATH_SIZE_MISMATCH;
+        return ARM_CMSIS_NN_ARG_ERROR;
     }
     /* Check input constraints pad_x <= 1 */
     if (pad_x > 1 || filter_dims->w != 3 || filter_dims->h != 3)
     {
-        return ARM_MATH_ARGUMENT_ERROR;
+        return ARM_CMSIS_NN_ARG_ERROR;
     }
 
     for (int32_t in_h = -pad_y, out_h = 0, out_idx = 0; out_h < output_y; in_h += stride_y, ++out_h)
@@ -204,7 +204,7 @@ arm_status arm_depthwise_conv_3x3_s8(const cmsis_nn_context *ctx,
     }
 
     /* Return to application */
-    return ARM_MATH_SUCCESS;
+    return ARM_CMSIS_NN_SUCCESS;
 }
 
 /**

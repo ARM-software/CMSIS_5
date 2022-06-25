@@ -54,7 +54,7 @@ def writeTests(config,format):
     output=[] 
     defs=[] 
 
-    if format == 0 or format == 31:
+    if format == Tools.F64 or format == 0 or format == 31:
        blk = [1, 2, 3, 8, 9,10,11, 16, 23]
        taps = [1, 2, 3, 4, 5, 6, 7, 8, 11, 16, 23, 25]
     elif format == 15 or format == 16:
@@ -98,14 +98,20 @@ def generatePatterns():
     PATTERNDIR = os.path.join("Patterns","DSP","Filtering","FIR","FIR")
     PARAMDIR = os.path.join("Parameters","DSP","Filtering","FIR","FIR")
     
+    configf64=Tools.Config(PATTERNDIR,PARAMDIR,"f64")
     configf32=Tools.Config(PATTERNDIR,PARAMDIR,"f32")
     configf16=Tools.Config(PATTERNDIR,PARAMDIR,"f16")
     configq31=Tools.Config(PATTERNDIR,PARAMDIR,"q31")
     configq15=Tools.Config(PATTERNDIR,PARAMDIR,"q15")
     configq7=Tools.Config(PATTERNDIR,PARAMDIR,"q7")
     
+    configf32.setOverwrite(False)
+    configf16.setOverwrite(False)
+    configq31.setOverwrite(False)
+    configq15.setOverwrite(False)
+    configq7.setOverwrite(False)
     
-    
+    writeTests(configf64,Tools.F64)
     writeTests(configf32,0)
     writeTests(configf16,16)
     writeTests(configq31,31)

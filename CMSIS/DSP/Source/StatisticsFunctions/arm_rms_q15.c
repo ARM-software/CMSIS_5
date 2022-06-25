@@ -93,10 +93,10 @@ void arm_rms_q15(
 
     /* Compute sum of squares and store result in a temporary variable. */
 #if defined (ARM_MATH_DSP)
-    in32 = read_q15x2_ia ((q15_t **) &pSrc);
+    in32 = read_q15x2_ia (&pSrc);
     sum = __SMLALD(in32, in32, sum);
 
-    in32 = read_q15x2_ia ((q15_t **) &pSrc);
+    in32 = read_q15x2_ia (&pSrc);
     sum = __SMLALD(in32, in32, sum);
 #else
     in = *pSrc++;

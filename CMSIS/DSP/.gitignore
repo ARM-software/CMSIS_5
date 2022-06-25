@@ -1,6 +1,7 @@
 DSP_Lib_TestSuite/build/
 PythonWrapper/build/
 PythonWrapper/cmsisdsp.cp36-win_amd64.pyd
+PythonWrapper/internal.cp36-win_amd64.pyd
 PythonWrapper/*.so
 PythonWrapper/rec_2.dat
 *.pickle
@@ -15,3 +16,6 @@ Projects/ARM/IntermediateFiles/
 .ipynb_checkpoints
 Examples/ARM/*/RTE/
 Examples/ARM/*/MTICoverageOut.cov
+CMSISDSP.egg-info/
+dist/
+

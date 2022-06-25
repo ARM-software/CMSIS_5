@@ -90,6 +90,66 @@ a double precision computation.
 
     }
 
+    void StatsTestsF16::test_absmax_no_idx_f16()
+    {
+        const float16_t *inp  = inputA.ptr();
+
+        float16_t result;
+
+        float16_t *refp  = ref.ptr();
+
+        float16_t *outp  = output.ptr();
+
+        arm_absmax_no_idx_f16(inp,
+              inputA.nbSamples(),
+              &result);
+
+        outp[0] = result;
+
+        ASSERT_EQ(result,refp[this->refOffset]);
+
+    }
+
+    void StatsTestsF16::test_min_no_idx_f16()
+    {
+        const float16_t *inp  = inputA.ptr();
+
+        float16_t result;
+
+        float16_t *refp  = ref.ptr();
+
+        float16_t *outp  = output.ptr();
+
+        arm_min_no_idx_f16(inp,
+              inputA.nbSamples(),
+              &result);
+
+        outp[0] = result;
+
+        ASSERT_EQ(result,refp[this->refOffset]);
+
+    }
+
+    void StatsTestsF16::test_absmin_no_idx_f16()
+    {
+        const float16_t *inp  = inputA.ptr();
+
+        float16_t result;
+
+        float16_t *refp  = ref.ptr();
+
+        float16_t *outp  = output.ptr();
+
+        arm_absmin_no_idx_f16(inp,
+              inputA.nbSamples(),
+              &result);
+
+        outp[0] = result;
+
+        ASSERT_EQ(result,refp[this->refOffset]);
+
+    }
+
 
     void StatsTestsF16::test_min_f16()
     {
@@ -381,7 +441,28 @@ a double precision computation.
       ASSERT_REL_ERROR(ref,output,REL_ERROR);
     } 
 
+    void StatsTestsF16::test_mse_f16()
+    {
+        const float16_t *inpA  = inputA.ptr();
+        const float16_t *inpB  = inputB.ptr();
 
+        float16_t result;
+
+        float16_t *refp  = ref.ptr();
+
+        float16_t *outp  = output.ptr();
+
+        arm_mse_f16(inpA,inpB,
+              inputA.nbSamples(),
+              &result);
+
+        outp[0] = result;
+
+        ASSERT_SNR(result,refp[this->refOffset],(float16_t)SNR_THRESHOLD);
+
+        ASSERT_REL_ERROR(result,refp[this->refOffset],(float16_t)REL_ERROR);
+
+    }
   
     void StatsTestsF16::setUp(Testing::testID_t id,std::vector<Testing::param_t>& paramsArgs,Client::PatternMgr *mgr)
     {
@@ -862,6 +943,166 @@ a double precision computation.
                index.create(1,StatsTestsF16::OUT_S16_ID,mgr);
 
                refOffset = 2;
+            }
+            break;
+
+            case StatsTestsF16::TEST_MIN_NO_IDX_F16_40:
+            {
+               inputA.reload(StatsTestsF16::INPUT1_F16_ID,mgr,7);
+              
+               ref.reload(StatsTestsF16::MINVALS_F16_ID,mgr);
+               
+               output.create(1,StatsTestsF16::OUT_F16_ID,mgr);
+
+               refOffset = 0;
+            }
+            break;
+
+            case StatsTestsF16::TEST_MIN_NO_IDX_F16_41:
+            {
+               inputA.reload(StatsTestsF16::INPUT1_F16_ID,mgr,16);
+              
+               ref.reload(StatsTestsF16::MINVALS_F16_ID,mgr);
+               
+               output.create(1,StatsTestsF16::OUT_F16_ID,mgr);
+
+               refOffset = 1;
+            }
+            break;
+
+            case StatsTestsF16::TEST_MIN_NO_IDX_F16_42:
+            {
+               inputA.reload(StatsTestsF16::INPUT1_F16_ID,mgr,23);
+              
+               ref.reload(StatsTestsF16::MINVALS_F16_ID,mgr);
+               
+               output.create(1,StatsTestsF16::OUT_F16_ID,mgr);
+
+               refOffset = 2;
+            }
+            break;
+
+            case StatsTestsF16::TEST_ABSMAX_NO_IDX_F16_43:
+            {
+               inputA.reload(StatsTestsF16::INPUTNEW1_F16_ID,mgr,7);
+              
+               ref.reload(StatsTestsF16::ABSMAXVALS_F16_ID,mgr);
+               
+               output.create(1,StatsTestsF16::OUT_F16_ID,mgr);
+
+               refOffset = 0;
+            }
+            break;
+
+            case StatsTestsF16::TEST_ABSMAX_NO_IDX_F16_44:
+            {
+               inputA.reload(StatsTestsF16::INPUTNEW1_F16_ID,mgr,16);
+              
+               ref.reload(StatsTestsF16::ABSMAXVALS_F16_ID,mgr);
+               
+               output.create(1,StatsTestsF16::OUT_F16_ID,mgr);
+
+               refOffset = 1;
+            }
+            break;
+
+            case StatsTestsF16::TEST_ABSMAX_NO_IDX_F16_45:
+            {
+               inputA.reload(StatsTestsF16::INPUTNEW1_F16_ID,mgr,23);
+              
+               ref.reload(StatsTestsF16::ABSMAXVALS_F16_ID,mgr);
+               
+               output.create(1,StatsTestsF16::OUT_F16_ID,mgr);
+
+               refOffset = 2;
+            }
+            break;
+
+            case StatsTestsF16::TEST_ABSMIN_NO_IDX_F16_46:
+            {
+               inputA.reload(StatsTestsF16::INPUTNEW1_F16_ID,mgr,7);
+              
+               ref.reload(StatsTestsF16::ABSMINVALS_F16_ID,mgr);
+               
+               output.create(1,StatsTestsF16::OUT_F16_ID,mgr);
+
+               refOffset = 0;
+            }
+            break;
+
+            case StatsTestsF16::TEST_ABSMIN_NO_IDX_F16_47:
+            {
+               inputA.reload(StatsTestsF16::INPUTNEW1_F16_ID,mgr,16);
+              
+               ref.reload(StatsTestsF16::ABSMINVALS_F16_ID,mgr);
+               
+               output.create(1,StatsTestsF16::OUT_F16_ID,mgr);
+
+               refOffset = 1;
+            }
+            break;
+
+            case StatsTestsF16::TEST_ABSMIN_NO_IDX_F16_48:
+            {
+               inputA.reload(StatsTestsF16::INPUTNEW1_F16_ID,mgr,23);
+              
+               ref.reload(StatsTestsF16::ABSMINVALS_F16_ID,mgr);
+               
+               output.create(1,StatsTestsF16::OUT_F16_ID,mgr);
+
+               refOffset = 2;
+            }
+            break;
+
+             case StatsTestsF16::TEST_MSE_F16_49:
+            {
+               inputA.reload(StatsTestsF16::INPUTNEW1_F16_ID,mgr,7);
+               inputB.reload(StatsTestsF16::INPUTNEW2_F16_ID,mgr,7);
+              
+               ref.reload(StatsTestsF16::MSE_F16_ID,mgr);
+               
+               output.create(1,StatsTestsF16::OUT_F16_ID,mgr);
+
+               refOffset = 0;
+            }
+            break;
+
+            case StatsTestsF16::TEST_MSE_F16_50:
+            {
+               inputA.reload(StatsTestsF16::INPUTNEW1_F16_ID,mgr,16);
+               inputB.reload(StatsTestsF16::INPUTNEW2_F16_ID,mgr,16);
+              
+               ref.reload(StatsTestsF16::MSE_F16_ID,mgr);
+               
+               output.create(1,StatsTestsF16::OUT_F16_ID,mgr);
+
+               refOffset = 1;
+            }
+            break;
+
+            case StatsTestsF16::TEST_MSE_F16_51:
+            {
+               inputA.reload(StatsTestsF16::INPUTNEW1_F16_ID,mgr,23);
+               inputB.reload(StatsTestsF16::INPUTNEW2_F16_ID,mgr,23);
+              
+               ref.reload(StatsTestsF16::MSE_F16_ID,mgr);
+               
+               output.create(1,StatsTestsF16::OUT_F16_ID,mgr);
+
+               refOffset = 2;
+            }
+            break;
+
+            case StatsTestsF16::TEST_MSE_F16_52:
+            {
+               inputA.reload(StatsTestsF16::INPUTNEW1_F16_ID,mgr,100);
+               inputB.reload(StatsTestsF16::INPUTNEW2_F16_ID,mgr,100);
+              
+               ref.reload(StatsTestsF16::MSE_F16_ID,mgr);
+               
+               output.create(1,StatsTestsF16::OUT_F16_ID,mgr);
+
+               refOffset = 3;
             }
             break;
         }

@@ -51,7 +51,7 @@
    *
    */
   q15_t arm_linear_interp_q15(
-  q15_t * pYData,
+  const q15_t * pYData,
   q31_t x,
   uint32_t nValues)
   {

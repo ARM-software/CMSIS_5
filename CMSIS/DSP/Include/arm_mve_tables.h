@@ -5,7 +5,7 @@
  *               used for MVE implementation only
  *
  * @version  V1.10.0
- * @date     08 July 2021
+ * @date     04 October 2021
  *
  * Target Processor: Cortex-M and Cortex-A cores
  * -------------------------------------------------------------------- */

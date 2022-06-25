@@ -1583,6 +1583,7 @@ group Root {
                 Pattern INPUTAC_Q31_ID : InputAC1_q31.txt 
                 Pattern INPUTBC_Q31_ID : InputBC1_q31.txt 
                 Output  OUT_Q31_ID : Output
+                Output  TMP_Q31_ID : Temp
 
                 Params PARAM1_ID = {
                   NBR = [5,10,40]
@@ -1595,6 +1596,7 @@ group Root {
                    Matrix Multiplication:test_mat_mult_q31
                    Complex Matrix Multiplication:test_mat_cmplx_mult_q31
                    Fast Matrix Multiplication:test_mat_mult_fast_q31
+                   Opt Matrix Multiplication:test_mat_mult_opt_q31
                 } -> PARAM1_ID
              }
 
@@ -1614,6 +1616,7 @@ group Root {
                 Pattern INPUTAC_Q15_ID : InputAC1_q15.txt 
                 Pattern INPUTBC_Q15_ID : InputBC1_q15.txt 
                 Output  OUT_Q15_ID : Output
+                Output  TMP_Q15_ID : Temp
 
                 Params PARAM1_ID = {
                   NBR = [5,10,40]

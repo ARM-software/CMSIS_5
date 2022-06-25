@@ -33,6 +33,10 @@ core_cm23.h       | for the Cortex-M23 processor
 core_cm33.h       | for the Cortex-M33 processor
 core_cm35p.h      | for the Cortex-M35P processor
 core_cm55.h       | for the Cortex-M55 processor
+core_cm85.h       | for the Cortex-M85 processor
+\endif
+\if STAR
+core_starmc1.h    | for the STAR-MC1 processor
 \endif
 \if ARMSC
 core_sc000.h      | for the SecurCore SC000 processor
@@ -71,6 +75,7 @@ ARM Cortex-M35P    | ARMCM35P_TZ             | Cortex-M35P based device with Tru
 ARM Cortex-M35P    | ARMCM35P_DSP_FP         | Cortex-M35P based device with SIMD, FPU, no TrustZone
 ARM Cortex-M35P    | ARMCM35P_DSP_FP_TZ      | Cortex-M35P based device with TrustZone, SIMD, FPU
 ARM Cortex-M55     | ARMCM55                 | Cortex-M55 based device with TrustZone, SIMD, double precision FPU, and floating-point MVE
+ARM Cortex-M85     | ARMCM85                 | Cortex-M85 based device with TrustZone, PACBTI, SIMD, double precision FPU, and floating-point MVE
 \endif
 \if ARMSC
 ARM SC000          | ARM SC000               | SC000 based device
@@ -194,6 +199,7 @@ The template files contain place holders:
 The device configuration of the template files is described in detail on the following pages:
   - \subpage startup_c_pg
   - \subpage startup_s_pg (deprecated)
+  - \subpage linker_sct_pg
   - \subpage system_c_pg
   - \subpage device_h_pg
 \if ARMv8M
@@ -204,7 +210,7 @@ The device configuration of the template files is described in detail on the fol
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\page startup_c_pg Startup File startup_<device>.c
+\page startup_c_pg Startup File startup_\<device\>.c
 
 The \ref startup_c_pg contains:
  - The reset handler which is executed after CPU reset and typically calls the \ref SystemInit function.
@@ -320,7 +326,7 @@ __NO_RETURN void Reset_Handler(void)
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\page startup_s_pg Startup File startup_<device>.s (deprecated)
+\page startup_s_pg Startup File startup_\<device\>.s (deprecated)
 
 The \ref startup_s_pg contains:
  - The reset handler which is executed after CPU reset and typically calls the \ref SystemInit function.
@@ -379,6 +385,71 @@ The files for other compiler vendors differ slightly in the syntax, but not in t
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
+\page linker_sct_pg Scatter-Loading description file \<device\>_ac<5|6>.sct
+
+A scatter file for linking is required when using a \ref startup_c_pg "C startup file".
+
+The \ref linker_sct_pg contains regions for:
+ - Code (read-only data, execute-only data)
+ - RAM (read/write data, zero-initialized data)
+ - Stack
+ - Heap
+ - Stack seal (Armv8-M/v8.1-M)
+ - CMSE veneer (Armv8-M/v8.1-M)
+
+Within the scatter file, the user needs to specify a set of macros. The scatter file is passed through the
+C preprocessor which uses these macros to calculate the start address and the size of the different regions.
+
+\code
+/*--------------------- Flash Configuration ----------------------------------
+; <h> Flash Configuration
+;   <o0> Flash Base Address <0x0-0xFFFFFFFF:8>
+;   <o1> Flash Size (in Bytes) <0x0-0xFFFFFFFF:8>
+; </h>
+ *----------------------------------------------------------------------------*/
+#define __ROM_BASE      0x00000000
+#define __ROM_SIZE      0x00080000
+
+/*--------------------- Embedded RAM Configuration ---------------------------
+; <h> RAM Configuration
+;   <o0> RAM Base Address    <0x0-0xFFFFFFFF:8>
+;   <o1> RAM Size (in Bytes) <0x0-0xFFFFFFFF:8>
+; </h>
+ *----------------------------------------------------------------------------*/
+#define __RAM_BASE      0x20000000
+#define __RAM_SIZE      0x00040000
+
+/*--------------------- Stack / Heap Configuration ---------------------------
+; <h> Stack / Heap Configuration
+;   <o0> Stack Size (in Bytes) <0x0-0xFFFFFFFF:8>
+;   <o1> Heap Size (in Bytes) <0x0-0xFFFFFFFF:8>
+; </h>
+ *----------------------------------------------------------------------------*/
+#define __STACK_SIZE    0x00000200
+#define __HEAP_SIZE     0x00000C00
+
+/*--------------------- CMSE Veneer Configuration ---------------------------
+; <h> CMSE Veneer Configuration
+;   <o0>  CMSE Veneer Size (in Bytes) <0x0-0xFFFFFFFF:32>
+; </h>
+ *----------------------------------------------------------------------------*/
+#define __CMSEVENEER_SIZE    0x200
+\endcode
+
+\note
+The stack is placed at the end of the available RAM and is growing downwards 
+whereas the Heap is placed after the application data and growing upwards.
+
+\section linker_sct_preproc_sec Preprocessor command
+The scatter file uses different preprocessor commands for Arm Compiler V6 and Arm Compiler V5
+ - \b AC6: #! armclang -E --target=arm-arm-none-eabi -mcpu=&lt;mcpu&gt; -xc
+ - \b AC5: #! armcc -E
+
+*/
+
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
 \page system_c_pg System Configuration Files system_<device>.c and system_<device>.h
 
 The \ref system_c_pg provides as a minimum the functions described under \ref system_init_gr.
@@ -416,7 +487,7 @@ The \ref device_h_pg contains the following sections that are device specific:
   - \ref device_access provides definitions for the \ref peripheral_gr to all device peripherals. It contains all data structures and the address mapping for device-specific peripherals.
   - <b>Access Functions for Peripherals (optional)</b> provide additional helper functions for peripherals that are useful for programming of these peripherals. Access Functions may be provided as inline functions or can be extern references to a device-specific library provided by the silicon vendor.
 
-<a href="Modules.html">\b Reference </a> describes the standard features and functions of the \ref device_h_pg in detail.
+<a href="modules.html">\b Reference </a> describes the standard features and functions of the \ref device_h_pg in detail.
 
 \section interrupt_number_sec Interrupt Number Definition
 
@@ -881,6 +952,81 @@ If these <i>\#defines</i> are missing default values are used.
       <td>\ref __ARMv81MML_REV or \ref __CM55_REV</td>
       <td>0x0000</td>
       <td>0x0000</td>
+      <td>Core revision number ([15:8] revision number, [7:0] patch number)</td>
+    </tr>
+    <tr>
+      <td>\ref __MPU_PRESENT</td>
+      <td>0 .. 1</td>
+      <td>0</td>
+      <td>Defines if a MPU is present or not</td>
+    </tr>
+    <tr>
+      <td>\ref __SAUREGION_PRESENT</td>
+      <td>0 .. 1</td>
+      <td>0</td>
+      <td>Defines if SAU regions are present or not</td>
+    </tr>
+    <tr>
+      <td>\ref __FPU_PRESENT</td>
+      <td>0 .. 1</td>
+      <td>0</td>
+      <td>Defines if a FPU is present or not</td>
+    </tr>
+    <tr>
+      <td>\ref __FPU_DP</td>
+      <td>0 .. 1</td>
+      <td>0</td>
+      <td>
+        The combination of the defines \ref __FPU_PRESENT and \ref __FPU_DP determine
+        whether the FPU is with single or double precision.
+      </td>
+    </tr>
+    <tr>
+      <td>\ref __ICACHE_PRESENT</td>
+      <td>0 .. 1</td>
+      <td>1</td>
+      <td>Instruction Chache present or not</td>
+    </tr>
+    <tr>
+      <td>\ref __DCACHE_PRESENT</td>
+      <td>0 .. 1</td>
+      <td>1</td>
+      <td>Data Chache present or not</td>
+    </tr>
+    <tr>
+      <td>\ref __VTOR_PRESENT</td>
+      <td>0 .. 1</td>
+      <td>1</td>
+      <td>Defines if a VTOR register is present or not</td>
+    </tr>
+    <tr>
+      <td>\ref __NVIC_PRIO_BITS</td>
+      <td>2 .. 8</td>
+      <td>3</td>
+      <td>Number of priority bits implemented in the NVIC (device specific)</td>
+    </tr>
+    <tr>
+      <td>\ref __Vendor_SysTickConfig</td>
+      <td>0 .. 1</td>
+      <td>0</td>
+      <td>Vendor defined <b>SysTick_Config</b> function.</td>
+    </tr>
+</table>
+\endif
+
+\if ARMv8M
+\b core_CM85.h
+<table class="cmtable">
+    <tr>
+      <th>\#define</th>
+      <th>Value Range</th>
+      <th>Default</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td>\ref __CM85_REV</td>
+      <td>0x0001</td>
+      <td>0x0001</td>
       <td>Core revision number ([15:8] revision number, [7:0] patch number)</td>
     </tr>
     <tr>
@@ -1490,6 +1636,7 @@ functionality provided by CMSIS-Core(M) dependent on the device capabilities.
 #define __CM33_REV                    /*!< \brief Cortex-M33 Core revision r0p1 \details ([15:8] revision number, [7:0] patch number) */
 #define __CM35P_REV                   /*!< \brief Cortex-M35P Core revision r0p1 \details ([15:8] revision number, [7:0] patch number) */
 #define __CM55_REV                    /*!< \brief Cortex-M55 Core revision r0p1 \details ([15:8] revision number, [7:0] patch number) */
+#define __CM85_REV                    /*!< \brief Cortex-M85 Core revision r0p1 \details ([15:8] revision number, [7:0] patch number) */
 #define __ARMv8MBL_REV                /*!< \brief Armv8-M Baseline device Core revision r0p1 \details ([15:8] revision number, [7:0] patch number) */
 #define __ARMv8MML_REV                /*!< \brief Armv8-M Mainline device Core revision r0p1 \details ([15:8] revision number, [7:0] patch number) */
 #define __ARMv81MML_REV               /*!< \brief Armv8.1-M Baseline device Core revision r0p1 \details ([15:8] revision number, [7:0] patch number) */

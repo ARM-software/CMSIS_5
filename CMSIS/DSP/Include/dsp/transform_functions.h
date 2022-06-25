@@ -583,6 +583,149 @@ arm_status arm_rfft_fast_init_f32 (
         q15_t * pState,
         q15_t * pInlineBuffer);
 
+  /**
+   * @brief Instance structure for the Floating-point MFCC function.
+   */
+typedef struct
+  {
+     const float32_t *dctCoefs; /**< Internal DCT coefficients */
+     const float32_t *filterCoefs; /**< Internal Mel filter coefficients */ 
+     const float32_t *windowCoefs; /**< Windowing coefficients */ 
+     const uint32_t *filterPos; /**< Internal Mel filter positions in spectrum */ 
+     const uint32_t *filterLengths; /**< Internal Mel filter  lengths */ 
+     uint32_t fftLen; /**< FFT length */
+     uint32_t nbMelFilters; /**< Number of Mel filters */
+     uint32_t nbDctOutputs; /**< Number of DCT outputs */
+#if defined(ARM_MFCC_CFFT_BASED)
+     /* Implementation of the MFCC is using a CFFT */
+     arm_cfft_instance_f32 cfft; /**< Internal CFFT instance */
+#else
+     /* Implementation of the MFCC is using a RFFT (default) */
+     arm_rfft_fast_instance_f32 rfft;
+#endif
+  } arm_mfcc_instance_f32 ;
+
+arm_status arm_mfcc_init_f32(
+  arm_mfcc_instance_f32 * S,
+  uint32_t fftLen,
+  uint32_t nbMelFilters,
+  uint32_t nbDctOutputs,
+  const float32_t *dctCoefs,
+  const uint32_t *filterPos,
+  const uint32_t *filterLengths,
+  const float32_t *filterCoefs,
+  const float32_t *windowCoefs
+  );
+
+
+/**
+  @brief         MFCC F32
+  @param[in]    S       points to the mfcc instance structure
+  @param[in]     pSrc points to the input samples
+  @param[out]     pDst  points to the output MFCC values
+  @param[inout]     pTmp  points to a temporary buffer of complex
+  @return        none
+ */
+  void arm_mfcc_f32(
+  const arm_mfcc_instance_f32 * S,
+  float32_t *pSrc,
+  float32_t *pDst,
+  float32_t *pTmp
+  );
+
+typedef struct
+  {
+     const q31_t *dctCoefs; /**< Internal DCT coefficients */
+     const q31_t *filterCoefs; /**< Internal Mel filter coefficients */ 
+     const q31_t *windowCoefs; /**< Windowing coefficients */ 
+     const uint32_t *filterPos; /**< Internal Mel filter positions in spectrum */ 
+     const uint32_t *filterLengths; /**< Internal Mel filter  lengths */ 
+     uint32_t fftLen; /**< FFT length */
+     uint32_t nbMelFilters; /**< Number of Mel filters */
+     uint32_t nbDctOutputs; /**< Number of DCT outputs */
+#if defined(ARM_MFCC_CFFT_BASED)
+     /* Implementation of the MFCC is using a CFFT */
+     arm_cfft_instance_q31 cfft; /**< Internal CFFT instance */
+#else
+     /* Implementation of the MFCC is using a RFFT (default) */
+     arm_rfft_instance_q31 rfft;
+#endif
+  } arm_mfcc_instance_q31 ;
+
+arm_status arm_mfcc_init_q31(
+  arm_mfcc_instance_q31 * S,
+  uint32_t fftLen,
+  uint32_t nbMelFilters,
+  uint32_t nbDctOutputs,
+  const q31_t *dctCoefs,
+  const uint32_t *filterPos,
+  const uint32_t *filterLengths,
+  const q31_t *filterCoefs,
+  const q31_t *windowCoefs
+  );
+
+
+/**
+  @brief         MFCC Q31
+  @param[in]    S       points to the mfcc instance structure
+  @param[in]     pSrc points to the input samples
+  @param[out]     pDst  points to the output MFCC values
+  @param[inout]     pTmp  points to a temporary buffer of complex
+  @return        none
+ */
+  arm_status arm_mfcc_q31(
+  const arm_mfcc_instance_q31 * S,
+  q31_t *pSrc,
+  q31_t *pDst,
+  q31_t *pTmp
+  );
+
+typedef struct
+  {
+     const q15_t *dctCoefs; /**< Internal DCT coefficients */
+     const q15_t *filterCoefs; /**< Internal Mel filter coefficients */ 
+     const q15_t *windowCoefs; /**< Windowing coefficients */ 
+     const uint32_t *filterPos; /**< Internal Mel filter positions in spectrum */ 
+     const uint32_t *filterLengths; /**< Internal Mel filter  lengths */ 
+     uint32_t fftLen; /**< FFT length */
+     uint32_t nbMelFilters; /**< Number of Mel filters */
+     uint32_t nbDctOutputs; /**< Number of DCT outputs */
+#if defined(ARM_MFCC_CFFT_BASED)
+     /* Implementation of the MFCC is using a CFFT */
+     arm_cfft_instance_q15 cfft; /**< Internal CFFT instance */
+#else
+     /* Implementation of the MFCC is using a RFFT (default) */
+     arm_rfft_instance_q15 rfft;
+#endif
+  } arm_mfcc_instance_q15 ;
+
+arm_status arm_mfcc_init_q15(
+  arm_mfcc_instance_q15 * S,
+  uint32_t fftLen,
+  uint32_t nbMelFilters,
+  uint32_t nbDctOutputs,
+  const q15_t *dctCoefs,
+  const uint32_t *filterPos,
+  const uint32_t *filterLengths,
+  const q15_t *filterCoefs,
+  const q15_t *windowCoefs
+  );
+
+
+/**
+  @brief         MFCC Q15
+  @param[in]    S       points to the mfcc instance structure
+  @param[in]     pSrc points to the input samples
+  @param[out]     pDst  points to the output MFCC values in q8.7 format
+  @param[inout]     pTmp  points to a temporary buffer of complex
+  @return        error status
+ */
+  arm_status arm_mfcc_q15(
+  const arm_mfcc_instance_q15 * S,
+  q15_t *pSrc,
+  q15_t *pDst,
+  q31_t *pTmp
+  );
 
 
 #ifdef   __cplusplus

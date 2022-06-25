@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION=5.5.3
+VERSION=5.5.4
 if [ -z "$JENKINS_FAMILY_ENV" ]; then
     ARTIFACTORY_URL=https://artifactory.eu02.arm.com:443/artifactory/mcu.promoted
 else

@@ -3,35 +3,60 @@
 #include "Error.h"
 #include "Test.h"
 
+#include "arm_common_tables.h"
+#include "dsp/utils.h"
 
-
-#define SNR_THRESHOLD 70
+#define SNR_THRESHOLD 69
 /* 
 
 Reference patterns are generated with
 a double precision computation.
 
 */
+#define ABS_SQRT_ERROR ((q15_t)6)
+
 #define ABS_ERROR ((q15_t)10)
 
-#define LOG_ABS_ERROR ((q15_t)1000)
+#define LOG_ABS_ERROR ((q15_t)3)
+#define ABS_ATAN_ERROR ((q15_t)3)
+#define DIV_ERROR ((q15_t)2)
+#define RECIP_ERROR ((q15_t)2)
+
 
     void FastMathQ15::test_vlog_q15()
     {
         const q15_t *inp  = input.ptr();
         q15_t *outp  = output.ptr();
 
-        //printf("Nb samples = %lu\n",ref.nbSamples());
         arm_vlog_q15(inp,outp,ref.nbSamples());
-        //arm_vlog_q15(inp,outp,1);
-        //printf("in = %08X\n",inp[124]);
-        //printf("out = %08X\n",outp[124]);
-    
-        //ASSERT_SNR(ref,output,(float32_t)SNR_THRESHOLD);
+        
+        ASSERT_SNR(ref,output,(float32_t)SNR_THRESHOLD);
         ASSERT_NEAR_EQ(ref,output,LOG_ABS_ERROR);
         ASSERT_EMPTY_TAIL(output);
 
     }
+
+    void FastMathQ15::test_atan2_scalar_q15()
+    {
+        const q15_t *inp  = input.ptr();
+        q15_t *outp  = output.ptr();
+        q15_t res;
+        unsigned long i;
+        arm_status status=ARM_MATH_SUCCESS;
+
+        for(i=0; i < ref.nbSamples(); i++)
+        {
+          status=arm_atan2_q15(inp[2*i],inp[2*i+1],&res);
+          outp[i]=res;
+          
+          ASSERT_TRUE((status == ARM_MATH_SUCCESS));
+
+        }
+
+        ASSERT_SNR(ref,output,(q15_t)SNR_THRESHOLD);
+        ASSERT_NEAR_EQ(ref,output,ABS_ATAN_ERROR);
+    }
+
 
     void FastMathQ15::test_division_q15()
     {
@@ -50,7 +75,7 @@ a double precision computation.
         (void)status;
 
         ASSERT_SNR(ref,output,(float32_t)SNR_THRESHOLD);
-        ASSERT_NEAR_EQ(ref,output,ABS_ERROR);
+        ASSERT_NEAR_EQ(ref,output,DIV_ERROR);
         ASSERT_EQ(refShift,shift);
 
     }
@@ -95,17 +120,37 @@ a double precision computation.
         arm_status status;
         unsigned long i;
 
+
         for(i=0; i < ref.nbSamples(); i++)
         {
+            
            status=arm_sqrt_q15(inp[i],&outp[i]);
            ASSERT_TRUE((status == ARM_MATH_SUCCESS) || ((inp[i] <= 0) && (status == ARM_MATH_ARGUMENT_ERROR)));
         }
 
         ASSERT_SNR(ref,output,(float32_t)SNR_THRESHOLD);
-        ASSERT_NEAR_EQ(ref,output,ABS_ERROR);
+        ASSERT_NEAR_EQ(ref,output,ABS_SQRT_ERROR);
 
     }
 
+    void FastMathQ15::test_recip_q15()
+    {
+        const q15_t *inp  = input.ptr();
+        q15_t *outp  = output.ptr();
+        int16_t *shiftp  = shift.ptr();
+
+      
+        for(unsigned long i=0; i < ref.nbSamples(); i++)
+        {
+          shiftp[i] = arm_recip_q15(inp[i],&outp[i],armRecipTableQ15);
+        }
+
+
+        ASSERT_SNR(ref,output,(float32_t)SNR_THRESHOLD);
+        ASSERT_NEAR_EQ(ref,output,RECIP_ERROR);
+        ASSERT_EQ(refShift,shift);
+
+    }
   
     void FastMathQ15::setUp(Testing::testID_t id,std::vector<Testing::param_t>& paramsArgs,Client::PatternMgr *mgr)
     {
@@ -188,6 +233,28 @@ a double precision computation.
 
             }
             break;
+
+            case FastMathQ15::TEST_ATAN2_SCALAR_Q15_9:
+            {
+               input.reload(FastMathQ15::ATAN2INPUT1_Q15_ID,mgr);
+               ref.reload(FastMathQ15::ATAN2_Q15_ID,mgr);
+               output.create(ref.nbSamples(),FastMathQ15::OUT_Q15_ID,mgr);
+            }
+            break;
+
+            case FastMathQ15::TEST_RECIP_Q15_10:
+            {
+               input.reload(FastMathQ15::RECIPINPUT1_Q15_ID,mgr);
+
+               ref.reload(FastMathQ15::RECIP_VAL_Q15_ID,mgr);
+               refShift.reload(FastMathQ15::RECIP_SHIFT_S16_ID,mgr);
+
+               output.create(ref.nbSamples(),FastMathQ15::OUT_Q15_ID,mgr);
+               shift.create(ref.nbSamples(),FastMathQ15::SHIFT_S16_ID,mgr);
+
+            }
+            break;
+
         }
         
     }

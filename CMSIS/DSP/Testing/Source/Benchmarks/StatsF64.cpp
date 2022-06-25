@@ -7,8 +7,7 @@
 
     void StatsF64::test_entropy_f64()
     {
-      float64_t out;
-      out = arm_entropy_f64(inap,this->nb);
+      (void)arm_entropy_f64(inap,this->nb);
       
 
     } 
@@ -18,9 +17,8 @@
     void StatsF64::test_kullback_leibler_f64()
     {
       
-      float64_t out;
 
-      out = arm_kullback_leibler_f64(inap,inbp,this->nb);
+      (void)arm_kullback_leibler_f64(inap,inbp,this->nb);
      
     } 
 

@@ -52,7 +52,7 @@
    *
    */
   q31_t arm_linear_interp_q31(
-  q31_t * pYData,
+  const q31_t * pYData,
   q31_t x,
   uint32_t nValues)
   {

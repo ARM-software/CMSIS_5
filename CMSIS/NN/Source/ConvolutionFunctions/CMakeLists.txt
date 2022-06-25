@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2019-2021 Arm Limited. All rights reserved.
+# Copyright (c) 2019-2022 Arm Limited.
 #
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -16,16 +16,6 @@
 # limitations under the License.
 #
 
-project(CMSISNNConvolutions)
-
 file(GLOB SRC "./*_s8*.c")
-add_library(CMSISNNConvolutions STATIC ${SRC})
-target_sources(CMSISNNConvolutions PUBLIC arm_convolve_s16.c arm_convolve_wrapper_s16.c)
-
-### Includes
-target_include_directories(CMSISNNConvolutions PUBLIC "${NN}/Include")
-target_include_directories(CMSISNNConvolutions PUBLIC "${ROOT}/CMSIS/Core/Include")
-target_include_directories(CMSISNNConvolutions PUBLIC "${ROOT}/CMSIS/DSP/Include")
-
-
-
+file(GLOB SRC_S16 "./*_s16*.c")
+target_sources(cmsis-nn PRIVATE ${SRC} ${SRC_S16})

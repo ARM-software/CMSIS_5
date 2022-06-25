@@ -132,7 +132,7 @@ pipeline {
                 script {
                     COMMIT = checkoutScmWithRetry(3)
                     echo "COMMIT: ${COMMIT}"
-                    VERSION = (sh(returnStdout: true, script: 'git describe --always')).trim()
+                    VERSION = (sh(returnStdout: true, script: 'git describe --tags --always')).trim()
                     echo "VERSION: '${VERSION}'"
                 }
 
@@ -214,8 +214,8 @@ echo """Stage schedule:
                                 - infinity
                               resources:
                                 requests:
-                                  cpu: 2
-                                  memory: 2Gi
+                                  cpu: 900m
+                                  memory: 3Gi
                         """.stripIndent()
                 }
             }
@@ -306,13 +306,14 @@ echo """Stage schedule:
                                 - infinity
                               resources:
                                 requests:
-                                  cpu: 2
-                                  memory: 2Gi
+                                  cpu: 900m
+                                  memory: 3Gi
                         """.stripIndent()
                 }
             }
             steps {
                 checkoutScmWithRetry(3)
+                sh('./CMSIS/Utilities/fetch_devtools.sh')
                 sh('./CMSIS/RTOS/RTX/LIB/fetch_libs.sh')
                 sh('./CMSIS/RTOS2/RTX/Library/fetch_libs.sh')
 
@@ -375,8 +376,8 @@ echo """Stage schedule:
                                             - infinity
                                           resources:
                                             requests:
-                                              cpu: 2
-                                              memory: 2Gi
+                                              cpu: 900m
+                                              memory: 3Gi
                                     """.stripIndent()
                             }
                         }

@@ -113,7 +113,7 @@ void arm_q7_to_q31(
     /* C = (q31_t) A << 24 */
 
     /* Convert from q7 to q31 and store result in destination buffer */
-    in = read_q7x4_ia ((q7_t **) &pIn);
+    in = read_q7x4_ia (&pIn);
 
 #ifndef ARM_MATH_BIG_ENDIAN
 

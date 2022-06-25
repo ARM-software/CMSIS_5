@@ -331,15 +331,16 @@ to configure the priority of an interrupt. It is equipped with the standard Syst
         - \token{CM0PLUS}: Arm Cortex-M0+
         - \token{CM0+}: Arm Cortex-M0+
         - \token{CM1}: Arm Cortex-M1 
-        - \token{SC000}: Arm Secure Core SC000
-        - \token{CM23}: Arm Cortex-M23
         - \token{CM3}: Arm Cortex-M3
+        - \token{CM4}: Arm Cortex-M4
+        - \token{CM7}: Arm Cortex-M7
+        - \token{CM23}: Arm Cortex-M23
         - \token{CM33}: Arm Cortex-M33
         - \token{CM35P}: Arm Cortex-M35P
         - \token{CM55}: Arm Cortex-M55
+        - \token{CM85}: Arm Cortex-M85
+        - \token{SC000}: Arm Secure Core SC000
         - \token{SC300}: Arm Secure Core SC300
-        - \token{CM4}: Arm Cortex-M4
-        - \token{CM7}: Arm Cortex-M7
         - \token{CA5}: Arm Cortex-A5
         - \token{CA7}: Arm Cortex-A7
         - \token{CA8}: Arm Cortex-A8
@@ -349,9 +350,10 @@ to configure the priority of an interrupt. It is equipped with the standard Syst
         - \token{CA53}: Arm Cortex-A53
         - \token{CA57}: Arm Cortex-A57
         - \token{CA72}: Arm Cortex-A72
+        - \token{SMC1}: Arm China STAR-MC1
         - \token{other}: other processor architectures
         </td>
-        <td>cpuNameType </td>
+        <td>cpuNameType</td>
         <td>1..1 </td>
     </tr> 
     <tr>

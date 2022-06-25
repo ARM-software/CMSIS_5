@@ -229,10 +229,17 @@ def  generatePatterns():
      PATTERNDIR = os.path.join("Patterns","DSP","Distance","Distance")
      PARAMDIR = os.path.join("Parameters","DSP","Distance","Distance")
      
+     configf64=Tools.Config(PATTERNDIR,PARAMDIR,"f64")
      configf32=Tools.Config(PATTERNDIR,PARAMDIR,"f32")
      configf16=Tools.Config(PATTERNDIR,PARAMDIR,"f16")
      configu32=Tools.Config(PATTERNDIR,PARAMDIR,"u32")
      
+     configf32.setOverwrite(False)
+     configf16.setOverwrite(False)
+     configu32.setOverwrite(False)
+
+
+     writeFTests(configf64)
      writeFTests(configf32)
      writeFTests(configf16)
      writeBTests(configu32)

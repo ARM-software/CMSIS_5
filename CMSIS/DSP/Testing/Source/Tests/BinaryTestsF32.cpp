@@ -16,6 +16,13 @@ a double precision computation.
 /* Upper bound of maximum matrix dimension used by Python */
 #define MAXMATRIXDIM 40
 
+static void checkInnerTail(float32_t *b)
+{
+    ASSERT_TRUE(b[0] == 0);
+    ASSERT_TRUE(b[1] == 0);
+    ASSERT_TRUE(b[2] == 0);
+    ASSERT_TRUE(b[3] == 0);
+}
 
 #define LOADDATA2()                          \
       const float32_t *inp1=input1.ptr();    \
@@ -68,6 +75,7 @@ a double precision computation.
           ASSERT_TRUE(status==ARM_MATH_SUCCESS);
 
           outp += (rows * columns);
+          checkInnerTail(outp);
 
       }
 
@@ -99,6 +107,7 @@ a double precision computation.
           ASSERT_TRUE(status==ARM_MATH_SUCCESS);
 
           outp += (2*rows * columns);
+          checkInnerTail(outp);
 
       }
 

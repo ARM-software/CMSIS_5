@@ -6,6 +6,8 @@
 
 #define SNR_THRESHOLD 60
 #define SNR_LOG_THRESHOLD 40
+#define SNR_ATAN2_THRESHOLD 60
+
 
 /* 
 
@@ -16,8 +18,9 @@ a double precision computation.
 #define REL_ERROR (1.0e-3)
 #define ABS_ERROR (1.0e-3)
 
-#define REL_LOG_ERROR (3.0e-2)
-#define ABS_LOG_ERROR (3.0e-2)
+
+#define REL_ERROR_ATAN (1.0e-3)
+#define ABS_ERROR_ATAN (2.0e-3)
 
 #if 0
     void FastMathF16::test_cos_f16()
@@ -54,6 +57,29 @@ a double precision computation.
 
 #endif 
 
+    void FastMathF16::test_atan2_scalar_f16()
+    {
+        const float16_t *inp  = input.ptr();
+        float16_t *outp  = output.ptr();
+        float16_t res;
+        unsigned long i;
+        arm_status status=ARM_MATH_SUCCESS;
+
+        for(i=0; i < ref.nbSamples(); i++)
+        {
+          status=arm_atan2_f16(inp[2*i],inp[2*i+1],&res);
+          outp[i]=res;
+          ASSERT_TRUE((status == ARM_MATH_SUCCESS));
+
+        }
+        //printf("%f %f %f\n",inp[2*i],inp[2*i+1],outp[i]);
+
+        ASSERT_SNR(ref,output,(float16_t)SNR_ATAN2_THRESHOLD);
+        ASSERT_CLOSE_ERROR(ref,output,ABS_ERROR_ATAN,REL_ERROR_ATAN);
+
+    }
+    
+
     void FastMathF16::test_sqrt_f16()
     {
         const float16_t *inp  = input.ptr();
@@ -74,15 +100,16 @@ a double precision computation.
 
     }
 
+
     void FastMathF16::test_vlog_f16()
     {
         const float16_t *inp  = input.ptr();
         float16_t *outp  = output.ptr();
 
         arm_vlog_f16(inp,outp,ref.nbSamples());
-    
-        ASSERT_SNR(ref,output,(float16_t)SNR_LOG_THRESHOLD);
-        ASSERT_CLOSE_ERROR(ref,output,ABS_LOG_ERROR,REL_LOG_ERROR);
+
+        //ASSERT_SNR(ref,output,(float16_t)SNR_THRESHOLD);
+        ASSERT_CLOSE_ERROR(ref,output,ABS_ERROR,REL_ERROR);
         ASSERT_EMPTY_TAIL(output);
 
     }
@@ -228,6 +255,14 @@ a double precision computation.
                ref.reload(FastMathF16::INVERSE1_F16_ID,mgr);
                output.create(ref.nbSamples(),FastMathF16::OUT_F16_ID,mgr);
 
+            }
+            break;
+
+            case FastMathF16::TEST_ATAN2_SCALAR_F16_13:
+            {
+               input.reload(FastMathF16::ATAN2INPUT1_F16_ID,mgr);
+               ref.reload(FastMathF16::ATAN2_F16_ID,mgr);
+               output.create(ref.nbSamples(),FastMathF16::OUT_F16_ID,mgr);
             }
             break;
         }

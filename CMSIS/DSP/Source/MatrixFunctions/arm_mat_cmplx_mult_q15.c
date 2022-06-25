@@ -461,8 +461,8 @@ arm_status arm_mat_cmplx_mult_q15(
 #if defined (ARM_MATH_DSP)
 
           /* read real and imag values from pSrcA and pSrcB buffer */
-          pSourceA = read_q15x2_ia ((q15_t **) &pInA);
-          pSourceB = read_q15x2_ia ((q15_t **) &pInB);
+          pSourceA = read_q15x2_ia (&pInA);
+          pSourceB = read_q15x2_ia (&pInB);
 
           /* Multiply and Accumlates */
 #ifdef ARM_MATH_BIG_ENDIAN
@@ -475,8 +475,8 @@ arm_status arm_mat_cmplx_mult_q15(
           sumImag += (q63_t) prod2;
 
           /* read real and imag values from pSrcA and pSrcB buffer */
-          pSourceA = read_q15x2_ia ((q15_t **) &pInA);
-          pSourceB = read_q15x2_ia ((q15_t **) &pInB);
+          pSourceA = read_q15x2_ia (&pInA);
+          pSourceB = read_q15x2_ia (&pInB);
 
           /* Multiply and Accumlates */
 #ifdef ARM_MATH_BIG_ENDIAN
@@ -534,8 +534,8 @@ arm_status arm_mat_cmplx_mult_q15(
 
 #if defined (ARM_MATH_DSP)
           /* read real and imag values from pSrcA and pSrcB buffer */
-          pSourceA = read_q15x2_ia ((q15_t **) &pInA);
-          pSourceB = read_q15x2_ia ((q15_t **) &pInB);
+          pSourceA = read_q15x2_ia (&pInA);
+          pSourceB = read_q15x2_ia (&pInB);
 
           /* Multiply and Accumlates */
 #ifdef ARM_MATH_BIG_ENDIAN

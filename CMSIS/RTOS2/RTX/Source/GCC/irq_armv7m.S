@@ -75,7 +75,7 @@ SVC_Handler:
         ldm      r0,{r0-r3,r12}         // Load function parameters and address from stack
         blx      r12                    // Call service function
         pop      {r12,lr}               // Restore SP and EXC_RETURN
-        stm      r12,{r0-r1}            // Store function return values
+        str      r0,[r12]               // Store function return value
 
 SVC_Context:
         ldr      r3,=osRtxInfo+I_T_RUN_OFS // Load address of osRtxInfo.thread.run

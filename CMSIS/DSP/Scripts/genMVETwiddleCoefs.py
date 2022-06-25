@@ -2,10 +2,19 @@ import numpy as np
 import math
 import argparse
 import sys
+import struct
 
 sys.path.append("PatternGeneration")
 
 import Tools
+
+# Force to f16 value
+def f16(x):
+    return struct.unpack('<e', struct.pack('<e', x))[0]
+
+# Force to f32 value
+def f32(x):
+    return struct.unpack('<f', struct.pack('<f', x))[0]
 
 parser = argparse.ArgumentParser(description='Generate C arrays')
 parser.add_argument('-f', nargs='?',type = str, default="../Source/CommonTables/arm_mve_tables.c", help="C File path")
@@ -45,7 +54,7 @@ def printCFloat32Array(f,name,arr):
     print("float32_t %s[%d]={" % (name,len(arr)),file=f)
 
     for d in arr:
-        val = "%.20ff," % d
+        val = "%.20ff," % f32(d)
         nb = nb + len(val)
         if nb > COLLIM:
             print("",file=f)
@@ -59,7 +68,7 @@ def printCFloat16Array(f,name,arr):
     print("float16_t %s[%d]={" % (name,len(arr)),file=f)
 
     for d in arr:
-        val = "(float16_t)%.20ff," % d
+        val = "(float16_t)%.13ff," % f16(d)
         nb = nb + len(val)
         if nb > COLLIM:
             print("",file=f)
@@ -329,12 +338,13 @@ cheader="""/* ------------------------------------------------------------------
  * Description:  common tables like fft twiddle factors, Bitreverse, reciprocal etc
  *               used for MVE implementation only
  *
- * $Date:        14. April 2020
+ * @version  V1.10.0
+ * @date     04 October 2021
  *
- * Target Processor: Cortex-M cores
+ * Target Processor: Cortex-M and Cortex-A cores
  * -------------------------------------------------------------------- */
 /*
- * Copyright (C) 2010-2020 ARM Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -351,11 +361,13 @@ cheader="""/* ------------------------------------------------------------------
  * limitations under the License.
  */
 
+ #include "arm_math_types%s.h"
+
  """ 
 
-cifdeMVEF="""#include "arm_math%s.h"
+cifdeMVEF="""
 
-#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(%s) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_FFT_ALLOW_TABLES)
 """
@@ -363,12 +375,12 @@ cifdeMVEF="""#include "arm_math%s.h"
 cfooterMVEF="""
 
 #endif /* !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_FFT_ALLOW_TABLES) */
-#endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
+#endif /* defined(%s) && !defined(ARM_MATH_AUTOVECTORIZE) */
 """
 
-cifdeMVEI="""#include "arm_math.h"
+cifdeMVEI="""
 
-#if defined(ARM_MATH_MVEI) 
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_FFT_ALLOW_TABLES)
 """
@@ -385,12 +397,13 @@ hheader="""/* ------------------------------------------------------------------
  * Description:  common tables like fft twiddle factors, Bitreverse, reciprocal etc
  *               used for MVE implementation only
  *
- * $Date:        14. April 2020
+ * @version  V1.10.0
+ * @date     04 October 2021
  *
- * Target Processor: Cortex-M cores
+ * Target Processor: Cortex-M and Cortex-A cores
  * -------------------------------------------------------------------- */
 /*
- * Copyright (C) 2010-2020 ARM Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -410,7 +423,7 @@ hheader="""/* ------------------------------------------------------------------
  #ifndef _ARM_MVE_TABLES_%sH
  #define _ARM_MVE_TABLES_%sH
 
- #include "arm_math%s.h"
+#include "arm_math_types%s.h"
 
 #ifdef   __cplusplus
 extern "C"
@@ -421,7 +434,7 @@ extern "C"
  """ 
 
 hifdefMVEF="""
-#if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(%s) && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_FFT_ALLOW_TABLES)
 """
@@ -429,12 +442,12 @@ hifdefMVEF="""
 hfooterMVEF="""
 #endif /* !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_FFT_ALLOW_TABLES) */
 
-#endif /* defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
+#endif /* defined(%s) && !defined(ARM_MATH_AUTOVECTORIZE) */
 
 """
 
 hifdefMVEI="""
-#if defined(ARM_MATH_MVEI) 
+#if defined(ARM_MATH_MVEI)  && !defined(ARM_MATH_AUTOVECTORIZE)
 
 #if !defined(ARM_DSP_CONFIG_TABLES) || defined(ARM_FFT_ALLOW_TABLES)
 """
@@ -456,20 +469,20 @@ hfooter="""
 
 with open(args.f16,'w') as f:
   with open(args.he16,'w') as h:
-     print(cheader % "_f16",file=f)
+     print(cheader % ("_f16","_f16"),file=f)
      print(hheader % ("_f16","F16_","F16_","_f16"),file=h)
 
      print("#if defined(ARM_FLOAT16_SUPPORTED)",file=f)
 
-     print(cifdeMVEF % "_f16",file=f)
-     print(hifdefMVEF,file=h)
+     print(cifdeMVEF % ("ARM_MATH_MVE_FLOAT16",),file=f)
+     print(hifdefMVEF % "ARM_MATH_MVE_FLOAT16",file=h)
      reorderTwiddle(F16,False,f,h,16)
      reorderTwiddle(F16,False,f,h,64)
      reorderTwiddle(F16,False,f,h,256)
      reorderTwiddle(F16,False,f,h,1024)
      reorderTwiddle(F16,False,f,h,4096)
-     print(cfooterMVEF,file=f)
-     print(hfooterMVEF,file=h)
+     print(cfooterMVEF % ("ARM_MATH_MVE_FLOAT16"),file=f)
+     print(hfooterMVEF % "ARM_MATH_MVE_FLOAT16",file=h)
 
      print("#endif /* if defined(ARM_FLOAT16_SUPPORTED) */",file=f)
 
@@ -477,19 +490,19 @@ with open(args.f16,'w') as f:
 
 with open(args.f,'w') as f:
   with open(args.he,'w') as h:
-     print(cheader % "",file=f)
+     print(cheader % ("",""),file=f)
      print(hheader % ("","","",""),file=h)
 
     
-     print(cifdeMVEF % "",file=f)
-     print(hifdefMVEF,file=h)
+     print(cifdeMVEF % ("ARM_MATH_MVEF",),file=f)
+     print(hifdefMVEF % "ARM_MATH_MVEF",file=h)
      reorderTwiddle(F32,False,f,h,16)
      reorderTwiddle(F32,False,f,h,64)
      reorderTwiddle(F32,False,f,h,256)
      reorderTwiddle(F32,False,f,h,1024)
      reorderTwiddle(F32,False,f,h,4096)
-     print(cfooterMVEF,file=f)
-     print(hfooterMVEF,file=h)
+     print(cfooterMVEF % ("ARM_MATH_MVEF"),file=f)
+     print(hfooterMVEF % "ARM_MATH_MVEF",file=h)
 
      print(cifdeMVEI,file=f)
      print(hifdefMVEI,file=h)

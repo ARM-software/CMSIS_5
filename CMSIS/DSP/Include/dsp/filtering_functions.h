@@ -91,6 +91,16 @@ extern "C"
   } arm_fir_instance_f32;
 
   /**
+   * @brief Instance structure for the floating-point FIR filter.
+   */
+  typedef struct
+  {
+          uint16_t numTaps;     /**< number of filter coefficients in the filter. */
+          float64_t *pState;    /**< points to the state variable array. The array is of length numTaps+blockSize-1. */
+    const float64_t *pCoeffs;   /**< points to the coefficient array. The array is of length numTaps. */
+  } arm_fir_instance_f64;
+
+  /**
    * @brief Processing function for the Q7 FIR filter.
    * @param[in]  S          points to an instance of the Q7 FIR filter structure.
    * @param[in]  pSrc       points to the block of input data.
@@ -227,6 +237,19 @@ extern "C"
         uint32_t blockSize);
 
   /**
+   * @brief Processing function for the floating-point FIR filter.
+   * @param[in]  S          points to an instance of the floating-point FIR structure.
+   * @param[in]  pSrc       points to the block of input data.
+   * @param[out] pDst       points to the block of output data.
+   * @param[in]  blockSize  number of samples to process.
+   */
+  void arm_fir_f64(
+  const arm_fir_instance_f64 * S,
+  const float64_t * pSrc,
+        float64_t * pDst,
+        uint32_t blockSize);
+
+  /**
    * @brief  Initialization function for the floating-point FIR filter.
    * @param[in,out] S          points to an instance of the floating-point FIR filter structure.
    * @param[in]     numTaps    Number of filter coefficients in the filter.
@@ -239,6 +262,21 @@ extern "C"
         uint16_t numTaps,
   const float32_t * pCoeffs,
         float32_t * pState,
+        uint32_t blockSize);
+
+  /**
+   * @brief  Initialization function for the floating-point FIR filter.
+   * @param[in,out] S          points to an instance of the floating-point FIR filter structure.
+   * @param[in]     numTaps    Number of filter coefficients in the filter.
+   * @param[in]     pCoeffs    points to the filter coefficients.
+   * @param[in]     pState     points to the state buffer.
+   * @param[in]     blockSize  number of samples that are processed at a time.
+   */
+  void arm_fir_init_f64(
+        arm_fir_instance_f64 * S,
+        uint16_t numTaps,
+  const float64_t * pCoeffs,
+        float64_t * pState,
         uint32_t blockSize);
 
   /**
@@ -1794,6 +1832,22 @@ void arm_biquad_cascade_df2T_compute_coefs_f32(
   const float32_t * pSrcB,
         uint32_t srcBLen,
         float32_t * pDst);
+
+
+  /**
+   * @brief Correlation of floating-point sequences.
+   * @param[in]  pSrcA    points to the first input sequence.
+   * @param[in]  srcALen  length of the first input sequence.
+   * @param[in]  pSrcB    points to the second input sequence.
+   * @param[in]  srcBLen  length of the second input sequence.
+   * @param[out] pDst     points to the block of output data  Length 2 * max(srcALen, srcBLen) - 1.
+   */
+  void arm_correlate_f64(
+  const float64_t * pSrcA,
+        uint32_t srcALen,
+  const float64_t * pSrcB,
+        uint32_t srcBLen,
+        float64_t * pDst);
 
 
 /**

@@ -176,7 +176,7 @@ void arm_biquad_cascade_df1_f32(
     const float32_t *pCoeffs = S->pCoeffs;    /*  coefficient pointer       */
     float32_t Xn1, Xn2, Yn1, Yn2;       /*  Filter pState variables   */
     float32_t lastX, lastY;             /*  X,Y history for tail handling */
-    float32_t X0, X1, X2, X3;           /*  temporary input           */
+    float32_t X0, X1, X2, X3 = 0;       /*  temporary input           */
     f32x4_t coeffs;
     f32x4_t accVec;                   /* accumultor vector */
     uint32_t  sample, stage = S->numStages; /*  loop counters             */

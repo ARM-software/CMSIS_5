@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2022 Arm Limited or its affiliates.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -43,7 +43,6 @@ void softmax_arm_softmax_s8(void)
 
 void softmax_invalid_diff_min_arm_softmax_s8(void)
 {
-    const q7_t softmax_expect_invalid_output[] = {-128, -128, -128, -128, -128};
     const int32_t num_rows = SOFTMAX_NUM_ROWS;
     const int32_t row_size = SOFTMAX_ROW_SIZE;
     const int32_t mult = SOFTMAX_INPUT_MULT;
@@ -52,9 +51,16 @@ void softmax_invalid_diff_min_arm_softmax_s8(void)
     const q7_t *input_data = softmax_input;
     int8_t output[SOFTMAX_DST_SIZE];
 
+    q7_t *softmax_expect_invalid_output = malloc(SOFTMAX_DST_SIZE);
+    for (int i = 0; i < SOFTMAX_DST_SIZE; i++)
+    {
+        softmax_expect_invalid_output[i] = -128;
+    }
+
     for (int i = 0; i < REPEAT_NUM; i++)
     {
         arm_softmax_s8(input_data, num_rows, row_size, mult, shift, diff_min, output);
         TEST_ASSERT_TRUE(validate(output, softmax_expect_invalid_output, SOFTMAX_DST_SIZE));
     }
+    free(softmax_expect_invalid_output);
 }

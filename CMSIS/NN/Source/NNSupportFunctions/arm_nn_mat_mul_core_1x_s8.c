@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2022 Arm Limited or its affiliates.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_nn_mat_mul_core_1x_s8.c
  * Description:  General Matrix-multiplication function
  *
- * $Date:        09. October 2020
- * $Revision:    V.1.0.2
+ * $Date:        20 April 2022
+ * $Revision:    V.2.0.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -45,24 +45,24 @@
  *
  */
 
-arm_status arm_nn_mat_mul_core_1x_s8(int32_t row_elements,
-                                     const int8_t *row_base,
-                                     const int8_t *col_base,
-                                     int32_t *const sum_col,
-                                     int32_t *const output)
+arm_cmsis_nn_status arm_nn_mat_mul_core_1x_s8(int32_t row_elements,
+                                              const int8_t *row_base,
+                                              const int8_t *col_base,
+                                              int32_t *const sum_col,
+                                              int32_t *const output)
 {
     int32_t acc_n0 = 0;
     int32_t sum_tmp = 0;
 
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
 
-    __ASM volatile("   vldrb.8         q0, [%[col]], 16     \n"
+    __ASM volatile("   vldrb.8         q0, [%[col]], #16     \n"
                    "   wlstp.8         lr, %[cnt], 1f       \n"
                    "2:                                      \n"
                    "   vaddva.s8      %[sum], q0            \n"
-                   "   vldrb.8         q1, [%[row0]], 16    \n"
+                   "   vldrb.8         q1, [%[row0]], #16    \n"
                    "   vmladava.s8    %[out0], q0, q1       \n"
-                   "   vldrb.8         q0, [%[col]], 16     \n"
+                   "   vldrb.8         q0, [%[col]], #16     \n"
                    "   letp            lr, 2b               \n"
                    "1:                                      \n"
                    : [col] "+r"(col_base), [sum] "+Te"(sum_tmp), [row0] "+r"(row_base), [out0] "+Te"(acc_n0)
@@ -78,7 +78,7 @@ arm_status arm_nn_mat_mul_core_1x_s8(int32_t row_elements,
 
     *sum_col = sum_tmp;
     *output = acc_n0;
-    return ARM_MATH_SUCCESS;
+    return ARM_CMSIS_NN_SUCCESS;
 }
 
 /**

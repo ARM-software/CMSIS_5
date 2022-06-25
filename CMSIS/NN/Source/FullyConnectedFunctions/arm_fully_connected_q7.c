@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2022 Arm Limited or its affiliates.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_fully_connected_q7.c
  * Description:  Q7 basic fully-connected layer function
  *
- * $Date:        July 20, 2021
- * $Revision:    V.1.1.2
+ * $Date:        19 April 2022
+ * $Revision:    V.2.0.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -51,7 +51,7 @@
  * @param[in]       bias        pointer to bias
  * @param[in,out]   pOut        pointer to output vector
  * @param[in,out]   vec_buffer  pointer to buffer space for input
- * @return     The function returns <code>ARM_MATH_SUCCESS</code>
+ * @return     The function returns <code>ARM_CMSIS_NN_SUCCESS</code>
  *
  * @details
  *
@@ -64,15 +64,15 @@
  *
  */
 
-arm_status arm_fully_connected_q7(const q7_t *pV,
-                                  const q7_t *pM,
-                                  const uint16_t dim_vec,
-                                  const uint16_t num_of_rows,
-                                  const uint16_t bias_shift,
-                                  const uint16_t out_shift,
-                                  const q7_t *bias,
-                                  q7_t *pOut,
-                                  q15_t *vec_buffer)
+arm_cmsis_nn_status arm_fully_connected_q7(const q7_t *pV,
+                                           const q7_t *pM,
+                                           const uint16_t dim_vec,
+                                           const uint16_t num_of_rows,
+                                           const uint16_t bias_shift,
+                                           const uint16_t out_shift,
+                                           const q7_t *bias,
+                                           q7_t *pOut,
+                                           q15_t *vec_buffer)
 {
 
 #if defined(ARM_MATH_DSP) && !defined(ARM_MATH_MVEI)
@@ -191,8 +191,8 @@ arm_status arm_fully_connected_q7(const q7_t *pV,
 
 #endif /* ARM_MATH_DSP */
 
-    /* Return to ARM_MATH_SUCCESS */
-    return (ARM_MATH_SUCCESS);
+    /* Return to ARM_CMSIS_NN_SUCCESS */
+    return (ARM_CMSIS_NN_SUCCESS);
 }
 
 /**

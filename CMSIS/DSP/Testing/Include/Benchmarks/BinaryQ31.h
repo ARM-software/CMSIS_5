@@ -14,6 +14,7 @@ class BinaryQ31:public Client::Suite
             Client::Pattern<q31_t> input1;
             Client::Pattern<q31_t> input2;
             Client::LocalPattern<q31_t> output;
+            Client::LocalPattern<q31_t> tmp;
 
             int nbr;
             int nbi;
@@ -22,5 +23,6 @@ class BinaryQ31:public Client::Suite
             arm_matrix_instance_q31 in1;
             arm_matrix_instance_q31 in2;
             arm_matrix_instance_q31 out;
+            q31_t *tmpPtr;
             
     };

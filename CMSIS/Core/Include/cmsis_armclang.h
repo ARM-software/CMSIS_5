@@ -1,11 +1,11 @@
 /**************************************************************************//**
  * @file     cmsis_armclang.h
  * @brief    CMSIS compiler armclang (Arm Compiler 6) header file
- * @version  V5.4.3
- * @date     27. May 2021
+ * @version  V5.4.4
+ * @date     30. May 2022
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2021 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2022 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -719,7 +719,7 @@ __STATIC_FORCEINLINE void __STL(uint32_t value, volatile uint32_t *ptr)
            (defined (__ARM_ARCH_8M_BASE__  ) && (__ARM_ARCH_8M_BASE__   == 1)) || \
            (defined (__ARM_ARCH_8_1M_MAIN__) && (__ARM_ARCH_8_1M_MAIN__ == 1))     ) */
 
-/*@}*/ /* end of group CMSIS_Core_InstructionInterface */
+/** @}*/ /* end of group CMSIS_Core_InstructionInterface */
 
 
 /* ###########################  Core Function Access  ########################### */
@@ -1403,11 +1403,11 @@ __STATIC_FORCEINLINE void __TZ_set_MSPLIM_NS(uint32_t MainStackPtrLimit)
      (defined (__FPU_USED   ) && (__FPU_USED    == 1U))     )
 #define __set_FPSCR      __builtin_arm_set_fpscr
 #else
-#define __set_FPSCR(x)      ((void)(x))
+#define __set_FPSCR(fpscr)      ((void)(fpscr))
 #endif
 
 
-/*@} end of CMSIS_Core_RegAccFunctions */
+/** @} end of CMSIS_Core_RegAccFunctions */
 
 
 /* ###################  Compiler specific Intrinsics  ########################### */
@@ -1497,7 +1497,7 @@ __STATIC_FORCEINLINE int32_t __SMMLA (int32_t op1, int32_t op2, int32_t op3)
 }
 
 #endif /* (__ARM_FEATURE_DSP == 1) */
-/*@} end of group CMSIS_SIMD_intrinsics */
+/** @} end of group CMSIS_SIMD_intrinsics */
 
 
 #endif /* __CMSIS_ARMCLANG_H */

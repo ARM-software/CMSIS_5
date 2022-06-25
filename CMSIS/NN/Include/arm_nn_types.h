@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020-2021 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2020-2022 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -22,8 +22,8 @@
  * Description:  Public header file to contain the CMSIS-NN structs for the
  *               TensorFlowLite micro compliant functions
  *
- * $Date:        19. March 2021
- * $Revision:    V.2.0.0
+ * $Date:        22. Februari 2022
+ * $Revision:    V.2.1.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -126,5 +126,12 @@ typedef struct
     cmsis_nn_activation input_activation;
     cmsis_nn_activation output_activation;
 } cmsis_nn_svdf_params;
+
+/** CMSIS-NN object for Softmax s16 layer parameters */
+typedef struct
+{
+    const int16_t *exp_lut;
+    const int16_t *one_by_one_lut;
+} cmsis_nn_softmax_lut_s16;
 
 #endif // _ARM_NN_TYPES_H

@@ -167,8 +167,8 @@ arm_status arm_mat_sub_q15(
 
       /* Subtract, Saturate and store result in destination buffer. */
 #if defined (ARM_MATH_DSP)
-      write_q15x2_ia (&pOut, __QSUB16(read_q15x2_ia ((q15_t **) &pInA), read_q15x2_ia ((q15_t **) &pInB)));
-      write_q15x2_ia (&pOut, __QSUB16(read_q15x2_ia ((q15_t **) &pInA), read_q15x2_ia ((q15_t **) &pInB)));
+      write_q15x2_ia (&pOut, __QSUB16(read_q15x2_ia (&pInA), read_q15x2_ia (&pInB)));
+      write_q15x2_ia (&pOut, __QSUB16(read_q15x2_ia (&pInA), read_q15x2_ia (&pInB)));
 #else
       *pOut++ = (q15_t) __SSAT(((q31_t) * pInA++ - *pInB++), 16);
       *pOut++ = (q15_t) __SSAT(((q31_t) * pInA++ - *pInB++), 16);

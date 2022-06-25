@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2022 Arm Limited or its affiliates.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_avgpool_s8.c
  * Description:  Pooling function implementations
  *
- * $Date:        01. March 2021
- * $Revision:    V.2.0.4
+ * $Date:        17 May 2022
+ * $Revision:    V.3.0.1
  *
  * Target Processor:  Cortex-M CPUs
  *
@@ -41,6 +41,7 @@ static void scale_q31_to_q7_and_clamp(const q31_t *buffer,
                                       const int act_max)
 {
     const int half_count = count / 2;
+
     for (int i = 0; i < length; i++)
     {
         int32_t sum = buffer[i] > 0 ? (buffer[i] + half_count) : (buffer[i] - half_count);
@@ -71,13 +72,13 @@ static void scale_q31_to_q7_and_clamp(const q31_t *buffer,
 
 #if defined(ARM_MATH_MVEI)
 
-arm_status arm_avgpool_s8(const cmsis_nn_context *ctx,
-                          const cmsis_nn_pool_params *pool_params,
-                          const cmsis_nn_dims *input_dims,
-                          const q7_t *src,
-                          const cmsis_nn_dims *filter_dims,
-                          const cmsis_nn_dims *output_dims,
-                          q7_t *dst)
+arm_cmsis_nn_status arm_avgpool_s8(const cmsis_nn_context *ctx,
+                                   const cmsis_nn_pool_params *pool_params,
+                                   const cmsis_nn_dims *input_dims,
+                                   const q7_t *src,
+                                   const cmsis_nn_dims *filter_dims,
+                                   const cmsis_nn_dims *output_dims,
+                                   q7_t *dst)
 {
     (void)ctx;
     const int32_t input_y = input_dims->h;
@@ -160,7 +161,7 @@ arm_status arm_avgpool_s8(const cmsis_nn_context *ctx,
                 // Prevent static code issue DIVIDE_BY_ZERO.
                 if (count == 0)
                 {
-                    return ARM_MATH_ARGUMENT_ERROR;
+                    return ARM_CMSIS_NN_ARG_ERROR;
                 }
 
                 sumV1[0] = sumV1[0] > 0 ? (sumV1[0] + count / 2) / count : (sumV1[0] - count / 2) / count;
@@ -225,6 +226,13 @@ arm_status arm_avgpool_s8(const cmsis_nn_context *ctx,
                         count++;
                     }
                 }
+
+                // Prevent static code issue DIVIDE_BY_ZERO.
+                if (count == 0)
+                {
+                    return ARM_CMSIS_NN_ARG_ERROR;
+                }
+
                 sum = sum > 0 ? (sum + count / 2) / count : (sum - count / 2) / count;
                 sum = MAX(sum, act_min);
                 sum = MIN(sum, act_max);
@@ -236,17 +244,17 @@ arm_status arm_avgpool_s8(const cmsis_nn_context *ctx,
             }
         }
     }
-    return ARM_MATH_SUCCESS;
+    return ARM_CMSIS_NN_SUCCESS;
 }
 
 #else
-arm_status arm_avgpool_s8(const cmsis_nn_context *ctx,
-                          const cmsis_nn_pool_params *pool_params,
-                          const cmsis_nn_dims *input_dims,
-                          const q7_t *src,
-                          const cmsis_nn_dims *filter_dims,
-                          const cmsis_nn_dims *output_dims,
-                          q7_t *dst)
+arm_cmsis_nn_status arm_avgpool_s8(const cmsis_nn_context *ctx,
+                                   const cmsis_nn_pool_params *pool_params,
+                                   const cmsis_nn_dims *input_dims,
+                                   const q7_t *src,
+                                   const cmsis_nn_dims *filter_dims,
+                                   const cmsis_nn_dims *output_dims,
+                                   q7_t *dst)
 {
     const int32_t input_y = input_dims->h;
     const int32_t input_x = input_dims->w;
@@ -261,6 +269,11 @@ arm_status arm_avgpool_s8(const cmsis_nn_context *ctx,
     const int32_t act_min = pool_params->activation.min;
     const int32_t act_max = pool_params->activation.max;
     const int32_t ch_src = input_dims->c;
+
+    if (ctx->buf == NULL && arm_avgpool_s8_get_buffer_size(output_dims->w, input_dims->c))
+    {
+        return ARM_CMSIS_NN_ARG_ERROR;
+    }
     q31_t *buffer = (q31_t *)ctx->buf;
 
 #if defined(ARM_MATH_DSP)
@@ -310,7 +323,7 @@ arm_status arm_avgpool_s8(const cmsis_nn_context *ctx,
             // Prevent static code issue DIVIDE_BY_ZERO.
             if (count == 0)
             {
-                return ARM_MATH_ARGUMENT_ERROR;
+                return ARM_CMSIS_NN_ARG_ERROR;
             }
 
             scale_q31_to_q7_and_clamp(buffer, dst, ch_src, count, act_min, act_max);
@@ -348,7 +361,7 @@ arm_status arm_avgpool_s8(const cmsis_nn_context *ctx,
                 // Prevent static code issue DIVIDE_BY_ZERO.
                 if (count == 0)
                 {
-                    return ARM_MATH_ARGUMENT_ERROR;
+                    return ARM_CMSIS_NN_ARG_ERROR;
                 }
 
                 sum = sum > 0 ? (sum + count / 2) / count : (sum - count / 2) / count;
@@ -361,7 +374,7 @@ arm_status arm_avgpool_s8(const cmsis_nn_context *ctx,
     }
 
 #endif
-    return ARM_MATH_SUCCESS;
+    return ARM_CMSIS_NN_SUCCESS;
 }
 
 #endif /* ARM_MATH_MVEI */

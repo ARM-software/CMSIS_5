@@ -186,7 +186,7 @@ void arm_biquad_cascade_df2T_f16(
     while (stage > 0U);
 }
 #else
-LOW_OPTIMIZATION_ENTER
+
 void arm_biquad_cascade_df2T_f16(
   const arm_biquad_cascade_df2T_instance_f16 * S,
   const float16_t * pSrc,
@@ -486,7 +486,6 @@ void arm_biquad_cascade_df2T_f16(
    } while (stage > 0U);
 
 }
-LOW_OPTIMIZATION_EXIT
 #endif /* #if defined(ARM_MATH_MVEF) && !defined(ARM_MATH_AUTOVECTORIZE) */
 /**
   @} end of BiquadCascadeDF2T group
