@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 #
-# Copyright (C) 2010-2022 Arm Limited or its affiliates.
+# SPDX-FileCopyrightText: Copyright 2010-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
 #
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -1172,16 +1172,16 @@ def load_all_testdatasets():
                                           w_y=10, stride_x=1, stride_y=2, pad=True,
                                           out_activation_min=-127, out_activation_max=127)
     dataset = 'conv_1_x_n_1'
-    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=3, out_ch=3, x_in=5, y_in=5, w_x=2,
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=3, out_ch=3, x_in=16, y_in=1, w_x=2,
                                           w_y=1, stride_x=2, stride_y=1, pad=False, out_activation_min=-127,
                                           out_activation_max=127, batches=2)
     dataset = 'conv_1_x_n_2'
-    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=3, out_ch=1, x_in=11, y_in=11, w_x=11,
-                                          w_y=1, stride_x=1, stride_y=1, pad=True,
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=4, out_ch=1, x_in=16, y_in=1, w_x=4,
+                                          w_y=1, stride_x=2, stride_y=1, pad=True,
                                           out_activation_min=-111, out_activation_max=127)
     dataset = 'conv_1_x_n_3'
-    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=1, out_ch=3, x_in=11, y_in=11, w_x=1,
-                                          w_y=11, stride_x=1, stride_y=1, pad=True,
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=1, out_ch=3, x_in=12, y_in=2, w_x=1,
+                                          w_y=11, stride_x=1, stride_y=2, pad=True,
                                           out_activation_min=-88, out_activation_max=127)
     dataset = 'conv_2'
     TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=2, out_ch=4, x_in=6, y_in=3, w_x=3,
@@ -1431,26 +1431,26 @@ def load_all_testdatasets():
     TESTDATA_SETS[dataset] = AddMulSettings(dataset, type_of_test, args, channels=8, x_in=4, y_in=4,
                                             randmin=INT8_MIN, randmax=INT8_MAX)
     dataset = 'add_s16'
-    ALL_TESTDATA_SETS[dataset] = AddMulSettings(dataset, type_of_test, args, channels=8, x_in=4, y_in=4,
-                                                randmin=INT16_MIN, randmax=INT16_MAX, out_activation_min=INT16_MIN,
-                                                out_activation_max=INT16_MAX, int16xint8=True)
+    TESTDATA_SETS[dataset] = AddMulSettings(dataset, type_of_test, args, channels=8, x_in=4, y_in=4,
+                                            randmin=INT16_MIN, randmax=INT16_MAX, out_activation_min=INT16_MIN,
+                                            out_activation_max=INT16_MAX, int16xint8=True)
     dataset = 'add_s16_spill'
-    ALL_TESTDATA_SETS[dataset] = AddMulSettings(dataset, type_of_test, args, channels=7, x_in=5, y_in=3,
-                                                randmin=INT16_MIN, randmax=INT16_MAX, out_activation_min=-2000,
-                                                out_activation_max=INT16_MAX, int16xint8=True)
+    TESTDATA_SETS[dataset] = AddMulSettings(dataset, type_of_test, args, channels=7, x_in=5, y_in=3,
+                                            randmin=INT16_MIN, randmax=INT16_MAX, out_activation_min=-2000,
+                                            out_activation_max=INT16_MAX, int16xint8=True)
 
     type_of_test = 'mul'
     dataset = 'mul'
     TESTDATA_SETS[dataset] = AddMulSettings(dataset, type_of_test, args, channels=8, x_in=4, y_in=5,
                                             randmin=INT8_MIN, randmax=INT8_MAX)
     dataset = 'mul_s16'
-    ALL_TESTDATA_SETS[dataset] = AddMulSettings(dataset, type_of_test, args, channels=8, x_in=5, y_in=4,
-                                                randmin=INT16_MIN, randmax=INT16_MAX, out_activation_min=INT16_MIN,
-                                                out_activation_max=INT16_MAX, int16xint8=True)
+    TESTDATA_SETS[dataset] = AddMulSettings(dataset, type_of_test, args, channels=8, x_in=5, y_in=4,
+                                            randmin=INT16_MIN, randmax=INT16_MAX, out_activation_min=INT16_MIN,
+                                            out_activation_max=INT16_MAX, int16xint8=True)
     dataset = 'mul_s16_spill'
-    ALL_TESTDATA_SETS[dataset] = AddMulSettings(dataset, type_of_test, args, channels=7, x_in=5, y_in=7,
-                                                randmin=INT16_MIN, randmax=INT16_MAX, out_activation_min=INT16_MIN,
-                                                out_activation_max=1000, int16xint8=True)
+    TESTDATA_SETS[dataset] = AddMulSettings(dataset, type_of_test, args, channels=7, x_in=5, y_in=7,
+                                            randmin=INT16_MIN, randmax=INT16_MAX, out_activation_min=INT16_MIN,
+                                            out_activation_max=1000, int16xint8=True)
 
 
 if __name__ == '__main__':
