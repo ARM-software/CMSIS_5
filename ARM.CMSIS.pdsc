@@ -414,7 +414,7 @@
   <devices>
     <!-- ******************************  Cortex-M0  ****************************** -->
     <family Dfamily="ARM Cortex M0" Dvendor="ARM:82">
-      <book name="http://infocenter.arm.com/help/topic/com.arm.doc.dui0497a/index.html" title="Cortex-M0 Device Generic Users Guide"/>
+      <book name="https://developer.arm.com/documentation/dui0497" title="Cortex-M0 Processor Devices Generic Users Guide"/>
       <description>
 The Cortex-M0 processor is an entry-level 32-bit Arm Cortex processor designed for a broad range of embedded applications. It offers significant benefits to developers, including:
 - simple, easy-to-use programmers model
@@ -436,7 +436,7 @@ The Cortex-M0 processor is an entry-level 32-bit Arm Cortex processor designed f
 
     <!-- ******************************  Cortex-M0P  ****************************** -->
     <family Dfamily="ARM Cortex M0 plus" Dvendor="ARM:82">
-      <book name="http://infocenter.arm.com/help/topic/com.arm.doc.dui0662b/index.html" title="Cortex-M0+ Device Generic Users Guide"/>
+      <book name="https://developer.arm.com/documentation/dui0662" title="Cortex-M0+ Processor Devices Generic Users Guide"/>
       <description>
 The Cortex-M0+ processor is an entry-level 32-bit Arm Cortex processor designed for a broad range of embedded applications. It offers significant benefits to developers, including:
 - simple, easy-to-use programmers model
@@ -463,7 +463,7 @@ The Cortex-M0+ processor is an entry-level 32-bit Arm Cortex processor designed 
 
     <!-- ******************************  Cortex-M1  ****************************** -->
     <family Dfamily="ARM Cortex M1" Dvendor="ARM:82">
-      <!--book name="http://infocenter.arm.com/help/topic/com.arm.doc.dui0497a/index.html" title="Cortex-M1 Device Generic Users Guide"/-->
+      <!--book name="https://developer.arm.com/documentation/dui0497" title="Cortex-M0 Processor Devices Generic Users Guide"/-->
       <description>
 The ARM Cortex-M1 FPGA processor is intended for deeply embedded applications that require a small processor integrated into an FPGA.
 The ARM Cortex-M1 processor implements the ARMv6-M architecture profile.
@@ -481,7 +481,7 @@ The ARM Cortex-M1 processor implements the ARMv6-M architecture profile.
 
     <!-- ******************************  Cortex-M3  ****************************** -->
     <family Dfamily="ARM Cortex M3" Dvendor="ARM:82">
-      <book name="http://infocenter.arm.com/help/topic/com.arm.doc.dui0552a/index.html" title="Cortex-M3 Device Generic Users Guide"/>
+      <book name="https://developer.arm.com/documentation/dui0552" title="Cortex-M3 Processor Devices Generic Users Guide"/>
       <description>
 The Cortex-M3 processor is an entry-level 32-bit Arm Cortex processor designed for a broad range of embedded applications. It offers significant benefits to developers, including:
 - simple, easy-to-use programmers model
@@ -503,7 +503,7 @@ The Cortex-M3 processor is an entry-level 32-bit Arm Cortex processor designed f
 
     <!-- ******************************  Cortex-M4  ****************************** -->
     <family Dfamily="ARM Cortex M4" Dvendor="ARM:82">
-      <book name="http://infocenter.arm.com/help/topic/com.arm.doc.dui0553a/index.html" title="Cortex-M4 Device Generic Users Guide"/>
+      <book name="https://developer.arm.com/documentation/dui0553" title="Cortex-M4 Processor Devices Generic Users Guide"/>
       <description>
 The Cortex-M4 processor is an entry-level 32-bit Arm Cortex processor designed for a broad range of embedded applications. It offers significant benefits to developers, including:
 - simple, easy-to-use programmers model
@@ -530,7 +530,7 @@ The Cortex-M4 processor is an entry-level 32-bit Arm Cortex processor designed f
 
     <!-- ******************************  Cortex-M7  ****************************** -->
     <family Dfamily="ARM Cortex M7" Dvendor="ARM:82">
-      <book name="http://infocenter.arm.com/help/topic/com.arm.doc.dui0646b/index.html" title="Cortex-M7 Device Generic Users Guide"/>
+      <book name="https://developer.arm.com/documentation/dui0646" title="Cortex-M7 Processor Devices Generic Users Guide"/>
       <description>
 The Cortex-M7 processor is an entry-level 32-bit Arm Cortex processor designed for a broad range of embedded applications. It offers significant benefits to developers, including:
 - simple, easy-to-use programmers model
@@ -562,7 +562,7 @@ The Cortex-M7 processor is an entry-level 32-bit Arm Cortex processor designed f
 
     <!-- ******************************  Cortex-M23  ********************** -->
     <family Dfamily="ARM Cortex M23" Dvendor="ARM:82">
-      <!--book name="Device/ARM/Documents/??_dgug.pdf"       title="?? Device Generic Users Guide"/-->
+      <book name="https://developer.arm.com/documentation/dui1095"       title="Cortex-M23 Processor Devices Generic Users Guide"/>
       <description>
 The Arm Cortex-M23 is based on the Armv8-M baseline architecture.
 It is the smallest and most energy efficient Arm processor with Arm TrustZone technology.
@@ -588,7 +588,7 @@ Cortex-M23 is the ideal processor for constrained embedded applications requirin
 
     <!-- ******************************  Cortex-M33  ****************************** -->
     <family Dfamily="ARM Cortex M33" Dvendor="ARM:82">
-      <!--book name="Device/ARM/Documents/??_dgug.pdf"       title="?? Device Generic Users Guide"/-->
+      <book name="https://developer.arm.com/documentation/100235"       title="Cortex-M33 Processor Devices Generic Users Guide"/>
       <description>
 The Arm Cortex-M33 is the most configurable of all Cortex-M processors. It is a full featured microcontroller
 class processor based on the Armv8-M mainline architecture with Arm TrustZone security.
@@ -683,7 +683,7 @@ class processor based on the Armv8-M mainline architecture with Arm TrustZone se
 
     <!-- ******************************  Cortex-M55  ****************************** -->
     <family Dfamily="ARM Cortex M55" Dvendor="ARM:82">
-      <!--book name="Device/ARM/Documents/Arm Cortex-M55 Processor Datasheet.pdf" title="Arm Cortex-M55 Processor Datasheet"/-->
+      <book name="https://developer.arm.com/documentation/101273"       title="Cortex-M55 Processor Devices Generic Users Guide"/>
       <description>
 The Arm Cortex-M55 processor is a fully synthesizable, mid-range, microcontroller-class processor that implements the Armv8.1-M mainline architecture and includes support for the M-profile Vector Extension (MVE), also known as Arm Helium technology.
 It is Arm's most AI-capable Cortex-M processor, delivering enhanced, energy-efficient digital signal processing (DSP) and machine learning (ML) performance.
@@ -708,7 +708,7 @@ The Cortex-M55 processor achieves high compute performance across scalar and vec
 
     <!-- ******************************  Cortex-M85  ****************************** -->
     <family Dfamily="ARM Cortex M85" Dvendor="ARM:82">
-      <!--book name="Device/ARM/Documents/Arm Cortex-M85 Processor Datasheet.pdf" title="Arm Cortex-M85 Processor Datasheet"/-->
+      <book name="https://developer.arm.com/documentation/1019283"       title="Cortex-M85 Processor Devices Generic Users Guide"/>
       <description>
 The Arm Cortex-M85 processor is a fully synthesizable high-performance microcontroller class processor that implements the Armv8.1-M Mainline architecture which includes support for the M-profile Vector Extension (MVE).
 The processor also supports previous Armv8-M architectural features.
@@ -774,7 +774,7 @@ The ARM SC300 processor is an entry-level 32-bit ARM Cortex processor designed f
 
     <!-- ******************************  ARMv8-M Baseline  ********************** -->
     <family Dfamily="ARMv8-M Baseline" Dvendor="ARM:82">
-      <!--book name="Device/ARM/Documents/ARMv8MBL_dgug.pdf"       title="ARMv8MBL Device Generic Users Guide"/-->
+      <book name="https://developer.arm.com/documentation/ddi0553"       title="Armv8-M Architecture Reference Manual"/>
       <description>
 Armv8-M Baseline based device with TrustZone
       </description>
@@ -793,7 +793,7 @@ Armv8-M Baseline based device with TrustZone
 
     <!-- ******************************  ARMv8-M Mainline  ****************************** -->
     <family Dfamily="ARMv8-M Mainline" Dvendor="ARM:82">
-      <!--book name="Device/ARM/Documents/ARMv8MML_dgug.pdf"       title="ARMv8MML Device Generic Users Guide"/-->
+      <book name="https://developer.arm.com/documentation/ddi0553"       title="Armv8-M Architecture Reference Manual"/>
       <description>
 Armv8-M Mainline based device with TrustZone
       </description>
@@ -855,7 +855,7 @@ Armv8-M Mainline based device with TrustZone
 
     <!-- ******************************  ARMv8.1-M Mainline  ****************************** -->
     <family Dfamily="ARMv8.1-M Mainline" Dvendor="ARM:82">
-      <!--book name="Device/ARM/Documents/ARMv8MML_dgug.pdf"       title="ARMv8MML Device Generic Users Guide"/-->
+      <book name="https://developer.arm.com/documentation/ddi0553"       title="Armv8-M Architecture Reference Manual"/>
       <description>
 Armv8.1-M Mainline based device with TrustZone and MVE
       </description>
@@ -878,7 +878,7 @@ Armv8.1-M Mainline based device with TrustZone and MVE
 
     <!-- ******************************  Cortex-A5  ****************************** -->
     <family Dfamily="ARM Cortex A5" Dvendor="ARM:82">
-      <book name="http://infocenter.arm.com/help/topic/com.arm.doc.ddi0433c/index.html" title="Cortex-A5 Technical Reference Manual"/>
+      <book name="https://developer.arm.com/documentation/ddi0433" title="Cortex-A5 Technical Reference Manual"/>
       <description>
 The Arm Cortex-A5 processor is a high-performance, low-power, Arm macrocell with an L1 cache subsystem that provides full
 virtual memory capabilities. The Cortex-A5 processor implements the Armv7-A architecture profile and can execute 32-bit
@@ -898,7 +898,7 @@ Arm instructions and 16-bit and 32-bit Thumb instructions. The Cortex-A5 is the 
 
     <!-- ******************************  Cortex-A7  ****************************** -->
     <family Dfamily="ARM Cortex A7" Dvendor="ARM:82">
-      <book name="http://infocenter.arm.com/help/topic/com.arm.doc.ddi0464f/index.html" title="Cortex-A7 MPCore Technical Reference Manual"/>
+      <book name="https://developer.arm.com/documentation/ddi0464" title="Cortex-A7 MPCore Technical Reference Manual"/>
       <description>
 The Cortex-A7 MPCore processor is a high-performance, low-power processor that implements the Armv7-A architecture.
 The Cortex-A7 MPCore processor has one to four processors in a single multiprocessor device with a L1 cache subsystem,
@@ -918,7 +918,7 @@ an optional integrated GIC, and an optional L2 cache controller.
 
     <!-- ******************************  Cortex-A9  ****************************** -->
     <family Dfamily="ARM Cortex A9" Dvendor="ARM:82">
-      <book name="http://infocenter.arm.com/help/topic/com.arm.doc.100511_0401_10_en/index.html" title="Cortex-A9 Technical Reference Manual"/>
+      <book name="https://developer.arm.com/documentation/100511" title="Cortex-A9 Technical Reference Manual"/>
       <description>
 The Cortex-A9 processor is a high-performance, low-power, Arm macrocell with an L1 cache subsystem that provides full virtual memory capabilities.
 The Cortex-A9 processor implements the Armv7-A architecture and runs 32-bit Arm instructions, 16-bit and 32-bit Thumb instructions,
