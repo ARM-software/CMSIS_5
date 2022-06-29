@@ -86,7 +86,9 @@ doxygen "${DIRNAME}/Core/core.dxy" 1
 doxygen "${DIRNAME}/Core_A/core_A.dxy" 1
 doxygen "${DIRNAME}/DAP/dap.dxy" 1
 doxygen "${DIRNAME}/Driver/Driver.dxy" 1
-doxygen "${DIRNAME}/DSP/dsp.dxy" 1
+echo "Copying DSP html"
+mkdir -p "${DIRNAME}/../Documentation/DSP/"
+cp -r "${DIRNAME}/DSP/html" "${DIRNAME}/../Documentation/DSP/"
 doxygen "${DIRNAME}/General/general.dxy" 0
 doxygen "${DIRNAME}/DAP/dap.dxy" 1
 doxygen "${DIRNAME}/NN/nn.dxy" 1
