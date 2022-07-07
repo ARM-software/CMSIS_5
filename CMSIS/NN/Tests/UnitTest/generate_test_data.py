@@ -1298,16 +1298,50 @@ def load_all_testdatasets():
                                           w_y=2, stride_x=1, stride_y=1, pad=False, randmin=INT16_MIN,
                                           randmax=INT16_MAX, out_activation_min=-17000,
                                           out_activation_max=32767, int16xint8=True)
+    dataset = 'dw_int16xint8_fast_multiple_batches_uneven_buffers'
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=8, out_ch=8, x_in=5, y_in=5, w_x=3,
+                                          w_y=3, stride_x=1, stride_y=1, pad=False, randmin=INT16_MIN,
+                                          randmax=INT16_MAX, out_activation_min=-17000,
+                                          out_activation_max=32767, int16xint8=True, batches=3)
+    dataset = 'dw_int16xint8_fast_multiple_batches_uneven_buffers_null_bias'
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=8, out_ch=8, x_in=4, y_in=4, w_x=3,
+                                          w_y=2, stride_x=1, stride_y=1, pad=False, randmin=INT16_MIN,
+                                          randmax=INT16_MAX, out_activation_min=-17000,
+                                          out_activation_max=32767, int16xint8=True, batches=3, generate_bias=False)
+
+    dataset = 'dw_int16xint8_fast_test_bias'
+    nbr_of_out_channels = 8;
+    bias=[i for i in range(nbr_of_out_channels)];
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=8, out_ch=nbr_of_out_channels, x_in=4, y_in=4, w_x=2,
+                                          w_y=2, stride_x=1, stride_y=1, pad=False, randmin=INT16_MIN,
+                                          randmax=INT16_MAX, out_activation_min=-17000,
+                                          out_activation_max=32767, int16xint8=True, generate_bias=bias)
+
+    dataset = 'dw_int16xint8_fast_null_bias'
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=8, out_ch=8, x_in=4, y_in=4, w_x=2,
+                                          w_y=2, stride_x=1, stride_y=1, pad=False, randmin=INT16_MIN,
+                                          randmax=INT16_MAX, out_activation_min=-17000,
+                                          out_activation_max=32767, int16xint8=True, generate_bias=False)
     dataset = 'dw_int16xint8_fast_stride'
     TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=8, out_ch=8, x_in=4, y_in=4, w_x=2,
                                           w_y=2, stride_x=2, stride_y=2, pad=True, randmin=INT16_MIN,
                                           randmax=INT16_MAX, batches=2, out_activation_min=INT16_MIN,
                                           out_activation_max=16000, int16xint8=True)
+    dataset = 'dw_int16xint8_fast_stride_null_bias'
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=8, out_ch=8, x_in=4, y_in=4, w_x=2,
+                                          w_y=2, stride_x=2, stride_y=2, pad=True, randmin=INT16_MIN,
+                                          randmax=INT16_MAX, batches=2, out_activation_min=INT16_MIN,
+                                          out_activation_max=16000, int16xint8=True, generate_bias=False)
     dataset = 'dw_int16xint8_fast_spill'
     TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=5, out_ch=5, x_in=4, y_in=4, w_x=3,
                                           w_y=3, stride_x=2, stride_y=1, pad=True, randmin=INT16_MIN,
                                           randmax=INT16_MAX, batches=3, out_activation_min=-30000,
                                           out_activation_max=32767, int16xint8=True)
+    dataset = 'dw_int16xint8_fast_spill_null_bias'
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=5, out_ch=5, x_in=4, y_in=4, w_x=3,
+                                          w_y=3, stride_x=2, stride_y=1, pad=True, randmin=INT16_MIN,
+                                          randmax=INT16_MAX, batches=3, out_activation_min=-30000,
+                                          out_activation_max=32767, int16xint8=True, generate_bias=False)
 
     type_of_test = 'fully_connected'
     dataset = 'fully_connected'

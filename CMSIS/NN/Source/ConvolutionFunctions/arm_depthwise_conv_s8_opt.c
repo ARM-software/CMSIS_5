@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2022 Arm Limited or its affiliates.
+ * SPDX-FileCopyrightText: Copyright 2010-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -22,8 +22,8 @@
  * Description:  Optimized s8 depthwise separable convolution function for
  *               channel multiplier of 1.
  *
- * $Date:        19 April 2022
- * $Revision:    V.3.0.0
+ * $Date:        6 July 2022
+ * $Revision:    V.3.0.1
  *
  * Target Processor:  Cortex-M CPUs
  *
@@ -75,6 +75,7 @@ arm_cmsis_nn_status arm_depthwise_conv_s8_opt(const cmsis_nn_context *ctx,
         return ARM_CMSIS_NN_ARG_ERROR;
     }
 #ifdef ARM_MATH_DSP
+    (void)bias_dims;
     const int32_t input_x = input_dims->w;
     const int32_t input_y = input_dims->h;
     const int32_t kernel_x = filter_dims->w;
@@ -94,7 +95,6 @@ arm_cmsis_nn_status arm_depthwise_conv_s8_opt(const cmsis_nn_context *ctx,
     q15_t *buffer_a = (q15_t *)ctx->buf;
 
 #ifdef ARM_MATH_MVEI
-    (void)bias_dims;
     /* Generate two columns from the input tensor */
     q7_t *lhs_buffer = (q7_t *)buffer_a;
     q7_t *out = output;
@@ -170,8 +170,8 @@ arm_cmsis_nn_status arm_depthwise_conv_s8_opt(const cmsis_nn_context *ctx,
     for (int i_buf = 0; i_buf < buffer_count; i_buf++)
     {
         int32_t loop_count = (input_ch + 3) / 4;
-
         int32_t num_ch_to_process = input_ch;
+
         for (int i_loop_cnt = 0, offset = 0; i_loop_cnt < loop_count; num_ch_to_process -= 4, offset += 4, i_loop_cnt++)
         {
             const int8_t *col_0 = lhs_buffer + (kernel_size * input_ch * i_buf) + offset;
@@ -211,7 +211,6 @@ arm_cmsis_nn_status arm_depthwise_conv_s8_opt(const cmsis_nn_context *ctx,
     }
 
 #else // ARM_MATH_DSP
-    (void)bias_dims;
     /* Run the following code in cores using DSP extension */
     q15_t *const col_buffer_start = buffer_a;
     q15_t *col_buffer = col_buffer_start;
@@ -418,7 +417,7 @@ int32_t arm_depthwise_conv_s8_opt_get_buffer_size(const cmsis_nn_dims *input_dim
 {
 #if defined(ARM_MATH_MVEI)
     /* The + 4 accounts for out of bounds read of the lhs buffers in the *_nt_t_* functions.  */
-    return (2 * input_dims->c * filter_dims->w * filter_dims->h) * (int32_t)sizeof(int16_t) + 4;
+    return (4 * input_dims->c * filter_dims->w * filter_dims->h) * (int32_t)sizeof(int8_t) + 4;
 #elif defined(ARM_MATH_DSP)
     return (input_dims->c * filter_dims->w * filter_dims->h) * sizeof(int16_t);
 #else

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022 Arm Limited or its affiliates.
+ * SPDX-FileCopyrightText: Copyright 2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -22,8 +22,8 @@
  * Description:  Optimized s16 depthwise separable convolution function for
  *               channel multiplier of 1.
  *
- * $Date:        May 19, 2022
- * $Revision:    V.1.0.0
+ * $Date:        6 July 2022
+ * $Revision:    V.1.1.0
  *
  * Target Processor:  Cortex-M CPUs
  *
@@ -69,7 +69,7 @@ arm_cmsis_nn_status arm_depthwise_conv_fast_s16(const cmsis_nn_context *ctx,
         return ARM_CMSIS_NN_ARG_ERROR;
     }
 
-    if (filter_dims->w * filter_dims->h * input_ch >= 512)
+    if (filter_dims->w * filter_dims->h >= 512)
     {
         return ARM_CMSIS_NN_ARG_ERROR;
     }
@@ -78,10 +78,12 @@ arm_cmsis_nn_status arm_depthwise_conv_fast_s16(const cmsis_nn_context *ctx,
     {
         return ARM_CMSIS_NN_ARG_ERROR;
     }
-#if defined(ARM_MATH_DSP) && !defined(ARM_MATH_MVEI)
-    const int32_t input_batches = input_dims->n;
+
+#if defined(ARM_MATH_DSP)
+    (void)bias_dims;
     const int32_t input_x = input_dims->w;
     const int32_t input_y = input_dims->h;
+    const int32_t input_batches = input_dims->n;
     const int32_t kernel_x = filter_dims->w;
     const int32_t kernel_y = filter_dims->h;
     const int32_t pad_x = dw_conv_params->padding.w;
@@ -96,7 +98,124 @@ arm_cmsis_nn_status arm_depthwise_conv_fast_s16(const cmsis_nn_context *ctx,
     const int32_t output_activation_max = dw_conv_params->activation.max;
     q15_t *buffer_a = (q15_t *)ctx->buf;
 
-    (void)bias_dims;
+#if defined(ARM_MATH_MVEI)
+    int16_t *lhs_buffer = buffer_a;
+    int16_t *out = output;
+    int buffer_count = 0;
+    const int32_t kernel_size = kernel_x * kernel_y;
+
+    for (int i_batch = 0; i_batch < input_batches; i_batch++)
+    {
+        /* This part implements the im2col function */
+        for (int i_out_y = 0, base_idx_y = -pad_y; i_out_y < output_y; base_idx_y += stride_y, i_out_y++)
+        {
+            for (int i_out_x = 0, base_idx_x = -pad_x; i_out_x < output_x; base_idx_x += stride_x, i_out_x++)
+            {
+                for (int i_ker_y = base_idx_y; i_ker_y < base_idx_y + kernel_y; i_ker_y++)
+                {
+                    for (int i_ker_x = base_idx_x; i_ker_x < base_idx_x + kernel_x; i_ker_x++)
+                    {
+                        if (i_ker_y < 0 || i_ker_y >= input_y || i_ker_x < 0 || i_ker_x >= input_x)
+                        {
+                            memset(lhs_buffer, (int16_t)0, (uint32_t)(input_ch * sizeof(int16_t)));
+                        }
+                        else
+                        {
+                            arm_memcpy_q15(lhs_buffer,
+                                           (int16_t *)(input + (i_ker_y * input_x + i_ker_x) * input_ch),
+                                           (uint32_t)(input_ch * sizeof(int16_t)));
+                        }
+                        lhs_buffer += input_ch;
+                    }
+                }
+                buffer_count++;
+                if (buffer_count == 4)
+                {
+                    lhs_buffer = buffer_a;
+
+                    out = arm_nn_depthwise_conv_nt_t_s16(lhs_buffer,
+                                                         kernel,
+                                                         input_ch,
+                                                         output_shift,
+                                                         output_mult,
+                                                         output_activation_min,
+                                                         output_activation_max,
+                                                         kernel_size,
+                                                         bias,
+                                                         out);
+                    buffer_count = 0;
+                }
+            }
+        }
+        input += input_x * input_y * input_ch;
+    }
+
+    /* Handle left over buffers */
+    lhs_buffer = buffer_a;
+    for (int i_buf = 0; i_buf < buffer_count; i_buf++)
+    {
+        int32_t loop_count = (input_ch + 3) / 4;
+        int32_t num_ch_to_process = input_ch;
+
+        for (int i_loop_cnt = 0, offset = 0; i_loop_cnt < loop_count; num_ch_to_process -= 4, offset += 4, i_loop_cnt++)
+        {
+            const int8_t *row_0 = kernel + offset;
+            const int16_t *col_0 = lhs_buffer + (kernel_size * input_ch * i_buf) + offset;
+
+            int32x4_t out_0 = vdupq_n_s32(0);
+
+            for (int i_ker = 0; i_ker < kernel_size; i_ker++)
+            {
+                const int32x4_t ker_0 = vldrbq_s32(row_0);
+
+                int32x4_t ip_0 = vldrhq_s32(col_0);
+                out_0 += vmulq_s32(ip_0, ker_0);
+
+                col_0 += input_ch;
+                row_0 += input_ch;
+            }
+
+            int64_t in_requantize_0 = (int64_t)out_0[0];
+            int64_t in_requantize_1 = (int64_t)out_0[1];
+            int64_t in_requantize_2 = (int64_t)out_0[2];
+            int64_t in_requantize_3 = (int64_t)out_0[3];
+
+            if (bias)
+            {
+                in_requantize_0 += bias[offset];
+                in_requantize_1 += bias[offset + 1];
+                in_requantize_2 += bias[offset + 2];
+                in_requantize_3 += bias[offset + 3];
+            }
+
+            int32_t reduced_multiplier_0 = REDUCE_MULTIPLIER(output_mult[offset]);
+            int32_t reduced_multiplier_1 = REDUCE_MULTIPLIER(output_mult[offset + 1]);
+            int32_t reduced_multiplier_2 = REDUCE_MULTIPLIER(output_mult[offset + 2]);
+            int32_t reduced_multiplier_3 = REDUCE_MULTIPLIER(output_mult[offset + 3]);
+
+            out_0[0] = arm_nn_requantize_s64(in_requantize_0, reduced_multiplier_0, output_shift[offset]);
+            out_0[1] = arm_nn_requantize_s64(in_requantize_1, reduced_multiplier_1, output_shift[offset + 1]);
+            out_0[2] = arm_nn_requantize_s64(in_requantize_2, reduced_multiplier_2, output_shift[offset + 2]);
+            out_0[3] = arm_nn_requantize_s64(in_requantize_3, reduced_multiplier_3, output_shift[offset + 3]);
+
+            out_0 = vmaxq_s32(out_0, vdupq_n_s32(output_activation_min));
+            out_0 = vminq_s32(out_0, vdupq_n_s32(output_activation_max));
+
+            mve_pred16_t p = vctp32q((uint32_t)num_ch_to_process);
+            vstrhq_p_s32(out, out_0, p);
+
+            out += 4;
+        }
+
+        const int tail_ch = input_ch & 0x3;
+        if (tail_ch != 0)
+        {
+            out -= (4 - tail_ch);
+        }
+    }
+
+#else // ARM_MATH_DSP
+
     /* Run the following code in cores using DSP extension */
     q15_t *const col_buffer_start = buffer_a;
     q15_t *col_buffer = col_buffer_start;
@@ -143,9 +262,9 @@ arm_cmsis_nn_status arm_depthwise_conv_fast_s16(const cmsis_nn_context *ctx,
                         }
                         else
                         {
-                            memcpy(&col_buffer[index],
-                                   input + (idx_y * input_x + idx_x) * input_ch,
-                                   input_ch * sizeof(q15_t));
+                            arm_memcpy_q15(&col_buffer[index],
+                                           input + (idx_y * input_x + idx_x) * input_ch,
+                                           input_ch * sizeof(q15_t));
                         }
                         index += input_ch;
                     }
@@ -237,10 +356,18 @@ arm_cmsis_nn_status arm_depthwise_conv_fast_s16(const cmsis_nn_context *ctx,
                         col_count--;
                     }
 
-                    q63_t acc_1 = *bias++ + sum_1;
-                    q63_t acc_2 = *bias++ + sum_2;
-                    q63_t acc_3 = *bias++ + sum_3;
-                    q63_t acc_4 = *bias++ + sum_4;
+                    int64_t acc_1 = sum_1;
+                    int64_t acc_2 = sum_2;
+                    int64_t acc_3 = sum_3;
+                    int64_t acc_4 = sum_4;
+
+                    if (bias)
+                    {
+                        acc_1 += *bias++;
+                        acc_2 += *bias++;
+                        acc_3 += *bias++;
+                        acc_4 += *bias++;
+                    }
 
                     result = arm_nn_requantize_s64(acc_1, output_mult_1, *output_shift++);
                     result = MAX(result, output_activation_min);
@@ -278,7 +405,11 @@ arm_cmsis_nn_status arm_depthwise_conv_fast_s16(const cmsis_nn_context *ctx,
                     {
                         sum += row_pos[i * input_ch] * col_pos[i * input_ch];
                     }
-                    q63_t acc = *bias++ + sum;
+                    int64_t acc = sum;
+                    if (bias)
+                    {
+                        acc += *bias++;
+                    }
                     result = arm_nn_requantize_s64(acc, REDUCE_MULTIPLIER(*output_mult), *output_shift++);
                     output_mult++;
                     result = MAX(result, output_activation_min);
@@ -287,7 +418,6 @@ arm_cmsis_nn_status arm_depthwise_conv_fast_s16(const cmsis_nn_context *ctx,
 
                     row_count--;
                 }
-
                 // clear counter and pointers
                 col_buffer = col_buffer_start;
             }
@@ -296,6 +426,7 @@ arm_cmsis_nn_status arm_depthwise_conv_fast_s16(const cmsis_nn_context *ctx,
         /* Advance to the next batch */
         input += (input_x * input_y * input_ch);
     }
+#endif
 #else
     /* Run the following code as reference implementation for Cortex-M0 and Cortex-M3 */
     return arm_depthwise_conv_s16(ctx,
@@ -317,8 +448,13 @@ arm_cmsis_nn_status arm_depthwise_conv_fast_s16(const cmsis_nn_context *ctx,
 
 int32_t arm_depthwise_conv_fast_s16_get_buffer_size(const cmsis_nn_dims *input_dims, const cmsis_nn_dims *filter_dims)
 {
-#if defined(ARM_MATH_DSP) && !defined(ARM_MATH_MVEI)
-    return ((input_dims->c * filter_dims->w * filter_dims->h) * sizeof(int16_t));
+#if defined(ARM_MATH_DSP)
+#if defined(ARM_MATH_MVEI)
+    /* The + 8 accounts for a worst case out of bounds read of the lhs buffers in the *_nt_t_* function.  */
+    return 4 * input_dims->c * filter_dims->w * filter_dims->h * sizeof(int16_t) + 8;
+#else // ARM_MATH_DSP
+    return input_dims->c * filter_dims->w * filter_dims->h * sizeof(int16_t);
+#endif
 #else
     (void)input_dims;
     (void)filter_dims;

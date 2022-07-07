@@ -13,6 +13,7 @@
       <li> Replaced arm_status with arm_cmsis_nn_status struct </li>
       <li> Added DSP support in arm_avgpool_s16.c </li>
       <li> Added support for DSP extension optimization for int16 depthwise_conv </li>
+      <li> Added support for MVEI extension optimization for int16 depthwise_conv </li>
       <li> Added support for MVEI extension optimization for int16 max pooling </li>
       </ul>
     </td>
@@ -51,7 +52,7 @@
     <td>V3.0.0</td>
     <td>
     <ul>
-      <li>Updated arm_fully_connected_s8 to use zero weight offset<br> 
+      <li>Updated arm_fully_connected_s8 to use zero weight offset<br>
       as per the TFLM int8 quantization spec. The API is the same but,<br>
       the weight offset parameter is expected to be zero<br> </li>
       <li> Added unit test for Softmax </li>

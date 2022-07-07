@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2022 Arm Limited or its affiliates.
+ * SPDX-FileCopyrightText: Copyright 2010-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -22,8 +22,8 @@
  * Description:  Wrapper API to select appropriate depthwise conv API based
  *               on dimensions.
  *
- * $Date:        19. May 2022
- * $Revision:    V.1.0.0
+ * $Date:        6 July 2022
+ * $Revision:    V.1.0.1
  *
  * Target Processor:  Cortex-M CPUs
  *
@@ -39,6 +39,10 @@
  * @addtogroup NNConv
  * @{
  */
+
+#define USE_FAST_DW_CONV_FUNCTION(dw_conv_params, filter_dims, input_dims)                                             \
+    (dw_conv_params->ch_mult == 1 && dw_conv_params->dilation.w == 1 && dw_conv_params->dilation.h == 1 &&             \
+     filter_dims->w * filter_dims->h * input_dims->c < 512)
 
 /*
  *  s16 Depthwise conv wrapper function
@@ -60,8 +64,7 @@ arm_cmsis_nn_status arm_depthwise_conv_wrapper_s16(const cmsis_nn_context *ctx,
 {
     arm_cmsis_nn_status status = ARM_CMSIS_NN_SUCCESS;
 
-    if (dw_conv_params->ch_mult == 1 && dw_conv_params->dilation.w == 1 && dw_conv_params->dilation.h == 1 &&
-        filter_dims->w * filter_dims->h * input_dims->c < 512)
+    if (USE_FAST_DW_CONV_FUNCTION(dw_conv_params, filter_dims, input_dims))
     {
         status = arm_depthwise_conv_fast_s16(ctx,
                                              dw_conv_params,
@@ -105,8 +108,7 @@ int32_t arm_depthwise_conv_wrapper_s16_get_buffer_size(const cmsis_nn_dw_conv_pa
     (void)output_dims;
     int32_t size = 0;
 
-    if (dw_conv_params->ch_mult == 1 && dw_conv_params->dilation.w == 1 && dw_conv_params->dilation.h == 1 &&
-        filter_dims->w * filter_dims->h * input_dims->c < 512)
+    if (USE_FAST_DW_CONV_FUNCTION(dw_conv_params, filter_dims, input_dims))
     {
         size = arm_depthwise_conv_fast_s16_get_buffer_size(input_dims, filter_dims);
     }
