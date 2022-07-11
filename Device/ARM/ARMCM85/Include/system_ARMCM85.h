@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     system_ARMCM85.h
  * @brief    CMSIS Device System Header File for ARMCM85 Device
- * @version  V1.0.0
- * @date     07. February 2022
+ * @version  V1.0.1
+ * @date     11. July 2022
  ******************************************************************************/
 /*
  * Copyright (c) 2022 Arm Limited. All rights reserved.
@@ -28,6 +28,8 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#include <stdint.h>
 
 /**
   \brief Exception / Interrupt Handler Function Prototype
