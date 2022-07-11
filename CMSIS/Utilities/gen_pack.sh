@@ -139,12 +139,6 @@ PACK_DIRS="
   CMSIS/Core_A
   CMSIS/DAP
   CMSIS/Driver
-  CMSIS/DSP/ComputeLibrary
-  CMSIS/DSP/Include
-  CMSIS/DSP/Source
-  CMSIS/DSP/Examples
-  CMSIS/DSP/Include
-  CMSIS/DSP/PrivateInclude
   CMSIS/NN
   CMSIS/RTOS
   CMSIS/RTOS2
