@@ -1,8 +1,8 @@
 /******************************************************************************
  * @file     cachel1_armv7.h
  * @brief    CMSIS Level 1 Cache API for Armv7-M and later
- * @version  V1.0.2
- * @date     22. June 2022
+ * @version  V1.0.3
+ * @date     12. July 2022
  ******************************************************************************/
 /*
  * Copyright (c) 2020-2021 Arm Limited. All rights reserved.
@@ -120,7 +120,7 @@ __STATIC_FORCEINLINE void SCB_InvalidateICache_by_Addr (volatile void *addr, int
     if ( isize <= 0 ) {
       return;
     }
-    
+
     int32_t op_size = isize + (((uint32_t)addr) & (__SCB_ICACHE_LINE_SIZE - 1U));
     uint32_t op_addr = (uint32_t)addr /* & ~(__SCB_ICACHE_LINE_SIZE - 1U) */;
 
