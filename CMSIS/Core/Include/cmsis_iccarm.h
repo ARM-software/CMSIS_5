@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     cmsis_iccarm.h
  * @brief    CMSIS compiler ICCARM (IAR Compiler for Arm) header file
- * @version  V5.3.0
- * @date     14. April 2021
+ * @version  V5.3.1
+ * @date     12. July 2022
  ******************************************************************************/
 
 //------------------------------------------------------------------------------
@@ -630,7 +630,7 @@ __STATIC_FORCEINLINE void __TZ_set_CONTROL_NS(uint32_t control)
     {
       uint32_t result;
       __ASM volatile("RRX      %0, %1" : "=r"(result) : "r" (value));
-      return(result);
+      return result;
     }
 
     __IAR_FT void __set_BASEPRI_MAX(uint32_t value)
@@ -838,7 +838,7 @@ __STATIC_FORCEINLINE void __TZ_set_CONTROL_NS(uint32_t control)
       {
         return max;
       }
-      else if (val < min)
+      if (val < min)
       {
         return min;
       }
@@ -855,7 +855,7 @@ __STATIC_FORCEINLINE void __TZ_set_CONTROL_NS(uint32_t control)
       {
         return max;
       }
-      else if (val < 0)
+      if (val < 0)
       {
         return 0U;
       }
