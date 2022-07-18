@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['revision_20history_20of_20cmsis_2ddsp',['Revision History of CMSIS-DSP',['../ChangeLog_pg.html',1,'']]],
+  ['revision_20history',['Revision History',['../ChangeLog_pg.html',1,'']]],
   ['r',['r',['../namespacetrain.html#affd02937635dd3d60705b7f75151fce1',1,'train']]],
   ['radius',['radius',['../namespacetrain.html#a5050a760c11da521cd4aee6336f6529f',1,'train']]],
   ['rbf_20svm',['RBF SVM',['../group__rbfsvm.html',1,'']]],

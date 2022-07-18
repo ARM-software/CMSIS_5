@@ -51,6 +51,7 @@ var searchData=
   ['arm_5fnn_5factivations_5fq7_2ec',['arm_nn_activations_q7.c',['../arm__nn__activations__q7_8c.html',1,'']]],
   ['arm_5fnn_5fadd_5fq7_2ec',['arm_nn_add_q7.c',['../arm__nn__add__q7_8c.html',1,'']]],
   ['arm_5fnn_5fdepthwise_5fconv_5fnt_5ft_5fpadded_5fs8_2ec',['arm_nn_depthwise_conv_nt_t_padded_s8.c',['../arm__nn__depthwise__conv__nt__t__padded__s8_8c.html',1,'']]],
+  ['arm_5fnn_5fdepthwise_5fconv_5fnt_5ft_5fs16_2ec',['arm_nn_depthwise_conv_nt_t_s16.c',['../arm__nn__depthwise__conv__nt__t__s16_8c.html',1,'']]],
   ['arm_5fnn_5fdepthwise_5fconv_5fnt_5ft_5fs8_2ec',['arm_nn_depthwise_conv_nt_t_s8.c',['../arm__nn__depthwise__conv__nt__t__s8_8c.html',1,'']]],
   ['arm_5fnn_5fdepthwise_5fconv_5fs8_5fcore_2ec',['arm_nn_depthwise_conv_s8_core.c',['../arm__nn__depthwise__conv__s8__core_8c.html',1,'']]],
   ['arm_5fnn_5fmat_5fmul_5fcore_5f1x_5fs8_2ec',['arm_nn_mat_mul_core_1x_s8.c',['../arm__nn__mat__mul__core__1x__s8_8c.html',1,'']]],

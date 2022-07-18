@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['if',['if',['../Source_2CommonTables_2CMakeLists_8txt.html#a5d12404fe73258d7cfdcd0e7ac149b70',1,'CMakeLists.txt']]],
-  ['include',['include',['../Source_2CMakeLists_8txt.html#abe658af24e68335d143536fb31fa1158',1,'CMakeLists.txt']]]
+  ['logf16_5fscalar',['logf16_scalar',['../arm__vlog__f16_8c.html#a1739b04e8d208e95be6d02abdc0112cd',1,'arm_vlog_f16.c']]]
 ];

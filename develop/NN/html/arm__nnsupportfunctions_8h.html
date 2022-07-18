@@ -227,6 +227,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga7f74841dd08196377cc29ce98deb2c12"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__nn__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NNBasicMath.html#ga7f74841dd08196377cc29ce98deb2c12">arm_nn_depthwise_conv_nt_t_s8</a> (const <a class="el" href="arm__nn__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *lhs, const <a class="el" href="arm__nn__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *rhs, const int32_t lhs_offset, const uint16_t num_ch, const int32_t *out_shift, const int32_t *out_mult, const int32_t out_offset, const int32_t activation_min, const int32_t activation_max, const uint16_t row_x_col, const int32_t *const output_bias, <a class="el" href="arm__nn__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *out)</td></tr>
 <tr class="memdesc:ga7f74841dd08196377cc29ce98deb2c12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Depthwise convolution of transposed rhs matrix with 4 lhs matrices. To be used in non-padded cases. Dimensions are the same for lhs and rhs.  <a href="group__NNBasicMath.html#ga7f74841dd08196377cc29ce98deb2c12">More...</a><br/></td></tr>
 <tr class="separator:ga7f74841dd08196377cc29ce98deb2c12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf4e238a5ef16167a478d6e076f2207f1"><td class="memItemLeft" align="right" valign="top">int16_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NNBasicMath.html#gaf4e238a5ef16167a478d6e076f2207f1">arm_nn_depthwise_conv_nt_t_s16</a> (const int16_t *lhs, const <a class="el" href="arm__nn__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *rhs, const uint16_t num_ch, const int32_t *out_shift, const int32_t *out_mult, const int32_t activation_min, const int32_t activation_max, const uint16_t row_x_col, const int64_t *const output_bias, int16_t *out)</td></tr>
+<tr class="memdesc:gaf4e238a5ef16167a478d6e076f2207f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Depthwise convolution of transposed rhs matrix with 4 lhs matrices. To be used in non-padded cases. Dimensions are the same for lhs and rhs.  <a href="group__NNBasicMath.html#gaf4e238a5ef16167a478d6e076f2207f1">More...</a><br/></td></tr>
+<tr class="separator:gaf4e238a5ef16167a478d6e076f2207f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aefe9c7ce9a65060a244b06dffe74c4b3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__nn__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__nnsupportfunctions_8h.html#aefe9c7ce9a65060a244b06dffe74c4b3">arm_nn_mat_mult_kernel_q7_q15_reordered</a> (const <a class="el" href="arm__nn__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *pA, const <a class="el" href="arm__nn__math__types_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *pInBuffer, const uint16_t ch_im_out, const uint16_t numCol_A, const uint16_t bias_shift, const uint16_t out_shift, const <a class="el" href="arm__nn__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *bias, <a class="el" href="arm__nn__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *pOut)</td></tr>
 <tr class="memdesc:aefe9c7ce9a65060a244b06dffe74c4b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Matrix-multiplication function for convolution with reordered columns.  <a href="#aefe9c7ce9a65060a244b06dffe74c4b3">More...</a><br/></td></tr>
 <tr class="separator:aefe9c7ce9a65060a244b06dffe74c4b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -278,6 +281,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a085459f6280c8f586ddd64998dece532"><td class="memItemLeft" align="right" valign="top">__STATIC_FORCEINLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__nnsupportfunctions_8h.html#a085459f6280c8f586ddd64998dece532">arm_memcpy_q7</a> (<a class="el" href="arm__nn__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *__RESTRICT dst, const <a class="el" href="arm__nn__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *__RESTRICT src, uint32_t block_size)</td></tr>
 <tr class="memdesc:a085459f6280c8f586ddd64998dece532"><td class="mdescLeft">&#160;</td><td class="mdescRight">memcpy optimized for MVE  <a href="#a085459f6280c8f586ddd64998dece532">More...</a><br/></td></tr>
 <tr class="separator:a085459f6280c8f586ddd64998dece532"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e19bcbf6826d5c9a1ac912a69d5f54b"><td class="memItemLeft" align="right" valign="top">__STATIC_FORCEINLINE void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__nnsupportfunctions_8h.html#a0e19bcbf6826d5c9a1ac912a69d5f54b">arm_memcpy_q15</a> (<a class="el" href="arm__nn__math__types_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *__RESTRICT dst, const <a class="el" href="arm__nn__math__types_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *__RESTRICT src, uint32_t block_size)</td></tr>
+<tr class="memdesc:a0e19bcbf6826d5c9a1ac912a69d5f54b"><td class="mdescLeft">&#160;</td><td class="mdescRight">memcpy wrapper for int16  <a href="#a0e19bcbf6826d5c9a1ac912a69d5f54b">More...</a><br/></td></tr>
+<tr class="separator:a0e19bcbf6826d5c9a1ac912a69d5f54b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa278c8c2ac1e8bd47fb377fa7cb77553"><td class="memItemLeft" align="right" valign="top">__STATIC_FORCEINLINE int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__nnsupportfunctions_8h.html#aa278c8c2ac1e8bd47fb377fa7cb77553">arm_nn_exp_on_negative_values</a> (int32_t val)</td></tr>
 <tr class="separator:aa278c8c2ac1e8bd47fb377fa7cb77553"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6caa6da5a6df5ebedf5efc49a56a42dd"><td class="memItemLeft" align="right" valign="top">__STATIC_FORCEINLINE <a class="el" href="arm__nn__math__types_8h.html#adc89a3547f5324b7b3b95adec3806bc0">q31_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__nnsupportfunctions_8h.html#a6caa6da5a6df5ebedf5efc49a56a42dd">arm_nn_mult_by_power_of_two</a> (const int32_t val, const int32_t exp)</td></tr>
@@ -709,7 +715,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Referenced by <a class="el" href="group__NNConv.html#ga43c4623c2553d09a59385aabe971d75d">__attribute__()</a>, <a class="el" href="group__NNConv.html#gaf65bb70e3f3f290e69d93f1ee322bfa4">arm_convolve_fast_s16()</a>, <a class="el" href="group__NNConv.html#gabef4ea1ca77e2af8055a230f63f332e0">arm_convolve_s16()</a>, <a class="el" href="group__NNConv.html#ga91c418d3d08f2969137e08e713a33f7e">arm_depthwise_conv_fast_s16()</a>, <a class="el" href="group__FC.html#ga6613c4e797098f0a1ce870f71752e248">arm_fully_connected_s16()</a>, <a class="el" href="arm__nn__mat__mul__kernel__s16_8c.html#a674055a9eeb7299669c8c4b6532de342">arm_nn_mat_mult_kernel_s16()</a>, and <a class="el" href="group__NNConv.html#gadde7c225c29269334cd821ead685361d">depthwise_conv_s16_generic_s16()</a>.</p>
+<p>Referenced by <a class="el" href="group__NNConv.html#ga43c4623c2553d09a59385aabe971d75d">__attribute__()</a>, <a class="el" href="group__NNConv.html#gaf65bb70e3f3f290e69d93f1ee322bfa4">arm_convolve_fast_s16()</a>, <a class="el" href="group__NNConv.html#gabef4ea1ca77e2af8055a230f63f332e0">arm_convolve_s16()</a>, <a class="el" href="group__NNConv.html#ga91c418d3d08f2969137e08e713a33f7e">arm_depthwise_conv_fast_s16()</a>, <a class="el" href="group__FC.html#ga6613c4e797098f0a1ce870f71752e248">arm_fully_connected_s16()</a>, <a class="el" href="group__NNBasicMath.html#gaf4e238a5ef16167a478d6e076f2207f1">arm_nn_depthwise_conv_nt_t_s16()</a>, <a class="el" href="arm__nn__mat__mul__kernel__s16_8c.html#a674055a9eeb7299669c8c4b6532de342">arm_nn_mat_mult_kernel_s16()</a>, and <a class="el" href="group__NNConv.html#gadde7c225c29269334cd821ead685361d">depthwise_conv_s16_generic_s16()</a>.</p>
 
 </div>
 </div>
@@ -784,6 +790,48 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="a0e19bcbf6826d5c9a1ac912a69d5f54b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__STATIC_FORCEINLINE void arm_memcpy_q15 </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="arm__nn__math__types_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *__RESTRICT&#160;</td>
+          <td class="paramname"><em>dst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="arm__nn__math__types_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *__RESTRICT&#160;</td>
+          <td class="paramname"><em>src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>block_size</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">dst</td><td>Destination pointer </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">src</td><td>Source pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">block_size</td><td>Number of bytes to copy. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Referenced by <a class="el" href="group__NNConv.html#ga91c418d3d08f2969137e08e713a33f7e">arm_depthwise_conv_fast_s16()</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a085459f6280c8f586ddd64998dece532"></a>
 <div class="memitem">
 <div class="memproto">
@@ -1744,7 +1792,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns (val * multiplier)/(2 ^ shift) </dd></dl>
 
-<p>Referenced by <a class="el" href="group__NNConv.html#ga43c4623c2553d09a59385aabe971d75d">__attribute__()</a>, <a class="el" href="group__NNConv.html#gaf65bb70e3f3f290e69d93f1ee322bfa4">arm_convolve_fast_s16()</a>, <a class="el" href="group__NNConv.html#gabef4ea1ca77e2af8055a230f63f332e0">arm_convolve_s16()</a>, <a class="el" href="group__NNConv.html#ga91c418d3d08f2969137e08e713a33f7e">arm_depthwise_conv_fast_s16()</a>, <a class="el" href="arm__nn__mat__mul__kernel__s16_8c.html#a674055a9eeb7299669c8c4b6532de342">arm_nn_mat_mult_kernel_s16()</a>, <a class="el" href="group__NNBasicMath.html#ga3283c2da5c4e313a64cf348e2c161f3f">arm_nn_vec_mat_mult_t_s16()</a>, and <a class="el" href="group__NNConv.html#gadde7c225c29269334cd821ead685361d">depthwise_conv_s16_generic_s16()</a>.</p>
+<p>Referenced by <a class="el" href="group__NNConv.html#ga43c4623c2553d09a59385aabe971d75d">__attribute__()</a>, <a class="el" href="group__NNConv.html#gaf65bb70e3f3f290e69d93f1ee322bfa4">arm_convolve_fast_s16()</a>, <a class="el" href="group__NNConv.html#gabef4ea1ca77e2af8055a230f63f332e0">arm_convolve_s16()</a>, <a class="el" href="group__NNConv.html#ga91c418d3d08f2969137e08e713a33f7e">arm_depthwise_conv_fast_s16()</a>, <a class="el" href="group__NNBasicMath.html#gaf4e238a5ef16167a478d6e076f2207f1">arm_nn_depthwise_conv_nt_t_s16()</a>, <a class="el" href="arm__nn__mat__mul__kernel__s16_8c.html#a674055a9eeb7299669c8c4b6532de342">arm_nn_mat_mult_kernel_s16()</a>, <a class="el" href="group__NNBasicMath.html#ga3283c2da5c4e313a64cf348e2c161f3f">arm_nn_vec_mat_mult_t_s16()</a>, and <a class="el" href="group__NNConv.html#gadde7c225c29269334cd821ead685361d">depthwise_conv_s16_generic_s16()</a>.</p>
 
 </div>
 </div>

@@ -1,5 +1,6 @@
 var group__NNConv =
 [
+    [ "USE_FAST_DW_CONV_FUNCTION", "group__NNConv.html#ga48d5105c2270fad5d5dc407d60bc894c", null ],
     [ "__attribute__", "group__NNConv.html#ga43c4623c2553d09a59385aabe971d75d", null ],
     [ "__attribute__", "group__NNConv.html#ga4779f7318779682e7789f1888d37e56b", null ],
     [ "arm_convolve_1_x_n_s8", "group__NNConv.html#ga6c569efc46ae1c38df1335888fc7873d", null ],

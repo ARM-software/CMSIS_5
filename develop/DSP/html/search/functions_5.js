@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['getinput',['getinput',['../arm__signal__converge__example__f32_8c.html#afd2975c4763ec935771e6f63bfe7758b',1,'arm_signal_converge_example_f32.c']]]
+  ['if',['if',['../Source_2CMakeLists_8txt.html#a2f377352b17e126f542d6083f72197f4',1,'CMakeLists.txt']]],
+  ['include',['include',['../Examples_2ARM_2CMakeLists_8txt.html#aae0662a24fd8c56d9539485f6a32bab2',1,'CMakeLists.txt']]]
 ];

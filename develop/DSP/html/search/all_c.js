@@ -7,7 +7,6 @@ var searchData=
   ['linear_20interpolation',['Linear Interpolation',['../group__LinearInterpolate.html',1,'']]],
   ['linear_20svm',['Linear SVM',['../group__linearsvm.html',1,'']]],
   ['linestyles',['linestyles',['../namespacetrain.html#a83ad329af42b09ac7ac1cca414344bb3',1,'train']]],
-  ['list',['list',['../Source_2CMakeLists_8txt.html#a831b7fa3ecb78efc7660397695c2a386',1,'CMakeLists.txt']]],
   ['least_20mean_20square_20_28lms_29_20filters',['Least Mean Square (LMS) Filters',['../group__LMS.html',1,'']]],
   ['lmsnorm_5finstance',['lmsNorm_instance',['../arm__signal__converge__example__f32_8c.html#a519f9b4db839245f3bf2075ff4c17605',1,'arm_signal_converge_example_f32.c']]],
   ['lmsnormcoeff_5ff32',['lmsNormCoeff_f32',['../arm__signal__converge__data_8c.html#aad7c60c30c5af397bb75e603f250f9d3',1,'lmsNormCoeff_f32():&#160;arm_signal_converge_data.c'],['../arm__signal__converge__example__f32_8c.html#aad7c60c30c5af397bb75e603f250f9d3',1,'lmsNormCoeff_f32():&#160;arm_signal_converge_data.c']]],
