@@ -2,7 +2,7 @@
  * @file     core_armv8mml.h
  * @brief    CMSIS Armv8-M Mainline Core Peripheral Access Layer Header File
  * @version  V5.2.6
- * @date     12. July 2022
+ * @date     18. July 2022
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2022 Arm Limited. All rights reserved.

@@ -2,7 +2,7 @@
  * @file     cmsis_armclang_ltm.h
  * @brief    CMSIS compiler armclang (Arm Compiler 6) header file
  * @version  V1.5.4
- * @date     22. July 2022
+ * @date     18. July 2022
  ******************************************************************************/
 /*
  * Copyright (c) 2018-2021 Arm Limited. All rights reserved.

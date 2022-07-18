@@ -2,7 +2,7 @@
  * @file     core_cm0plus.h
  * @brief    CMSIS Cortex-M0+ Core Peripheral Access Layer Header File
  * @version  V5.0.10
- * @date     12. July 2022
+ * @date     18. July 2022
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2019 Arm Limited. All rights reserved.

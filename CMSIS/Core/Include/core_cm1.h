@@ -2,7 +2,7 @@
  * @file     core_cm1.h
  * @brief    CMSIS Cortex-M1 Core Peripheral Access Layer Header File
  * @version  V1.0.2
- * @date     12. July 2022
+ * @date     18. July 2022
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
