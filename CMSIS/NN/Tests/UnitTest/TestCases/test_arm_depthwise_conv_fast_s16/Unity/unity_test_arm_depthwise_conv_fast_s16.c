@@ -53,3 +53,27 @@ void test_dw_int16xint8_fast_stride_arm_depthwise_conv_fast_s16(void)
 {
     dw_int16xint8_fast_stride_arm_depthwise_conv_fast_s16();
 }
+void test_dw_int16xint8_fast_null_bias_arm_depthwise_conv_fast_s16(void)
+{
+    dw_int16xint8_fast_null_bias_arm_depthwise_conv_fast_s16();
+}
+void test_dw_int16xint8_fast_stride_null_bias_arm_depthwise_conv_fast_s16(void)
+{
+    dw_int16xint8_fast_stride_null_bias_arm_depthwise_conv_fast_s16();
+}
+void test_dw_int16xint8_fast_spill_null_bias_arm_depthwise_conv_fast_s16(void)
+{
+    dw_int16xint8_fast_spill_null_bias_arm_depthwise_conv_fast_s16();
+}
+void test_dw_int16xint8_fast_test_bias_arm_depthwise_conv_fast_s16(void)
+{
+    dw_int16xint8_fast_test_bias_arm_depthwise_conv_fast_s16();
+}
+void test_dw_int16xint8_fast_multiple_batches_uneven_buffers_arm_depthwise_conv_fast_s16(void)
+{
+    dw_int16xint8_fast_multiple_batches_uneven_buffers_arm_depthwise_conv_fast_s16();
+}
+void test_dw_int16xint8_fast_multiple_batches_uneven_buffers_null_bias_arm_depthwise_conv_fast_s16(void)
+{
+    dw_int16xint8_fast_multiple_batches_uneven_buffers_null_bias_arm_depthwise_conv_fast_s16();
+}

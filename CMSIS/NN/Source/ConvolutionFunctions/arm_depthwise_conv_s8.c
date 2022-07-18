@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2022 Arm Limited or its affiliates.
+ * SPDX-FileCopyrightText: Copyright 2010-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_depthwise_conv_s8.c
  * Description:  s8 version of depthwise convolution.
  *
- * $Date:        9. May 2022
- * $Revision:    V.3.0.1
+ * $Date:        6 July 2022
+ * $Revision:    V.3.0.2
  *
  * Target Processor:  Cortex-M CPUs
  *
@@ -281,7 +281,6 @@ arm_cmsis_nn_status arm_depthwise_conv_s8(const cmsis_nn_context *ctx,
     const uint16_t dilation_x = dw_conv_params->dilation.w;
     const uint16_t dilation_y = dw_conv_params->dilation.h;
 
-    (void)dw_conv_params->dilation;
     (void)bias_dims;
     (void)ctx;
 

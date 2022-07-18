@@ -15,6 +15,7 @@
        - Changed return types of all API's
        - Support for int16 average pooling DSP implementation
        - Support for DSP extension optimization for int16 depthwise_conv
+       - Support for MVEI extension optimization for int16 depthwise_conv
        - Support for MVEI extension optimization for int16 max pooling
     </release>
     <release version="5.9.0" date="2022-05-02">
@@ -2297,6 +2298,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_q7_to_q15_with_offset.c"/>
         <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_nn_accumulate_q7_to_q15.c"/>
         <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_nn_mat_mult_nt_t_s8.c"/>
+        <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_nn_depthwise_conv_nt_t_s16.c"/>
         <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_nn_mat_mul_kernel_s16.c"/>
         <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_nn_depthwise_conv_nt_t_padded_s8.c"/>
         <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_nn_add_q7.c"/>

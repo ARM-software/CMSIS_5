@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2022 Arm Limited or its affiliates.
+ * SPDX-FileCopyrightText: Copyright 2010-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_nnsupportfunctions.h
  * Description:  Public header file of support functions for CMSIS NN Library
  *
- * $Date:        10 May 2022
- * $Revision:    V.8.1.0
+ * $Date:        6 July 2022
+ * $Revision:    V.8.2.0
  *
  * Target Processor:  Cortex-M CPUs
  * -------------------------------------------------------------------- */
@@ -558,6 +558,43 @@ q7_t *arm_nn_depthwise_conv_nt_t_s8(const q7_t *lhs,
                                     q7_t *out);
 
 /**
+ * @brief Depthwise convolution of transposed rhs matrix with 4 lhs matrices. To be used in non-padded cases.
+ *        Dimensions are the same for lhs and rhs.
+ *
+ * @param[in]      lhs             Input left-hand side matrix
+ * @param[in]      rhs             Input right-hand side matrix (transposed)
+ * @param[in]      num_ch          Number of channels in LHS/RHS
+ * @param[in]      out_shift       Per channel output shift. Length of vector is equal to number of channels.
+ * @param[in]      out_mult        Per channel output multiplier. Length of vector is equal to number of channels.
+ * @param[in]      activation_min  Minimum value to clamp the output to. Range: int8
+ * @param[in]      activation_max  Maximum value to clamp the output to. Range: int8
+ * @param[in]       row_x_col       (row_dimension * col_dimension) of LHS/RHS matrix
+ * @param[in]      output_bias     Per channel output bias. Length of vector is equal to number of channels.
+ * @param[in]      out             Output pointer
+ *
+ * @return         The function returns one of the two
+ *                  - Updated output pointer if an implementation is available
+ *                  - NULL if no implementation is available.
+ *
+ * @note           If number of channels is not a multiple of 4, upto 3 elements outside the boundary will be read
+ * out for the following.
+ *                  - Output shift
+ *                  - Output multiplier
+ *                  - Output bias
+ *                  - rhs
+ */
+int16_t *arm_nn_depthwise_conv_nt_t_s16(const int16_t *lhs,
+                                        const q7_t *rhs,
+                                        const uint16_t num_ch,
+                                        const int32_t *out_shift,
+                                        const int32_t *out_mult,
+                                        const int32_t activation_min,
+                                        const int32_t activation_max,
+                                        const uint16_t row_x_col,
+                                        const int64_t *const output_bias,
+                                        int16_t *out);
+
+/**
  *@brief Matrix-multiplication function for convolution with reordered columns
  *@param[in]       pA          pointer to operand A
  *@param[in]       pInBuffer   pointer to operand B, always conssists of 2 vectors
@@ -662,8 +699,8 @@ __STATIC_FORCEINLINE void arm_memset_q7(q7_t *dst, const q7_t val, uint32_t bloc
                    "   vstrb.8                 q0, [%[in]], #16            \n"
                    "   letp                    lr, 2b                     \n"
                    "1:                                                    \n"
-                   : [ in ] "+r"(dst)
-                   : [ cnt ] "r"(block_size), [ set_val ] "r"(val)
+                   : [in] "+r"(dst)
+                   : [cnt] "r"(block_size), [set_val] "r"(val)
                    : "q0", "memory", "r14");
 #else
     memset(dst, val, block_size);
@@ -1010,12 +1047,24 @@ __STATIC_FORCEINLINE void arm_memcpy_q7(q7_t *__RESTRICT dst, const q7_t *__REST
                    "   vstrb.8                 q0, [%[out]], #16           \n"
                    "   letp                    lr, 2b                     \n"
                    "1:                                                    \n"
-                   : [ in ] "+r"(src), [ out ] "+r"(dst)
-                   : [ cnt ] "r"(block_size)
+                   : [in] "+r"(src), [out] "+r"(dst)
+                   : [cnt] "r"(block_size)
                    : "q0", "memory", "r14");
 #else
     memcpy(dst, src, block_size);
 #endif
+}
+
+/**
+ * @brief           memcpy wrapper for int16
+ * @param[in, out]  dst         Destination pointer
+ * @param[in]       src         Source pointer.
+ * @param[in]       block_size  Number of bytes to copy.
+ *
+ */
+__STATIC_FORCEINLINE void arm_memcpy_q15(q15_t *__RESTRICT dst, const q15_t *__RESTRICT src, uint32_t block_size)
+{
+    memcpy(dst, src, block_size);
 }
 
 #if defined(ARM_MATH_MVEI)
