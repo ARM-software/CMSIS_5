@@ -2149,7 +2149,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="sourceC"      name="Device/ARM/ARMCA5/Source/AC6/startup_ARMCA5.c" version="1.0.1" attr="config" condition="ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMCA5/Source/AC6/ARMCA5.sct"       version="1.0.0" attr="config" condition="ARMCC6"/>
         <file category="sourceC"      name="Device/ARM/ARMCA5/Source/GCC/startup_ARMCA5.c" version="1.0.1" attr="config" condition="GCC"/>
-        <file category="linkerScript"        name="Device/ARM/ARMCA5/Source/GCC/ARMCA5.ld"        version="1.0.0" attr="config" condition="GCC"/>
+        <file category="linkerScript" name="Device/ARM/ARMCA5/Source/GCC/ARMCA5.ld"        version="1.0.0" attr="config" condition="GCC"/>
         <file category="sourceAsm"    name="Device/ARM/ARMCA5/Source/IAR/startup_ARMCA5.s" version="1.0.0" attr="config" condition="IAR"/>
         <file category="linkerScript" name="Device/ARM/ARMCA5/Source/IAR/ARMCA5.icf"       version="1.0.0" attr="config" condition="IAR"/>
         <file category="sourceC"      name="Device/ARM/ARMCA5/Source/system_ARMCA5.c"      version="1.0.1" attr="config"/>
@@ -2172,7 +2172,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="sourceC"      name="Device/ARM/ARMCA7/Source/AC6/startup_ARMCA7.c" version="1.0.1" attr="config" condition="ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMCA7/Source/AC6/ARMCA7.sct"       version="1.0.0" attr="config" condition="ARMCC6"/>
         <file category="sourceC"      name="Device/ARM/ARMCA7/Source/GCC/startup_ARMCA7.c" version="1.0.1" attr="config" condition="GCC"/>
-        <file category="linkerScript"        name="Device/ARM/ARMCA7/Source/GCC/ARMCA7.ld"        version="1.0.0" attr="config" condition="GCC"/>
+        <file category="linkerScript" name="Device/ARM/ARMCA7/Source/GCC/ARMCA7.ld"        version="1.0.0" attr="config" condition="GCC"/>
         <file category="sourceAsm"    name="Device/ARM/ARMCA7/Source/IAR/startup_ARMCA7.s" version="1.0.0" attr="config" condition="IAR"/>
         <file category="linkerScript" name="Device/ARM/ARMCA7/Source/IAR/ARMCA7.icf"       version="1.0.0" attr="config" condition="IAR"/>
         <file category="sourceC"      name="Device/ARM/ARMCA7/Source/system_ARMCA7.c"      version="1.0.1" attr="config"/>
@@ -2194,7 +2194,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="sourceC"      name="Device/ARM/ARMCA9/Source/AC6/startup_ARMCA9.c" version="1.0.1" attr="config" condition="ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMCA9/Source/AC6/ARMCA9.sct"       version="1.0.0" attr="config" condition="ARMCC6"/>
         <file category="sourceC"      name="Device/ARM/ARMCA9/Source/GCC/startup_ARMCA9.c" version="1.0.1" attr="config" condition="GCC"/>
-        <file category="linkerScript"        name="Device/ARM/ARMCA9/Source/GCC/ARMCA9.ld"        version="1.0.0" attr="config" condition="GCC"/>
+        <file category="linkerScript" name="Device/ARM/ARMCA9/Source/GCC/ARMCA9.ld"        version="1.0.0" attr="config" condition="GCC"/>
         <file category="sourceAsm"    name="Device/ARM/ARMCA9/Source/IAR/startup_ARMCA9.s" version="1.0.0" attr="config" condition="IAR"/>
         <file category="linkerScript" name="Device/ARM/ARMCA9/Source/IAR/ARMCA9.icf"       version="1.0.0" attr="config" condition="IAR"/>
         <file category="sourceC"      name="Device/ARM/ARMCA9/Source/system_ARMCA9.c"      version="1.0.1" attr="config"/>
