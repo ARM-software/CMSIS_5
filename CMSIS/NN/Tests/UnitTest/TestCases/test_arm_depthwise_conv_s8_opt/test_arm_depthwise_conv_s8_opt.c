@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2022 Arm Limited or its affiliates.
+ * SPDX-FileCopyrightText: Copyright 2010-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -26,7 +26,19 @@
 #include "../TestData/stride2pad1/test_data.h"
 #include "../Utils/validate.h"
 
-static const uint16_t dilation = 1;
+const int32_t *get_bias_address(const int32_t *bias, int32_t size)
+{
+    const int32_t *return_bias = NULL;
+    for (int i = 0; i < size; i++)
+    {
+        if (bias[i] != 0)
+        {
+            return_bias = bias;
+            break;
+        }
+    }
+    return return_bias;
+}
 
 void basic_arm_depthwise_conv_s8_opt(void)
 {
@@ -167,7 +179,7 @@ void depthwise_eq_in_out_ch_arm_depthwise_conv_s8_opt(void)
     cmsis_nn_dims bias_dims;
     cmsis_nn_dims output_dims;
 
-    const q31_t *bias_data = depthwise_eq_in_out_ch_biases;
+    const q31_t *bias_data = get_bias_address(depthwise_eq_in_out_ch_biases, DEPTHWISE_EQ_IN_OUT_CH_IN_CH);
     const q7_t *kernel_data = depthwise_eq_in_out_ch_weights;
     const q7_t *input_data = depthwise_eq_in_out_ch_input;
 
