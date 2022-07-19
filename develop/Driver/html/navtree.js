@@ -3,6 +3,7 @@ var NAVTREE =
   [ "CMSIS-Driver", "index.html", [
     [ "Overview", "index.html", null ],
     [ "Revision History of CMSIS-Driver", "driver_revisionHistory.html", null ],
+    [ "CMSIS-Driver Implementation List", "listOfImplementations.html", null ],
     [ "Theory of Operation", "theoryOperation.html", [
       [ "Common Driver Functions", "theoryOperation.html#DriverFunctions", [
         [ "Cortex-M Processor Mode", "theoryOperation.html#ProcessorMode", null ]

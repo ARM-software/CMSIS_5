@@ -135,6 +135,7 @@ Peripheral Driver Interfaces and Middleware</div></div>
 <li><a class="el" href="group__vio__interface__gr.html">VIO</a>: API for virtual I/Os (VIO).</li>
 <li><a class="el" href="group__wifi__interface__gr.html">WiFi</a>: Interface driver for wireless communication.</li>
 </ul>
+<p>A list of current CMSIS-Driver implementations is available <a class="el" href="listOfImplementations.html">here</a>.</p>
 <dl class="section note"><dt>Note</dt><dd>Usually, WiFi chips and modules have their own networking stack incorporated. This means that payload data is sent via a serial interface (SPI or USART) to the WiFi chip/module and the Ethernet frames are assembled inside. If you intend to use a TCP/IP stack from a middleware component with a WiFi chip/module, make sure that the WiFi driver has a <a class="el" href="group__wifi__bypass__gr.html">WiFi Bypass Mode</a>. This allows to send the Ethernet frames assembled by the TCP/IP component transparently through the WiFi chip/module.</dd></dl>
 <hr/>
 <h2>CMSIS-Driver in ARM::CMSIS Pack </h2>

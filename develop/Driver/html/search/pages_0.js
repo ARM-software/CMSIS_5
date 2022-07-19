@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['deprecated_20list',['Deprecated List',['../deprecated.html',1,'']]],
-  ['driver_20validation',['Driver Validation',['../driverValidation.html',1,'']]]
+  ['cmsis_2ddriver_20implementation_20list',['CMSIS-Driver Implementation List',['../listOfImplementations.html',1,'']]]
 ];
