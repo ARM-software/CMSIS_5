@@ -17,6 +17,7 @@
        - Support for DSP extension optimization for int16 depthwise_conv
        - Support for MVEI extension optimization for int16 depthwise_conv
        - Support for MVEI extension optimization for int16 max and average pooling
+       - Support for MVEI extension optimization for int16 fully connected
     </release>
     <release version="5.9.0" date="2022-05-02">
       CMSIS-Core(M): 5.6.0

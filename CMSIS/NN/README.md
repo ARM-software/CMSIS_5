@@ -41,7 +41,7 @@ Group | API | Base Operator | Input Constraints | Additional memory required for
 ||arm_depthwise_conv_fast_s16() | DEPTHWISE_CONV | Yes | Yes. Refer to API for details | Yes | Yes ||
 |[Fully Connected](https://arm-software.github.io/CMSIS_5/NN/html/group__FC.html)||||| |  | |
 ||arm_fully_connected_s8() |FULLY CONNECTED & <br/> MAT MUL  | None | No | Yes | Yes | |
-||arm_fully_connected_s16() |FULLY CONNECTED & <br/> MAT MUL  | None | No | Yes | No | |
+||arm_fully_connected_s16() |FULLY CONNECTED & <br/> MAT MUL  | None | No | Yes | Yes | |
 |[Pooling](https://arm-software.github.io/CMSIS_5/NN/html/group__Pooling.html)||||| |  ||
 || arm_avgpool_s8() | AVERAGE POOL | None | input_ch * 4<br/>(DSP only) | Yes| Yes| Best case is when channels are multiple of 4 or <br/> at the least >= 4 |
 || arm_avgpool_s16() | AVERAGE POOL | None | input_ch * 4<br/>(DSP only) | Yes| Yes| Best case is when channels are multiple of 4 or <br/> at the least >= 4 |
