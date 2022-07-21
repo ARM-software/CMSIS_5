@@ -38,7 +38,7 @@ except Exception as e:
 
 REQUIRED_MINIMUM_TENSORFLOW_VERSION = version.parse("2.5")
 TESTDATA_SETS = {}
-CLANG_FORMAT = 'clang-format-9 -i'
+CLANG_FORMAT = 'clang-format-12 -i'
 
 INT32_MAX = 2147483647
 INT32_MIN = -2147483648
@@ -1375,7 +1375,7 @@ def load_all_testdatasets():
 
     type_of_test = 'avgpool'
     dataset = 'avgpooling'
-    TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=8, x_in=22, y_in=12, stride_x=9,
+    TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=20, x_in=22, y_in=12, stride_x=9,
                                              stride_y=5, w_x=6, w_y=5, pad=True)
     dataset = 'avgpooling_1'
     TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=3, x_in=9, y_in=5, stride_x=1,
