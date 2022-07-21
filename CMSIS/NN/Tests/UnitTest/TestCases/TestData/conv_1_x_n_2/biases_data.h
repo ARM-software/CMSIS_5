@@ -2,4 +2,4 @@
 #pragma once
 #include <stdint.h>
 
-const int32_t conv_1_x_n_2_biases[1] = {14600};
+const int32_t conv_1_x_n_2_biases[5] = {-22104, -19486, 9068, -4369, 1053};

@@ -1164,8 +1164,8 @@ def load_all_testdatasets():
     TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=1, out_ch=1, x_in=7,
                                           y_in=7, w_x=3, w_y=3, stride_x=2, stride_y=2, pad=True)
     dataset = 'kernel1x1'
-    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=4, out_ch=17, x_in=15,
-                                          y_in=15, w_x=1, w_y=1, stride_x=1, stride_y=1, pad=False,
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=5, out_ch=9, x_in=7,
+                                          y_in=3, w_x=1, w_y=1, stride_x=1, stride_y=1, pad=False,
                                           out_activation_min=-126, out_activation_max=127)
     dataset = 'conv_3'
     TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=3, out_ch=1, x_in=10, y_in=49, w_x=4,
@@ -1176,7 +1176,7 @@ def load_all_testdatasets():
                                           w_y=1, stride_x=2, stride_y=1, pad=False, out_activation_min=-127,
                                           out_activation_max=127, batches=2)
     dataset = 'conv_1_x_n_2'
-    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=4, out_ch=1, x_in=16, y_in=1, w_x=4,
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=4, out_ch=5, x_in=8, y_in=1, w_x=4,
                                           w_y=1, stride_x=2, stride_y=1, pad=True,
                                           out_activation_min=-111, out_activation_max=127)
     dataset = 'conv_1_x_n_3'

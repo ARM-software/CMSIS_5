@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
+ * SPDX-FileCopyrightText: Copyright 2010-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -35,10 +35,6 @@ static inline int validate(int8_t *act, const int8_t *ref, int size)
             count++;
             printf("ERROR at pos %d: Act: %d Ref: %d\r\n", i, act[i], ref[i]);
             test_passed = false;
-        }
-        else
-        {
-            // printf("PASS at pos %d: %d\r\n", i, act[i]);
         }
     }
 

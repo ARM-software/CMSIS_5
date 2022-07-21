@@ -2,4 +2,5 @@
 #pragma once
 #include <stdint.h>
 
-const q7_t conv_1_x_n_2_output_ref[8] = {-89, 16, 61, -7, 66, -96, 57, 127};
+const q7_t conv_1_x_n_2_output_ref[20] = {125, 71,  123, 31, -60, 67, 127, 109, 55, -1,
+                                          76,  122, 113, 66, -39, 34, 63,  111, 68, 31};
