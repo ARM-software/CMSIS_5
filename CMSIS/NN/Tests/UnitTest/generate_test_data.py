@@ -1254,8 +1254,12 @@ def load_all_testdatasets():
     TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=5, out_ch=5, x_in=4, y_in=5, w_x=3,
                                           w_y=3, stride_x=2, stride_y=2, pad=True,
                                           out_activation_min=-104, out_activation_max=127)
+    dataset = 'depthwise_kernel_3x3_null_bias'
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=5, out_ch=5, x_in=4, y_in=5, w_x=3,
+                                          w_y=3, stride_x=2, stride_y=2, pad=True, generate_bias=False,
+                                          out_activation_min=-104, out_activation_max=127)
     dataset = 'depthwise_eq_in_out_ch'
-    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=6, out_ch=6, x_in=4, y_in=5, w_x=2,
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=6, out_ch=6, x_in=4, y_in=5, w_x=2, generate_bias=False,
                                           w_y=3, stride_x=1, stride_y=1, pad=True,
                                           out_activation_min=-86, out_activation_max=127)
     dataset = 'depthwise_out_activation'

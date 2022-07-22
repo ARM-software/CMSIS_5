@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
+ * SPDX-FileCopyrightText: Copyright 2010-2020, 2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_nn_depthwise_conv_nt_t_padded_s8.c
  * Description:  Depthwise convolution with padded matrices.
  *
- * $Date:        09. October 2020
- * $Revision:    V.1.0.2
+ * $Date:        19. July 2022
+ * $Revision:    V.1.1.0
  *
  * Target Processor:  Cortex-M processors with MVE extension
  * -------------------------------------------------------------------- */
@@ -67,11 +67,15 @@ q7_t *arm_nn_depthwise_conv_nt_t_padded_s8(const q7_t *lhs,
     for (int i_loop_cnt = 0, offset = 0; i_loop_cnt < loop_count;
          num_ch_to_process -= 4, out += 4, offset += 4, i_loop_cnt++)
     {
-        int32x4_t out_0 = vldrwq_s32(bias);
+        int32x4_t out_0 = vdupq_n_s32(0);
+        if (bias)
+        {
+            out_0 = vldrwq_s32(bias);
+            bias += 4;
+        }
         int32x4_t out_1 = out_0;
         int32x4_t out_2 = out_0;
         int32x4_t out_3 = out_0;
-        bias += 4;
 
         const int8_t *rhs_0 = rhs + offset;
         const int8_t *lhs_0 = lhs + offset;
