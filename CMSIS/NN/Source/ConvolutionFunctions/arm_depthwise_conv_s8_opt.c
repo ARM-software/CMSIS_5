@@ -176,7 +176,11 @@ arm_cmsis_nn_status arm_depthwise_conv_s8_opt(const cmsis_nn_context *ctx,
         {
             const int8_t *col_0 = lhs_buffer + (kernel_size * input_ch * i_buf) + offset;
             const int8_t *row_0 = kernel + offset;
-            int32x4_t out_0 = vldrwq_s32(&bias[offset]);
+            int32x4_t out_0 = vdupq_n_s32(0);
+            if (bias)
+            {
+                out_0 = vldrwq_s32(&bias[offset]);
+            }
 
             for (int i_ker = 0; i_ker < kernel_size; i_ker++)
             {
@@ -276,10 +280,17 @@ arm_cmsis_nn_status arm_depthwise_conv_s8_opt(const cmsis_nn_context *ctx,
 
             while (row_count)
             {
-                q31_t sum = *bias++;
-                q31_t sum_2 = *bias++;
-                q31_t sum_3 = *bias++;
-                q31_t sum_4 = *bias++;
+                q31_t sum = 0;
+                q31_t sum_2 = 0;
+                q31_t sum_3 = 0;
+                q31_t sum_4 = 0;
+                if (bias)
+                {
+                    sum = *bias++;
+                    sum_2 = *bias++;
+                    sum_3 = *bias++;
+                    sum_4 = *bias++;
+                }
 
                 uint16_t col_count = (kernel_x * kernel_y) / 2;
                 q15_t *col_pos = col_buffer_start + row_shift;
@@ -372,7 +383,11 @@ arm_cmsis_nn_status arm_depthwise_conv_s8_opt(const cmsis_nn_context *ctx,
             {
                 q15_t *col_pos = col_buffer_start + row_shift;
                 const q7_t *row_pos = kernel + row_shift;
-                q31_t sum = *bias++;
+                q31_t sum = 0;
+                if (bias)
+                {
+                    sum = *bias++;
+                }
                 const uint16_t col_count = (kernel_x * kernel_y);
                 row_shift += 1;
 

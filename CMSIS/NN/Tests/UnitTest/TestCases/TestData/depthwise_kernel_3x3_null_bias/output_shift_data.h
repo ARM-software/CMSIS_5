@@ -2,4 +2,4 @@
 #pragma once
 #include <stdint.h>
 
-const int32_t depthwise_eq_in_out_ch_output_shift[6] = {-9, -9, -9, -9, -9, -9};
+const int32_t depthwise_kernel_3x3_null_bias_output_shift[5] = {-9, -9, -8, -9, -9};
