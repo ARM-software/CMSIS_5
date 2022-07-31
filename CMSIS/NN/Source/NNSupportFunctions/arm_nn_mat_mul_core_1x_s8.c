@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2022 Arm Limited or its affiliates.
+ * SPDX-FileCopyrightText: Copyright 2010-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_nn_mat_mul_core_1x_s8.c
  * Description:  General Matrix-multiplication function
  *
- * $Date:        20 April 2022
- * $Revision:    V.2.0.0
+ * $Date:        7 July 2022
+ * $Revision:    V.3.0.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -44,40 +44,96 @@
  * Refer header file for details.
  *
  */
-
 arm_cmsis_nn_status arm_nn_mat_mul_core_1x_s8(int32_t row_elements,
-                                              const int8_t *row_base,
-                                              const int8_t *col_base,
-                                              int32_t *const sum_col,
-                                              int32_t *const output)
+                                              const int32_t skipped_row_elements,
+                                              const int8_t *row_base_ref,
+                                              const int8_t *col_base_ref,
+                                              const int32_t out_ch,
+                                              const cmsis_nn_conv_params *conv_params,
+                                              const cmsis_nn_per_channel_quant_params *quant_params,
+                                              const int32_t *bias,
+                                              int8_t *output)
 {
-    int32_t acc_n0 = 0;
-    int32_t sum_tmp = 0;
-
 #if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
+    const int8_t *col_base = col_base_ref;
+    int32_t *output_mult = quant_params->multiplier;
+    int32_t *output_shift = quant_params->shift;
+    const int32_t out_offset = conv_params->output_offset;
+    const int32_t out_activation_min = conv_params->activation.min;
+    const int32_t out_activation_max = conv_params->activation.max;
 
-    __ASM volatile("   vldrb.8         q0, [%[col]], #16     \n"
-                   "   wlstp.8         lr, %[cnt], 1f       \n"
-                   "2:                                      \n"
-                   "   vaddva.s8      %[sum], q0            \n"
-                   "   vldrb.8         q1, [%[row0]], #16    \n"
-                   "   vmladava.s8    %[out0], q0, q1       \n"
-                   "   vldrb.8         q0, [%[col]], #16     \n"
-                   "   letp            lr, 2b               \n"
-                   "1:                                      \n"
-                   : [col] "+r"(col_base), [sum] "+Te"(sum_tmp), [row0] "+r"(row_base), [out0] "+Te"(acc_n0)
-                   : [cnt] "r"(row_elements)
-                   : "q0", "q1", "memory", "r14");
-#else
-    for (int i = 0; i < row_elements; i++)
+    int32_t acc[4];
+    for (int i = 0; i < out_ch; i++)
     {
-        sum_tmp += col_base[i];
-        acc_n0 += row_base[i] * col_base[i];
-    }
-#endif
+        int32_t acc_n0 = 0;
+        const int8_t *row_base = row_base_ref;
 
-    *sum_col = sum_tmp;
-    *output = acc_n0;
+        int32_t sum_tmp = 0;
+
+        __ASM volatile("   vldrb.8         q0, [%[col]], #16     \n"
+                       "   wlstp.8         lr, %[cnt], 1f       \n"
+                       "2:                                      \n"
+                       "   vaddva.s8      %[sum], q0            \n"
+                       "   vldrb.8         q1, [%[row0]], #16    \n"
+                       "   vmladava.s8    %[out0], q0, q1       \n"
+                       "   vldrb.8         q0, [%[col]], #16     \n"
+                       "   letp            lr, 2b               \n"
+                       "1:                                      \n"
+                       : [col] "+r"(col_base), [sum] "+Te"(sum_tmp), [row0] "+r"(row_base), [out0] "+Te"(acc_n0)
+                       : [cnt] "r"(row_elements)
+                       : "q0", "q1", "memory", "r14");
+
+        sum_tmp *= conv_params->input_offset;
+        acc_n0 += sum_tmp;
+
+        const int32_t index = i & 0x3;
+        acc[index] = acc_n0;
+
+        if (index == 3)
+        {
+            int32x4_t res = vldrwq_s32(acc);
+            if (bias)
+            {
+                res = vaddq_s32(res, vldrwq_s32(bias));
+                bias += 4;
+            }
+            res = arm_requantize_mve_32x4(res, vldrwq_s32(output_mult), vldrwq_s32(output_shift));
+            output_mult += 4;
+            output_shift += 4;
+            res = vaddq_n_s32(res, out_offset);
+            res = vmaxq_s32(res, vdupq_n_s32(out_activation_min));
+            res = vminq_s32(res, vdupq_n_s32(out_activation_max));
+            vstrbq_s32(output, res);
+            output += 4;
+        }
+        col_base = col_base_ref + (i + 1) * (row_elements + skipped_row_elements);
+    }
+    // Handle left over elements
+    for (int i = 0; i < (out_ch & 0x3); i++)
+    {
+        int32_t acc_n0 = acc[i];
+        if (bias)
+        {
+            acc_n0 += bias[i];
+        }
+        acc_n0 = arm_nn_requantize(acc_n0, output_mult[i], output_shift[i]);
+        acc_n0 += conv_params->output_offset;
+        acc_n0 = MAX(acc_n0, conv_params->activation.min);
+        acc_n0 = MIN(acc_n0, conv_params->activation.max);
+        *output++ = (q7_t)acc_n0;
+    }
+
+#else
+    (void)row_elements;
+    (void)skipped_row_elements;
+    (void)row_base_ref;
+    (void)col_base_ref;
+    (void)out_ch;
+    (void)conv_params;
+    (void)quant_params;
+    (void)bias;
+    (void)output;
+#endif
     return ARM_CMSIS_NN_SUCCESS;
 }
 

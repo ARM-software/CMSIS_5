@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2022 Arm Limited or its affiliates.
+ * SPDX-FileCopyrightText: Copyright 2010-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_avgpool_s8.c
  * Description:  Pooling function implementations
  *
- * $Date:        17 May 2022
- * $Revision:    V.3.0.1
+ * $Date:        7 July 2022
+ * $Revision:    V.3.0.2
  *
  * Target Processor:  Cortex-M CPUs
  *
@@ -32,7 +32,6 @@
 #include "arm_nnsupportfunctions.h"
 
 #if defined(ARM_MATH_DSP) && !defined(ARM_MATH_MVEI)
-
 static void scale_q31_to_q7_and_clamp(const q31_t *buffer,
                                       q7_t *target,
                                       int32_t length,
@@ -95,64 +94,57 @@ arm_cmsis_nn_status arm_avgpool_s8(const cmsis_nn_context *ctx,
     const int32_t act_max = pool_params->activation.max;
     const int32_t ch_src = input_dims->c;
 
-    int32_t i_x, i_y;
-    int32_t k_x, k_y;
-
-    for (i_y = 0; i_y < output_y; i_y++)
+    for (int i_y = 0; i_y < output_y; i_y++)
     {
-        for (i_x = 0; i_x < output_x; i_x++)
+        for (int i_x = 0; i_x < output_x; i_x++)
         {
+            const int32_t k_y_start = MAX(0, i_y * stride_y - pad_y);
+            const int32_t k_y_end = MIN(i_y * stride_y - pad_y + kernel_y, input_y);
 
-            int32_t k_y_start, k_y_end;
-            int32_t k_x_start, k_x_end;
-            int32_t chCnt;
-            const int8_t *pTmp, *pTmpInner;
-            int8_t *pDst;
+            const int32_t k_x_start = MAX(0, i_x * stride_x - pad_x);
+            const int32_t k_x_end = MIN(i_x * stride_x - pad_x + kernel_x, input_x);
 
-            k_y_start = MAX(0, i_y * stride_y - pad_y);
-            k_y_end = MIN(i_y * stride_y - pad_y + kernel_y, input_y);
+            const int8_t *src_base = src;
+            int8_t *out = &dst[ch_src * (i_x + i_y * output_x)];
 
-            k_x_start = MAX(0, i_x * stride_x - pad_x);
-            k_x_end = MIN(i_x * stride_x - pad_x + kernel_x, input_x);
+            int32_t ch_count = (ch_src + 15) / 16;
+            int32_t channels = ch_src;
 
-            pTmp = src;
-            pDst = &dst[ch_src * (i_x + i_y * output_x)];
-
-            chCnt = ch_src >> 4;
-            while (chCnt > 0)
+            while (ch_count > 0)
             {
-                int32x4_t sumV1, sumV2, sumV3, sumV4;
-
-                int8x16_t tempV;
-                int16x8_t tempVLO, tempVHI;
-                int32x4_t tempVLOLO, tempVLOHI, tempVHILO, tempVHIHI;
+                int8x16_t temp;
+                int16x8_t temp_lo, temp_hi;
+                int32x4_t temp_lo_lo, temp_lo_hi, temp_hi_lo, temp_hi_hi;
                 int32_t count = 0;
 
-                sumV1 = vdupq_n_s32(0);
-                sumV2 = vdupq_n_s32(0);
-                sumV3 = vdupq_n_s32(0);
-                sumV4 = vdupq_n_s32(0);
+                int32x4_t sum_1 = vdupq_n_s32(0);
+                int32x4_t sum_2 = vdupq_n_s32(0);
+                int32x4_t sum_3 = vdupq_n_s32(0);
+                int32x4_t sum_4 = vdupq_n_s32(0);
+                // Load store tail predicate
+                const mve_pred16_t ld_st_p = vctp8q(channels);
+                channels -= 16;
 
-                for (k_y = k_y_start; k_y < k_y_end; k_y++)
+                for (int k_y = k_y_start; k_y < k_y_end; k_y++)
                 {
-                    for (k_x = k_x_start; k_x < k_x_end; k_x++)
+                    for (int k_x = k_x_start; k_x < k_x_end; k_x++)
                     {
-                        pTmpInner = pTmp + (ch_src * (k_x + k_y * input_x));
-                        tempV = vldrbq_s8(pTmpInner);
+                        const int8_t *src_inner = src_base + (ch_src * (k_x + k_y * input_x));
+                        temp = vldrbq_z_s8(src_inner, ld_st_p);
 
-                        tempVLO = vmovlbq_s8(tempV);
-                        tempVHI = vmovltq_s8(tempV);
+                        temp_lo = vmovlbq_s8(temp);
+                        temp_hi = vmovltq_s8(temp);
 
-                        tempVLOLO = vmovlbq_s16(tempVLO);
-                        tempVLOHI = vmovltq_s16(tempVLO);
+                        temp_lo_lo = vmovlbq_s16(temp_lo);
+                        temp_lo_hi = vmovltq_s16(temp_lo);
 
-                        tempVHILO = vmovlbq_s16(tempVHI);
-                        tempVHIHI = vmovltq_s16(tempVHI);
+                        temp_hi_lo = vmovlbq_s16(temp_hi);
+                        temp_hi_hi = vmovltq_s16(temp_hi);
 
-                        sumV1 = vaddq_s32(sumV1, tempVLOLO);
-                        sumV2 = vaddq_s32(sumV2, tempVLOHI);
-                        sumV3 = vaddq_s32(sumV3, tempVHILO);
-                        sumV4 = vaddq_s32(sumV4, tempVHIHI);
+                        sum_1 = vaddq_s32(sum_1, temp_lo_lo);
+                        sum_2 = vaddq_s32(sum_2, temp_lo_hi);
+                        sum_3 = vaddq_s32(sum_3, temp_hi_lo);
+                        sum_4 = vaddq_s32(sum_4, temp_hi_hi);
 
                         count++;
                     }
@@ -164,83 +156,60 @@ arm_cmsis_nn_status arm_avgpool_s8(const cmsis_nn_context *ctx,
                     return ARM_CMSIS_NN_ARG_ERROR;
                 }
 
-                sumV1[0] = sumV1[0] > 0 ? (sumV1[0] + count / 2) / count : (sumV1[0] - count / 2) / count;
-                sumV1[1] = sumV1[1] > 0 ? (sumV1[1] + count / 2) / count : (sumV1[1] - count / 2) / count;
-                sumV1[2] = sumV1[2] > 0 ? (sumV1[2] + count / 2) / count : (sumV1[2] - count / 2) / count;
-                sumV1[3] = sumV1[3] > 0 ? (sumV1[3] + count / 2) / count : (sumV1[3] - count / 2) / count;
+                // Perform the following operation
+                // sum = sum > 0 ? (sum + count / 2) / count : (sum - count / 2) / count;
+                const int32_t half_count = count / 2;
+                // Predicate for 'sum > 0' operation
+                mve_pred16_t p = vcmpgtq_n_s32(sum_1, 0);
+                sum_1 = vaddq_m_n_s32(sum_1, sum_1, half_count, p);
+                sum_1 = vsubq_m_n_s32(sum_1, sum_1, half_count, ~p);
 
-                sumV2[0] = sumV2[0] > 0 ? (sumV2[0] + count / 2) / count : (sumV2[0] - count / 2) / count;
-                sumV2[1] = sumV2[1] > 0 ? (sumV2[1] + count / 2) / count : (sumV2[1] - count / 2) / count;
-                sumV2[2] = sumV2[2] > 0 ? (sumV2[2] + count / 2) / count : (sumV2[2] - count / 2) / count;
-                sumV2[3] = sumV2[3] > 0 ? (sumV2[3] + count / 2) / count : (sumV2[3] - count / 2) / count;
+                p = vcmpgtq_n_s32(sum_2, 0);
+                sum_2 = vaddq_m_n_s32(sum_2, sum_2, half_count, p);
+                sum_2 = vsubq_m_n_s32(sum_2, sum_2, half_count, ~p);
 
-                sumV3[0] = sumV3[0] > 0 ? (sumV3[0] + count / 2) / count : (sumV3[0] - count / 2) / count;
-                sumV3[1] = sumV3[1] > 0 ? (sumV3[1] + count / 2) / count : (sumV3[1] - count / 2) / count;
-                sumV3[2] = sumV3[2] > 0 ? (sumV3[2] + count / 2) / count : (sumV3[2] - count / 2) / count;
-                sumV3[3] = sumV3[3] > 0 ? (sumV3[3] + count / 2) / count : (sumV3[3] - count / 2) / count;
+                p = vcmpgtq_n_s32(sum_3, 0);
+                sum_3 = vaddq_m_n_s32(sum_3, sum_3, half_count, p);
+                sum_3 = vsubq_m_n_s32(sum_3, sum_3, half_count, ~p);
 
-                sumV4[0] = sumV4[0] > 0 ? (sumV4[0] + count / 2) / count : (sumV4[0] - count / 2) / count;
-                sumV4[1] = sumV4[1] > 0 ? (sumV4[1] + count / 2) / count : (sumV4[1] - count / 2) / count;
-                sumV4[2] = sumV4[2] > 0 ? (sumV4[2] + count / 2) / count : (sumV4[2] - count / 2) / count;
-                sumV4[3] = sumV4[3] > 0 ? (sumV4[3] + count / 2) / count : (sumV4[3] - count / 2) / count;
+                p = vcmpgtq_n_s32(sum_4, 0);
+                sum_4 = vaddq_m_n_s32(sum_4, sum_4, half_count, p);
+                sum_4 = vsubq_m_n_s32(sum_4, sum_4, half_count, ~p);
 
-                sumV1 = vmaxq_s32(sumV1, vdupq_n_s32(act_min));
-                sumV1 = vminq_s32(sumV1, vdupq_n_s32(act_max));
-
-                sumV2 = vmaxq_s32(sumV2, vdupq_n_s32(act_min));
-                sumV2 = vminq_s32(sumV2, vdupq_n_s32(act_max));
-
-                sumV3 = vmaxq_s32(sumV3, vdupq_n_s32(act_min));
-                sumV3 = vminq_s32(sumV3, vdupq_n_s32(act_max));
-
-                sumV4 = vmaxq_s32(sumV4, vdupq_n_s32(act_min));
-                sumV4 = vminq_s32(sumV4, vdupq_n_s32(act_max));
-
-                tempVLO = vmovnbq_s32(tempVLO, sumV1);
-                tempVLO = vmovntq_s32(tempVLO, sumV2);
-
-                tempVHI = vmovnbq_s32(tempVHI, sumV3);
-                tempVHI = vmovntq_s32(tempVHI, sumV4);
-
-                tempV = vmovnbq_s16(tempV, tempVLO);
-                tempV = vmovntq_s16(tempV, tempVHI);
-
-                vstrbq_s8(pDst, tempV);
-                pDst += 16;
-
-                chCnt--;
-                pTmp += 16;
-            }
-
-            chCnt = ch_src & 0xF;
-            while (chCnt > 0)
-            {
-                int32_t sum = 0;
-                int32_t count = 0;
-
-                for (k_y = k_y_start; k_y < k_y_end; k_y++)
+                for (int i = 0; i < 4; i++)
                 {
-                    for (k_x = k_x_start; k_x < k_x_end; k_x++)
-                    {
-                        sum += pTmp[ch_src * (k_x + k_y * input_x)];
-                        count++;
-                    }
+                    sum_1[i] = sum_1[i] / count;
+                    sum_2[i] = sum_2[i] / count;
+                    sum_3[i] = sum_3[i] / count;
+                    sum_4[i] = sum_4[i] / count;
                 }
 
-                // Prevent static code issue DIVIDE_BY_ZERO.
-                if (count == 0)
-                {
-                    return ARM_CMSIS_NN_ARG_ERROR;
-                }
+                sum_1 = vmaxq_s32(sum_1, vdupq_n_s32(act_min));
+                sum_1 = vminq_s32(sum_1, vdupq_n_s32(act_max));
 
-                sum = sum > 0 ? (sum + count / 2) / count : (sum - count / 2) / count;
-                sum = MAX(sum, act_min);
-                sum = MIN(sum, act_max);
+                sum_2 = vmaxq_s32(sum_2, vdupq_n_s32(act_min));
+                sum_2 = vminq_s32(sum_2, vdupq_n_s32(act_max));
 
-                *pDst++ = sum;
+                sum_3 = vmaxq_s32(sum_3, vdupq_n_s32(act_min));
+                sum_3 = vminq_s32(sum_3, vdupq_n_s32(act_max));
 
-                chCnt--;
-                pTmp++;
+                sum_4 = vmaxq_s32(sum_4, vdupq_n_s32(act_min));
+                sum_4 = vminq_s32(sum_4, vdupq_n_s32(act_max));
+
+                temp_lo = vmovnbq_s32(temp_lo, sum_1);
+                temp_lo = vmovntq_s32(temp_lo, sum_2);
+
+                temp_hi = vmovnbq_s32(temp_hi, sum_3);
+                temp_hi = vmovntq_s32(temp_hi, sum_4);
+
+                temp = vmovnbq_s16(temp, temp_lo);
+                temp = vmovntq_s16(temp, temp_hi);
+
+                vstrbq_p_s8(out, temp, ld_st_p);
+                out += 16;
+
+                ch_count--;
+                src_base += 16;
             }
         }
     }
@@ -335,20 +304,18 @@ arm_cmsis_nn_status arm_avgpool_s8(const cmsis_nn_context *ctx,
     /* Reference C code adapted from CMSIS-NN arm_avepool_q7_HWC.
      */
     (void)buffer;
-    int16_t i_ch_in, i_x, i_y;
-    int16_t k_x, k_y;
 
-    for (i_y = 0; i_y < output_y; i_y++)
+    for (int i_y = 0; i_y < output_y; i_y++)
     {
-        for (i_x = 0; i_x < output_x; i_x++)
+        for (int i_x = 0; i_x < output_x; i_x++)
         {
-            for (i_ch_in = 0; i_ch_in < ch_src; i_ch_in++)
+            for (int i_ch_in = 0; i_ch_in < ch_src; i_ch_in++)
             {
                 int sum = 0;
                 int count = 0;
-                for (k_y = i_y * stride_y - pad_y; k_y < i_y * stride_y - pad_y + kernel_y; k_y++)
+                for (int k_y = i_y * stride_y - pad_y; k_y < i_y * stride_y - pad_y + kernel_y; k_y++)
                 {
-                    for (k_x = i_x * stride_x - pad_x; k_x < i_x * stride_x - pad_x + kernel_x; k_x++)
+                    for (int k_x = i_x * stride_x - pad_x; k_x < i_x * stride_x - pad_x + kernel_x; k_x++)
                     {
                         if (k_y >= 0 && k_x >= 0 && k_y < input_y && k_x < input_x)
                         {

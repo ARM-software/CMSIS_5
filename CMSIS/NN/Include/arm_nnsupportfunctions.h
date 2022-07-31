@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2022 Arm Limited or its affiliates.
+ * SPDX-FileCopyrightText: Copyright 2010-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_nnsupportfunctions.h
  * Description:  Public header file of support functions for CMSIS NN Library
  *
- * $Date:        10 May 2022
- * $Revision:    V.8.1.0
+ * $Date:        7 July 2022
+ * $Revision:    V.9.0.0
  *
  * Target Processor:  Cortex-M CPUs
  * -------------------------------------------------------------------- */
@@ -282,28 +282,43 @@ q15_t *arm_nn_mat_mult_kernel_s16(const q7_t *input_a,
                                   const int32_t num_col_a,
                                   const int64_t *const output_bias,
                                   q15_t *out_0);
+
 /**
- * @brief General Matrix-multiplication without requantization for one row & one column
- * @param[in]       row_elements  number of row elements
- * @param[in]       row_base      pointer to row operand
- * @param[in]       col_base      pointer to col operand
- * @param[out]      sum_col       pointer to store sum of column elements
- * @param[out]      output        pointer to store result of multiply-accumulate
- * @return     The function returns the multiply-accumulated result of the row by column.
+ * @brief General Vector by Matrix multiplication with requantization and storage of result.
+ * @param[in]       row_elements          number of row elements
+ * @param[in]       skipped_row_elements  number of row elements skipped due to padding.
+ *                                        row_elements + skipped_row_elements = (kernel_x * kernel_y) * input_ch
+ * @param[in]       row_base_ref          pointer to row operand
+ * @param[in]       col_base_ref          pointer to col operand
+ * @param[out]      out_ch                Number of output channels
+ * @param[in]       conv_params           Pointer to convolution parameters like offsets and activation values
+ * @param[in]       quant_params          Pointer to per-channel quantization parameters
+ * @param[in]       bias                  Pointer to optional per-channel bias
+ * @param[out]      output                Pointer to output where int8 results are stored.
+ * @return     The function performs matrix(row_base_ref) multiplication with vector(col_base_ref) and
+ *             scaled result is stored in memory.
  *
  * @details Pseudo-code
  *      *output = 0
  *      sum_col = 0
+ *      for (j = 0; j < out_ch; j++)
  *      for (i = 0; i < row_elements; i++)
- *          *output += row_base[i] * col_base[i]
- *          sum_col += col_base[i]
+ *          *output += row_base_ref[i] * col_base_ref[i]
+ *          sum_col += col_base_ref[i]
+ *      scale sum_col using quant_params and bias
+ *      store result in 'output'
+ *
  *
  */
 arm_cmsis_nn_status arm_nn_mat_mul_core_1x_s8(int32_t row_elements,
-                                              const int8_t *row_base,
-                                              const int8_t *col_base,
-                                              int32_t *const sum_col,
-                                              int32_t *const output);
+                                              const int32_t skipped_row_elements,
+                                              const int8_t *row_base_ref,
+                                              const int8_t *col_base_ref,
+                                              const int32_t out_ch,
+                                              const cmsis_nn_conv_params *conv_params,
+                                              const cmsis_nn_per_channel_quant_params *quant_params,
+                                              const int32_t *bias,
+                                              int8_t *output);
 
 /**
  * @brief Matrix-multiplication with requantization & activation function for four rows and one column
@@ -558,6 +573,43 @@ q7_t *arm_nn_depthwise_conv_nt_t_s8(const q7_t *lhs,
                                     q7_t *out);
 
 /**
+ * @brief Depthwise convolution of transposed rhs matrix with 4 lhs matrices. To be used in non-padded cases.
+ *        Dimensions are the same for lhs and rhs.
+ *
+ * @param[in]      lhs             Input left-hand side matrix
+ * @param[in]      rhs             Input right-hand side matrix (transposed)
+ * @param[in]      num_ch          Number of channels in LHS/RHS
+ * @param[in]      out_shift       Per channel output shift. Length of vector is equal to number of channels.
+ * @param[in]      out_mult        Per channel output multiplier. Length of vector is equal to number of channels.
+ * @param[in]      activation_min  Minimum value to clamp the output to. Range: int8
+ * @param[in]      activation_max  Maximum value to clamp the output to. Range: int8
+ * @param[in]       row_x_col       (row_dimension * col_dimension) of LHS/RHS matrix
+ * @param[in]      output_bias     Per channel output bias. Length of vector is equal to number of channels.
+ * @param[in]      out             Output pointer
+ *
+ * @return         The function returns one of the two
+ *                  - Updated output pointer if an implementation is available
+ *                  - NULL if no implementation is available.
+ *
+ * @note           If number of channels is not a multiple of 4, upto 3 elements outside the boundary will be read
+ * out for the following.
+ *                  - Output shift
+ *                  - Output multiplier
+ *                  - Output bias
+ *                  - rhs
+ */
+int16_t *arm_nn_depthwise_conv_nt_t_s16(const int16_t *lhs,
+                                        const q7_t *rhs,
+                                        const uint16_t num_ch,
+                                        const int32_t *out_shift,
+                                        const int32_t *out_mult,
+                                        const int32_t activation_min,
+                                        const int32_t activation_max,
+                                        const uint16_t row_x_col,
+                                        const int64_t *const output_bias,
+                                        int16_t *out);
+
+/**
  *@brief Matrix-multiplication function for convolution with reordered columns
  *@param[in]       pA          pointer to operand A
  *@param[in]       pInBuffer   pointer to operand B, always conssists of 2 vectors
@@ -662,8 +714,8 @@ __STATIC_FORCEINLINE void arm_memset_q7(q7_t *dst, const q7_t val, uint32_t bloc
                    "   vstrb.8                 q0, [%[in]], #16            \n"
                    "   letp                    lr, 2b                     \n"
                    "1:                                                    \n"
-                   : [ in ] "+r"(dst)
-                   : [ cnt ] "r"(block_size), [ set_val ] "r"(val)
+                   : [in] "+r"(dst)
+                   : [cnt] "r"(block_size), [set_val] "r"(val)
                    : "q0", "memory", "r14");
 #else
     memset(dst, val, block_size);
@@ -1010,12 +1062,24 @@ __STATIC_FORCEINLINE void arm_memcpy_q7(q7_t *__RESTRICT dst, const q7_t *__REST
                    "   vstrb.8                 q0, [%[out]], #16           \n"
                    "   letp                    lr, 2b                     \n"
                    "1:                                                    \n"
-                   : [ in ] "+r"(src), [ out ] "+r"(dst)
-                   : [ cnt ] "r"(block_size)
+                   : [in] "+r"(src), [out] "+r"(dst)
+                   : [cnt] "r"(block_size)
                    : "q0", "memory", "r14");
 #else
     memcpy(dst, src, block_size);
 #endif
+}
+
+/**
+ * @brief           memcpy wrapper for int16
+ * @param[in, out]  dst         Destination pointer
+ * @param[in]       src         Source pointer.
+ * @param[in]       block_size  Number of bytes to copy.
+ *
+ */
+__STATIC_FORCEINLINE void arm_memcpy_q15(q15_t *__RESTRICT dst, const q15_t *__RESTRICT src, uint32_t block_size)
+{
+    memcpy(dst, src, block_size);
 }
 
 #if defined(ARM_MATH_MVEI)

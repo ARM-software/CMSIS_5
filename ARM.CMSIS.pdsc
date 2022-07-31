@@ -15,6 +15,7 @@
        - Changed return types of all API's
        - Support for int16 average pooling DSP implementation
        - Support for DSP extension optimization for int16 depthwise_conv
+       - Support for MVEI extension optimization for int16 depthwise_conv
        - Support for MVEI extension optimization for int16 max pooling
     </release>
     <release version="5.9.0" date="2022-05-02">
@@ -2149,7 +2150,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="sourceC"      name="Device/ARM/ARMCA5/Source/AC6/startup_ARMCA5.c" version="1.0.1" attr="config" condition="ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMCA5/Source/AC6/ARMCA5.sct"       version="1.0.0" attr="config" condition="ARMCC6"/>
         <file category="sourceC"      name="Device/ARM/ARMCA5/Source/GCC/startup_ARMCA5.c" version="1.0.1" attr="config" condition="GCC"/>
-        <file category="other"        name="Device/ARM/ARMCA5/Source/GCC/ARMCA5.ld"        version="1.0.0" attr="config" condition="GCC"/>
+        <file category="linkerScript" name="Device/ARM/ARMCA5/Source/GCC/ARMCA5.ld"        version="1.0.0" attr="config" condition="GCC"/>
         <file category="sourceAsm"    name="Device/ARM/ARMCA5/Source/IAR/startup_ARMCA5.s" version="1.0.0" attr="config" condition="IAR"/>
         <file category="linkerScript" name="Device/ARM/ARMCA5/Source/IAR/ARMCA5.icf"       version="1.0.0" attr="config" condition="IAR"/>
         <file category="sourceC"      name="Device/ARM/ARMCA5/Source/system_ARMCA5.c"      version="1.0.1" attr="config"/>
@@ -2172,7 +2173,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="sourceC"      name="Device/ARM/ARMCA7/Source/AC6/startup_ARMCA7.c" version="1.0.1" attr="config" condition="ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMCA7/Source/AC6/ARMCA7.sct"       version="1.0.0" attr="config" condition="ARMCC6"/>
         <file category="sourceC"      name="Device/ARM/ARMCA7/Source/GCC/startup_ARMCA7.c" version="1.0.1" attr="config" condition="GCC"/>
-        <file category="other"        name="Device/ARM/ARMCA7/Source/GCC/ARMCA7.ld"        version="1.0.0" attr="config" condition="GCC"/>
+        <file category="linkerScript" name="Device/ARM/ARMCA7/Source/GCC/ARMCA7.ld"        version="1.0.0" attr="config" condition="GCC"/>
         <file category="sourceAsm"    name="Device/ARM/ARMCA7/Source/IAR/startup_ARMCA7.s" version="1.0.0" attr="config" condition="IAR"/>
         <file category="linkerScript" name="Device/ARM/ARMCA7/Source/IAR/ARMCA7.icf"       version="1.0.0" attr="config" condition="IAR"/>
         <file category="sourceC"      name="Device/ARM/ARMCA7/Source/system_ARMCA7.c"      version="1.0.1" attr="config"/>
@@ -2194,7 +2195,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="sourceC"      name="Device/ARM/ARMCA9/Source/AC6/startup_ARMCA9.c" version="1.0.1" attr="config" condition="ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMCA9/Source/AC6/ARMCA9.sct"       version="1.0.0" attr="config" condition="ARMCC6"/>
         <file category="sourceC"      name="Device/ARM/ARMCA9/Source/GCC/startup_ARMCA9.c" version="1.0.1" attr="config" condition="GCC"/>
-        <file category="other"        name="Device/ARM/ARMCA9/Source/GCC/ARMCA9.ld"        version="1.0.0" attr="config" condition="GCC"/>
+        <file category="linkerScript" name="Device/ARM/ARMCA9/Source/GCC/ARMCA9.ld"        version="1.0.0" attr="config" condition="GCC"/>
         <file category="sourceAsm"    name="Device/ARM/ARMCA9/Source/IAR/startup_ARMCA9.s" version="1.0.0" attr="config" condition="IAR"/>
         <file category="linkerScript" name="Device/ARM/ARMCA9/Source/IAR/ARMCA9.icf"       version="1.0.0" attr="config" condition="IAR"/>
         <file category="sourceC"      name="Device/ARM/ARMCA9/Source/system_ARMCA9.c"      version="1.0.1" attr="config"/>
@@ -2297,6 +2298,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_q7_to_q15_with_offset.c"/>
         <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_nn_accumulate_q7_to_q15.c"/>
         <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_nn_mat_mult_nt_t_s8.c"/>
+        <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_nn_depthwise_conv_nt_t_s16.c"/>
         <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_nn_mat_mul_kernel_s16.c"/>
         <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_nn_depthwise_conv_nt_t_padded_s8.c"/>
         <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_nn_add_q7.c"/>
@@ -2317,6 +2319,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="source" name="CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_mat_q7_vec_q15.c"/>
         <file category="source" name="CMSIS/NN/Source/SoftmaxFunctions/arm_softmax_q15.c"/>
         <file category="source" name="CMSIS/NN/Source/SoftmaxFunctions/arm_softmax_s8.c"/>
+        <file category="source" name="CMSIS/NN/Source/SoftmaxFunctions/arm_nn_softmax_common_s8.c"/>
         <file category="source" name="CMSIS/NN/Source/SoftmaxFunctions/arm_softmax_s8_s16.c"/>
         <file category="source" name="CMSIS/NN/Source/SoftmaxFunctions/arm_softmax_s16.c"/>
         <file category="source" name="CMSIS/NN/Source/SoftmaxFunctions/arm_softmax_u8.c"/>

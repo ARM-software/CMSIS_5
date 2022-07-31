@@ -38,7 +38,7 @@ except Exception as e:
 
 REQUIRED_MINIMUM_TENSORFLOW_VERSION = version.parse("2.5")
 TESTDATA_SETS = {}
-CLANG_FORMAT = 'clang-format-9 -i'
+CLANG_FORMAT = 'clang-format-12 -i'
 
 INT32_MAX = 2147483647
 INT32_MIN = -2147483648
@@ -1164,8 +1164,8 @@ def load_all_testdatasets():
     TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=1, out_ch=1, x_in=7,
                                           y_in=7, w_x=3, w_y=3, stride_x=2, stride_y=2, pad=True)
     dataset = 'kernel1x1'
-    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=4, out_ch=17, x_in=15,
-                                          y_in=15, w_x=1, w_y=1, stride_x=1, stride_y=1, pad=False,
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=5, out_ch=9, x_in=7,
+                                          y_in=3, w_x=1, w_y=1, stride_x=1, stride_y=1, pad=False,
                                           out_activation_min=-126, out_activation_max=127)
     dataset = 'conv_3'
     TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=3, out_ch=1, x_in=10, y_in=49, w_x=4,
@@ -1176,7 +1176,7 @@ def load_all_testdatasets():
                                           w_y=1, stride_x=2, stride_y=1, pad=False, out_activation_min=-127,
                                           out_activation_max=127, batches=2)
     dataset = 'conv_1_x_n_2'
-    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=4, out_ch=1, x_in=16, y_in=1, w_x=4,
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=4, out_ch=5, x_in=8, y_in=1, w_x=4,
                                           w_y=1, stride_x=2, stride_y=1, pad=True,
                                           out_activation_min=-111, out_activation_max=127)
     dataset = 'conv_1_x_n_3'
@@ -1254,8 +1254,12 @@ def load_all_testdatasets():
     TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=5, out_ch=5, x_in=4, y_in=5, w_x=3,
                                           w_y=3, stride_x=2, stride_y=2, pad=True,
                                           out_activation_min=-104, out_activation_max=127)
+    dataset = 'depthwise_kernel_3x3_null_bias'
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=5, out_ch=5, x_in=4, y_in=5, w_x=3,
+                                          w_y=3, stride_x=2, stride_y=2, pad=True, generate_bias=False,
+                                          out_activation_min=-104, out_activation_max=127)
     dataset = 'depthwise_eq_in_out_ch'
-    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=6, out_ch=6, x_in=4, y_in=5, w_x=2,
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=6, out_ch=6, x_in=4, y_in=5, w_x=2, generate_bias=False,
                                           w_y=3, stride_x=1, stride_y=1, pad=True,
                                           out_activation_min=-86, out_activation_max=127)
     dataset = 'depthwise_out_activation'
@@ -1298,16 +1302,50 @@ def load_all_testdatasets():
                                           w_y=2, stride_x=1, stride_y=1, pad=False, randmin=INT16_MIN,
                                           randmax=INT16_MAX, out_activation_min=-17000,
                                           out_activation_max=32767, int16xint8=True)
+    dataset = 'dw_int16xint8_fast_multiple_batches_uneven_buffers'
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=8, out_ch=8, x_in=5, y_in=5, w_x=3,
+                                          w_y=3, stride_x=1, stride_y=1, pad=False, randmin=INT16_MIN,
+                                          randmax=INT16_MAX, out_activation_min=-17000,
+                                          out_activation_max=32767, int16xint8=True, batches=3)
+    dataset = 'dw_int16xint8_fast_multiple_batches_uneven_buffers_null_bias'
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=8, out_ch=8, x_in=4, y_in=4, w_x=3,
+                                          w_y=2, stride_x=1, stride_y=1, pad=False, randmin=INT16_MIN,
+                                          randmax=INT16_MAX, out_activation_min=-17000,
+                                          out_activation_max=32767, int16xint8=True, batches=3, generate_bias=False)
+
+    dataset = 'dw_int16xint8_fast_test_bias'
+    nbr_of_out_channels = 8;
+    bias=[i for i in range(nbr_of_out_channels)];
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=8, out_ch=nbr_of_out_channels, x_in=4, y_in=4, w_x=2,
+                                          w_y=2, stride_x=1, stride_y=1, pad=False, randmin=INT16_MIN,
+                                          randmax=INT16_MAX, out_activation_min=-17000,
+                                          out_activation_max=32767, int16xint8=True, generate_bias=bias)
+
+    dataset = 'dw_int16xint8_fast_null_bias'
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=8, out_ch=8, x_in=4, y_in=4, w_x=2,
+                                          w_y=2, stride_x=1, stride_y=1, pad=False, randmin=INT16_MIN,
+                                          randmax=INT16_MAX, out_activation_min=-17000,
+                                          out_activation_max=32767, int16xint8=True, generate_bias=False)
     dataset = 'dw_int16xint8_fast_stride'
     TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=8, out_ch=8, x_in=4, y_in=4, w_x=2,
                                           w_y=2, stride_x=2, stride_y=2, pad=True, randmin=INT16_MIN,
                                           randmax=INT16_MAX, batches=2, out_activation_min=INT16_MIN,
                                           out_activation_max=16000, int16xint8=True)
+    dataset = 'dw_int16xint8_fast_stride_null_bias'
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=8, out_ch=8, x_in=4, y_in=4, w_x=2,
+                                          w_y=2, stride_x=2, stride_y=2, pad=True, randmin=INT16_MIN,
+                                          randmax=INT16_MAX, batches=2, out_activation_min=INT16_MIN,
+                                          out_activation_max=16000, int16xint8=True, generate_bias=False)
     dataset = 'dw_int16xint8_fast_spill'
     TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=5, out_ch=5, x_in=4, y_in=4, w_x=3,
                                           w_y=3, stride_x=2, stride_y=1, pad=True, randmin=INT16_MIN,
                                           randmax=INT16_MAX, batches=3, out_activation_min=-30000,
                                           out_activation_max=32767, int16xint8=True)
+    dataset = 'dw_int16xint8_fast_spill_null_bias'
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=5, out_ch=5, x_in=4, y_in=4, w_x=3,
+                                          w_y=3, stride_x=2, stride_y=1, pad=True, randmin=INT16_MIN,
+                                          randmax=INT16_MAX, batches=3, out_activation_min=-30000,
+                                          out_activation_max=32767, int16xint8=True, generate_bias=False)
 
     type_of_test = 'fully_connected'
     dataset = 'fully_connected'
@@ -1341,7 +1379,7 @@ def load_all_testdatasets():
 
     type_of_test = 'avgpool'
     dataset = 'avgpooling'
-    TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=8, x_in=22, y_in=12, stride_x=9,
+    TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=20, x_in=22, y_in=12, stride_x=9,
                                              stride_y=5, w_x=6, w_y=5, pad=True)
     dataset = 'avgpooling_1'
     TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=3, x_in=9, y_in=5, stride_x=1,
