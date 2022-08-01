@@ -1275,7 +1275,7 @@ def load_all_testdatasets():
                                           w_y=2, stride_x=1, stride_y=1, pad=True, generate_bias=False,
                                           batches=1)
     dataset = 'depthwise_null_bias_1'
-    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=2, out_ch=8, x_in=4, y_in=5, w_x=2,
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=2, out_ch=16, x_in=4, y_in=5, w_x=2,
                                           w_y=2, stride_x=1, stride_y=1, pad=True, generate_bias=False,
                                           batches=1)
     dataset = 'depthwise_dilation'
