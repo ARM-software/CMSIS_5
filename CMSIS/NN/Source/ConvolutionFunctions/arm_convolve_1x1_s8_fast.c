@@ -32,9 +32,6 @@
 #include "arm_nnsupportfunctions.h"
 #include <stdio.h>
 
-#define DIM_KER_X (1U)
-#define DIM_KER_Y (1U)
-
 /**
  *  @ingroup groupNN
  */
