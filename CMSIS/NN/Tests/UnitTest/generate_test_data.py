@@ -1191,6 +1191,10 @@ def load_all_testdatasets():
     TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=3, out_ch=3, x_in=5, y_in=5, w_x=2,
                                           w_y=3, stride_x=2, stride_y=2, pad=False,
                                           out_activation_min=-109, out_activation_max=127, batches=3)
+    dataset = 'conv_5'
+    TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=128, out_ch=1, x_in=128, y_in=1, w_x=3,
+                                          w_y=3, stride_x=4, stride_y=4, pad=True,
+                                          out_activation_min=-88, out_activation_max=127)
     dataset = 'conv_out_activation'
     TESTDATA_SETS[dataset] = ConvSettings(dataset, type_of_test, args, in_ch=2, out_ch=2, x_in=3, y_in=3, w_x=3,
                                           w_y=3, stride_x=1, stride_y=1, pad=True, out_activation_min=-61,
