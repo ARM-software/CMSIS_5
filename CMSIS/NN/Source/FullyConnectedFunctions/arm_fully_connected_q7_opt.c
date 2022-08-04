@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2022 Arm Limited or its affiliates.
+ * SPDX-FileCopyrightText: Copyright 2010-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_fully_connected_q7_opt.c
  * Description:  Q7 basic fully-connected layer function
  *
- * $Date:        19 April 2022
- * $Revision:    V.2.0.0
+ * $Date:        4 Aug 2022
+ * $Revision:    V.2.0.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -40,89 +40,9 @@
  * @{
  */
 
-/**
- * @brief Q7 opt fully-connected layer function
- * @param[in]       pV          pointer to input vector
- * @param[in]       pM          pointer to matrix weights
- * @param[in]       dim_vec     length of the vector
- * @param[in]       num_of_rows number of rows in weight matrix
- * @param[in]       bias_shift  amount of left-shift for bias
- * @param[in]       out_shift   amount of right-shift for output
- * @param[in]       bias        pointer to bias
- * @param[in,out]   pOut        pointer to output vector
- * @param[in,out]   vec_buffer  pointer to buffer space for input
- * @return     The function returns <code>ARM_CMSIS_NN_SUCCESS</code>
- *
- * @details
- *
- * <b>Buffer size:</b>
- *
- * vec_buffer size: dim_vec
- *
- * This opt function is designed to work with interleaved weight
- * matrix. The vector input is assumed in q7_t format, we call
- *  arm_q7_to_q15_no_shift_shuffle function to expand into
- *  q15_t format with certain weight re-ordering, refer to the function
- *  comments for more details.
- *  Here we use only one pointer to read 4 rows in the weight
- *  matrix. So if the original q7_t matrix looks like this:
- *
- *  | a11 | a12 | a13 | a14 | a15 | a16 | a17 |
- *
- *  | a21 | a22 | a23 | a24 | a25 | a26 | a27 |
- *
- *  | a31 | a32 | a33 | a34 | a35 | a36 | a37 |
- *
- *  | a41 | a42 | a43 | a44 | a45 | a46 | a47 |
- *
- *  | a51 | a52 | a53 | a54 | a55 | a56 | a57 |
- *
- *  | a61 | a62 | a63 | a64 | a65 | a66 | a67 |
- *
- *
- *  We operates on multiple-of-4 rows, so the first four rows becomes
- *
- *  | a11 | a21 | a13 | a23 | a31 | a41 | a33 | a43 |
- *
- *  | a12 | a22 | a14 | a24 | a32 | a42 | a34 | a44 |
- *
- *  | a15 | a25 | a35 | a45 | a16 | a26 | a36 | a46 |
- *
- *  So within the kernel, we first read the re-ordered vector in as:
- *
- *  | b1  | b3  | and | b2  | b4  |
- *
- *  the four q31_t weights will look like
- *
- *  | a11 | a13 |, | a21 | a23 |, | a31 | a33 |, | a41 | a43 |
- *
- *  | a12 | a14 |, | a22 | a24 |, | a32 | a34 |, | a42 | a44 |
- *
- *  The column left over will be in-order.
- *  which is:
- *
- *  | a17 | a27 | a37 | a47 |
- *
- *  For the left-over rows, we do 1x1 computation, so the data remains
- *  as its original order.
- *
- *  So the stored weight matrix looks like this:
- *
- *  | a11 | a21 | a13 | a23 | a31 | a41 |
- *
- *  | a33 | a43 | a12 | a22 | a14 | a24 |
- *
- *  | a32 | a42 | a34 | a44 | a15 | a25 |
- *
- *  | a35 | a45 | a16 | a26 | a36 | a46 |
- *
- *  | a17 | a27 | a37 | a47 | a51 | a52 |
- *
- *  | a53 | a54 | a55 | a56 | a57 | a61 |
- *
- *  | a62 | a63 | a64 | a65 | a66 | a67 |
- *
- *
+/*
+ * Q7 opt fully-connected layer function
+ * Refer function header for details
  */
 
 arm_cmsis_nn_status arm_fully_connected_q7_opt(const q7_t *pV,
@@ -237,81 +157,73 @@ arm_cmsis_nn_status arm_fully_connected_q7_opt(const q7_t *pV,
          */
 
 #ifndef ARM_MATH_BIG_ENDIAN
-        asm volatile("COL_LOOP_%=:\n"
-                     "ldr.w r4, [%[pA]], #8\n"
-                     "ldr.w r1, [%[pB]], #16\n"
-                     "mov.w r0, r1, ror #8\n"
-                     "sxtb16 r0, r0\n"
-                     "sxtb16 r1, r1\n"
-                     "smlad %[sum], r4, r1, %[sum]\n"
-                     "smlad %[sum2], r4, r0, %[sum2]\n"
-                     "ldr.w r3, [%[pB], #-12]\n"
-                     "mov.w r2, r3, ror #8\n"
-                     "sxtb16 r2, r2\n"
-                     "sxtb16 r3, r3\n"
-                     "smlad %[sum3], r4, r3, %[sum3]\n"
-                     "smlad %[sum4], r4, r2, %[sum4]\n"
-                     "ldr.w r4, [%[pA], #-4]\n"
-                     "ldr.w r1, [%[pB], #-8]\n"
-                     "mov.w r0, r1, ror #8\n"
-                     "sxtb16 r0, r0\n"
-                     "sxtb16 r1, r1\n"
-                     "smlad %[sum], r4, r1, %[sum]\n"
-                     "smlad %[sum2], r4, r0, %[sum2]\n"
-                     "ldr.w r3, [%[pB], #-4]\n"
-                     "mov.w r2, r3, ror #8\n"
-                     "sxtb16 r2, r2\n"
-                     "sxtb16 r3, r3\n"
-                     "smlad %[sum3], r4, r3, %[sum3]\n"
-                     "smlad %[sum4], r4, r2, %[sum4]\n"
-                     "subs %[colCnt], #1\n"
-                     "bne COL_LOOP_%=\n"
-                     : [ sum ] "+r"(sum),
-                       [ sum2 ] "+r"(sum2),
-                       [ sum3 ] "+r"(sum3),
-                       [ sum4 ] "+r"(sum4),
-                       [ pB ] "+r"(pB),
-                       [ pA ] "+r"(pA)
-                     : [ colCnt ] "r"(colCnt)
-                     : "r0", "r1", "r2", "r3", "r4");
+        asm volatile(
+            "COL_LOOP_%=:\n"
+            "ldr.w r4, [%[pA]], #8\n"
+            "ldr.w r1, [%[pB]], #16\n"
+            "mov.w r0, r1, ror #8\n"
+            "sxtb16 r0, r0\n"
+            "sxtb16 r1, r1\n"
+            "smlad %[sum], r4, r1, %[sum]\n"
+            "smlad %[sum2], r4, r0, %[sum2]\n"
+            "ldr.w r3, [%[pB], #-12]\n"
+            "mov.w r2, r3, ror #8\n"
+            "sxtb16 r2, r2\n"
+            "sxtb16 r3, r3\n"
+            "smlad %[sum3], r4, r3, %[sum3]\n"
+            "smlad %[sum4], r4, r2, %[sum4]\n"
+            "ldr.w r4, [%[pA], #-4]\n"
+            "ldr.w r1, [%[pB], #-8]\n"
+            "mov.w r0, r1, ror #8\n"
+            "sxtb16 r0, r0\n"
+            "sxtb16 r1, r1\n"
+            "smlad %[sum], r4, r1, %[sum]\n"
+            "smlad %[sum2], r4, r0, %[sum2]\n"
+            "ldr.w r3, [%[pB], #-4]\n"
+            "mov.w r2, r3, ror #8\n"
+            "sxtb16 r2, r2\n"
+            "sxtb16 r3, r3\n"
+            "smlad %[sum3], r4, r3, %[sum3]\n"
+            "smlad %[sum4], r4, r2, %[sum4]\n"
+            "subs %[colCnt], #1\n"
+            "bne COL_LOOP_%=\n"
+            : [sum] "+r"(sum), [sum2] "+r"(sum2), [sum3] "+r"(sum3), [sum4] "+r"(sum4), [pB] "+r"(pB), [pA] "+r"(pA)
+            : [colCnt] "r"(colCnt)
+            : "r0", "r1", "r2", "r3", "r4");
 #else
-        asm volatile("COL_LOOP_%=:\n"
-                     "ldr.w r4, [%[pA]], #8\n"
-                     "ldr.w r1, [%[pB]], #16\n"
-                     "mov.w r0, r1, ror #8\n"
-                     "sxtb16 r0, r0\n"
-                     "sxtb16 r1, r1\n"
-                     "smlad %[sum], r4, r0, %[sum]\n"
-                     "smlad %[sum2], r4, r1, %[sum2]\n"
-                     "ldr.w r3, [%[pB], #-12]\n"
-                     "mov.w r2, r3, ror #8\n"
-                     "sxtb16 r2, r2\n"
-                     "sxtb16 r3, r3\n"
-                     "smlad %[sum3], r4, r2, %[sum3]\n"
-                     "smlad %[sum4], r4, r3, %[sum4]\n"
-                     "ldr.w r4, [%[pA], #-4]\n"
-                     "ldr.w r1, [%[pB], #-8]\n"
-                     "mov.w r0, r1, ror #8\n"
-                     "sxtb16 r0, r0\n"
-                     "sxtb16 r1, r1\n"
-                     "smlad %[sum], r4, r0, %[sum]\n"
-                     "smlad %[sum2], r4, r1, %[sum2]\n"
-                     "ldr.w r3, [%[pB], #-4]\n"
-                     "mov.w r2, r3, ror #8\n"
-                     "sxtb16 r2, r2\n"
-                     "sxtb16 r3, r3\n"
-                     "smlad %[sum3], r4, r2, %[sum3]\n"
-                     "smlad %[sum4], r4, r3, %[sum4]\n"
-                     "subs %[colCnt], #1\n"
-                     "bne COL_LOOP_%=\n"
-                     : [ sum ] "+r"(sum),
-                       [ sum2 ] "+r"(sum2),
-                       [ sum3 ] "+r"(sum3),
-                       [ sum4 ] "+r"(sum4),
-                       [ pB ] "+r"(pB),
-                       [ pA ] "+r"(pA)
-                     : [ colCnt ] "r"(colCnt)
-                     : "r0", "r1", "r2", "r3", "r4");
+        asm volatile(
+            "COL_LOOP_%=:\n"
+            "ldr.w r4, [%[pA]], #8\n"
+            "ldr.w r1, [%[pB]], #16\n"
+            "mov.w r0, r1, ror #8\n"
+            "sxtb16 r0, r0\n"
+            "sxtb16 r1, r1\n"
+            "smlad %[sum], r4, r0, %[sum]\n"
+            "smlad %[sum2], r4, r1, %[sum2]\n"
+            "ldr.w r3, [%[pB], #-12]\n"
+            "mov.w r2, r3, ror #8\n"
+            "sxtb16 r2, r2\n"
+            "sxtb16 r3, r3\n"
+            "smlad %[sum3], r4, r2, %[sum3]\n"
+            "smlad %[sum4], r4, r3, %[sum4]\n"
+            "ldr.w r4, [%[pA], #-4]\n"
+            "ldr.w r1, [%[pB], #-8]\n"
+            "mov.w r0, r1, ror #8\n"
+            "sxtb16 r0, r0\n"
+            "sxtb16 r1, r1\n"
+            "smlad %[sum], r4, r0, %[sum]\n"
+            "smlad %[sum2], r4, r1, %[sum2]\n"
+            "ldr.w r3, [%[pB], #-4]\n"
+            "mov.w r2, r3, ror #8\n"
+            "sxtb16 r2, r2\n"
+            "sxtb16 r3, r3\n"
+            "smlad %[sum3], r4, r2, %[sum3]\n"
+            "smlad %[sum4], r4, r3, %[sum4]\n"
+            "subs %[colCnt], #1\n"
+            "bne COL_LOOP_%=\n"
+            : [sum] "+r"(sum), [sum2] "+r"(sum2), [sum3] "+r"(sum3), [sum4] "+r"(sum4), [pB] "+r"(pB), [pA] "+r"(pA)
+            : [colCnt] "r"(colCnt)
+            : "r0", "r1", "r2", "r3", "r4");
 #endif /* ARM_MATH_BIG_ENDIAN */
 
 #endif /* USE_INTRINSIC */

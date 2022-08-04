@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
+ * SPDX-FileCopyrightText: Copyright 2010-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_q7_to_q15_no_shift.c
  * Description:  Converts the elements of the Q7 vector to Q15 vector without left-shift
  *
- * $Date:        May 29, 2020
- * $Revision:    V.1.0.2
+ * $Date:        4 Aug 2022
+ * $Revision:    V.1.0.3
  *
  * Target Processor:  Cortex-M cores
  *
@@ -39,20 +39,9 @@
  * @{
  */
 
-/**
+/*
  * @brief Converts the elements of the Q7 vector to Q15 vector without left-shift
- * @param[in]       *pSrc points to the Q7 input vector
- * @param[out]      *pDst points to the Q15 output vector
- * @param[in]       blockSize length of the input vector
- *
- * \par Description:
- *
- * The equation used for the conversion process is:
- *
- * <pre>
- * 	pDst[n] = (q15_t) pSrc[n];   0 <= n < blockSize.
- * </pre>
- *
+ * Refer function header for details
  */
 
 void arm_q7_to_q15_no_shift(const q7_t *pSrc, q15_t *pDst, uint32_t blockSize)

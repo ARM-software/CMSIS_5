@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
+ * SPDX-FileCopyrightText: Copyright 2010-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_nn_mult_q15.c
  * Description:  Q15 vector multiplication with variable output shifts
  *
- * $Date:        20. July 2021
- * $Revision:    V.1.1.2
+ * $Date:        4 Aug 2022
+ * $Revision:    V.1.1.3
  *
  * Target Processor:  Cortex-M cores
  *
@@ -39,18 +39,10 @@
  * @{
  */
 
-/**
- * @brief           Q7 vector multiplication with variable output shifts
- * @param[in]       *pSrcA        pointer to the first input vector
- * @param[in]       *pSrcB        pointer to the second input vector
- * @param[out]      *pDst         pointer to the output vector
- * @param[in]       out_shift     amount of right-shift for output
- * @param[in]       blockSize     number of samples in each vector
+/*
+ * Q7 vector multiplication with variable output shifts
+ * Refer function header for details
  *
- * <b>Scaling and Overflow Behavior:</b>
- * \par
- * The function uses saturating arithmetic.
- * Results outside of the allowable Q15 range [0x8000 0x7FFF] will be saturated.
  */
 
 void arm_nn_mult_q15(q15_t *pSrcA, q15_t *pSrcB, q15_t *pDst, const uint16_t out_shift, uint32_t blockSize)

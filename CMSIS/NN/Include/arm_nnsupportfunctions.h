@@ -21,8 +21,8 @@
  * Title:        arm_nnsupportfunctions.h
  * Description:  Public header file of support functions for CMSIS NN Library
  *
- * $Date:        7 July 2022
- * $Revision:    V.9.0.0
+ * $Date:        4 Aug 2022
+ * $Revision:    V.9.0.1
  *
  * Target Processor:  Cortex-M CPUs
  * -------------------------------------------------------------------- */
@@ -129,7 +129,6 @@ void arm_nn_add_q7(const q7_t *input, q31_t *output, uint32_t block_size);
  * @param[in]       *pSrc points to the q7 input vector
  * @param[out]      *pDst points to the q15 output vector
  * @param[in]       blockSize length of the input vector
- * @return none.
  *
  */
 void arm_q7_to_q15_reordered_no_shift(const q7_t *pSrc, q15_t *pDst, uint32_t blockSize);
@@ -158,7 +157,6 @@ void arm_q7_to_q15_with_offset(const q7_t *src, q15_t *dst, uint32_t block_size,
  * @param[out]      dst        pointer to the q15 output vector
  * @param[in]       block_size length of the input vector
  * @param[in]       offset     offset to be added to each input vector element.
- * @return none.
  *
  * @details  This function does the q7 to q15 expansion with re-ordering of bytes. Re-ordering is a consequence of
  *           the sign extension intrinsic(DSP extension). The tail (i.e., last (N % 4) elements) retains its
@@ -800,7 +798,6 @@ read_and_pad_reordered_with_offset(const q7_t *source, q31_t *out1, q31_t *out2,
  * @param[out]      *pDst         pointer to the output vector
  * @param[in]       out_shift     amount of right-shift for output
  * @param[in]       blockSize     number of samples in each vector
- * @return none.
  *
  * <b>Scaling and Overflow Behavior:</b>
  * \par
@@ -817,7 +814,6 @@ void arm_nn_mult_q15(q15_t *pSrcA, q15_t *pSrcB, q15_t *pDst, const uint16_t out
  * @param[out]      *pDst         pointer to the output vector
  * @param[in]       out_shift     amount of right-shift for output
  * @param[in]       blockSize     number of samples in each vector
- * @return none.
  *
  * <b>Scaling and Overflow Behavior:</b>
  * \par

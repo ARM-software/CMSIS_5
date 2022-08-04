@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2022 Arm Limited or its affiliates.
+ * SPDX-FileCopyrightText: Copyright 2010-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_convolve_HWC_q7_fast.c
  * Description:  Fast Q7 version of convolution
  *
- * $Date:        19 April 2022
- * $Revision:    V.2.0.0
+ * $Date:        4 Aug 2022
+ * $Revision:    V.2.0.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -40,53 +40,9 @@
  * @{
  */
 
-/**
- * @brief Fast Q7 convolution function
- * @param[in]       Im_in       pointer to input tensor
- * @param[in]       dim_im_in   input tensor dimention
- * @param[in]       ch_im_in    number of input tensor channels
- * @param[in]       wt          pointer to kernel weights
- * @param[in]       ch_im_out   number of filters, i.e., output tensor channels
- * @param[in]       dim_kernel  filter kernel size
- * @param[in]       padding     padding sizes
- * @param[in]       stride      convolution stride
- * @param[in]       bias        pointer to bias
- * @param[in]       bias_shift  amount of left-shift for bias
- * @param[in]       out_shift   amount of right-shift for output
- * @param[in,out]   Im_out      pointer to output tensor
- * @param[in]       dim_im_out  output tensor dimension
- * @param[in,out]   bufferA     pointer to buffer space for input
- * @param[in,out]   bufferB     pointer to buffer space for output
- * @return     The function returns either
- * <code>ARM_CMSIS_NN_ARG_ERROR</code> or <code>ARM_CMSIS_NN_SUCCESS</code> based on the outcome of input arguments
- * constraints checking.
- *
- * @details
- *
- * <b>Buffer size:</b>
- *
- * bufferA size: 2*ch_im_in*dim_kernel*dim_kernel
- *
- * bufferB size: 0
- *
- * <b>Input dimension constraints:</b>
- *
- * ch_im_in is multiple of 4    ( because of the SIMD32 read and swap )
- *
- * ch_im_out is multiple of 2    ( bacause 2x2 mat_mult kernel )
- *
- * The im2col converts the Q7 tensor input into Q15 column, which is stored in
- * bufferA. There is reordering happenning during this im2col process with
- * arm_q7_to_q15_reordered_no_shift. For every four elements, the second and
- * third elements are swapped.
- *
- * The computation kernel arm_nn_mat_mult_kernel_q7_q15_reordered does the
- * GEMM computation with the reordered columns.
- *
- * To speed-up the determination of the padding condition, we split the
- * computation into 3x3 parts, i.e., {top, mid, bottom} X {left, mid, right}.
- * This reduces the total number of boundary condition checks and improves
- * the data copying performance.
+/*
+ * Fast Q7 convolution function
+ * Refer function header for details
  */
 
 arm_cmsis_nn_status arm_convolve_HWC_q7_fast(const q7_t *Im_in,

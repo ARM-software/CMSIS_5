@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2022 Arm Limited or its affiliates.
+ * SPDX-FileCopyrightText: Copyright 2010-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_nnfunctions.h
  * Description:  Public header file for CMSIS NN Library
  *
- * $Date:        19 May 2022
- * $Revision:    V.10.1.0
+ * $Date:        4 Aug 2022
+ * $Revision:    V.10.1.1
  *
  * Target Processor:  Cortex-M CPUs
  * -------------------------------------------------------------------- */
@@ -112,7 +112,7 @@
    * Copyright Notice
    * ------------
    *
-   * Copyright (C) 2010-2019 Arm Limited. All rights reserved.
+   * SPDX-FileCopyrightText: Copyright 2010-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
    *
    * [1] CMSIS-NN: Efficient Neural Network Kernels for Arm Cortex-M CPUs https://arxiv.org/abs/1801.06601
    *
@@ -1872,7 +1872,6 @@ arm_cmsis_nn_status arm_elementwise_mul_s16(const int16_t *input_1_vect,
  * @brief Q7 RELU function
  * @param[in,out]   data        pointer to input
  * @param[in]       size        number of elements
- * @return none.
  */
 
 void arm_relu_q7(q7_t *data, uint16_t size);
@@ -1889,7 +1888,6 @@ void arm_relu6_s8(q7_t *data, uint16_t size);
  * @brief Q15 RELU function
  * @param[in,out]   data        pointer to input
  * @param[in]       size        number of elements
- * @return none.
  */
 
 void arm_relu_q15(q15_t *data, uint16_t size);
@@ -1900,7 +1898,6 @@ void arm_relu_q15(q15_t *data, uint16_t size);
  * @param[in]       size        number of elements
  * @param[in]       int_width   bit-width of the integer part, assume to be smaller than 3
  * @param[in]       type        type of activation functions
- * @return none.
  */
 
 void arm_nn_activations_direct_q7(q7_t *data, uint16_t size, uint16_t int_width, arm_nn_activation_type type);
@@ -1911,7 +1908,6 @@ void arm_nn_activations_direct_q7(q7_t *data, uint16_t size, uint16_t int_width,
  * @param[in]       size        number of elements
  * @param[in]       int_width   bit-width of the integer part, assume to be smaller than 3
  * @param[in]       type        type of activation functions
- * @return none.
  *
  * @details
  *
@@ -1942,7 +1938,6 @@ void arm_nn_activations_direct_q15(q15_t *data, uint16_t size, uint16_t int_widt
  * @param[in]       dim_im_out  output tensor dimension
  * @param[in,out]   bufferA     pointer to buffer space for input
  * @param[in,out]   Im_out      pointer to output tensor
- * @return none.
  *
  */
 
@@ -1967,7 +1962,6 @@ void arm_maxpool_q7_HWC(q7_t *Im_in,
  * @param[in]       dim_im_out  output tensor dimension
  * @param[in,out]   bufferA     pointer to buffer space for input
  * @param[in,out]   Im_out      pointer to output tensor
- * @return none.
  *
  */
 
@@ -2156,7 +2150,6 @@ void arm_softmax_q7(const q7_t *vec_in, const uint16_t dim_vec, q7_t *p_out);
  * @param[in]       nb_batches  number of batches
  * @param[in]       dim_vec     input vector dimension
  * @param[out]      p_out       pointer to output vector
- * @return none.
  *
  * @note This function is an optimized version which is not bit-accurate with
  *       TensorFlow Lite's kernel
@@ -2169,7 +2162,6 @@ void arm_softmax_with_batch_q7(const q7_t *vec_in, const uint16_t nb_batches, co
  * @param[in]       vec_in      pointer to input vector
  * @param[in]       dim_vec     input vector dimension
  * @param[out]      p_out       pointer to output vector
- * @return none.
  *
  * @note This function is an optimized version which is not bit-accurate with
  *       TensorFlow Lite's kernel
