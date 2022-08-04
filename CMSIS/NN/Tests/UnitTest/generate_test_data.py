@@ -1397,9 +1397,21 @@ def load_all_testdatasets():
     TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=1, x_in=3, y_in=3,
                                              stride_x=1, stride_y=1, w_x=1, w_y=3, pad=True, relu6=True)
     dataset = 'avgpooling_int16'
-    TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=2, x_in=6, y_in=4,
+    TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=17, x_in=6, y_in=4,
                                              stride_x=2, stride_y=1, w_x=2, w_y=3, pad=True,
                                              randmin=INT16_MIN, randmax=INT16_MAX, int16xint8=True)
+    dataset = 'avgpooling_int16_1'
+    TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=2, x_in=9, y_in=1, stride_x=2,
+                                             stride_y=1, w_x=1, w_y=1, pad=False, randmin=INT16_MIN,
+                                             randmax=INT16_MAX, int16xint8=True)
+    dataset = 'avgpooling_int16_2'
+    TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=20, x_in=9, y_in=1, stride_x=2,
+                                             stride_y=1, w_x=1, w_y=1, pad=False, randmin=INT16_MIN,
+                                             randmax=INT16_MAX, int16xint8=True)
+    dataset = 'avgpooling_int16_3'
+    TESTDATA_SETS[dataset] = PoolingSettings(dataset, type_of_test, args, channels=21, x_in=1, y_in=20, stride_x=1,
+                                             stride_y=3, w_x=1, w_y=3, pad=True, randmin=INT16_MIN,
+                                             randmax=INT16_MAX, int16xint8=True)
 
     type_of_test = 'maxpool'
     dataset = 'maxpooling'

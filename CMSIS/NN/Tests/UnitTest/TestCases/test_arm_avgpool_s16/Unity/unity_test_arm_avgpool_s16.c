@@ -45,3 +45,7 @@ void setUp(void)
 void tearDown(void) {}
 
 void test_avgpooling_int16_arm_avgpool_s16(void) { avgpooling_int16_arm_avgpool_s16(); }
+
+void test_avgpooling_1_int16_arm_avgpool_s16(void) { avgpooling_int16_1_arm_avgpool_s16(); }
+void test_avgpooling_2_int16_arm_avgpool_s16(void) { avgpooling_int16_2_arm_avgpool_s16(); }
+void test_avgpooling_3_int16_arm_avgpool_s16(void) { avgpooling_int16_3_arm_avgpool_s16(); }
