@@ -132,9 +132,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga7f74841dd08196377cc29ce98deb2c12"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__nn__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NNBasicMath.html#ga7f74841dd08196377cc29ce98deb2c12">arm_nn_depthwise_conv_nt_t_s8</a> (const <a class="el" href="arm__nn__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *lhs, const <a class="el" href="arm__nn__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *rhs, const int32_t input_offset, const uint16_t num_ch, const int32_t *out_shift, const int32_t *out_mult, const int32_t out_offset, const int32_t activation_min, const int32_t activation_max, const uint16_t row_x_col, const int32_t *const output_bias, <a class="el" href="arm__nn__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *out)</td></tr>
 <tr class="memdesc:ga7f74841dd08196377cc29ce98deb2c12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Depthwise convolution of transposed rhs matrix with 4 lhs matrices. To be used in non-padded cases. Dimensions are the same for lhs and rhs.  <a href="#ga7f74841dd08196377cc29ce98deb2c12">More...</a><br/></td></tr>
 <tr class="separator:ga7f74841dd08196377cc29ce98deb2c12"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga66467cbafb1fc90a2b673fa9221aee67"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__nn__math__types_8h.html#a67ac3e1e650a7040b0f706fb83ea6184">arm_cmsis_nn_status</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NNBasicMath.html#ga66467cbafb1fc90a2b673fa9221aee67">arm_nn_mat_mul_core_1x_s8</a> (int32_t row_elements, const int8_t *row_base, const int8_t *col_base, int32_t *const sum_col, int32_t *const output)</td></tr>
-<tr class="memdesc:ga66467cbafb1fc90a2b673fa9221aee67"><td class="mdescLeft">&#160;</td><td class="mdescRight">General Matrix-multiplication without requantization for one row &amp; one column.  <a href="#ga66467cbafb1fc90a2b673fa9221aee67">More...</a><br/></td></tr>
-<tr class="separator:ga66467cbafb1fc90a2b673fa9221aee67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gada3234313b4c9fefd7c4421d88c4a785"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__nn__math__types_8h.html#a67ac3e1e650a7040b0f706fb83ea6184">arm_cmsis_nn_status</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NNBasicMath.html#gada3234313b4c9fefd7c4421d88c4a785">arm_nn_mat_mul_core_1x_s8</a> (int32_t row_elements, const int32_t skipped_row_elements, const int8_t *row_base_ref, const int8_t *col_base_ref, const int32_t out_ch, const <a class="el" href="structcmsis__nn__conv__params.html">cmsis_nn_conv_params</a> *conv_params, const <a class="el" href="structcmsis__nn__per__channel__quant__params.html">cmsis_nn_per_channel_quant_params</a> *quant_params, const int32_t *bias, int8_t *output)</td></tr>
+<tr class="memdesc:gada3234313b4c9fefd7c4421d88c4a785"><td class="mdescLeft">&#160;</td><td class="mdescRight">General Vector by Matrix multiplication with requantization and storage of result.  <a href="#gada3234313b4c9fefd7c4421d88c4a785">More...</a><br/></td></tr>
+<tr class="separator:gada3234313b4c9fefd7c4421d88c4a785"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga356c6870ac897816c016e7b77a3b767a"><td class="memItemLeft" align="right" valign="top">int8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NNBasicMath.html#ga356c6870ac897816c016e7b77a3b767a">arm_nn_mat_mul_core_4x_s8</a> (const int32_t row_elements, const int32_t offset, const int8_t *row_base, const int8_t *col_base_ref, const int32_t out_ch, const <a class="el" href="structcmsis__nn__conv__params.html">cmsis_nn_conv_params</a> *conv_params, const <a class="el" href="structcmsis__nn__per__channel__quant__params.html">cmsis_nn_per_channel_quant_params</a> *quant_params, const int32_t *bias, int8_t *output)</td></tr>
 <tr class="memdesc:ga356c6870ac897816c016e7b77a3b767a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Matrix-multiplication with requantization &amp; activation function for four rows and one column.  <a href="#ga356c6870ac897816c016e7b77a3b767a">More...</a><br/></td></tr>
 <tr class="separator:ga356c6870ac897816c016e7b77a3b767a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -592,7 +592,7 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ga66467cbafb1fc90a2b673fa9221aee67"></a>
+<a class="anchor" id="gada3234313b4c9fefd7c4421d88c4a785"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -605,25 +605,49 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const int8_t *&#160;</td>
-          <td class="paramname"><em>row_base</em>, </td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>skipped_row_elements</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const int8_t *&#160;</td>
-          <td class="paramname"><em>col_base</em>, </td>
+          <td class="paramname"><em>row_base_ref</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int32_t *const&#160;</td>
-          <td class="paramname"><em>sum_col</em>, </td>
+          <td class="paramtype">const int8_t *&#160;</td>
+          <td class="paramname"><em>col_base_ref</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int32_t *const&#160;</td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>out_ch</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structcmsis__nn__conv__params.html">cmsis_nn_conv_params</a> *&#160;</td>
+          <td class="paramname"><em>conv_params</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structcmsis__nn__per__channel__quant__params.html">cmsis_nn_per_channel_quant_params</a> *&#160;</td>
+          <td class="paramname"><em>quant_params</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t *&#160;</td>
+          <td class="paramname"><em>bias</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int8_t *&#160;</td>
           <td class="paramname"><em>output</em>&#160;</td>
         </tr>
         <tr>
@@ -636,17 +660,21 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">row_elements</td><td>number of row elements </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">row_base</td><td>pointer to row operand </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">col_base</td><td>pointer to col operand </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">sum_col</td><td>pointer to store sum of column elements </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">output</td><td>pointer to store result of multiply-accumulate </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">skipped_row_elements</td><td>number of row elements skipped due to padding. row_elements + skipped_row_elements = (kernel_x * kernel_y) * input_ch </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">row_base_ref</td><td>pointer to row operand </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">col_base_ref</td><td>pointer to col operand </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">out_ch</td><td>Number of output channels </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">conv_params</td><td>Pointer to convolution parameters like offsets and activation values </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">quant_params</td><td>Pointer to per-channel quantization parameters </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">bias</td><td>Pointer to optional per-channel bias </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">output</td><td>Pointer to output where int8 results are stored. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The function returns the multiply-accumulated result of the row by column.</dd></dl>
-<p>Pseudo-code *output = 0 sum_col = 0 for (i = 0; i &lt; row_elements; i++) *output += row_base[i] * col_base[i] sum_col += col_base[i] </p>
+<dl class="section return"><dt>Returns</dt><dd>The function performs matrix(row_base_ref) multiplication with vector(col_base_ref) and scaled result is stored in memory.</dd></dl>
+<p>Pseudo-code *output = 0 sum_col = 0 for (j = 0; j &lt; out_ch; j++) for (i = 0; i &lt; row_elements; i++) *output += row_base_ref[i] * col_base_ref[i] sum_col += col_base_ref[i] scale sum_col using quant_params and bias store result in 'output' </p>
 
-<p>References <a class="el" href="arm__nn__math__types_8h.html#a67ac3e1e650a7040b0f706fb83ea6184a3ba593df6b92214112a5e752c95ae016">ARM_CMSIS_NN_SUCCESS</a>.</p>
+<p>References <a class="el" href="structcmsis__nn__conv__params.html#a37811f827c8b46689a0627b54043650c">cmsis_nn_conv_params::activation</a>, <a class="el" href="arm__nn__math__types_8h.html#a67ac3e1e650a7040b0f706fb83ea6184a3ba593df6b92214112a5e752c95ae016">ARM_CMSIS_NN_SUCCESS</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#a6a13b7a567485da5fc7f0d311318886d">arm_nn_requantize()</a>, <a class="el" href="structcmsis__nn__conv__params.html#ac284274c0aa03b1a0bcc0a93b275eadd">cmsis_nn_conv_params::input_offset</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#ad935f1ff1a50822e317bdb321ce991ad">MAX</a>, <a class="el" href="structcmsis__nn__activation.html#a5fefc67d8979f6a9efe36330b9ba81cf">cmsis_nn_activation::max</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#adcd021ac91d43a62b2cdecf9a5b971a7">MIN</a>, <a class="el" href="structcmsis__nn__activation.html#a88a2ecd4bda8cd5f339c826df578585a">cmsis_nn_activation::min</a>, <a class="el" href="structcmsis__nn__per__channel__quant__params.html#a33b4a56acc8ffaa077f7db31b001e5bd">cmsis_nn_per_channel_quant_params::multiplier</a>, <a class="el" href="structcmsis__nn__conv__params.html#aa917be27492df19f6382df8d1d78870a">cmsis_nn_conv_params::output_offset</a>, and <a class="el" href="structcmsis__nn__per__channel__quant__params.html#a281dfde55f7a87b39a4a2c2c0362c813">cmsis_nn_per_channel_quant_params::shift</a>.</p>
 
 <p>Referenced by <a class="el" href="group__NNConv.html#ga6c569efc46ae1c38df1335888fc7873d">arm_convolve_1_x_n_s8()</a>, and <a class="el" href="group__NNConv.html#gae5a5bd1e247b50b2c24abe6eb7efb03a">arm_convolve_1x1_s8_fast()</a>.</p>
 
