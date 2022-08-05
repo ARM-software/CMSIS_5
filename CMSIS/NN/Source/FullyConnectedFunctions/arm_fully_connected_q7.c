@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2022 Arm Limited or its affiliates.
+ * SPDX-FileCopyrightText: Copyright 2010-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_fully_connected_q7.c
  * Description:  Q7 basic fully-connected layer function
  *
- * $Date:        19 April 2022
- * $Revision:    V.2.0.0
+ * $Date:        4 Aug 2022
+ * $Revision:    V.2.0.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -40,28 +40,9 @@
  * @{
  */
 
-/**
- * @brief Q7 basic fully-connected layer function
- * @param[in]       pV          pointer to input vector
- * @param[in]       pM          pointer to matrix weights
- * @param[in]       dim_vec     length of the vector
- * @param[in]       num_of_rows number of rows in weight matrix
- * @param[in]       bias_shift  amount of left-shift for bias
- * @param[in]       out_shift   amount of right-shift for output
- * @param[in]       bias        pointer to bias
- * @param[in,out]   pOut        pointer to output vector
- * @param[in,out]   vec_buffer  pointer to buffer space for input
- * @return     The function returns <code>ARM_CMSIS_NN_SUCCESS</code>
- *
- * @details
- *
- * <b>Buffer size:</b>
- *
- * vec_buffer size: dim_vec
- *
- * This basic function is designed to work with regular weight
- * matrix without interleaving.
- *
+/*
+ * Q7 basic fully-connected layer function
+ * Refer function header for details
  */
 
 arm_cmsis_nn_status arm_fully_connected_q7(const q7_t *pV,

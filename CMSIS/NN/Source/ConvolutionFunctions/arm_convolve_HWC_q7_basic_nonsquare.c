@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2022 Arm Limited or its affiliates.
+ * SPDX-FileCopyrightText: Copyright 2010-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_convolve_HWC_q7_basic.c
  * Description:	 Q7 version of convolution
  *
- * $Date:        19 April 2022
- * $Revision:    V.2.0.0
+ * $Date:        4 Aug 2022
+ * $Revision:    V.2.0.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -40,29 +40,10 @@
  * @{
  */
 
-/**
- * @brief Basic Q7 convolution function (non-sqaure shape)
- * @param[in]       Im_in        pointer to input tensor
- * @param[in]       dim_im_in_x  input tensor dimention x
- * @param[in]       dim_im_in_y  input tensor dimention y
- * @param[in]       ch_im_in     number of input tensor channels
- * @param[in]       wt           pointer to kernel weights
- * @param[in]       ch_im_out    number of filters, i.e., output tensor channels
- * @param[in]       dim_kernel_x filter kernel size x
- * @param[in]       dim_kernel_y filter kernel size y
- * @param[in]       padding_x    padding size x
- * @param[in]       padding_y    padding size y
- * @param[in]       stride_x     convolution stride x
- * @param[in]       stride_y     convolution stride y
- * @param[in]       bias         pointer to bias
- * @param[in]       bias_shift   amount of left-shift for bias
- * @param[in]       out_shift    amount of right-shift for output
- * @param[in,out]   Im_out       pointer to output tensor
- * @param[in]       dim_im_out_x output tensor dimension x
- * @param[in]       dim_im_out_y output tensor dimension y
- * @param[in,out]   bufferA      pointer to buffer space for input
- * @param[in,out]   bufferB      pointer to buffer space for output
- * @return     The function returns <code>ARM_CMSIS_NN_SUCCESS</code>
+/*
+ * Basic Q7 convolution function (non-sqaure shape)
+ * Refer function header for details
+ *
  */
 
 arm_cmsis_nn_status arm_convolve_HWC_q7_basic_nonsquare(const q7_t *Im_in,

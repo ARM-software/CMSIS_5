@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2022 Arm Limited or its affiliates.
+ * SPDX-FileCopyrightText: Copyright 2010-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_depthwise_separable_conv_HWC_q7_nonsquare.c
  * Description:  Q7 depthwise separable convolution function (non-square shape)
  *
- * $Date:        19 April 2022
- * $Revision:    V.2.0.0
+ * $Date:        4 Aug 2022
+ * $Revision:    V.2.0.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -40,36 +40,9 @@
  * @{
  */
 
-/**
- * @brief Q7 depthwise separable convolution function (non-square shape)
- * @param[in]       Im_in         pointer to input tensor
- * @param[in]       dim_im_in_x   input tensor dimension x
- * @param[in]       dim_im_in_y   input tensor dimension y
- * @param[in]       ch_im_in      number of input tensor channels
- * @param[in]       wt            pointer to kernel weights
- * @param[in]       ch_im_out     number of filters, i.e., output tensor channels
- * @param[in]       dim_kernel_x  filter kernel size x
- * @param[in]       dim_kernel_y  filter kernel size y
- * @param[in]       padding_x     padding sizes x
- * @param[in]       padding_y     padding sizes y
- * @param[in]       stride_x      convolution stride x
- * @param[in]       stride_y      convolution stride y
- * @param[in]       bias          pointer to bias
- * @param[in]       bias_shift    amount of left-shift for bias
- * @param[in]       out_shift     amount of right-shift for output
- * @param[in,out]   Im_out        pointer to output tensor
- * @param[in]       dim_im_out_x  output tensor dimension x
- * @param[in]       dim_im_out_y  output tensor dimension y
- * @param[in,out]   bufferA       pointer to buffer space for input
- * @param[in,out]   bufferB       pointer to buffer space for output
- * @return     The function returns either
- * <code>ARM_CMSIS_NN_ARG_ERROR</code> or <code>ARM_CMSIS_NN_SUCCESS</code> based on the outcome of input arguments
- * constraints checking.
- *
- * This function is the version with full list of optimization tricks, but with
- * some constraints:
- *   ch_im_in is equal to ch_im_out
- *
+/*
+ * Q7 depthwise separable convolution function (non-square shape)
+ * Refer function header for details
  */
 
 arm_cmsis_nn_status arm_depthwise_separable_conv_HWC_q7_nonsquare(const q7_t *Im_in,
@@ -271,13 +244,13 @@ arm_cmsis_nn_status arm_depthwise_separable_conv_HWC_q7_nonsquare(const q7_t *Im
                              "smlad %[sum4], r4, r5, %[sum4]\n"
                              "subs %[colCnt], #1\n"
                              "bne COL_LOOP\n"
-                             : [ sum ] "+r"(sum),
-                               [ sum2 ] "+r"(sum2),
-                               [ sum3 ] "+r"(sum3),
-                               [ sum4 ] "+r"(sum4),
-                               [ pB ] "+r"(pB),
-                               [ pA ] "+r"(pA)
-                             : [ colCnt ] "r"(colCnt), [ ch_im_in ] "r"(ch_im_in)
+                             : [sum] "+r"(sum),
+                               [sum2] "+r"(sum2),
+                               [sum3] "+r"(sum3),
+                               [sum4] "+r"(sum4),
+                               [pB] "+r"(pB),
+                               [pA] "+r"(pA)
+                             : [colCnt] "r"(colCnt), [ch_im_in] "r"(ch_im_in)
                              : "r0", "r1", "r2", "r3", "r4", "r5");
 #else
                 //  r0    r1    r2    r3    r4   r5
@@ -313,13 +286,13 @@ arm_cmsis_nn_status arm_depthwise_separable_conv_HWC_q7_nonsquare(const q7_t *Im
                              "smlad %[sum3], r4, r5, %[sum3]\n"
                              "subs %[colCnt], #1\n"
                              "bne COL_LOOP\n"
-                             : [ sum ] "+r"(sum),
-                               [ sum2 ] "+r"(sum2),
-                               [ sum3 ] "+r"(sum3),
-                               [ sum4 ] "+r"(sum4),
-                               [ pB ] "+r"(pB),
-                               [ pA ] "+r"(pA)
-                             : [ colCnt ] "r"(colCnt), [ ch_im_in ] "r"(ch_im_in)
+                             : [sum] "+r"(sum),
+                               [sum2] "+r"(sum2),
+                               [sum3] "+r"(sum3),
+                               [sum4] "+r"(sum4),
+                               [pB] "+r"(pB),
+                               [pA] "+r"(pA)
+                             : [colCnt] "r"(colCnt), [ch_im_in] "r"(ch_im_in)
                              : "r0", "r1", "r2", "r3", "r4", "r5");
 #endif /*ARM_MATH_BIG_ENDIAN */
 

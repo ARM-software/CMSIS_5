@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2022 Arm Limited or its affiliates.
+ * SPDX-FileCopyrightText: Copyright 2010-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_elementwise_mul_s8
  * Description:  Element wise multiplication
  *
- * $Date:        19 April 2022
- * $Revision:    V.2.0.0
+ * $Date:        4 Aug 2022
+ * $Revision:    V.2.0.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -40,10 +40,10 @@
  * @{
  */
 
-/**
- * @brief s8 element wise multiplication of two vectors
+/*
+ * s8 element wise multiplication of two vectors
  *
- * @note   Refer header file for details.
+ * Refer header file for details.
  *
  */
 
