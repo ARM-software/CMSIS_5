@@ -22,8 +22,8 @@
  * Description:  s8 convolution layer wrapper function with the main purpose to call the optimal kernel available in
  * cmsis-nn to perform the convolution.
  *
- * $Date:        20 June 2022
- * $Revision:    V.2.1.0
+ * $Date:        4 August 2022
+ * $Revision:    V.2.1.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -75,7 +75,7 @@ arm_cmsis_nn_status arm_convolve_wrapper_s8(const cmsis_nn_context *ctx,
                                         output_dims,
                                         output_data);
     }
-    else if ((input_dims->h == 1) && (output_dims->w % 4 == 0) && conv_params->dilation.w == 1)
+    else if ((input_dims->h == 1) && (output_dims->w % 4 == 0) && conv_params->dilation.w == 1 && (filter_dims->h == 1))
     {
         return arm_convolve_1_x_n_s8(ctx,
                                      conv_params,
@@ -116,7 +116,8 @@ int32_t arm_convolve_wrapper_s8_get_buffer_size(const cmsis_nn_conv_params *conv
     {
         return arm_convolve_1x1_s8_fast_get_buffer_size(input_dims);
     }
-    else if ((input_dims->h == 1) && (output_dims->w % 4 == 0) && (conv_params->dilation.w == 1))
+    else if ((input_dims->h == 1) && (output_dims->w % 4 == 0) && (conv_params->dilation.w == 1) &&
+             (filter_dims->h == 1))
     {
         return arm_convolve_1_x_n_s8_get_buffer_size(input_dims, filter_dims);
     }
