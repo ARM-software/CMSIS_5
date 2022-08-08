@@ -98,7 +98,12 @@ void basic_arm_depthwise_conv_s8_opt(void)
                                                            &output_dims,
                                                            output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        // The caller is responsible to clear the scratch buffers for security reasons if applicable.
+        memset(ctx.buf, 0, ctx.size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, basic_output_ref, BASIC_DST_SIZE));
 }
@@ -161,7 +166,11 @@ void stride2pad1_arm_depthwise_conv_s8_opt(void)
                                                            &output_dims,
                                                            output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, ctx.size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, stride2pad1_output_ref, STRIDE2PAD1_DST_SIZE));
 }
@@ -224,7 +233,11 @@ void depthwise_eq_in_out_ch_arm_depthwise_conv_s8_opt(void)
                                                            &output_dims,
                                                            output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, ctx.size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, depthwise_eq_in_out_ch_output_ref, DEPTHWISE_EQ_IN_OUT_CH_DST_SIZE));
 }

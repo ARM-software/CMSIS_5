@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2022 Arm Limited or its affiliates.
+ * SPDX-FileCopyrightText: Copyright 2010-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -96,7 +96,12 @@ void depthwise_kernel_3x3_arm_depthwise_conv_3x3_s8(void)
                                                            &output_dims,
                                                            output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        // The caller is responsible to clear the scratch buffers for security reasons if applicable.
+        memset(ctx.buf, 0, ctx.size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, depthwise_kernel_3x3_output_ref, DEPTHWISE_KERNEL_3X3_DST_SIZE));
 
@@ -116,7 +121,11 @@ void depthwise_kernel_3x3_arm_depthwise_conv_3x3_s8(void)
                                            &output_dims,
                                            output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, depthwise_kernel_3x3_output_ref, DEPTHWISE_KERNEL_3X3_DST_SIZE));
 }
@@ -180,7 +189,11 @@ void depthwise_kernel_3x3_arm_depthwise_conv_3x3_1_s8(void)
                                                            &output_dims,
                                                            output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, ctx.size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
 
     const arm_cmsis_nn_status expected_wrapper = ARM_CMSIS_NN_SUCCESS;
@@ -201,7 +214,11 @@ void depthwise_kernel_3x3_arm_depthwise_conv_3x3_1_s8(void)
                                            &output_dims,
                                            output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected_wrapper, result);
 }
 
@@ -264,7 +281,11 @@ void depthwise_kernel_3x3_null_bias_arm_depthwise_conv_3x3_null_bias_s8(void)
                                                            &output_dims,
                                                            output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, ctx.size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(
         validate(output, depthwise_kernel_3x3_null_bias_output_ref, DEPTHWISE_KERNEL_3X3_NULL_BIAS_DST_SIZE));
@@ -287,7 +308,11 @@ void depthwise_kernel_3x3_null_bias_arm_depthwise_conv_3x3_null_bias_s8(void)
                                            &output_dims,
                                            output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected_wrapper, result);
     TEST_ASSERT_TRUE(
         validate(output, depthwise_kernel_3x3_null_bias_output_ref, DEPTHWISE_KERNEL_3X3_NULL_BIAS_DST_SIZE));

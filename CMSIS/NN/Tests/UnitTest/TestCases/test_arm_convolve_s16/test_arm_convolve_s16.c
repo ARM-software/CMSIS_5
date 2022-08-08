@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2010-2022 Arm Limited or its affiliates. All rights reserved.
+ * SPDX-FileCopyrightText: Copyright 2010-2022 Arm Limited and/or its affiliates <open-source-office@arm.com> All rights
+ * reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -84,7 +85,12 @@ void int16xint8_arm_convolve_s16(void)
                                                   bias_data,
                                                   &output_dims,
                                                   output);
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        // The caller is responsible to clear the scratch buffers for security reasons if applicable.
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(ARM_CMSIS_NN_SUCCESS, result);
     TEST_ASSERT_TRUE(validate_s16(output, output_ref, output_ref_size));
 
@@ -103,7 +109,11 @@ void int16xint8_arm_convolve_s16(void)
                                       &output_dims,
                                       output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(ARM_CMSIS_NN_SUCCESS, result);
     TEST_ASSERT_TRUE(validate_s16(output, output_ref, output_ref_size));
 }
@@ -164,7 +174,11 @@ void requantize_s64_arm_convolve_s16(void)
                                                   bias_data,
                                                   &output_dims,
                                                   output);
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(ARM_CMSIS_NN_SUCCESS, result);
     TEST_ASSERT_TRUE(validate_s16(output, output_ref, output_ref_size));
 
@@ -183,7 +197,11 @@ void requantize_s64_arm_convolve_s16(void)
                                       &output_dims,
                                       output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(ARM_CMSIS_NN_SUCCESS, result);
     TEST_ASSERT_TRUE(validate_s16(output, output_ref, output_ref_size));
 }
@@ -244,7 +262,11 @@ void int16xint8_dilation_1_arm_convolve_s16(void)
                                                   bias_data,
                                                   &output_dims,
                                                   output);
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(ARM_CMSIS_NN_SUCCESS, result);
     TEST_ASSERT_TRUE(validate_s16(output, output_ref, output_ref_size));
 
@@ -263,7 +285,11 @@ void int16xint8_dilation_1_arm_convolve_s16(void)
                                       &output_dims,
                                       output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(ARM_CMSIS_NN_SUCCESS, result);
     TEST_ASSERT_TRUE(validate_s16(output, output_ref, output_ref_size));
 }
@@ -324,7 +350,11 @@ void int16xint8_dilation_2_arm_convolve_s16(void)
                                                   bias_data,
                                                   &output_dims,
                                                   output);
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(ARM_CMSIS_NN_SUCCESS, result);
     TEST_ASSERT_TRUE(validate_s16(output, output_ref, output_ref_size));
 
@@ -343,7 +373,11 @@ void int16xint8_dilation_2_arm_convolve_s16(void)
                                       &output_dims,
                                       output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(ARM_CMSIS_NN_SUCCESS, result);
     TEST_ASSERT_TRUE(validate_s16(output, output_ref, output_ref_size));
 }
@@ -404,7 +438,11 @@ void int16xint8_dilation_3_arm_convolve_s16(void)
                                                   bias_data,
                                                   &output_dims,
                                                   output);
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(ARM_CMSIS_NN_SUCCESS, result);
     TEST_ASSERT_TRUE(validate_s16(output, output_ref, output_ref_size));
 
@@ -423,7 +461,11 @@ void int16xint8_dilation_3_arm_convolve_s16(void)
                                       &output_dims,
                                       output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(ARM_CMSIS_NN_SUCCESS, result);
     TEST_ASSERT_TRUE(validate_s16(output, output_ref, output_ref_size));
 }
