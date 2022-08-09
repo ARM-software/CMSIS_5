@@ -21,8 +21,8 @@
  * Title:        arm_nnfunctions.h
  * Description:  Public header file for CMSIS NN Library
  *
- * $Date:        4 Aug 2022
- * $Revision:    V.10.1.1
+ * $Date:        7 Aug 2022
+ * $Revision:    V.10.1.2
  *
  * Target Processor:  Cortex-M CPUs
  * -------------------------------------------------------------------- */
@@ -175,11 +175,11 @@ typedef enum
 
 /**
  * @brief s8 convolution layer wrapper function with the main purpose to call the optimal kernel available in
- cmsis-nn
- *        to perform the convolution.
+ *        cmsis-nn  to perform the convolution.
  *
  * @param[in, out] ctx            Function context that contains the additional buffer if required by the function.
-                                  arm_convolve_wrapper_s8_get_buffer_size will return the buffer_size if required
+ *                                arm_convolve_wrapper_s8_get_buffer_size will return the buffer_size if required.
+ *                                The caller is expected to clear the buffer ,if applicable, for security reasons.
  * @param[in]      conv_params    Convolution parameters (e.g. strides, dilations, pads,...).
  *                                Range of conv_params->input_offset  : [-127, 128]
  *                                Range of conv_params->output_offset : [-128, 127]
@@ -233,11 +233,11 @@ int32_t arm_convolve_wrapper_s8_get_buffer_size(const cmsis_nn_conv_params *conv
 
 /**
  * @brief s16 convolution layer wrapper function with the main purpose to call the optimal kernel available in
- cmsis-nn
- *        to perform the convolution.
+ *        cmsis-nn to perform the convolution.
  *
  * @param[in, out] ctx            Function context that contains the additional buffer if required by the function.
-                                  arm_convolve_wrapper_s8_get_buffer_size will return the buffer_size if required
+ *                                arm_convolve_wrapper_s8_get_buffer_size will return the buffer_size if required
+ *                                The caller is expected to clear the buffer ,if applicable, for security reasons.
  * @param[in]      conv_params    Convolution parameters (e.g. strides, dilations, pads,...).
  *                                conv_params->input_offset  : Not used
  *                                conv_params->output_offset : Not used
@@ -292,7 +292,8 @@ int32_t arm_convolve_wrapper_s16_get_buffer_size(const cmsis_nn_conv_params *con
 /**
  * @brief Basic s8 convolution function
  * @param[in, out] ctx            Function context that contains the additional buffer if required by the function.
-                                  arm_convolve_s8_get_buffer_size will return the buffer_size if required
+ *                                arm_convolve_s8_get_buffer_size will return the buffer_size if required.
+ *                                The caller is expected to clear the buffer ,if applicable, for security reasons.
  * @param[in]      conv_params    Convolution parameters (e.g. strides, dilations, pads,...).
  *                                Range of conv_params->input_offset  : [-127, 128]
  *                                Range of conv_params->output_offset : [-128, 127]
@@ -342,7 +343,8 @@ int32_t arm_convolve_s8_get_buffer_size(const cmsis_nn_dims *input_dims, const c
 /**
  * @brief Basic s16 convolution function
  * @param[in, out] ctx            Function context that contains the additional buffer if required by the function.
-                                  arm_convolve_s16_get_buffer_size will return the buffer_size if required
+ *                                arm_convolve_s16_get_buffer_size will return the buffer_size if required.
+ *                                The caller is expected to clear the buffer ,if applicable, for security reasons.
  * @param[in]      conv_params    Convolution parameters (e.g. strides, dilations, pads,...).
  *                                conv_params->input_offset  : Not used
  *                                conv_params->output_offset : Not used
@@ -380,7 +382,8 @@ arm_cmsis_nn_status arm_convolve_s16(const cmsis_nn_context *ctx,
 /**
  * @brief Optimized s16 convolution function
  * @param[in, out] ctx            Function context that contains the additional buffer if required by the function.
-                                  arm_convolve_fast_s16_get_buffer_size will return the buffer_size if required
+ *                                arm_convolve_fast_s16_get_buffer_size will return the buffer_size if required.
+ *                                The caller is expected to clear the buffer ,if applicable, for security reasons.
  * @param[in]      conv_params    Convolution parameters (e.g. strides, dilations, pads,...).
  *                                conv_params->input_offset  : Not used
  *                                conv_params->output_offset : Not used
@@ -422,9 +425,9 @@ arm_cmsis_nn_status arm_convolve_fast_s16(const cmsis_nn_context *ctx,
 /**
  * @brief Get the required buffer size for s16 convolution function
  *
- * @param[in]       input_dims            Input (activation) tensor dimensions. Format: [N, H, W, C_IN]
- * @param[in]       filter_dims           Filter tensor dimensions. Format: [C_OUT, HK, WK, C_IN] where HK and WK
- * are the spatial filter dimensions
+ * @param[in]       input_dims    Input (activation) tensor dimensions. Format: [N, H, W, C_IN]
+ * @param[in]       filter_dims   Filter tensor dimensions. Format: [C_OUT, HK, WK, C_IN] where HK and WK
+ *                                are the spatial filter dimensions
  * @return          The function returns  required buffer size(bytes)
  *
  */
@@ -433,9 +436,9 @@ int32_t arm_convolve_s16_get_buffer_size(const cmsis_nn_dims *input_dims, const 
 /**
  * @brief Get the required buffer size for fast s16 convolution function
  *
- * @param[in]       input_dims            Input (activation) tensor dimensions. Format: [N, H, W, C_IN]
- * @param[in]       filter_dims           Filter tensor dimensions. Format: [C_OUT, HK, WK, C_IN] where HK and WK
- * are the spatial filter dimensions
+ * @param[in]       input_dims    Input (activation) tensor dimensions. Format: [N, H, W, C_IN]
+ * @param[in]       filter_dims   Filter tensor dimensions. Format: [C_OUT, HK, WK, C_IN] where HK and WK
+ *                                are the spatial filter dimensions
  * @return          The function returns required buffer size(bytes)
  *
  */
@@ -655,26 +658,26 @@ arm_cmsis_nn_status arm_convolve_HWC_q7_fast_nonsquare(const q7_t *Im_in,
 
 /**
  * @brief Fast Q7 version of 1x1 convolution (non-sqaure shape)
- * @param[in]       Im_in        pointer to input tensor
- * @param[in]       dim_im_in_x  input tensor dimension x
- * @param[in]       dim_im_in_y  input tensor dimension y
- * @param[in]       ch_im_in     number of input tensor channels
- * @param[in]       wt           pointer to kernel weights
- * @param[in]       ch_im_out    number of filters, i.e., output tensor channels
- * @param[in]       dim_kernel_x filter kernel size x
- * @param[in]       dim_kernel_y filter kernel size y
- * @param[in]       padding_x    padding size x
- * @param[in]       padding_y    padding size y
- * @param[in]       stride_x     convolution stride x
- * @param[in]       stride_y     convolution stride y
- * @param[in]       bias         pointer to bias
- * @param[in]       bias_shift   amount of left-shift for bias
- * @param[in]       out_shift    amount of right-shift for output
- * @param[in,out]   Im_out       pointer to output tensor
- * @param[in]       dim_im_out_x output tensor dimension x
- * @param[in]       dim_im_out_y output tensor dimension y
- * @param[in,out]   bufferA      pointer to buffer space for input
- * @param[in,out]   bufferB      pointer to buffer space for output
+ * @param[in]       Im_in         pointer to input tensor
+ * @param[in]       dim_im_in_x   input tensor dimension x
+ * @param[in]       dim_im_in_y   input tensor dimension y
+ * @param[in]       ch_im_in      number of input tensor channels
+ * @param[in]       wt            pointer to kernel weights
+ * @param[in]       ch_im_out     number of filters, i.e., output tensor channels
+ * @param[in]       dim_kernel_x  filter kernel size x
+ * @param[in]       dim_kernel_y  filter kernel size y
+ * @param[in]       padding_x     padding size x
+ * @param[in]       padding_y     padding size y
+ * @param[in]       stride_x      convolution stride x
+ * @param[in]       stride_y      convolution stride y
+ * @param[in]       bias          pointer to bias
+ * @param[in]       bias_shift    amount of left-shift for bias
+ * @param[in]       out_shift     amount of right-shift for output
+ * @param[in,out]   Im_out        pointer to output tensor
+ * @param[in]       dim_im_out_x  output tensor dimension x
+ * @param[in]       dim_im_out_y  output tensor dimension y
+ * @param[in,out]   bufferA       pointer to buffer space for input
+ * @param[in,out]   bufferB       pointer to buffer space for output
  * @return     The function returns either
  *                          <code>ARM_CMSIS_NN_ARG_ERROR</code> if argument constraints fail. or,
  *                          <code>ARM_CMSIS_NN_SUCCESS</code> on successful completion.
@@ -712,21 +715,22 @@ arm_cmsis_nn_status arm_convolve_1x1_HWC_q7_fast_nonsquare(const q7_t *Im_in,
 /**
  * @brief Fast s8 version for 1x1 convolution (non-square shape)
  *
- * @param[in, out] ctx            Function context that contains the additional buffer if required by the function.
-                                  arm_convolve_1x1_s8_fast_get_buffer_size will return the buffer_size if required
- * @param[in]      conv_params    Convolution parameters (e.g. strides, dilations, pads,...).
- *                                Range of conv_params->input_offset  : [-127, 128]
- *                                Range of conv_params->output_offset : [-128, 127]
- * @param[in]      quant_params   Per-channel quantization info.
- *                                It contains the multiplier and shift values to be applied to each output channel
- * @param[in]      input_dims     Input (activation) tensor dimensions. Format: [N, H, W, C_IN]
- * @param[in]      input_data     Input (activation) data pointer. Data type: int8
- * @param[in]      filter_dims    Filter tensor dimensions. Format: [C_OUT, 1, 1, C_IN]
- * @param[in]      filter_data    Filter data pointer. Data type: int8
- * @param[in]      bias_dims      Bias tensor dimensions. Format: [C_OUT]
- * @param[in]      bias_data      Optional bias data pointer. Data type: int32
- * @param[in]      output_dims    Output tensor dimensions. Format: [N, H, W, C_OUT]
- * @param[out]     output_data    Output data pointer. Data type: int8
+ * @param[in, out] ctx           Function context that contains the additional buffer if required by the function.
+ *                               arm_convolve_1x1_s8_fast_get_buffer_size will return the buffer_size if required.
+ *                               The caller is expected to clear the buffer ,if applicable, for security reasons.
+ * @param[in]      conv_params   Convolution parameters (e.g. strides, dilations, pads,...).
+ *                               Range of conv_params->input_offset  : [-127, 128]
+ *                               Range of conv_params->output_offset : [-128, 127]
+ * @param[in]      quant_params  Per-channel quantization info.
+ *                               It contains the multiplier and shift values to be applied to each output channel
+ * @param[in]      input_dims    Input (activation) tensor dimensions. Format: [N, H, W, C_IN]
+ * @param[in]      input_data    Input (activation) data pointer. Data type: int8
+ * @param[in]      filter_dims   Filter tensor dimensions. Format: [C_OUT, 1, 1, C_IN]
+ * @param[in]      filter_data   Filter data pointer. Data type: int8
+ * @param[in]      bias_dims     Bias tensor dimensions. Format: [C_OUT]
+ * @param[in]      bias_data     Optional bias data pointer. Data type: int32
+ * @param[in]      output_dims   Output tensor dimensions. Format: [N, H, W, C_OUT]
+ * @param[out]     output_data   Output data pointer. Data type: int8
  *
  * @return     The function returns either
  *                  <code>ARM_CMSIS_NN_ARG_ERROR</code> if argument constraints fail. or,
@@ -764,22 +768,23 @@ int32_t arm_convolve_1x1_s8_fast_get_buffer_size(const cmsis_nn_dims *input_dims
 /**
  * @brief 1xn convolution
  *
- * @param[in, out] ctx            Function context that contains the additional buffer if required by the function.
-                                  arm_convolve_1_x_n_s8_get_buffer_size will return the buffer_size if required
- * @param[in]      conv_params    Convolution parameters (e.g. strides, dilations, pads,...).
- *                                Range of conv_params->input_offset  : [-127, 128]
- *                                Range of conv_params->output_offset : [-128, 127]
- * @param[in]      quant_params   Per-channel quantization info.
- *                                It contains the multiplier and shift values to be applied to each output channel
- * @param[in]      input_dims     Input (activation) tensor dimensions. Format: [N, H, W, C_IN]
- * @param[in]      input_data     Input (activation) data pointer. Data type: int8
- * @param[in]      filter_dims    Filter tensor dimensions. Format: [C_OUT, 1, WK, C_IN] where WK is the horizontal
- *                                spatial filter dimension
- * @param[in]      filter_data    Filter data pointer. Data type: int8
- * @param[in]      bias_dims      Bias tensor dimensions. Format: [C_OUT]
- * @param[in]      bias_data      Optional bias data pointer. Data type: int32
- * @param[in]      output_dims    Output tensor dimensions. Format: [N, H, W, C_OUT]
- * @param[out]     output_data    Output data pointer. Data type: int8
+ * @param[in, out] ctx           Function context that contains the additional buffer if required by the function.
+ *                               arm_convolve_1_x_n_s8_get_buffer_size will return the buffer_size if required
+ *                               The caller is expected to clear the buffer ,if applicable, for security reasons.
+ * @param[in]      conv_params   Convolution parameters (e.g. strides, dilations, pads,...).
+ *                               Range of conv_params->input_offset  : [-127, 128]
+ *                               Range of conv_params->output_offset : [-128, 127]
+ * @param[in]      quant_params  Per-channel quantization info.
+ *                               It contains the multiplier and shift values to be applied to each output channel
+ * @param[in]      input_dims    Input (activation) tensor dimensions. Format: [N, H, W, C_IN]
+ * @param[in]      input_data    Input (activation) data pointer. Data type: int8
+ * @param[in]      filter_dims   Filter tensor dimensions. Format: [C_OUT, 1, WK, C_IN] where WK is the horizontal
+ *                               spatial filter dimension
+ * @param[in]      filter_data   Filter data pointer. Data type: int8
+ * @param[in]      bias_dims     Bias tensor dimensions. Format: [C_OUT]
+ * @param[in]      bias_data     Optional bias data pointer. Data type: int32
+ * @param[in]      output_dims   Output tensor dimensions. Format: [N, H, W, C_OUT]
+ * @param[out]     output_data   Output data pointer. Data type: int8
  *
  * @return     The function returns either
  *                  <code>ARM_CMSIS_NN_ARG_ERROR</code> if argument constraints fail. or,
@@ -1067,26 +1072,27 @@ arm_cmsis_nn_status arm_depthwise_separable_conv_HWC_q7_nonsquare(const q7_t *Im
 /**
  * @brief Wrapper function to pick the right optimized s8 depthwise convolution function
  *
- * @param[in, out] ctx            Function context (e.g. temporary buffer). Check the function
- *                                definition file to see if an additional buffer is required.
- *                                Optional function {API}_get_buffer_size() provides the buffer
- *                                size if required.
- * @param[in]      dw_conv_params Depthwise convolution parameters (e.g. strides, dilations, pads,...)
- *                                dw_conv_params->dilation is not used.
- *                                Range of dw_conv_params->input_offset : [-127, 128]
- *                                Range of dw_conv_params->output_offset : [-128, 127]
- * @param[in]      quant_params   Per-channel quantization info.
- *                               It contains the multiplier and shift values to be applied to each
- *                               output channel
- * @param[in]      input_dims     Input (activation) tensor dimensions. Format: [H, W, C_IN]
- *                                Batch argument N is not used and assumed to be 1.
- * @param[in]      input_data     Input (activation) data pointer. Data type: int8
- * @param[in]      filter_dims    Filter tensor dimensions. Format: [1, H, W, C_OUT]
- * @param[in]      filter_data    Filter data pointer. Data type: int8
- * @param[in]      bias_dims      Bias tensor dimensions. Format: [C_OUT]
- * @param[in]      bias_data      Bias data pointer. Data type: int32
- * @param[in]      output_dims    Output tensor dimensions. Format: [1, H, W, C_OUT]
- * @param[in, out] output_data    Output data pointer. Data type: int8
+ * @param[in, out] ctx             Function context (e.g. temporary buffer). Check the function
+ *                                 definition file to see if an additional buffer is required.
+ *                                 Optional function {API}_get_buffer_size() provides the buffer
+ *                                 size if required.
+ *                                 The caller is expected to clear the buffer ,if applicable, for security reasons.
+ * @param[in]      dw_conv_params  Depthwise convolution parameters (e.g. strides, dilations, pads,...)
+ *                                 dw_conv_params->dilation is not used.
+ *                                 Range of dw_conv_params->input_offset : [-127, 128]
+ *                                 Range of dw_conv_params->output_offset : [-128, 127]
+ * @param[in]      quant_params    Per-channel quantization info.
+ *                                 It contains the multiplier and shift values to be applied to each
+ *                                 output channel
+ * @param[in]      input_dims      Input (activation) tensor dimensions. Format: [H, W, C_IN]
+ *                                 Batch argument N is not used and assumed to be 1.
+ * @param[in]      input_data      Input (activation) data pointer. Data type: int8
+ * @param[in]      filter_dims     Filter tensor dimensions. Format: [1, H, W, C_OUT]
+ * @param[in]      filter_data     Filter data pointer. Data type: int8
+ * @param[in]      bias_dims       Bias tensor dimensions. Format: [C_OUT]
+ * @param[in]      bias_data       Bias data pointer. Data type: int32
+ * @param[in]      output_dims     Output tensor dimensions. Format: [1, H, W, C_OUT]
+ * @param[in, out] output_data     Output data pointer. Data type: int8
  * @return     The function returns
  *                <code>ARM_CMSIS_NN_SUCCESS</code>   -  Successful completion.
  *
@@ -1115,14 +1121,14 @@ arm_cmsis_nn_status arm_depthwise_conv_wrapper_s8(const cmsis_nn_context *ctx,
 /**
  * @brief Get size of additional buffer required by arm_depthwise_conv_wrapper_s8()
  *
- * @param[in]      dw_conv_params Depthwise convolution parameters (e.g. strides, dilations, pads,...)
- *                                Range of dw_conv_params->input_offset : [-127, 128]
- *                                Range of dw_conv_params->input_offset : [-128, 127]
- * @param[in]      input_dims     Input (activation) tensor dimensions. Format: [H, W, C_IN]
- *                                Batch argument N is not used and assumed to be 1.
- * @param[in]      filter_dims    Filter tensor dimensions. Format: [1, H, W, C_OUT]
- * @param[in]      output_dims    Output tensor dimensions. Format: [1, H, W, C_OUT]
- * @return                        Size of additional memory required for optimizations in bytes.
+ * @param[in]      dw_conv_params  Depthwise convolution parameters (e.g. strides, dilations, pads,...)
+ *                                 Range of dw_conv_params->input_offset : [-127, 128]
+ *                                 Range of dw_conv_params->input_offset : [-128, 127]
+ * @param[in]      input_dims      Input (activation) tensor dimensions. Format: [H, W, C_IN]
+ *                                 Batch argument N is not used and assumed to be 1.
+ * @param[in]      filter_dims     Filter tensor dimensions. Format: [1, H, W, C_OUT]
+ * @param[in]      output_dims     Output tensor dimensions. Format: [1, H, W, C_OUT]
+ * @return                         Size of additional memory required for optimizations in bytes.
  *
  */
 int32_t arm_depthwise_conv_wrapper_s8_get_buffer_size(const cmsis_nn_dw_conv_params *dw_conv_params,
@@ -1133,27 +1139,27 @@ int32_t arm_depthwise_conv_wrapper_s8_get_buffer_size(const cmsis_nn_dw_conv_par
 /**
  * @brief Basic s8 depthwise convolution function that doesn't have any constraints on the input dimensions.
  *
- * @param[in, out] ctx            Function context (e.g. temporary buffer). Check the function
- *                                definition file to see if an additional buffer is required.
- *                                Optional function {API}_get_buffer_size() provides the buffer
- *                                size if an additional buffer is required.
- *                                exists if additional memory is.
- * @param[in]      dw_conv_params Depthwise convolution parameters (e.g. strides, dilations, pads,...)
- *                                dw_conv_params->dilation is not used.
- *                                Range of dw_conv_params->input_offset : [-127, 128]
- *                                Range of dw_conv_params->input_offset : [-128, 127]
- * @param[in]      quant_params   Per-channel quantization info.
- *                               It contains the multiplier and shift values to be applied to each
- *                               output channel
- * @param[in]      input_dims     Input (activation) tensor dimensions. Format: [N, H, W, C_IN]
- *                                Batch argument N is not used.
- * @param[in]      input_data     Input (activation) data pointer. Data type: int8
- * @param[in]      filter_dims    Filter tensor dimensions. Format: [1, H, W, C_OUT]
- * @param[in]      filter_data    Filter data pointer. Data type: int8
- * @param[in]      bias_dims      Bias tensor dimensions. Format: [C_OUT]
- * @param[in]      bias_data      Bias data pointer. Data type: int32
- * @param[in]      output_dims    Output tensor dimensions. Format: [N, H, W, C_OUT]
- * @param[in, out] output_data    Output data pointer. Data type: int8
+ * @param[in, out] ctx             Function context (e.g. temporary buffer). Check the function
+ *                                 definition file to see if an additional buffer is required.
+ *                                 Optional function {API}_get_buffer_size() provides the buffer
+ *                                 size if an additional buffer is required exists if additional memory is.
+ *                                 The caller is expected to clear the buffer ,if applicable, for security reasons.
+ * @param[in]      dw_conv_params  Depthwise convolution parameters (e.g. strides, dilations, pads,...)
+ *                                 dw_conv_params->dilation is not used.
+ *                                 Range of dw_conv_params->input_offset : [-127, 128]
+ *                                 Range of dw_conv_params->input_offset : [-128, 127]
+ * @param[in]      quant_params    Per-channel quantization info.
+ *                                 It contains the multiplier and shift values to be applied to each
+ *                                 output channel
+ * @param[in]      input_dims      Input (activation) tensor dimensions. Format: [N, H, W, C_IN]
+ *                                 Batch argument N is not used.
+ * @param[in]      input_data      Input (activation) data pointer. Data type: int8
+ * @param[in]      filter_dims     Filter tensor dimensions. Format: [1, H, W, C_OUT]
+ * @param[in]      filter_data     Filter data pointer. Data type: int8
+ * @param[in]      bias_dims       Bias tensor dimensions. Format: [C_OUT]
+ * @param[in]      bias_data       Bias data pointer. Data type: int32
+ * @param[in]      output_dims     Output tensor dimensions. Format: [N, H, W, C_OUT]
+ * @param[in, out] output_data     Output data pointer. Data type: int8
  * @return     The function returns <code>ARM_CMSIS_NN_SUCCESS</code>
  *
  * @details
@@ -1175,26 +1181,27 @@ arm_cmsis_nn_status arm_depthwise_conv_s8(const cmsis_nn_context *ctx,
 /**
  * @brief Basic s16 depthwise convolution function that doesn't have any constraints on the input dimensions.
  *
- * @param[in, out] ctx            Function context (e.g. temporary buffer). Check the function
- *                                definition file to see if an additional buffer is required.
- *                                Optional function {API}_get_buffer_size() provides the buffer
- *                                size if an additional buffer is required.
- *                                exists if additional memory is.
- * @param[in]      dw_conv_params Depthwise convolution parameters (e.g. strides, dilations, pads,...)
- *                                conv_params->input_offset  : Not used
- *                                conv_params->output_offset : Not used
- * @param[in]      quant_params   Per-channel quantization info.
- *                               It contains the multiplier and shift values to be applied to each
- *                               output channel
- * @param[in]      input_dims     Input (activation) tensor dimensions. Format: [N, H, W, C_IN]
- *                                Batch argument N is not used.
- * @param[in]      input_data     Input (activation) data pointer. Data type: int8
- * @param[in]      filter_dims    Filter tensor dimensions. Format: [1, H, W, C_OUT]
- * @param[in]      filter_data    Filter data pointer. Data type: int8
- * @param[in]      bias_dims      Bias tensor dimensions. Format: [C_OUT]
- * @param[in]      bias_data      Bias data pointer. Data type: int64
- * @param[in]      output_dims    Output tensor dimensions. Format: [N, H, W, C_OUT]
- * @param[in, out] output_data    Output data pointer. Data type: int16
+ * @param[in, out] ctx             Function context (e.g. temporary buffer). Check the function
+ *                                 definition file to see if an additional buffer is required.
+ *                                 Optional function {API}_get_buffer_size() provides the buffer
+ *                                 size if an additional buffer is required.
+ *                                 exists if additional memory is.
+ *                                 The caller is expected to clear the buffer ,if applicable, for security reasons.
+ * @param[in]      dw_conv_params  Depthwise convolution parameters (e.g. strides, dilations, pads,...)
+ *                                 conv_params->input_offset  : Not used
+ *                                 conv_params->output_offset : Not used
+ * @param[in]      quant_params    Per-channel quantization info.
+ *                                 It contains the multiplier and shift values to be applied to each
+ *                                 output channel
+ * @param[in]      input_dims      Input (activation) tensor dimensions. Format: [N, H, W, C_IN]
+ *                                 Batch argument N is not used.
+ * @param[in]      input_data      Input (activation) data pointer. Data type: int8
+ * @param[in]      filter_dims     Filter tensor dimensions. Format: [1, H, W, C_OUT]
+ * @param[in]      filter_data     Filter data pointer. Data type: int8
+ * @param[in]      bias_dims       Bias tensor dimensions. Format: [C_OUT]
+ * @param[in]      bias_data       Bias data pointer. Data type: int64
+ * @param[in]      output_dims     Output tensor dimensions. Format: [N, H, W, C_OUT]
+ * @param[in, out] output_data     Output data pointer. Data type: int16
  * @return     The function returns <code>ARM_CMSIS_NN_SUCCESS</code>
  *
  * @details
@@ -1216,26 +1223,27 @@ arm_cmsis_nn_status arm_depthwise_conv_s16(const cmsis_nn_context *ctx,
 /**
  * @brief Wrapper function to pick the right optimized s16 depthwise convolution function
  *
- * @param[in, out] ctx            Function context (e.g. temporary buffer). Check the function
- *                                definition file to see if an additional buffer is required.
- *                                Optional function {API}_get_buffer_size() provides the buffer
- *                                size if required.
- * @param[in]      dw_conv_params Depthwise convolution parameters (e.g. strides, dilations, pads,...)
- *                                dw_conv_params->dilation is not used.
- *                                Range of dw_conv_params->input_offset : Not used
- *                                Range of dw_conv_params->output_offset : Not used
- * @param[in]      quant_params   Per-channel quantization info.
- *                                It contains the multiplier and shift values to be applied to each
- *                                output channel
- * @param[in]      input_dims     Input (activation) tensor dimensions. Format: [H, W, C_IN]
- *                                Batch argument N is not used and assumed to be 1.
- * @param[in]      input_data     Input (activation) data pointer. Data type: int16
- * @param[in]      filter_dims    Filter tensor dimensions. Format: [1, H, W, C_OUT]
- * @param[in]      filter_data    Filter data pointer. Data type: int8
- * @param[in]      bias_dims      Bias tensor dimensions. Format: [C_OUT]
- * @param[in]      bias_data      Bias data pointer. Data type: int64
- * @param[in]      output_dims    Output tensor dimensions. Format: [1, H, W, C_OUT]
- * @param[in, out] output_data    Output data pointer. Data type: int16
+ * @param[in, out] ctx             Function context (e.g. temporary buffer). Check the function
+ *                                 definition file to see if an additional buffer is required.
+ *                                 Optional function {API}_get_buffer_size() provides the buffer
+ *                                 size if required.
+ *                                 The caller is expected to clear the buffer ,if applicable, for security reasons.
+ * @param[in]      dw_conv_params  Depthwise convolution parameters (e.g. strides, dilations, pads,...)
+ *                                 dw_conv_params->dilation is not used.
+ *                                 Range of dw_conv_params->input_offset : Not used
+ *                                 Range of dw_conv_params->output_offset : Not used
+ * @param[in]      quant_params    Per-channel quantization info.
+ *                                 It contains the multiplier and shift values to be applied to each
+ *                                 output channel
+ * @param[in]      input_dims      Input (activation) tensor dimensions. Format: [H, W, C_IN]
+ *                                 Batch argument N is not used and assumed to be 1.
+ * @param[in]      input_data      Input (activation) data pointer. Data type: int16
+ * @param[in]      filter_dims     Filter tensor dimensions. Format: [1, H, W, C_OUT]
+ * @param[in]      filter_data     Filter data pointer. Data type: int8
+ * @param[in]      bias_dims       Bias tensor dimensions. Format: [C_OUT]
+ * @param[in]      bias_data       Bias data pointer. Data type: int64
+ * @param[in]      output_dims     Output tensor dimensions. Format: [1, H, W, C_OUT]
+ * @param[in, out] output_data     Output data pointer. Data type: int16
  * @return     The function returns
  *                <code>ARM_CMSIS_NN_SUCCESS</code>   -  Successful completion.
  *
@@ -1261,14 +1269,14 @@ arm_cmsis_nn_status arm_depthwise_conv_wrapper_s16(const cmsis_nn_context *ctx,
 /**
  * @brief Get size of additional buffer required by arm_depthwise_conv_wrapper_s16()
  *
- * @param[in]      dw_conv_params Depthwise convolution parameters (e.g. strides, dilations, pads,...)
- *                                Range of dw_conv_params->input_offset : Not used
- *                                Range of dw_conv_params->input_offset : Not used
- * @param[in]      input_dims     Input (activation) tensor dimensions. Format: [H, W, C_IN]
- *                                Batch argument N is not used and assumed to be 1.
- * @param[in]      filter_dims    Filter tensor dimensions. Format: [1, H, W, C_OUT]
- * @param[in]      output_dims    Output tensor dimensions. Format: [1, H, W, C_OUT]
- * @return                        Size of additional memory required for optimizations in bytes.
+ * @param[in]      dw_conv_params  Depthwise convolution parameters (e.g. strides, dilations, pads,...)
+ *                                 Range of dw_conv_params->input_offset : Not used
+ *                                 Range of dw_conv_params->input_offset : Not used
+ * @param[in]      input_dims      Input (activation) tensor dimensions. Format: [H, W, C_IN]
+ *                                 Batch argument N is not used and assumed to be 1.
+ * @param[in]      filter_dims     Filter tensor dimensions. Format: [1, H, W, C_OUT]
+ * @param[in]      output_dims     Output tensor dimensions. Format: [1, H, W, C_OUT]
+ * @return                         Size of additional memory required for optimizations in bytes.
  *
  */
 int32_t arm_depthwise_conv_wrapper_s16_get_buffer_size(const cmsis_nn_dw_conv_params *dw_conv_params,
@@ -1311,9 +1319,9 @@ arm_cmsis_nn_status arm_depthwise_conv_fast_s16(const cmsis_nn_context *ctx,
 /**
  * @brief Get the required buffer size for optimized s16 depthwise convolution
  * function with constraint that in_channel equals out_channel.
- * @param[in]       input_dims     Input (activation) tensor dimensions. Format: [1, H, W, C_IN]
- *                                 Batch argument N is not used.
- * @param[in]       filter_dims    Filter tensor dimensions. Format: [1, H, W, C_OUT]
+ * @param[in]       input_dims   Input (activation) tensor dimensions. Format: [1, H, W, C_IN]
+ *                               Batch argument N is not used.
+ * @param[in]       filter_dims  Filter tensor dimensions. Format: [1, H, W, C_OUT]
  * @return          The function returns  required buffer size in bytes
  *
  */
@@ -1387,9 +1395,9 @@ arm_cmsis_nn_status arm_depthwise_conv_s8_opt(const cmsis_nn_context *ctx,
 /**
  * @brief Get the required buffer size for optimized s8 depthwise convolution
  * function with constraint that in_channel equals out_channel.
- * @param[in]       input_dims     Input (activation) tensor dimensions. Format: [1, H, W, C_IN]
- *                                 Batch argument N is not used.
- * @param[in]       filter_dims    Filter tensor dimensions. Format: [1, H, W, C_OUT]
+ * @param[in]       input_dims   Input (activation) tensor dimensions. Format: [1, H, W, C_IN]
+ *                               Batch argument N is not used.
+ * @param[in]       filter_dims  Filter tensor dimensions. Format: [1, H, W, C_OUT]
  * @return          The function returns  required buffer size in bytes
  *
  */
@@ -1439,31 +1447,32 @@ arm_cmsis_nn_status arm_fully_connected_q7(const q7_t *pV,
 /**
  * @brief Basic s8 Fully Connected function.
  *
- * @param[in, out] ctx            Function context (e.g. temporary buffer). Check the function
- *                                definition file to see if an additional buffer is required.
- *                                Optional function {API}_get_buffer_size() provides the buffer
- *                                size if an additional buffer is required.
- * @param[in]      fc_params      Fully Connected layer parameters.
- *                                Range of fc_params->input_offset  : [-127, 128]
- *                                fc_params->filter_offset : 0
- *                                Range of fc_params->output_offset : [-128, 127]
- * @param[in]      quant_params   Per-tensor quantization info.
- *                                It contains the multiplier and shift values to be applied to the output tensor.
- * @param[in]      input_dims     Input (activation) tensor dimensions. Format: [N, H, W, C_IN]
- *                                Input dimension is taken as Nx(H * W * C_IN)
- * @param[in]      input_data     Input (activation) data pointer. Data type: int8
- * @param[in]      filter_dims    Two dimensional filter dimensions. Format: [N, C]
- *                                N : accumulation depth and equals (H * W * C_IN) from input_dims
- *                                C : output depth and equals C_OUT in output_dims
- *                                H & W : Not used
- * @param[in]      filter_data    Filter data pointer. Data type: int8
- * @param[in]      bias_dims      Bias tensor dimensions. Format: [C_OUT]
- *                                N, H, W : Not used
- * @param[in]      bias_data      Bias data pointer. Data type: int32
- * @param[in]      output_dims    Output tensor dimensions. Format: [N, C_OUT]
- *                                N : Batches
- *                                C_OUT : Output depth
- *                                H & W : Not used.
+ * @param[in, out] ctx           Function context (e.g. temporary buffer). Check the function
+ *                               definition file to see if an additional buffer is required.
+ *                               Optional function {API}_get_buffer_size() provides the buffer
+ *                               size if an additional buffer is required.
+ *                               The caller is expected to clear the buffer ,if applicable, for security reasons.
+ * @param[in]      fc_params     Fully Connected layer parameters.
+ *                               Range of fc_params->input_offset  : [-127, 128]
+ *                               fc_params->filter_offset : 0
+ *                               Range of fc_params->output_offset : [-128, 127]
+ * @param[in]      quant_params  Per-tensor quantization info.
+ *                               It contains the multiplier and shift values to be applied to the output tensor.
+ * @param[in]      input_dims    Input (activation) tensor dimensions. Format: [N, H, W, C_IN]
+ *                               Input dimension is taken as Nx(H * W * C_IN)
+ * @param[in]      input_data    Input (activation) data pointer. Data type: int8
+ * @param[in]      filter_dims   Two dimensional filter dimensions. Format: [N, C]
+ *                               N : accumulation depth and equals (H * W * C_IN) from input_dims
+ *                               C : output depth and equals C_OUT in output_dims
+ *                               H & W : Not used
+ * @param[in]      filter_data   Filter data pointer. Data type: int8
+ * @param[in]      bias_dims     Bias tensor dimensions. Format: [C_OUT]
+ *                               N, H, W : Not used
+ * @param[in]      bias_data     Bias data pointer. Data type: int32
+ * @param[in]      output_dims   Output tensor dimensions. Format: [N, C_OUT]
+ *                               N : Batches
+ *                               C_OUT : Output depth
+ *                               H & W : Not used.
  * @param[in, out] output_data    Output data pointer. Data type: int8
  * @return     The function returns <code>ARM_CMSIS_NN_SUCCESS</code>
  *
@@ -1495,31 +1504,32 @@ int32_t arm_fully_connected_s8_get_buffer_size(const cmsis_nn_dims *filter_dims)
 /**
  * @brief Basic s16 Fully Connected function.
  *
- * @param[in, out] ctx            Function context (e.g. temporary buffer). Check the function
- *                                definition file to see if an additional buffer is required.
- *                                Optional function {API}_get_buffer_size() provides the buffer
- *                                size if an additional buffer is required.
- * @param[in]      fc_params      Fully Connected layer parameters.
- *                                fc_params->input_offset  : 0
- *                                fc_params->filter_offset : 0
- *                                fc_params->output_offset : 0
- * @param[in]      quant_params   Per-tensor quantization info.
- *                                It contains the multiplier and shift values to be applied to the output tensor.
- * @param[in]      input_dims     Input (activation) tensor dimensions. Format: [N, H, W, C_IN]
- *                                Input dimension is taken as Nx(H * W * C_IN)
- * @param[in]      input_data     Input (activation) data pointer. Data type: int16
- * @param[in]      filter_dims    Two dimensional filter dimensions. Format: [N, C]
- *                                N : accumulation depth and equals (H * W * C_IN) from input_dims
- *                                C : output depth and equals C_OUT in output_dims
- *                                H & W : Not used
- * @param[in]      filter_data    Filter data pointer. Data type: int8
- * @param[in]      bias_dims      Bias tensor dimensions. Format: [C_OUT]
- *                                N, H, W : Not used
- * @param[in]      bias_data      Bias data pointer. Data type: int64
- * @param[in]      output_dims    Output tensor dimensions. Format: [N, C_OUT]
- *                                N : Batches
- *                                C_OUT : Output depth
- *                                H & W : Not used.
+ * @param[in, out] ctx           Function context (e.g. temporary buffer). Check the function
+ *                               definition file to see if an additional buffer is required.
+ *                               Optional function {API}_get_buffer_size() provides the buffer
+ *                               size if an additional buffer is required.
+ *                               The caller is expected to clear the buffer ,if applicable, for security reasons.
+ * @param[in]      fc_params     Fully Connected layer parameters.
+ *                               fc_params->input_offset  : 0
+ *                               fc_params->filter_offset : 0
+ *                               fc_params->output_offset : 0
+ * @param[in]      quant_params  Per-tensor quantization info.
+ *                               It contains the multiplier and shift values to be applied to the output tensor.
+ * @param[in]      input_dims    Input (activation) tensor dimensions. Format: [N, H, W, C_IN]
+ *                               Input dimension is taken as Nx(H * W * C_IN)
+ * @param[in]      input_data    Input (activation) data pointer. Data type: int16
+ * @param[in]      filter_dims   Two dimensional filter dimensions. Format: [N, C]
+ *                               N : accumulation depth and equals (H * W * C_IN) from input_dims
+ *                               C : output depth and equals C_OUT in output_dims
+ *                               H & W : Not used
+ * @param[in]      filter_data   Filter data pointer. Data type: int8
+ * @param[in]      bias_dims     Bias tensor dimensions. Format: [C_OUT]
+ *                               N, H, W : Not used
+ * @param[in]      bias_data     Bias data pointer. Data type: int64
+ * @param[in]      output_dims   Output tensor dimensions. Format: [N, C_OUT]
+ *                               N : Batches
+ *                               C_OUT : Output depth
+ *                               H & W : Not used.
  * @param[in, out] output_data    Output data pointer. Data type: int16
  * @return     The function returns <code>ARM_CMSIS_NN_SUCCESS</code>
  *
@@ -1730,22 +1740,22 @@ extern "C" {
 
 /**
  * @brief s8 elementwise add of two vectors
- * @param[in]       input_1_vect            pointer to input vector 1
- * @param[in]       input_2_vect            pointer to input vector 2
- * @param[in]       input_1_offset          offset for input 1. Range: -127 to 128
- * @param[in]       input_1_mult            multiplier for input 1
- * @param[in]       input_1_shift           shift for input 1
- * @param[in]       input_2_offset          offset for input 2. Range: -127 to 128
- * @param[in]       input_2_mult            multiplier for input 2
- * @param[in]       input_2_shift           shift for input 2
- * @param[in]       left_shift              input left shift
- * @param[in,out]   output                  pointer to output vector
- * @param[in]       out_offset              output offset.  Range: -128 to 127
- * @param[in]       out_mult                output multiplier
- * @param[in]       out_shift               output shift
- * @param[in]       out_activation_min      minimum value to clamp output to. Min: -128
- * @param[in]       out_activation_max      maximum value to clamp output to. Max: 127
- * @param[in]       block_size              number of samples
+ * @param[in]       input_1_vect        pointer to input vector 1
+ * @param[in]       input_2_vect        pointer to input vector 2
+ * @param[in]       input_1_offset      offset for input 1. Range: -127 to 128
+ * @param[in]       input_1_mult        multiplier for input 1
+ * @param[in]       input_1_shift       shift for input 1
+ * @param[in]       input_2_offset      offset for input 2. Range: -127 to 128
+ * @param[in]       input_2_mult        multiplier for input 2
+ * @param[in]       input_2_shift       shift for input 2
+ * @param[in]       left_shift          input left shift
+ * @param[in,out]   output              pointer to output vector
+ * @param[in]       out_offset          output offset.  Range: -128 to 127
+ * @param[in]       out_mult            output multiplier
+ * @param[in]       out_shift           output shift
+ * @param[in]       out_activation_min  minimum value to clamp output to. Min: -128
+ * @param[in]       out_activation_max  maximum value to clamp output to. Max: 127
+ * @param[in]       block_size          number of samples
  * @return          The function returns    ARM_CMSIS_NN_SUCCESS
  */
 arm_cmsis_nn_status arm_elementwise_add_s8(const int8_t *input_1_vect,
@@ -1767,23 +1777,23 @@ arm_cmsis_nn_status arm_elementwise_add_s8(const int8_t *input_1_vect,
 
 /**
  * @brief s16 elementwise add of two vectors
- * @param[in]       input_1_vect            pointer to input vector 1
- * @param[in]       input_2_vect            pointer to input vector 2
- * @param[in]       input_1_offset          offset for input 1. Not used.
- * @param[in]       input_1_mult            multiplier for input 1
- * @param[in]       input_1_shift           shift for input 1
- * @param[in]       input_2_offset          offset for input 2. Not used.
- * @param[in]       input_2_mult            multiplier for input 2
- * @param[in]       input_2_shift           shift for input 2
- * @param[in]       left_shift              input left shift
- * @param[in,out]   output                  pointer to output vector
- * @param[in]       out_offset              output offset. Not used.
- * @param[in]       out_mult                output multiplier
- * @param[in]       out_shift               output shift
- * @param[in]       out_activation_min      minimum value to clamp output to. Min: -32768
- * @param[in]       out_activation_max      maximum value to clamp output to. Max: 32767
- * @param[in]       block_size              number of samples
- * @return          The function returns    ARM_CMSIS_NN_SUCCESS
+ * @param[in]       input_1_vect        pointer to input vector 1
+ * @param[in]       input_2_vect        pointer to input vector 2
+ * @param[in]       input_1_offset      offset for input 1. Not used.
+ * @param[in]       input_1_mult        multiplier for input 1
+ * @param[in]       input_1_shift       shift for input 1
+ * @param[in]       input_2_offset      offset for input 2. Not used.
+ * @param[in]       input_2_mult        multiplier for input 2
+ * @param[in]       input_2_shift       shift for input 2
+ * @param[in]       left_shift          input left shift
+ * @param[in,out]   output              pointer to output vector
+ * @param[in]       out_offset          output offset. Not used.
+ * @param[in]       out_mult            output multiplier
+ * @param[in]       out_shift           output shift
+ * @param[in]       out_activation_min  minimum value to clamp output to. Min: -32768
+ * @param[in]       out_activation_max  maximum value to clamp output to. Max: 32767
+ * @param[in]       block_size          number of samples
+ * @return          The function returns  ARM_CMSIS_NN_SUCCESS
  */
 arm_cmsis_nn_status arm_elementwise_add_s16(const int16_t *input_1_vect,
                                             const int16_t *input_2_vect,
@@ -1804,18 +1814,18 @@ arm_cmsis_nn_status arm_elementwise_add_s16(const int16_t *input_1_vect,
 
 /**
  * @brief s8 elementwise multiplication
- * @param[in]       input_1_vect            pointer to input vector 1
- * @param[in]       input_2_vect            pointer to input vector 2
- * @param[in]       input_1_offset          offset for input 1. Range: -127 to 128
- * @param[in]       input_2_offset          offset for input 2. Range: -127 to 128
- * @param[in,out]   output                  pointer to output vector
- * @param[in]       out_offset              output offset. Range: -128 to 127
- * @param[in]       out_mult                output multiplier
- * @param[in]       out_shift               output shift
- * @param[in]       out_activation_min      minimum value to clamp output to. Min: -128
- * @param[in]       out_activation_max      maximum value to clamp output to. Max: 127
- * @param[in]       block_size              number of samples
- * @return          The function returns    ARM_CMSIS_NN_SUCCESS
+ * @param[in]       input_1_vect        pointer to input vector 1
+ * @param[in]       input_2_vect        pointer to input vector 2
+ * @param[in]       input_1_offset      offset for input 1. Range: -127 to 128
+ * @param[in]       input_2_offset      offset for input 2. Range: -127 to 128
+ * @param[in,out]   output              pointer to output vector
+ * @param[in]       out_offset          output offset. Range: -128 to 127
+ * @param[in]       out_mult            output multiplier
+ * @param[in]       out_shift           output shift
+ * @param[in]       out_activation_min  minimum value to clamp output to. Min: -128
+ * @param[in]       out_activation_max  maximum value to clamp output to. Max: 127
+ * @param[in]       block_size          number of samples
+ * @return          The function returns ARM_CMSIS_NN_SUCCESS
  *
  * @details   Supported framework: TensorFlow Lite micro
  */
@@ -1833,18 +1843,18 @@ arm_cmsis_nn_status arm_elementwise_mul_s8(const int8_t *input_1_vect,
 
 /**
  * @brief s16 elementwise multiplication
- * @param[in]       input_1_vect            pointer to input vector 1
- * @param[in]       input_2_vect            pointer to input vector 2
- * @param[in]       input_1_offset          offset for input 1. Not used.
- * @param[in]       input_2_offset          offset for input 2. Not used.
- * @param[in,out]   output                  pointer to output vector
- * @param[in]       out_offset              output offset. Not used.
- * @param[in]       out_mult                output multiplier
- * @param[in]       out_shift               output shift
- * @param[in]       out_activation_min      minimum value to clamp output to. Min: -32768
- * @param[in]       out_activation_max      maximum value to clamp output to. Max: 32767
- * @param[in]       block_size              number of samples
- * @return          The function returns    ARM_CMSIS_NN_SUCCESS
+ * @param[in]       input_1_vect        pointer to input vector 1
+ * @param[in]       input_2_vect        pointer to input vector 2
+ * @param[in]       input_1_offset      offset for input 1. Not used.
+ * @param[in]       input_2_offset      offset for input 2. Not used.
+ * @param[in,out]   output              pointer to output vector
+ * @param[in]       out_offset          output offset. Not used.
+ * @param[in]       out_mult            output multiplier
+ * @param[in]       out_shift           output shift
+ * @param[in]       out_activation_min  minimum value to clamp output to. Min: -32768
+ * @param[in]       out_activation_max  maximum value to clamp output to. Max: 32767
+ * @param[in]       block_size          number of samples
+ * @return          The function returns ARM_CMSIS_NN_SUCCESS
  *
  * @details   Supported framework: TensorFlow Lite micro
  */
@@ -1978,22 +1988,23 @@ void arm_avepool_q7_HWC(q7_t *Im_in,
 /**
  * @brief s8 average pooling function.
  *
- * @param[in, out] ctx            Function context (e.g. temporary buffer). Check the function
- *                                definition file to see if an additional buffer is required.
- *                                Optional function {API}_get_buffer_size() provides the buffer
- *                                size if an additional buffer is required.
- * @param[in]      pool_params    Pooling parameters
- * @param[in]      input_dims     Input (activation) tensor dimensions. Format: [H, W, C_IN]
- *                                Argument 'N' is not used.
- * @param[in]      input_data     Input (activation) data pointer. Data type: int8
- * @param[in]      filter_dims    Filter tensor dimensions. Format: [H, W]
- *                                Argument N and C are not used.
- * @param[in]      output_dims    Output tensor dimensions. Format: [H, W, C_OUT]
- *                                Argument N is not used.
- *                                C_OUT equals C_IN.
- * @param[in, out] output_data    Output data pointer. Data type: int8
- * @return                        The function returns
- *                                    <code>ARM_CMSIS_NN_SUCCESS</code> - Successful operation
+ * @param[in, out] ctx          Function context (e.g. temporary buffer). Check the function
+ *                              definition file to see if an additional buffer is required.
+ *                              Optional function {API}_get_buffer_size() provides the buffer
+ *                              size if an additional buffer is required.
+ *                              The caller is expected to clear the buffer ,if applicable, for security reasons.
+ * @param[in]      pool_params  Pooling parameters
+ * @param[in]      input_dims   Input (activation) tensor dimensions. Format: [H, W, C_IN]
+ *                              Argument 'N' is not used.
+ * @param[in]      input_data   Input (activation) data pointer. Data type: int8
+ * @param[in]      filter_dims  Filter tensor dimensions. Format: [H, W]
+ *                              Argument N and C are not used.
+ * @param[in]      output_dims  Output tensor dimensions. Format: [H, W, C_OUT]
+ *                              Argument N is not used.
+ *                              C_OUT equals C_IN.
+ * @param[in, out] output_data Output data pointer. Data type: int8
+ * @return                     The function returns
+ *                             <code>ARM_CMSIS_NN_SUCCESS</code> - Successful operation
  *
  * @details
  *    - Supported Framework: TensorFlow Lite
@@ -2019,20 +2030,21 @@ int32_t arm_avgpool_s8_get_buffer_size(const int dim_dst_width, const int ch_src
 /**
  * @brief s16 average pooling function.
  *
- * @param[in, out] ctx            Function context (e.g. temporary buffer). Check the function
- *                                definition file to see if an additional buffer is required.
- *                                Optional function {API}_get_buffer_size() provides the buffer
- *                                size if an additional buffer is required.
- * @param[in]      pool_params    Pooling parameters
- * @param[in]      input_dims     Input (activation) tensor dimensions. Format: [H, W, C_IN]
- *                                Argument 'N' is not used.
- * @param[in]      input_data     Input (activation) data pointer. Data type: int16
- * @param[in]      filter_dims    Filter tensor dimensions. Format: [H, W]
- *                                Argument N and C are not used.
- * @param[in]      output_dims    Output tensor dimensions. Format: [H, W, C_OUT]
- *                                Argument N is not used.
- *                                C_OUT equals C_IN.
- * @param[in, out] output_data    Output data pointer. Data type: int16
+ * @param[in, out] ctx          Function context (e.g. temporary buffer). Check the function
+ *                              definition file to see if an additional buffer is required.
+ *                              Optional function {API}_get_buffer_size() provides the buffer
+ *                              size if an additional buffer is required.
+ *                              The caller is expected to clear the buffer ,if applicable, for security reasons.
+ * @param[in]      pool_params  Pooling parameters
+ * @param[in]      input_dims   Input (activation) tensor dimensions. Format: [H, W, C_IN]
+ *                              Argument 'N' is not used.
+ * @param[in]      input_data   Input (activation) data pointer. Data type: int16
+ * @param[in]      filter_dims  Filter tensor dimensions. Format: [H, W]
+ *                              Argument N and C are not used.
+ * @param[in]      output_dims  Output tensor dimensions. Format: [H, W, C_OUT]
+ *                              Argument N is not used.
+ *                              C_OUT equals C_IN.
+ * @param[in, out] output_data  Output data pointer. Data type: int16
  * @return                        The function returns
  *                                    <code>ARM_CMSIS_NN_SUCCESS</code> - Successful operation
  *                                    <code>ARM_CMSIS_NN_ARG_ERROR</code> - In case of invalid arguments
@@ -2061,20 +2073,21 @@ int32_t arm_avgpool_s16_get_buffer_size(const int dim_dst_width, const int ch_sr
 /**
  * @brief s8 max pooling function.
  *
- * @param[in, out] ctx            Function context (e.g. temporary buffer). Check the function
- *                                definition file to see if an additional buffer is required.
- *                                Optional function {API}_get_buffer_size() provides the buffer
- *                                size if an additional buffer is required.
- * @param[in]      pool_params    Pooling parameters
- * @param[in]      input_dims     Input (activation) tensor dimensions. Format: [H, W, C_IN]
- *                                Argument 'N' is not used.
- * @param[in]      input_data     Input (activation) data pointer. The input tensor must not
- *                                overlap with the output tensor. Data type: int8
- * @param[in]      filter_dims    Filter tensor dimensions. Format: [H, W]
- *                                Argument N and C are not used.
- * @param[in]      output_dims    Output tensor dimensions. Format: [H, W, C_OUT]
- *                                Argument N is not used.
- *                                C_OUT equals C_IN.
+ * @param[in, out] ctx          Function context (e.g. temporary buffer). Check the function
+ *                              definition file to see if an additional buffer is required.
+ *                              Optional function {API}_get_buffer_size() provides the buffer
+ *                              size if an additional buffer is required.
+ *                              The caller is expected to clear the buffer ,if applicable, for security reasons.
+ * @param[in]      pool_params  Pooling parameters
+ * @param[in]      input_dims   Input (activation) tensor dimensions. Format: [H, W, C_IN]
+ *                              Argument 'N' is not used.
+ * @param[in]      input_data   Input (activation) data pointer. The input tensor must not
+ *                              overlap with the output tensor. Data type: int8
+ * @param[in]      filter_dims  Filter tensor dimensions. Format: [H, W]
+ *                              Argument N and C are not used.
+ * @param[in]      output_dims  Output tensor dimensions. Format: [H, W, C_OUT]
+ *                              Argument N is not used.
+ *                              C_OUT equals C_IN.
  * @param[in, out] output_data    Output data pointer. Data type: int8
  * @return                        The function returns
  *                                    <code>ARM_CMSIS_NN_SUCCESS</code> - Successful operation
@@ -2094,21 +2107,22 @@ arm_cmsis_nn_status arm_max_pool_s8(const cmsis_nn_context *ctx,
 /**
  * @brief s16 max pooling function.
  *
- * @param[in, out] ctx            Function context (e.g. temporary buffer). Check the function
- *                                definition file to see if an additional buffer is required.
- *                                Optional function {API}_get_buffer_size() provides the buffer
- *                                size if an additional buffer is required.
- * @param[in]      pool_params    Pooling parameters
- * @param[in]      input_dims     Input (activation) tensor dimensions. Format: [H, W, C_IN]
- *                                Argument 'N' is not used.
- * @param[in]      src            Input (activation) data pointer. The input tensor must not
- *                                overlap with the output tensor. Data type: int16
- * @param[in]      filter_dims    Filter tensor dimensions. Format: [H, W]
- *                                Argument N and C are not used.
- * @param[in]      output_dims    Output tensor dimensions. Format: [H, W, C_OUT]
- *                                Argument N is not used.
- *                                C_OUT equals C_IN.
- * @param[in, out] dst            Output data pointer. Data type: int16
+ * @param[in, out] ctx          Function context (e.g. temporary buffer). Check the function
+ *                              definition file to see if an additional buffer is required.
+ *                              Optional function {API}_get_buffer_size() provides the buffer
+ *                              size if an additional buffer is required.
+ *                              The caller is expected to clear the buffer ,if applicable, for security reasons.
+ * @param[in]      pool_params  Pooling parameters
+ * @param[in]      input_dims   Input (activation) tensor dimensions. Format: [H, W, C_IN]
+ *                              Argument 'N' is not used.
+ * @param[in]      src          Input (activation) data pointer. The input tensor must not
+ *                              overlap with the output tensor. Data type: int16
+ * @param[in]      filter_dims  Filter tensor dimensions. Format: [H, W]
+ *                              Argument N and C are not used.
+ * @param[in]      output_dims  Output tensor dimensions. Format: [H, W, C_OUT]
+ *                              Argument N is not used.
+ *                              C_OUT equals C_IN.
+ * @param[in, out] dst          Output data pointer. Data type: int16
  * @return                        The function returns
  *                                    <code>ARM_CMSIS_NN_SUCCESS</code> - Successful operation
  *
@@ -2537,25 +2551,27 @@ void arm_concatenation_s8_w(const int8_t *input,
 /**
  * @brief s8 SVDF function with 8 bit state tensor and 8 bit time weights
  *
- * @param[in]   input_ctx Temporary scratch buffer
- * @param[in]   output_ctx Temporary output scratch buffer
- * @param[in]   svdf_params SVDF Parameters
- *              Range of svdf_params->input_offset  : [-128, 127]
- *              Range of svdf_params->output_offset  : [-128, 127]
- * @param[in]   input_quant_params Input quantization parameters
- * @param[in]   output_quant_params Output quantization parameters
- * @param[in]   input_dims Input tensor dimensions
- * @param[in]   input_data Pointer to input tensor
- * @param[in]   state_dims State tensor dimensions
- * @param[in]   state_data Pointer to state tensor
- * @param[in]   weights_feature_dims Weights (feature) tensor dimensions
- * @param[in]   weights_feature_data Pointer to the weights (feature) tensor
- * @param[in]   weights_time_dims Weights (time) tensor dimensions
- * @param[in]   weights_time_data Pointer to the weights (time) tensor
- * @param[in]   bias_dims Bias tensor dimensions
- * @param[in]   bias_data Pointer to bias tensor
- * @param[in]   output_dims Output tensor dimensions
- * @param[out]  output_data Pointer to the output tensor
+ * @param[in]   input_ctx             Temporary scratch buffer
+ *                                    The caller is expected to clear the buffer ,if applicable, for security reasons.
+ * @param[in]   output_ctx            Temporary output scratch buffer
+ *                                    The caller is expected to clear the buffer ,if applicable, for security reasons.
+ * @param[in]   svdf_params           SVDF Parameters
+ *                                    Range of svdf_params->input_offset  : [-128, 127]
+ *                                    Range of svdf_params->output_offset  : [-128, 127]
+ * @param[in]   input_quant_params    Input quantization parameters
+ * @param[in]   output_quant_params   Output quantization parameters
+ * @param[in]   input_dims            Input tensor dimensions
+ * @param[in]   input_data            Pointer to input tensor
+ * @param[in]   state_dims            State tensor dimensions
+ * @param[in]   state_data            Pointer to state tensor
+ * @param[in]   weights_feature_dims  Weights (feature) tensor dimensions
+ * @param[in]   weights_feature_data  Pointer to the weights (feature) tensor
+ * @param[in]   weights_time_dims     Weights (time) tensor dimensions
+ * @param[in]   weights_time_data     Pointer to the weights (time) tensor
+ * @param[in]   bias_dims             Bias tensor dimensions
+ * @param[in]   bias_data             Pointer to bias tensor
+ * @param[in]   output_dims           Output tensor dimensions
+ * @param[out]  output_data           Pointer to the output tensor
  *
  * @return     The function returns <code>ARM_CMSIS_NN_SUCCESS</code>
  *
@@ -2585,25 +2601,27 @@ arm_cmsis_nn_status arm_svdf_s8(const cmsis_nn_context *input_ctx,
 /**
  * @brief s8 SVDF function with 16 bit state tensor and 16 bit time weights
  *
- * @param[in]   input_ctx Temporary scratch buffer
- * @param[in]   output_ctx Temporary output scratch buffer
- * @param[in]   svdf_params SVDF Parameters
- *              Range of svdf_params->input_offset  : [-128, 127]
- *              Range of svdf_params->output_offset  : [-128, 127]
- * @param[in]   input_quant_params Input quantization parameters
- * @param[in]   output_quant_params Output quantization parameters
- * @param[in]   input_dims Input tensor dimensions
- * @param[in]   input_data Pointer to input tensor
- * @param[in]   state_dims State tensor dimensions
- * @param[in]   state_data Pointer to state tensor
- * @param[in]   weights_feature_dims Weights (feature) tensor dimensions
- * @param[in]   weights_feature_data Pointer to the weights (feature) tensor
- * @param[in]   weights_time_dims Weights (time) tensor dimensions
- * @param[in]   weights_time_data Pointer to the weights (time) tensor
- * @param[in]   bias_dims Bias tensor dimensions
- * @param[in]   bias_data Pointer to bias tensor
- * @param[in]   output_dims Output tensor dimensions
- * @param[out]  output_data Pointer to the output tensor
+ * @param[in]   input_ctx             Temporary scratch buffer
+ *                                    The caller is expected to clear the buffer ,if applicable, for security reasons.
+ * @param[in]   output_ctx            Temporary output scratch buffer
+ *                                    The caller is expected to clear the buffer ,if applicable, for security reasons.
+ * @param[in]   svdf_params           SVDF Parameters
+ *                                    Range of svdf_params->input_offset  : [-128, 127]
+ *                                    Range of svdf_params->output_offset  : [-128, 127]
+ * @param[in]   input_quant_params    Input quantization parameters
+ * @param[in]   output_quant_params   Output quantization parameters
+ * @param[in]   input_dims            Input tensor dimensions
+ * @param[in]   input_data            Pointer to input tensor
+ * @param[in]   state_dims            State tensor dimensions
+ * @param[in]   state_data            Pointer to state tensor
+ * @param[in]   weights_feature_dims  Weights (feature) tensor dimensions
+ * @param[in]   weights_feature_data  Pointer to the weights (feature) tensor
+ * @param[in]   weights_time_dims     Weights (time) tensor dimensions
+ * @param[in]   weights_time_data     Pointer to the weights (time) tensor
+ * @param[in]   bias_dims             Bias tensor dimensions
+ * @param[in]   bias_data             Pointer to bias tensor
+ * @param[in]   output_dims           Output tensor dimensions
+ * @param[out]  output_data           Pointer to the output tensor
  *
  * @return     The function returns <code>ARM_CMSIS_NN_SUCCESS</code>
  *

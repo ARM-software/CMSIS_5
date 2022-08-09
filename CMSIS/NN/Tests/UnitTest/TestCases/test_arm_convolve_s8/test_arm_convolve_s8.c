@@ -98,7 +98,12 @@ void basic_arm_convolve_s8(void)
                                                  &output_dims,
                                                  output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        // The caller is responsible to clear the scratch buffers for security reasons if applicable.
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
 
@@ -118,7 +123,11 @@ void basic_arm_convolve_s8(void)
                                      &output_dims,
                                      output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
 }
@@ -182,7 +191,11 @@ void stride2pad1_arm_convolve_s8(void)
                                                  &output_dims,
                                                  output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
 
@@ -202,7 +215,11 @@ void stride2pad1_arm_convolve_s8(void)
                                      &output_dims,
                                      output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
 }
@@ -266,7 +283,11 @@ void conv_2_arm_convolve_s8(void)
                                                  &output_dims,
                                                  output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
 
@@ -286,7 +307,11 @@ void conv_2_arm_convolve_s8(void)
                                      &output_dims,
                                      output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
 }
@@ -350,7 +375,11 @@ void conv_3_arm_convolve_s8(void)
                                                  &output_dims,
                                                  output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
 
@@ -370,7 +399,11 @@ void conv_3_arm_convolve_s8(void)
                                      &output_dims,
                                      output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
 }
@@ -434,7 +467,11 @@ void conv_4_arm_convolve_s8(void)
                                                  &output_dims,
                                                  output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
 
@@ -454,7 +491,11 @@ void conv_4_arm_convolve_s8(void)
                                      &output_dims,
                                      output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
 }
@@ -518,7 +559,11 @@ void conv_1_x_n_1_arm_convolve_s8(void)
                                                        &output_dims,
                                                        output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
 
@@ -536,7 +581,11 @@ void conv_1_x_n_1_arm_convolve_s8(void)
                              bias_data,
                              &output_dims,
                              output);
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(ARM_CMSIS_NN_SUCCESS, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
 }
@@ -600,7 +649,11 @@ void conv_1_x_n_2_arm_convolve_s8(void)
                                                        &output_dims,
                                                        output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
 
     buf_size = arm_convolve_s8_get_buffer_size(&input_dims, &filter_dims);
@@ -617,7 +670,11 @@ void conv_1_x_n_2_arm_convolve_s8(void)
                                      bias_data,
                                      &output_dims,
                                      output);
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(ARM_CMSIS_NN_SUCCESS, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
 }
@@ -681,7 +738,11 @@ void conv_1_x_n_3_arm_convolve_s8(void)
                                                        &output_dims,
                                                        output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
 
     buf_size = arm_convolve_s8_get_buffer_size(&input_dims, &filter_dims);
@@ -698,7 +759,11 @@ void conv_1_x_n_3_arm_convolve_s8(void)
                                      bias_data,
                                      &output_dims,
                                      output);
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(ARM_CMSIS_NN_SUCCESS, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
 }
@@ -759,7 +824,11 @@ void conv_out_activation_arm_convolve_s8(void)
                                                          bias_data,
                                                          &output_dims,
                                                          output);
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(ARM_CMSIS_NN_SUCCESS, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
 }
@@ -823,7 +892,11 @@ void conv_2x2_dilation_arm_convolve_s8(void)
                                                  &output_dims,
                                                  output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
 
@@ -843,7 +916,11 @@ void conv_2x2_dilation_arm_convolve_s8(void)
                                      &output_dims,
                                      output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
 }
@@ -905,7 +982,11 @@ void conv_2x2_dilation_5x5_input_arm_convolve_s8(void)
                                                  bias_data,
                                                  &output_dims,
                                                  output);
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
 
@@ -925,7 +1006,11 @@ void conv_2x2_dilation_5x5_input_arm_convolve_s8(void)
                                      &output_dims,
                                      output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
 }
@@ -987,7 +1072,11 @@ void conv_3x3_dilation_5x5_input_arm_convolve_s8(void)
                                                  bias_data,
                                                  &output_dims,
                                                  output);
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
 
@@ -1007,7 +1096,11 @@ void conv_3x3_dilation_5x5_input_arm_convolve_s8(void)
                                      &output_dims,
                                      output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
 }
@@ -1069,7 +1162,11 @@ void conv_2x3_dilation_arm_convolve_s8(void)
                                                  bias_data,
                                                  &output_dims,
                                                  output);
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
 
@@ -1089,7 +1186,11 @@ void conv_2x3_dilation_arm_convolve_s8(void)
                                      &output_dims,
                                      output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
 }
@@ -1151,7 +1252,11 @@ void conv_3x2_dilation_arm_convolve_s8(void)
                                                  bias_data,
                                                  &output_dims,
                                                  output);
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
 
@@ -1171,7 +1276,11 @@ void conv_3x2_dilation_arm_convolve_s8(void)
                                      &output_dims,
                                      output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
 }
@@ -1233,7 +1342,11 @@ void conv_dilation_golden_arm_convolve_s8(void)
                                                  bias_data,
                                                  &output_dims,
                                                  output);
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
 
@@ -1253,7 +1366,11 @@ void conv_dilation_golden_arm_convolve_s8(void)
                                      &output_dims,
                                      output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
 }
@@ -1317,7 +1434,11 @@ void conv_5_arm_convolve_s8(void)
                                                  &output_dims,
                                                  output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
 
@@ -1337,7 +1458,11 @@ void conv_5_arm_convolve_s8(void)
                                      &output_dims,
                                      output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
 }
