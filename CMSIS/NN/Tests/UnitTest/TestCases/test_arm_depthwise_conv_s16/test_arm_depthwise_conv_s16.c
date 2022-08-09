@@ -91,6 +91,7 @@ void dw_int16xint8_arm_depthwise_conv_s16(void)
     }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate_s16(output, output_ref, output_ref_size));
+    memset(output, 0, sizeof(output));
 
     int buf_size =
         arm_depthwise_conv_wrapper_s16_get_buffer_size(&dw_conv_params, &input_dims, &filter_dims, &output_dims);
@@ -184,6 +185,7 @@ void dw_int16xint8_dilation_arm_depthwise_conv_s16(void)
     }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate_s16(output, output_ref, output_ref_size));
+    memset(output, 0, sizeof(output));
 
     int buf_size =
         arm_depthwise_conv_wrapper_s16_get_buffer_size(&dw_conv_params, &input_dims, &filter_dims, &output_dims);
@@ -277,6 +279,7 @@ void dw_int16xint8_mult4_arm_depthwise_conv_s16(void)
     }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate_s16(output, output_ref, output_ref_size));
+    memset(output, 0, sizeof(output));
 
     int buf_size =
         arm_depthwise_conv_wrapper_s16_get_buffer_size(&dw_conv_params, &input_dims, &filter_dims, &output_dims);

@@ -51,6 +51,7 @@ void depthwise_kernel_3x3_arm_depthwise_conv_3x3_s8(void)
     cmsis_nn_dims bias_dims = {};
     cmsis_nn_dims output_dims;
 
+    const int32_t output_ref_size = DEPTHWISE_KERNEL_3X3_DST_SIZE;
     const q31_t *bias_data = depthwise_kernel_3x3_biases;
     const q7_t *kernel_data = depthwise_kernel_3x3_weights;
     const q7_t *input_data = depthwise_kernel_3x3_input;
@@ -103,7 +104,8 @@ void depthwise_kernel_3x3_arm_depthwise_conv_3x3_s8(void)
         free(ctx.buf);
     }
     TEST_ASSERT_EQUAL(expected, result);
-    TEST_ASSERT_TRUE(validate(output, depthwise_kernel_3x3_output_ref, DEPTHWISE_KERNEL_3X3_DST_SIZE));
+    TEST_ASSERT_TRUE(validate(output, depthwise_kernel_3x3_output_ref, output_ref_size));
+    memset(output, 0, sizeof(output));
 
     const int32_t buf_size =
         arm_depthwise_conv_wrapper_s8_get_buffer_size(&dw_conv_params, &input_dims, &filter_dims, &output_dims);
@@ -127,7 +129,7 @@ void depthwise_kernel_3x3_arm_depthwise_conv_3x3_s8(void)
         free(ctx.buf);
     }
     TEST_ASSERT_EQUAL(expected, result);
-    TEST_ASSERT_TRUE(validate(output, depthwise_kernel_3x3_output_ref, DEPTHWISE_KERNEL_3X3_DST_SIZE));
+    TEST_ASSERT_TRUE(validate(output, depthwise_kernel_3x3_output_ref, output_ref_size));
 }
 
 // Negative check to see non 3x3 dimensions return an error
@@ -235,6 +237,7 @@ void depthwise_kernel_3x3_null_bias_arm_depthwise_conv_3x3_null_bias_s8(void)
     cmsis_nn_dims bias_dims = {};
     cmsis_nn_dims output_dims;
 
+    const int32_t output_ref_size = DEPTHWISE_KERNEL_3X3_NULL_BIAS_DST_SIZE;
     const q31_t *bias_data = depthwise_kernel_3x3_null_bias_biases;
     // get_bias_address(depthwise_kernel_3x3_null_bias_biases, DEPTHWISE_KERNEL_3X3_NULL_BIAS_OUT_CH);
     const q7_t *kernel_data = depthwise_kernel_3x3_null_bias_weights;
@@ -287,8 +290,8 @@ void depthwise_kernel_3x3_null_bias_arm_depthwise_conv_3x3_null_bias_s8(void)
         free(ctx.buf);
     }
     TEST_ASSERT_EQUAL(expected, result);
-    TEST_ASSERT_TRUE(
-        validate(output, depthwise_kernel_3x3_null_bias_output_ref, DEPTHWISE_KERNEL_3X3_NULL_BIAS_DST_SIZE));
+    TEST_ASSERT_TRUE(validate(output, depthwise_kernel_3x3_null_bias_output_ref, output_ref_size));
+    memset(output, 0, sizeof(output));
 
     const arm_cmsis_nn_status expected_wrapper = ARM_CMSIS_NN_SUCCESS;
     const int32_t buf_size =
@@ -314,6 +317,5 @@ void depthwise_kernel_3x3_null_bias_arm_depthwise_conv_3x3_null_bias_s8(void)
         free(ctx.buf);
     }
     TEST_ASSERT_EQUAL(expected_wrapper, result);
-    TEST_ASSERT_TRUE(
-        validate(output, depthwise_kernel_3x3_null_bias_output_ref, DEPTHWISE_KERNEL_3X3_NULL_BIAS_DST_SIZE));
+    TEST_ASSERT_TRUE(validate(output, depthwise_kernel_3x3_null_bias_output_ref, output_ref_size));
 }
