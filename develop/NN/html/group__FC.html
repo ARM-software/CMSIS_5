@@ -124,7 +124,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:ga580497e2ef34601937441f76d7463f08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mixed Q15-Q7 opt fully-connected layer function.  <a href="#ga580497e2ef34601937441f76d7463f08">More...</a><br/></td></tr>
 <tr class="separator:ga580497e2ef34601937441f76d7463f08"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5d16f7dcd49d96e8f16440a57198ee98"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__nn__math__types_8h.html#a67ac3e1e650a7040b0f706fb83ea6184">arm_cmsis_nn_status</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__FC.html#ga5d16f7dcd49d96e8f16440a57198ee98">arm_fully_connected_q15</a> (const <a class="el" href="arm__nn__math__types_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *pV, const <a class="el" href="arm__nn__math__types_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *pM, const uint16_t dim_vec, const uint16_t num_of_rows, const uint16_t bias_shift, const uint16_t out_shift, const <a class="el" href="arm__nn__math__types_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *bias, <a class="el" href="arm__nn__math__types_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *pOut, <a class="el" href="arm__nn__math__types_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *vec_buffer)</td></tr>
-<tr class="memdesc:ga5d16f7dcd49d96e8f16440a57198ee98"><td class="mdescLeft">&#160;</td><td class="mdescRight">Q15 opt fully-connected layer function.  <a href="#ga5d16f7dcd49d96e8f16440a57198ee98">More...</a><br/></td></tr>
+<tr class="memdesc:ga5d16f7dcd49d96e8f16440a57198ee98"><td class="mdescLeft">&#160;</td><td class="mdescRight">Q15 basic fully-connected layer function.  <a href="#ga5d16f7dcd49d96e8f16440a57198ee98">More...</a><br/></td></tr>
 <tr class="separator:ga5d16f7dcd49d96e8f16440a57198ee98"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3a63eb256d70628f8d3f6b149ac5686b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__nn__math__types_8h.html#a67ac3e1e650a7040b0f706fb83ea6184">arm_cmsis_nn_status</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__FC.html#ga3a63eb256d70628f8d3f6b149ac5686b">arm_fully_connected_q15_opt</a> (const <a class="el" href="arm__nn__math__types_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *pV, const <a class="el" href="arm__nn__math__types_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *pM, const uint16_t dim_vec, const uint16_t num_of_rows, const uint16_t bias_shift, const uint16_t out_shift, const <a class="el" href="arm__nn__math__types_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *bias, <a class="el" href="arm__nn__math__types_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *pOut, <a class="el" href="arm__nn__math__types_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *vec_buffer)</td></tr>
 <tr class="memdesc:ga3a63eb256d70628f8d3f6b149ac5686b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Q15 opt fully-connected layer function.  <a href="#ga3a63eb256d70628f8d3f6b149ac5686b">More...</a><br/></td></tr>
@@ -232,11 +232,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The function returns <code>ARM_CMSIS_NN_SUCCESS</code></dd></dl>
-<p><b>Buffer size:</b></p>
-<p>vec_buffer size: 0</p>
-<p>Q7_Q15 version of the fully connected layer</p>
-<p>Weights are in q7_t and Activations are in q15_t </p>
+<dl class="section return"><dt>Returns</dt><dd>The function returns <code>ARM_CMSIS_NN_SUCCESS</code> </dd></dl>
 
 <p>References <a class="el" href="arm__nn__math__types_8h.html#a67ac3e1e650a7040b0f706fb83ea6184a3ba593df6b92214112a5e752c95ae016">ARM_CMSIS_NN_SUCCESS</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#afdda94a339b76615d3161e9fc63f4d21">arm_nn_read_q15x2_ia()</a>, and <a class="el" href="arm__nnsupportfunctions_8h.html#a4cbd428a2b4a4f6b2a6e4219520c7ce0">NN_ROUND</a>.</p>
 
@@ -321,33 +317,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The function returns <code>ARM_CMSIS_NN_SUCCESS</code></dd></dl>
-<p><b>Buffer size:</b></p>
-<p>vec_buffer size: 0</p>
-<p>Q7_Q15 version of the fully connected layer</p>
-<p>Weights are in q7_t and Activations are in q15_t</p>
-<p>Limitation: x4 version requires weight reordering to work</p>
-<p>Here we use only one pointer to read 4 rows in the weight matrix. So if the original q7_t matrix looks like this:</p>
-<p>| a11 | a12 | a13 | a14 | a15 | a16 | a17 |</p>
-<p>| a21 | a22 | a23 | a24 | a25 | a26 | a27 |</p>
-<p>| a31 | a32 | a33 | a34 | a35 | a36 | a37 |</p>
-<p>| a41 | a42 | a43 | a44 | a45 | a46 | a47 |</p>
-<p>| a51 | a52 | a53 | a54 | a55 | a56 | a57 |</p>
-<p>| a61 | a62 | a63 | a64 | a65 | a66 | a67 |</p>
-<p>We operates on multiple-of-4 rows, so the first four rows becomes</p>
-<p>| a11 | a21 | a12 | a22 | a31 | a41 | a32 | a42 |</p>
-<p>| a13 | a23 | a14 | a24 | a33 | a43 | a34 | a44 |</p>
-<p>| a15 | a25 | a16 | a26 | a35 | a45 | a36 | a46 |</p>
-<p>The column left over will be in-order. which is: | a17 | a27 | a37 | a47 |</p>
-<p>For the left-over rows, we do 1x1 computation, so the data remains as its original order.</p>
-<p>So the stored weight matrix looks like this:</p>
-<p>| a11 | a21 | a12 | a22 | a31 | a41 |</p>
-<p>| a32 | a42 | a13 | a23 | a14 | a24 |</p>
-<p>| a33 | a43 | a34 | a44 | a15 | a25 |</p>
-<p>| a16 | a26 | a35 | a45 | a36 | a46 |</p>
-<p>| a17 | a27 | a37 | a47 | a51 | a52 |</p>
-<p>| a53 | a54 | a55 | a56 | a57 | a61 |</p>
-<p>| a62 | a63 | a64 | a65 | a66 | a67 | </p>
+<dl class="section return"><dt>Returns</dt><dd>The function returns <code>ARM_CMSIS_NN_SUCCESS</code> </dd></dl>
 
 <p>References <a class="el" href="arm__nn__math__types_8h.html#a67ac3e1e650a7040b0f706fb83ea6184a3ba593df6b92214112a5e752c95ae016">ARM_CMSIS_NN_SUCCESS</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#afdda94a339b76615d3161e9fc63f4d21">arm_nn_read_q15x2_ia()</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#ac9f7be20432a6926ac07c1f44b1b02fe">arm_nn_read_q7x4_ia()</a>, and <a class="el" href="arm__nnsupportfunctions_8h.html#a4cbd428a2b4a4f6b2a6e4219520c7ce0">NN_ROUND</a>.</p>
 
@@ -418,7 +388,6 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Q15 basic fully-connected layer function.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">pV</td><td>pointer to input vector </td></tr>
@@ -433,9 +402,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The function returns <code>ARM_CMSIS_NN_SUCCESS</code></dd></dl>
-<p><b>Buffer size:</b></p>
-<p>vec_buffer size: 0 </p>
+<dl class="section return"><dt>Returns</dt><dd>The function returns <code>ARM_CMSIS_NN_SUCCESS</code> </dd></dl>
 
 <p>References <a class="el" href="arm__nn__math__types_8h.html#a67ac3e1e650a7040b0f706fb83ea6184a3ba593df6b92214112a5e752c95ae016">ARM_CMSIS_NN_SUCCESS</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#afdda94a339b76615d3161e9fc63f4d21">arm_nn_read_q15x2_ia()</a>, and <a class="el" href="arm__nnsupportfunctions_8h.html#a4cbd428a2b4a4f6b2a6e4219520c7ce0">NN_ROUND</a>.</p>
 
@@ -520,24 +487,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The function returns <code>ARM_CMSIS_NN_SUCCESS</code></dd></dl>
-<p><b>Buffer size:</b></p>
-<p>vec_buffer size: 0</p>
-<p>Here we use only one pointer to read 4 rows in the weight matrix. So if the original matrix looks like this:</p>
-<p>| a11 | a12 | a13 |</p>
-<p>| a21 | a22 | a23 |</p>
-<p>| a31 | a32 | a33 |</p>
-<p>| a41 | a42 | a43 |</p>
-<p>| a51 | a52 | a53 |</p>
-<p>| a61 | a62 | a63 |</p>
-<p>We operates on multiple-of-4 rows, so the first four rows becomes</p>
-<p>| a11 | a12 | a21 | a22 | a31 | a32 | a41 | a42 |</p>
-<p>| a13 | a23 | a33 | a43 |</p>
-<p>Remaining rows are kept the same original order.</p>
-<p>So the stored weight matrix looks like this:</p>
-<p>| a11 | a12 | a21 | a22 | a31 | a32 | a41 | a42 |</p>
-<p>| a13 | a23 | a33 | a43 | a51 | a52 | a53 | a61 |</p>
-<p>| a62 | a63 | </p>
+<dl class="section return"><dt>Returns</dt><dd>The function returns <code>ARM_CMSIS_NN_SUCCESS</code> </dd></dl>
 
 <p>References <a class="el" href="arm__nn__math__types_8h.html#a67ac3e1e650a7040b0f706fb83ea6184a3ba593df6b92214112a5e752c95ae016">ARM_CMSIS_NN_SUCCESS</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#afdda94a339b76615d3161e9fc63f4d21">arm_nn_read_q15x2_ia()</a>, and <a class="el" href="arm__nnsupportfunctions_8h.html#a4cbd428a2b4a4f6b2a6e4219520c7ce0">NN_ROUND</a>.</p>
 
@@ -622,10 +572,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The function returns <code>ARM_CMSIS_NN_SUCCESS</code></dd></dl>
-<p><b>Buffer size:</b></p>
-<p>vec_buffer size: dim_vec</p>
-<p>This basic function is designed to work with regular weight matrix without interleaving. </p>
+<dl class="section return"><dt>Returns</dt><dd>The function returns <code>ARM_CMSIS_NN_SUCCESS</code> </dd></dl>
 
 <p>References <a class="el" href="arm__nn__math__types_8h.html#a67ac3e1e650a7040b0f706fb83ea6184a3ba593df6b92214112a5e752c95ae016">ARM_CMSIS_NN_SUCCESS</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#afdda94a339b76615d3161e9fc63f4d21">arm_nn_read_q15x2_ia()</a>, <a class="el" href="group__nndata__convert.html#gaba8fd446d5f54760b406ee63b25d1aee">arm_q7_to_q15_reordered_no_shift()</a>, and <a class="el" href="arm__nnsupportfunctions_8h.html#a4cbd428a2b4a4f6b2a6e4219520c7ce0">NN_ROUND</a>.</p>
 
@@ -710,36 +657,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The function returns <code>ARM_CMSIS_NN_SUCCESS</code></dd></dl>
-<p><b>Buffer size:</b></p>
-<p>vec_buffer size: dim_vec</p>
-<p>This opt function is designed to work with interleaved weight matrix. The vector input is assumed in q7_t format, we call arm_q7_to_q15_no_shift_shuffle function to expand into q15_t format with certain weight re-ordering, refer to the function comments for more details. Here we use only one pointer to read 4 rows in the weight matrix. So if the original q7_t matrix looks like this:</p>
-<p>| a11 | a12 | a13 | a14 | a15 | a16 | a17 |</p>
-<p>| a21 | a22 | a23 | a24 | a25 | a26 | a27 |</p>
-<p>| a31 | a32 | a33 | a34 | a35 | a36 | a37 |</p>
-<p>| a41 | a42 | a43 | a44 | a45 | a46 | a47 |</p>
-<p>| a51 | a52 | a53 | a54 | a55 | a56 | a57 |</p>
-<p>| a61 | a62 | a63 | a64 | a65 | a66 | a67 |</p>
-<p>We operates on multiple-of-4 rows, so the first four rows becomes</p>
-<p>| a11 | a21 | a13 | a23 | a31 | a41 | a33 | a43 |</p>
-<p>| a12 | a22 | a14 | a24 | a32 | a42 | a34 | a44 |</p>
-<p>| a15 | a25 | a35 | a45 | a16 | a26 | a36 | a46 |</p>
-<p>So within the kernel, we first read the re-ordered vector in as:</p>
-<p>| b1 | b3 | and | b2 | b4 |</p>
-<p>the four q31_t weights will look like</p>
-<p>| a11 | a13 |, | a21 | a23 |, | a31 | a33 |, | a41 | a43 |</p>
-<p>| a12 | a14 |, | a22 | a24 |, | a32 | a34 |, | a42 | a44 |</p>
-<p>The column left over will be in-order. which is:</p>
-<p>| a17 | a27 | a37 | a47 |</p>
-<p>For the left-over rows, we do 1x1 computation, so the data remains as its original order.</p>
-<p>So the stored weight matrix looks like this:</p>
-<p>| a11 | a21 | a13 | a23 | a31 | a41 |</p>
-<p>| a33 | a43 | a12 | a22 | a14 | a24 |</p>
-<p>| a32 | a42 | a34 | a44 | a15 | a25 |</p>
-<p>| a35 | a45 | a16 | a26 | a36 | a46 |</p>
-<p>| a17 | a27 | a37 | a47 | a51 | a52 |</p>
-<p>| a53 | a54 | a55 | a56 | a57 | a61 |</p>
-<p>| a62 | a63 | a64 | a65 | a66 | a67 | </p>
+<dl class="section return"><dt>Returns</dt><dd>The function returns <code>ARM_CMSIS_NN_SUCCESS</code> </dd></dl>
 
 <p>References <a class="el" href="arm__nn__math__types_8h.html#a67ac3e1e650a7040b0f706fb83ea6184a3ba593df6b92214112a5e752c95ae016">ARM_CMSIS_NN_SUCCESS</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#afdda94a339b76615d3161e9fc63f4d21">arm_nn_read_q15x2_ia()</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#ac9f7be20432a6926ac07c1f44b1b02fe">arm_nn_read_q7x4_ia()</a>, <a class="el" href="group__nndata__convert.html#gaba8fd446d5f54760b406ee63b25d1aee">arm_q7_to_q15_reordered_no_shift()</a>, and <a class="el" href="arm__nnsupportfunctions_8h.html#a4cbd428a2b4a4f6b2a6e4219520c7ce0">NN_ROUND</a>.</p>
 
@@ -824,7 +742,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">ctx</td><td>Function context (e.g. temporary buffer). Check the function definition file to see if an additional buffer is required. Optional function {API}_get_buffer_size() provides the buffer size if an additional buffer is required. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">ctx</td><td>Function context (e.g. temporary buffer). Check the function definition file to see if an additional buffer is required. Optional function {API}_get_buffer_size() provides the buffer size if an additional buffer is required. The caller is expected to clear the buffer ,if applicable, for security reasons. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">fc_params</td><td>Fully Connected layer parameters. fc_params-&gt;input_offset : 0 fc_params-&gt;filter_offset : 0 fc_params-&gt;output_offset : 0 </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">quant_params</td><td>Per-tensor quantization info. It contains the multiplier and shift values to be applied to the output tensor. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">input_dims</td><td>Input (activation) tensor dimensions. Format: [N, H, W, C_IN] Input dimension is taken as Nx(H * W * C_IN) </td></tr>
@@ -950,7 +868,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">ctx</td><td>Function context (e.g. temporary buffer). Check the function definition file to see if an additional buffer is required. Optional function {API}_get_buffer_size() provides the buffer size if an additional buffer is required. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">ctx</td><td>Function context (e.g. temporary buffer). Check the function definition file to see if an additional buffer is required. Optional function {API}_get_buffer_size() provides the buffer size if an additional buffer is required. The caller is expected to clear the buffer ,if applicable, for security reasons. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">fc_params</td><td>Fully Connected layer parameters. Range of fc_params-&gt;input_offset : [-127, 128] fc_params-&gt;filter_offset : 0 Range of fc_params-&gt;output_offset : [-128, 127] </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">quant_params</td><td>Per-tensor quantization info. It contains the multiplier and shift values to be applied to the output tensor. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">input_dims</td><td>Input (activation) tensor dimensions. Format: [N, H, W, C_IN] Input dimension is taken as Nx(H * W * C_IN) </td></tr>

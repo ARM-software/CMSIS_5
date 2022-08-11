@@ -118,7 +118,7 @@ $(document).ready(function(){initNavTree('arm__nn__mat__mult__kernel__q7__q15_8c
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:abc4fb258cfe8500ee68e812a293a80a3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__nn__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="arm__nn__mat__mult__kernel__q7__q15_8c.html#abc4fb258cfe8500ee68e812a293a80a3">arm_nn_mat_mult_kernel_q7_q15</a> (const <a class="el" href="arm__nn__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *pA, const <a class="el" href="arm__nn__math__types_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *pInBuffer, const uint16_t ch_im_out, const uint16_t numCol_A, const uint16_t bias_shift, const uint16_t out_shift, const <a class="el" href="arm__nn__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *bias, <a class="el" href="arm__nn__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *pOut)</td></tr>
-<tr class="memdesc:abc4fb258cfe8500ee68e812a293a80a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Matrix-multiplication function for convolution.  <a href="#abc4fb258cfe8500ee68e812a293a80a3">More...</a><br/></td></tr>
+<tr class="memdesc:abc4fb258cfe8500ee68e812a293a80a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Matrix-Multiplication Kernels for Convolution.  <a href="#abc4fb258cfe8500ee68e812a293a80a3">More...</a><br/></td></tr>
 <tr class="separator:abc4fb258cfe8500ee68e812a293a80a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
@@ -181,8 +181,22 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Matrix-Multiplication Kernels for Convolution.</p>
-<p>Refer to header file for details. </p>
+<p>These functions are used within convolution layer functions for matrix multiplication.</p>
+<p>The implementation is similar to CMSIS-DSP arm_mat_mult functions with one Q7 and one Q15 operands. The Q15 operand is the im2col output which is always with 2 columns. Matrix-multiplication function for convolution </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">pA</td><td>pointer to operand A </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pInBuffer</td><td>pointer to operand B, always conssists of 2 vectors </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ch_im_out</td><td>numRow of A </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">numCol_A</td><td>numCol of A </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">bias_shift</td><td>amount of left-shift for bias </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">out_shift</td><td>amount of right-shift for output </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">bias</td><td>the bias </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">pOut</td><td>pointer to output </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The function returns the incremented output pointer </dd></dl>
 
 <p>References <a class="el" href="arm__nnsupportfunctions_8h.html#afdda94a339b76615d3161e9fc63f4d21">arm_nn_read_q15x2_ia()</a>, and <a class="el" href="arm__nnsupportfunctions_8h.html#a4cbd428a2b4a4f6b2a6e4219520c7ce0">NN_ROUND</a>.</p>
 

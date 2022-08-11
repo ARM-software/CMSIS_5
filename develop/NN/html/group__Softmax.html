@@ -257,14 +257,12 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">vec_in</td><td>pointer to input vector </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">dim_vec</td><td>input vector dimention </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">dim_vec</td><td>input vector dimension </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">p_out</td><td>pointer to output vector</td></tr>
   </table>
   </dd>
 </dl>
-<p>Here, instead of typical e based softmax, we use 2-based softmax, i.e.,:</p>
-<p>y_i = 2^(x_i) / sum(2^x_j)</p>
-<p>The relative output will be different here. But mathematically, the gradient will be the same with a log(2) scaling factor. </p>
+<dl class="section note"><dt>Note</dt><dd>This function is an optimized version which is not bit-accurate with TensorFlow Lite's kernel </dd></dl>
 
 </div>
 </div>
@@ -300,14 +298,12 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">vec_in</td><td>pointer to input vector </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">dim_vec</td><td>input vector dimention </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">dim_vec</td><td>input vector dimension </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">p_out</td><td>pointer to output vector</td></tr>
   </table>
   </dd>
 </dl>
-<p>Here, instead of typical natural logarithm e based softmax, we use 2-based softmax here, i.e.,:</p>
-<p>y_i = 2^(x_i) / sum(2^x_j)</p>
-<p>The relative output will be different here. But mathematically, the gradient will be the same with a log(2) scaling factor. </p>
+<dl class="section note"><dt>Note</dt><dd>This function is an optimized version which is not bit-accurate with TensorFlow Lite's kernel </dd></dl>
 
 <p>Referenced by <a class="el" href="group__Softmax.html#ga894cfd80c260b946702755b5754e520f">arm_softmax_with_batch_q7()</a>.</p>
 
@@ -641,14 +637,12 @@ Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">vec_in</td><td>pointer to input vector </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">nb_batches</td><td>number of batches </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">dim_vec</td><td>input vector dimention </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">dim_vec</td><td>input vector dimension </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">p_out</td><td>pointer to output vector</td></tr>
   </table>
   </dd>
 </dl>
-<p>Here, instead of typical natural logarithm e based softmax, we use 2-based softmax here, i.e.,:</p>
-<p>y_i = 2^(x_i) / sum(2^x_j)</p>
-<p>The relative output will be different here. But mathematically, the gradient will be the same with a log(2) scaling factor. </p>
+<dl class="section note"><dt>Note</dt><dd>This function is an optimized version which is not bit-accurate with TensorFlow Lite's kernel </dd></dl>
 
 <p>References <a class="el" href="group__Softmax.html#ga89aff212a97a3cf32d9d7ddf11a8f43e">arm_softmax_q7()</a>.</p>
 

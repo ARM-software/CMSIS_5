@@ -152,8 +152,15 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Basic s8 reshape function.</p>
-<p>Refer header file for details. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">input</td><td>points to the s8 input vector </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">output</td><td>points to the s8 output vector </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">total_size</td><td>total size of the input and output vectors in bytes</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>The output is expected to be in a memory area that does not overlap with the input's </dd></dl>
 
 <p>References <a class="el" href="arm__nnsupportfunctions_8h.html#a085459f6280c8f586ddd64998dece532">arm_memcpy_q7()</a>.</p>
 

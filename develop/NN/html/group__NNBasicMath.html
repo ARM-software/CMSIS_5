@@ -142,10 +142,10 @@ Functions</h2></td></tr>
 <tr class="memdesc:ga59ab655606dd4f7a90f573b7479c6dbf"><td class="mdescLeft">&#160;</td><td class="mdescRight">General Matrix-multiplication function with per-channel requantization. This function assumes:  <a href="#ga59ab655606dd4f7a90f573b7479c6dbf">More...</a><br/></td></tr>
 <tr class="separator:ga59ab655606dd4f7a90f573b7479c6dbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga08f8340aa6533271b3aa6d211614fe22"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NNBasicMath.html#ga08f8340aa6533271b3aa6d211614fe22">arm_nn_mult_q15</a> (<a class="el" href="arm__nn__math__types_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *pSrcA, <a class="el" href="arm__nn__math__types_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *pSrcB, <a class="el" href="arm__nn__math__types_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *pDst, const uint16_t out_shift, uint32_t blockSize)</td></tr>
-<tr class="memdesc:ga08f8340aa6533271b3aa6d211614fe22"><td class="mdescLeft">&#160;</td><td class="mdescRight">Q7 vector multiplication with variable output shifts.  <a href="#ga08f8340aa6533271b3aa6d211614fe22">More...</a><br/></td></tr>
+<tr class="memdesc:ga08f8340aa6533271b3aa6d211614fe22"><td class="mdescLeft">&#160;</td><td class="mdescRight">q7 vector multiplication with variable output shifts  <a href="#ga08f8340aa6533271b3aa6d211614fe22">More...</a><br/></td></tr>
 <tr class="separator:ga08f8340aa6533271b3aa6d211614fe22"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad46c9ab012cceda8ce6681c687a58c70"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NNBasicMath.html#gad46c9ab012cceda8ce6681c687a58c70">arm_nn_mult_q7</a> (<a class="el" href="arm__nn__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *pSrcA, <a class="el" href="arm__nn__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *pSrcB, <a class="el" href="arm__nn__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *pDst, const uint16_t out_shift, uint32_t blockSize)</td></tr>
-<tr class="memdesc:gad46c9ab012cceda8ce6681c687a58c70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Q7 vector multiplication with variable output shifts.  <a href="#gad46c9ab012cceda8ce6681c687a58c70">More...</a><br/></td></tr>
+<tr class="memdesc:gad46c9ab012cceda8ce6681c687a58c70"><td class="mdescLeft">&#160;</td><td class="mdescRight">q7 vector multiplication with variable output shifts  <a href="#gad46c9ab012cceda8ce6681c687a58c70">More...</a><br/></td></tr>
 <tr class="separator:gad46c9ab012cceda8ce6681c687a58c70"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3283c2da5c4e313a64cf348e2c161f3f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__nn__math__types_8h.html#a67ac3e1e650a7040b0f706fb83ea6184">arm_cmsis_nn_status</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NNBasicMath.html#ga3283c2da5c4e313a64cf348e2c161f3f">arm_nn_vec_mat_mult_t_s16</a> (const <a class="el" href="arm__nn__math__types_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *lhs, const <a class="el" href="arm__nn__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *rhs, const <a class="el" href="arm__nn__math__types_8h.html#a5aea1cb12fc02d9d44c8abf217eaa5c6">q63_t</a> *bias, <a class="el" href="arm__nn__math__types_8h.html#ab5a8fb21a5b3b983d5f54f31614052ea">q15_t</a> *dst, const int32_t dst_multiplier, const int32_t dst_shift, const int32_t rhs_cols, const int32_t rhs_rows, const int32_t activation_min, const int32_t activation_max)</td></tr>
 <tr class="memdesc:ga3283c2da5c4e313a64cf348e2c161f3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">s16 Vector by Matrix (transposed) multiplication  <a href="#ga3283c2da5c4e313a64cf348e2c161f3f">More...</a><br/></td></tr>
@@ -929,7 +929,6 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>q7 vector multiplication with variable output shifts</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">*pSrcA</td><td>pointer to the first input vector </td></tr>
@@ -941,7 +940,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <p><b>Scaling and Overflow Behavior:</b> </p>
-<dl class="section user"><dt></dt><dd>The function uses saturating arithmetic. Results outside of the allowable Q15 range [0x8000 0x7FFF] will be saturated. </dd></dl>
+<dl class="section user"><dt></dt><dd>The function uses saturating arithmetic. Results outside of the allowable q15 range [0x8000 0x7FFF] will be saturated. </dd></dl>
 
 <p>References <a class="el" href="arm__nnsupportfunctions_8h.html#a4cbd428a2b4a4f6b2a6e4219520c7ce0">NN_ROUND</a>.</p>
 
@@ -988,7 +987,6 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>q7 vector multiplication with variable output shifts</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">*pSrcA</td><td>pointer to the first input vector </td></tr>
@@ -1000,7 +998,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <p><b>Scaling and Overflow Behavior:</b> </p>
-<dl class="section user"><dt></dt><dd>The function uses saturating arithmetic. Results outside of the allowable Q7 range [0x80 0x7F] will be saturated. </dd></dl>
+<dl class="section user"><dt></dt><dd>The function uses saturating arithmetic. Results outside of the allowable q7 range [0x80 0x7F] will be saturated. </dd></dl>
 
 <p>References <a class="el" href="arm__nnsupportfunctions_8h.html#a4cbd428a2b4a4f6b2a6e4219520c7ce0">NN_ROUND</a>.</p>
 
@@ -1094,7 +1092,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The function returns <code>ARM_CMSIS_NN_SUCCESS</code> </dd></dl>
 
-<p>References <a class="el" href="arm__nn__math__types_8h.html#a67ac3e1e650a7040b0f706fb83ea6184a3ba593df6b92214112a5e752c95ae016">ARM_CMSIS_NN_SUCCESS</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#afdda94a339b76615d3161e9fc63f4d21">arm_nn_read_q15x2_ia()</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#aa03e369b608572b80a4e56e8298a21c0">arm_nn_requantize_s64()</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#ad935f1ff1a50822e317bdb321ce991ad">MAX</a>, and <a class="el" href="arm__nnsupportfunctions_8h.html#adcd021ac91d43a62b2cdecf9a5b971a7">MIN</a>.</p>
+<p>References <a class="el" href="arm__nn__math__types_8h.html#a67ac3e1e650a7040b0f706fb83ea6184a3ba593df6b92214112a5e752c95ae016">ARM_CMSIS_NN_SUCCESS</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#afdda94a339b76615d3161e9fc63f4d21">arm_nn_read_q15x2_ia()</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#aa03e369b608572b80a4e56e8298a21c0">arm_nn_requantize_s64()</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#ad935f1ff1a50822e317bdb321ce991ad">MAX</a>, <a class="el" href="arm__nn__vec__mat__mult__t__s16_8c.html#ab6cf185995a44514fff7ea4871e26fc2">MAX_COL_COUNT</a>, and <a class="el" href="arm__nnsupportfunctions_8h.html#adcd021ac91d43a62b2cdecf9a5b971a7">MIN</a>.</p>
 
 <p>Referenced by <a class="el" href="group__FC.html#ga6613c4e797098f0a1ce870f71752e248">arm_fully_connected_s16()</a>.</p>
 

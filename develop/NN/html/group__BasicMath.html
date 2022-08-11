@@ -127,7 +127,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:ga30d6345a9dd6754bb39a6237b6068f5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">s16 element wise multiplication of two vectors  <a href="#ga30d6345a9dd6754bb39a6237b6068f5e">More...</a><br/></td></tr>
 <tr class="separator:ga30d6345a9dd6754bb39a6237b6068f5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0ac27a4f45de0738632abe89fc1418e7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__nn__math__types_8h.html#a67ac3e1e650a7040b0f706fb83ea6184">arm_cmsis_nn_status</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__BasicMath.html#ga0ac27a4f45de0738632abe89fc1418e7">arm_elementwise_mul_s8</a> (const int8_t *input_1_vect, const int8_t *input_2_vect, const int32_t input_1_offset, const int32_t input_2_offset, int8_t *output, const int32_t out_offset, const int32_t out_mult, const int32_t out_shift, const int32_t out_activation_min, const int32_t out_activation_max, const int32_t block_size)</td></tr>
-<tr class="memdesc:ga0ac27a4f45de0738632abe89fc1418e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">s8 element wise multiplication of two vectors  <a href="#ga0ac27a4f45de0738632abe89fc1418e7">More...</a><br/></td></tr>
+<tr class="memdesc:ga0ac27a4f45de0738632abe89fc1418e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">s8 elementwise multiplication  <a href="#ga0ac27a4f45de0738632abe89fc1418e7">More...</a><br/></td></tr>
 <tr class="separator:ga0ac27a4f45de0738632abe89fc1418e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
@@ -562,8 +562,24 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>s8 elementwise multiplication</p>
-<dl class="section note"><dt>Note</dt><dd>Refer header file for details. </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">input_1_vect</td><td>pointer to input vector 1 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">input_2_vect</td><td>pointer to input vector 2 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">input_1_offset</td><td>offset for input 1. Range: -127 to 128 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">input_2_offset</td><td>offset for input 2. Range: -127 to 128 </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">output</td><td>pointer to output vector </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">out_offset</td><td>output offset. Range: -128 to 127 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">out_mult</td><td>output multiplier </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">out_shift</td><td>output shift </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">out_activation_min</td><td>minimum value to clamp output to. Min: -128 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">out_activation_max</td><td>maximum value to clamp output to. Max: 127 </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">block_size</td><td>number of samples </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The function returns ARM_CMSIS_NN_SUCCESS</dd></dl>
+<p>Supported framework: TensorFlow Lite micro </p>
 
 <p>References <a class="el" href="arm__nn__math__types_8h.html#a67ac3e1e650a7040b0f706fb83ea6184a3ba593df6b92214112a5e752c95ae016">ARM_CMSIS_NN_SUCCESS</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#a6a13b7a567485da5fc7f0d311318886d">arm_nn_requantize()</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#a17553765eecd852dc2f9663575f2a91d">arm_nn_write_q7x4_ia()</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#ad935f1ff1a50822e317bdb321ce991ad">MAX</a>, <a class="el" href="arm__nnsupportfunctions_8h.html#adcd021ac91d43a62b2cdecf9a5b971a7">MIN</a>, and <a class="el" href="arm__nnsupportfunctions_8h.html#a7f8d7623a6fd3492efd9b38f45da38a6">PACK_Q7x4_32x1</a>.</p>
 
