@@ -91,6 +91,7 @@ void int16xint8_arm_convolve_fast_s16(void)
 
     TEST_ASSERT_EQUAL(ARM_CMSIS_NN_SUCCESS, result);
     TEST_ASSERT_TRUE(validate_s16(output, output_ref, output_ref_size));
+    memset(output, 0, sizeof(output));
 
     buf_size = arm_convolve_fast_s16_get_buffer_size(&input_dims, &filter_dims);
     ctx.buf = malloc(buf_size);
@@ -183,6 +184,7 @@ void requantize_s64_arm_convolve_fast_s16(void)
     }
     TEST_ASSERT_EQUAL(ARM_CMSIS_NN_SUCCESS, result);
     TEST_ASSERT_TRUE(validate_s16(output, output_ref, output_ref_size));
+    memset(output, 0, sizeof(output));
 
     buf_size = arm_convolve_fast_s16_get_buffer_size(&input_dims, &filter_dims);
     ctx.buf = malloc(buf_size);

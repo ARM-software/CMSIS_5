@@ -106,6 +106,7 @@ void basic_arm_convolve_s8(void)
     }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
+    memset(output, 0, sizeof(output));
 
     buf_size = arm_convolve_wrapper_s8_get_buffer_size(&conv_params, &input_dims, &filter_dims, &output_dims);
     ctx.buf = malloc(buf_size);
@@ -198,6 +199,7 @@ void stride2pad1_arm_convolve_s8(void)
     }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
+    memset(output, 0, sizeof(output));
 
     buf_size = arm_convolve_wrapper_s8_get_buffer_size(&conv_params, &input_dims, &filter_dims, &output_dims);
     ctx.buf = malloc(buf_size);
@@ -290,6 +292,7 @@ void conv_2_arm_convolve_s8(void)
     }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
+    memset(output, 0, sizeof(output));
 
     buf_size = arm_convolve_wrapper_s8_get_buffer_size(&conv_params, &input_dims, &filter_dims, &output_dims);
     ctx.buf = malloc(buf_size);
@@ -382,6 +385,7 @@ void conv_3_arm_convolve_s8(void)
     }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
+    memset(output, 0, sizeof(output));
 
     buf_size = arm_convolve_wrapper_s8_get_buffer_size(&conv_params, &input_dims, &filter_dims, &output_dims);
     ctx.buf = malloc(buf_size);
@@ -474,6 +478,7 @@ void conv_4_arm_convolve_s8(void)
     }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
+    memset(output, 0, sizeof(output));
 
     buf_size = arm_convolve_wrapper_s8_get_buffer_size(&conv_params, &input_dims, &filter_dims, &output_dims);
     ctx.buf = malloc(buf_size);
@@ -566,6 +571,7 @@ void conv_1_x_n_1_arm_convolve_s8(void)
     }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
+    memset(output, 0, sizeof(output));
 
     buf_size = arm_convolve_s8_get_buffer_size(&input_dims, &filter_dims);
     ctx.buf = malloc(buf_size);
@@ -655,6 +661,7 @@ void conv_1_x_n_2_arm_convolve_s8(void)
         free(ctx.buf);
     }
     TEST_ASSERT_EQUAL(expected, result);
+    memset(output, 0, sizeof(output));
 
     buf_size = arm_convolve_s8_get_buffer_size(&input_dims, &filter_dims);
     ctx.buf = malloc(buf_size);
@@ -744,6 +751,7 @@ void conv_1_x_n_3_arm_convolve_s8(void)
         free(ctx.buf);
     }
     TEST_ASSERT_EQUAL(expected, result);
+    memset(output, 0, sizeof(output));
 
     buf_size = arm_convolve_s8_get_buffer_size(&input_dims, &filter_dims);
     ctx.buf = malloc(buf_size);
@@ -899,6 +907,7 @@ void conv_2x2_dilation_arm_convolve_s8(void)
     }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
+    memset(output, 0, sizeof(output));
 
     buf_size = arm_convolve_wrapper_s8_get_buffer_size(&conv_params, &input_dims, &filter_dims, &output_dims);
     ctx.buf = malloc(buf_size);
@@ -989,6 +998,7 @@ void conv_2x2_dilation_5x5_input_arm_convolve_s8(void)
     }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
+    memset(output, 0, sizeof(output));
 
     buf_size = arm_convolve_wrapper_s8_get_buffer_size(&conv_params, &input_dims, &filter_dims, &output_dims);
     ctx.buf = malloc(buf_size);
@@ -1079,6 +1089,7 @@ void conv_3x3_dilation_5x5_input_arm_convolve_s8(void)
     }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
+    memset(output, 0, sizeof(output));
 
     buf_size = arm_convolve_wrapper_s8_get_buffer_size(&conv_params, &input_dims, &filter_dims, &output_dims);
     ctx.buf = malloc(buf_size);
@@ -1169,6 +1180,7 @@ void conv_2x3_dilation_arm_convolve_s8(void)
     }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
+    memset(output, 0, sizeof(output));
 
     buf_size = arm_convolve_wrapper_s8_get_buffer_size(&conv_params, &input_dims, &filter_dims, &output_dims);
     ctx.buf = malloc(buf_size);
@@ -1259,6 +1271,7 @@ void conv_3x2_dilation_arm_convolve_s8(void)
     }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
+    memset(output, 0, sizeof(output));
 
     buf_size = arm_convolve_wrapper_s8_get_buffer_size(&conv_params, &input_dims, &filter_dims, &output_dims);
     ctx.buf = malloc(buf_size);
@@ -1349,6 +1362,7 @@ void conv_dilation_golden_arm_convolve_s8(void)
     }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
+    memset(output, 0, sizeof(output));
 
     buf_size = arm_convolve_wrapper_s8_get_buffer_size(&conv_params, &input_dims, &filter_dims, &output_dims);
     ctx.buf = malloc(buf_size);
@@ -1441,6 +1455,7 @@ void conv_5_arm_convolve_s8(void)
     }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
+    memset(output, 0, sizeof(output));
 
     buf_size = arm_convolve_wrapper_s8_get_buffer_size(&conv_params, &input_dims, &filter_dims, &output_dims);
     ctx.buf = malloc(buf_size);
