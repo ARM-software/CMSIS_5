@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2021 Arm Limited or its affiliates.
+ * SPDX-FileCopyrightText: Copyright 2010-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_nn_mat_mult_s8.c
  * Description:  General Matrix-multiplication function
  *
- * $Date:        27. October 2021
- * $Revision:    V.2.0.6
+ * $Date:        16 August 2022
+ * $Revision:    V.2.0.7
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -73,7 +73,7 @@ q7_t *arm_nn_mat_mult_s8(const q7_t *input_row,
             for (int i_row_loop = 0; i_row_loop < row_loop_cnt; i_row_loop++)
             {
                 mve_pred16_t p = vctp16q((uint32_t)row_len_tmp);
-                const int16x8_t offset = vdupq_m_n_s16(vuninitializedq_s16(), col_offset, p);
+                const int16x8_t offset = vdupq_x_n_s16(col_offset, p);
                 row_len_tmp -= 8;
 
                 int16x8_t c0 = vldrbq_s16(ip_c0);
@@ -133,7 +133,7 @@ q7_t *arm_nn_mat_mult_s8(const q7_t *input_row,
                 for (int i_row_loop = 0; i_row_loop < row_loop_cnt; i_row_loop++)
                 {
                     const mve_pred16_t p = vctp16q((uint32_t)row_len_tmp);
-                    const int16x8_t offset = vdupq_m_n_s16(vuninitializedq_s16(), col_offset, p);
+                    const int16x8_t offset = vdupq_x_n_s16(col_offset, p);
                     row_len_tmp -= 8;
 
                     int16x8_t c0 = vldrbq_s16(ip_c0);

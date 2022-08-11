@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2022 Arm Limited or its affiliates.
+ * SPDX-FileCopyrightText: Copyright 2010-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_max_pool_s8.c
  * Description:  Pooling function implementations
  *
- * $Date:        19 April 2022
- * $Revision:    V.3.0.0
+ * $Date:        16 August 2022
+ * $Revision:    V.3.0.1
  *
  * Target Processor:  Cortex-M CPUs
  *
@@ -40,7 +40,7 @@ static void compare_and_replace_if_larger_q7(q7_t *base, const q7_t *target, int
         mve_pred16_t p = vctp8q((uint32_t)length);
         const int8x16_t op_1 = vldrbq_z_s8(base, p);
         const int8x16_t op_2 = vldrbq_z_s8(target, p);
-        const int8x16_t max = vmaxq_m_s8(vuninitializedq_s8(), op_1, op_2, p);
+        const int8x16_t max = vmaxq_x_s8(op_1, op_2, p);
         vstrbq_p_s8(base, max, p);
         base += 16;
         target += 16;
@@ -98,15 +98,16 @@ static void clamp_output(q7_t *source, int32_t length, const int32_t act_min, co
 {
 #if defined(ARM_MATH_MVEI)
     int32_t loop_count = (length + 15) / 16;
+    const int8x16_t vmin = vdupq_n_s8((int8_t)act_min);
+    const int8x16_t vmax = vdupq_n_s8((int8_t)act_max);
+
     for (int i = 0; i < loop_count; i++)
     {
         mve_pred16_t p = vctp8q((uint32_t)length);
         length -= 16;
         const int8x16_t src = vldrbq_z_s8(source, p);
-        const int8x16_t predicated_min = vdupq_m_n_s8(vuninitializedq_s8(), (int8_t)act_min, p);
-        const int8x16_t predicated_max = vdupq_m_n_s8(vuninitializedq_s8(), (int8_t)act_max, p);
-        int8x16_t res = vmaxq_m_s8(vuninitializedq_s8(), src, predicated_min, p);
-        res = vminq_m_s8(vuninitializedq_s8(), res, predicated_max, p);
+        int8x16_t res = vmaxq_x_s8(src, vmin, p);
+        res = vminq_x_s8(res, vmax, p);
         vstrbq_p_s8(source, res, p);
         source += 16;
     }
