@@ -15,6 +15,7 @@
       <li> Added support for DSP extension optimization for int16 depthwise_conv </li>
       <li> Added support for MVEI extension optimization for int16 depthwise_conv </li>
       <li> Added support for MVEI extension optimization for int16 max & average pooling </li>
+      <li> Added support for MVEI extension optimization for int16 fully fully_connected </li>
       </ul>
     </td>
   </tr>
