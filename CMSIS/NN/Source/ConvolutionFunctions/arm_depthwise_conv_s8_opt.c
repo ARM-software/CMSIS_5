@@ -22,8 +22,8 @@
  * Description:  Optimized s8 depthwise separable convolution function for
  *               channel multiplier of 1.
  *
- * $Date:        6 July 2022
- * $Revision:    V.3.0.1
+ * $Date:        27 July 2022
+ * $Revision:    V.3.1.0
  *
  * Target Processor:  Cortex-M CPUs
  *
@@ -64,7 +64,7 @@ arm_cmsis_nn_status arm_depthwise_conv_s8_opt(const cmsis_nn_context *ctx,
     const int32_t input_ch = input_dims->c;
     const int32_t output_ch = output_dims->c;
 
-    /* Check input constraints input_ch == output_ch */
+    /* Check depth multiplier is 1 */
     if (input_ch != output_ch)
     {
         return ARM_CMSIS_NN_ARG_ERROR;
@@ -102,116 +102,130 @@ arm_cmsis_nn_status arm_depthwise_conv_s8_opt(const cmsis_nn_context *ctx,
     int buffer_count = 0;
     const int32_t kernel_size = kernel_x * kernel_y;
 
-    /* This part implements the im2col function */
-    for (int i_out_y = 0, base_idx_y = -pad_y; i_out_y < output_y; base_idx_y += stride_y, i_out_y++)
+    const int32_t ch_loop = (input_ch + (CH_IN_BLOCK_MVE - 1)) / CH_IN_BLOCK_MVE;
+    int32_t remaining_ch = output_ch;
+    int32_t active_ch = MIN(CH_IN_BLOCK_MVE, remaining_ch);
+    remaining_ch -= CH_IN_BLOCK_MVE;
+
+    for (int i_ch = 0; i_ch < ch_loop; i_ch++)
     {
-        for (int i_out_x = 0, base_idx_x = -pad_x; i_out_x < output_x; base_idx_x += stride_x, i_out_x++)
+        out = output + i_ch * CH_IN_BLOCK_MVE;
+        const int8_t *input_slice = input + (i_ch * CH_IN_BLOCK_MVE);
+
+        for (int i_out_y = 0, base_idx_y = -pad_y; i_out_y < output_y; base_idx_y += stride_y, i_out_y++)
         {
-            for (int i_ker_y = base_idx_y; i_ker_y < base_idx_y + kernel_y; i_ker_y++)
+            for (int i_out_x = 0, base_idx_x = -pad_x; i_out_x < output_x; base_idx_x += stride_x, i_out_x++)
             {
-                for (int i_ker_x = base_idx_x; i_ker_x < base_idx_x + kernel_x; i_ker_x++)
+                for (int i_ker_y = base_idx_y; i_ker_y < base_idx_y + kernel_y; i_ker_y++)
                 {
-                    if (i_ker_y < 0 || i_ker_y >= input_y || i_ker_x < 0 || i_ker_x >= input_x)
+                    for (int i_ker_x = base_idx_x; i_ker_x < base_idx_x + kernel_x; i_ker_x++)
                     {
-                        arm_memset_q7(lhs_buffer, (int8_t)-input_offset, (uint32_t)input_ch);
-                        padded = 1;
+                        if (i_ker_y < 0 || i_ker_y >= input_y || i_ker_x < 0 || i_ker_x >= input_x)
+                        {
+                            arm_memset_q7(lhs_buffer, (int8_t)-input_offset, (uint32_t)active_ch);
+                            padded = 1;
+                        }
+                        else
+                        {
+                            arm_memcpy_q7(lhs_buffer,
+                                          input_slice + (i_ker_y * input_x + i_ker_x) * input_ch,
+                                          (uint32_t)active_ch);
+                        }
+                        lhs_buffer += CH_IN_BLOCK_MVE;
+                    }
+                }
+                buffer_count++;
+
+                if (buffer_count == 4)
+                {
+                    const int32_t block_offset = i_ch * CH_IN_BLOCK_MVE;
+                    lhs_buffer = (q7_t *)buffer_a;
+                    if (padded == 0)
+                    {
+                        arm_nn_depthwise_conv_nt_t_s8(lhs_buffer,
+                                                      kernel + block_offset,
+                                                      input_offset,
+                                                      active_ch,
+                                                      input_ch,
+                                                      output_shift + block_offset,
+                                                      output_mult + block_offset,
+                                                      output_offset,
+                                                      output_activation_min,
+                                                      output_activation_max,
+                                                      kernel_size,
+                                                      bias + block_offset,
+                                                      out);
                     }
                     else
                     {
-                        arm_memcpy_q7(lhs_buffer, input + (i_ker_y * input_x + i_ker_x) * input_ch, (uint32_t)input_ch);
+                        arm_nn_depthwise_conv_nt_t_padded_s8(lhs_buffer,
+                                                             kernel + block_offset,
+                                                             input_offset,
+                                                             active_ch,
+                                                             input_ch,
+                                                             output_shift + block_offset,
+                                                             output_mult + block_offset,
+                                                             output_offset,
+                                                             output_activation_min,
+                                                             output_activation_max,
+                                                             kernel_size,
+                                                             bias + block_offset,
+                                                             out);
+                        padded = 0;
                     }
-                    lhs_buffer += input_ch;
+                    out += (4 * input_ch);
+                    buffer_count = 0;
                 }
-            }
-            buffer_count++;
-
-            if (buffer_count == 4)
-            {
-                lhs_buffer = (q7_t *)buffer_a;
-                if (padded == 0)
-                {
-                    out = arm_nn_depthwise_conv_nt_t_s8(lhs_buffer,
-                                                        kernel,
-                                                        input_offset,
-                                                        input_ch,
-                                                        output_shift,
-                                                        output_mult,
-                                                        output_offset,
-                                                        output_activation_min,
-                                                        output_activation_max,
-                                                        kernel_size,
-                                                        bias,
-                                                        out);
-                }
-                else
-                {
-                    out = arm_nn_depthwise_conv_nt_t_padded_s8(lhs_buffer,
-                                                               kernel,
-                                                               input_offset,
-                                                               input_ch,
-                                                               output_shift,
-                                                               output_mult,
-                                                               output_offset,
-                                                               output_activation_min,
-                                                               output_activation_max,
-                                                               kernel_size,
-                                                               bias,
-                                                               out);
-                    padded = 0;
-                }
-                buffer_count = 0;
             }
         }
-    }
+        /* Handle left over buffers */
+        lhs_buffer = (q7_t *)buffer_a;
 
-    /* Handle left over buffers */
-    lhs_buffer = (q7_t *)buffer_a;
-
-    for (int i_buf = 0; i_buf < buffer_count; i_buf++)
-    {
-        int32_t loop_count = (input_ch + 3) / 4;
-        int32_t num_ch_to_process = input_ch;
-
-        for (int i_loop_cnt = 0, offset = 0; i_loop_cnt < loop_count; num_ch_to_process -= 4, offset += 4, i_loop_cnt++)
+        int8_t *out_base = out;
+        for (int i_buf = 0; i_buf < buffer_count; i_buf++)
         {
-            const int8_t *col_0 = lhs_buffer + (kernel_size * input_ch * i_buf) + offset;
-            const int8_t *row_0 = kernel + offset;
-            int32x4_t out_0 = vdupq_n_s32(0);
-            if (bias)
+            int32_t loop_count = (active_ch + 3) / 4;
+            int32_t num_ch_to_process = active_ch;
+            out = out_base + (i_buf * input_ch);
+            for (int i_loop_cnt = 0, offset = i_ch * CH_IN_BLOCK_MVE; i_loop_cnt < loop_count;
+                 num_ch_to_process -= 4, offset += 4, i_loop_cnt++)
             {
-                out_0 = vldrwq_s32(&bias[offset]);
+                const int8_t *col_0 = lhs_buffer + (kernel_size * CH_IN_BLOCK_MVE * i_buf) + (i_loop_cnt * 4);
+                const int8_t *row_0 = kernel + offset;
+                int32x4_t out_0 = vdupq_n_s32(0);
+                if (bias)
+                {
+                    out_0 = vldrwq_s32(&bias[offset]);
+                }
+
+                for (int i_ker = 0; i_ker < kernel_size; i_ker++)
+                {
+                    const int32x4_t ker_0 = vldrbq_s32(row_0);
+                    int32x4_t ip_0 = vldrbq_s32(col_0);
+                    ip_0 = vaddq_n_s32(ip_0, input_offset);
+                    out_0 += vmulq_s32(ip_0, ker_0);
+
+                    col_0 += CH_IN_BLOCK_MVE;
+                    row_0 += input_ch;
+                }
+
+                const int32x4_t mult = vldrwq_s32(&output_mult[offset]);
+                const int32x4_t shift = vldrwq_s32(&output_shift[offset]);
+
+                out_0 = arm_requantize_mve_32x4(out_0, mult, shift);
+                out_0 = vaddq_n_s32(out_0, output_offset);
+                out_0 = vmaxq_s32(out_0, vdupq_n_s32(output_activation_min));
+                out_0 = vminq_s32(out_0, vdupq_n_s32(output_activation_max));
+                mve_pred16_t p = vctp32q((uint32_t)num_ch_to_process);
+                vstrbq_p_s32(out, out_0, p);
+
+                out += 4;
             }
-
-            for (int i_ker = 0; i_ker < kernel_size; i_ker++)
-            {
-                const int32x4_t ker_0 = vldrbq_s32(row_0);
-
-                int32x4_t ip_0 = vldrbq_s32(col_0);
-                ip_0 = vaddq_n_s32(ip_0, input_offset);
-                out_0 += vmulq_s32(ip_0, ker_0);
-
-                col_0 += input_ch;
-                row_0 += input_ch;
-            }
-
-            const int32x4_t mult = vldrwq_s32(&output_mult[offset]);
-            const int32x4_t shift = vldrwq_s32(&output_shift[offset]);
-
-            out_0 = arm_requantize_mve_32x4(out_0, mult, shift);
-            out_0 = vaddq_n_s32(out_0, output_offset);
-            out_0 = vmaxq_s32(out_0, vdupq_n_s32(output_activation_min));
-            out_0 = vminq_s32(out_0, vdupq_n_s32(output_activation_max));
-            mve_pred16_t p = vctp32q((uint32_t)num_ch_to_process);
-            vstrbq_p_s32(out, out_0, p);
-
-            out += 4;
         }
+        buffer_count = 0;
 
-        const int tail_ch = input_ch & 0x3;
-        if (tail_ch != 0)
-        {
-            out -= (4 - tail_ch);
-        }
+        active_ch = MIN(CH_IN_BLOCK_MVE, remaining_ch);
+        remaining_ch -= CH_IN_BLOCK_MVE;
     }
 
 #else // ARM_MATH_DSP
@@ -431,8 +445,8 @@ arm_cmsis_nn_status arm_depthwise_conv_s8_opt(const cmsis_nn_context *ctx,
 int32_t arm_depthwise_conv_s8_opt_get_buffer_size(const cmsis_nn_dims *input_dims, const cmsis_nn_dims *filter_dims)
 {
 #if defined(ARM_MATH_MVEI)
-    /* The + 4 accounts for out of bounds read of the lhs buffers in the *_nt_t_* functions.  */
-    return (4 * input_dims->c * filter_dims->w * filter_dims->h) * (int32_t)sizeof(int8_t) + 4;
+    (void)input_dims;
+    return (4 * CH_IN_BLOCK_MVE * filter_dims->w * filter_dims->h) * (int32_t)sizeof(int8_t);
 #elif defined(ARM_MATH_DSP)
     return (input_dims->c * filter_dims->w * filter_dims->h) * sizeof(int16_t);
 #else

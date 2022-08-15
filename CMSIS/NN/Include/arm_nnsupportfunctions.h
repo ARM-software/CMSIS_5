@@ -21,8 +21,8 @@
  * Title:        arm_nnsupportfunctions.h
  * Description:  Public header file of support functions for CMSIS NN Library
  *
- * $Date:        4 Aug 2022
- * $Revision:    V.9.0.1
+ * $Date:        8 August 2022
+ * $Revision:    V.10.0.0
  *
  * Target Processor:  Cortex-M CPUs
  * -------------------------------------------------------------------- */
@@ -49,6 +49,14 @@ extern "C" {
 #define MIN(A, B) ((A) < (B) ? (A) : (B))
 #define CLAMP(x, h, l) MAX(MIN((x), (h)), (l))
 #define REDUCE_MULTIPLIER(_mult) ((_mult < 0x7FFF0000) ? ((_mult + (1 << 15)) >> 16) : 0x7FFF)
+
+// Number of channels processed in a block for DW Conv(MVE)
+// Requirement: Greater than 0 & less than 128
+// This can be fine tuned to match number of input channels for best performance.
+// A layer with lower number of channels than CH_IN_BLOCK_MVE will result in higher
+// scratch buffer usage and a layer with higher number of channels than CH_IN_BLOCK_MVE
+// will result in lower scratch buffer usage.
+#define CH_IN_BLOCK_MVE (124)
 
 /**
  * @brief definition to pack four 8 bit values.
@@ -495,7 +503,8 @@ arm_cmsis_nn_status arm_nn_vec_mat_mult_t_svdf_s8(const q7_t *lhs,
  * @param[in]      lhs             Input left-hand side matrix
  * @param[in]      rhs             Input right-hand side matrix (transposed)
  * @param[in]      lhs_offset      LHS matrix offset(input offset). Range: -127 to 128
- * @param[in]      num_ch          Number of channels in LHS/RHS
+ * @param[in]      active_ch       Subset of total_ch processed
+ * @param[in]      total_ch        Number of channels in LHS/RHS
  * @param[in]      out_shift       Per channel output shift. Length of vector is equal to number of channels
  * @param[in]      out_mult        Per channel output multiplier. Length of vector is equal to number of channels
  * @param[in]      out_offset      Offset to be added to the output values. Range: -127 to 128
@@ -516,18 +525,19 @@ arm_cmsis_nn_status arm_nn_vec_mat_mult_t_svdf_s8(const q7_t *lhs,
  *                  - Output bias
  *                  - rhs
  */
-q7_t *arm_nn_depthwise_conv_nt_t_padded_s8(const q7_t *lhs,
-                                           const q7_t *rhs,
-                                           const int32_t lhs_offset,
-                                           const uint16_t num_ch,
-                                           const int32_t *out_shift,
-                                           const int32_t *out_mult,
-                                           const int32_t out_offset,
-                                           const int32_t activation_min,
-                                           const int32_t activation_max,
-                                           const uint16_t row_x_col,
-                                           const int32_t *const output_bias,
-                                           q7_t *out);
+arm_cmsis_nn_status arm_nn_depthwise_conv_nt_t_padded_s8(const q7_t *lhs,
+                                                         const q7_t *rhs,
+                                                         const int32_t lhs_offset,
+                                                         const int32_t active_ch,
+                                                         const int32_t total_ch,
+                                                         const int32_t *out_shift,
+                                                         const int32_t *out_mult,
+                                                         const int32_t out_offset,
+                                                         const int32_t activation_min,
+                                                         const int32_t activation_max,
+                                                         const uint16_t row_x_col,
+                                                         const int32_t *const output_bias,
+                                                         q7_t *out);
 
 /**
  * @brief Depthwise convolution of transposed rhs matrix with 4 lhs matrices. To be used in non-padded cases.
@@ -536,7 +546,8 @@ q7_t *arm_nn_depthwise_conv_nt_t_padded_s8(const q7_t *lhs,
  * @param[in]      lhs             Input left-hand side matrix
  * @param[in]      rhs             Input right-hand side matrix (transposed)
  * @param[in]      lhs_offset      LHS matrix offset(input offset). Range: -127 to 128
- * @param[in]      num_ch          Number of channels in LHS/RHS
+ * @param[in]      active_ch       Subset of total_ch processed
+ * @param[in]      total_ch        Number of channels in LHS/RHS
  * @param[in]      out_shift       Per channel output shift. Length of vector is equal to number of channels.
  * @param[in]      out_mult        Per channel output multiplier. Length of vector is equal to number of channels.
  * @param[in]      out_offset      Offset to be added to the output values. Range: -127 to 128
@@ -557,18 +568,19 @@ q7_t *arm_nn_depthwise_conv_nt_t_padded_s8(const q7_t *lhs,
  *                  - Output bias
  *                  - rhs
  */
-q7_t *arm_nn_depthwise_conv_nt_t_s8(const q7_t *lhs,
-                                    const q7_t *rhs,
-                                    const int32_t lhs_offset,
-                                    const uint16_t num_ch,
-                                    const int32_t *out_shift,
-                                    const int32_t *out_mult,
-                                    const int32_t out_offset,
-                                    const int32_t activation_min,
-                                    const int32_t activation_max,
-                                    const uint16_t row_x_col,
-                                    const int32_t *const output_bias,
-                                    q7_t *out);
+arm_cmsis_nn_status arm_nn_depthwise_conv_nt_t_s8(const q7_t *lhs,
+                                                  const q7_t *rhs,
+                                                  const int32_t lhs_offset,
+                                                  const int32_t active_ch,
+                                                  const int32_t total_ch,
+                                                  const int32_t *out_shift,
+                                                  const int32_t *out_mult,
+                                                  const int32_t out_offset,
+                                                  const int32_t activation_min,
+                                                  const int32_t activation_max,
+                                                  const uint16_t row_x_col,
+                                                  const int32_t *const output_bias,
+                                                  q7_t *out);
 
 /**
  * @brief Depthwise convolution of transposed rhs matrix with 4 lhs matrices. To be used in non-padded cases.

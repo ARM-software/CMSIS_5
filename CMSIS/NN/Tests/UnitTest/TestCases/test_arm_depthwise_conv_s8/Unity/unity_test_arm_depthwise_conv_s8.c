@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2021 Arm Limited or its affiliates.
+ * SPDX-FileCopyrightText: Copyright 2010-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -59,3 +59,5 @@ void test_depthwise_null_bias_0_arm_depthwise_conv_s8(void) { depthwise_null_bia
 void test_depthwise_null_bias_1_arm_depthwise_conv_s8(void) { depthwise_null_bias_1_arm_depthwise_conv_s8(); }
 
 void test_depthwise_dilation_arm_depthwise_conv_s8(void) { depthwise_dilation_arm_depthwise_conv_s8(); }
+
+void test_depthwise_x_stride_arm_depthwise_conv_s8(void) { depthwise_x_stride_arm_depthwise_conv_s8(); }

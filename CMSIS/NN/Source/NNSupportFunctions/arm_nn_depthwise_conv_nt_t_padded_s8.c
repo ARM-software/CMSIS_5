@@ -21,8 +21,8 @@
  * Title:        arm_nn_depthwise_conv_nt_t_padded_s8.c
  * Description:  Depthwise convolution with padded matrices.
  *
- * $Date:        19. July 2022
- * $Revision:    V.1.1.0
+ * $Date:        27. July 2022
+ * $Revision:    V.2.0.0
  *
  * Target Processor:  Cortex-M processors with MVE extension
  * -------------------------------------------------------------------- */
@@ -46,23 +46,24 @@
  *
  */
 
-q7_t *arm_nn_depthwise_conv_nt_t_padded_s8(const q7_t *lhs,
-                                           const q7_t *rhs,
-                                           const int32_t input_offset,
-                                           const uint16_t num_ch,
-                                           const int32_t *out_shift,
-                                           const int32_t *out_mult,
-                                           const int32_t out_offset,
-                                           const int32_t activation_min,
-                                           const int32_t activation_max,
-                                           const uint16_t row_x_col,
-                                           const int32_t *const output_bias,
-                                           q7_t *out)
+arm_cmsis_nn_status arm_nn_depthwise_conv_nt_t_padded_s8(const q7_t *lhs,
+                                                         const q7_t *rhs,
+                                                         const int32_t input_offset,
+                                                         const int32_t active_ch,
+                                                         const int32_t total_ch,
+                                                         const int32_t *out_shift,
+                                                         const int32_t *out_mult,
+                                                         const int32_t out_offset,
+                                                         const int32_t activation_min,
+                                                         const int32_t activation_max,
+                                                         const uint16_t row_x_col,
+                                                         const int32_t *const output_bias,
+                                                         q7_t *out)
 {
 #if defined(ARM_MATH_MVEI)
-    int32_t loop_count = (num_ch + 3) / 4;
+    int32_t loop_count = (active_ch + 3) / 4;
     const int32_t *bias = output_bias;
-    uint32_t num_ch_to_process = num_ch;
+    uint32_t num_ch_to_process = active_ch;
 
     for (int i_loop_cnt = 0, offset = 0; i_loop_cnt < loop_count;
          num_ch_to_process -= 4, out += 4, offset += 4, i_loop_cnt++)
@@ -79,9 +80,9 @@ q7_t *arm_nn_depthwise_conv_nt_t_padded_s8(const q7_t *lhs,
 
         const int8_t *rhs_0 = rhs + offset;
         const int8_t *lhs_0 = lhs + offset;
-        const int8_t *lhs_1 = lhs + row_x_col * num_ch + offset;
-        const int8_t *lhs_2 = lhs + (row_x_col * num_ch * 2) + offset;
-        const int8_t *lhs_3 = lhs + (row_x_col * num_ch * 3) + offset;
+        const int8_t *lhs_1 = lhs + row_x_col * CH_IN_BLOCK_MVE + offset;
+        const int8_t *lhs_2 = lhs + (row_x_col * CH_IN_BLOCK_MVE * 2) + offset;
+        const int8_t *lhs_3 = lhs + (row_x_col * CH_IN_BLOCK_MVE * 3) + offset;
 
         for (int i_row_x_col = 0; i_row_x_col < row_x_col; i_row_x_col++)
         {
@@ -104,12 +105,12 @@ q7_t *arm_nn_depthwise_conv_nt_t_padded_s8(const q7_t *lhs,
 
             out_3 += vmulq_s32(ip_3, ker_0);
 
-            lhs_0 += num_ch;
-            lhs_1 += num_ch;
-            lhs_2 += num_ch;
-            lhs_3 += num_ch;
+            lhs_0 += CH_IN_BLOCK_MVE;
+            lhs_1 += CH_IN_BLOCK_MVE;
+            lhs_2 += CH_IN_BLOCK_MVE;
+            lhs_3 += CH_IN_BLOCK_MVE;
 
-            rhs_0 += num_ch;
+            rhs_0 += total_ch;
         }
 
         const int32x4_t mult = vldrwq_s32(out_mult);
@@ -128,33 +129,29 @@ q7_t *arm_nn_depthwise_conv_nt_t_padded_s8(const q7_t *lhs,
         out_1 = vaddq_n_s32(out_1, out_offset);
         out_1 = vmaxq_s32(out_1, vdupq_n_s32(activation_min));
         out_1 = vminq_s32(out_1, vdupq_n_s32(activation_max));
-        vstrbq_p_s32(out + num_ch, out_1, p);
+        vstrbq_p_s32(out + total_ch, out_1, p);
 
         out_2 = arm_requantize_mve_32x4(out_2, mult, shift);
         out_2 = vaddq_n_s32(out_2, out_offset);
         out_2 = vmaxq_s32(out_2, vdupq_n_s32(activation_min));
         out_2 = vminq_s32(out_2, vdupq_n_s32(activation_max));
-        vstrbq_p_s32(out + 2 * num_ch, out_2, p);
+        vstrbq_p_s32(out + 2 * total_ch, out_2, p);
 
         out_3 = arm_requantize_mve_32x4(out_3, mult, shift);
         out_3 = vaddq_n_s32(out_3, out_offset);
         out_3 = vmaxq_s32(out_3, vdupq_n_s32(activation_min));
         out_3 = vminq_s32(out_3, vdupq_n_s32(activation_max));
-        vstrbq_p_s32(out + 3 * num_ch, out_3, p);
+        vstrbq_p_s32(out + 3 * total_ch, out_3, p);
     }
 
-    const int tail_ch = num_ch & 0x3;
-    if (tail_ch != 0)
-    {
-        out -= (4 - tail_ch);
-    }
-    return out + (3 * num_ch);
+    return ARM_CMSIS_NN_SUCCESS;
 
 #else
     (void)lhs;
     (void)rhs;
     (void)input_offset;
-    (void)num_ch;
+    (void)active_ch;
+    (void)total_ch;
     (void)out_shift;
     (void)out_mult;
     (void)out_offset;
@@ -163,7 +160,7 @@ q7_t *arm_nn_depthwise_conv_nt_t_padded_s8(const q7_t *lhs,
     (void)row_x_col;
     (void)output_bias;
     (void)out;
-    return NULL;
+    return ARM_CMSIS_NN_NO_IMPL_ERROR;
 #endif
 }
 
