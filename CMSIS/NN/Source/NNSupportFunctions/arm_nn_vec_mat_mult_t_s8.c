@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020-2022 Arm Limited or its affiliates.
+ * SPDX-FileCopyrightText: Copyright 2020-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_nn_vec_mat_mult_t_s8
  * Description:  s8 vector by matrix (transposed) multiplication
  *
- * $Date:        2 May 2022
- * $Revision:    V.4.0.1
+ * $Date:        16 Aug 2022
+ * $Revision:    V.4.0.2
  *
  * Target Processor:  Cortex-M
  *
@@ -115,7 +115,7 @@ arm_cmsis_nn_status arm_nn_vec_mat_mult_t_s8(const q7_t *lhs,
         if (bias)
         {
             int32x4_t b = vldrwq_z_s32(bias, p);
-            acc = vaddq_m_s32(vuninitializedq_s32(), acc, b, p);
+            acc = vaddq_x_s32(acc, b, p);
             bias += 3;
         }
         const int32x4_t rhs_sum = {rhs_sum_0, rhs_sum_1, rhs_sum_2, 0};

@@ -21,8 +21,8 @@
  * Title:        arm_max_pool_s16.c
  * Description:  Pooling function implementations
  *
- * $Date:        20 June 2022
- * $Revision:    V.2.1.0
+ * $Date:        16 August 2022
+ * $Revision:    V.2.1.1
  *
  * Target Processor:  Cortex-M CPUs
  *
@@ -94,8 +94,8 @@ static void clamp_output(int16_t *source, int32_t length, const int16_t act_min,
         mve_pred16_t p = vctp16q((uint32_t)length);
         length -= 8;
         const int16x8_t src = vldrhq_z_s16(source, p);
-        int16x8_t res = vmaxq_m_s16(vuninitializedq_s16(), src, min, p);
-        res = vminq_m_s16(vuninitializedq_s16(), res, max, p);
+        int16x8_t res = vmaxq_x_s16(src, min, p);
+        res = vminq_x_s16(res, max, p);
         vstrhq_p_s16(source, res, p);
         source += 8;
     }
