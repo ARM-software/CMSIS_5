@@ -93,6 +93,7 @@ cmake .. -DCMAKE_TOOLCHAIN_FILE=~/ethos-u-core-platform/cmake/toolchain/armclang
 
 ### Compiler options
 Default optimization level is Ofast. Please change according to project needs. Just bear in mind it will impact performance.
+With only optimization level -O0, ARM_MATH_AUTOVECTORIZE needs to be defined.
 
 The compiler option '-fomit-frame-pointer' is enabled by default at -O and higher. With no optimization level you may need to specifiy '-fomit-frame-pointer' as a minimum.
 

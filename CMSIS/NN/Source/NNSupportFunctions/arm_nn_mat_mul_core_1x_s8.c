@@ -21,8 +21,8 @@
  * Title:        arm_nn_mat_mul_core_1x_s8.c
  * Description:  General Matrix-multiplication function
  *
- * $Date:        7 July 2022
- * $Revision:    V.3.0.0
+ * $Date:        22 Aug 2022
+ * $Revision:    V.3.1.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -54,7 +54,7 @@ arm_cmsis_nn_status arm_nn_mat_mul_core_1x_s8(int32_t row_elements,
                                               const int32_t *bias,
                                               int8_t *output)
 {
-#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
+#if defined(ARM_MATH_MVEI)
     const int8_t *col_base = col_base_ref;
     int32_t *output_mult = quant_params->multiplier;
     int32_t *output_shift = quant_params->shift;
@@ -70,6 +70,14 @@ arm_cmsis_nn_status arm_nn_mat_mul_core_1x_s8(int32_t row_elements,
 
         int32_t sum_tmp = 0;
 
+#if defined(ARM_MATH_AUTOVECTORIZE)
+        for (int j = 0; j < row_elements; j++)
+        {
+            int32_t col = col_base[j];
+            sum_tmp += col;
+            acc_n0 += row_base[j] * col;
+        }
+#else
         __ASM volatile("   vldrb.8         q0, [%[col]], #16     \n"
                        "   wlstp.8         lr, %[cnt], 1f       \n"
                        "2:                                      \n"
@@ -82,6 +90,7 @@ arm_cmsis_nn_status arm_nn_mat_mul_core_1x_s8(int32_t row_elements,
                        : [col] "+r"(col_base), [sum] "+Te"(sum_tmp), [row0] "+r"(row_base), [out0] "+Te"(acc_n0)
                        : [cnt] "r"(row_elements)
                        : "q0", "q1", "memory", "r14");
+#endif
 
         sum_tmp *= conv_params->input_offset;
         acc_n0 += sum_tmp;

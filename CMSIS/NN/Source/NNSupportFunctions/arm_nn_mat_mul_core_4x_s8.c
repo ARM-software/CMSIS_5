@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2022 Arm Limited or its affiliates.
+ * SPDX-FileCopyrightText: Copyright 2010-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_nn_mat_mul_core_4x_s8.c
  * Description:  General matrix multiplication function for MVE extension
  *
- * $Date:        19. April 2022
- * $Revision:    V.3.0.1
+ * $Date:        22. Aug 2022
+ * $Revision:    V.3.1.0
  *
  * Target Processor:  Cortex-M processors
  * -------------------------------------------------------------------- */
@@ -70,6 +70,17 @@ int8_t *arm_nn_mat_mul_core_4x_s8(const int32_t row_elements,
         const int8_t *col_base = col_base_ref + i * row_elements;
         int32_t sum_tmp = 0;
 
+#if defined(ARM_MATH_AUTOVECTORIZE)
+        for (int j = 0; j < row_elements; j++)
+        {
+            int32_t col = col_base[j];
+            sum_tmp += col;
+            acc_n0 += ip_row_0[j] * col;
+            acc_n1 += ip_row_1[j] * col;
+            acc_n2 += ip_row_2[j] * col;
+            acc_n3 += ip_row_3[j] * col;
+        }
+#else
         __ASM volatile("   vldrb.8         q0, [%[col]], #16     \n"
                        "   wlstp.8         lr, %[cnt], 1f       \n"
                        "2:                                      \n"
@@ -97,6 +108,7 @@ int8_t *arm_nn_mat_mul_core_4x_s8(const int32_t row_elements,
                          [out3] "+Te"(acc_n3)
                        : [cnt] "r"(row_elements)
                        : "q0", "q1", "q2", "q3", "q4", "memory", "r14");
+#endif
 
         int32x4_t res = {acc_n0, acc_n1, acc_n2, acc_n3};
         sum_tmp *= conv_params->input_offset;
