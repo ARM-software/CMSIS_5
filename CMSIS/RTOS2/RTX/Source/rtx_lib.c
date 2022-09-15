@@ -368,7 +368,7 @@ __STATIC_INLINE void evr_initialize (void) {
 #endif
 #if ((OS_EVR_KERNEL_LEVEL & 0x80U) != 0U)
   (void)EventRecorderEnable(  OS_EVR_KERNEL_LEVEL & 0x0FU,    EvtRtxKernelNo,       EvtRtxKernelNo);
-  (void)EventRecorderDisable(~OS_EVR_KERNEL_LEVEL & 0x0FU,    EvtRtxKernelNo,       EvtRtxMemoryNo);
+  (void)EventRecorderDisable(~OS_EVR_KERNEL_LEVEL & 0x0FU,    EvtRtxKernelNo,       EvtRtxKernelNo);
 #endif
 #if ((OS_EVR_THREAD_LEVEL & 0x80U) != 0U)
   (void)EventRecorderEnable(  OS_EVR_THREAD_LEVEL & 0x0FU,    EvtRtxThreadNo,       EvtRtxThreadNo);
