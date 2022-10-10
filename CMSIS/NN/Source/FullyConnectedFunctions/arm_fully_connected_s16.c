@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2022 Arm Limited or its affiliates.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_fully_connected_s16
  * Description:  Fully connected function compatible with TF Lite.
  *
- * $Date:        3. August 2021
- * $Revision:    V.1.0.0
+ * $Date:        19 April 2022
+ * $Revision:    V.2.0.0
  *
  * Target Processor:  Cortex-M and Cortex-A cores
  *
@@ -46,17 +46,17 @@
  * Refer header file for details.
  *
  */
-arm_status arm_fully_connected_s16(const cmsis_nn_context *ctx,
-                                   const cmsis_nn_fc_params *fc_params,
-                                   const cmsis_nn_per_tensor_quant_params *quant_params,
-                                   const cmsis_nn_dims *input_dims,
-                                   const q15_t *input,
-                                   const cmsis_nn_dims *filter_dims,
-                                   const q7_t *kernel,
-                                   const cmsis_nn_dims *bias_dims,
-                                   const int64_t *bias,
-                                   const cmsis_nn_dims *output_dims,
-                                   q15_t *output)
+arm_cmsis_nn_status arm_fully_connected_s16(const cmsis_nn_context *ctx,
+                                            const cmsis_nn_fc_params *fc_params,
+                                            const cmsis_nn_per_tensor_quant_params *quant_params,
+                                            const cmsis_nn_dims *input_dims,
+                                            const q15_t *input,
+                                            const cmsis_nn_dims *filter_dims,
+                                            const q7_t *kernel,
+                                            const cmsis_nn_dims *bias_dims,
+                                            const int64_t *bias,
+                                            const cmsis_nn_dims *output_dims,
+                                            q15_t *output)
 {
     (void)bias_dims;
     (void)ctx;
@@ -83,7 +83,7 @@ arm_status arm_fully_connected_s16(const cmsis_nn_context *ctx,
         batch_cnt--;
     }
 
-    return (ARM_MATH_SUCCESS);
+    return (ARM_CMSIS_NN_SUCCESS);
 }
 
 int32_t arm_fully_connected_s16_get_buffer_size(const cmsis_nn_dims *filter_dims)

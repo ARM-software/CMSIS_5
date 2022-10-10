@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
+ * SPDX-FileCopyrightText: Copyright 2010-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_depthwise_separable_conv_HWC_q7.c
  * Description:  Q7 depthwise separable convolution function
  *
- * $Date:        July 20, 2021
- * $Revision:    V.1.1.2
+ * $Date:        4 Aug 2022
+ * $Revision:    V.2.0.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -40,60 +40,26 @@
  * @{
  */
 
-/**
- * @brief Q7 depthwise separable convolution function
- * @param[in]       Im_in       pointer to input tensor
- * @param[in]       dim_im_in   input tensor dimension
- * @param[in]       ch_im_in    number of input tensor channels
- * @param[in]       wt          pointer to kernel weights
- * @param[in]       ch_im_out   number of filters, i.e., output tensor channels
- * @param[in]       dim_kernel  filter kernel size
- * @param[in]       padding     padding sizes
- * @param[in]       stride      convolution stride
- * @param[in]       bias        pointer to bias
- * @param[in]       bias_shift  amount of left-shift for bias
- * @param[in]       out_shift   amount of right-shift for output
- * @param[in,out]   Im_out      pointer to output tensor
- * @param[in]       dim_im_out  output tensor dimension
- * @param[in,out]   bufferA     pointer to buffer space for input
- * @param[in,out]   bufferB     pointer to buffer space for output
- * @return     The function returns either
- * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
- *
- * @details
- *
- * <b>Buffer size:</b>
- *
- * bufferA size: 2*ch_im_in*dim_kernel*dim_kernel
- *
- * bufferB size: 0
- *
- * <b>Input dimension constraints:</b>
- *
- * ch_im_in equals ch_im_out
- *
- * Implementation:
- * There are 3 nested loop here:
- * Inner loop: calculate each output value with MAC instruction over an accumulator
- * Mid   loop: loop over different output channel
- * Outer loop: loop over different output (x, y)
+/*
+ * Q7 depthwise separable convolution function
+ * Refer function header for details
  */
 
-arm_status arm_depthwise_separable_conv_HWC_q7(const q7_t *Im_in,
-                                               const uint16_t dim_im_in,
-                                               const uint16_t ch_im_in,
-                                               const q7_t *wt,
-                                               const uint16_t ch_im_out,
-                                               const uint16_t dim_kernel,
-                                               const uint16_t padding,
-                                               const uint16_t stride,
-                                               const q7_t *bias,
-                                               const uint16_t bias_shift,
-                                               const uint16_t out_shift,
-                                               q7_t *Im_out,
-                                               const uint16_t dim_im_out,
-                                               q15_t *bufferA,
-                                               q7_t *bufferB)
+arm_cmsis_nn_status arm_depthwise_separable_conv_HWC_q7(const q7_t *Im_in,
+                                                        const uint16_t dim_im_in,
+                                                        const uint16_t ch_im_in,
+                                                        const q7_t *wt,
+                                                        const uint16_t ch_im_out,
+                                                        const uint16_t dim_kernel,
+                                                        const uint16_t padding,
+                                                        const uint16_t stride,
+                                                        const q7_t *bias,
+                                                        const uint16_t bias_shift,
+                                                        const uint16_t out_shift,
+                                                        q7_t *Im_out,
+                                                        const uint16_t dim_im_out,
+                                                        q15_t *bufferA,
+                                                        q7_t *bufferB)
 {
     (void)bufferB;
 #if defined(ARM_MATH_DSP) && !defined(ARM_MATH_MVEI)
@@ -111,7 +77,7 @@ arm_status arm_depthwise_separable_conv_HWC_q7(const q7_t *Im_in,
     /* do some checking here, basically ch_im_in == ch_im_out */
     if (ch_im_in != ch_im_out)
     {
-        return ARM_MATH_SIZE_MISMATCH;
+        return ARM_CMSIS_NN_ARG_ERROR;
     }
 
     for (i_out_y = 0; i_out_y < dim_im_out; i_out_y++)
@@ -263,13 +229,13 @@ arm_status arm_depthwise_separable_conv_HWC_q7(const q7_t *Im_in,
                              "smlad %[sum4], r4, r5, %[sum4]\n"
                              "subs %[colCnt], #1\n"
                              "bne COL_LOOP_%=\n"
-                             : [ sum ] "+r"(sum),
-                               [ sum2 ] "+r"(sum2),
-                               [ sum3 ] "+r"(sum3),
-                               [ sum4 ] "+r"(sum4),
-                               [ pB ] "+r"(pB),
-                               [ pA ] "+r"(pA)
-                             : [ colCnt ] "r"(colCnt), [ ch_im_in ] "r"(ch_im_in)
+                             : [sum] "+r"(sum),
+                               [sum2] "+r"(sum2),
+                               [sum3] "+r"(sum3),
+                               [sum4] "+r"(sum4),
+                               [pB] "+r"(pB),
+                               [pA] "+r"(pA)
+                             : [colCnt] "r"(colCnt), [ch_im_in] "r"(ch_im_in)
                              : "r0", "r1", "r2", "r3", "r4", "r5");
 #else
                 /*
@@ -307,13 +273,13 @@ arm_status arm_depthwise_separable_conv_HWC_q7(const q7_t *Im_in,
                              "smlad %[sum3], r4, r5, %[sum3]\n"
                              "subs %[colCnt], #1\n"
                              "bne COL_LOOP_%=\n"
-                             : [ sum ] "+r"(sum),
-                               [ sum2 ] "+r"(sum2),
-                               [ sum3 ] "+r"(sum3),
-                               [ sum4 ] "+r"(sum4),
-                               [ pB ] "+r"(pB),
-                               [ pA ] "+r"(pA)
-                             : [ colCnt ] "r"(colCnt), [ ch_im_in ] "r"(ch_im_in)
+                             : [sum] "+r"(sum),
+                               [sum2] "+r"(sum2),
+                               [sum3] "+r"(sum3),
+                               [sum4] "+r"(sum4),
+                               [pB] "+r"(pB),
+                               [pA] "+r"(pA)
+                             : [colCnt] "r"(colCnt), [ch_im_in] "r"(ch_im_in)
                              : "r0", "r1", "r2", "r3", "r4", "r5");
 
 #endif /* ARM_MATH_BIG_ENDIAN */
@@ -381,7 +347,7 @@ arm_status arm_depthwise_separable_conv_HWC_q7(const q7_t *Im_in,
     /* do some checking here, basically ch_im_in == ch_im_out */
     if (ch_im_in != ch_im_out)
     {
-        return ARM_MATH_SIZE_MISMATCH;
+        return ARM_CMSIS_NN_ARG_ERROR;
     }
 
     for (i_out_y = 0; i_out_y < dim_im_out; i_out_y++)
@@ -414,7 +380,7 @@ arm_status arm_depthwise_separable_conv_HWC_q7(const q7_t *Im_in,
 #endif /* ARM_MATH_DSP */
 
     /* Return to application */
-    return ARM_MATH_SUCCESS;
+    return ARM_CMSIS_NN_SUCCESS;
 }
 
 /**

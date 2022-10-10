@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
+ * SPDX-FileCopyrightText: Copyright 2010-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -22,8 +22,8 @@
  * Description:  Converts the elements of the Q7 vector to a reordered Q15 vector with an added offset. The re-ordering
  *               is a signature of sign extension intrinsic(DSP extension).
  *
- * $Date:        May 29, 2020
- * $Revision:    V.2.0.3
+ * $Date:        4 Aug 2022
+ * $Revision:    V.2.0.4
  *
  * Target Processor:  Cortex-M cores
  *
@@ -40,10 +40,10 @@
  * @{
  */
 
-/**
- * @brief Converts the elements of the Q7 vector to a reordered Q15 vector with an added offset.
+/*
+ * Converts the elements of the Q7 vector to a reordered Q15 vector with an added offset.
  *
- * @note  Refer header file for details.
+ * Refer header file for details.
  *
  */
 

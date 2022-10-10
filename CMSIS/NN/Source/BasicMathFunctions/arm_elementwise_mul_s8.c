@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2022 Arm Limited or its affiliates.
+ * SPDX-FileCopyrightText: Copyright 2010-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_elementwise_mul_s8
  * Description:  Element wise multiplication
  *
- * $Date:        3 Februari 2022
- * $Revision:    V.1.1.0
+ * $Date:        4 Aug 2022
+ * $Revision:    V.2.0.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -40,24 +40,24 @@
  * @{
  */
 
-/**
- * @brief s8 element wise multiplication of two vectors
+/*
+ * s8 element wise multiplication of two vectors
  *
- * @note   Refer header file for details.
+ * Refer header file for details.
  *
  */
 
-arm_status arm_elementwise_mul_s8(const int8_t *input_1_vect,
-                                  const int8_t *input_2_vect,
-                                  const int32_t input_1_offset,
-                                  const int32_t input_2_offset,
-                                  int8_t *output,
-                                  const int32_t out_offset,
-                                  const int32_t out_mult,
-                                  const int32_t out_shift,
-                                  const int32_t out_activation_min,
-                                  const int32_t out_activation_max,
-                                  const int32_t block_size)
+arm_cmsis_nn_status arm_elementwise_mul_s8(const int8_t *input_1_vect,
+                                           const int8_t *input_2_vect,
+                                           const int32_t input_1_offset,
+                                           const int32_t input_2_offset,
+                                           int8_t *output,
+                                           const int32_t out_offset,
+                                           const int32_t out_mult,
+                                           const int32_t out_shift,
+                                           const int32_t out_activation_min,
+                                           const int32_t out_activation_max,
+                                           const int32_t block_size)
 {
 
     int32_t loop_count;
@@ -192,7 +192,7 @@ arm_status arm_elementwise_mul_s8(const int8_t *input_1_vect,
         loop_count--;
     }
 #endif
-    return ARM_MATH_SUCCESS;
+    return ARM_CMSIS_NN_SUCCESS;
 }
 
 /**

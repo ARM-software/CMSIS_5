@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020-2022 Arm Limited or its affiliates.
+ * SPDX-FileCopyrightText: Copyright 2020-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,14 +21,16 @@
  * Title:        arm_nn_vec_mat_mult_t_s16
  * Description:  s16 vector by matrix (transposed) multiplication
  *
- * $Date:        04. January 2022
- * $Revision:    V.1.2.0
+ * $Date:        11 August 2022
+ * $Revision:    V.2.1.0
  *
  * Target Processor:  Cortex-M
  *
  * -------------------------------------------------------------------- */
 
 #include "arm_nnsupportfunctions.h"
+#define MAX_COL_COUNT (512)
+
 /**
  * @ingroup groupSupport
  */
@@ -44,29 +46,181 @@
  * Refer header file for details.
  *
  */
-arm_status arm_nn_vec_mat_mult_t_s16(const q15_t *lhs,
-                                     const q7_t *rhs,
-                                     const q63_t *bias,
-                                     q15_t *dst,
-                                     const int32_t dst_multiplier,
-                                     const int32_t dst_shift,
-                                     const int32_t rhs_cols,
-                                     const int32_t rhs_rows,
-                                     const int32_t activation_min,
-                                     const int32_t activation_max)
+arm_cmsis_nn_status arm_nn_vec_mat_mult_t_s16(const q15_t *lhs,
+                                              const q7_t *rhs,
+                                              const q63_t *bias,
+                                              q15_t *dst,
+                                              const int32_t dst_multiplier,
+                                              const int32_t dst_shift,
+                                              const int32_t rhs_cols,
+                                              const int32_t rhs_rows,
+                                              const int32_t activation_min,
+                                              const int32_t activation_max)
 {
-#if defined(ARM_MATH_DSP) && !defined(ARM_MATH_MVEI)
-    const int32_t row_loop_cnt = rhs_rows / 2;
+#if defined(ARM_MATH_DSP)
 
     int32_t rhs_cols_fast = rhs_cols;
 
-    if (rhs_cols > 512)
+    if (rhs_cols > MAX_COL_COUNT)
     {
-        rhs_cols_fast = 512;
+        rhs_cols_fast = MAX_COL_COUNT;
     }
+
+#if defined(ARM_MATH_MVEI)
+    int32_t row_loop_cnt = rhs_rows / 4;
+    int32_t col_loop_cnt = (rhs_cols_fast + 7) / 8;
+
+    for (int32_t i_row_loop_count = 0; i_row_loop_count < row_loop_cnt; i_row_loop_count++)
+    {
+        int32_t col_cnt = rhs_cols_fast;
+
+        const int16_t *lhs_ptr = lhs;
+        const int8_t *rhs_ptr_0 = rhs;
+        const int8_t *rhs_ptr_1 = rhs + rhs_cols;
+        const int8_t *rhs_ptr_2 = rhs + rhs_cols * 2;
+        const int8_t *rhs_ptr_3 = rhs + rhs_cols * 3;
+
+        int32_t result_0 = 0;
+        int32_t result_1 = 0;
+        int32_t result_2 = 0;
+        int32_t result_3 = 0;
+
+        for (int i_col_loop_cnt = 0; i_col_loop_cnt < col_loop_cnt; i_col_loop_cnt++)
+        {
+            mve_pred16_t pred = vctp16q(col_cnt);
+            col_cnt -= 8;
+
+            int16x8_t lhs_input = vldrhq_z_s16(lhs_ptr, pred);
+
+            int16x8_t rhs_input_0 = vldrbq_z_s16(rhs_ptr_0, pred);
+            int16x8_t rhs_input_1 = vldrbq_z_s16(rhs_ptr_1, pred);
+            int16x8_t rhs_input_2 = vldrbq_z_s16(rhs_ptr_2, pred);
+            int16x8_t rhs_input_3 = vldrbq_z_s16(rhs_ptr_3, pred);
+
+            result_0 = vmladavaq_s16(result_0, lhs_input, rhs_input_0);
+            result_1 = vmladavaq_s16(result_1, lhs_input, rhs_input_1);
+            result_2 = vmladavaq_s16(result_2, lhs_input, rhs_input_2);
+            result_3 = vmladavaq_s16(result_3, lhs_input, rhs_input_3);
+
+            lhs_ptr += 8;
+
+            rhs_ptr_0 += 8;
+            rhs_ptr_1 += 8;
+            rhs_ptr_2 += 8;
+            rhs_ptr_3 += 8;
+        }
+
+        int64_t result_64_0 = result_0;
+        int64_t result_64_1 = result_1;
+        int64_t result_64_2 = result_2;
+        int64_t result_64_3 = result_3;
+
+        if (rhs_cols > MAX_COL_COUNT)
+        {
+            for (int i_rhs_cols = MAX_COL_COUNT; i_rhs_cols < rhs_cols; i_rhs_cols++)
+            {
+                const int16_t lhs_temp = *lhs_ptr++;
+
+                result_64_0 += *rhs_ptr_0++ * lhs_temp;
+                result_64_1 += *rhs_ptr_1++ * lhs_temp;
+                result_64_2 += *rhs_ptr_2++ * lhs_temp;
+                result_64_3 += *rhs_ptr_3++ * lhs_temp;
+            }
+        }
+
+        if (bias)
+        {
+            result_64_0 += *bias++;
+            result_64_1 += *bias++;
+            result_64_2 += *bias++;
+            result_64_3 += *bias++;
+        }
+
+        int32_t tmp;
+        tmp = arm_nn_requantize_s64(result_64_0, dst_multiplier, dst_shift);
+        tmp = MAX(tmp, activation_min);
+        tmp = MIN(tmp, activation_max);
+        *dst++ = (q15_t)tmp;
+
+        tmp = 0;
+        tmp = arm_nn_requantize_s64(result_64_1, dst_multiplier, dst_shift);
+        tmp = MAX(tmp, activation_min);
+        tmp = MIN(tmp, activation_max);
+        *dst++ = (q15_t)tmp;
+
+        tmp = 0;
+        tmp = arm_nn_requantize_s64(result_64_2, dst_multiplier, dst_shift);
+        tmp = MAX(tmp, activation_min);
+        tmp = MIN(tmp, activation_max);
+        *dst++ = (q15_t)tmp;
+
+        tmp = 0;
+        tmp = arm_nn_requantize_s64(result_64_3, dst_multiplier, dst_shift);
+        tmp = MAX(tmp, activation_min);
+        tmp = MIN(tmp, activation_max);
+        *dst++ = (q15_t)tmp;
+
+        rhs += 4 * rhs_cols;
+    }
+
+    for (int8_t rows_left = rhs_rows & 0x3; rows_left > 0; rows_left--)
+    {
+        int32_t result = 0;
+
+        col_loop_cnt = (rhs_cols_fast + 7) / 8;
+
+        const int16_t *lhs_ptr = lhs;
+        const int8_t *rhs_ptr = rhs;
+
+        int32_t col_cnt = (int32_t)rhs_cols_fast;
+
+        for (int i_col_loop_cnt = 0; i_col_loop_cnt < col_loop_cnt; i_col_loop_cnt++)
+        {
+            mve_pred16_t pred = vctp16q(col_cnt);
+            col_cnt -= 8;
+
+            int16x8_t lhs_input = vldrhq_z_s16(lhs_ptr, pred);
+            int16x8_t rhs_input = vldrbq_z_s16(rhs_ptr, pred);
+
+            result = vmladavaq_p_s16(result, lhs_input, rhs_input, pred);
+
+            lhs_ptr += 8;
+            rhs_ptr += 8;
+        }
+
+        int64_t result_64 = result;
+
+        if (bias)
+        {
+            result_64 += *bias++;
+        }
+
+        if (rhs_cols > MAX_COL_COUNT)
+        {
+            for (int i_rhs_cols = MAX_COL_COUNT; i_rhs_cols < rhs_cols; i_rhs_cols++)
+            {
+                const int16_t lhs_temp = *lhs_ptr++;
+
+                result_64 += *rhs_ptr++ * lhs_temp;
+            }
+        }
+
+        int32_t tmp = 0;
+        tmp = arm_nn_requantize_s64(result_64, dst_multiplier, dst_shift);
+        tmp = MAX(tmp, activation_min);
+        tmp = MIN(tmp, activation_max);
+        *dst++ = (q15_t)tmp;
+
+        rhs += rhs_cols;
+    }
+
+#else // ARM_MATH_MVEI
+
+    const int32_t row_loop_cnt = rhs_rows / 2;
 
     for (int32_t i = 0; i < row_loop_cnt; i++)
     {
+
         q63_t acc_64_0 = 0;
         q63_t acc_64_1 = 0;
         int32_t acc_0 = 0;
@@ -82,6 +236,7 @@ arm_status arm_nn_vec_mat_mult_t_s16(const q15_t *lhs,
         for (int j = col_loop_cnt; j != 0; j--)
         {
             int32_t ker_0, ker_1, vec_part_0, vec_part_1;
+
             vec_part_0 = arm_nn_read_q15x2_ia(&lhs_vec);
             vec_part_1 = arm_nn_read_q15x2_ia(&lhs_vec);
 
@@ -115,6 +270,7 @@ arm_status arm_nn_vec_mat_mult_t_s16(const q15_t *lhs,
             acc_64_1 += *bias++;
         }
         q31_t tmp;
+
         tmp = arm_nn_requantize_s64(acc_64_0, dst_multiplier, dst_shift);
         tmp = MAX(tmp, activation_min);
         tmp = MIN(tmp, activation_max);
@@ -168,7 +324,8 @@ arm_status arm_nn_vec_mat_mult_t_s16(const q15_t *lhs,
         *dst++ = (q15_t)tmp;
     }
 
-#else
+#endif // ARM_MATH_MVEI
+#else  // ARM_MATH_DSP
     for (int i_row_loop_cnt = 0; i_row_loop_cnt < rhs_rows; i_row_loop_cnt++)
     {
         const q15_t *lhs_ptr = lhs;
@@ -176,10 +333,6 @@ arm_status arm_nn_vec_mat_mult_t_s16(const q15_t *lhs,
 
         q63_t result = 0;
 
-        if (bias)
-        {
-            result = *bias++;
-        }
         for (int32_t rhs_cols_idx = 0; rhs_cols_idx < rhs_cols; ++rhs_cols_idx)
         {
             const q63_t rhs_value0 = (int8_t)*rhs_ptr_0;
@@ -191,6 +344,10 @@ arm_status arm_nn_vec_mat_mult_t_s16(const q15_t *lhs,
             ++lhs_ptr;
         }
 
+        if (bias)
+        {
+            result += *bias++;
+        }
         // Quantize down
         result = arm_nn_requantize_s64(result, dst_multiplier, dst_shift);
 
@@ -201,9 +358,9 @@ arm_status arm_nn_vec_mat_mult_t_s16(const q15_t *lhs,
         *dst++ = (q15_t)result;
         rhs += rhs_cols;
     }
-#endif
+#endif // ARM_MATH_DSP
 
-    return ARM_MATH_SUCCESS;
+    return ARM_CMSIS_NN_SUCCESS;
 }
 
 /**

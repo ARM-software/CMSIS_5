@@ -104,6 +104,12 @@ should provide an .inf file. Refer to \ref wininf "USB Driver and *.inf file" fo
       <th>Description</th>
     </tr>
     <tr>
+      <td>V2.1.1</td>
+      <td>
+         Allow default clock frequency to use fast clock mode
+      </td>
+    </tr>
+    <tr>
       <td>V2.1.0</td>
       <td>
          Added: \ref DAP_uart_gr to support target communication via extra UART\n

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
+ * SPDX-FileCopyrightText: Copyright 2010-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_convolve_HWC_q15_fast.c
  * Description:  Fast Q15 version of convolution
  *
- * $Date:        July 20, 2021
- * $Revision:    V.1.1.2
+ * $Date:        4 Aug 2022
+ * $Revision:    V.2.0.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -40,59 +40,26 @@
  * @{
  */
 
-/**
- * @brief Fast Q15 convolution function
- * @param[in]       Im_in       pointer to input tensor
- * @param[in]       dim_im_in   input tensor dimention
- * @param[in]       ch_im_in    number of input tensor channels
- * @param[in]       wt          pointer to kernel weights
- * @param[in]       ch_im_out   number of filters, i.e., output tensor channels
- * @param[in]       dim_kernel  filter kernel size
- * @param[in]       padding     padding sizes
- * @param[in]       stride      convolution stride
- * @param[in]       bias        pointer to bias
- * @param[in]       bias_shift  amount of left-shift for bias
- * @param[in]       out_shift   amount of right-shift for output
- * @param[in,out]   Im_out      pointer to output tensor
- * @param[in]       dim_im_out  output tensor dimension
- * @param[in,out]   bufferA     pointer to buffer space for input
- * @param[in,out]   bufferB     pointer to buffer space for output
- * @return     The function returns either
- * <code>ARM_MATH_SIZE_MISMATCH</code> or <code>ARM_MATH_SUCCESS</code> based on the outcome of size checking.
- *
- * @details
- *
- * <b>Buffer size:</b>
- *
- * bufferA size: 2*ch_im_in*dim_kernel*dim_kernel
- *
- * bufferB size: 0
- *
- * <b>Input dimension constraints:</b>
- *
- * ch_im_in is multiple of 2
- *
- * ch_im_out is multiple of 2
- *
- * dim_im_out is a multiple of 2
- *
+/*
+ * Fast Q15 convolution function
+ * Refer function header for details
  */
 
-arm_status arm_convolve_HWC_q15_fast(const q15_t *Im_in,
-                                     const uint16_t dim_im_in,
-                                     const uint16_t ch_im_in,
-                                     const q15_t *wt,
-                                     const uint16_t ch_im_out,
-                                     const uint16_t dim_kernel,
-                                     const uint16_t padding,
-                                     const uint16_t stride,
-                                     const q15_t *bias,
-                                     const uint16_t bias_shift,
-                                     const uint16_t out_shift,
-                                     q15_t *Im_out,
-                                     const uint16_t dim_im_out,
-                                     q15_t *bufferA,
-                                     q7_t *bufferB)
+arm_cmsis_nn_status arm_convolve_HWC_q15_fast(const q15_t *Im_in,
+                                              const uint16_t dim_im_in,
+                                              const uint16_t ch_im_in,
+                                              const q15_t *wt,
+                                              const uint16_t ch_im_out,
+                                              const uint16_t dim_kernel,
+                                              const uint16_t padding,
+                                              const uint16_t stride,
+                                              const q15_t *bias,
+                                              const uint16_t bias_shift,
+                                              const uint16_t out_shift,
+                                              q15_t *Im_out,
+                                              const uint16_t dim_im_out,
+                                              q15_t *bufferA,
+                                              q7_t *bufferB)
 {
     (void)bufferB;
 #if defined(ARM_MATH_DSP) && !defined(ARM_MATH_MVEI)
@@ -105,7 +72,7 @@ arm_status arm_convolve_HWC_q15_fast(const q15_t *Im_in,
     if (ch_im_in % 2 != 0 || ch_im_out % 2 != 0 || dim_im_out & 0x1)
     {
         /* check if the input dimension meets the constraints */
-        return ARM_MATH_SIZE_MISMATCH;
+        return ARM_CMSIS_NN_ARG_ERROR;
     }
 
     /* Run the following code for Cortex-M4 and Cortex-M7 */
@@ -217,7 +184,7 @@ arm_status arm_convolve_HWC_q15_fast(const q15_t *Im_in,
     if (ch_im_in % 2 != 0 || ch_im_out % 2 != 0)
     {
         /* check if the input dimension meets the constraints */
-        return ARM_MATH_SIZE_MISMATCH;
+        return ARM_CMSIS_NN_ARG_ERROR;
     }
 
     for (i = 0; i < ch_im_out; i++)
@@ -251,7 +218,7 @@ arm_status arm_convolve_HWC_q15_fast(const q15_t *Im_in,
 #endif /* ARM_MATH_DSP */
 
     /* Return to application */
-    return ARM_MATH_SUCCESS;
+    return ARM_CMSIS_NN_SUCCESS;
 }
 
 /**

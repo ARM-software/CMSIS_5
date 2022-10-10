@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
+ * SPDX-FileCopyrightText: Copyright 2010-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -29,7 +29,7 @@
 
 void fully_connected_arm_fully_connected_s8(void)
 {
-    const arm_status expected = ARM_MATH_SUCCESS;
+    const arm_cmsis_nn_status expected = ARM_CMSIS_NN_SUCCESS;
     q7_t output[FULLY_CONNECTED_DST_SIZE] = {0};
 
     cmsis_nn_context ctx;
@@ -68,26 +68,31 @@ void fully_connected_arm_fully_connected_s8(void)
     ctx.buf = malloc(buf_size);
     ctx.size = buf_size;
 
-    arm_status result = arm_fully_connected_s8(&ctx,
-                                               &fc_params,
-                                               &quant_params,
-                                               &input_dims,
-                                               input_data,
-                                               &filter_dims,
-                                               kernel_data,
-                                               &bias_dims,
-                                               bias_data,
-                                               &output_dims,
-                                               output);
+    arm_cmsis_nn_status result = arm_fully_connected_s8(&ctx,
+                                                        &fc_params,
+                                                        &quant_params,
+                                                        &input_dims,
+                                                        input_data,
+                                                        &filter_dims,
+                                                        kernel_data,
+                                                        &bias_dims,
+                                                        bias_data,
+                                                        &output_dims,
+                                                        output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        // The caller is responsible to clear the scratch buffers for security reasons if applicable.
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
 }
 
 void fully_connected_mve_0_arm_fully_connected_s8(void)
 {
-    const arm_status expected = ARM_MATH_SUCCESS;
+    const arm_cmsis_nn_status expected = ARM_CMSIS_NN_SUCCESS;
     q7_t output[FULLY_CONNECTED_MVE_0_DST_SIZE] = {0};
     cmsis_nn_context ctx;
     cmsis_nn_fc_params fc_params;
@@ -120,26 +125,30 @@ void fully_connected_mve_0_arm_fully_connected_s8(void)
     int32_t buf_size = arm_fully_connected_s8_get_buffer_size(&filter_dims);
     ctx.buf = malloc(buf_size);
     ctx.size = buf_size;
-    arm_status result = arm_fully_connected_s8(&ctx,
-                                               &fc_params,
-                                               &quant_params,
-                                               &input_dims,
-                                               input_data,
-                                               &filter_dims,
-                                               kernel_data,
-                                               &bias_dims,
-                                               bias_data,
-                                               &output_dims,
-                                               output);
+    arm_cmsis_nn_status result = arm_fully_connected_s8(&ctx,
+                                                        &fc_params,
+                                                        &quant_params,
+                                                        &input_dims,
+                                                        input_data,
+                                                        &filter_dims,
+                                                        kernel_data,
+                                                        &bias_dims,
+                                                        bias_data,
+                                                        &output_dims,
+                                                        output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
 }
 
 void fully_connected_mve_1_arm_fully_connected_s8(void)
 {
-    const arm_status expected = ARM_MATH_SUCCESS;
+    const arm_cmsis_nn_status expected = ARM_CMSIS_NN_SUCCESS;
     q7_t output[FULLY_CONNECTED_MVE_1_DST_SIZE] = {0};
     cmsis_nn_context ctx;
     cmsis_nn_fc_params fc_params;
@@ -172,26 +181,30 @@ void fully_connected_mve_1_arm_fully_connected_s8(void)
     int32_t buf_size = arm_fully_connected_s8_get_buffer_size(&filter_dims);
     ctx.buf = malloc(buf_size);
     ctx.size = buf_size;
-    arm_status result = arm_fully_connected_s8(&ctx,
-                                               &fc_params,
-                                               &quant_params,
-                                               &input_dims,
-                                               input_data,
-                                               &filter_dims,
-                                               kernel_data,
-                                               &bias_dims,
-                                               bias_data,
-                                               &output_dims,
-                                               output);
+    arm_cmsis_nn_status result = arm_fully_connected_s8(&ctx,
+                                                        &fc_params,
+                                                        &quant_params,
+                                                        &input_dims,
+                                                        input_data,
+                                                        &filter_dims,
+                                                        kernel_data,
+                                                        &bias_dims,
+                                                        bias_data,
+                                                        &output_dims,
+                                                        output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
 }
 
 void fully_connected_null_bias_0_arm_fully_connected_s8(void)
 {
-    const arm_status expected = ARM_MATH_SUCCESS;
+    const arm_cmsis_nn_status expected = ARM_CMSIS_NN_SUCCESS;
     q7_t output[FULLY_CONNECTED_NULL_BIAS_0_DST_SIZE] = {0};
     cmsis_nn_context ctx;
     cmsis_nn_fc_params fc_params;
@@ -221,12 +234,12 @@ void fully_connected_null_bias_0_arm_fully_connected_s8(void)
     quant_params.multiplier = FULLY_CONNECTED_NULL_BIAS_0_OUTPUT_MULTIPLIER;
     quant_params.shift = FULLY_CONNECTED_NULL_BIAS_0_OUTPUT_SHIFT;
 
-    arm_status ip_check = ARM_MATH_SUCCESS;
+    arm_cmsis_nn_status ip_check = ARM_CMSIS_NN_SUCCESS;
     for (int i = 0; i < FULLY_CONNECTED_NULL_BIAS_0_OUT_CH; i++)
     {
         if (bias_data[i] != 0)
         {
-            ip_check = ARM_MATH_ARGUMENT_ERROR;
+            ip_check = ARM_CMSIS_NN_ARG_ERROR;
             break;
         }
     }
@@ -235,26 +248,30 @@ void fully_connected_null_bias_0_arm_fully_connected_s8(void)
     int32_t buf_size = arm_fully_connected_s8_get_buffer_size(&filter_dims);
     ctx.buf = malloc(buf_size);
     ctx.size = buf_size;
-    arm_status result = arm_fully_connected_s8(&ctx,
-                                               &fc_params,
-                                               &quant_params,
-                                               &input_dims,
-                                               input_data,
-                                               &filter_dims,
-                                               kernel_data,
-                                               &bias_dims,
-                                               NULL,
-                                               &output_dims,
-                                               output);
+    arm_cmsis_nn_status result = arm_fully_connected_s8(&ctx,
+                                                        &fc_params,
+                                                        &quant_params,
+                                                        &input_dims,
+                                                        input_data,
+                                                        &filter_dims,
+                                                        kernel_data,
+                                                        &bias_dims,
+                                                        NULL,
+                                                        &output_dims,
+                                                        output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
 }
 
 void fully_connected_out_activation_arm_fully_connected_s8(void)
 {
-    const arm_status expected = ARM_MATH_SUCCESS;
+    const arm_cmsis_nn_status expected = ARM_CMSIS_NN_SUCCESS;
     q7_t output[FULLY_CONNECTED_OUT_ACTIVATION_DST_SIZE] = {0};
     cmsis_nn_context ctx;
     cmsis_nn_fc_params fc_params;
@@ -287,19 +304,23 @@ void fully_connected_out_activation_arm_fully_connected_s8(void)
     int32_t buf_size = arm_fully_connected_s8_get_buffer_size(&filter_dims);
     ctx.buf = malloc(buf_size);
     ctx.size = buf_size;
-    arm_status result = arm_fully_connected_s8(&ctx,
-                                               &fc_params,
-                                               &quant_params,
-                                               &input_dims,
-                                               input_data,
-                                               &filter_dims,
-                                               kernel_data,
-                                               &bias_dims,
-                                               bias_data,
-                                               &output_dims,
-                                               output);
+    arm_cmsis_nn_status result = arm_fully_connected_s8(&ctx,
+                                                        &fc_params,
+                                                        &quant_params,
+                                                        &input_dims,
+                                                        input_data,
+                                                        &filter_dims,
+                                                        kernel_data,
+                                                        &bias_dims,
+                                                        bias_data,
+                                                        &output_dims,
+                                                        output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
+ * SPDX-FileCopyrightText: Copyright 2010-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_pool_q7_HWC.c
  * Description:  Pooling function implementations
  *
- * $Date:        20. July 2021
- * $Revision:    V.1.1.1
+ * $Date:        4 Aug 2022
+ * $Revision:    V.1.1.2
  *
  * Target Processor:  Cortex-M cores
  *
@@ -33,8 +33,8 @@
 
 #if defined(ARM_MATH_DSP) && !defined(ARM_MATH_MVEI)
 
-/**
- * @brief A few utility functions used by pooling functions
+/*
+ * A few utility functions used by pooling functions
  *
  *
  */

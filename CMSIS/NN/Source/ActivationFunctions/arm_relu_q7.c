@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
+ * SPDX-FileCopyrightText: Copyright 2010-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_relu_q7.c
  * Description:  Q7 version of ReLU
  *
- * $Date:        20. July 2021
- * $Revision:    V.1.1.3
+ * $Date:        4 Aug 2022
+ * $Revision:    V.1.1.4
  *
  * Target Processor:  Cortex-M cores
  *
@@ -40,14 +40,10 @@
  * @{
  */
 
-/**
- * @brief Q7 RELU function
- * @param[in,out]   data        pointer to input
- * @param[in]       size        number of elements
+/*
+ * Q7 ReLu function
  *
- * @details
- *
- * Optimized relu with QSUB instructions.
+ * Refer header file for details.
  *
  */
 

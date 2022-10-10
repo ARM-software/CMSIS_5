@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2021 Arm Limited or its affiliates.
+ * SPDX-FileCopyrightText: Copyright 2010-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -53,6 +53,8 @@ void test_conv_2_arm_convolve_s8(void) { conv_2_arm_convolve_s8(); }
 void test_conv_3_arm_convolve_s8(void) { conv_3_arm_convolve_s8(); }
 
 void test_conv_4_arm_convolve_s8(void) { conv_4_arm_convolve_s8(); }
+
+void test_conv_5_arm_convolve_s8(void) { conv_5_arm_convolve_s8(); }
 
 void test_conv_1_x_n_1_arm_convolve_s8(void) { conv_1_x_n_1_arm_convolve_s8(); }
 

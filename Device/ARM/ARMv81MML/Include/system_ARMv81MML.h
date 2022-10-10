@@ -2,11 +2,11 @@
  * @file     system_ARMv81MML.h
  * @brief    CMSIS Device System Header File for
  *           Armv8.1-M Mainline Device Series
- * @version  V1.0.1
- * @date     15. Novemer 2019
+ * @version  V1.0.2
+ * @date     11. July 2022
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2022 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -29,6 +29,8 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#include <stdint.h>
 
 /**
   \brief Exception / Interrupt Handler Function Prototype

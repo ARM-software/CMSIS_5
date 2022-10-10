@@ -1,11 +1,11 @@
 /******************************************************************************
  * @file     mpu_armv8.h
  * @brief    CMSIS MPU API for Armv8-M and Armv8.1-M MPU
- * @version  V5.1.3
- * @date     03. February 2021
+ * @version  V5.1.4
+ * @date     30. May 2022
  ******************************************************************************/
 /*
- * Copyright (c) 2017-2021 Arm Limited. All rights reserved.
+ * Copyright (c) 2017-2022 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -84,7 +84,7 @@
 * \param SH Defines the Shareability domain for this memory region.
 * \param RO Read-Only: Set to 1 for a read-only memory region.
 * \param NP Non-Privileged: Set to 1 for a non-privileged memory region.
-* \oaram XN eXecute Never: Set to 1 for a non-executable memory region.
+* \param XN eXecute Never: Set to 1 for a non-executable memory region.
 */
 #define ARM_MPU_RBAR(BASE, SH, RO, NP, XN) \
   (((BASE) & MPU_RBAR_BASE_Msk) | \

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2020-2022 Arm Limited or its affiliates.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_nn_mat_mult_s8_nt_t_s8
  * Description:  Matrix multiplication support function with the right-hand-side (rhs) matrix transposed
  *
- * $Date:        09. October 2020
- * $Revision:    V.1.0.3
+ * $Date:        19 April 2022
+ * $Revision:    V.2.0.0
  *
  * Target Processor:  Cortex-M
  *
@@ -45,19 +45,19 @@
  * Refer header file for details.
  *
  */
-arm_status arm_nn_mat_mult_nt_t_s8(const q7_t *lhs,
-                                   const q7_t *rhs,
-                                   const q31_t *bias,
-                                   q7_t *dst,
-                                   const int32_t *dst_multipliers,
-                                   const int32_t *dst_shifts,
-                                   const int32_t lhs_rows,
-                                   const int32_t rhs_rows,
-                                   const int32_t rhs_cols,
-                                   const int32_t lhs_offset,
-                                   const int32_t dst_offset,
-                                   const int32_t activation_min,
-                                   const int32_t activation_max)
+arm_cmsis_nn_status arm_nn_mat_mult_nt_t_s8(const q7_t *lhs,
+                                            const q7_t *rhs,
+                                            const q31_t *bias,
+                                            q7_t *dst,
+                                            const int32_t *dst_multipliers,
+                                            const int32_t *dst_shifts,
+                                            const int32_t lhs_rows,
+                                            const int32_t rhs_rows,
+                                            const int32_t rhs_cols,
+                                            const int32_t lhs_offset,
+                                            const int32_t dst_offset,
+                                            const int32_t activation_min,
+                                            const int32_t activation_max)
 {
 #if defined(ARM_MATH_DSP)
     const int32_t off0 = rhs_cols - 4;
@@ -574,7 +574,7 @@ arm_status arm_nn_mat_mult_nt_t_s8(const q7_t *lhs,
         }
     }
 #endif
-    return ARM_MATH_SUCCESS;
+    return ARM_CMSIS_NN_SUCCESS;
 }
 
 /**

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2021 Arm Limited or its affiliates.
+ * SPDX-FileCopyrightText: Copyright 2010-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -33,6 +33,7 @@
 #include "../TestData/conv_3x2_dilation/test_data.h"
 #include "../TestData/conv_3x3_dilation_5x5_input/test_data.h"
 #include "../TestData/conv_4/test_data.h"
+#include "../TestData/conv_5/test_data.h"
 #include "../TestData/conv_dilation_golden/test_data.h"
 #include "../TestData/conv_out_activation/test_data.h"
 #include "../TestData/stride2pad1/test_data.h"
@@ -40,7 +41,7 @@
 
 void basic_arm_convolve_s8(void)
 {
-    const arm_status expected = ARM_MATH_SUCCESS;
+    const arm_cmsis_nn_status expected = ARM_CMSIS_NN_SUCCESS;
     q7_t output[BASIC_DST_SIZE] = {0};
 
     cmsis_nn_context ctx;
@@ -85,21 +86,27 @@ void basic_arm_convolve_s8(void)
     ctx.buf = malloc(buf_size);
     ctx.size = 0;
 
-    arm_status result = arm_convolve_s8(&ctx,
-                                        &conv_params,
-                                        &quant_params,
-                                        &input_dims,
-                                        input_data,
-                                        &filter_dims,
-                                        kernel_data,
-                                        &bias_dims,
-                                        bias_data,
-                                        &output_dims,
-                                        output);
+    arm_cmsis_nn_status result = arm_convolve_s8(&ctx,
+                                                 &conv_params,
+                                                 &quant_params,
+                                                 &input_dims,
+                                                 input_data,
+                                                 &filter_dims,
+                                                 kernel_data,
+                                                 &bias_dims,
+                                                 bias_data,
+                                                 &output_dims,
+                                                 output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        // The caller is responsible to clear the scratch buffers for security reasons if applicable.
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
+    memset(output, 0, sizeof(output));
 
     buf_size = arm_convolve_wrapper_s8_get_buffer_size(&conv_params, &input_dims, &filter_dims, &output_dims);
     ctx.buf = malloc(buf_size);
@@ -117,14 +124,18 @@ void basic_arm_convolve_s8(void)
                                      &output_dims,
                                      output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
 }
 
 void stride2pad1_arm_convolve_s8(void)
 {
-    const arm_status expected = ARM_MATH_SUCCESS;
+    const arm_cmsis_nn_status expected = ARM_CMSIS_NN_SUCCESS;
     q7_t output[STRIDE2PAD1_DST_SIZE] = {0};
 
     cmsis_nn_context ctx;
@@ -169,21 +180,26 @@ void stride2pad1_arm_convolve_s8(void)
     ctx.buf = malloc(buf_size);
     ctx.size = 0;
 
-    arm_status result = arm_convolve_s8(&ctx,
-                                        &conv_params,
-                                        &quant_params,
-                                        &input_dims,
-                                        input_data,
-                                        &filter_dims,
-                                        kernel_data,
-                                        &bias_dims,
-                                        bias_data,
-                                        &output_dims,
-                                        output);
+    arm_cmsis_nn_status result = arm_convolve_s8(&ctx,
+                                                 &conv_params,
+                                                 &quant_params,
+                                                 &input_dims,
+                                                 input_data,
+                                                 &filter_dims,
+                                                 kernel_data,
+                                                 &bias_dims,
+                                                 bias_data,
+                                                 &output_dims,
+                                                 output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
+    memset(output, 0, sizeof(output));
 
     buf_size = arm_convolve_wrapper_s8_get_buffer_size(&conv_params, &input_dims, &filter_dims, &output_dims);
     ctx.buf = malloc(buf_size);
@@ -201,14 +217,18 @@ void stride2pad1_arm_convolve_s8(void)
                                      &output_dims,
                                      output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
 }
 
 void conv_2_arm_convolve_s8(void)
 {
-    const arm_status expected = ARM_MATH_SUCCESS;
+    const arm_cmsis_nn_status expected = ARM_CMSIS_NN_SUCCESS;
     q7_t output[CONV_2_DST_SIZE] = {0};
 
     cmsis_nn_context ctx;
@@ -253,21 +273,26 @@ void conv_2_arm_convolve_s8(void)
     ctx.buf = malloc(buf_size);
     ctx.size = 0;
 
-    arm_status result = arm_convolve_s8(&ctx,
-                                        &conv_params,
-                                        &quant_params,
-                                        &input_dims,
-                                        input_data,
-                                        &filter_dims,
-                                        conv_2_weights,
-                                        &bias_dims,
-                                        bias_data,
-                                        &output_dims,
-                                        output);
+    arm_cmsis_nn_status result = arm_convolve_s8(&ctx,
+                                                 &conv_params,
+                                                 &quant_params,
+                                                 &input_dims,
+                                                 input_data,
+                                                 &filter_dims,
+                                                 conv_2_weights,
+                                                 &bias_dims,
+                                                 bias_data,
+                                                 &output_dims,
+                                                 output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
+    memset(output, 0, sizeof(output));
 
     buf_size = arm_convolve_wrapper_s8_get_buffer_size(&conv_params, &input_dims, &filter_dims, &output_dims);
     ctx.buf = malloc(buf_size);
@@ -285,14 +310,18 @@ void conv_2_arm_convolve_s8(void)
                                      &output_dims,
                                      output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
 }
 
 void conv_3_arm_convolve_s8(void)
 {
-    const arm_status expected = ARM_MATH_SUCCESS;
+    const arm_cmsis_nn_status expected = ARM_CMSIS_NN_SUCCESS;
     q7_t output[CONV_3_DST_SIZE] = {0};
 
     cmsis_nn_context ctx;
@@ -337,21 +366,26 @@ void conv_3_arm_convolve_s8(void)
     ctx.buf = malloc(buf_size);
     ctx.size = 0;
 
-    arm_status result = arm_convolve_s8(&ctx,
-                                        &conv_params,
-                                        &quant_params,
-                                        &input_dims,
-                                        input_data,
-                                        &filter_dims,
-                                        conv_3_weights,
-                                        &bias_dims,
-                                        bias_data,
-                                        &output_dims,
-                                        output);
+    arm_cmsis_nn_status result = arm_convolve_s8(&ctx,
+                                                 &conv_params,
+                                                 &quant_params,
+                                                 &input_dims,
+                                                 input_data,
+                                                 &filter_dims,
+                                                 conv_3_weights,
+                                                 &bias_dims,
+                                                 bias_data,
+                                                 &output_dims,
+                                                 output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
+    memset(output, 0, sizeof(output));
 
     buf_size = arm_convolve_wrapper_s8_get_buffer_size(&conv_params, &input_dims, &filter_dims, &output_dims);
     ctx.buf = malloc(buf_size);
@@ -369,14 +403,18 @@ void conv_3_arm_convolve_s8(void)
                                      &output_dims,
                                      output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
 }
 
 void conv_4_arm_convolve_s8(void)
 {
-    const arm_status expected = ARM_MATH_SUCCESS;
+    const arm_cmsis_nn_status expected = ARM_CMSIS_NN_SUCCESS;
     q7_t output[CONV_4_DST_SIZE] = {0};
 
     cmsis_nn_context ctx;
@@ -421,21 +459,26 @@ void conv_4_arm_convolve_s8(void)
     ctx.buf = malloc(buf_size);
     ctx.size = 0;
 
-    arm_status result = arm_convolve_s8(&ctx,
-                                        &conv_params,
-                                        &quant_params,
-                                        &input_dims,
-                                        input_data,
-                                        &filter_dims,
-                                        conv_4_weights,
-                                        &bias_dims,
-                                        bias_data,
-                                        &output_dims,
-                                        output);
+    arm_cmsis_nn_status result = arm_convolve_s8(&ctx,
+                                                 &conv_params,
+                                                 &quant_params,
+                                                 &input_dims,
+                                                 input_data,
+                                                 &filter_dims,
+                                                 conv_4_weights,
+                                                 &bias_dims,
+                                                 bias_data,
+                                                 &output_dims,
+                                                 output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
+    memset(output, 0, sizeof(output));
 
     buf_size = arm_convolve_wrapper_s8_get_buffer_size(&conv_params, &input_dims, &filter_dims, &output_dims);
     ctx.buf = malloc(buf_size);
@@ -453,14 +496,18 @@ void conv_4_arm_convolve_s8(void)
                                      &output_dims,
                                      output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
 }
 
 void conv_1_x_n_1_arm_convolve_s8(void)
 {
-    const arm_status expected = ARM_MATH_SIZE_MISMATCH;
+    const arm_cmsis_nn_status expected = ARM_CMSIS_NN_SUCCESS;
     q7_t output[CONV_1_X_N_1_DST_SIZE] = {0};
 
     cmsis_nn_context ctx;
@@ -505,20 +552,26 @@ void conv_1_x_n_1_arm_convolve_s8(void)
     ctx.buf = malloc(buf_size);
     ctx.size = 0;
 
-    arm_status result = arm_convolve_1_x_n_s8(&ctx,
-                                              &conv_params,
-                                              &quant_params,
-                                              &input_dims,
-                                              input_data,
-                                              &filter_dims,
-                                              kernel_data,
-                                              &bias_dims,
-                                              bias_data,
-                                              &output_dims,
-                                              output);
+    arm_cmsis_nn_status result = arm_convolve_1_x_n_s8(&ctx,
+                                                       &conv_params,
+                                                       &quant_params,
+                                                       &input_dims,
+                                                       input_data,
+                                                       &filter_dims,
+                                                       kernel_data,
+                                                       &bias_dims,
+                                                       bias_data,
+                                                       &output_dims,
+                                                       output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
+    TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
+    memset(output, 0, sizeof(output));
 
     buf_size = arm_convolve_s8_get_buffer_size(&input_dims, &filter_dims);
     ctx.buf = malloc(buf_size);
@@ -534,14 +587,18 @@ void conv_1_x_n_1_arm_convolve_s8(void)
                              bias_data,
                              &output_dims,
                              output);
-    free(ctx.buf);
-    TEST_ASSERT_EQUAL(ARM_MATH_SUCCESS, result);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
+    TEST_ASSERT_EQUAL(ARM_CMSIS_NN_SUCCESS, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
 }
 
 void conv_1_x_n_2_arm_convolve_s8(void)
 {
-    const arm_status expected = ARM_MATH_SIZE_MISMATCH;
+    const arm_cmsis_nn_status expected = ARM_CMSIS_NN_SUCCESS;
     q7_t output[CONV_1_X_N_2_DST_SIZE] = {0};
 
     cmsis_nn_context ctx;
@@ -586,43 +643,52 @@ void conv_1_x_n_2_arm_convolve_s8(void)
     ctx.buf = malloc(buf_size);
     ctx.size = 0;
 
-    arm_status result = arm_convolve_1_x_n_s8(&ctx,
-                                              &conv_params,
-                                              &quant_params,
-                                              &input_dims,
-                                              input_data,
-                                              &filter_dims,
-                                              kernel_data,
-                                              &bias_dims,
-                                              bias_data,
-                                              &output_dims,
-                                              output);
+    arm_cmsis_nn_status result = arm_convolve_1_x_n_s8(&ctx,
+                                                       &conv_params,
+                                                       &quant_params,
+                                                       &input_dims,
+                                                       input_data,
+                                                       &filter_dims,
+                                                       kernel_data,
+                                                       &bias_dims,
+                                                       bias_data,
+                                                       &output_dims,
+                                                       output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
+    memset(output, 0, sizeof(output));
 
     buf_size = arm_convolve_s8_get_buffer_size(&input_dims, &filter_dims);
     ctx.buf = malloc(buf_size);
 
-    result = arm_convolve_s8(&ctx,
-                             &conv_params,
-                             &quant_params,
-                             &input_dims,
-                             input_data,
-                             &filter_dims,
-                             kernel_data,
-                             &bias_dims,
-                             bias_data,
-                             &output_dims,
-                             output);
-    free(ctx.buf);
-    TEST_ASSERT_EQUAL(ARM_MATH_SUCCESS, result);
+    result = arm_convolve_wrapper_s8(&ctx,
+                                     &conv_params,
+                                     &quant_params,
+                                     &input_dims,
+                                     input_data,
+                                     &filter_dims,
+                                     kernel_data,
+                                     &bias_dims,
+                                     bias_data,
+                                     &output_dims,
+                                     output);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
+    TEST_ASSERT_EQUAL(ARM_CMSIS_NN_SUCCESS, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
 }
 
 void conv_1_x_n_3_arm_convolve_s8(void)
 {
-    const arm_status expected = ARM_MATH_SIZE_MISMATCH;
+    const arm_cmsis_nn_status expected = ARM_CMSIS_NN_ARG_ERROR;
     q7_t output[CONV_1_X_N_3_DST_SIZE] = {0};
 
     cmsis_nn_context ctx;
@@ -667,43 +733,51 @@ void conv_1_x_n_3_arm_convolve_s8(void)
     ctx.buf = malloc(buf_size);
     ctx.size = 0;
 
-    arm_status result = arm_convolve_1_x_n_s8(&ctx,
-                                              &conv_params,
-                                              &quant_params,
-                                              &input_dims,
-                                              input_data,
-                                              &filter_dims,
-                                              kernel_data,
-                                              &bias_dims,
-                                              bias_data,
-                                              &output_dims,
-                                              output);
+    arm_cmsis_nn_status result = arm_convolve_1_x_n_s8(&ctx,
+                                                       &conv_params,
+                                                       &quant_params,
+                                                       &input_dims,
+                                                       input_data,
+                                                       &filter_dims,
+                                                       kernel_data,
+                                                       &bias_dims,
+                                                       bias_data,
+                                                       &output_dims,
+                                                       output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
+    memset(output, 0, sizeof(output));
 
     buf_size = arm_convolve_s8_get_buffer_size(&input_dims, &filter_dims);
     ctx.buf = malloc(buf_size);
 
-    result = arm_convolve_s8(&ctx,
-                             &conv_params,
-                             &quant_params,
-                             &input_dims,
-                             input_data,
-                             &filter_dims,
-                             kernel_data,
-                             &bias_dims,
-                             bias_data,
-                             &output_dims,
-                             output);
-    free(ctx.buf);
-    TEST_ASSERT_EQUAL(ARM_MATH_SUCCESS, result);
+    result = arm_convolve_wrapper_s8(&ctx,
+                                     &conv_params,
+                                     &quant_params,
+                                     &input_dims,
+                                     input_data,
+                                     &filter_dims,
+                                     kernel_data,
+                                     &bias_dims,
+                                     bias_data,
+                                     &output_dims,
+                                     output);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
+    TEST_ASSERT_EQUAL(ARM_CMSIS_NN_SUCCESS, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
 }
 
 void conv_out_activation_arm_convolve_s8(void)
 {
-    const arm_status expected = ARM_MATH_SIZE_MISMATCH;
     q7_t output[CONV_OUT_ACTIVATION_DST_SIZE] = {0};
 
     cmsis_nn_context ctx;
@@ -744,41 +818,26 @@ void conv_out_activation_arm_convolve_s8(void)
     quant_params.multiplier = (int32_t *)conv_out_activation_output_mult;
     quant_params.shift = (int32_t *)conv_out_activation_output_shift;
 
-    int32_t buf_size = arm_convolve_1_x_n_s8_get_buffer_size(&input_dims, &filter_dims);
-    ctx.buf = malloc(buf_size);
-    ctx.size = 0;
-
-    arm_status result = arm_convolve_1_x_n_s8(&ctx,
-                                              &conv_params,
-                                              &quant_params,
-                                              &input_dims,
-                                              input_data,
-                                              &filter_dims,
-                                              kernel_data,
-                                              &bias_dims,
-                                              bias_data,
-                                              &output_dims,
-                                              output);
-
-    free(ctx.buf);
-    TEST_ASSERT_EQUAL(expected, result);
-
-    buf_size = arm_convolve_s8_get_buffer_size(&input_dims, &filter_dims);
+    int32_t buf_size = arm_convolve_wrapper_s8_get_buffer_size(&conv_params, &input_dims, &filter_dims, &output_dims);
     ctx.buf = malloc(buf_size);
 
-    result = arm_convolve_s8(&ctx,
-                             &conv_params,
-                             &quant_params,
-                             &input_dims,
-                             input_data,
-                             &filter_dims,
-                             kernel_data,
-                             &bias_dims,
-                             bias_data,
-                             &output_dims,
-                             output);
-    free(ctx.buf);
-    TEST_ASSERT_EQUAL(ARM_MATH_SUCCESS, result);
+    arm_cmsis_nn_status result = arm_convolve_wrapper_s8(&ctx,
+                                                         &conv_params,
+                                                         &quant_params,
+                                                         &input_dims,
+                                                         input_data,
+                                                         &filter_dims,
+                                                         kernel_data,
+                                                         &bias_dims,
+                                                         bias_data,
+                                                         &output_dims,
+                                                         output);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
+    TEST_ASSERT_EQUAL(ARM_CMSIS_NN_SUCCESS, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
 }
 
@@ -794,7 +853,7 @@ void conv_2x2_dilation_arm_convolve_s8(void)
     cmsis_nn_dims bias_dims;
     cmsis_nn_dims output_dims;
 
-    const arm_status expected = ARM_MATH_SUCCESS;
+    const arm_cmsis_nn_status expected = ARM_CMSIS_NN_SUCCESS;
     const q31_t *bias_data = conv_2x2_dilation_biases;
     const q7_t *kernel_data = conv_2x2_dilation_weights;
     const q7_t *input_data = conv_2x2_dilation_input;
@@ -829,21 +888,26 @@ void conv_2x2_dilation_arm_convolve_s8(void)
     ctx.buf = malloc(buf_size);
     ctx.size = 0;
 
-    arm_status result = arm_convolve_s8(&ctx,
-                                        &conv_params,
-                                        &quant_params,
-                                        &input_dims,
-                                        input_data,
-                                        &filter_dims,
-                                        kernel_data,
-                                        &bias_dims,
-                                        bias_data,
-                                        &output_dims,
-                                        output);
+    arm_cmsis_nn_status result = arm_convolve_s8(&ctx,
+                                                 &conv_params,
+                                                 &quant_params,
+                                                 &input_dims,
+                                                 input_data,
+                                                 &filter_dims,
+                                                 kernel_data,
+                                                 &bias_dims,
+                                                 bias_data,
+                                                 &output_dims,
+                                                 output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
+    memset(output, 0, sizeof(output));
 
     buf_size = arm_convolve_wrapper_s8_get_buffer_size(&conv_params, &input_dims, &filter_dims, &output_dims);
     ctx.buf = malloc(buf_size);
@@ -861,7 +925,11 @@ void conv_2x2_dilation_arm_convolve_s8(void)
                                      &output_dims,
                                      output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
 }
@@ -883,7 +951,7 @@ void conv_2x2_dilation_5x5_input_arm_convolve_s8(void)
     const q7_t *input_data = conv_2x2_dilation_5x5_input_input;
     const q7_t *output_ref = conv_2x2_dilation_5x5_input_output_ref;
     const int32_t output_ref_size = CONV_2X2_DILATION_5X5_INPUT_DST_SIZE;
-    const arm_status expected = ARM_MATH_SUCCESS;
+    const arm_cmsis_nn_status expected = ARM_CMSIS_NN_SUCCESS;
 
     input_dims.n = CONV_2X2_DILATION_5X5_INPUT_INPUT_BATCHES;
     input_dims.w = CONV_2X2_DILATION_5X5_INPUT_INPUT_W;
@@ -912,20 +980,25 @@ void conv_2x2_dilation_5x5_input_arm_convolve_s8(void)
     int32_t buf_size = arm_convolve_s8_get_buffer_size(&input_dims, &filter_dims);
     ctx.buf = malloc(buf_size);
 
-    arm_status result = arm_convolve_s8(&ctx,
-                                        &conv_params,
-                                        &quant_params,
-                                        &input_dims,
-                                        input_data,
-                                        &filter_dims,
-                                        kernel_data,
-                                        &bias_dims,
-                                        bias_data,
-                                        &output_dims,
-                                        output);
-    free(ctx.buf);
+    arm_cmsis_nn_status result = arm_convolve_s8(&ctx,
+                                                 &conv_params,
+                                                 &quant_params,
+                                                 &input_dims,
+                                                 input_data,
+                                                 &filter_dims,
+                                                 kernel_data,
+                                                 &bias_dims,
+                                                 bias_data,
+                                                 &output_dims,
+                                                 output);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
+    memset(output, 0, sizeof(output));
 
     buf_size = arm_convolve_wrapper_s8_get_buffer_size(&conv_params, &input_dims, &filter_dims, &output_dims);
     ctx.buf = malloc(buf_size);
@@ -943,7 +1016,11 @@ void conv_2x2_dilation_5x5_input_arm_convolve_s8(void)
                                      &output_dims,
                                      output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
 }
@@ -965,7 +1042,7 @@ void conv_3x3_dilation_5x5_input_arm_convolve_s8(void)
     const q7_t *input_data = conv_3x3_dilation_5x5_input_input;
     const q7_t *output_ref = conv_3x3_dilation_5x5_input_output_ref;
     const int32_t output_ref_size = CONV_3X3_DILATION_5X5_INPUT_DST_SIZE;
-    const arm_status expected = ARM_MATH_SUCCESS;
+    const arm_cmsis_nn_status expected = ARM_CMSIS_NN_SUCCESS;
 
     input_dims.n = CONV_3X3_DILATION_5X5_INPUT_INPUT_BATCHES;
     input_dims.w = CONV_3X3_DILATION_5X5_INPUT_INPUT_W;
@@ -994,20 +1071,25 @@ void conv_3x3_dilation_5x5_input_arm_convolve_s8(void)
     int32_t buf_size = arm_convolve_s8_get_buffer_size(&input_dims, &filter_dims);
     ctx.buf = malloc(buf_size);
 
-    arm_status result = arm_convolve_s8(&ctx,
-                                        &conv_params,
-                                        &quant_params,
-                                        &input_dims,
-                                        input_data,
-                                        &filter_dims,
-                                        kernel_data,
-                                        &bias_dims,
-                                        bias_data,
-                                        &output_dims,
-                                        output);
-    free(ctx.buf);
+    arm_cmsis_nn_status result = arm_convolve_s8(&ctx,
+                                                 &conv_params,
+                                                 &quant_params,
+                                                 &input_dims,
+                                                 input_data,
+                                                 &filter_dims,
+                                                 kernel_data,
+                                                 &bias_dims,
+                                                 bias_data,
+                                                 &output_dims,
+                                                 output);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
+    memset(output, 0, sizeof(output));
 
     buf_size = arm_convolve_wrapper_s8_get_buffer_size(&conv_params, &input_dims, &filter_dims, &output_dims);
     ctx.buf = malloc(buf_size);
@@ -1025,7 +1107,11 @@ void conv_3x3_dilation_5x5_input_arm_convolve_s8(void)
                                      &output_dims,
                                      output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
 }
@@ -1047,7 +1133,7 @@ void conv_2x3_dilation_arm_convolve_s8(void)
     const q7_t *input_data = conv_2x3_dilation_input;
     const q7_t *output_ref = conv_2x3_dilation_output_ref;
     const int32_t output_ref_size = CONV_2X3_DILATION_DST_SIZE;
-    const arm_status expected = ARM_MATH_SUCCESS;
+    const arm_cmsis_nn_status expected = ARM_CMSIS_NN_SUCCESS;
 
     input_dims.n = CONV_2X3_DILATION_INPUT_BATCHES;
     input_dims.w = CONV_2X3_DILATION_INPUT_W;
@@ -1076,20 +1162,25 @@ void conv_2x3_dilation_arm_convolve_s8(void)
     int32_t buf_size = arm_convolve_s8_get_buffer_size(&input_dims, &filter_dims);
     ctx.buf = malloc(buf_size);
 
-    arm_status result = arm_convolve_s8(&ctx,
-                                        &conv_params,
-                                        &quant_params,
-                                        &input_dims,
-                                        input_data,
-                                        &filter_dims,
-                                        kernel_data,
-                                        &bias_dims,
-                                        bias_data,
-                                        &output_dims,
-                                        output);
-    free(ctx.buf);
+    arm_cmsis_nn_status result = arm_convolve_s8(&ctx,
+                                                 &conv_params,
+                                                 &quant_params,
+                                                 &input_dims,
+                                                 input_data,
+                                                 &filter_dims,
+                                                 kernel_data,
+                                                 &bias_dims,
+                                                 bias_data,
+                                                 &output_dims,
+                                                 output);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
+    memset(output, 0, sizeof(output));
 
     buf_size = arm_convolve_wrapper_s8_get_buffer_size(&conv_params, &input_dims, &filter_dims, &output_dims);
     ctx.buf = malloc(buf_size);
@@ -1107,7 +1198,11 @@ void conv_2x3_dilation_arm_convolve_s8(void)
                                      &output_dims,
                                      output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
 }
@@ -1129,7 +1224,7 @@ void conv_3x2_dilation_arm_convolve_s8(void)
     const q7_t *input_data = conv_3x2_dilation_input;
     const q7_t *output_ref = conv_3x2_dilation_output_ref;
     const int32_t output_ref_size = CONV_3X2_DILATION_DST_SIZE;
-    const arm_status expected = ARM_MATH_SUCCESS;
+    const arm_cmsis_nn_status expected = ARM_CMSIS_NN_SUCCESS;
 
     input_dims.n = CONV_3X2_DILATION_INPUT_BATCHES;
     input_dims.w = CONV_3X2_DILATION_INPUT_W;
@@ -1158,20 +1253,25 @@ void conv_3x2_dilation_arm_convolve_s8(void)
     int32_t buf_size = arm_convolve_s8_get_buffer_size(&input_dims, &filter_dims);
     ctx.buf = malloc(buf_size);
 
-    arm_status result = arm_convolve_s8(&ctx,
-                                        &conv_params,
-                                        &quant_params,
-                                        &input_dims,
-                                        input_data,
-                                        &filter_dims,
-                                        kernel_data,
-                                        &bias_dims,
-                                        bias_data,
-                                        &output_dims,
-                                        output);
-    free(ctx.buf);
+    arm_cmsis_nn_status result = arm_convolve_s8(&ctx,
+                                                 &conv_params,
+                                                 &quant_params,
+                                                 &input_dims,
+                                                 input_data,
+                                                 &filter_dims,
+                                                 kernel_data,
+                                                 &bias_dims,
+                                                 bias_data,
+                                                 &output_dims,
+                                                 output);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
+    memset(output, 0, sizeof(output));
 
     buf_size = arm_convolve_wrapper_s8_get_buffer_size(&conv_params, &input_dims, &filter_dims, &output_dims);
     ctx.buf = malloc(buf_size);
@@ -1189,7 +1289,11 @@ void conv_3x2_dilation_arm_convolve_s8(void)
                                      &output_dims,
                                      output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
 }
@@ -1211,7 +1315,7 @@ void conv_dilation_golden_arm_convolve_s8(void)
     const q7_t *input_data = conv_dilation_golden_input;
     const q7_t *output_ref = conv_dilation_golden_output_ref;
     const int32_t output_ref_size = CONV_DILATION_GOLDEN_DST_SIZE;
-    const arm_status expected = ARM_MATH_SUCCESS;
+    const arm_cmsis_nn_status expected = ARM_CMSIS_NN_SUCCESS;
 
     input_dims.n = CONV_DILATION_GOLDEN_INPUT_BATCHES;
     input_dims.w = CONV_DILATION_GOLDEN_INPUT_W;
@@ -1240,20 +1344,25 @@ void conv_dilation_golden_arm_convolve_s8(void)
     int32_t buf_size = arm_convolve_s8_get_buffer_size(&input_dims, &filter_dims);
     ctx.buf = malloc(buf_size);
 
-    arm_status result = arm_convolve_s8(&ctx,
-                                        &conv_params,
-                                        &quant_params,
-                                        &input_dims,
-                                        input_data,
-                                        &filter_dims,
-                                        kernel_data,
-                                        &bias_dims,
-                                        bias_data,
-                                        &output_dims,
-                                        output);
-    free(ctx.buf);
+    arm_cmsis_nn_status result = arm_convolve_s8(&ctx,
+                                                 &conv_params,
+                                                 &quant_params,
+                                                 &input_dims,
+                                                 input_data,
+                                                 &filter_dims,
+                                                 kernel_data,
+                                                 &bias_dims,
+                                                 bias_data,
+                                                 &output_dims,
+                                                 output);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
+    memset(output, 0, sizeof(output));
 
     buf_size = arm_convolve_wrapper_s8_get_buffer_size(&conv_params, &input_dims, &filter_dims, &output_dims);
     ctx.buf = malloc(buf_size);
@@ -1271,7 +1380,104 @@ void conv_dilation_golden_arm_convolve_s8(void)
                                      &output_dims,
                                      output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
+    TEST_ASSERT_EQUAL(expected, result);
+    TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
+}
+
+void conv_5_arm_convolve_s8(void)
+{
+    const arm_cmsis_nn_status expected = ARM_CMSIS_NN_SUCCESS;
+    q7_t output[CONV_5_DST_SIZE] = {0};
+
+    cmsis_nn_context ctx;
+    cmsis_nn_conv_params conv_params;
+    cmsis_nn_per_channel_quant_params quant_params;
+    cmsis_nn_dims input_dims;
+    cmsis_nn_dims filter_dims;
+    cmsis_nn_dims bias_dims;
+    cmsis_nn_dims output_dims;
+
+    const q31_t *bias_data = conv_5_biases;
+    const q7_t *kernel_data = conv_5_weights;
+    const q7_t *input_data = conv_5_input;
+    const q7_t *output_ref = conv_5_output_ref;
+    const int32_t output_ref_size = CONV_5_DST_SIZE;
+
+    input_dims.n = CONV_5_INPUT_BATCHES;
+    input_dims.w = CONV_5_INPUT_W;
+    input_dims.h = CONV_5_INPUT_H;
+    input_dims.c = CONV_5_IN_CH;
+    filter_dims.w = CONV_5_FILTER_X;
+    filter_dims.h = CONV_5_FILTER_Y;
+    output_dims.w = CONV_5_OUTPUT_W;
+    output_dims.h = CONV_5_OUTPUT_H;
+    output_dims.c = CONV_5_OUT_CH;
+
+    conv_params.padding.w = CONV_5_PAD_X;
+    conv_params.padding.h = CONV_5_PAD_Y;
+    conv_params.stride.w = CONV_5_STRIDE_X;
+    conv_params.stride.h = CONV_5_STRIDE_Y;
+    conv_params.dilation.w = CONV_5_DILATION_X;
+    conv_params.dilation.h = CONV_5_DILATION_Y;
+
+    conv_params.input_offset = CONV_5_INPUT_OFFSET;
+    conv_params.output_offset = CONV_5_OUTPUT_OFFSET;
+    conv_params.activation.min = CONV_5_OUT_ACTIVATION_MIN;
+    conv_params.activation.max = CONV_5_OUT_ACTIVATION_MAX;
+    quant_params.multiplier = (int32_t *)conv_5_output_mult;
+    quant_params.shift = (int32_t *)conv_5_output_shift;
+
+    int32_t buf_size = arm_convolve_s8_get_buffer_size(&input_dims, &filter_dims);
+    ctx.buf = malloc(buf_size);
+    ctx.size = 0;
+
+    arm_cmsis_nn_status result = arm_convolve_s8(&ctx,
+                                                 &conv_params,
+                                                 &quant_params,
+                                                 &input_dims,
+                                                 input_data,
+                                                 &filter_dims,
+                                                 conv_5_weights,
+                                                 &bias_dims,
+                                                 bias_data,
+                                                 &output_dims,
+                                                 output);
+
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
+    TEST_ASSERT_EQUAL(expected, result);
+    TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
+    memset(output, 0, sizeof(output));
+
+    buf_size = arm_convolve_wrapper_s8_get_buffer_size(&conv_params, &input_dims, &filter_dims, &output_dims);
+    ctx.buf = malloc(buf_size);
+    ctx.size = 0;
+
+    result = arm_convolve_wrapper_s8(&ctx,
+                                     &conv_params,
+                                     &quant_params,
+                                     &input_dims,
+                                     input_data,
+                                     &filter_dims,
+                                     kernel_data,
+                                     &bias_dims,
+                                     bias_data,
+                                     &output_dims,
+                                     output);
+
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
     TEST_ASSERT_TRUE(validate(output, output_ref, output_ref_size));
 }

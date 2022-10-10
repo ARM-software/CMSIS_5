@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
+ * SPDX-FileCopyrightText: Copyright 2010-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_fully_connected_mat_q7_vec_q15.c
  * Description:  Mixed Q15-Q7 fully-connected layer function
  *
- * $Date:        20. July 2021
- * $Revision:    V.1.1.1
+ * $Date:        4 Aug 2022
+ * $Revision:    V.2.0.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -40,40 +40,20 @@
  * @{
  */
 
-/**
+/*
  * @brief Mixed Q15-Q7 fully-connected layer function
- * @param[in]       pV          pointer to input vector
- * @param[in]       pM          pointer to matrix weights
- * @param[in]       dim_vec     length of the vector
- * @param[in]       num_of_rows number of rows in weight matrix
- * @param[in]       bias_shift  amount of left-shift for bias
- * @param[in]       out_shift   amount of right-shift for output
- * @param[in]       bias        pointer to bias
- * @param[in,out]   pOut        pointer to output vector
- * @param[in,out]   vec_buffer  pointer to buffer space for input
- * @return     The function returns <code>ARM_MATH_SUCCESS</code>
- *
- * @details
- *
- * <b>Buffer size:</b>
- *
- * vec_buffer size: 0
- *
- *  Q7_Q15 version of the fully connected layer
- *
- *  Weights are in q7_t and Activations are in q15_t
- *
+ * Refer function header for details
  */
 
-arm_status arm_fully_connected_mat_q7_vec_q15(const q15_t *pV,
-                                              const q7_t *pM,
-                                              const uint16_t dim_vec,
-                                              const uint16_t num_of_rows,
-                                              const uint16_t bias_shift,
-                                              const uint16_t out_shift,
-                                              const q7_t *bias,
-                                              q15_t *pOut,
-                                              q15_t *vec_buffer)
+arm_cmsis_nn_status arm_fully_connected_mat_q7_vec_q15(const q15_t *pV,
+                                                       const q7_t *pM,
+                                                       const uint16_t dim_vec,
+                                                       const uint16_t num_of_rows,
+                                                       const uint16_t bias_shift,
+                                                       const uint16_t out_shift,
+                                                       const q7_t *bias,
+                                                       q15_t *pOut,
+                                                       q15_t *vec_buffer)
 {
     (void)vec_buffer;
 #if defined(ARM_MATH_DSP) && !defined(ARM_MATH_MVEI)
@@ -188,8 +168,8 @@ arm_status arm_fully_connected_mat_q7_vec_q15(const q15_t *pV,
 
 #endif /* ARM_MATH_DSP */
 
-    /* Return to ARM_MATH_SUCCESS */
-    return (ARM_MATH_SUCCESS);
+    /* Return to ARM_CMSIS_NN_SUCCESS */
+    return (ARM_CMSIS_NN_SUCCESS);
 }
 
 /**

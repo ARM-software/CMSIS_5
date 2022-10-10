@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2022 Arm Limited or its affiliates.
+ * SPDX-FileCopyrightText: Copyright 2010-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -26,7 +26,7 @@
 
 void dw_int16xint8_arm_depthwise_conv_s16(void)
 {
-    const arm_status expected = ARM_MATH_SUCCESS;
+    const arm_cmsis_nn_status expected = ARM_CMSIS_NN_SUCCESS;
     q15_t output[DW_INT16XINT8_DST_SIZE] = {0};
 
     cmsis_nn_context ctx;
@@ -34,11 +34,14 @@ void dw_int16xint8_arm_depthwise_conv_s16(void)
     cmsis_nn_per_channel_quant_params quant_params;
     cmsis_nn_dims input_dims;
     cmsis_nn_dims filter_dims;
-    cmsis_nn_dims bias_dims;
+    cmsis_nn_dims bias_dims = {};
     cmsis_nn_dims output_dims;
 
     const q63_t *bias_data = dw_int16xint8_biases;
     const q15_t *input_data = dw_int16xint8_input;
+    const q7_t *kernel_data = dw_int16xint8_weights;
+    const q15_t *output_ref = dw_int16xint8_output_ref;
+    const int32_t output_ref_size = DW_INT16XINT8_DST_SIZE;
 
     input_dims.n = DW_INT16XINT8_INPUT_BATCHES;
     input_dims.w = DW_INT16XINT8_INPUT_W;
@@ -69,26 +72,55 @@ void dw_int16xint8_arm_depthwise_conv_s16(void)
     ctx.buf = NULL;
     ctx.size = 0;
 
-    arm_status result = arm_depthwise_conv_s16(&ctx,
-                                               &dw_conv_params,
-                                               &quant_params,
-                                               &input_dims,
-                                               input_data,
-                                               &filter_dims,
-                                               dw_int16xint8_weights,
-                                               &bias_dims,
-                                               bias_data,
-                                               &output_dims,
-                                               output);
-
-    free(ctx.buf);
+    arm_cmsis_nn_status result = arm_depthwise_conv_s16(&ctx,
+                                                        &dw_conv_params,
+                                                        &quant_params,
+                                                        &input_dims,
+                                                        input_data,
+                                                        &filter_dims,
+                                                        dw_int16xint8_weights,
+                                                        &bias_dims,
+                                                        bias_data,
+                                                        &output_dims,
+                                                        output);
+    if (ctx.buf)
+    {
+        // The caller is responsible to clear the scratch buffers for security reasons if applicable.
+        memset(ctx.buf, 0, ctx.size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
-    TEST_ASSERT_TRUE(validate_s16(output, dw_int16xint8_output_ref, DW_INT16XINT8_DST_SIZE));
+    TEST_ASSERT_TRUE(validate_s16(output, output_ref, output_ref_size));
+    memset(output, 0, sizeof(output));
+
+    int buf_size =
+        arm_depthwise_conv_wrapper_s16_get_buffer_size(&dw_conv_params, &input_dims, &filter_dims, &output_dims);
+    ctx.buf = malloc(buf_size);
+
+    result = arm_depthwise_conv_wrapper_s16(&ctx,
+                                            &dw_conv_params,
+                                            &quant_params,
+                                            &input_dims,
+                                            input_data,
+                                            &filter_dims,
+                                            kernel_data,
+                                            &bias_dims,
+                                            bias_data,
+                                            &output_dims,
+                                            output);
+
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
+    TEST_ASSERT_EQUAL(expected, result);
+    TEST_ASSERT_TRUE(validate_s16(output, output_ref, output_ref_size));
 }
 
 void dw_int16xint8_dilation_arm_depthwise_conv_s16(void)
 {
-    const arm_status expected = ARM_MATH_SUCCESS;
+    const arm_cmsis_nn_status expected = ARM_CMSIS_NN_SUCCESS;
     q15_t output[DW_INT16XINT8_DILATION_DST_SIZE] = {0};
 
     cmsis_nn_context ctx;
@@ -96,11 +128,14 @@ void dw_int16xint8_dilation_arm_depthwise_conv_s16(void)
     cmsis_nn_per_channel_quant_params quant_params;
     cmsis_nn_dims input_dims;
     cmsis_nn_dims filter_dims;
-    cmsis_nn_dims bias_dims;
+    cmsis_nn_dims bias_dims = {};
     cmsis_nn_dims output_dims;
 
     const q63_t *bias_data = dw_int16xint8_dilation_biases;
     const q15_t *input_data = dw_int16xint8_dilation_input;
+    const q7_t *kernel_data = dw_int16xint8_dilation_weights;
+    const q15_t *output_ref = dw_int16xint8_dilation_output_ref;
+    const int32_t output_ref_size = DW_INT16XINT8_DILATION_DST_SIZE;
 
     input_dims.n = DW_INT16XINT8_DILATION_INPUT_BATCHES;
     input_dims.w = DW_INT16XINT8_DILATION_INPUT_W;
@@ -131,26 +166,55 @@ void dw_int16xint8_dilation_arm_depthwise_conv_s16(void)
     ctx.buf = NULL;
     ctx.size = 0;
 
-    arm_status result = arm_depthwise_conv_s16(&ctx,
-                                               &dw_conv_params,
-                                               &quant_params,
-                                               &input_dims,
-                                               input_data,
-                                               &filter_dims,
-                                               dw_int16xint8_dilation_weights,
-                                               &bias_dims,
-                                               bias_data,
-                                               &output_dims,
-                                               output);
+    arm_cmsis_nn_status result = arm_depthwise_conv_s16(&ctx,
+                                                        &dw_conv_params,
+                                                        &quant_params,
+                                                        &input_dims,
+                                                        input_data,
+                                                        &filter_dims,
+                                                        dw_int16xint8_dilation_weights,
+                                                        &bias_dims,
+                                                        bias_data,
+                                                        &output_dims,
+                                                        output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, ctx.size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
-    TEST_ASSERT_TRUE(validate_s16(output, dw_int16xint8_dilation_output_ref, DW_INT16XINT8_DILATION_DST_SIZE));
+    TEST_ASSERT_TRUE(validate_s16(output, output_ref, output_ref_size));
+    memset(output, 0, sizeof(output));
+
+    int buf_size =
+        arm_depthwise_conv_wrapper_s16_get_buffer_size(&dw_conv_params, &input_dims, &filter_dims, &output_dims);
+    ctx.buf = malloc(buf_size);
+
+    result = arm_depthwise_conv_wrapper_s16(&ctx,
+                                            &dw_conv_params,
+                                            &quant_params,
+                                            &input_dims,
+                                            input_data,
+                                            &filter_dims,
+                                            kernel_data,
+                                            &bias_dims,
+                                            bias_data,
+                                            &output_dims,
+                                            output);
+
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
+    TEST_ASSERT_EQUAL(expected, result);
+    TEST_ASSERT_TRUE(validate_s16(output, output_ref, output_ref_size));
 }
 
 void dw_int16xint8_mult4_arm_depthwise_conv_s16(void)
 {
-    const arm_status expected = ARM_MATH_SUCCESS;
+    const arm_cmsis_nn_status expected = ARM_CMSIS_NN_SUCCESS;
     q15_t output[DW_INT16XINT8_MULT4_DST_SIZE] = {0};
 
     cmsis_nn_context ctx;
@@ -158,11 +222,14 @@ void dw_int16xint8_mult4_arm_depthwise_conv_s16(void)
     cmsis_nn_per_channel_quant_params quant_params;
     cmsis_nn_dims input_dims;
     cmsis_nn_dims filter_dims;
-    cmsis_nn_dims bias_dims;
+    cmsis_nn_dims bias_dims = {};
     cmsis_nn_dims output_dims;
 
     const q63_t *bias_data = dw_int16xint8_mult4_biases;
     const q15_t *input_data = dw_int16xint8_mult4_input;
+    const q7_t *kernel_data = dw_int16xint8_mult4_weights;
+    const q15_t *output_ref = dw_int16xint8_mult4_output_ref;
+    const int32_t output_ref_size = DW_INT16XINT8_MULT4_DST_SIZE;
 
     input_dims.n = DW_INT16XINT8_MULT4_INPUT_BATCHES;
     input_dims.w = DW_INT16XINT8_MULT4_INPUT_W;
@@ -193,19 +260,48 @@ void dw_int16xint8_mult4_arm_depthwise_conv_s16(void)
     ctx.buf = NULL;
     ctx.size = 0;
 
-    arm_status result = arm_depthwise_conv_s16(&ctx,
-                                               &dw_conv_params,
-                                               &quant_params,
-                                               &input_dims,
-                                               input_data,
-                                               &filter_dims,
-                                               dw_int16xint8_mult4_weights,
-                                               &bias_dims,
-                                               bias_data,
-                                               &output_dims,
-                                               output);
+    arm_cmsis_nn_status result = arm_depthwise_conv_s16(&ctx,
+                                                        &dw_conv_params,
+                                                        &quant_params,
+                                                        &input_dims,
+                                                        input_data,
+                                                        &filter_dims,
+                                                        dw_int16xint8_mult4_weights,
+                                                        &bias_dims,
+                                                        bias_data,
+                                                        &output_dims,
+                                                        output);
 
-    free(ctx.buf);
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, ctx.size);
+        free(ctx.buf);
+    }
     TEST_ASSERT_EQUAL(expected, result);
-    TEST_ASSERT_TRUE(validate_s16(output, dw_int16xint8_mult4_output_ref, DW_INT16XINT8_MULT4_DST_SIZE));
+    TEST_ASSERT_TRUE(validate_s16(output, output_ref, output_ref_size));
+    memset(output, 0, sizeof(output));
+
+    int buf_size =
+        arm_depthwise_conv_wrapper_s16_get_buffer_size(&dw_conv_params, &input_dims, &filter_dims, &output_dims);
+    ctx.buf = malloc(buf_size);
+
+    result = arm_depthwise_conv_wrapper_s16(&ctx,
+                                            &dw_conv_params,
+                                            &quant_params,
+                                            &input_dims,
+                                            input_data,
+                                            &filter_dims,
+                                            kernel_data,
+                                            &bias_dims,
+                                            bias_data,
+                                            &output_dims,
+                                            output);
+
+    if (ctx.buf)
+    {
+        memset(ctx.buf, 0, buf_size);
+        free(ctx.buf);
+    }
+    TEST_ASSERT_EQUAL(expected, result);
+    TEST_ASSERT_TRUE(validate_s16(output, output_ref, output_ref_size));
 }

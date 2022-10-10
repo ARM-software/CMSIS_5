@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
+ * SPDX-FileCopyrightText: Copyright 2010-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_fully_connected_q15_opt.c
  * Description:  Q15 opt fully-connected layer function
  *
- * $Date:        20. July 2021
- * $Revision:    V.1.1.1
+ * $Date:        4 Aug 2022
+ * $Revision:    V.2.0.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -40,68 +40,20 @@
  * @{
  */
 
-/**
+/*
  * @brief Q15 opt fully-connected layer function
- * @param[in]       pV          pointer to input vector
- * @param[in]       pM          pointer to matrix weights
- * @param[in]       dim_vec     length of the vector
- * @param[in]       num_of_rows number of rows in weight matrix
- * @param[in]       bias_shift  amount of left-shift for bias
- * @param[in]       out_shift   amount of right-shift for output
- * @param[in]       bias        pointer to bias
- * @param[in,out]   pOut        pointer to output vector
- * @param[in,out]   vec_buffer  pointer to buffer space for input
- * @return     The function returns <code>ARM_MATH_SUCCESS</code>
- *
- *
- * @details
- *
- * <b>Buffer size:</b>
- *
- * vec_buffer size: 0
- *
- *  Here we use only one pointer to read 4 rows in the weight
- *  matrix. So if the original matrix looks like this:
- *
- *  | a11 | a12 | a13 |
- *
- *  | a21 | a22 | a23 |
- *
- *  | a31 | a32 | a33 |
- *
- *  | a41 | a42 | a43 |
- *
- *  | a51 | a52 | a53 |
- *
- *  | a61 | a62 | a63 |
- *
- *  We operates on multiple-of-4 rows, so the first four rows becomes
- *
- *  | a11 | a12 | a21 | a22 | a31 | a32 | a41 | a42 |
- *
- *  | a13 | a23 | a33 | a43 |
- *
- *  Remaining rows are kept the same original order.
- *
- *  So the stored weight matrix looks like this:
- *
- *
- *  | a11 | a12 | a21 | a22 | a31 | a32 | a41 | a42 |
- *
- *  | a13 | a23 | a33 | a43 | a51 | a52 | a53 | a61 |
- *
- *  | a62 | a63 |
+ * Refer function header for details
  */
 
-arm_status arm_fully_connected_q15_opt(const q15_t *pV,
-                                       const q15_t *pM,
-                                       const uint16_t dim_vec,
-                                       const uint16_t num_of_rows,
-                                       const uint16_t bias_shift,
-                                       const uint16_t out_shift,
-                                       const q15_t *bias,
-                                       q15_t *pOut,
-                                       q15_t *vec_buffer)
+arm_cmsis_nn_status arm_fully_connected_q15_opt(const q15_t *pV,
+                                                const q15_t *pM,
+                                                const uint16_t dim_vec,
+                                                const uint16_t num_of_rows,
+                                                const uint16_t bias_shift,
+                                                const uint16_t out_shift,
+                                                const q15_t *bias,
+                                                q15_t *pOut,
+                                                q15_t *vec_buffer)
 {
     (void)vec_buffer;
 #if defined(ARM_MATH_DSP) && !defined(ARM_MATH_MVEI)
@@ -155,26 +107,22 @@ arm_status arm_fully_connected_q15_opt(const q15_t *pV,
          * activation data: inV
          */
 
-        asm volatile("COL_LOOP_%=:\n"
-                     "ldr.w r4, [%[pA]], #4\n"
-                     "ldr.w r0, [%[pB]], #16\n"
-                     "smlad %[sum], r4, r0, %[sum]\n"
-                     "ldr.w r1, [%[pB] , #-12]\n"
-                     "smlad %[sum2], r4, r1, %[sum2]\n"
-                     "ldr.w r2, [%[pB] , #-8]\n"
-                     "smlad %[sum3], r4, r2, %[sum3]\n"
-                     "ldr.w r3, [%[pB] , #-4]\n"
-                     "smlad %[sum4], r4, r3, %[sum4]\n"
-                     "subs %[colCnt], #1\n"
-                     "bne COL_LOOP_%=\n"
-                     : [ sum ] "+r"(sum),
-                       [ sum2 ] "+r"(sum2),
-                       [ sum3 ] "+r"(sum3),
-                       [ sum4 ] "+r"(sum4),
-                       [ pB ] "+r"(pB),
-                       [ pA ] "+r"(pA)
-                     : [ colCnt ] "r"(colCnt)
-                     : "r0", "r1", "r2", "r3", "r4");
+        asm volatile(
+            "COL_LOOP_%=:\n"
+            "ldr.w r4, [%[pA]], #4\n"
+            "ldr.w r0, [%[pB]], #16\n"
+            "smlad %[sum], r4, r0, %[sum]\n"
+            "ldr.w r1, [%[pB] , #-12]\n"
+            "smlad %[sum2], r4, r1, %[sum2]\n"
+            "ldr.w r2, [%[pB] , #-8]\n"
+            "smlad %[sum3], r4, r2, %[sum3]\n"
+            "ldr.w r3, [%[pB] , #-4]\n"
+            "smlad %[sum4], r4, r3, %[sum4]\n"
+            "subs %[colCnt], #1\n"
+            "bne COL_LOOP_%=\n"
+            : [sum] "+r"(sum), [sum2] "+r"(sum2), [sum3] "+r"(sum3), [sum4] "+r"(sum4), [pB] "+r"(pB), [pA] "+r"(pA)
+            : [colCnt] "r"(colCnt)
+            : "r0", "r1", "r2", "r3", "r4");
 
 #endif /* USE_INTRINSIC */
 
@@ -327,8 +275,8 @@ arm_status arm_fully_connected_q15_opt(const q15_t *pV,
 
 #endif /* ARM_MATH_DSP */
 
-    /* Return to ARM_MATH_SUCCESS */
-    return (ARM_MATH_SUCCESS);
+    /* Return to ARM_CMSIS_NN_SUCCESS */
+    return (ARM_CMSIS_NN_SUCCESS);
 }
 
 /**

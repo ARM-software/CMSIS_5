@@ -19,6 +19,3 @@
 file(GLOB SRC "./*_s8*.c")
 file(GLOB SRC_S16 "./*_s16*.c")
 target_sources(cmsis-nn PRIVATE ${SRC} ${SRC_S16})
-
-
-

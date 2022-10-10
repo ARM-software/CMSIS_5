@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
+ * SPDX-FileCopyrightText: Copyright 2010-2020, 2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_nn_activations_q7.c
  * Description:  Q7 neural network activation function using direct table look-up
  *
- * $Date:        09. October 2020
- * $Revision:    V.1.0.1
+ * $Date:        4 Aug 2022
+ * $Revision:    V.1.0.2
  *
  * Target Processor:  Cortex-M cores
  *
@@ -40,20 +40,11 @@
  * @{
  */
 
-/**
- * @brief Q7 neural network activation function using direct table look-up
- * @param[in,out]   data        pointer to input
- * @param[in]       size        number of elements
- * @param[in]       int_width   bit-width of the integer part, assume to be smaller than 3
- * @param[in]       type        type of activation functions
+/*
+ * Q7 neural network activation function using direct table look-up
  *
- * @details
+ * Refer header file for details.
  *
- * This is the direct table look-up approach.
- *
- * Assume here the integer part of the fixed-point is <= 3.
- * More than 3 just not making much sense, makes no difference with
- * saturation followed by any of these activation functions.
  */
 
 void arm_nn_activations_direct_q7(q7_t *data, uint16_t size, uint16_t int_width, arm_nn_activation_type type)

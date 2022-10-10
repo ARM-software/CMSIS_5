@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
+ * SPDX-FileCopyrightText: Copyright 2010-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -33,7 +33,7 @@
 
 void maxpooling_arm_max_pool_s8(void)
 {
-    const arm_status expected = ARM_MATH_SUCCESS;
+    const arm_cmsis_nn_status expected = ARM_CMSIS_NN_SUCCESS;
     q7_t output[MAXPOOLING_DST_SIZE] = {0};
 
     cmsis_nn_context ctx;
@@ -64,7 +64,7 @@ void maxpooling_arm_max_pool_s8(void)
 
     for (int i = 0; i < REPEAT_NUM; i++)
     {
-        arm_status result =
+        arm_cmsis_nn_status result =
             arm_max_pool_s8(&ctx, &pool_params, &input_dims, input_data, &filter_dims, &output_dims, output);
 
         TEST_ASSERT_EQUAL(expected, result);
@@ -74,7 +74,7 @@ void maxpooling_arm_max_pool_s8(void)
 
 void maxpooling_1_arm_max_pool_s8(void)
 {
-    const arm_status expected = ARM_MATH_SUCCESS;
+    const arm_cmsis_nn_status expected = ARM_CMSIS_NN_SUCCESS;
     q7_t output[MAXPOOLING_1_DST_SIZE] = {0};
 
     cmsis_nn_context ctx;
@@ -105,7 +105,7 @@ void maxpooling_1_arm_max_pool_s8(void)
 
     for (int i = 0; i < REPEAT_NUM; i++)
     {
-        arm_status result =
+        arm_cmsis_nn_status result =
             arm_max_pool_s8(&ctx, &pool_params, &input_dims, input_data, &filter_dims, &output_dims, output);
 
         TEST_ASSERT_EQUAL(expected, result);
@@ -115,7 +115,7 @@ void maxpooling_1_arm_max_pool_s8(void)
 
 void maxpooling_2_arm_max_pool_s8(void)
 {
-    const arm_status expected = ARM_MATH_SUCCESS;
+    const arm_cmsis_nn_status expected = ARM_CMSIS_NN_SUCCESS;
     q7_t output[MAXPOOLING_2_DST_SIZE] = {0};
 
     cmsis_nn_context ctx;
@@ -146,7 +146,7 @@ void maxpooling_2_arm_max_pool_s8(void)
 
     for (int i = 0; i < REPEAT_NUM; i++)
     {
-        arm_status result =
+        arm_cmsis_nn_status result =
             arm_max_pool_s8(&ctx, &pool_params, &input_dims, input_data, &filter_dims, &output_dims, output);
 
         TEST_ASSERT_EQUAL(expected, result);
@@ -156,7 +156,7 @@ void maxpooling_2_arm_max_pool_s8(void)
 
 void maxpooling_3_arm_max_pool_s8(void)
 {
-    const arm_status expected = ARM_MATH_SUCCESS;
+    const arm_cmsis_nn_status expected = ARM_CMSIS_NN_SUCCESS;
     q7_t output[MAXPOOLING_3_DST_SIZE] = {0};
 
     cmsis_nn_context ctx;
@@ -187,7 +187,7 @@ void maxpooling_3_arm_max_pool_s8(void)
 
     for (int i = 0; i < REPEAT_NUM; i++)
     {
-        arm_status result =
+        arm_cmsis_nn_status result =
             arm_max_pool_s8(&ctx, &pool_params, &input_dims, input_data, &filter_dims, &output_dims, output);
 
         TEST_ASSERT_EQUAL(expected, result);
@@ -197,7 +197,7 @@ void maxpooling_3_arm_max_pool_s8(void)
 
 void maxpooling_4_arm_max_pool_s8(void)
 {
-    const arm_status expected = ARM_MATH_SUCCESS;
+    const arm_cmsis_nn_status expected = ARM_CMSIS_NN_SUCCESS;
     q7_t output[MAXPOOLING_4_DST_SIZE] = {0};
 
     cmsis_nn_context ctx;
@@ -228,7 +228,7 @@ void maxpooling_4_arm_max_pool_s8(void)
 
     for (int i = 0; i < REPEAT_NUM; i++)
     {
-        arm_status result =
+        arm_cmsis_nn_status result =
             arm_max_pool_s8(&ctx, &pool_params, &input_dims, input_data, &filter_dims, &output_dims, output);
 
         TEST_ASSERT_EQUAL(expected, result);
@@ -238,7 +238,7 @@ void maxpooling_4_arm_max_pool_s8(void)
 
 void maxpooling_5_arm_max_pool_s8(void)
 {
-    const arm_status expected = ARM_MATH_SUCCESS;
+    const arm_cmsis_nn_status expected = ARM_CMSIS_NN_SUCCESS;
     q7_t output[MAXPOOLING_5_DST_SIZE] = {0};
 
     cmsis_nn_context ctx;
@@ -269,7 +269,7 @@ void maxpooling_5_arm_max_pool_s8(void)
 
     for (int i = 0; i < REPEAT_NUM; i++)
     {
-        arm_status result =
+        arm_cmsis_nn_status result =
             arm_max_pool_s8(&ctx, &pool_params, &input_dims, input_data, &filter_dims, &output_dims, output);
 
         TEST_ASSERT_EQUAL(expected, result);
@@ -279,7 +279,7 @@ void maxpooling_5_arm_max_pool_s8(void)
 
 void maxpooling_6_arm_max_pool_s8(void)
 {
-    const arm_status expected = ARM_MATH_SUCCESS;
+    const arm_cmsis_nn_status expected = ARM_CMSIS_NN_SUCCESS;
     q7_t output[MAXPOOLING_6_DST_SIZE] = {0};
 
     cmsis_nn_context ctx;
@@ -310,7 +310,7 @@ void maxpooling_6_arm_max_pool_s8(void)
 
     for (int i = 0; i < REPEAT_NUM; i++)
     {
-        arm_status result =
+        arm_cmsis_nn_status result =
             arm_max_pool_s8(&ctx, &pool_params, &input_dims, input_data, &filter_dims, &output_dims, output);
 
         TEST_ASSERT_EQUAL(expected, result);
@@ -320,7 +320,7 @@ void maxpooling_6_arm_max_pool_s8(void)
 
 void maxpooling_7_arm_max_pool_s8(void)
 {
-    const arm_status expected = ARM_MATH_SUCCESS;
+    const arm_cmsis_nn_status expected = ARM_CMSIS_NN_SUCCESS;
     q7_t output[MAXPOOLING_7_DST_SIZE] = {0};
 
     cmsis_nn_context ctx;
@@ -351,7 +351,7 @@ void maxpooling_7_arm_max_pool_s8(void)
 
     for (int i = 0; i < REPEAT_NUM; i++)
     {
-        arm_status result =
+        arm_cmsis_nn_status result =
             arm_max_pool_s8(&ctx, &pool_params, &input_dims, input_data, &filter_dims, &output_dims, output);
 
         TEST_ASSERT_EQUAL(expected, result);

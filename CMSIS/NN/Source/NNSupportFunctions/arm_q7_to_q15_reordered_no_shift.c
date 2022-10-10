@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
+ * SPDX-FileCopyrightText: Copyright 2010-2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,8 +21,8 @@
  * Title:        arm_q7_to_q15_reordered_no_shift.c
  * Description:  Converts the elements of the Q7 vector to reordered Q15 vector without left-shift
  *
- * $Date:        July 20, 2021
- * $Revision:    V.1.1.1
+ * $Date:        4 Aug 2022
+ * $Revision:    V.1.1.2
  *
  * Target Processor:  Cortex-M cores
  *
@@ -39,13 +39,10 @@
  * @{
  */
 
-/**
- * @brief Converts the elements of the Q7 vector to reordered Q15 vector without left-shift
- * @param[in]       *pSrc points to the Q7 input vector
- * @param[out]      *pDst points to the Q15 output vector
- * @param[in]       blockSize length of the input vector
+/*
+ * Converts the elements of the Q7 vector to reordered Q15 vector without left-shift
  *
- * @details
+ * Refer to header for details
  *
  * This function does the q7 to q15 expansion with re-ordering
  *

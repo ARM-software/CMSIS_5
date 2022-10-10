@@ -22,8 +22,8 @@
  * Description:  s16 convolution layer wrapper function with the main purpose to call the optimal kernel available in
  * cmsis-nn to perform the convolution.
  *
- * $Date:        13 January 2022
- * $Revision:    V.1.2.0
+ * $Date:        19 April 2022
+ * $Revision:    V.2.0.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -47,17 +47,17 @@
  *
  */
 
-arm_status arm_convolve_wrapper_s16(const cmsis_nn_context *ctx,
-                                    const cmsis_nn_conv_params *conv_params,
-                                    const cmsis_nn_per_channel_quant_params *quant_params,
-                                    const cmsis_nn_dims *input_dims,
-                                    const q15_t *input_data,
-                                    const cmsis_nn_dims *filter_dims,
-                                    const q7_t *filter_data,
-                                    const cmsis_nn_dims *bias_dims,
-                                    const int64_t *bias_data,
-                                    const cmsis_nn_dims *output_dims,
-                                    q15_t *output_data)
+arm_cmsis_nn_status arm_convolve_wrapper_s16(const cmsis_nn_context *ctx,
+                                             const cmsis_nn_conv_params *conv_params,
+                                             const cmsis_nn_per_channel_quant_params *quant_params,
+                                             const cmsis_nn_dims *input_dims,
+                                             const q15_t *input_data,
+                                             const cmsis_nn_dims *filter_dims,
+                                             const q7_t *filter_data,
+                                             const cmsis_nn_dims *bias_dims,
+                                             const int64_t *bias_data,
+                                             const cmsis_nn_dims *output_dims,
+                                             q15_t *output_data)
 {
 #if defined(ARM_MATH_DSP) && !defined(ARM_MATH_MVEI)
     if (filter_dims->w * filter_dims->h * input_dims->c < 512 &&
