@@ -26,17 +26,19 @@ jobs:
       contents: read
       security-events: write
     env:
-      CMSIS_PACK_ROOT: /github/home/.packs
+      CMSIS_PACK_ROOT: ${{ github.workspace }}/.packs
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
+      with:
+        path: CMSIS_5
 
     - run: |
         sudo apt install gcc-arm-none-eabi
 
     - run: |
-        wget https://github.com/Open-CMSIS-Pack/cmsis-toolbox/releases/download/1.1.0/cmsis-toolbox.sh
+        wget https://github.com/Open-CMSIS-Pack/cmsis-toolbox/releases/download/1.2.0/cmsis-toolbox.sh
         chmod +x cmsis-toolbox.sh
         sudo ./cmsis-toolbox.sh <<EOI
         /opt/ctools
@@ -59,7 +61,7 @@ jobs:
         queries: security-and-quality
 
     - run: |
-        cd CMSIS/CoreValidation/Project
+        cd CMSIS_5/CMSIS/CoreValidation/Project
         pip install -r requirements.txt
         cpackget init https://www.keil.com/pack/index.pidx
         cpackget add -a -f cpacklist.txt
