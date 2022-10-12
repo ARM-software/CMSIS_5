@@ -21,16 +21,37 @@ jobs:
   analyze:
     name: Analyze
     runs-on: ubuntu-latest
-    container: 
+    container:
       image: ghcr.io/jonatanantoni/cmsis/linux.gnu:latest
     permissions:
       actions: read
       contents: read
       security-events: write
+    env:
+      CMSIS_PACK_ROOT: /github/home/.packs
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
+
+    - run: |
+        sudo apt install gcc-arm-none-eabi
+
+    - run: |
+        wget https://github.com/Open-CMSIS-Pack/cmsis-toolbox/releases/download/1.1.0/cmsis-toolbox.sh
+        chmod +x cmsis-toolbox.sh
+        sudo ./cmsis-toolbox.sh <<EOI
+        /opt/ctools
+        $CMSIS_PACK_ROOT
+        $(dirname $(which armclang 2>/dev/null))
+        $(dirname $(which armcc 2>/dev/null))
+        $(dirname $(which arm-none-eabi-gcc 2>/dev/null))
+
+        EOI
+        echo "/opt/ctools/bin" >> $GITHUB_PATH
+        echo "cpackget : $(which cpackget)"
+        echo "csolution: $(which csolution)"
+        echo "cbuild   : $(which cbuild)"
 
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
@@ -38,11 +59,13 @@ jobs:
       with:
         languages: cpp
         queries: security-and-quality
-  
+
     - run: |
-       ln -s /root/.rtebuild /github/home/.rtebuild
-       cd CMSIS/CoreValidation/Tests
-       python3 build.py -c GCC -o low build
+        cd CMSIS/CoreValidation/Project
+        pip install -r requirements.txt
+        cpackget init https://www.keil.com/pack/index.pidx
+        cpackget add -a -f cpacklist.txt
+        python build.py --verbose -c GCC -d "CM[047]*" -d "CM[23]3*" -o low build || echo "Something failed!"
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2

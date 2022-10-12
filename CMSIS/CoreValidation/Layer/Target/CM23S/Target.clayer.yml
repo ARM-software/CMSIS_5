@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Open-CMSIS-Pack/devtools/schemas/projmgr/1.1.0/tools/projmgr/schemas/clayer.schema.json
+
+layer:
+  # type: Target
+  description: Target setup
+
+  # packs:
+  #   - pack: ARM::CMSIS
+
+  components:
+    # [Cvendor::] Cclass [&Cbundle] :Cgroup [:Csub] [&Cvariant] [@[>=]Cversion]
+    - component: ARM::CMSIS:CORE
+    - component: Device:Startup&C Startup
+
+  groups:
+    - group: VHT/FVP
+      files:
+        - file: ./model_config.txt
