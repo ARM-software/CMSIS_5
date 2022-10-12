@@ -21,8 +21,6 @@ jobs:
   analyze:
     name: Analyze
     runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/jonatanantoni/cmsis/linux.gnu:latest
     permissions:
       actions: read
       contents: read
@@ -43,8 +41,8 @@ jobs:
         sudo ./cmsis-toolbox.sh <<EOI
         /opt/ctools
         $CMSIS_PACK_ROOT
-        $(dirname $(which armclang 2>/dev/null))
-        $(dirname $(which armcc 2>/dev/null))
+
+
         $(dirname $(which arm-none-eabi-gcc 2>/dev/null))
 
         EOI
