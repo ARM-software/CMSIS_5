@@ -1,0 +1,78 @@
+# The repository needs to provide the following secrets
+# - AWS_DEFAULT_REGION          The data center region to be used.
+# - AWS_S3_BUCKET_NAME          The name of the S3 storage bucket to be used for data exchange.
+# - AWS_IAM_PROFILE             The IAM profile to be used.
+# - AWS_ASSUME_ROLE             The AWS access role to be assumed.
+# - AWS_SECURITY_GROUP_ID       The id of the security group to add the EC2 instance to.
+# - AWS_SUBNET_ID               The id of the network subnet to connect the EC2 instance to.
+
+name: CoreValidation
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    paths:
+      - .github/workflows/corevalidation.yml
+      - CMSIS/Core/**/*
+      - CMSIS/Core_A/**/*
+      - CMSIS/CoreValidation/**/*
+      - Device/ARM/**/*
+  workflow_dispatch:
+
+env:
+  AWS_S3_BUCKET_NAME: ${{ secrets.AWS_S3_BUCKET_NAME }}
+  AWS_IAM_PROFILE: ${{ secrets.AWS_IAM_PROFILE }}
+  AWS_SECURITY_GROUP_ID: ${{ secrets.AWS_SECURITY_GROUP_ID }}
+  AWS_SUBNET_ID: ${{ secrets.AWS_SUBNET_ID }}
+jobs:
+  ci_test:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    outputs:
+      avhresult: ${{ steps.avh.conclusion }}
+      testbadge: ${{ steps.avh.outputs.badge }}
+    steps:
+    - name: Check out repository code
+      uses: actions/checkout@v3
+
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.10'
+
+    - name: Install AVH Client for Python
+      run: |
+        pip install git+https://github.com/ARM-software/avhclient.git@v0.1
+
+    - uses: ammaraskar/gcc-problem-matcher@master
+
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        role-to-assume: ${{ secrets.AWS_ASSUME_ROLE }}
+        aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+
+    - name: Run tests
+      id: avh
+      run: |
+        avhclient -b aws execute --specfile CMSIS/CoreValidation/Project/avh.yml
+
+    - name: Archive build results
+      uses: actions/upload-artifact@v2
+      with:
+        name: builds
+        path: CMSIS/CoreValidation/Project/Core_Validation-*.zip
+        retention-days: 1
+        if-no-files-found: error
+      if: always()
+
+    - name: Archive test results
+      uses: actions/upload-artifact@v2
+      with:
+        name: tests
+        path: CMSIS/CoreValidation/Project/Core_Validation-*.junit
+        retention-days: 1
+        if-no-files-found: error
+      if: always()
