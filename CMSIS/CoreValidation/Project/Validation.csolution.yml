@@ -188,7 +188,7 @@ solution:
       compiler: GCC
       misc:
         - compiler: GCC
-          C: [-Oz]
+          C: [-Ofast]
 
   projects:
     - project: ./Validation.cproject.yml
@@ -203,6 +203,5 @@ solution:
 
   output-dirs:
     cprjdir: ./$Project$.$BuildType$+$TargetType$
-    rtedir:  ./$Project$.$BuildType$+$TargetType$/RTE
     intdir:  ./$Project$.$BuildType$+$TargetType$/$Project$.$BuildType$+$TargetType$_intdir
     outdir:  ./$Project$.$BuildType$+$TargetType$/$Project$.$BuildType$+$TargetType$_outdir
