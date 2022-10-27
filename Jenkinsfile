@@ -112,7 +112,7 @@ VERSION = null
 artifactory = new ArtifactoryHelper(this)
 
 pipeline {
-    agent { label 'master' }
+    agent { label 'build-in' }
     options {
         timestamps()
         timeout(time: 1, unit: 'HOURS')
