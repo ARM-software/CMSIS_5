@@ -2207,7 +2207,7 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- IRQ Controller -->
-    <component Cclass="Device" Cgroup="IRQ Controller" Csub="GIC" Capiversion="1.0.0" Cversion="1.0.1" condition="ARMv7-A Device">
+    <component Cclass="Device" Cgroup="IRQ Controller" Csub="GIC" Capiversion="1.0.0" Cversion="1.2.0" condition="ARMv7-A Device">
       <description>IRQ Controller implementation using GIC</description>
       <files>
         <file category="sourceC" name="CMSIS/Core_A/Source/irq_ctrl_gic.c"/>
