@@ -4,7 +4,6 @@
 DEPENDENCIES_FOLDER=dependenciesFiles
 ARTIFACTORY_URL=https://eu-west-1.artifactory.aws.arm.com:443/artifactory
 ARTIFACTORY_DEPOT=mcu.depot/ci/depot
-PACKCHK_VERSION=1.3.93
 
 if [ -z "$ARTIFACTORY_API_KEY" ]; then
     echo "Please set your Artifactory ARTIFACTORY_API_KEY"
@@ -59,7 +58,6 @@ downloadFromDepot "ArmCompiler-6.16-linux-x86_64.sh"
 downloadFromDepot "ArmCompiler-6.6.4-linux-x86_64.sh"
 downloadFromDepot "gcc-arm-none-eabi-10-2020-q4-major-x86_64-linux.tar.bz2"
 downloadFromDepot "fvp-11.12-linux-x86_64.tar.gz"
-downloadFromArtifactory "mcu.promoted/staging/devtools/tools/packchk/${PACKCHK_VERSION}/linux64/PackChk"
 
 gitClone "ssh://${USER}@eu-gerrit-1.euhpc.arm.com:29418/dsg/cmsis/buildtools" "buildtools" "master"
 
