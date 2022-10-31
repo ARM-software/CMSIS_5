@@ -232,32 +232,8 @@ echo """Stage schedule:
                 expression { return (isPrecommit || isPostcommit) && DOCKER_BUILD }
                 beforeOptions true
             }
-            agent {
-                kubernetes {
-                    defaultContainer 'docker-dind'
-                    slaveConnectTimeout 600
-                    yaml """\
-                        apiVersion: v1
-                        kind: Pod
-                        spec:
-                          imagePullSecrets:
-                            - name: artifactory-mcu-docker
-                          containers:
-                            - name: docker-dind
-                              image: docker:dind
-                              securityContext:
-                                privileged: true
-                              volumeMounts:
-                                - name: dind-storage
-                                  mountPath: /var/lib/docker
-                          volumes:
-                            - name: dind-storage
-                              emptyDir: {}
-                        """.stripIndent()
-                }
-            }
+            agent { label "Docker-Build" }
             steps {
-                sh('apk add bash curl git')
                 script {
                     unstash 'dockerfile'
 
@@ -427,30 +403,7 @@ echo """Stage schedule:
                 expression { return isPostcommit && DOCKER_BUILD }
                 beforeOptions true
             }
-            agent {
-                kubernetes {
-                    defaultContainer 'docker-dind'
-                    slaveConnectTimeout 600
-                    yaml """\
-                        apiVersion: v1
-                        kind: Pod
-                        spec:
-                          imagePullSecrets:
-                            - name: artifactory-mcu-docker
-                          containers:
-                            - name: docker-dind
-                              image: docker:dind
-                              securityContext:
-                                privileged: true
-                              volumeMounts:
-                                - name: dind-storage
-                                  mountPath: /var/lib/docker
-                          volumes:
-                            - name: dind-storage
-                              emptyDir: {}
-                        """.stripIndent()
-                }
-            }
+            agent { label 'Docker-Build' }
             steps {
                 script {
                     String postCommitTag = "${dockerinfo['registryUrl']}/${dockerinfo['image']}:${dockerinfo['label']}"
