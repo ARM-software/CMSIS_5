@@ -57,9 +57,7 @@ CONFIGURATIONS = [
         'adevices': ['CA7', 'CA9'],
         'devices' : [],
         'configs' : [
-            'AC5': ['low', 'tiny'],
             'AC6': ['low', 'tiny'],
-            'AC6LTM': ['low', 'tiny'],
             'GCC': ['low', 'tiny']
         ]
     ],
@@ -70,9 +68,7 @@ CONFIGURATIONS = [
             'CM85S', 'CM85NS',
             'CA5', 'CA7', 'CA9'],
         'configs' : [
-            'AC5': ['low', 'tiny'],
             'AC6': ['low', 'tiny'],
-            'AC6LTM': ['low', 'tiny'],
             'GCC': ['low', 'tiny']
         ]
     ],
@@ -83,9 +79,7 @@ CONFIGURATIONS = [
             'CM85S', 'CM85NS',
             'CA5', 'CA7', 'CA9'],
         'configs' : [
-            'AC5': ['low', 'mid', 'high', 'size', 'tiny'],
             'AC6': ['low', 'mid', 'high', 'size', 'tiny'],
-            'AC6LTM': ['low', 'mid', 'high', 'size', 'tiny'],
             'GCC': ['low', 'mid', 'high', 'size', 'tiny']
         ]
     ],
@@ -416,9 +410,7 @@ echo """Stage schedule:
                         CONFIGURATION['devices'].each { unstash "CV_${it}" }
                     }
 
-                    recordIssues tools: [armCc(id: 'AC5', name: 'Arm Compiler 5', pattern: 'CV_AC5_*.log'),
-                                         clang(id: 'AC6', name: 'Arm Compiler 6', pattern: 'CV_AC6_*.log'),
-                                         clang(id: 'AC6LTM', name: 'Arm Compiler 6 LTM', pattern: 'CV_AC6LTM_*.log'),
+                    recordIssues tools: [clang(id: 'AC6', name: 'Arm Compiler 6', pattern: 'CV_AC6_*.log'),
                                          gcc(id: 'GCC', name: 'GNU Compiler', pattern: 'CV_GCC_*.log')],
                                  qualityGates: [[threshold: 1, type: 'DELTA', unstable: true]],
                                  referenceJobName: 'nightly', ignoreQualityGate: true
