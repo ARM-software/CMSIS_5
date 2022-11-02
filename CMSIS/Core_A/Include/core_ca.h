@@ -1,11 +1,11 @@
 /**************************************************************************//**
  * @file     core_ca.h
  * @brief    CMSIS Cortex-A Core Peripheral Access Layer Header File
- * @version  V1.0.3
- * @date     28. January 2020
+ * @version  V1.0.4
+ * @date     27. October 2022
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2020 ARM Limited. All rights reserved.
+ * Copyright (c) 2009-2022 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -830,8 +830,57 @@ typedef struct
   __OM  uint32_t WDISABLE;        //!< \brief  Offset: 0x034 ( /W) Watchdog Disable Register
 } Timer_Type;
 #define PTIM ((Timer_Type *) TIMER_BASE )   /*!< \brief Timer register struct */
-#endif
-#endif
+
+/* PTIM Control Register */
+#define PTIM_CONTROL_Enable_Pos             0U                                         /*!< PTIM CONTROL: Enable Position */
+#define PTIM_CONTROL_Enable_Msk             (0x1U /*<< PTIM_CONTROL_Enable_Pos*/)      /*!< PTIM CONTROL: Enable Mask */
+#define PTIM_CONTROL_Enable(x)              (((uint32_t)(((uint32_t)(x)) /*<< PTIM_CONTROL_Enable_Pos*/)) & PTIM_CONTROL_Enable_Msk)
+
+#define PTIM_CONTROL_AutoReload_Pos         1U                                         /*!< PTIM CONTROL: Auto Reload Position */
+#define PTIM_CONTROL_AutoReload_Msk         (0x1U << PTIM_CONTROL_AutoReload_Pos)      /*!< PTIM CONTROL: Auto Reload Mask */
+#define PTIM_CONTROL_AutoReload(x)          (((uint32_t)(((uint32_t)(x)) << PTIM_CONTROL_AutoReload_Pos)) & PTIM_CONTROL_AutoReload_Msk)
+
+#define PTIM_CONTROL_IRQenable_Pos          2U                                         /*!< PTIM CONTROL: IRQ Enabel Position */
+#define PTIM_CONTROL_IRQenable_Msk          (0x1U << PTIM_CONTROL_IRQenable_Pos)       /*!< PTIM CONTROL: IRQ Enabel Mask */
+#define PTIM_CONTROL_IRQenable(x)           (((uint32_t)(((uint32_t)(x)) << PTIM_CONTROL_IRQenable_Pos)) & PTIM_CONTROL_IRQenable_Msk)
+
+#define PTIM_CONTROL_Prescaler_Pos          8U                                         /*!< PTIM CONTROL: Prescaler Position */
+#define PTIM_CONTROL_Prescaler_Msk          (0xFFU << PTIM_CONTROL_Prescaler_Pos)      /*!< PTIM CONTROL: Prescaler Mask */
+#define PTIM_CONTROL_Prescaler(x)           (((uint32_t)(((uint32_t)(x)) << PTIM_CONTROL_Prescaler_Pos)) & PTIM_CONTROL_Prescaler_Msk)
+
+/* WCONTROL Watchdog Control Register */
+#define PTIM_WCONTROL_Enable_Pos            0U                                         /*!< PTIM WCONTROL: Enable Position */
+#define PTIM_WCONTROL_Enable_Msk            (0x1U /*<< PTIM_WCONTROL_Enable_Pos*/)     /*!< PTIM WCONTROL: Enable Mask */
+#define PTIM_WCONTROL_Enable(x)             (((uint32_t)(((uint32_t)(x)) /*<< PTIM_WCONTROL_Enable_Pos*/)) & PTIM_WCONTROL_Enable_Msk)
+
+#define PTIM_WCONTROL_AutoReload_Pos        1U                                         /*!< PTIM WCONTROL: Auto Reload Position */
+#define PTIM_WCONTROL_AutoReload_Msk        (0x1U << PTIM_WCONTROL_AutoReload_Pos)     /*!< PTIM WCONTROL: Auto Reload Mask */
+#define PTIM_WCONTROL_AutoReload(x)         (((uint32_t)(((uint32_t)(x)) << PTIM_WCONTROL_AutoReload_Pos)) & PTIM_WCONTROL_AutoReload_Msk)
+
+#define PTIM_WCONTROL_IRQenable_Pos         2U                                         /*!< PTIM WCONTROL: IRQ Enable Position */
+#define PTIM_WCONTROL_IRQenable_Msk         (0x1U << PTIM_WCONTROL_IRQenable_Pos)      /*!< PTIM WCONTROL: IRQ Enable Mask */
+#define PTIM_WCONTROL_IRQenable(x)          (((uint32_t)(((uint32_t)(x)) << PTIM_WCONTROL_IRQenable_Pos)) & PTIM_WCONTROL_IRQenable_Msk)
+
+#define PTIM_WCONTROL_Mode_Pos              3U                                         /*!< PTIM WCONTROL: Watchdog Mode Position */
+#define PTIM_WCONTROL_Mode_Msk              (0x1U << PTIM_WCONTROL_Mode_Pos)           /*!< PTIM WCONTROL: Watchdog Mode Mask */
+#define PTIM_WCONTROL_Mode(x)               (((uint32_t)(((uint32_t)(x)) << PTIM_WCONTROL_Mode_Pos)) & PTIM_WCONTROL_Mode_Msk)
+
+#define PTIM_WCONTROL_Presacler_Pos         8U                                         /*!< PTIM WCONTROL: Prescaler Position */
+#define PTIM_WCONTROL_Presacler_Msk         (0xFFU << PTIM_WCONTROL_Presacler_Pos)     /*!< PTIM WCONTROL: Prescaler Mask */
+#define PTIM_WCONTROL_Presacler(x)          (((uint32_t)(((uint32_t)(x)) << PTIM_WCONTROL_Presacler_Pos)) & PTIM_WCONTROL_Presacler_Msk)
+
+/* WISR Watchdog Interrupt Status Register */
+#define PTIM_WISR_EventFlag_Pos             0U                                         /*!< PTIM WISR: Event Flag Position */
+#define PTIM_WISR_EventFlag_Msk             (0x1U /*<< PTIM_WISR_EventFlag_Pos*/)      /*!< PTIM WISR: Event Flag Mask */
+#define PTIM_WISR_EventFlag(x)              (((uint32_t)(((uint32_t)(x)) /*<< PTIM_WISR_EventFlag_Pos*/)) & PTIM_WISR_EventFlag_Msk)
+
+/* WRESET Watchdog Reset Status */
+#define PTIM_WRESET_ResetFlag_Pos           0U                                         /*!< PTIM WRESET: Reset Flag Position */
+#define PTIM_WRESET_ResetFlag_Msk           (0x1U /*<< PTIM_WRESET_ResetFlag_Pos*/)    /*!< PTIM WRESET: Reset Flag Mask */
+#define PTIM_WRESET_ResetFlag(x)            (((uint32_t)(((uint32_t)(x)) /*<< PTIM_WRESET_ResetFlag_Pos*/)) & PTIM_WRESET_ResetFlag_Msk)
+
+#endif /* ((__CORTEX_A == 5U) || (__CORTEX_A == 9U)) || defined(DOXYGEN) */
+#endif /* (__TIM_PRESENT == 1U) || defined(DOXYGEN) */
 
  /*******************************************************************************
   *                Hardware Abstraction Layer
