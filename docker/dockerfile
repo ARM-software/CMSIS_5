@@ -9,9 +9,14 @@ FROM ${DOCKER_REGISTRY}/ubuntu:focal
 RUN useradd -u 1000 -U -m -c Jenkins jenkins
 
 # install packages from official Ubuntu repo
+# software-properties-common, ppa:deadsnakes/ppa for python 3.9-dev
+# there is hard requirement for python3.9 for VHT models
 ENV DEBIAN_FRONTEND=noninteractive
 # hadolint ignore=DL3008
 RUN apt-get update && \
+    apt-get install software-properties-common -y && \
+    add-apt-repository ppa:deadsnakes/ppa -y && \
+    apt-get upgrade -y && \
     apt-get install --no-install-recommends -y \
         bc \
         build-essential \
@@ -20,11 +25,14 @@ RUN apt-get update && \
         git \
         lib32stdc++6 \
         mscgen \
+        ninja-build \
         p7zip-full \
-        python3 \
         python3-pip \
+        python3.9-dev \
+        python3 \
         tar \
         unzip \
+        vim \
         wget \
         libxml2-utils \
         zip && \
@@ -39,6 +47,7 @@ ARG ARMCLANGLTM=ArmCompiler-6.6.4-linux-x86_64.sh
 ARG GCC=gcc-arm-none-eabi-10-2020-q4-major-x86_64-linux.tar.bz2
 ARG DOXYGEN=doxygen_1.8.6-2_amd64.deb
 ARG FASTMODELS=fvp-11.12-linux-x86_64.tar.gz
+ARG VHTMODELS=vht-11.18-linux-x86_64.tar.gz
 
 # Including dependency folder
 ARG DEPENDENCIESFOLDER=dependenciesFiles
@@ -76,6 +85,24 @@ RUN tar -xvf ${INSTALLER_PATH}/${FASTMODELS}
 ENV PATH=${PATH}:${TOOLS_PATH}/fvp
 WORKDIR /
 
+# install vht models 11.18
+RUN mkdir -p ${TOOLS_PATH}/vht/
+WORKDIR ${TOOLS_PATH}/vht/
+RUN tar -xvf ${INSTALLER_PATH}/${VHTMODELS}
+RUN chmod -R 777 ${TOOLS_PATH}/vht/
+ENV PATH=${PATH}:${TOOLS_PATH}/vht
+ENV LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${TOOLS_PATH}/vht
+WORKDIR /
+
+# install cmake
+ARG CMAKE_VERSION=3.24.3
+RUN mkdir -p ${TOOLS_PATH}/cmake/ && \
+    wget https://github.com/Kitware/CMake/releases/download/v${CMAKE_VERSION}/cmake-${CMAKE_VERSION}-linux-x86_64.sh && \
+    chmod +x cmake-${CMAKE_VERSION}-linux-x86_64.sh && \
+    ./cmake-${CMAKE_VERSION}-linux-x86_64.sh --prefix=${TOOLS_PATH}/cmake/ --skip-license && \
+    rm -rf cmake-${CMAKE_VERSION}-linux-x86_64.sh
+ENV PATH=${PATH}:${TOOLS_PATH}/cmake/bin
+
 # install doxygen
 RUN dpkg -i ${INSTALLER_PATH}/${DOXYGEN}
 
@@ -83,16 +110,13 @@ RUN dpkg -i ${INSTALLER_PATH}/${DOXYGEN}
 ENV CMSIS_PACK_ROOT=${HOME}/.packs
 RUN wget https://github.com/Open-CMSIS-Pack/cmsis-toolbox/releases/download/1.2.0/cmsis-toolbox-linux64.tar.gz && \
     tar -xvf cmsis-toolbox-linux64.tar.gz && \
-    sed -i -e 's/set(TOOLCHAIN_ROOT "[^"]*")/set(TOOLCHAIN_ROOT "${CI_ARMCC5_TOOLCHAIN_ROOT}")/' cmsis-toolbox-linux64/etc/AC5.5.6.7.cmake && \
-    sed -i -e 's/set(TOOLCHAIN_ROOT "[^"]*")/set(TOOLCHAIN_ROOT "${CI_ARMCC6_TOOLCHAIN_ROOT}")/' cmsis-toolbox-linux64/etc/AC6.6.18.0.cmake && \
-    sed -i -e 's/set(TOOLCHAIN_ROOT "[^"]*")/set(TOOLCHAIN_ROOT "${CI_GCC_TOOLCHAIN_ROOT}")/' cmsis-toolbox-linux64/etc/GCC.11.2.1.cmake && \
-    sed -i -e 's/set(TOOLCHAIN_ROOT "[^"]*")/set(TOOLCHAIN_ROOT "")/' cmsis-toolbox-linux64/etc/IAR.8.50.6.cmake && \
+    sed -i -e 's|set(TOOLCHAIN_ROOT "[^"]*")|set(TOOLCHAIN_ROOT "'${CI_ARMCC5_TOOLCHAIN_ROOT}'")|' cmsis-toolbox-linux64/etc/AC5.5.6.7.cmake && \
+    sed -i -e 's|set(TOOLCHAIN_ROOT "[^"]*")|set(TOOLCHAIN_ROOT "'${CI_ARMCC6_TOOLCHAIN_ROOT}'")|' cmsis-toolbox-linux64/etc/AC6.6.18.0.cmake && \
+    sed -i -e 's|set(TOOLCHAIN_ROOT "[^"]*")|set(TOOLCHAIN_ROOT "'${CI_GCC_TOOLCHAIN_ROOT}'")|' cmsis-toolbox-linux64/etc/GCC.11.2.1.cmake && \
+    sed -i -e 's|set(TOOLCHAIN_ROOT "[^"]*")|set(TOOLCHAIN_ROOT "")|' cmsis-toolbox-linux64/etc/IAR.8.50.6.cmake && \
     mv cmsis-toolbox-linux64 ${TOOLS_PATH}/cmsis-toolbox && \
     rm -f cmsis-toolbox-linux64.tar.gz
 ENV PATH=${PATH}:${TOOLS_PATH}/cmsis-toolbox/bin
-
-# install PackChk for backward compatibility
-RUN ln -s $(which packchk) /usr/local/bin/PackChk
 
 # install Python requirements
 COPY requirements.txt ${INSTALLER_PATH}/

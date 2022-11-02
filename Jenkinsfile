@@ -119,9 +119,10 @@ pipeline {
     environment {
         CI_ACCOUNT          = credentials('grasci')
         ARTIFACTORY         = credentials('artifactory')
-        USER                = "${CI_ACCOUNT_USR}"
-        PASS                = "${CI_ACCOUNT_PSW}"
+        ARTIFACTORY_USER    = "${CI_ACCOUNT_USR}"
+        ARTIFACTORY_PASS    = "${CI_ACCOUNT_PSW}"
         ARTIFACTORY_API_KEY = "${ARTIFACTORY_PSW}"
+        DOCKER_REGISTRY     = 'mirrors--dockerhub.eu-west-1.artifactory.aws.arm.com'
     }
     stages {
         stage('Checkout') {
@@ -246,7 +247,7 @@ echo """Stage schedule:
                             sh("GIT_SSH_COMMAND='ssh -i $grasciPk -o StrictHostKeyChecking=no' ./getDependencies.sh")
                         }
                         docker.withRegistry("https://${dockerinfo['registryUrl']}", dockerinfo['registryCredentialsId']) {
-                            def image = docker.build("${dockerinfo['registryUrl']}/${dockerinfo['image']}:${dockerinfo['label']}", "--build-arg DOCKER_REGISTRY=${dockerinfo['registryUrl']} .")
+                            def image = docker.build("${dockerinfo['registryUrl']}/${dockerinfo['image']}:${dockerinfo['label']}", "--build-arg DOCKER_REGISTRY .")
                             image.push()
                         }
                     }
@@ -386,7 +387,9 @@ echo """Stage schedule:
                         CONFIGURATION['devices'].each { unstash "CV_${it}" }
                     }
 
-                    recordIssues tools: [clang(id: 'AC6', name: 'Arm Compiler 6', pattern: 'CV_AC6_*.log'),
+                    recordIssues tools: [armCc(id: 'AC5', name: 'Arm Compiler 5', pattern: 'CV_AC5_*.log'),
+                                         clang(id: 'AC6', name: 'Arm Compiler 6', pattern: 'CV_AC6_*.log'),
+                                         clang(id: 'AC6LTM', name: 'Arm Compiler 6 LTM', pattern: 'CV_AC6LTM_*.log'),
                                          gcc(id: 'GCC', name: 'GNU Compiler', pattern: 'CV_GCC_*.log')],
                                  qualityGates: [[threshold: 1, type: 'DELTA', unstable: true]],
                                  referenceJobName: 'nightly', ignoreQualityGate: true

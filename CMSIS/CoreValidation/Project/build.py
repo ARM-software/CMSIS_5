@@ -144,8 +144,12 @@ def bl_output_dir(config):
     return f"{bl_project_name(config)}_outdir"
 
 
+def target_layer_dir(config):
+    return f"../Layer/Target/{config.device[1]}"
+
+
 def model_config(config):
-    return f"../Layer/Target/{config.device[1]}/model_config.txt"
+    return f"{target_layer_dir(config)}/model_config.txt"
 
 
 @matrix_action
@@ -166,7 +170,7 @@ def build(config, results):
     logging.info("Compiling Tests...")
 
     if config.compiler == CompilerAxis.GCC and  config.device.match("CA*"):
-        ldfile = Path(f"{project_name(config)}/RTE/Device/ARM{config.device[1]}/ARM{config.device[1]}.ld")
+        ldfile = Path(f"{target_layer_dir(config)}/RTE/Device/ARM{config.device[1]}/ARM{config.device[1]}.ld")
         infile = ldfile.replace(ldfile.with_suffix('.ld.in'))
         yield preprocess(infile, ldfile)
 

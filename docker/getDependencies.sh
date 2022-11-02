@@ -10,7 +10,7 @@ if [ -z "$ARTIFACTORY_API_KEY" ]; then
     exit 1
 fi
 
-if [ -z "$USER" ]; then
+if [ -z "$ARTIFACTORY_USER" ]; then
     echo "Please set your short ARM user e.g. sampel01"
     exit 1
 fi
@@ -58,7 +58,8 @@ downloadFromDepot "ArmCompiler-6.16-linux-x86_64.sh"
 downloadFromDepot "ArmCompiler-6.6.4-linux-x86_64.sh"
 downloadFromDepot "gcc-arm-none-eabi-10-2020-q4-major-x86_64-linux.tar.bz2"
 downloadFromDepot "fvp-11.12-linux-x86_64.tar.gz"
+downloadFromDepot "vht-11.18-linux-x86_64.tar.gz"
 
-gitClone "ssh://${USER}@eu-gerrit-1.euhpc.arm.com:29418/dsg/cmsis/buildtools" "buildtools" "master"
+gitClone "ssh://${ARTIFACTORY_USER}@eu-gerrit-1.euhpc.arm.com:29418/dsg/cmsis/buildtools" "buildtools" "master"
 
 popd || exit
