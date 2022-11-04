@@ -75,7 +75,7 @@ __WEAK int32_t IRQ_SetHandler (IRQn_ID_t irqn, IRQHandler_t handler) {
 __WEAK void IRQ_Handler (void) {
   IRQn_Type irqn = GIC_AcknowledgePending ();
   if (irqn < (IRQn_Type)IRQ_GIC_LINE_COUNT) {
-    IrqTable[irqn]();
+    IRQTable[irqn]();
   }
   GIC_EndInterrupt (irqn);
 }
