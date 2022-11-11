@@ -49,8 +49,30 @@ jobs:
       avhresult: ${{ steps.avh.conclusion }}
       testbadge: ${{ steps.avh.outputs.badge }}
     steps:
-    - name: Check out repository code
+    - name: Download workflow artifact
+      uses: dawidd6/action-download-artifact@v2
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        workflow: caller-corevalidation.yml
+        run_id: ${{ github.event.workflow_run.id }}
+
+    - name: Read the pr_num file
+      id: pr_num_reader
+      uses: juliangruber/read-file-action@v1.1.6
+      with:
+        path: ./pr_number/pr_number
+        trim: true
+
+    - name: Clone this repo
       uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Checkout PR
+      env:
+        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      run: |
+        gh pr checkout ${{ steps.pr_num_reader.outputs.content }}
 
     - name: Set up Python 3.10
       uses: actions/setup-python@v4
