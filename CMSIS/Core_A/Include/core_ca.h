@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     core_ca.h
  * @brief    CMSIS Cortex-A Core Peripheral Access Layer Header File
- * @version  V1.0.4
- * @date     27. October 2022
+ * @version  V1.0.5
+ * @date     13. November 2022
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2022 ARM Limited. All rights reserved.
@@ -46,8 +46,8 @@
                                    __CA_CMSIS_VERSION_SUB          )       /*!< \brief CMSIS-Core(A) version number         */
 
 #if defined ( __CC_ARM )
-  #if defined __TARGET_FPU_VFP
-    #if (__FPU_PRESENT == 1)
+  #if defined (__TARGET_FPU_VFP)
+    #if defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)
       #define __FPU_USED       1U
     #else
       #warning "Compiler generates FPU instructions for a device without an FPU (check __FPU_PRESENT)"
@@ -58,7 +58,7 @@
   #endif
 
 #elif defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
-  #if defined __ARM_FP
+  #if defined (__ARM_FP)
     #if defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)
       #define __FPU_USED       1U
     #else
@@ -70,8 +70,8 @@
   #endif
 
 #elif defined ( __ICCARM__ )
-  #if defined __ARMVFP__
-    #if (__FPU_PRESENT == 1)
+  #if defined (__ARMVFP__)
+    #if defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)
       #define __FPU_USED       1U
     #else
       #warning "Compiler generates FPU instructions for a device without an FPU (check __FPU_PRESENT)"
@@ -83,7 +83,7 @@
 
 #elif defined ( __TMS470__ )
   #if defined __TI_VFP_SUPPORT__
-    #if (__FPU_PRESENT == 1)
+    #if defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)
       #define __FPU_USED       1U
     #else
       #warning "Compiler generates FPU instructions for a device without an FPU (check __FPU_PRESENT)"
@@ -95,7 +95,7 @@
 
 #elif defined ( __GNUC__ )
   #if defined (__VFP_FP__) && !defined(__SOFTFP__)
-    #if (__FPU_PRESENT == 1)
+    #if defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)
       #define __FPU_USED       1U
     #else
       #warning "Compiler generates FPU instructions for a device without an FPU (check __FPU_PRESENT)"
@@ -106,8 +106,8 @@
   #endif
 
 #elif defined ( __TASKING__ )
-  #if defined __FPU_VFP__
-    #if (__FPU_PRESENT == 1)
+  #if defined (__FPU_VFP__)
+    #if defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)
       #define __FPU_USED       1U
     #else
       #error "Compiler generates FPU instructions for a device without an FPU (check __FPU_PRESENT)"
