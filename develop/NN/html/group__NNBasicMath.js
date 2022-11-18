@@ -2,9 +2,9 @@ var group__NNBasicMath =
 [
     [ "arm_nn_accumulate_q7_to_q15", "group__NNBasicMath.html#ga379c39e614f1468e1fdb524f51fb6061", null ],
     [ "arm_nn_add_q7", "group__NNBasicMath.html#gae65bde3218210820d789659179e14ce3", null ],
-    [ "arm_nn_depthwise_conv_nt_t_padded_s8", "group__NNBasicMath.html#gaf7e914e84c2fa6bcf9b0727b8c46c250", null ],
+    [ "arm_nn_depthwise_conv_nt_t_padded_s8", "group__NNBasicMath.html#ga24c66d123320bd578d0d393a07f61ae4", null ],
     [ "arm_nn_depthwise_conv_nt_t_s16", "group__NNBasicMath.html#gaf4e238a5ef16167a478d6e076f2207f1", null ],
-    [ "arm_nn_depthwise_conv_nt_t_s8", "group__NNBasicMath.html#ga7f74841dd08196377cc29ce98deb2c12", null ],
+    [ "arm_nn_depthwise_conv_nt_t_s8", "group__NNBasicMath.html#gab055229b0c5322a6682e0b995d316716", null ],
     [ "arm_nn_mat_mul_core_1x_s8", "group__NNBasicMath.html#gada3234313b4c9fefd7c4421d88c4a785", null ],
     [ "arm_nn_mat_mul_core_4x_s8", "group__NNBasicMath.html#ga356c6870ac897816c016e7b77a3b767a", null ],
     [ "arm_nn_mat_mult_nt_t_s8", "group__NNBasicMath.html#ga59ab655606dd4f7a90f573b7479c6dbf", null ],

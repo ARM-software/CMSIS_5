@@ -123,15 +123,15 @@ Functions</h2></td></tr>
 <tr class="memitem:gae65bde3218210820d789659179e14ce3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NNBasicMath.html#gae65bde3218210820d789659179e14ce3">arm_nn_add_q7</a> (const <a class="el" href="arm__nn__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *input, <a class="el" href="arm__nn__math__types_8h.html#adc89a3547f5324b7b3b95adec3806bc0">q31_t</a> *output, uint32_t block_size)</td></tr>
 <tr class="memdesc:gae65bde3218210820d789659179e14ce3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Non-saturating addition of elements of a q7 vector.  <a href="#gae65bde3218210820d789659179e14ce3">More...</a><br/></td></tr>
 <tr class="separator:gae65bde3218210820d789659179e14ce3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf7e914e84c2fa6bcf9b0727b8c46c250"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__nn__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NNBasicMath.html#gaf7e914e84c2fa6bcf9b0727b8c46c250">arm_nn_depthwise_conv_nt_t_padded_s8</a> (const <a class="el" href="arm__nn__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *lhs, const <a class="el" href="arm__nn__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *rhs, const int32_t input_offset, const uint16_t num_ch, const int32_t *out_shift, const int32_t *out_mult, const int32_t out_offset, const int32_t activation_min, const int32_t activation_max, const uint16_t row_x_col, const int32_t *const output_bias, <a class="el" href="arm__nn__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *out)</td></tr>
-<tr class="memdesc:gaf7e914e84c2fa6bcf9b0727b8c46c250"><td class="mdescLeft">&#160;</td><td class="mdescRight">Depthwise convolution of transposed rhs matrix with 4 lhs matrices. To be used in padded cases where the padding is -lhs_offset(Range: int8). Dimensions are the same for lhs and rhs.  <a href="#gaf7e914e84c2fa6bcf9b0727b8c46c250">More...</a><br/></td></tr>
-<tr class="separator:gaf7e914e84c2fa6bcf9b0727b8c46c250"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga24c66d123320bd578d0d393a07f61ae4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__nn__math__types_8h.html#a67ac3e1e650a7040b0f706fb83ea6184">arm_cmsis_nn_status</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NNBasicMath.html#ga24c66d123320bd578d0d393a07f61ae4">arm_nn_depthwise_conv_nt_t_padded_s8</a> (const <a class="el" href="arm__nn__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *lhs, const <a class="el" href="arm__nn__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *rhs, const int32_t input_offset, const int32_t active_ch, const int32_t total_ch, const int32_t *out_shift, const int32_t *out_mult, const int32_t out_offset, const int32_t activation_min, const int32_t activation_max, const uint16_t row_x_col, const int32_t *const output_bias, <a class="el" href="arm__nn__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *out)</td></tr>
+<tr class="memdesc:ga24c66d123320bd578d0d393a07f61ae4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Depthwise convolution of transposed rhs matrix with 4 lhs matrices. To be used in padded cases where the padding is -lhs_offset(Range: int8). Dimensions are the same for lhs and rhs.  <a href="#ga24c66d123320bd578d0d393a07f61ae4">More...</a><br/></td></tr>
+<tr class="separator:ga24c66d123320bd578d0d393a07f61ae4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf4e238a5ef16167a478d6e076f2207f1"><td class="memItemLeft" align="right" valign="top">int16_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NNBasicMath.html#gaf4e238a5ef16167a478d6e076f2207f1">arm_nn_depthwise_conv_nt_t_s16</a> (const int16_t *lhs, const <a class="el" href="arm__nn__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *rhs, const uint16_t num_ch, const int32_t *out_shift, const int32_t *out_mult, const int32_t activation_min, const int32_t activation_max, const uint16_t row_x_col, const int64_t *const output_bias, int16_t *out)</td></tr>
 <tr class="memdesc:gaf4e238a5ef16167a478d6e076f2207f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Depthwise convolution of transposed rhs matrix with 4 lhs matrices. To be used in non-padded cases. Dimensions are the same for lhs and rhs.  <a href="#gaf4e238a5ef16167a478d6e076f2207f1">More...</a><br/></td></tr>
 <tr class="separator:gaf4e238a5ef16167a478d6e076f2207f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7f74841dd08196377cc29ce98deb2c12"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__nn__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NNBasicMath.html#ga7f74841dd08196377cc29ce98deb2c12">arm_nn_depthwise_conv_nt_t_s8</a> (const <a class="el" href="arm__nn__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *lhs, const <a class="el" href="arm__nn__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *rhs, const int32_t input_offset, const uint16_t num_ch, const int32_t *out_shift, const int32_t *out_mult, const int32_t out_offset, const int32_t activation_min, const int32_t activation_max, const uint16_t row_x_col, const int32_t *const output_bias, <a class="el" href="arm__nn__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *out)</td></tr>
-<tr class="memdesc:ga7f74841dd08196377cc29ce98deb2c12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Depthwise convolution of transposed rhs matrix with 4 lhs matrices. To be used in non-padded cases. Dimensions are the same for lhs and rhs.  <a href="#ga7f74841dd08196377cc29ce98deb2c12">More...</a><br/></td></tr>
-<tr class="separator:ga7f74841dd08196377cc29ce98deb2c12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab055229b0c5322a6682e0b995d316716"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__nn__math__types_8h.html#a67ac3e1e650a7040b0f706fb83ea6184">arm_cmsis_nn_status</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NNBasicMath.html#gab055229b0c5322a6682e0b995d316716">arm_nn_depthwise_conv_nt_t_s8</a> (const <a class="el" href="arm__nn__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *lhs, const <a class="el" href="arm__nn__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *rhs, const int32_t input_offset, const int32_t active_ch, const int32_t total_ch, const int32_t *out_shift, const int32_t *out_mult, const int32_t out_offset, const int32_t activation_min, const int32_t activation_max, const uint16_t row_x_col, const int32_t *const output_bias, <a class="el" href="arm__nn__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *out)</td></tr>
+<tr class="memdesc:gab055229b0c5322a6682e0b995d316716"><td class="mdescLeft">&#160;</td><td class="mdescRight">Depthwise convolution of transposed rhs matrix with 4 lhs matrices. To be used in non-padded cases. Dimensions are the same for lhs and rhs.  <a href="#gab055229b0c5322a6682e0b995d316716">More...</a><br/></td></tr>
+<tr class="separator:gab055229b0c5322a6682e0b995d316716"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gada3234313b4c9fefd7c4421d88c4a785"><td class="memItemLeft" align="right" valign="top"><a class="el" href="arm__nn__math__types_8h.html#a67ac3e1e650a7040b0f706fb83ea6184">arm_cmsis_nn_status</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__NNBasicMath.html#gada3234313b4c9fefd7c4421d88c4a785">arm_nn_mat_mul_core_1x_s8</a> (int32_t row_elements, const int32_t skipped_row_elements, const int8_t *row_base_ref, const int8_t *col_base_ref, const int32_t out_ch, const <a class="el" href="structcmsis__nn__conv__params.html">cmsis_nn_conv_params</a> *conv_params, const <a class="el" href="structcmsis__nn__per__channel__quant__params.html">cmsis_nn_per_channel_quant_params</a> *quant_params, const int32_t *bias, int8_t *output)</td></tr>
 <tr class="memdesc:gada3234313b4c9fefd7c4421d88c4a785"><td class="mdescLeft">&#160;</td><td class="mdescRight">General Vector by Matrix multiplication with requantization and storage of result.  <a href="#gada3234313b4c9fefd7c4421d88c4a785">More...</a><br/></td></tr>
 <tr class="separator:gada3234313b4c9fefd7c4421d88c4a785"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -253,12 +253,12 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="gaf7e914e84c2fa6bcf9b0727b8c46c250"></a>
+<a class="anchor" id="ga24c66d123320bd578d0d393a07f61ae4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="arm__nn__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a>* arm_nn_depthwise_conv_nt_t_padded_s8 </td>
+          <td class="memname"><a class="el" href="arm__nn__math__types_8h.html#a67ac3e1e650a7040b0f706fb83ea6184">arm_cmsis_nn_status</a> arm_nn_depthwise_conv_nt_t_padded_s8 </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="arm__nn__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *&#160;</td>
           <td class="paramname"><em>lhs</em>, </td>
@@ -278,8 +278,14 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const uint16_t&#160;</td>
-          <td class="paramname"><em>num_ch</em>, </td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>active_ch</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>total_ch</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -341,7 +347,8 @@ Functions</h2></td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">lhs</td><td>Input left-hand side matrix </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">rhs</td><td>Input right-hand side matrix (transposed) </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">lhs_offset</td><td>LHS matrix offset(input offset). Range: -127 to 128 </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">num_ch</td><td>Number of channels in LHS/RHS </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">active_ch</td><td>Subset of total_ch processed </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">total_ch</td><td>Number of channels in LHS/RHS </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">out_shift</td><td>Per channel output shift. Length of vector is equal to number of channels </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">out_mult</td><td>Per channel output multiplier. Length of vector is equal to number of channels </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">out_offset</td><td>Offset to be added to the output values. Range: -127 to 128 </td></tr>
@@ -365,6 +372,8 @@ Functions</h2></td></tr>
 <li>rhs </li>
 </ul>
 </dd></dl>
+
+<p>References <a class="el" href="arm__nn__math__types_8h.html#a67ac3e1e650a7040b0f706fb83ea6184a4b6c02556982295a76f113e1cbed9400">ARM_CMSIS_NN_NO_IMPL_ERROR</a>, <a class="el" href="arm__nn__math__types_8h.html#a67ac3e1e650a7040b0f706fb83ea6184a3ba593df6b92214112a5e752c95ae016">ARM_CMSIS_NN_SUCCESS</a>, and <a class="el" href="arm__nnsupportfunctions_8h.html#ace380daf8e374d9ab4aa50095d1b39b1">CH_IN_BLOCK_MVE</a>.</p>
 
 <p>Referenced by <a class="el" href="group__NNConv.html#ga51f7b85b6fc9db094f3d502dcbfd3a3d">arm_depthwise_conv_s8_opt()</a>.</p>
 
@@ -475,12 +484,12 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ga7f74841dd08196377cc29ce98deb2c12"></a>
+<a class="anchor" id="gab055229b0c5322a6682e0b995d316716"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="arm__nn__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a>* arm_nn_depthwise_conv_nt_t_s8 </td>
+          <td class="memname"><a class="el" href="arm__nn__math__types_8h.html#a67ac3e1e650a7040b0f706fb83ea6184">arm_cmsis_nn_status</a> arm_nn_depthwise_conv_nt_t_s8 </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="arm__nn__math__types_8h.html#ae541b6f232c305361e9b416fc9eed263">q7_t</a> *&#160;</td>
           <td class="paramname"><em>lhs</em>, </td>
@@ -500,8 +509,14 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const uint16_t&#160;</td>
-          <td class="paramname"><em>num_ch</em>, </td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>active_ch</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const int32_t&#160;</td>
+          <td class="paramname"><em>total_ch</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -563,7 +578,8 @@ Functions</h2></td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">lhs</td><td>Input left-hand side matrix </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">rhs</td><td>Input right-hand side matrix (transposed) </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">lhs_offset</td><td>LHS matrix offset(input offset). Range: -127 to 128 </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">num_ch</td><td>Number of channels in LHS/RHS </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">active_ch</td><td>Subset of total_ch processed </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">total_ch</td><td>Number of channels in LHS/RHS </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">out_shift</td><td>Per channel output shift. Length of vector is equal to number of channels. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">out_mult</td><td>Per channel output multiplier. Length of vector is equal to number of channels. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">out_offset</td><td>Offset to be added to the output values. Range: -127 to 128 </td></tr>
@@ -587,6 +603,8 @@ Functions</h2></td></tr>
 <li>rhs </li>
 </ul>
 </dd></dl>
+
+<p>References <a class="el" href="arm__nn__math__types_8h.html#a67ac3e1e650a7040b0f706fb83ea6184a4b6c02556982295a76f113e1cbed9400">ARM_CMSIS_NN_NO_IMPL_ERROR</a>, <a class="el" href="arm__nn__math__types_8h.html#a67ac3e1e650a7040b0f706fb83ea6184a3ba593df6b92214112a5e752c95ae016">ARM_CMSIS_NN_SUCCESS</a>, and <a class="el" href="arm__nnsupportfunctions_8h.html#ace380daf8e374d9ab4aa50095d1b39b1">CH_IN_BLOCK_MVE</a>.</p>
 
 <p>Referenced by <a class="el" href="group__NNConv.html#ga51f7b85b6fc9db094f3d502dcbfd3a3d">arm_depthwise_conv_s8_opt()</a>.</p>
 

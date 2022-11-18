@@ -1,6 +1,7 @@
 var searchData=
 [
   ['c',['c',['../structcmsis__nn__dims.html#ac9c268ab90554ab8ea2c3d76ecf1ed6c',1,'cmsis_nn_dims']]],
+  ['ch_5fin_5fblock_5fmve',['CH_IN_BLOCK_MVE',['../arm__nnsupportfunctions_8h.html#ace380daf8e374d9ab4aa50095d1b39b1',1,'arm_nnsupportfunctions.h']]],
   ['ch_5fmult',['ch_mult',['../structcmsis__nn__dw__conv__params.html#aa613968e07c396755c2a6def8ecded79',1,'cmsis_nn_dw_conv_params']]],
   ['clamp',['CLAMP',['../arm__nnsupportfunctions_8h.html#abe05f0e80d965ae31dec16ba4063f48a',1,'arm_nnsupportfunctions.h']]],
   ['clamp_5foutput',['clamp_output',['../arm__max__pool__s16_8c.html#a464e5d2cf70e82eb27be23b94a793cf6',1,'clamp_output(int16_t *source, int32_t length, const int16_t act_min, const int16_t act_max):&#160;arm_max_pool_s16.c'],['../arm__max__pool__s8_8c.html#ae73d902e6c38cf63ab235d6c4a3ff3b0',1,'clamp_output(q7_t *source, int32_t length, const int32_t act_min, const int32_t act_max):&#160;arm_max_pool_s8.c']]],
