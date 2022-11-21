@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     cmsis_armcc.h
- * @brief    CMSIS compiler specific macros, functions, instructions
- * @version  V1.0.5
- * @date     05. May 2021
+ * @brief    CMSIS compiler ARMCC (Arm Compiler 5) header file
+ * @version  V1.0.6
+ * @date     13. November 2022
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2021 Arm Limited. All rights reserved.
@@ -24,6 +24,7 @@
 
 #ifndef __CMSIS_ARMCC_H
 #define __CMSIS_ARMCC_H
+
 
 #if defined(__ARMCC_VERSION) && (__ARMCC_VERSION < 400677)
   #error "Please use Arm Compiler Toolchain V4.0.677 or later!"
@@ -68,6 +69,12 @@
 #ifndef   __PACKED_STRUCT
   #define __PACKED_STRUCT                        __packed struct
 #endif
+#ifndef   __PACKED_UNION
+  #define __PACKED_UNION                         __packed union
+#endif
+#ifndef   __UNALIGNED_UINT32        /* deprecated */
+  #define __UNALIGNED_UINT32(x)                  (*((__packed uint32_t *)(x)))
+#endif
 #ifndef   __UNALIGNED_UINT16_WRITE
   #define __UNALIGNED_UINT16_WRITE(addr, val)    ((*((__packed uint16_t *)(addr))) = (val))
 #endif
@@ -83,8 +90,8 @@
 #ifndef   __ALIGNED
   #define __ALIGNED(x)                           __attribute__((aligned(x)))
 #endif
-#ifndef   __PACKED
-  #define __PACKED                               __attribute__((packed))
+#ifndef   __RESTRICT
+  #define __RESTRICT                             __restrict
 #endif
 #ifndef   __COMPILER_BARRIER
   #define __COMPILER_BARRIER()                   __memory_changed()
@@ -93,38 +100,55 @@
 /* ##########################  Core Instruction Access  ######################### */
 /**
   \brief   No Operation
+  \details No Operation does nothing. This instruction can be used for code alignment purposes.
  */
 #define __NOP                             __nop
 
+
 /**
   \brief   Wait For Interrupt
+  \details Wait For Interrupt is a hint instruction that suspends execution until one of a number of events occurs.
  */
 #define __WFI                             __wfi
 
+
 /**
   \brief   Wait For Event
+  \details Wait For Event is a hint instruction that permits the processor to enter
+           a low-power state until one of a number of events occurs.
  */
 #define __WFE                             __wfe
 
+
 /**
   \brief   Send Event
+  \details Send Event is a hint instruction. It causes an event to be signaled to the CPU.
  */
 #define __SEV                             __sev
 
+
 /**
   \brief   Instruction Synchronization Barrier
+  \details Instruction Synchronization Barrier flushes the pipeline in the processor,
+           so that all instructions following the ISB are fetched from cache or memory,
+           after the instruction has been completed.
  */
 #define __ISB()                           __isb(0xF)
 
 /**
   \brief   Data Synchronization Barrier
+  \details Acts as a special kind of Data Memory Barrier.
+           It completes when all explicit memory accesses before this instruction complete.
  */
 #define __DSB()                           __dsb(0xF)
 
 /**
   \brief   Data Memory Barrier
+  \details Ensures the apparent order of the explicit memory operations before
+           and after the instruction, without ensuring their completion.
  */
 #define __DMB()                           __dmb(0xF)
+
 
 /**
   \brief   Reverse byte order (32 bit)
@@ -133,6 +157,7 @@
   \return               Reversed value
  */
 #define __REV                             __rev
+
 
 /**
   \brief   Reverse byte order (16 bit)
@@ -148,6 +173,7 @@ __attribute__((section(".rev16_text"))) __STATIC_INLINE __ASM uint32_t __REV16(u
 }
 #endif
 
+
 /**
   \brief   Reverse byte order (16 bit)
   \details Reverses the byte order in a 16-bit value and returns the signed 16-bit result. For example, 0x0080 becomes 0x8000.
@@ -162,23 +188,30 @@ __attribute__((section(".revsh_text"))) __STATIC_INLINE __ASM int16_t __REVSH(in
 }
 #endif
 
+
 /**
   \brief   Rotate Right in unsigned value (32 bit)
+  \details Rotate Right (immediate) provides the value of the contents of a register rotated by a variable number of bits.
   \param [in]    op1  Value to rotate
   \param [in]    op2  Number of Bits to rotate
   \return               Rotated value
  */
 #define __ROR                             __ror
 
+
 /**
   \brief   Breakpoint
+  \details Causes the processor to enter Debug state.
+           Debug tools can use this to investigate system state when the instruction at a particular address is reached.
   \param [in]    value  is ignored by the processor.
                  If required, a debugger can use it to store additional information about the breakpoint.
  */
 #define __BKPT(value)                     __breakpoint(value)
 
+
 /**
   \brief   Reverse bit order of value
+  \details Reverses the bit order of the given value.
   \param [in]    value  Value to reverse
   \return               Reversed value
  */
@@ -186,6 +219,7 @@ __attribute__((section(".revsh_text"))) __STATIC_INLINE __ASM int16_t __REVSH(in
 
 /**
   \brief   Count leading zeros
+  \details Counts the number of leading zeros of a data value.
   \param [in]  value  Value to count the leading zeros
   \return             number of leading zeros in value
  */
@@ -203,6 +237,7 @@ __attribute__((section(".revsh_text"))) __STATIC_INLINE __ASM int16_t __REVSH(in
   #define __LDREXB(ptr)          _Pragma("push") _Pragma("diag_suppress 3731") ((uint8_t ) __ldrex(ptr))  _Pragma("pop")
 #endif
 
+
 /**
   \brief   LDR Exclusive (16 bit)
   \details Executes a exclusive LDR instruction for 16 bit values.
@@ -215,6 +250,7 @@ __attribute__((section(".revsh_text"))) __STATIC_INLINE __ASM int16_t __REVSH(in
   #define __LDREXH(ptr)          _Pragma("push") _Pragma("diag_suppress 3731") ((uint16_t) __ldrex(ptr))  _Pragma("pop")
 #endif
 
+
 /**
   \brief   LDR Exclusive (32 bit)
   \details Executes a exclusive LDR instruction for 32 bit values.
@@ -226,6 +262,7 @@ __attribute__((section(".revsh_text"))) __STATIC_INLINE __ASM int16_t __REVSH(in
 #else
   #define __LDREXW(ptr)          _Pragma("push") _Pragma("diag_suppress 3731") ((uint32_t ) __ldrex(ptr))  _Pragma("pop")
 #endif
+
 
 /**
   \brief   STR Exclusive (8 bit)
@@ -241,6 +278,7 @@ __attribute__((section(".revsh_text"))) __STATIC_INLINE __ASM int16_t __REVSH(in
   #define __STREXB(value, ptr)   _Pragma("push") _Pragma("diag_suppress 3731") __strex(value, ptr)        _Pragma("pop")
 #endif
 
+
 /**
   \brief   STR Exclusive (16 bit)
   \details Executes a exclusive STR instruction for 16 bit values.
@@ -255,6 +293,7 @@ __attribute__((section(".revsh_text"))) __STATIC_INLINE __ASM int16_t __REVSH(in
   #define __STREXH(value, ptr)   _Pragma("push") _Pragma("diag_suppress 3731") __strex(value, ptr)        _Pragma("pop")
 #endif
 
+
 /**
   \brief   STR Exclusive (32 bit)
   \details Executes a exclusive STR instruction for 32 bit values.
@@ -268,6 +307,7 @@ __attribute__((section(".revsh_text"))) __STATIC_INLINE __ASM int16_t __REVSH(in
 #else
   #define __STREXW(value, ptr)   _Pragma("push") _Pragma("diag_suppress 3731") __strex(value, ptr)        _Pragma("pop")
 #endif
+
 
 /**
   \brief   Remove the exclusive lock
@@ -285,6 +325,7 @@ __attribute__((section(".revsh_text"))) __STATIC_INLINE __ASM int16_t __REVSH(in
  */
 #define __SSAT                            __ssat
 
+
 /**
   \brief   Unsigned Saturate
   \details Saturates an unsigned value.
@@ -298,14 +339,15 @@ __attribute__((section(".revsh_text"))) __STATIC_INLINE __ASM int16_t __REVSH(in
 
 /**
   \brief   Enable IRQ Interrupts
-  \details Enables IRQ interrupts by clearing the I-bit in the CPSR.
+  \details Enables IRQ interrupts by clearing special-purpose register PRIMASK.
            Can only be executed in Privileged modes.
  */
 /* intrinsic void __enable_irq(); */
 
+
 /**
   \brief   Disable IRQ Interrupts
-  \details Disables IRQ interrupts by setting the I-bit in the CPSR.
+  \details Disables IRQ interrupts by setting special-purpose register PRIMASK.
   Can only be executed in Privileged modes.
  */
 /* intrinsic void __disable_irq(void); */
