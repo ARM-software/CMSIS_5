@@ -739,7 +739,6 @@ arm_cmsis_nn_status arm_convolve_1x1_HWC_q7_fast_nonsquare(const q7_t *Im_in,
  * @details
  *   - Supported framework : TensorFlow Lite Micro
  *   - The following constrains on the arguments apply
- *      -# input_dims->c is a multiple of 4
  *      -# conv_params->padding.w = conv_params->padding.h = 0
  *      -# conv_params->stride.w = conv_params->stride.h = 1
  *
