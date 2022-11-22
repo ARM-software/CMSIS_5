@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     core_ca.h
  * @brief    CMSIS Cortex-A Core Peripheral Access Layer Header File
- * @version  V1.0.6
- * @date     13. November 2022
+ * @version  V1.0.7
+ * @date     22. November 2022
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2022 ARM Limited. All rights reserved.
@@ -1623,13 +1623,14 @@ __STATIC_INLINE void GIC_ClearPendingIRQ(IRQn_Type IRQn)
 */
 __STATIC_INLINE void GIC_SetConfiguration(IRQn_Type IRQn, uint32_t int_config)
 {
-  uint32_t icfgr = GICDistributor->ICFGR[IRQn / 16U];
-  uint32_t shift = (IRQn % 16U) << 1U;
+  uint32_t icfgr = GICDistributor->ICFGR[IRQn / 16U];  /* read current register content */
+  uint32_t shift = (IRQn % 16U) << 1U;                 /* calculate shift value */
 
-  icfgr &= (~(3U         << shift));
-  icfgr |= (  int_config << shift);
+  int_config &= 3U;                                    /* only 2 bits are valid */
+  icfgr &= (~(3U         << shift));                   /* clear bits to change */
+  icfgr |= (  int_config << shift);                    /* set new configuration */
 
-  GICDistributor->ICFGR[IRQn / 16U] = icfgr;
+  GICDistributor->ICFGR[IRQn / 16U] = icfgr;           /* write new register content */
 }
 
 /** \brief Get the interrupt configuration from the GIC's ICFGR register.
