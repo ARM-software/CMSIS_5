@@ -712,7 +712,8 @@ static uint32_t DAP_SWD_Transfer(const uint8_t *request, uint8_t *response) {
 
   request_count = *request++;
 
-  for (; request_count != 0U; request_count--) {
+  while (request_count != 0) {
+    request_count--;
     request_value = *request++;
     if ((request_value & DAP_TRANSFER_RnW) != 0U) {
       // Read register
@@ -893,7 +894,8 @@ static uint32_t DAP_SWD_Transfer(const uint8_t *request, uint8_t *response) {
     }
   }
 
-  for (; request_count != 0U; request_count--) {
+  while (request_count != 0) {
+    request_count--;
     // Process canceled requests
     request_value = *request++;
     if ((request_value & DAP_TRANSFER_RnW) != 0U) {
@@ -986,7 +988,8 @@ static uint32_t DAP_JTAG_Transfer(const uint8_t *request, uint8_t *response) {
 
   request_count = *request++;
 
-  for (; request_count != 0U; request_count--) {
+  while (request_count != 0) {
+    request_count--;
     request_value = *request++;
     request_ir = (request_value & DAP_TRANSFER_APnDP) ? JTAG_APACC : JTAG_DPACC;
     if ((request_value & DAP_TRANSFER_RnW) != 0U) {
@@ -1163,7 +1166,8 @@ static uint32_t DAP_JTAG_Transfer(const uint8_t *request, uint8_t *response) {
     }
   }
 
-  for (; request_count != 0U; request_count--) {
+  while (request_count != 0) {
+    request_count--;
     // Process canceled requests
     request_value = *request++;
     if ((request_value & DAP_TRANSFER_RnW) != 0U) {
