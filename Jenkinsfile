@@ -37,7 +37,7 @@ patternDocker = [
 ]
 
 patternCoreM = [
-    '^CMSIS/Core/Include/.*',
+    '^CMSIS/Core_M/Include/.*',
     '^Device/ARM/ARMCM.*'
 ]
 

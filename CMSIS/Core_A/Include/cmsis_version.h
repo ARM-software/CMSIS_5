@@ -1,11 +1,11 @@
 /**************************************************************************//**
- * @file     compiler.h
- * @brief    CMSIS compiler generic header file
- * @version  V5.2.0
+ * @file     cmsis_version.h
+ * @brief    CMSIS Core(M) Version definitions
+ * @version  V5.1.0
  * @date     04. December 2022
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2022 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2022 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -22,10 +22,15 @@
  * limitations under the License.
  */
 
-#ifndef __CMSIS_COMPILER_H
-#define __CMSIS_COMPILER_H
+#if   defined ( __ICCARM__ )
+  #pragma system_include         /* treat file as system include file for MISRA check */
+#elif defined (__clang__)
+  #pragma clang system_header   /* treat file as system include file */
+#endif
 
-#include "../../Core/cmsis_generic_compiler.h"
+#ifndef __CMSIS_VERSION_H
+#define __CMSIS_VERSION_H
 
-#endif /* __CMSIS_COMPILER_H */
+#include "../../Core/cmsis_generic_version.h"
 
+#endif
