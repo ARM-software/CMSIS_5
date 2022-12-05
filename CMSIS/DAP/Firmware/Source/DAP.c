@@ -17,8 +17,8 @@
  *
  * ----------------------------------------------------------------------
  *
- * $Date:        26. April 2022
- * $Revision:    V2.1.1
+ * $Date:        5. December 2022
+ * $Revision:    V2.1.2
  *
  * Project:      CMSIS-DAP Source
  * Title:        DAP.c CMSIS-DAP Commands
@@ -895,8 +895,8 @@ static uint32_t DAP_SWD_Transfer(const uint8_t *request, uint8_t *response) {
   }
 
   while (request_count != 0) {
-    request_count--;
     // Process canceled requests
+    request_count--;
     request_value = *request++;
     if ((request_value & DAP_TRANSFER_RnW) != 0U) {
       // Read register
@@ -1167,8 +1167,8 @@ static uint32_t DAP_JTAG_Transfer(const uint8_t *request, uint8_t *response) {
   }
 
   while (request_count != 0) {
-    request_count--;
     // Process canceled requests
+    request_count--;
     request_value = *request++;
     if ((request_value & DAP_TRANSFER_RnW) != 0U) {
       // Read register
