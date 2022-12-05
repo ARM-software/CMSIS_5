@@ -116,7 +116,7 @@ $(document).ready(function(){initNavTree('cmsis__armcc_8h.html','');});
 </div><!--header-->
 <div class="contents">
 
-<p>CMSIS compiler specific macros, functions, instructions.  
+<p>CMSIS compiler ARMCC (Arm Compiler 5) header file.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
@@ -153,6 +153,10 @@ Macros</h2></td></tr>
 <tr class="separator:gabe8996d3d985ee1529475443cc635bf1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4dbb70fab85207c27b581ecb6532b314"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cmsis__armcc_8h.html#a4dbb70fab85207c27b581ecb6532b314">__PACKED_STRUCT</a>&#160;&#160;&#160;__packed struct</td></tr>
 <tr class="separator:a4dbb70fab85207c27b581ecb6532b314"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6fba34d08b0a526830b4231d2ea0b89a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cmsis__armcc_8h.html#a6fba34d08b0a526830b4231d2ea0b89a">__PACKED_UNION</a>&#160;&#160;&#160;__packed union</td></tr>
+<tr class="separator:a6fba34d08b0a526830b4231d2ea0b89a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac8a13aacd0453758fdfd01a57a2a6a3d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cmsis__armcc_8h.html#ac8a13aacd0453758fdfd01a57a2a6a3d">__UNALIGNED_UINT32</a>(x)&#160;&#160;&#160;(*((__packed uint32_t *)(x)))</td></tr>
+<tr class="separator:ac8a13aacd0453758fdfd01a57a2a6a3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5103fb373cae9837cc4a384be55dc87f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cmsis__armcc_8h.html#a5103fb373cae9837cc4a384be55dc87f">__UNALIGNED_UINT16_WRITE</a>(addr, val)&#160;&#160;&#160;((*((__packed uint16_t *)(addr))) = (val))</td></tr>
 <tr class="separator:a5103fb373cae9837cc4a384be55dc87f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab71b66e5ce403158d3dee62a59f9175f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cmsis__armcc_8h.html#ab71b66e5ce403158d3dee62a59f9175f">__UNALIGNED_UINT16_READ</a>(addr)&#160;&#160;&#160;(*((const __packed uint16_t *)(addr)))</td></tr>
@@ -164,6 +168,8 @@ Macros</h2></td></tr>
 <tr class="memitem:gaa65ef8f7a5e8b7a6ea6c1d48b4c78e55"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__comp__cntrl__gr.html#gaa65ef8f7a5e8b7a6ea6c1d48b4c78e55">__ALIGNED</a>(x)&#160;&#160;&#160;__attribute__((aligned(x)))</td></tr>
 <tr class="memdesc:gaa65ef8f7a5e8b7a6ea6c1d48b4c78e55"><td class="mdescLeft">&#160;</td><td class="mdescRight">Minimum alignment for a variable.  <a href="group__comp__cntrl__gr.html#gaa65ef8f7a5e8b7a6ea6c1d48b4c78e55">More...</a><br/></td></tr>
 <tr class="separator:gaa65ef8f7a5e8b7a6ea6c1d48b4c78e55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a378ac21329d33f561f90265eef89f564"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cmsis__armcc_8h.html#a378ac21329d33f561f90265eef89f564">__RESTRICT</a>&#160;&#160;&#160;__restrict</td></tr>
+<tr class="separator:a378ac21329d33f561f90265eef89f564"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6516fb12ab0dd45c734f8cef7d921af6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cmsis__armcc_8h.html#a6516fb12ab0dd45c734f8cef7d921af6">__COMPILER_BARRIER</a>()&#160;&#160;&#160;__memory_changed()</td></tr>
 <tr class="separator:a6516fb12ab0dd45c734f8cef7d921af6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabd585ddc865fb9b7f2493af1eee1a572"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__Core__InstructionInterface.html#gabd585ddc865fb9b7f2493af1eee1a572">__NOP</a>&#160;&#160;&#160;__nop</td></tr>
@@ -287,8 +293,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga1e4728985ee8b4fa89cc01c032f69565"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
-<div class="textblock"><dl class="section version"><dt>Version</dt><dd>V1.0.5 </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>05. May 2021 </dd></dl>
+<div class="textblock"><dl class="section version"><dt>Version</dt><dd>V1.0.6 </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>13. November 2022 </dd></dl>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
 <a class="anchor" id="a7f7b66103530fadcce226375af3c2c03"></a>
 <div class="memitem">
@@ -312,6 +318,7 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Counts the number of leading zeros of a data value. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>Value to count the leading zeros </td></tr>
@@ -359,8 +366,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Enables IRQ interrupts by clearing the I-bit in the CPSR. Can only be executed in Privileged modes. Disable IRQ Interrupts</p>
-<p>Disables IRQ interrupts by setting the I-bit in the CPSR. Can only be executed in Privileged modes. Enable FIQ</p>
+<p>Enables IRQ interrupts by clearing special-purpose register PRIMASK. Can only be executed in Privileged modes. Disable IRQ Interrupts</p>
+<p>Disables IRQ interrupts by setting special-purpose register PRIMASK. Can only be executed in Privileged modes. Enable FIQ</p>
 <p>Enables FIQ interrupts by clearing the F-bit in the CPSR. Can only be executed in Privileged modes. </p>
 
 </div>
@@ -549,6 +556,18 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a6fba34d08b0a526830b4231d2ea0b89a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define __PACKED_UNION&#160;&#160;&#160;__packed union</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="ab83768933a612816fad669db5488366f"></a>
 <div class="memitem">
 <div class="memproto">
@@ -558,6 +577,7 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Reverses the bit order of the given value. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>Value to reverse </td></tr>
@@ -565,6 +585,18 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Reversed value </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a378ac21329d33f561f90265eef89f564"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define __RESTRICT&#160;&#160;&#160;__restrict</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -612,7 +644,8 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Reversed value Rotate Right in unsigned value (32 bit) </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Reversed value Rotate Right in unsigned value (32 bit)</dd></dl>
+<p>Rotate Right (immediate) provides the value of the contents of a register rotated by a variable number of bits. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">op1</td><td>Value to rotate </td></tr>
@@ -892,6 +925,22 @@ Functions</h2></td></tr>
           <td></td>
           <td>)</td>
           <td></td><td>&#160;&#160;&#160;((*((__packed uint16_t *)(addr))) = (val))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ac8a13aacd0453758fdfd01a57a2a6a3d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define __UNALIGNED_UINT32</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">x</td><td>)</td>
+          <td>&#160;&#160;&#160;(*((__packed uint32_t *)(x)))</td>
         </tr>
       </table>
 </div><div class="memdoc">
