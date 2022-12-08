@@ -338,13 +338,13 @@ Exercise 6 - Time Management</h2>
 <h2><a class="anchor" id="rtos2_tutorial_virtual_timers"></a>
 Virtual Timers</h2>
 <p>The CMSIS-RTOS API can be used to define any number of virtual timers which act as count down timers. When they expire, they will run a user call-back function to perform a specific action. Each timer can be configured as a one shot or repeat timer. A virtual timer is created by first defining a timer structure: </p>
-<div class="fragment"><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#structosThreadAttr__t">osThreadAttr_t</a> ThreadAttr_app_main = {</div>
-<div class="line">  <span class="keyword">const</span> <span class="keywordtype">char</span> * name <span class="comment">// symbolic name of the timer</span></div>
-<div class="line">  uin32_t attr_bits <span class="comment">// None</span></div>
-<div class="line">  <span class="keywordtype">void</span>* cb_mem      <span class="comment">// pointer to memory for control block</span></div>
-<div class="line">  uint32_t cb_size  <span class="comment">// size of memory control block</span></div>
-<div class="line">}</div>
-</div><!-- fragment --><p> This defines a name for the timer and the name of the call back function. The timer must then be instantiated by an RTOS thread: </p>
+<div class="fragment"><div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">struct </span><a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#structosTimerAttr__t">osTimerAttr_t</a> timerAttr_timer0 = {</div>
+<div class="line">  <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#ab74e6bf80237ddc4109968cedc58c151">name</a>;      <span class="comment">///&lt; name of the timer</span></div>
+<div class="line"><span class="comment"></span>  uint32_t    <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#a6e93b49cb79c12f768d72580c7731f30">attr_bits</a>; <span class="comment">///&lt; attribute bits</span></div>
+<div class="line"><span class="comment"></span>  <span class="keywordtype">void</span>*       <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#a1e100dc33d403841ed3c344e3397868e">cb_mem</a>;    <span class="comment">///&lt; memory for control block</span></div>
+<div class="line"><span class="comment"></span>  uint32_t    <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#aa55a4335d12dc2785dc00fdc292d1159">cb_size</a>;   <span class="comment">///&lt; size of provided memory for control block</span></div>
+<div class="line"><span class="comment"></span>}</div>
+</div><!-- fragment --><p> This defines a name for the timer. The timer must then be instantiated by an RTOS thread providing a pointer to the callback function and its parameter.: </p>
 <div class="fragment"><div class="line"><a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gaad5409379689ee27bb0a0b56ea4a4b34">osTimerId_t</a> timer0_handle;</div>
 <div class="line">timer0_handle = <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gad4e7f785c5f700a509f55a3bf6a62bec">osTimerNew</a>(&amp;callback, <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gga7dc24a4c2b90334427081c3da7a71915ab3463d921dc310938094745c230f2b35">osTimerPeriodic</a>,(<span class="keywordtype">void</span> *)&lt;parameter&gt;, &amp;timerAttr_timer0);</div>
 </div><!-- fragment --><p> This creates the timer and defines it as a periodic timer or a single shot timer (<a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#gga7dc24a4c2b90334427081c3da7a71915a2e0e1f31c742c84b497c4d7143357bdb">osTimerOnce()</a>). The next parameter passes an argument to the call back function when the timer expires: </p>
@@ -418,10 +418,10 @@ Event Flags</h2>
 <p>Event flags operate in a similar fashion to thread flags but must be created and then act as a global RTOS object that can be used by all the running threads.</p>
 <p>First, we need to create a set of event flags, this is a similar process to creating a thread. We define an event flag attribute structure. The attribute structure defines an ASCII name string, attribute bits, and memory detention. If we are using the static memory model. </p>
 <div class="fragment"><div class="line"><a class="code" href="group__CMSIS__RTOS__EventFlags.html#structosEventFlagsAttr__t">osEventFlagsAttr_t</a> {</div>
-<div class="line">  <span class="keyword">const</span> <span class="keywordtype">char</span> *name;   <span class="comment">///&lt; name of the event flags</span></div>
-<div class="line"><span class="comment"></span>  uint32_t attr_bits; <span class="comment">///&lt; attribute bits (none)</span></div>
-<div class="line"><span class="comment"></span>  <span class="keywordtype">void</span> *cb_mem;       <span class="comment">///&lt; memory for control block</span></div>
-<div class="line"><span class="comment"></span>  uint32_t cb_size;   <span class="comment">///&lt; size of provided memory for control block</span></div>
+<div class="line">  <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#ab74e6bf80237ddc4109968cedc58c151">name</a>;   <span class="comment">///&lt; name of the event flags</span></div>
+<div class="line"><span class="comment"></span>  uint32_t <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#a6e93b49cb79c12f768d72580c7731f30">attr_bits</a>; <span class="comment">///&lt; attribute bits (none)</span></div>
+<div class="line"><span class="comment"></span>  <span class="keywordtype">void</span> *<a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#a1e100dc33d403841ed3c344e3397868e">cb_mem</a>;       <span class="comment">///&lt; memory for control block</span></div>
+<div class="line"><span class="comment"></span>  uint32_t <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#aa55a4335d12dc2785dc00fdc292d1159">cb_size</a>;   <span class="comment">///&lt; size of provided memory for control block</span></div>
 <div class="line"><span class="comment"></span>};</div>
 </div><!-- fragment --><p> Next we need a handle to control access the event flags: </p>
 <div class="fragment"><div class="line"><a class="code" href="group__CMSIS__RTOS__EventFlags.html#gafdbab933146d6d81d7cca7287e267a50">osEventFlagsId_t</a> EventFlag_LED;</div>
@@ -443,10 +443,10 @@ Semaphores</h2>
 <p>Meanwhile, the executing thread can release a token back to the semaphore. When this happens, the waiting thread will acquire the token and leave the waiting state for the ready state. Once in the ready state the scheduler will place the thread into the run state so that thread execution can continue. While semaphores have a simple set of OS calls they can be one of the more difficult OS objects to fully understand. In this section, we will first look at how to add semaphores to an RTOS program and then go on to look at the most useful semaphore applications.</p>
 <p>To use a semaphore in the CMSIS-RTOS you must first declare a semaphore attributes: </p>
 <div class="fragment"><div class="line"><a class="code" href="group__CMSIS__RTOS__SemaphoreMgmt.html#structosSemaphoreAttr__t">osSemaphoreAttr_t</a> {</div>
-<div class="line">  <span class="keyword">const</span> <span class="keywordtype">char</span> *name;   <span class="comment">///&lt; name of the semaphore</span></div>
-<div class="line"><span class="comment"></span>  uint32_t attr_bits; <span class="comment">///&lt; attribute bits (none)</span></div>
-<div class="line"><span class="comment"></span>  <span class="keywordtype">void</span> *cb_mem;       <span class="comment">///&lt; memory for control block</span></div>
-<div class="line"><span class="comment"></span>  uint32_t cb_size;   <span class="comment">///&lt; size of provided memory for control block</span></div>
+<div class="line">  <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#ab74e6bf80237ddc4109968cedc58c151">name</a>;   <span class="comment">///&lt; name of the semaphore</span></div>
+<div class="line"><span class="comment"></span>  uint32_t <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#a6e93b49cb79c12f768d72580c7731f30">attr_bits</a>; <span class="comment">///&lt; attribute bits (none)</span></div>
+<div class="line"><span class="comment"></span>  <span class="keywordtype">void</span> *<a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#a1e100dc33d403841ed3c344e3397868e">cb_mem</a>;       <span class="comment">///&lt; memory for control block</span></div>
+<div class="line"><span class="comment"></span>  uint32_t <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#aa55a4335d12dc2785dc00fdc292d1159">cb_size</a>;   <span class="comment">///&lt; size of provided memory for control block</span></div>
 <div class="line"><span class="comment"></span>};</div>
 </div><!-- fragment --><p> Next declare the semaphore handle: </p>
 <div class="fragment"><div class="line"><a class="code" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga6e1c1c4b04175bb92b013c8f37249f40">osSemaphoreId_t</a> sem1;</div>
@@ -609,10 +609,10 @@ Mutex</h2>
 <div class="fragment"><div class="line"><a class="code" href="group__CMSIS__RTOS__MutexMgmt.html#ga313801836c62deb23055efb55a420e42">osMutexId_t</a> uart_mutex;</div>
 <div class="line"> </div>
 <div class="line"><a class="code" href="group__CMSIS__RTOS__MutexMgmt.html#structosMutexAttr__t">osMutexAttr_t</a> {</div>
-<div class="line">  <span class="keyword">const</span> <span class="keywordtype">char</span> *name;   <span class="comment">///&lt; name of the mutex</span></div>
-<div class="line"><span class="comment"></span>  uint32_t attr_bits; <span class="comment">///&lt; attribute bits</span></div>
-<div class="line"><span class="comment"></span>  <span class="keywordtype">void</span> *cb_mem;       <span class="comment">///&lt; memory for control block</span></div>
-<div class="line"><span class="comment"></span>  uint32_t cb_size;   <span class="comment">///&lt; size of provided memory for control block</span></div>
+<div class="line">  <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#ab74e6bf80237ddc4109968cedc58c151">name</a>;   <span class="comment">///&lt; name of the mutex</span></div>
+<div class="line"><span class="comment"></span>  uint32_t <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#a6e93b49cb79c12f768d72580c7731f30">attr_bits</a>; <span class="comment">///&lt; attribute bits</span></div>
+<div class="line"><span class="comment"></span>  <span class="keywordtype">void</span> *<a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#a1e100dc33d403841ed3c344e3397868e">cb_mem</a>;       <span class="comment">///&lt; memory for control block</span></div>
+<div class="line"><span class="comment"></span>  uint32_t <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#aa55a4335d12dc2785dc00fdc292d1159">cb_size</a>;   <span class="comment">///&lt; size of provided memory for control block</span></div>
 <div class="line"><span class="comment"></span>};</div>
 </div><!-- fragment --><p> When a mutex is created its functionality can be modified by setting the following attribute bits: </p>
 <table class="doxtable">
@@ -655,10 +655,10 @@ Message Queue</h3>
 <div class="fragment"><div class="line">osMessageQId_t Q_LED;</div>
 <div class="line"> </div>
 <div class="line"><a class="code" href="group__CMSIS__RTOS__Message.html#structosMessageQueueAttr__t">osMessageQueueAttr_t</a> {</div>
-<div class="line">  <span class="keyword">const</span> <span class="keywordtype">char</span> *name;   <span class="comment">///&lt; name of the message queue</span></div>
-<div class="line"><span class="comment"></span>  uint32_t attr_bits; <span class="comment">///&lt; attribute bits</span></div>
-<div class="line"><span class="comment"></span>  <span class="keywordtype">void</span> *cb_mem;       <span class="comment">///&lt; memory for control block</span></div>
-<div class="line"><span class="comment"></span>  uint32_t cb_size;   <span class="comment">///&lt; size of provided memory for control block</span></div>
+<div class="line">  <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#ab74e6bf80237ddc4109968cedc58c151">name</a>;   <span class="comment">///&lt; name of the message queue</span></div>
+<div class="line"><span class="comment"></span>  uint32_t <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#a6e93b49cb79c12f768d72580c7731f30">attr_bits</a>; <span class="comment">///&lt; attribute bits</span></div>
+<div class="line"><span class="comment"></span>  <span class="keywordtype">void</span> *<a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#a1e100dc33d403841ed3c344e3397868e">cb_mem</a>;       <span class="comment">///&lt; memory for control block</span></div>
+<div class="line"><span class="comment"></span>  uint32_t <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#aa55a4335d12dc2785dc00fdc292d1159">cb_size</a>;   <span class="comment">///&lt; size of provided memory for control block</span></div>
 <div class="line"><span class="comment"></span>  <span class="keywordtype">void</span> *mq_mem;       <span class="comment">///&lt; memory for data storage</span></div>
 <div class="line"><span class="comment"></span>  uint32_t mq_size;   <span class="comment">///&lt; size of provided memory for data storage</span></div>
 <div class="line"><span class="comment"></span>};</div>
