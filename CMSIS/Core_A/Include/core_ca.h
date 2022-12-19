@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     core_ca.h
  * @brief    CMSIS Cortex-A Core Peripheral Access Layer Header File
- * @version  V1.0.7
- * @date     22. November 2022
+ * @version  V1.0.8
+ * @date     19. December 2022
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2022 ARM Limited. All rights reserved.
@@ -1195,6 +1195,15 @@ __STATIC_FORCEINLINE void L1C_InvalidateBTAC(void) {
   __set_BPIALL(0);
   __DSB();     //ensure completion of the invalidation
   __ISB();     //ensure instruction fetch path sees new state
+}
+
+/** \brief  Clean instruction cache line by address.
+* \param [in] va Pointer to instructions to clear the cache for.
+*/
+__STATIC_FORCEINLINE void L1C_InvalidateICacheMVA(void *va) {
+  __set_ICIMVAC((uint32_t)va);
+  __DSB();     //ensure completion of the invalidation
+  __ISB();     //ensure instruction fetch path sees new I cache state
 }
 
 /** \brief  Invalidate the whole instruction cache

@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     cmsis_cp15.h
  * @brief    CMSIS compiler specific macros, functions, instructions
- * @version  V1.0.1
- * @date     07. Sep 2017
+ * @version  V1.0.2
+ * @date     19. December 2022
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2017 ARM Limited. All rights reserved.
@@ -408,6 +408,15 @@ __STATIC_FORCEINLINE void __set_BPIALL(uint32_t value)
 __STATIC_FORCEINLINE void __set_ICIALLU(uint32_t value)
 {
   __set_CP(15, 0, value, 7, 5, 0);
+}
+
+/** \brief  Set ICIMVAC
+
+  Instruction Cache Invalidate
+ */
+__STATIC_FORCEINLINE void __set_ICIMVAC(uint32_t value)
+{
+  __set_CP(15, 0, value, 7, 5, 1);
 }
 
 /** \brief  Set DCCMVAC
