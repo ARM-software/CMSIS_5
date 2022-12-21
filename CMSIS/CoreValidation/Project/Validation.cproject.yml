@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/Open-CMSIS-Pack/devtools/schemas/projmgr/0.9.2/tools/projmgr/schemas/cproject.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Open-CMSIS-Pack/devtools/schemas/projmgr/1.3.0/tools/projmgr/schemas/cproject.schema.json
 
 project:
   layers:
@@ -47,6 +47,11 @@ project:
         - .GCC_high+CM0
         - .GCC_size+CM0
         - .GCC_tiny+CM0
+        - .IAR_low+CM0
+        - .IAR_mid+CM0
+        - .IAR_high+CM0
+        - .IAR_size+CM0
+        - .IAR_tiny+CM0
 
     #Target: CM0plus
     - layer: ../Layer/Target/CM0plus/Target.clayer.yml
@@ -61,6 +66,11 @@ project:
         - .GCC_high+CM0plus
         - .GCC_size+CM0plus
         - .GCC_tiny+CM0plus
+        - .IAR_low+CM0plus
+        - .IAR_mid+CM0plus
+        - .IAR_high+CM0plus
+        - .IAR_size+CM0plus
+        - .IAR_tiny+CM0plus
 
     #Target: CM3
     - layer: ../Layer/Target/CM3/Target.clayer.yml
@@ -75,6 +85,11 @@ project:
         - .GCC_high+CM3
         - .GCC_size+CM3
         - .GCC_tiny+CM3
+        - .IAR_low+CM3
+        - .IAR_mid+CM3
+        - .IAR_high+CM3
+        - .IAR_size+CM3
+        - .IAR_tiny+CM3
 
     #Target: CM4
     - layer: ../Layer/Target/CM4/Target.clayer.yml
@@ -89,6 +104,11 @@ project:
         - .GCC_high+CM4
         - .GCC_size+CM4
         - .GCC_tiny+CM4
+        - .IAR_low+CM4
+        - .IAR_mid+CM4
+        - .IAR_high+CM4
+        - .IAR_size+CM4
+        - .IAR_tiny+CM4
 
     #Target: CM4FP
     - layer: ../Layer/Target/CM4FP/Target.clayer.yml
@@ -103,6 +123,11 @@ project:
         - .GCC_high+CM4FP
         - .GCC_size+CM4FP
         - .GCC_tiny+CM4FP
+        - .IAR_low+CM4FP
+        - .IAR_mid+CM4FP
+        - .IAR_high+CM4FP
+        - .IAR_size+CM4FP
+        - .IAR_tiny+CM4FP
 
     #Target: CM7
     - layer: ../Layer/Target/CM7/Target.clayer.yml
@@ -117,6 +142,11 @@ project:
         - .GCC_high+CM7
         - .GCC_size+CM7
         - .GCC_tiny+CM7
+        - .IAR_low+CM7
+        - .IAR_mid+CM7
+        - .IAR_high+CM7
+        - .IAR_size+CM7
+        - .IAR_tiny+CM7
 
     #Target: CM7SP
     - layer: ../Layer/Target/CM7SP/Target.clayer.yml
@@ -131,6 +161,11 @@ project:
         - .GCC_high+CM7SP
         - .GCC_size+CM7SP
         - .GCC_tiny+CM7SP
+        - .IAR_low+CM7SP
+        - .IAR_mid+CM7SP
+        - .IAR_high+CM7SP
+        - .IAR_size+CM7SP
+        - .IAR_tiny+CM7SP
 
     #Target: CM7DP
     - layer: ../Layer/Target/CM7DP/Target.clayer.yml
@@ -145,6 +180,11 @@ project:
         - .GCC_high+CM7DP
         - .GCC_size+CM7DP
         - .GCC_tiny+CM7DP
+        - .IAR_low+CM7DP
+        - .IAR_mid+CM7DP
+        - .IAR_high+CM7DP
+        - .IAR_size+CM7DP
+        - .IAR_tiny+CM7DP
 
     #Target: CM23
     - layer: ../Layer/Target/CM23/Target.clayer.yml
@@ -159,6 +199,11 @@ project:
         - .GCC_high+CM23
         - .GCC_size+CM23
         - .GCC_tiny+CM23
+        - .IAR_low+CM23
+        - .IAR_mid+CM23
+        - .IAR_high+CM23
+        - .IAR_size+CM23
+        - .IAR_tiny+CM23
 
     #Target: CM23S
     - layer: ../Layer/Target/CM23S/Target.clayer.yml
@@ -173,6 +218,11 @@ project:
         - .GCC_high+CM23S
         - .GCC_size+CM23S
         - .GCC_tiny+CM23S
+        - .IAR_low+CM23S
+        - .IAR_mid+CM23S
+        - .IAR_high+CM23S
+        - .IAR_size+CM23S
+        - .IAR_tiny+CM23S
 
     #Target: CM23NS
     - layer: ../Layer/Target/CM23NS/Target.clayer.yml
@@ -187,6 +237,11 @@ project:
         - .GCC_high+CM23NS
         - .GCC_size+CM23NS
         - .GCC_tiny+CM23NS
+        - .IAR_low+CM23NS
+        - .IAR_mid+CM23NS
+        - .IAR_high+CM23NS
+        - .IAR_size+CM23NS
+        - .IAR_tiny+CM23NS
 
     #Target: CM33
     - layer: ../Layer/Target/CM33/Target.clayer.yml
@@ -201,6 +256,11 @@ project:
         - .GCC_high+CM33
         - .GCC_size+CM33
         - .GCC_tiny+CM33
+        - .IAR_low+CM33
+        - .IAR_mid+CM33
+        - .IAR_high+CM33
+        - .IAR_size+CM33
+        - .IAR_tiny+CM33
 
     #Target: CM33S
     - layer: ../Layer/Target/CM33S/Target.clayer.yml
@@ -215,6 +275,11 @@ project:
         - .GCC_high+CM33S
         - .GCC_size+CM33S
         - .GCC_tiny+CM33S
+        - .IAR_low+CM33S
+        - .IAR_mid+CM33S
+        - .IAR_high+CM33S
+        - .IAR_size+CM33S
+        - .IAR_tiny+CM33S
 
     #Target: CM33NS
     - layer: ../Layer/Target/CM33NS/Target.clayer.yml
@@ -229,6 +294,11 @@ project:
         - .GCC_high+CM33NS
         - .GCC_size+CM33NS
         - .GCC_tiny+CM33NS
+        - .IAR_low+CM33NS
+        - .IAR_mid+CM33NS
+        - .IAR_high+CM33NS
+        - .IAR_size+CM33NS
+        - .IAR_tiny+CM33NS
 
     #Target: CM35P
     - layer: ../Layer/Target/CM35P/Target.clayer.yml
@@ -243,6 +313,11 @@ project:
         - .GCC_high+CM35P
         - .GCC_size+CM35P
         - .GCC_tiny+CM35P
+        - .IAR_low+CM35P
+        - .IAR_mid+CM35P
+        - .IAR_high+CM35P
+        - .IAR_size+CM35P
+        - .IAR_tiny+CM35P
 
     #Target: CM35PS
     - layer: ../Layer/Target/CM35PS/Target.clayer.yml
@@ -253,10 +328,15 @@ project:
         - .AC6_size+CM35PS
         - .AC6_tiny+CM35PS
         - .GCC_low+CM35PS
-        - .AC6_mid+CM35PS
-        - .AC6_high+CM35PS
-        - .AC6_size+CM35PS
-        - .AC6_tiny+CM35PS
+        - .GCC_mid+CM35PS
+        - .GCC_high+CM35PS
+        - .GCC_size+CM35PS
+        - .GCC_tiny+CM35PS
+        - .IAR_low+CM35PS
+        - .IAR_mid+CM35PS
+        - .IAR_high+CM35PS
+        - .IAR_size+CM35PS
+        - .IAR_tiny+CM35PS
 
     #Target: CM35PNS
     - layer: ../Layer/Target/CM35PNS/Target.clayer.yml
@@ -271,6 +351,11 @@ project:
         - .GCC_high+CM35PNS
         - .GCC_size+CM35PNS
         - .GCC_tiny+CM35PNS
+        - .IAR_low+CM35PNS
+        - .IAR_mid+CM35PNS
+        - .IAR_high+CM35PNS
+        - .IAR_size+CM35PNS
+        - .IAR_tiny+CM35PNS
 
     #Target: CM55S
     - layer: ../Layer/Target/CM55S/Target.clayer.yml
@@ -285,6 +370,11 @@ project:
         - .GCC_high+CM55S
         - .GCC_size+CM55S
         - .GCC_tiny+CM55S
+        - .IAR_low+CM55S
+        - .IAR_mid+CM55S
+        - .IAR_high+CM55S
+        - .IAR_size+CM55S
+        - .IAR_tiny+CM55S
 
     #Target: CM55NS
     - layer: ../Layer/Target/CM55NS/Target.clayer.yml
@@ -299,6 +389,11 @@ project:
         - .GCC_high+CM55NS
         - .GCC_size+CM55NS
         - .GCC_tiny+CM55NS
+        - .IAR_low+CM55NS
+        - .IAR_mid+CM55NS
+        - .IAR_high+CM55NS
+        - .IAR_size+CM55NS
+        - .IAR_tiny+CM55NS
 
     #Target: CM85S
     - layer: ../Layer/Target/CM85S/Target.clayer.yml
@@ -313,6 +408,11 @@ project:
         - .GCC_high+CM85S
         - .GCC_size+CM85S
         - .GCC_tiny+CM85S
+        - .IAR_low+CM85S
+        - .IAR_mid+CM85S
+        - .IAR_high+CM85S
+        - .IAR_size+CM85S
+        - .IAR_tiny+CM85S
 
     #Target: CM85NS
     - layer: ../Layer/Target/CM85NS/Target.clayer.yml
@@ -327,6 +427,11 @@ project:
         - .GCC_high+CM85NS
         - .GCC_size+CM85NS
         - .GCC_tiny+CM85NS
+        - .IAR_low+CM85NS
+        - .IAR_mid+CM85NS
+        - .IAR_high+CM85NS
+        - .IAR_size+CM85NS
+        - .IAR_tiny+CM85NS
 
     #Target: CA5
     - layer: ../Layer/Target/CA5/Target.clayer.yml
@@ -341,6 +446,11 @@ project:
         - .GCC_high+CA5
         - .GCC_size+CA5
         - .GCC_tiny+CA5
+        - .IAR_low+CA5
+        - .IAR_mid+CA5
+        - .IAR_high+CA5
+        - .IAR_size+CA5
+        - .IAR_tiny+CA5
 
     #Target: CA7
     - layer: ../Layer/Target/CA7/Target.clayer.yml
@@ -355,6 +465,11 @@ project:
         - .GCC_high+CA7
         - .GCC_size+CA7
         - .GCC_tiny+CA7
+        - .IAR_low+CA7
+        - .IAR_mid+CA7
+        - .IAR_high+CA7
+        - .IAR_size+CA7
+        - .IAR_tiny+CA7
 
     #Target: CA9
     - layer: ../Layer/Target/CA9/Target.clayer.yml
@@ -369,3 +484,8 @@ project:
         - .GCC_high+CA9
         - .GCC_size+CA9
         - .GCC_tiny+CA9
+        - .IAR_low+CA9
+        - .IAR_mid+CA9
+        - .IAR_high+CA9
+        - .IAR_size+CA9
+        - .IAR_tiny+CA9
