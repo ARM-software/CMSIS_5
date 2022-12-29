@@ -1,8 +1,8 @@
 /******************************************************************************
  * @file     cachel1_armv7.h
  * @brief    CMSIS Level 1 Cache API for Armv7-M and later
- * @version  V1.0.2
- * @date     22. June 2022
+ * @version  V1.0.3
+ * @date     12. July 2022
  ******************************************************************************/
 /*
  * Copyright (c) 2020-2021 Arm Limited. All rights reserved.
@@ -57,8 +57,10 @@
 __STATIC_FORCEINLINE void SCB_EnableICache (void)
 {
   #if defined (__ICACHE_PRESENT) && (__ICACHE_PRESENT == 1U)
-    if (SCB->CCR & SCB_CCR_IC_Msk) return;  /* return if ICache is already enabled */
-
+    if (SCB->CCR & SCB_CCR_IC_Msk){ /* return if ICache is already enabled */
+      return; 
+    }
+    
     __DSB();
     __ISB();
     SCB->ICIALLU = 0UL;                     /* invalidate I-Cache */
@@ -115,21 +117,23 @@ __STATIC_FORCEINLINE void SCB_InvalidateICache (void)
 __STATIC_FORCEINLINE void SCB_InvalidateICache_by_Addr (volatile void *addr, int32_t isize)
 {
   #if defined (__ICACHE_PRESENT) && (__ICACHE_PRESENT == 1U)
-    if ( isize > 0 ) {
-       int32_t op_size = isize + (((uint32_t)addr) & (__SCB_ICACHE_LINE_SIZE - 1U));
-      uint32_t op_addr = (uint32_t)addr /* & ~(__SCB_ICACHE_LINE_SIZE - 1U) */;
-
-      __DSB();
-
-      do {
-        SCB->ICIMVAU = op_addr;             /* register accepts only 32byte aligned values, only bits 31..5 are valid */
-        op_addr += __SCB_ICACHE_LINE_SIZE;
-        op_size -= __SCB_ICACHE_LINE_SIZE;
-      } while ( op_size > 0 );
-
-      __DSB();
-      __ISB();
+    if ( isize <= 0 ) {
+      return;
     }
+
+    int32_t op_size = isize + (((uint32_t)addr) & (__SCB_ICACHE_LINE_SIZE - 1U));
+    uint32_t op_addr = (uint32_t)addr /* & ~(__SCB_ICACHE_LINE_SIZE - 1U) */;
+
+    __DSB();
+
+    do {
+      SCB->ICIMVAU = op_addr;             /* register accepts only 32byte aligned values, only bits 31..5 are valid */
+      op_addr += __SCB_ICACHE_LINE_SIZE;
+      op_size -= __SCB_ICACHE_LINE_SIZE;
+    } while ( op_size > 0 );
+
+    __DSB();
+    __ISB();
   #endif
 }
 
@@ -145,13 +149,14 @@ __STATIC_FORCEINLINE void SCB_EnableDCache (void)
     uint32_t sets;
     uint32_t ways;
 
-    if (SCB->CCR & SCB_CCR_DC_Msk) return;  /* return if DCache is already enabled */
+    if (SCB->CCR & SCB_CCR_DC_Msk){ /* return if DCache is already enabled */
+      return; 
+    }  
 
     SCB->CSSELR = 0U;                       /* select Level 1 data cache */
     __DSB();
 
     ccsidr = SCB->CCSIDR;
-
                                             /* invalidate D-Cache */
     sets = (uint32_t)(CCSIDR_SETS(ccsidr));
     do {
@@ -351,21 +356,23 @@ __STATIC_FORCEINLINE void SCB_CleanInvalidateDCache (void)
 __STATIC_FORCEINLINE void SCB_InvalidateDCache_by_Addr (volatile void *addr, int32_t dsize)
 {
   #if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
-    if ( dsize > 0 ) {
-       int32_t op_size = dsize + (((uint32_t)addr) & (__SCB_DCACHE_LINE_SIZE - 1U));
-      uint32_t op_addr = (uint32_t)addr /* & ~(__SCB_DCACHE_LINE_SIZE - 1U) */;
-
-      __DSB();
-
-      do {
-        SCB->DCIMVAC = op_addr;             /* register accepts only 32byte aligned values, only bits 31..5 are valid */
-        op_addr += __SCB_DCACHE_LINE_SIZE;
-        op_size -= __SCB_DCACHE_LINE_SIZE;
-      } while ( op_size > 0 );
-
-      __DSB();
-      __ISB();
+    if ( dsize <= 0 ) {
+      return;
     }
+
+    int32_t op_size = dsize + (((uint32_t)addr) & (__SCB_DCACHE_LINE_SIZE - 1U));
+    uint32_t op_addr = (uint32_t)addr /* & ~(__SCB_DCACHE_LINE_SIZE - 1U) */;
+
+    __DSB();
+
+    do {
+      SCB->DCIMVAC = op_addr;             /* register accepts only 32byte aligned values, only bits 31..5 are valid */
+      op_addr += __SCB_DCACHE_LINE_SIZE;
+      op_size -= __SCB_DCACHE_LINE_SIZE;
+    } while ( op_size > 0 );
+
+    __DSB();
+    __ISB();
   #endif
 }
 
@@ -381,21 +388,23 @@ __STATIC_FORCEINLINE void SCB_InvalidateDCache_by_Addr (volatile void *addr, int
 __STATIC_FORCEINLINE void SCB_CleanDCache_by_Addr (volatile void *addr, int32_t dsize)
 {
   #if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
-    if ( dsize > 0 ) {
-       int32_t op_size = dsize + (((uint32_t)addr) & (__SCB_DCACHE_LINE_SIZE - 1U));
-      uint32_t op_addr = (uint32_t)addr /* & ~(__SCB_DCACHE_LINE_SIZE - 1U) */;
-
-      __DSB();
-
-      do {
-        SCB->DCCMVAC = op_addr;             /* register accepts only 32byte aligned values, only bits 31..5 are valid */
-        op_addr += __SCB_DCACHE_LINE_SIZE;
-        op_size -= __SCB_DCACHE_LINE_SIZE;
-      } while ( op_size > 0 );
-
-      __DSB();
-      __ISB();
+    if ( dsize <= 0 ) {
+       return;
     }
+
+    int32_t op_size = dsize + (((uint32_t)addr) & (__SCB_DCACHE_LINE_SIZE - 1U));
+    uint32_t op_addr = (uint32_t)addr /* & ~(__SCB_DCACHE_LINE_SIZE - 1U) */;
+
+    __DSB();
+
+    do {
+      SCB->DCCMVAC = op_addr;             /* register accepts only 32byte aligned values, only bits 31..5 are valid */
+      op_addr += __SCB_DCACHE_LINE_SIZE;
+      op_size -= __SCB_DCACHE_LINE_SIZE;
+    } while ( op_size > 0 );
+
+    __DSB();
+    __ISB();
   #endif
 }
 
@@ -411,21 +420,23 @@ __STATIC_FORCEINLINE void SCB_CleanDCache_by_Addr (volatile void *addr, int32_t 
 __STATIC_FORCEINLINE void SCB_CleanInvalidateDCache_by_Addr (volatile void *addr, int32_t dsize)
 {
   #if defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
-    if ( dsize > 0 ) {
-       int32_t op_size = dsize + (((uint32_t)addr) & (__SCB_DCACHE_LINE_SIZE - 1U));
-      uint32_t op_addr = (uint32_t)addr /* & ~(__SCB_DCACHE_LINE_SIZE - 1U) */;
-
-      __DSB();
-
-      do {
-        SCB->DCCIMVAC = op_addr;            /* register accepts only 32byte aligned values, only bits 31..5 are valid */
-        op_addr +=          __SCB_DCACHE_LINE_SIZE;
-        op_size -=          __SCB_DCACHE_LINE_SIZE;
-      } while ( op_size > 0 );
-
-      __DSB();
-      __ISB();
+    if ( dsize <= 0 ) {
+       return;
     }
+
+    int32_t op_size = dsize + (((uint32_t)addr) & (__SCB_DCACHE_LINE_SIZE - 1U));
+    uint32_t op_addr = (uint32_t)addr /* & ~(__SCB_DCACHE_LINE_SIZE - 1U) */;
+
+    __DSB();
+
+    do {
+      SCB->DCCIMVAC = op_addr;            /* register accepts only 32byte aligned values, only bits 31..5 are valid */
+      op_addr +=          __SCB_DCACHE_LINE_SIZE;
+      op_size -=          __SCB_DCACHE_LINE_SIZE;
+    } while ( op_size > 0 );
+
+    __DSB();
+    __ISB();
   #endif
 }
 

@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     cmsis_gcc.h
  * @brief    CMSIS compiler GCC header file
- * @version  V5.4.1
- * @date     27. May 2021
+ * @version  V5.4.2
+ * @date     12. July 2022
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2021 Arm Limited. All rights reserved.
@@ -478,7 +478,7 @@ __STATIC_FORCEINLINE uint32_t __LDREXW(volatile uint32_t *addr)
     uint32_t result;
 
    __ASM volatile ("ldrex %0, %1" : "=r" (result) : "Q" (*addr) );
-   return(result);
+   return result;
 }
 
 
@@ -495,7 +495,7 @@ __STATIC_FORCEINLINE uint32_t __STREXB(uint8_t value, volatile uint8_t *addr)
    uint32_t result;
 
    __ASM volatile ("strexb %0, %2, %1" : "=&r" (result), "=Q" (*addr) : "r" ((uint32_t)value) );
-   return(result);
+   return result;
 }
 
 
@@ -512,7 +512,7 @@ __STATIC_FORCEINLINE uint32_t __STREXH(uint16_t value, volatile uint16_t *addr)
    uint32_t result;
 
    __ASM volatile ("strexh %0, %2, %1" : "=&r" (result), "=Q" (*addr) : "r" ((uint32_t)value) );
-   return(result);
+   return result;
 }
 
 
@@ -529,7 +529,7 @@ __STATIC_FORCEINLINE uint32_t __STREXW(uint32_t value, volatile uint32_t *addr)
    uint32_t result;
 
    __ASM volatile ("strex %0, %2, %1" : "=&r" (result), "=Q" (*addr) : "r" (value) );
-   return(result);
+   return result;
 }
 
 
@@ -595,7 +595,7 @@ __STATIC_FORCEINLINE uint32_t __RRX(uint32_t value)
   uint32_t result;
 
   __ASM volatile ("rrx %0, %1" : __CMSIS_GCC_OUT_REG (result) : __CMSIS_GCC_USE_REG (value) );
-  return(result);
+  return result;
 }
 
 
@@ -654,7 +654,7 @@ __STATIC_FORCEINLINE uint32_t __LDRT(volatile uint32_t *ptr)
     uint32_t result;
 
    __ASM volatile ("ldrt %0, %1" : "=r" (result) : "Q" (*ptr) );
-   return(result);
+   return result;
 }
 
 
@@ -794,7 +794,7 @@ __STATIC_FORCEINLINE uint32_t __LDA(volatile uint32_t *ptr)
     uint32_t result;
 
    __ASM volatile ("lda %0, %1" : "=r" (result) : "Q" (*ptr) : "memory" );
-   return(result);
+   return result;
 }
 
 
@@ -875,7 +875,7 @@ __STATIC_FORCEINLINE uint32_t __LDAEX(volatile uint32_t *ptr)
     uint32_t result;
 
    __ASM volatile ("ldaex %0, %1" : "=r" (result) : "Q" (*ptr) : "memory" );
-   return(result);
+   return result;
 }
 
 
@@ -892,7 +892,7 @@ __STATIC_FORCEINLINE uint32_t __STLEXB(uint8_t value, volatile uint8_t *ptr)
    uint32_t result;
 
    __ASM volatile ("stlexb %0, %2, %1" : "=&r" (result), "=Q" (*ptr) : "r" ((uint32_t)value) : "memory" );
-   return(result);
+   return result;
 }
 
 
@@ -909,7 +909,7 @@ __STATIC_FORCEINLINE uint32_t __STLEXH(uint16_t value, volatile uint16_t *ptr)
    uint32_t result;
 
    __ASM volatile ("stlexh %0, %2, %1" : "=&r" (result), "=Q" (*ptr) : "r" ((uint32_t)value) : "memory" );
-   return(result);
+   return result;
 }
 
 
@@ -926,7 +926,7 @@ __STATIC_FORCEINLINE uint32_t __STLEX(uint32_t value, volatile uint32_t *ptr)
    uint32_t result;
 
    __ASM volatile ("stlex %0, %2, %1" : "=&r" (result), "=Q" (*ptr) : "r" ((uint32_t)value) : "memory" );
-   return(result);
+   return result;
 }
 
 #endif /* ((defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1)) || \
@@ -973,7 +973,7 @@ __STATIC_FORCEINLINE uint32_t __get_CONTROL(void)
   uint32_t result;
 
   __ASM volatile ("MRS %0, control" : "=r" (result) );
-  return(result);
+  return result;
 }
 
 
@@ -988,7 +988,7 @@ __STATIC_FORCEINLINE uint32_t __TZ_get_CONTROL_NS(void)
   uint32_t result;
 
   __ASM volatile ("MRS %0, control_ns" : "=r" (result) );
-  return(result);
+  return result;
 }
 #endif
 
@@ -1029,7 +1029,7 @@ __STATIC_FORCEINLINE uint32_t __get_IPSR(void)
   uint32_t result;
 
   __ASM volatile ("MRS %0, ipsr" : "=r" (result) );
-  return(result);
+  return result;
 }
 
 
@@ -1043,7 +1043,7 @@ __STATIC_FORCEINLINE uint32_t __get_APSR(void)
   uint32_t result;
 
   __ASM volatile ("MRS %0, apsr" : "=r" (result) );
-  return(result);
+  return result;
 }
 
 
@@ -1057,7 +1057,7 @@ __STATIC_FORCEINLINE uint32_t __get_xPSR(void)
   uint32_t result;
 
   __ASM volatile ("MRS %0, xpsr" : "=r" (result) );
-  return(result);
+  return result;
 }
 
 
@@ -1071,7 +1071,7 @@ __STATIC_FORCEINLINE uint32_t __get_PSP(void)
   uint32_t result;
 
   __ASM volatile ("MRS %0, psp"  : "=r" (result) );
-  return(result);
+  return result;
 }
 
 
@@ -1086,7 +1086,7 @@ __STATIC_FORCEINLINE uint32_t __TZ_get_PSP_NS(void)
   uint32_t result;
 
   __ASM volatile ("MRS %0, psp_ns"  : "=r" (result) );
-  return(result);
+  return result;
 }
 #endif
 
@@ -1125,7 +1125,7 @@ __STATIC_FORCEINLINE uint32_t __get_MSP(void)
   uint32_t result;
 
   __ASM volatile ("MRS %0, msp" : "=r" (result) );
-  return(result);
+  return result;
 }
 
 
@@ -1140,7 +1140,7 @@ __STATIC_FORCEINLINE uint32_t __TZ_get_MSP_NS(void)
   uint32_t result;
 
   __ASM volatile ("MRS %0, msp_ns" : "=r" (result) );
-  return(result);
+  return result;
 }
 #endif
 
@@ -1180,7 +1180,7 @@ __STATIC_FORCEINLINE uint32_t __TZ_get_SP_NS(void)
   uint32_t result;
 
   __ASM volatile ("MRS %0, sp_ns" : "=r" (result) );
-  return(result);
+  return result;
 }
 
 
@@ -1206,7 +1206,7 @@ __STATIC_FORCEINLINE uint32_t __get_PRIMASK(void)
   uint32_t result;
 
   __ASM volatile ("MRS %0, primask" : "=r" (result) );
-  return(result);
+  return result;
 }
 
 
@@ -1221,7 +1221,7 @@ __STATIC_FORCEINLINE uint32_t __TZ_get_PRIMASK_NS(void)
   uint32_t result;
 
   __ASM volatile ("MRS %0, primask_ns" : "=r" (result) );
-  return(result);
+  return result;
 }
 #endif
 
@@ -1285,7 +1285,7 @@ __STATIC_FORCEINLINE uint32_t __get_BASEPRI(void)
   uint32_t result;
 
   __ASM volatile ("MRS %0, basepri" : "=r" (result) );
-  return(result);
+  return result;
 }
 
 
@@ -1300,7 +1300,7 @@ __STATIC_FORCEINLINE uint32_t __TZ_get_BASEPRI_NS(void)
   uint32_t result;
 
   __ASM volatile ("MRS %0, basepri_ns" : "=r" (result) );
-  return(result);
+  return result;
 }
 #endif
 
@@ -1351,7 +1351,7 @@ __STATIC_FORCEINLINE uint32_t __get_FAULTMASK(void)
   uint32_t result;
 
   __ASM volatile ("MRS %0, faultmask" : "=r" (result) );
-  return(result);
+  return result;
 }
 
 
@@ -1366,7 +1366,7 @@ __STATIC_FORCEINLINE uint32_t __TZ_get_FAULTMASK_NS(void)
   uint32_t result;
 
   __ASM volatile ("MRS %0, faultmask_ns" : "=r" (result) );
-  return(result);
+  return result;
 }
 #endif
 
@@ -1598,7 +1598,7 @@ __STATIC_FORCEINLINE uint32_t __get_FPSCR(void)
   uint32_t result;
 
   __ASM volatile ("VMRS %0, fpscr" : "=r" (result) );
-  return(result);
+  return result;
 #endif
 #else
   return(0U);
@@ -1645,7 +1645,7 @@ __STATIC_FORCEINLINE uint32_t __SADD8(uint32_t op1, uint32_t op2)
   uint32_t result;
 
   __ASM volatile ("sadd8 %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
+  return result;
 }
 
 __STATIC_FORCEINLINE uint32_t __QADD8(uint32_t op1, uint32_t op2)
@@ -1653,7 +1653,7 @@ __STATIC_FORCEINLINE uint32_t __QADD8(uint32_t op1, uint32_t op2)
   uint32_t result;
 
   __ASM ("qadd8 %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
+  return result;
 }
 
 __STATIC_FORCEINLINE uint32_t __SHADD8(uint32_t op1, uint32_t op2)
@@ -1661,7 +1661,7 @@ __STATIC_FORCEINLINE uint32_t __SHADD8(uint32_t op1, uint32_t op2)
   uint32_t result;
 
   __ASM ("shadd8 %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
+  return result;
 }
 
 __STATIC_FORCEINLINE uint32_t __UADD8(uint32_t op1, uint32_t op2)
@@ -1669,7 +1669,7 @@ __STATIC_FORCEINLINE uint32_t __UADD8(uint32_t op1, uint32_t op2)
   uint32_t result;
 
   __ASM volatile ("uadd8 %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
+  return result;
 }
 
 __STATIC_FORCEINLINE uint32_t __UQADD8(uint32_t op1, uint32_t op2)
@@ -1677,7 +1677,7 @@ __STATIC_FORCEINLINE uint32_t __UQADD8(uint32_t op1, uint32_t op2)
   uint32_t result;
 
   __ASM ("uqadd8 %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
+  return result;
 }
 
 __STATIC_FORCEINLINE uint32_t __UHADD8(uint32_t op1, uint32_t op2)
@@ -1685,7 +1685,7 @@ __STATIC_FORCEINLINE uint32_t __UHADD8(uint32_t op1, uint32_t op2)
   uint32_t result;
 
   __ASM ("uhadd8 %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
+  return result;
 }
 
 
@@ -1694,7 +1694,7 @@ __STATIC_FORCEINLINE uint32_t __SSUB8(uint32_t op1, uint32_t op2)
   uint32_t result;
 
   __ASM volatile ("ssub8 %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
+  return result;
 }
 
 __STATIC_FORCEINLINE uint32_t __QSUB8(uint32_t op1, uint32_t op2)
@@ -1702,7 +1702,7 @@ __STATIC_FORCEINLINE uint32_t __QSUB8(uint32_t op1, uint32_t op2)
   uint32_t result;
 
   __ASM ("qsub8 %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
+  return result;
 }
 
 __STATIC_FORCEINLINE uint32_t __SHSUB8(uint32_t op1, uint32_t op2)
@@ -1710,7 +1710,7 @@ __STATIC_FORCEINLINE uint32_t __SHSUB8(uint32_t op1, uint32_t op2)
   uint32_t result;
 
   __ASM ("shsub8 %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
+  return result;
 }
 
 __STATIC_FORCEINLINE uint32_t __USUB8(uint32_t op1, uint32_t op2)
@@ -1718,7 +1718,7 @@ __STATIC_FORCEINLINE uint32_t __USUB8(uint32_t op1, uint32_t op2)
   uint32_t result;
 
   __ASM volatile ("usub8 %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
+  return result;
 }
 
 __STATIC_FORCEINLINE uint32_t __UQSUB8(uint32_t op1, uint32_t op2)
@@ -1726,7 +1726,7 @@ __STATIC_FORCEINLINE uint32_t __UQSUB8(uint32_t op1, uint32_t op2)
   uint32_t result;
 
   __ASM ("uqsub8 %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
+  return result;
 }
 
 __STATIC_FORCEINLINE uint32_t __UHSUB8(uint32_t op1, uint32_t op2)
@@ -1734,7 +1734,7 @@ __STATIC_FORCEINLINE uint32_t __UHSUB8(uint32_t op1, uint32_t op2)
   uint32_t result;
 
   __ASM ("uhsub8 %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
+  return result;
 }
 
 
@@ -1743,7 +1743,7 @@ __STATIC_FORCEINLINE uint32_t __SADD16(uint32_t op1, uint32_t op2)
   uint32_t result;
 
   __ASM volatile ("sadd16 %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
+  return result;
 }
 
 __STATIC_FORCEINLINE uint32_t __QADD16(uint32_t op1, uint32_t op2)
@@ -1751,7 +1751,7 @@ __STATIC_FORCEINLINE uint32_t __QADD16(uint32_t op1, uint32_t op2)
   uint32_t result;
 
   __ASM ("qadd16 %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
+  return result;
 }
 
 __STATIC_FORCEINLINE uint32_t __SHADD16(uint32_t op1, uint32_t op2)
@@ -1759,7 +1759,7 @@ __STATIC_FORCEINLINE uint32_t __SHADD16(uint32_t op1, uint32_t op2)
   uint32_t result;
 
   __ASM ("shadd16 %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
+  return result;
 }
 
 __STATIC_FORCEINLINE uint32_t __UADD16(uint32_t op1, uint32_t op2)
@@ -1767,7 +1767,7 @@ __STATIC_FORCEINLINE uint32_t __UADD16(uint32_t op1, uint32_t op2)
   uint32_t result;
 
   __ASM volatile ("uadd16 %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
+  return result;
 }
 
 __STATIC_FORCEINLINE uint32_t __UQADD16(uint32_t op1, uint32_t op2)
@@ -1775,7 +1775,7 @@ __STATIC_FORCEINLINE uint32_t __UQADD16(uint32_t op1, uint32_t op2)
   uint32_t result;
 
   __ASM ("uqadd16 %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
+  return result;
 }
 
 __STATIC_FORCEINLINE uint32_t __UHADD16(uint32_t op1, uint32_t op2)
@@ -1783,7 +1783,7 @@ __STATIC_FORCEINLINE uint32_t __UHADD16(uint32_t op1, uint32_t op2)
   uint32_t result;
 
   __ASM ("uhadd16 %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
+  return result;
 }
 
 __STATIC_FORCEINLINE uint32_t __SSUB16(uint32_t op1, uint32_t op2)
@@ -1791,7 +1791,7 @@ __STATIC_FORCEINLINE uint32_t __SSUB16(uint32_t op1, uint32_t op2)
   uint32_t result;
 
   __ASM volatile ("ssub16 %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
+  return result;
 }
 
 __STATIC_FORCEINLINE uint32_t __QSUB16(uint32_t op1, uint32_t op2)
@@ -1799,7 +1799,7 @@ __STATIC_FORCEINLINE uint32_t __QSUB16(uint32_t op1, uint32_t op2)
   uint32_t result;
 
   __ASM ("qsub16 %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
+  return result;
 }
 
 __STATIC_FORCEINLINE uint32_t __SHSUB16(uint32_t op1, uint32_t op2)
@@ -1807,7 +1807,7 @@ __STATIC_FORCEINLINE uint32_t __SHSUB16(uint32_t op1, uint32_t op2)
   uint32_t result;
 
   __ASM ("shsub16 %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
+  return result;
 }
 
 __STATIC_FORCEINLINE uint32_t __USUB16(uint32_t op1, uint32_t op2)
@@ -1815,7 +1815,7 @@ __STATIC_FORCEINLINE uint32_t __USUB16(uint32_t op1, uint32_t op2)
   uint32_t result;
 
   __ASM volatile ("usub16 %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
+  return result;
 }
 
 __STATIC_FORCEINLINE uint32_t __UQSUB16(uint32_t op1, uint32_t op2)
@@ -1823,7 +1823,7 @@ __STATIC_FORCEINLINE uint32_t __UQSUB16(uint32_t op1, uint32_t op2)
   uint32_t result;
 
   __ASM ("uqsub16 %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
+  return result;
 }
 
 __STATIC_FORCEINLINE uint32_t __UHSUB16(uint32_t op1, uint32_t op2)
@@ -1831,7 +1831,7 @@ __STATIC_FORCEINLINE uint32_t __UHSUB16(uint32_t op1, uint32_t op2)
   uint32_t result;
 
   __ASM ("uhsub16 %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
+  return result;
 }
 
 __STATIC_FORCEINLINE uint32_t __SASX(uint32_t op1, uint32_t op2)
@@ -1839,7 +1839,7 @@ __STATIC_FORCEINLINE uint32_t __SASX(uint32_t op1, uint32_t op2)
   uint32_t result;
 
   __ASM volatile ("sasx %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
+  return result;
 }
 
 __STATIC_FORCEINLINE uint32_t __QASX(uint32_t op1, uint32_t op2)
@@ -1847,7 +1847,7 @@ __STATIC_FORCEINLINE uint32_t __QASX(uint32_t op1, uint32_t op2)
   uint32_t result;
 
   __ASM ("qasx %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
+  return result;
 }
 
 __STATIC_FORCEINLINE uint32_t __SHASX(uint32_t op1, uint32_t op2)
@@ -1855,7 +1855,7 @@ __STATIC_FORCEINLINE uint32_t __SHASX(uint32_t op1, uint32_t op2)
   uint32_t result;
 
   __ASM ("shasx %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
+  return result;
 }
 
 __STATIC_FORCEINLINE uint32_t __UASX(uint32_t op1, uint32_t op2)
@@ -1863,7 +1863,7 @@ __STATIC_FORCEINLINE uint32_t __UASX(uint32_t op1, uint32_t op2)
   uint32_t result;
 
   __ASM volatile ("uasx %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
+  return result;
 }
 
 __STATIC_FORCEINLINE uint32_t __UQASX(uint32_t op1, uint32_t op2)
@@ -1871,7 +1871,7 @@ __STATIC_FORCEINLINE uint32_t __UQASX(uint32_t op1, uint32_t op2)
   uint32_t result;
 
   __ASM ("uqasx %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
+  return result;
 }
 
 __STATIC_FORCEINLINE uint32_t __UHASX(uint32_t op1, uint32_t op2)
@@ -1879,7 +1879,7 @@ __STATIC_FORCEINLINE uint32_t __UHASX(uint32_t op1, uint32_t op2)
   uint32_t result;
 
   __ASM ("uhasx %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
+  return result;
 }
 
 __STATIC_FORCEINLINE uint32_t __SSAX(uint32_t op1, uint32_t op2)
@@ -1887,7 +1887,7 @@ __STATIC_FORCEINLINE uint32_t __SSAX(uint32_t op1, uint32_t op2)
   uint32_t result;
 
   __ASM volatile ("ssax %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
+  return result;
 }
 
 __STATIC_FORCEINLINE uint32_t __QSAX(uint32_t op1, uint32_t op2)
@@ -1895,7 +1895,7 @@ __STATIC_FORCEINLINE uint32_t __QSAX(uint32_t op1, uint32_t op2)
   uint32_t result;
 
   __ASM ("qsax %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
+  return result;
 }
 
 __STATIC_FORCEINLINE uint32_t __SHSAX(uint32_t op1, uint32_t op2)
@@ -1903,7 +1903,7 @@ __STATIC_FORCEINLINE uint32_t __SHSAX(uint32_t op1, uint32_t op2)
   uint32_t result;
 
   __ASM ("shsax %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
+  return result;
 }
 
 __STATIC_FORCEINLINE uint32_t __USAX(uint32_t op1, uint32_t op2)
@@ -1911,7 +1911,7 @@ __STATIC_FORCEINLINE uint32_t __USAX(uint32_t op1, uint32_t op2)
   uint32_t result;
 
   __ASM volatile ("usax %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
+  return result;
 }
 
 __STATIC_FORCEINLINE uint32_t __UQSAX(uint32_t op1, uint32_t op2)
@@ -1919,7 +1919,7 @@ __STATIC_FORCEINLINE uint32_t __UQSAX(uint32_t op1, uint32_t op2)
   uint32_t result;
 
   __ASM ("uqsax %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
+  return result;
 }
 
 __STATIC_FORCEINLINE uint32_t __UHSAX(uint32_t op1, uint32_t op2)
@@ -1927,7 +1927,7 @@ __STATIC_FORCEINLINE uint32_t __UHSAX(uint32_t op1, uint32_t op2)
   uint32_t result;
 
   __ASM ("uhsax %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
+  return result;
 }
 
 __STATIC_FORCEINLINE uint32_t __USAD8(uint32_t op1, uint32_t op2)
@@ -1935,7 +1935,7 @@ __STATIC_FORCEINLINE uint32_t __USAD8(uint32_t op1, uint32_t op2)
   uint32_t result;
 
   __ASM ("usad8 %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
+  return result;
 }
 
 __STATIC_FORCEINLINE uint32_t __USADA8(uint32_t op1, uint32_t op2, uint32_t op3)
@@ -1943,7 +1943,7 @@ __STATIC_FORCEINLINE uint32_t __USADA8(uint32_t op1, uint32_t op2, uint32_t op3)
   uint32_t result;
 
   __ASM ("usada8 %0, %1, %2, %3" : "=r" (result) : "r" (op1), "r" (op2), "r" (op3) );
-  return(result);
+  return result;
 }
 
 #define __SSAT16(ARG1, ARG2) \
@@ -1967,7 +1967,7 @@ __STATIC_FORCEINLINE uint32_t __UXTB16(uint32_t op1)
   uint32_t result;
 
   __ASM ("uxtb16 %0, %1" : "=r" (result) : "r" (op1));
-  return(result);
+  return result;
 }
 
 __STATIC_FORCEINLINE uint32_t __UXTAB16(uint32_t op1, uint32_t op2)
@@ -1975,7 +1975,7 @@ __STATIC_FORCEINLINE uint32_t __UXTAB16(uint32_t op1, uint32_t op2)
   uint32_t result;
 
   __ASM ("uxtab16 %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
+  return result;
 }
 
 __STATIC_FORCEINLINE uint32_t __SXTB16(uint32_t op1)
@@ -1983,7 +1983,7 @@ __STATIC_FORCEINLINE uint32_t __SXTB16(uint32_t op1)
   uint32_t result;
 
   __ASM ("sxtb16 %0, %1" : "=r" (result) : "r" (op1));
-  return(result);
+  return result;
 }
 
 __STATIC_FORCEINLINE uint32_t __SXTB16_RORn(uint32_t op1, uint32_t rotate)
@@ -2002,7 +2002,7 @@ __STATIC_FORCEINLINE uint32_t __SXTAB16(uint32_t op1, uint32_t op2)
   uint32_t result;
 
   __ASM ("sxtab16 %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
+  return result;
 }
 
 __STATIC_FORCEINLINE uint32_t __SXTAB16_RORn(uint32_t op1, uint32_t op2, uint32_t rotate)
@@ -2022,7 +2022,7 @@ __STATIC_FORCEINLINE uint32_t __SMUAD  (uint32_t op1, uint32_t op2)
   uint32_t result;
 
   __ASM volatile ("smuad %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
+  return result;
 }
 
 __STATIC_FORCEINLINE uint32_t __SMUADX (uint32_t op1, uint32_t op2)
@@ -2030,7 +2030,7 @@ __STATIC_FORCEINLINE uint32_t __SMUADX (uint32_t op1, uint32_t op2)
   uint32_t result;
 
   __ASM volatile ("smuadx %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
+  return result;
 }
 
 __STATIC_FORCEINLINE uint32_t __SMLAD (uint32_t op1, uint32_t op2, uint32_t op3)
@@ -2038,7 +2038,7 @@ __STATIC_FORCEINLINE uint32_t __SMLAD (uint32_t op1, uint32_t op2, uint32_t op3)
   uint32_t result;
 
   __ASM volatile ("smlad %0, %1, %2, %3" : "=r" (result) : "r" (op1), "r" (op2), "r" (op3) );
-  return(result);
+  return result;
 }
 
 __STATIC_FORCEINLINE uint32_t __SMLADX (uint32_t op1, uint32_t op2, uint32_t op3)
@@ -2046,7 +2046,7 @@ __STATIC_FORCEINLINE uint32_t __SMLADX (uint32_t op1, uint32_t op2, uint32_t op3
   uint32_t result;
 
   __ASM volatile ("smladx %0, %1, %2, %3" : "=r" (result) : "r" (op1), "r" (op2), "r" (op3) );
-  return(result);
+  return result;
 }
 
 __STATIC_FORCEINLINE uint64_t __SMLALD (uint32_t op1, uint32_t op2, uint64_t acc)
@@ -2088,7 +2088,7 @@ __STATIC_FORCEINLINE uint32_t __SMUSD  (uint32_t op1, uint32_t op2)
   uint32_t result;
 
   __ASM volatile ("smusd %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
+  return result;
 }
 
 __STATIC_FORCEINLINE uint32_t __SMUSDX (uint32_t op1, uint32_t op2)
@@ -2096,7 +2096,7 @@ __STATIC_FORCEINLINE uint32_t __SMUSDX (uint32_t op1, uint32_t op2)
   uint32_t result;
 
   __ASM volatile ("smusdx %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
+  return result;
 }
 
 __STATIC_FORCEINLINE uint32_t __SMLSD (uint32_t op1, uint32_t op2, uint32_t op3)
@@ -2104,7 +2104,7 @@ __STATIC_FORCEINLINE uint32_t __SMLSD (uint32_t op1, uint32_t op2, uint32_t op3)
   uint32_t result;
 
   __ASM volatile ("smlsd %0, %1, %2, %3" : "=r" (result) : "r" (op1), "r" (op2), "r" (op3) );
-  return(result);
+  return result;
 }
 
 __STATIC_FORCEINLINE uint32_t __SMLSDX (uint32_t op1, uint32_t op2, uint32_t op3)
@@ -2112,7 +2112,7 @@ __STATIC_FORCEINLINE uint32_t __SMLSDX (uint32_t op1, uint32_t op2, uint32_t op3
   uint32_t result;
 
   __ASM volatile ("smlsdx %0, %1, %2, %3" : "=r" (result) : "r" (op1), "r" (op2), "r" (op3) );
-  return(result);
+  return result;
 }
 
 __STATIC_FORCEINLINE uint64_t __SMLSLD (uint32_t op1, uint32_t op2, uint64_t acc)
@@ -2154,7 +2154,7 @@ __STATIC_FORCEINLINE uint32_t __SEL  (uint32_t op1, uint32_t op2)
   uint32_t result;
 
   __ASM volatile ("sel %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
+  return result;
 }
 
 __STATIC_FORCEINLINE  int32_t __QADD( int32_t op1,  int32_t op2)
@@ -2162,7 +2162,7 @@ __STATIC_FORCEINLINE  int32_t __QADD( int32_t op1,  int32_t op2)
   int32_t result;
 
   __ASM volatile ("qadd %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
+  return result;
 }
 
 __STATIC_FORCEINLINE  int32_t __QSUB( int32_t op1,  int32_t op2)
@@ -2170,7 +2170,7 @@ __STATIC_FORCEINLINE  int32_t __QSUB( int32_t op1,  int32_t op2)
   int32_t result;
 
   __ASM volatile ("qsub %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
+  return result;
 }
 
 
@@ -2199,7 +2199,7 @@ __STATIC_FORCEINLINE int32_t __SMMLA (int32_t op1, int32_t op2, int32_t op3)
  int32_t result;
 
  __ASM ("smmla %0, %1, %2, %3" : "=r" (result): "r"  (op1), "r" (op2), "r" (op3) );
- return(result);
+ return result;
 }
 
 #endif /* (__ARM_FEATURE_DSP == 1) */

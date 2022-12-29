@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     cmsis_armclang.h
  * @brief    CMSIS compiler armclang (Arm Compiler 6) header file
- * @version  V5.4.4
- * @date     30. May 2022
+ * @version  V5.4.5
+ * @date     12. July 2022
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2022 Arm Limited. All rights reserved.
@@ -427,7 +427,7 @@ __STATIC_FORCEINLINE uint32_t __RRX(uint32_t value)
   uint32_t result;
 
   __ASM volatile ("rrx %0, %1" : __CMSIS_GCC_OUT_REG (result) : __CMSIS_GCC_USE_REG (value) );
-  return(result);
+  return result;
 }
 
 
@@ -472,7 +472,7 @@ __STATIC_FORCEINLINE uint32_t __LDRT(volatile uint32_t *ptr)
   uint32_t result;
 
   __ASM volatile ("ldrt %0, %1" : "=r" (result) : "Q" (*ptr) );
-  return(result);
+  return result;
 }
 
 
@@ -533,7 +533,7 @@ __STATIC_FORCEINLINE int32_t __SSAT(int32_t val, uint32_t sat)
     {
       return max;
     }
-    else if (val < min)
+    if (val < min)
     {
       return min;
     }
@@ -557,7 +557,7 @@ __STATIC_FORCEINLINE uint32_t __USAT(int32_t val, uint32_t sat)
     {
       return max;
     }
-    else if (val < 0)
+    if (val < 0)
     {
       return 0U;
     }
@@ -616,7 +616,7 @@ __STATIC_FORCEINLINE uint32_t __LDA(volatile uint32_t *ptr)
   uint32_t result;
 
   __ASM volatile ("lda %0, %1" : "=r" (result) : "Q" (*ptr) : "memory" );
-  return(result);
+  return result;
 }
 
 
@@ -764,7 +764,7 @@ __STATIC_FORCEINLINE uint32_t __get_CONTROL(void)
   uint32_t result;
 
   __ASM volatile ("MRS %0, control" : "=r" (result) );
-  return(result);
+  return result;
 }
 
 
@@ -779,7 +779,7 @@ __STATIC_FORCEINLINE uint32_t __TZ_get_CONTROL_NS(void)
   uint32_t result;
 
   __ASM volatile ("MRS %0, control_ns" : "=r" (result) );
-  return(result);
+  return result;
 }
 #endif
 
@@ -820,7 +820,7 @@ __STATIC_FORCEINLINE uint32_t __get_IPSR(void)
   uint32_t result;
 
   __ASM volatile ("MRS %0, ipsr" : "=r" (result) );
-  return(result);
+  return result;
 }
 
 
@@ -834,7 +834,7 @@ __STATIC_FORCEINLINE uint32_t __get_APSR(void)
   uint32_t result;
 
   __ASM volatile ("MRS %0, apsr" : "=r" (result) );
-  return(result);
+  return result;
 }
 
 
@@ -848,7 +848,7 @@ __STATIC_FORCEINLINE uint32_t __get_xPSR(void)
   uint32_t result;
 
   __ASM volatile ("MRS %0, xpsr" : "=r" (result) );
-  return(result);
+  return result;
 }
 
 
@@ -862,7 +862,7 @@ __STATIC_FORCEINLINE uint32_t __get_PSP(void)
   uint32_t result;
 
   __ASM volatile ("MRS %0, psp"  : "=r" (result) );
-  return(result);
+  return result;
 }
 
 
@@ -877,7 +877,7 @@ __STATIC_FORCEINLINE uint32_t __TZ_get_PSP_NS(void)
   uint32_t result;
 
   __ASM volatile ("MRS %0, psp_ns"  : "=r" (result) );
-  return(result);
+  return result;
 }
 #endif
 
@@ -916,7 +916,7 @@ __STATIC_FORCEINLINE uint32_t __get_MSP(void)
   uint32_t result;
 
   __ASM volatile ("MRS %0, msp" : "=r" (result) );
-  return(result);
+  return result;
 }
 
 
@@ -931,7 +931,7 @@ __STATIC_FORCEINLINE uint32_t __TZ_get_MSP_NS(void)
   uint32_t result;
 
   __ASM volatile ("MRS %0, msp_ns" : "=r" (result) );
-  return(result);
+  return result;
 }
 #endif
 
@@ -971,7 +971,7 @@ __STATIC_FORCEINLINE uint32_t __TZ_get_SP_NS(void)
   uint32_t result;
 
   __ASM volatile ("MRS %0, sp_ns" : "=r" (result) );
-  return(result);
+  return result;
 }
 
 
@@ -997,7 +997,7 @@ __STATIC_FORCEINLINE uint32_t __get_PRIMASK(void)
   uint32_t result;
 
   __ASM volatile ("MRS %0, primask" : "=r" (result) );
-  return(result);
+  return result;
 }
 
 
@@ -1012,7 +1012,7 @@ __STATIC_FORCEINLINE uint32_t __TZ_get_PRIMASK_NS(void)
   uint32_t result;
 
   __ASM volatile ("MRS %0, primask_ns" : "=r" (result) );
-  return(result);
+  return result;
 }
 #endif
 
@@ -1077,7 +1077,7 @@ __STATIC_FORCEINLINE uint32_t __get_BASEPRI(void)
   uint32_t result;
 
   __ASM volatile ("MRS %0, basepri" : "=r" (result) );
-  return(result);
+  return result;
 }
 
 
@@ -1092,7 +1092,7 @@ __STATIC_FORCEINLINE uint32_t __TZ_get_BASEPRI_NS(void)
   uint32_t result;
 
   __ASM volatile ("MRS %0, basepri_ns" : "=r" (result) );
-  return(result);
+  return result;
 }
 #endif
 
@@ -1143,7 +1143,7 @@ __STATIC_FORCEINLINE uint32_t __get_FAULTMASK(void)
   uint32_t result;
 
   __ASM volatile ("MRS %0, faultmask" : "=r" (result) );
-  return(result);
+  return result;
 }
 
 
@@ -1158,7 +1158,7 @@ __STATIC_FORCEINLINE uint32_t __TZ_get_FAULTMASK_NS(void)
   uint32_t result;
 
   __ASM volatile ("MRS %0, faultmask_ns" : "=r" (result) );
-  return(result);
+  return result;
 }
 #endif
 
@@ -1493,7 +1493,7 @@ __STATIC_FORCEINLINE int32_t __SMMLA (int32_t op1, int32_t op2, int32_t op3)
   int32_t result;
 
   __ASM volatile ("smmla %0, %1, %2, %3" : "=r" (result): "r"  (op1), "r" (op2), "r" (op3) );
-  return(result);
+  return result;
 }
 
 #endif /* (__ARM_FEATURE_DSP == 1) */
