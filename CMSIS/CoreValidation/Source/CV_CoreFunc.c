@@ -2,7 +2,7 @@
  *      Name:         CV_CoreFunc.c
  *      Purpose:      CMSIS CORE validation tests implementation
  *-----------------------------------------------------------------------------
- *      Copyright (c) 2017 - 2021 Arm Limited. All rights reserved.
+ *      Copyright (c) 2017 - 2023 Arm Limited. All rights reserved.
  *----------------------------------------------------------------------------*/
 
 #include "CV_Framework.h"
@@ -195,8 +195,7 @@ void TC_CoreFunc_IRQVect(void) {
 #if defined(__VTOR_PRESENT) && __VTOR_PRESENT
   /* relocate vector table */
   extern const VECTOR_TABLE_Type __VECTOR_TABLE[48];
-  static VECTOR_TABLE_Type vectors[sizeof(__VECTOR_TABLE)/sizeof(__VECTOR_TABLE[0])] __ALIGNED(512);
-
+  static VECTOR_TABLE_Type vectors[sizeof(__VECTOR_TABLE)/sizeof(__VECTOR_TABLE[0])] __ALIGNED(1024) __NO_INIT;
   memcpy(vectors, __VECTOR_TABLE, sizeof(__VECTOR_TABLE));
 
   const uint32_t orig_vtor = SCB->VTOR;

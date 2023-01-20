@@ -1,11 +1,11 @@
 /**************************************************************************//**
  * @file     cmsis_armcc.h
  * @brief    CMSIS compiler ARMCC (Arm Compiler 5) header file
- * @version  V5.3.2
- * @date     27. May 2021
+ * @version  V5.4.0
+ * @date     20. January 2023
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2021 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2023 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -107,6 +107,12 @@
 #endif
 #ifndef   __COMPILER_BARRIER
   #define __COMPILER_BARRIER()                   __memory_changed()
+#endif
+#ifndef __NO_INIT
+  #define __NO_INIT                              __attribute__ ((section (".bss.noinit"), zero_init))
+#endif
+#ifndef __ALIAS
+  #define __ALIAS(x)                             __attribute__ ((alias(x)))
 #endif
 
 /* #########################  Startup and Lowlevel Init  ######################## */

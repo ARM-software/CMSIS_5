@@ -8,7 +8,7 @@ solution:
   misc:
     - compiler: AC6
       C: [-std=c99, -gdwarf-4, -ffunction-sections]
-      Link: [--entry=Reset_Handler]
+      Link: [--entry=Reset_Handler, --symbols, --map]
     - compiler: GCC
       C: [-std=gnu99, -gdwarf-2, -ffunction-sections, -fdata-sections]
       Link: [--specs=nano.specs, --specs=rdimon.specs]
