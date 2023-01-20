@@ -10,6 +10,8 @@
   <releases>
     <release version="5.9.1">
       Active development ...
+      CMSIS-Core(M): 5.7.0
+       - Added new compiler macros.
       CMSIS-DSP: Moved into separate pack!
       CMSIS-NN: Moved into separate pack!
       CMSIS-DAP: 2.1.2 (see revision history for details)
@@ -1662,7 +1664,7 @@ and 8-bit Java bytecodes in Jazelle state.
 
   <components>
     <!-- CMSIS-Core component -->
-    <component Cclass="CMSIS" Cgroup="CORE" Cversion="5.6.0"  condition="ARMv6_7_8-M Device" >
+    <component Cclass="CMSIS" Cgroup="CORE" Cversion="5.7.0"  condition="ARMv6_7_8-M Device" >
       <description>CMSIS-CORE for Cortex-M, SC000, SC300, Star-MC1, ARMv8-M, ARMv8.1-M</description>
       <files>
         <!-- CPU independent -->

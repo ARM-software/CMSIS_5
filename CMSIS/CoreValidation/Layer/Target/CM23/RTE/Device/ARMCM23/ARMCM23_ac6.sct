@@ -22,10 +22,12 @@
 ; <h> RAM Configuration
 ;   <o0> RAM Base Address    <0x0-0xFFFFFFFF:8>
 ;   <o1> RAM Size (in Bytes) <0x0-0xFFFFFFFF:8>
+;   <o2> NOINIT RAM Size (in Bytes) <0x0-0xFFFFFFFF:8>
 ; </h>
  *----------------------------------------------------------------------------*/
-#define __RAM_BASE      0x20000000
-#define __RAM_SIZE      0x00040000
+#define __RAM_BASE        0x20000000
+#define __RAM_SIZE        0x00040000
+#define __RAM_NOINIT_SIZE 0x00001000
 
 /*--------------------- Stack / Heap Configuration ---------------------------
 ; <h> Stack / Heap Configuration
@@ -78,7 +80,7 @@
 #define __RO_SIZE          ( __ROM_SIZE - __CV_SIZE )
 
 #define __RW_BASE          ( __RAM_BASE )
-#define __RW_SIZE          ( __RAM_SIZE - __STACK_SIZE - __HEAP_SIZE )
+#define __RW_SIZE          ( __RAM_SIZE - __STACK_SIZE - __HEAP_SIZE - __RAM_NOINIT_SIZE)
 
 
 /*----------------------------------------------------------------------------
@@ -95,6 +97,12 @@ LR_ROM __RO_BASE __RO_SIZE  {                       ; load region size_region
   RW_RAM __RW_BASE __RW_SIZE  {                     ; RW data
    .ANY (+RW +ZI)
   }
+
+#if __RAM_NOINIT_SIZE > 0
+  RW_NOINIT +0 UNINIT __RAM_NOINIT_SIZE {
+    *(.bss.noinit)
+  }
+#endif
 
 #if __HEAP_SIZE > 0
   ARM_LIB_HEAP  __HEAP_BASE EMPTY  __HEAP_SIZE  {   ; Reserve empty region for heap

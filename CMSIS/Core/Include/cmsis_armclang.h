@@ -1,11 +1,11 @@
 /**************************************************************************//**
  * @file     cmsis_armclang.h
  * @brief    CMSIS compiler armclang (Arm Compiler 6) header file
- * @version  V5.4.4
- * @date     30. May 2022
+ * @version  V5.5.0
+ * @date     20. January 2023
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2022 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2023 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -109,6 +109,13 @@
 #ifndef   __COMPILER_BARRIER
   #define __COMPILER_BARRIER()                   __ASM volatile("":::"memory")
 #endif
+#ifndef __NO_INIT
+  #define __NO_INIT                              __attribute__ ((section (".bss.noinit")))
+#endif
+#ifndef __ALIAS
+  #define __ALIAS(x)                             __attribute__ ((alias(x)))
+#endif
+
 
 /* #########################  Startup and Lowlevel Init  ######################## */
 
