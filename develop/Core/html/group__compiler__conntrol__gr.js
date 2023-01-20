@@ -1,5 +1,6 @@
 var group__compiler__conntrol__gr =
 [
+    [ "__ALIAS", "group__compiler__conntrol__gr.html#gadc1a82527532aabbfa7d8eface645fb5", null ],
     [ "__ALIGNED", "group__compiler__conntrol__gr.html#ga0c58caa5a273e2c21924509a45f8b849", null ],
     [ "__ARM_ARCH_6M__", "group__compiler__conntrol__gr.html#ga8be4ebde5d4dd91b161d206545ce59aa", null ],
     [ "__ARM_ARCH_7EM__", "group__compiler__conntrol__gr.html#ga43ab3e79ec5ecb615f1f2f6e83e7d48a", null ],
@@ -10,6 +11,7 @@ var group__compiler__conntrol__gr =
     [ "__COMPILER_BARRIER", "group__compiler__conntrol__gr.html#ga6f053389e2958b5a239a54d4e4047bf5", null ],
     [ "__INITIAL_SP", "group__compiler__conntrol__gr.html#ga1002e751427b1189f92787d4e4eef965", null ],
     [ "__INLINE", "group__compiler__conntrol__gr.html#gade2d8d7118f8ff49547f60aa0c3382bb", null ],
+    [ "__NO_INIT", "group__compiler__conntrol__gr.html#ga541e3bdeb73ef92c9a18ea2f7082bf5d", null ],
     [ "__NO_RETURN", "group__compiler__conntrol__gr.html#ga153a4a31b276a9758959580538720a51", null ],
     [ "__PACKED", "group__compiler__conntrol__gr.html#gabe8996d3d985ee1529475443cc635bf1", null ],
     [ "__PACKED_STRUCT", "group__compiler__conntrol__gr.html#ga4dbb70fab85207c27b581ecb6532b314", null ],

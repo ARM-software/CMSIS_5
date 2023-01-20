@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-Core (Cortex-M)
-   &#160;<span id="projectnumber">Version 5.6.0</span>
+   &#160;<span id="projectnumber">Version 5.7.0</span>
    </div>
    <div id="projectbrief">CMSIS-Core support for Cortex-M processor-based devices</div>
   </td>
@@ -186,6 +186,12 @@ Macros</h2></td></tr>
 <tr class="memitem:ga6f053389e2958b5a239a54d4e4047bf5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__compiler__conntrol__gr.html#ga6f053389e2958b5a239a54d4e4047bf5">__COMPILER_BARRIER</a></td></tr>
 <tr class="memdesc:ga6f053389e2958b5a239a54d4e4047bf5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Barrier to prevent compiler from reordering instructions.  <a href="#ga6f053389e2958b5a239a54d4e4047bf5">More...</a><br/></td></tr>
 <tr class="separator:ga6f053389e2958b5a239a54d4e4047bf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga541e3bdeb73ef92c9a18ea2f7082bf5d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__compiler__conntrol__gr.html#ga541e3bdeb73ef92c9a18ea2f7082bf5d">__NO_INIT</a></td></tr>
+<tr class="memdesc:ga541e3bdeb73ef92c9a18ea2f7082bf5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Force symbol into uninitialized memory section.  <a href="#ga541e3bdeb73ef92c9a18ea2f7082bf5d">More...</a><br/></td></tr>
+<tr class="separator:ga541e3bdeb73ef92c9a18ea2f7082bf5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadc1a82527532aabbfa7d8eface645fb5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__compiler__conntrol__gr.html#gadc1a82527532aabbfa7d8eface645fb5">__ALIAS</a></td></tr>
+<tr class="memdesc:gadc1a82527532aabbfa7d8eface645fb5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a symbol as alias to another symbol.  <a href="#gadc1a82527532aabbfa7d8eface645fb5">More...</a><br/></td></tr>
+<tr class="separator:gadc1a82527532aabbfa7d8eface645fb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga72db8b026c5e100254080fefabd9fd88"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__compiler__conntrol__gr.html#ga72db8b026c5e100254080fefabd9fd88">__PROGRAM_START</a></td></tr>
 <tr class="memdesc:ga72db8b026c5e100254080fefabd9fd88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Entry function into the user application or library startup.  <a href="#ga72db8b026c5e100254080fefabd9fd88">More...</a><br/></td></tr>
 <tr class="separator:ga72db8b026c5e100254080fefabd9fd88"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -207,6 +213,22 @@ Macros</h2></td></tr>
 <p>The CMSIS-Core provides the header file <b>cmsis_compiler.h</b> with consistent #define symbols for generate C or C++ source files that should be compiler agnostic. Each CMSIS compliant compiler should support the functionality described in this section.</p>
 <p>The header file <b>cmsis_compiler.h</b> is also included by each <a class="el" href="device_h_pg.html">Device Header File &lt;device.h&gt;</a> so that these definitions are available. </p>
 <h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="gadc1a82527532aabbfa7d8eface645fb5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define __ALIAS</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Creates a symbol as alias to another symbol. </p>
+<p><b>Code Example:</b> The example declares the function Interrupt0_Handler. By default it is just an alias pointing to Default_Handler. In combination with __WEAK modifier this allows giving the function definition at a later point if required.</p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> Interrupt0_Handler     (<span class="keywordtype">void</span>) <a class="code" href="group__compiler__conntrol__gr.html#gac607bf387b29162be6a9b77fc7999539">__WEAK</a> <a class="code" href="group__compiler__conntrol__gr.html#gadc1a82527532aabbfa7d8eface645fb5">__ALIAS</a>(&quot;Default_Handler&quot;);</div>
+</div><!-- fragment --> 
+</div>
+</div>
 <a class="anchor" id="ga0c58caa5a273e2c21924509a45f8b849"></a>
 <div class="memitem">
 <div class="memproto">
@@ -313,11 +335,11 @@ Macros</h2></td></tr>
 <p>The <b>__ASM</b> keyword can declare or define an embedded assembly function or incorporate inline assembly into a function (shown in the code example below).</p>
 <p><b>Code Example:</b> </p>
 <div class="fragment"><div class="line"><span class="comment">// Reverse bit order of value</span></div>
-<div class="line"> </div>
+<div class="line"></div>
 <div class="line">__attribute__( ( always_inline ) ) <a class="code" href="group__compiler__conntrol__gr.html#gaba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> uint32_t <a class="code" href="group__intrinsic__CPU__gr.html#gad6f9f297f6b91a995ee199fbc796b863">__RBIT</a>(uint32_t value)</div>
 <div class="line">{</div>
 <div class="line">  uint32_t result;</div>
-<div class="line"> </div>
+<div class="line"></div>
 <div class="line">   <a class="code" href="group__compiler__conntrol__gr.html#ga1378040bcf22428955c6e3ce9c2053cd">__ASM</a> <span class="keyword">volatile</span> (<span class="stringliteral">&quot;rbit %0, %1&quot;</span> : <span class="stringliteral">&quot;=r&quot;</span> (result) : <span class="stringliteral">&quot;r&quot;</span> (value) );</div>
 <div class="line">   <span class="keywordflow">return</span>(result);</div>
 <div class="line">}</div>
@@ -375,14 +397,31 @@ Macros</h2></td></tr>
 <p>Inline functions offer a trade-off between code size and performance. By default, the compiler decides during optimization whether to inline code or not. The <b>__INLINE</b> attribute gives the compiler an hint to inline this function. Still, the compiler may decide not to inline the function. As the function is global an callable function is also generated.</p>
 <p><b>Code Example:</b> </p>
 <div class="fragment"><div class="line"><span class="keyword">const</span> uint32_t led_mask[] = {1U &lt;&lt; 4, 1U &lt;&lt; 5, 1U &lt;&lt; 6, 1U &lt;&lt; 7};</div>
-<div class="line"> </div>
+<div class="line"></div>
 <div class="line"><span class="comment">/*------------------------------------------------------------------------------</span></div>
 <div class="line"><span class="comment">  Switch on LEDs</span></div>
 <div class="line"><span class="comment"> *------------------------------------------------------------------------------*/</span></div>
 <div class="line"><a class="code" href="group__compiler__conntrol__gr.html#gade2d8d7118f8ff49547f60aa0c3382bb">__INLINE</a> <span class="keyword">static</span> <span class="keywordtype">void</span> LED_On (uint32_t led) {</div>
-<div class="line"> </div>
+<div class="line"></div>
 <div class="line">  PTD-&gt;PCOR   = led_mask[led];</div>
 <div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a class="anchor" id="ga541e3bdeb73ef92c9a18ea2f7082bf5d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define __NO_INIT</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Force symbol into uninitialized memory section. </p>
+<p>This puts a symbol (such as a variable) into an uninitialized memory section (e.g, .bss.noinit).</p>
+<p><b>Code Example:</b> The EventBuffer in the example does not need to be copy- or zero-initialized. By adding __NO_INIT this variable is allocated into an uninitialized memory section.</p>
+<div class="fragment"><div class="line"><span class="keyword">static</span> EventRecord_t EventBuffer[EVENT_RECORD_COUNT] <a class="code" href="group__compiler__conntrol__gr.html#ga541e3bdeb73ef92c9a18ea2f7082bf5d">__NO_INIT</a> <a class="code" href="group__compiler__conntrol__gr.html#ga0c58caa5a273e2c21924509a45f8b849">__ALIGNED</a>(16);</div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -400,7 +439,7 @@ Macros</h2></td></tr>
 <p>Informs the compiler that the function does not return. The compiler can then perform optimizations by removing code that is never reached.</p>
 <p><b>Code Example:</b> </p>
 <div class="fragment"><div class="line"><span class="comment">// OS idle demon (running when no other thread is ready to run).</span></div>
-<div class="line"> </div>
+<div class="line"></div>
 <div class="line"><a class="code" href="group__compiler__conntrol__gr.html#ga153a4a31b276a9758959580538720a51">__NO_RETURN</a> <span class="keywordtype">void</span> os_idle_demon (<span class="keywordtype">void</span>);</div>
 </div><!-- fragment --> 
 </div>
@@ -485,7 +524,7 @@ Macros</h2></td></tr>
 <div class="fragment"><div class="line"><a class="code" href="group__compiler__conntrol__gr.html#gaba87361bfad2ae52cfe2f40c1a1dbf9c">__STATIC_INLINE</a> <span class="keywordtype">void</span> <a class="code" href="group__mpu__functions.html#gac1a949403bf84eecaf407003fb553ae7">ARM_MPU_OrderedMemcpy</a> (<span class="keyword">volatile</span> uint32_t* dst, <span class="keyword">const</span> uint32_t* <a class="code" href="group__compiler__conntrol__gr.html#ga378ac21329d33f561f90265eef89f564">__RESTRICT</a> src, uint32_t len)</div>
 <div class="line">{</div>
 <div class="line">  uint32_t i;</div>
-<div class="line">  <span class="keywordflow">for</span> (i = 0U; i &lt; len; ++i) </div>
+<div class="line">  <span class="keywordflow">for</span> (i = 0U; i &lt; len; ++i)</div>
 <div class="line">  {</div>
 <div class="line">    dst[i] = src[i];   <span class="comment">// Since src is restrict, the compiler can assume that dst and src are not overlapping may load multiple values at a time</span></div>
 <div class="line">  }</div>
@@ -575,7 +614,7 @@ Macros</h2></td></tr>
 <p>Defines a pointer to a uint16_t from an address that does not need to be aligned. This can then be used in read operations. The compiler will generate the appropriate access (aligned or non-aligned) depending on the underlying Arm processor core and compiler settings.</p>
 <p><b>Code Example:</b> </p>
 <div class="fragment"><div class="line">uint16_t val16;</div>
-<div class="line"> </div>
+<div class="line"></div>
 <div class="line"><span class="keywordtype">void</span> test (uint8_t *ptr) {</div>
 <div class="line">   val16 = <a class="code" href="group__compiler__conntrol__gr.html#gabe8693a7200e573101551d49a1772fb9">__UNALIGNED_UINT16_READ</a>(ptr);</div>
 <div class="line">}</div>
@@ -596,7 +635,7 @@ Macros</h2></td></tr>
 <p>Defines a pointer to a uint16_t from an address that does not need to be aligned. This can then be used in write operations. The compiler will generate the appropriate access (aligned or non-aligned) depending on the underlying Arm processor core and compiler settings.</p>
 <p><b>Code Example:</b> </p>
 <div class="fragment"><div class="line">uint16_t val16 = 0U;</div>
-<div class="line"> </div>
+<div class="line"></div>
 <div class="line"><span class="keywordtype">void</span> test (uint8_t *ptr) {</div>
 <div class="line">   <a class="code" href="group__compiler__conntrol__gr.html#gadb9cd73446f7e11e92383cd327a23407">__UNALIGNED_UINT16_WRITE</a>(ptr, val16);</div>
 <div class="line">}</div>
@@ -618,7 +657,7 @@ Macros</h2></td></tr>
 <p>Defines a pointer to a uint32_t from an address that does not need to be aligned. This can then be used in read/write operations. The compiler will generate the appropriate access (aligned or non-aligned) depending on the underlying Arm processor core and compiler settings.</p>
 <p><b>Code Example:</b> </p>
 <div class="fragment"><div class="line">uint32_t val32;</div>
-<div class="line"> </div>
+<div class="line"></div>
 <div class="line"><span class="keywordtype">void</span> test (uint8_t *ptr) {</div>
 <div class="line">  <a class="code" href="group__compiler__conntrol__gr.html#ga27fd2ec6767ca1ab66d36b5cc0103268">__UNALIGNED_UINT32</a>(ptr) = val32;</div>
 <div class="line">}</div>
@@ -639,7 +678,7 @@ Macros</h2></td></tr>
 <p>Defines a pointer to a uint32_t from an address that does not need to be aligned. This can then be used in read operations. The compiler will generate the appropriate access (aligned or non-aligned) depending on the underlying Arm processor core and compiler settings.</p>
 <p><b>Code Example:</b> </p>
 <div class="fragment"><div class="line">uint32_t val32;</div>
-<div class="line"> </div>
+<div class="line"></div>
 <div class="line"><span class="keywordtype">void</span> test (uint8_t *ptr) {</div>
 <div class="line">   val32 = <a class="code" href="group__compiler__conntrol__gr.html#ga254322c344d954c9f829719a50a88e87">__UNALIGNED_UINT32_READ</a>(ptr);</div>
 <div class="line">}</div>
@@ -660,7 +699,7 @@ Macros</h2></td></tr>
 <p>Defines a pointer to a uint32_t from an address that does not need to be aligned. This can then be used in write operations. The compiler will generate the appropriate access (aligned or non-aligned) depending on the underlying Arm processor core and compiler settings.</p>
 <p><b>Code Example:</b> </p>
 <div class="fragment"><div class="line">uint32_t val32 = 0U;</div>
-<div class="line"> </div>
+<div class="line"></div>
 <div class="line"><span class="keywordtype">void</span> test (uint8_t *ptr) {</div>
 <div class="line">   <a class="code" href="group__compiler__conntrol__gr.html#gabb2180285c417aa9120a360c51f64b4b">__UNALIGNED_UINT32_WRITE</a>(ptr, val32);</div>
 <div class="line">}</div>
@@ -737,7 +776,7 @@ Macros</h2></td></tr>
 <div class="fragment"><div class="line"><a class="code" href="group__compiler__conntrol__gr.html#gac607bf387b29162be6a9b77fc7999539">__WEAK</a> <span class="keywordtype">void</span> <a class="code" href="group__system__init__gr.html#ga93f514700ccf00d08dbdcff7f1224eb2">SystemInit</a>(<span class="keywordtype">void</span>)</div>
 <div class="line">{</div>
 <div class="line">  SystemCoreSetup();</div>
-<div class="line">  SystemCoreClockSetup(); </div>
+<div class="line">  SystemCoreClockSetup();</div>
 <div class="line">}</div>
 </div><!-- fragment --> 
 </div>

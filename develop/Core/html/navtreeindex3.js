@@ -1,5 +1,7 @@
 var NAVTREEINDEX3 =
 {
+"structSysTick__Type.html#a9b5420d17e8e43104ddd4ae5a610af93":[9,14,3],
+"structSysTick__Type.html#afcadb0c6d35b21cdc0018658a13942de":[9,14,0],
 "structTPI__Type.html":[9,15],
 "structTPI__Type.html#a061372fcd72f1eea871e2d9c1be849bc":[9,15,9],
 "structTPI__Type.html#a0e10e292cb019a832b03ddd055b2f6ac":[9,15,1],
