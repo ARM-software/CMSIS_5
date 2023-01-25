@@ -1,11 +1,11 @@
 /**************************************************************************//**
  * @file     os_systick.c
  * @brief    CMSIS OS Tick SysTick implementation
- * @version  V1.0.3
- * @date     19. March 2021
+ * @version  V1.0.4
+ * @date     20. January 2023
  ******************************************************************************/
 /*
- * Copyright (c) 2017-2021 ARM Limited. All rights reserved.
+ * Copyright (c) 2017-2023 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -121,8 +121,17 @@ __WEAK uint32_t OS_Tick_GetInterval (void) {
 
 // Get OS Tick count value.
 __WEAK uint32_t OS_Tick_GetCount (void) {
-  uint32_t load = SysTick->LOAD;
-  return  (load - SysTick->VAL);
+  uint32_t val;
+  uint32_t count;
+
+  val = SysTick->VAL;
+  if (val != 0U) {
+    count = (SysTick->LOAD - val) + 1U;
+  } else {
+    count = 0U;
+  }
+
+  return (count);
 }
 
 // Get OS Tick overflow status.
