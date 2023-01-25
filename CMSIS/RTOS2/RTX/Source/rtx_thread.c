@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2022 Arm Limited. All rights reserved.
+ * Copyright (c) 2013-2023 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -1094,6 +1094,8 @@ static void osRtxThreadJoinWakeup (os_thread_t *thread) {
 /// \param[in]  thread          thread object.
 static void osRtxThreadFree (os_thread_t *thread) {
 
+  osRtxThreadBeforeFree(thread);
+
   // Mark object as inactive and invalid
   thread->state = osRtxThreadInactive;
   thread->id    = osRtxIdInvalid;
@@ -1619,6 +1621,13 @@ uint32_t isrRtxThreadFlagsSet (osThreadId_t thread_id, uint32_t flags) {
 
 
 //  ==== Library functions ====
+
+/// RTOS Thread Before Free Hook.
+//lint -esym(759,osRtxThreadBeforeFree) "Prototype in header"
+//lint -esym(765,osRtxThreadBeforeFree) "Global scope (can be overridden)"
+__WEAK void osRtxThreadBeforeFree (os_thread_t *thread) {
+  (void)thread;
+}
 
 /// Thread startup (Idle and Timer Thread).
 /// \return true - success, false - failure.
