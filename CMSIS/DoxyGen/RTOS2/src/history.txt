@@ -102,6 +102,7 @@
       <td>V5.5.5</td>
       <td>
        - Added de-allocation of Arm C library thread data (libspace) when thread is terminated.
+       - Updated SysTick implementation for OS Tick (initial count value).
       </td>
     </tr>
     <tr>
