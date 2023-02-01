@@ -103,6 +103,7 @@
       <td>
        - Added de-allocation of Arm C library thread data (libspace) when thread is terminated.
        - Updated SysTick implementation for OS Tick (initial count value).
+       - Added Thread Entry wrapper (compatible with GDB stack unwind).
       </td>
     </tr>
     <tr>
