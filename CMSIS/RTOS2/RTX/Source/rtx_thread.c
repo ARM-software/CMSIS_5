@@ -542,6 +542,11 @@ uint32_t osRtxTzGetModuleId (void) {
 }
 #endif
 
+static __NO_RETURN void osThreadEntry (void *argument, osThreadFunc_t func) {
+  func(argument);
+  osThreadExit();
+}
+
 
 //  ==== Post ISR processing ====
 
@@ -785,16 +790,16 @@ static osThreadId_t svcRtxThreadNew (osThreadFunc_t func, void *argument, const 
       }
     }
     ptr = (uint32_t *)thread->sp;
-    for (n = 0U; n != 13U; n++) {
-      ptr[n] = 0U;                      // R4..R11, R0..R3, R12
+    for (n = 0U; n != 14U; n++) {
+      ptr[n] = 0U;                      // R4..R11, R0..R3, R12, LR
     }
-    ptr[13] = (uint32_t)osThreadExit;   // LR
-    ptr[14] = (uint32_t)func;           // PC
+    ptr[14] = (uint32_t)osThreadEntry;  // PC
     ptr[15] = xPSR_InitVal(
                 (bool_t)((osRtxConfig.flags & osRtxConfigPrivilegedMode) != 0U),
                 (bool_t)(((uint32_t)func & 1U) != 0U)
               );                        // xPSR
     ptr[8]  = (uint32_t)argument;       // R0
+    ptr[9]  = (uint32_t)func;           // R1
 
     // Register post ISR processing function
     osRtxInfo.post_process.thread = osRtxThreadPostProcess;
