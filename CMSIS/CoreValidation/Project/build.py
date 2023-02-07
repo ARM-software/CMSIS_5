@@ -139,11 +139,11 @@ def bl_project_name(config):
 
 
 def output_dir(config):
-    return f"{project_name(config)}_outdir"
+    return "outdir"
 
 
 def bl_output_dir(config):
-    return f"{bl_project_name(config)}_outdir"
+    return "outdir"
 
 
 def model_config(config):

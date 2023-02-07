@@ -231,5 +231,5 @@ solution:
 
   output-dirs:
     cprjdir: ./$Project$.$BuildType$+$TargetType$
-    intdir:  ./$Project$.$BuildType$+$TargetType$/$Project$.$BuildType$+$TargetType$_intdir
-    outdir:  ./$Project$.$BuildType$+$TargetType$/$Project$.$BuildType$+$TargetType$_outdir
+    intdir:  ./$Project$.$BuildType$+$TargetType$/intdir
+    outdir:  ./$Project$.$BuildType$+$TargetType$/outdir
