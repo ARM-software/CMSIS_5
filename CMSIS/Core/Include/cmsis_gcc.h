@@ -116,6 +116,12 @@
 #ifndef   __COMPILER_BARRIER
   #define __COMPILER_BARRIER()                   __ASM volatile("":::"memory")
 #endif
+#ifndef __NO_INIT
+  #define __NO_INIT                              __attribute__ ((section (".bss.noinit")))
+#endif
+#ifndef __ALIAS
+  #define __ALIAS(x)                             __attribute__ ((alias(x)))
+#endif
 
 /* #########################  Startup and Lowlevel Init  ######################## */
 
