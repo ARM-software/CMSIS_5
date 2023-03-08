@@ -78,7 +78,7 @@
 #define __RO_SIZE          ( __ROM_SIZE - __CV_SIZE )
 
 #define __RW_BASE          ( __RAM_BASE )
-#define __RW_SIZE          ( __RAM_SIZE - __STACK_SIZE - __HEAP_SIZE )
+#define __RW_SIZE          ( __RAM_SIZE - __STACK_SIZE - __HEAP_SIZE - __STACKSEAL_SIZE )
 
 
 /*----------------------------------------------------------------------------
