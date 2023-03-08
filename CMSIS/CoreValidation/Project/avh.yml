@@ -30,10 +30,9 @@ steps:
       echo "csolution: $(which csolution)"
       echo "cbuild   : $(which cbuild)"
   - run: |
+      pip install -r requirements.txt 2>&1
+  - run: |
       cd CMSIS/CoreValidation/Project
-      pip install -r requirements.txt 2>&1 || exit 1
-      cpackget update-index 2>&1
-      cpackget add -a -f cpacklist.txt 2>&1
       python build.py --verbose -c AC6 -c GCC -d "CM[047]*" -d "CM[23]3*" build run 2>&1 || echo "Something failed!"
 download:
   - CMSIS/CoreValidation/Project/Core_Validation-*.zip
