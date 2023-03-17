@@ -197,12 +197,12 @@ __STATIC_FORCEINLINE void SCB_DisableDCache (void)
     SCB->CCR &= ~(uint32_t)SCB_CCR_DC_Msk;  /* disable D-Cache */
     __DSB();
 
-    #if ((defined(__GNUC__) || defined(__clang__)) && !defined(__OPTIMIZE__))
+    #if !defined(__OPTIMIZE__)
       /*
-       * For the endless loop issue with GCC and clang with O0.
+       * For the endless loop issue with no optimization builds.
        * More details, see https://github.com/ARM-software/CMSIS_5/issues/620
        *
-       * The issue only happens when local variables are in stack (GCC/clang O0). If
+       * The issue only happens when local variables are in stack. If
        * local variables are saved in general purpose register, then the function
        * is OK.
        *
@@ -210,7 +210,14 @@ __STATIC_FORCEINLINE void SCB_DisableDCache (void)
        * local variables cache line for data consistency.
        */
       /* Clean and invalidate the local variable cache. */
+    #if defined(__ICCARM__)
+    /* As we can't align the stack to the cache line size, invalidate each of the variables */
+      SCB->DCCIMVAC = (uint32_t)&locals.sets;
+      SCB->DCCIMVAC = (uint32_t)&locals.ways;
+      SCB->DCCIMVAC = (uint32_t)&locals.ccsidr;
+    #else
       SCB->DCCIMVAC = (uint32_t)&locals;
+    #endif
       __DSB();
       __ISB();
     #endif
