@@ -2723,7 +2723,7 @@ __STATIC_INLINE int MMU_GetSectionDescriptor(uint32_t *descriptor, mmu_region_at
   MMU_XNSection(descriptor,reg.xn_t);
   MMU_DomainSection(descriptor, reg.domain);
   MMU_PSection(descriptor, reg.e_t);
-  MMU_APSection(descriptor, reg.priv_t, reg.user_t, 1);
+  MMU_APSection(descriptor, reg.user_t, reg.priv_t, 1);
   MMU_SharedSection(descriptor,reg.sh_t);
   MMU_GlobalSection(descriptor,reg.g_t);
   MMU_SecureSection(descriptor,reg.sec_t);
@@ -2754,7 +2754,7 @@ __STATIC_INLINE int MMU_GetPageDescriptor(uint32_t *descriptor, uint32_t *descri
       MMU_XNPage(descriptor2, reg.xn_t, PAGE_4k);
       MMU_DomainPage(descriptor, reg.domain);
       MMU_PPage(descriptor, reg.e_t);
-      MMU_APPage(descriptor2, reg.priv_t, reg.user_t, 1);
+      MMU_APPage(descriptor2, reg.user_t, reg.priv_t, 1);
       MMU_SharedPage(descriptor2,reg.sh_t);
       MMU_GlobalPage(descriptor2,reg.g_t);
       MMU_SecurePage(descriptor,reg.sec_t);
@@ -2769,7 +2769,7 @@ __STATIC_INLINE int MMU_GetPageDescriptor(uint32_t *descriptor, uint32_t *descri
       MMU_XNPage(descriptor2, reg.xn_t, PAGE_64k);
       MMU_DomainPage(descriptor, reg.domain);
       MMU_PPage(descriptor, reg.e_t);
-      MMU_APPage(descriptor2, reg.priv_t, reg.user_t, 1);
+      MMU_APPage(descriptor2, reg.user_t, reg.priv_t, 1);
       MMU_SharedPage(descriptor2,reg.sh_t);
       MMU_GlobalPage(descriptor2,reg.g_t);
       MMU_SecurePage(descriptor,reg.sec_t);
