@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     core_ca.h
  * @brief    CMSIS Cortex-A Core Peripheral Access Layer Header File
- * @version  V1.0.7
- * @date     22. November 2022
+ * @version  V1.0.8
+ * @date     23. March 2023
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2022 ARM Limited. All rights reserved.
