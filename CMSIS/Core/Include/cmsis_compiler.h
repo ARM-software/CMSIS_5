@@ -46,6 +46,11 @@
 #elif defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6100100)
   #include "cmsis_armclang.h"
 
+/*
+ * TI Arm Clang Compiler (tiarmclang)
+ */
+#elif defined (__ti__)
+  #include "cmsis_tiarmclang.h"
 
 /*
  * GNU Compiler
@@ -62,7 +67,7 @@
 
 
 /*
- * TI Arm Compiler
+ * TI Arm Compiler (armcl)
  */
 #elif defined ( __TI_ARM__ )
   #include <cmsis_ccs.h>
