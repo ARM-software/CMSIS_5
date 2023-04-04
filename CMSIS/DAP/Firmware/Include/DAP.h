@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 ARM Limited. All rights reserved.
+ * Copyright (c) 2013-2022 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -17,8 +17,8 @@
  *
  * ----------------------------------------------------------------------
  *
- * $Date:        26. May 2021
- * $Revision:    V2.1.0
+ * $Date:        5. December 2022
+ * $Revision:    V2.1.2
  *
  * Project:      CMSIS-DAP Include
  * Title:        DAP.h Definitions
@@ -33,7 +33,7 @@
 #ifdef  DAP_FW_V1
 #define DAP_FW_VER                      "1.3.0"
 #else
-#define DAP_FW_VER                      "2.1.0"
+#define DAP_FW_VER                      "2.1.2"
 #endif
 
 // DAP Command IDs

@@ -185,15 +185,15 @@ static void osRtxMessageQueuePostProcess (os_message_t *msg) {
         // Wakeup waiting Thread with highest Priority
         thread = osRtxThreadListGet(osRtxObject(mq));
         osRtxThreadWaitExit(thread, (uint32_t)osOK, FALSE);
-        // Copy Message (R2: const void *msg_ptr, R3: uint8_t msg_prio)
+        // Copy Message (R1: const void *msg_ptr, R2: uint8_t msg_prio)
         reg = osRtxThreadRegPtr(thread);
         //lint -e{923} "cast from unsigned int to pointer"
-        ptr_src = (const void *)reg[2];
+        ptr_src = (const void *)reg[1];
         (void)memcpy(&msg0[1], ptr_src, mq->msg_size);
         // Store Message into Queue
         msg0->id       = osRtxIdMessage;
         msg0->flags    = 0U;
-        msg0->priority = (uint8_t)reg[3];
+        msg0->priority = (uint8_t)reg[2];
         MessageQueuePut(mq, msg0);
         EvrRtxMessageQueueInserted(mq, ptr_src);
       }
@@ -210,14 +210,14 @@ static void osRtxMessageQueuePostProcess (os_message_t *msg) {
       // Wakeup waiting Thread with highest Priority
       thread = osRtxThreadListGet(osRtxObject(mq));
       osRtxThreadWaitExit(thread, (uint32_t)osOK, FALSE);
-      // Copy Message (R2: void *msg_ptr, R3: uint8_t *msg_prio)
+      // Copy Message (R1: void *msg_ptr, R2: uint8_t *msg_prio)
       reg = osRtxThreadRegPtr(thread);
       //lint -e{923} "cast from unsigned int to pointer"
-      ptr_dst = (void *)reg[2];
+      ptr_dst = (void *)reg[1];
       (void)memcpy(ptr_dst, &msg[1], mq->msg_size);
-      if (reg[3] != 0U) {
+      if (reg[2] != 0U) {
         //lint -e{923} -e{9078} "cast from unsigned int to pointer"
-        *((uint8_t *)reg[3]) = msg->priority;
+        *((uint8_t *)reg[2]) = msg->priority;
       }
       EvrRtxMessageQueueRetrieved(mq, ptr_dst);
       // Free memory
@@ -406,14 +406,14 @@ static osStatus_t svcRtxMessageQueuePut (osMessageQueueId_t mq_id, const void *m
     // Wakeup waiting Thread with highest Priority
     thread = osRtxThreadListGet(osRtxObject(mq));
     osRtxThreadWaitExit(thread, (uint32_t)osOK, TRUE);
-    // Copy Message (R2: void *msg_ptr, R3: uint8_t *msg_prio)
+    // Copy Message (R1: void *msg_ptr, R2: uint8_t *msg_prio)
     reg = osRtxThreadRegPtr(thread);
     //lint -e{923} "cast from unsigned int to pointer"
-    ptr = (void *)reg[2];
+    ptr = (void *)reg[1];
     (void)memcpy(ptr, msg_ptr, mq->msg_size);
-    if (reg[3] != 0U) {
+    if (reg[2] != 0U) {
       //lint -e{923} -e{9078} "cast from unsigned int to pointer"
-      *((uint8_t *)reg[3]) = msg_prio;
+      *((uint8_t *)reg[2]) = msg_prio;
     }
     EvrRtxMessageQueueRetrieved(mq, ptr);
     status = osOK;
@@ -438,13 +438,6 @@ static osStatus_t svcRtxMessageQueuePut (osMessageQueueId_t mq_id, const void *m
         // Suspend current Thread
         if (osRtxThreadWaitEnter(osRtxThreadWaitingMessagePut, timeout)) {
           osRtxThreadListPut(osRtxObject(mq), osRtxThreadGetRunning());
-          // Save arguments (R2: const void *msg_ptr, R3: uint8_t msg_prio)
-          //lint -e{923} -e{9078} "cast from unsigned int to pointer"
-          reg = (uint32_t *)(__get_PSP());
-          //lint -e{923} -e{9078} "cast from pointer to unsigned int"
-          reg[2] = (uint32_t)msg_ptr;
-          //lint -e{923} -e{9078} "cast from pointer to unsigned int"
-          reg[3] = (uint32_t)msg_prio;
         } else {
           EvrRtxMessageQueuePutTimeout(mq);
         }
@@ -498,15 +491,15 @@ static osStatus_t svcRtxMessageQueueGet (osMessageQueueId_t mq_id, void *msg_ptr
         // Wakeup waiting Thread with highest Priority
         thread = osRtxThreadListGet(osRtxObject(mq));
         osRtxThreadWaitExit(thread, (uint32_t)osOK, TRUE);
-        // Copy Message (R2: const void *msg_ptr, R3: uint8_t msg_prio)
+        // Copy Message (R1: const void *msg_ptr, R2: uint8_t msg_prio)
         reg = osRtxThreadRegPtr(thread);
         //lint -e{923} "cast from unsigned int to pointer"
-        ptr = (const void *)reg[2];
+        ptr = (const void *)reg[1];
         (void)memcpy(&msg[1], ptr, mq->msg_size);
         // Store Message into Queue
         msg->id       = osRtxIdMessage;
         msg->flags    = 0U;
-        msg->priority = (uint8_t)reg[3];
+        msg->priority = (uint8_t)reg[2];
         MessageQueuePut(mq, msg);
         EvrRtxMessageQueueInserted(mq, ptr);
       }
@@ -519,13 +512,6 @@ static osStatus_t svcRtxMessageQueueGet (osMessageQueueId_t mq_id, void *msg_ptr
       // Suspend current Thread
       if (osRtxThreadWaitEnter(osRtxThreadWaitingMessageGet, timeout)) {
         osRtxThreadListPut(osRtxObject(mq), osRtxThreadGetRunning());
-        // Save arguments (R2: void *msg_ptr, R3: uint8_t *msg_prio)
-        //lint -e{923} -e{9078} "cast from unsigned int to pointer"
-        reg = (uint32_t *)(__get_PSP());
-        //lint -e{923} -e{9078} "cast from pointer to unsigned int"
-        reg[2] = (uint32_t)msg_ptr;
-        //lint -e{923} -e{9078} "cast from pointer to unsigned int"
-        reg[3] = (uint32_t)msg_prio;
       } else {
         EvrRtxMessageQueueGetTimeout(mq);
       }
@@ -647,15 +633,15 @@ static osStatus_t svcRtxMessageQueueReset (osMessageQueueId_t mq_id) {
         // Wakeup waiting Thread with highest Priority
         thread = osRtxThreadListGet(osRtxObject(mq));
         osRtxThreadWaitExit(thread, (uint32_t)osOK, FALSE);
-        // Copy Message (R2: const void *msg_ptr, R3: uint8_t msg_prio)
+        // Copy Message (R1: const void *msg_ptr, R2: uint8_t msg_prio)
         reg = osRtxThreadRegPtr(thread);
         //lint -e{923} "cast from unsigned int to pointer"
-        ptr = (const void *)reg[2];
+        ptr = (const void *)reg[1];
         (void)memcpy(&msg[1], ptr, mq->msg_size);
         // Store Message into Queue
         msg->id       = osRtxIdMessage;
         msg->flags    = 0U;
-        msg->priority = (uint8_t)reg[3];
+        msg->priority = (uint8_t)reg[2];
         MessageQueuePut(mq, msg);
         EvrRtxMessageQueueInserted(mq, ptr);
       }

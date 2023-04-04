@@ -1,6 +1,6 @@
 #!/bin/bash
-# Version: 1.4
-# Date: 2021-06-29
+# Version: 1.5
+# Date: 2022-04-06
 # This bash script generates a CMSIS Software Pack:
 #
 # Pre-requisites:
@@ -8,11 +8,12 @@
 # - git in path (for Windows: install git for Windows)
 # - 7z in path (zip archiving utility)
 #   e.g. Ubuntu: sudo apt-get install p7zip-full p7zip-rar)
-# - PackChk is taken from latest install CMSIS Pack installed in $CMSIS_PACK_ROOT
 # - xmllint in path (XML schema validation; available only for Linux)
 #
 # Preparation steps:
 # - Generate documentation, see CMSIS/DoxyGen/gen_doc.sh
+# - Populate utilities, see
+#   - CMSIS/Utilities/fetch_devtools.sh
 # - Populate pre-built libraries, see
 #   - CMSIS/RTOS/RTX/LIB/fetch_libs.sh
 #   - CMSIS/RTOS2/RTX/Library/fetch_libs.sh
@@ -35,7 +36,6 @@ function usage {
   echo ""
   echo "Environment:"
   echo " 7z"
-  echo " PackChk"
   if [ $(uname -s) = "Linux" ]; then
     echo " xmllint"
   fi
@@ -51,8 +51,8 @@ function pack_version()
 
 function git_describe()
 {
-  if [ git rev-parse --git-dir 2>/dev/null ]; then
-    local gitversion=$(git describe --match $1* --abbrev=9 2>/dev/null || echo "$1-dirty-0-g$(git describe --match $1* --always --abbrev=9 2>/dev/null)")
+  if git rev-parse --git-dir 2>&1 >/dev/null; then
+    local gitversion=$(git describe --tags --match $1* --abbrev=9 2>/dev/null || echo "$1-dirty-0-g$(git describe --tags --match $1* --always --abbrev=9 2>/dev/null)")
     local version=$(echo $gitversion | sed -r -e 's/-([0-9]+)-(g[0-9a-f]{9})/\1+\2/')
     if [[ $version != $1 ]] && [[ $version == $gitversion ]]; then
         version+=0
@@ -111,8 +111,7 @@ case $OS in
     CMSIS_TOOLSDIR="./CMSIS/Utilities/Win32"
     ;;
   'Darwin')
-    echo "Error: CMSIS Tools not available for Mac at present."
-    exit 1
+    CMSIS_TOOLSDIR="./CMSIS/Utilities/Darwin64"
     ;;
   *)
     echo "Error: unrecognized OS $OS"
@@ -140,17 +139,11 @@ PACK_DIRS="
   CMSIS/Core_A
   CMSIS/DAP
   CMSIS/Driver
-  CMSIS/DSP/ComputeLibrary
-  CMSIS/DSP/Include
-  CMSIS/DSP/Source
-  CMSIS/DSP/Examples
-  CMSIS/DSP/Include
-  CMSIS/DSP/PrivateInclude
-  CMSIS/NN
   CMSIS/RTOS
   CMSIS/RTOS2
   CMSIS/Utilities/Win32
   CMSIS/Utilities/Linux64
+  CMSIS/Utilities/Darwin64
   CMSIS/Documentation
 "
 
@@ -189,12 +182,12 @@ if [ $errorlevel -gt 0 ]
 fi
 
 # Pack checking utility check
-PACKCHK=PackChk
+PACKCHK=packchk
 type -a ${PACKCHK}
 errorlevel=$?
 if [ $errorlevel != 0 ]; then
-  echo "Error: No PackChk Utility found"
-  echo "Action: Add PackChk to your path"
+  echo "Error: No packchk Utility found"
+  echo "Action: Add packchk to your path"
   echo "Hint: Included in CMSIS Pack:"
   echo "$CMSIS_PACK_ROOT/ARM/CMSIS/<version>/CMSIS/Utilities/<os>/"
   echo " "
@@ -297,6 +290,7 @@ popd > /dev/null
 
 if [ $(uname -s) = "Linux" ]; then
   echo "Running schema check for ${PACK_VENDOR}.${PACK_NAME}.pdsc"
+  curl https://raw.githubusercontent.com/Open-CMSIS-Pack/Open-CMSIS-Pack-Spec/main/schema/PACK.xsd -o CMSIS/Utilities/PACK.xsd
   xmllint --noout --schema "$(realpath -m ./CMSIS/Utilities/PACK.xsd)" "${PACK_BUILD}/${PACK_VENDOR}.${PACK_NAME}.pdsc"
   errorlevel=$?
   if [ $errorlevel -ne 0 ]; then

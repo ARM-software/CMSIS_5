@@ -1,14 +1,14 @@
 /**************************************************************************//**
  * @file     cmsis_iccarm.h
  * @brief    CMSIS compiler ICCARM (IAR Compiler for Arm) header file
- * @version  V5.3.0
- * @date     14. April 2021
+ * @version  V5.4.0
+ * @date     20. January 2023
  ******************************************************************************/
 
 //------------------------------------------------------------------------------
 //
 // Copyright (c) 2017-2021 IAR Systems
-// Copyright (c) 2017-2021 Arm Limited. All rights reserved.
+// Copyright (c) 2017-2023 Arm Limited. All rights reserved.
 //
 // SPDX-License-Identifier: Apache-2.0
 //
@@ -108,6 +108,12 @@
   #define __IAR_M0_FAMILY  0
 #endif
 
+#ifndef __NO_INIT
+  #define __NO_INIT __attribute__ ((section (".noinit")))
+#endif
+#ifndef __ALIAS
+  #define __ALIAS(x) __attribute__ ((alias(x)))
+#endif
 
 #ifndef __ASM
   #define __ASM __asm

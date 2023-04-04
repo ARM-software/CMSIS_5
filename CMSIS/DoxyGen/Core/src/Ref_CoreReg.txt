@@ -102,7 +102,8 @@ void __set_CONTROL(uint32_t control);
         - = 4 MemManage
         - = 5 BusFault
         - = 6 UsageFault
-        - = 7-10  Reserved
+        - = 7 SecureFault
+        - = 8-10  Reserved
         - = 11 SVC
         - = 12 Reserved for Debug
         - = 13 Reserved

@@ -1,11 +1,11 @@
 /**************************************************************************//**
  * @file     cmsis_compiler.h
  * @brief    CMSIS compiler generic header file
- * @version  V5.1.0
- * @date     09. October 2018
+ * @version  V5.2.0
+ * @date     20. January 2023
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2023 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -127,7 +127,12 @@
     #warning No compiler specific solution for __COMPILER_BARRIER. __COMPILER_BARRIER is ignored.
     #define __COMPILER_BARRIER()                   (void)0
   #endif
-
+  #ifndef __NO_INIT
+    #define __NO_INIT                              __attribute__ ((section (".bss.noinit")))
+  #endif
+  #ifndef __ALIAS
+    #define __ALIAS(x)                             __attribute__ ((alias(x)))
+  #endif
 
 /*
  * TASKING Compiler
@@ -200,7 +205,12 @@
     #warning No compiler specific solution for __COMPILER_BARRIER. __COMPILER_BARRIER is ignored.
     #define __COMPILER_BARRIER()                   (void)0
   #endif
-
+  #ifndef __NO_INIT
+    #define __NO_INIT                              __attribute__ ((section (".bss.noinit")))
+  #endif
+  #ifndef __ALIAS
+    #define __ALIAS(x)                             __attribute__ ((alias(x)))
+  #endif
 
 /*
  * COSMIC Compiler
@@ -272,7 +282,12 @@
     #warning No compiler specific solution for __COMPILER_BARRIER. __COMPILER_BARRIER is ignored.
     #define __COMPILER_BARRIER()                   (void)0
   #endif
-
+  #ifndef __NO_INIT
+    #define __NO_INIT                              __attribute__ ((section (".bss.noinit")))
+  #endif
+  #ifndef __ALIAS
+    #define __ALIAS(x)                             __attribute__ ((alias(x)))
+  #endif
 
 #else
   #error Unknown compiler.

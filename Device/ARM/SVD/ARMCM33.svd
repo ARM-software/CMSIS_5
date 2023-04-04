@@ -39,7 +39,7 @@
   <name>ARMCM33</name>                                            <!-- name of part-->
   <series>ARMv8-M Mainline</series>                               <!-- device series the device belongs to -->
   <version>1.0</version>                                          <!-- version of this description, adding CMSIS-SVD 1.1 tags -->
-  <description>ARM 32-bit Cortex-M33 based device<./description>
+  <description>ARM 32-bit Cortex-M33 based device.</description>
   <licenseText>                                                   <!-- this license text will appear in header file. \n force line breaks -->
     ARM Limited (ARM) is supplying this software for use with Cortex-M\n
     processor based microcontroller, but can be equally used for other\n

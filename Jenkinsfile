@@ -52,8 +52,9 @@ patternCoreValidation = [
 
 CONFIGURATIONS = [
     'pre_commit': [
-        'mdevices': ['CM0', 'CM3', 'CM4FP', 'CM7DP', 'CM23', 'CM33NS', 'CM35PS', 'CM55NS'],
-        'adevices': ['CA7', 'CA9neon'],
+        'mdevices': ['CM0', 'CM3', 'CM4FP', 'CM7DP', 'CM23', 'CM33NS', 'CM35PS',
+            'CM55NS', 'CM85S'],
+        'adevices': ['CA7', 'CA9'],
         'devices' : [],
         'configs' : [
             'AC5': ['low', 'tiny'],
@@ -64,9 +65,10 @@ CONFIGURATIONS = [
     ],
     'post_commit': [
         'devices' : ['CM0', 'CM0plus', 'CM3', 'CM4', 'CM4FP', 'CM7', 'CM7SP', 'CM7DP',
-             'CM23', 'CM23S', 'CM23NS', 'CM33', 'CM33S', 'CM33NS',
-             'CM35P', 'CM35PS', 'CM35PNS', 'CM55', 'CM55S', 'CM55NS',
-             'CA5', 'CA5neon', 'CA7', 'CA7neon', 'CA9', 'CA9neon'],
+            'CM23', 'CM23S', 'CM23NS', 'CM33', 'CM33S', 'CM33NS',
+            'CM35P', 'CM35PS', 'CM35PNS', 'CM55', 'CM55S', 'CM55NS',
+            'CM85S', 'CM85NS',
+            'CA5', 'CA7', 'CA9'],
         'configs' : [
             'AC5': ['low', 'tiny'],
             'AC6': ['low', 'tiny'],
@@ -76,9 +78,10 @@ CONFIGURATIONS = [
     ],
     'nightly': [
         'devices' : ['CM0', 'CM0plus', 'CM3', 'CM4', 'CM4FP', 'CM7', 'CM7SP', 'CM7DP',
-                     'CM23', 'CM23S', 'CM23NS', 'CM33', 'CM33S', 'CM33NS',
-                     'CM35P', 'CM35PS', 'CM35PNS', 'CM55', 'CM55S', 'CM55NS',
-                     'CA5', 'CA5neon', 'CA7', 'CA7neon', 'CA9', 'CA9neon'],
+            'CM23', 'CM23S', 'CM23NS', 'CM33', 'CM33S', 'CM33NS',
+            'CM35P', 'CM35PS', 'CM35PNS', 'CM55', 'CM55S', 'CM55NS',
+            'CM85S', 'CM85NS',
+            'CA5', 'CA7', 'CA9'],
         'configs' : [
             'AC5': ['low', 'mid', 'high', 'size', 'tiny'],
             'AC6': ['low', 'mid', 'high', 'size', 'tiny'],
@@ -132,7 +135,7 @@ pipeline {
                 script {
                     COMMIT = checkoutScmWithRetry(3)
                     echo "COMMIT: ${COMMIT}"
-                    VERSION = (sh(returnStdout: true, script: 'git describe --always')).trim()
+                    VERSION = (sh(returnStdout: true, script: 'git describe --tags --always')).trim()
                     echo "VERSION: '${VERSION}'"
                 }
 
@@ -214,8 +217,8 @@ echo """Stage schedule:
                                 - infinity
                               resources:
                                 requests:
-                                  cpu: 2
-                                  memory: 2Gi
+                                  cpu: 900m
+                                  memory: 3Gi
                         """.stripIndent()
                 }
             }
@@ -306,13 +309,14 @@ echo """Stage schedule:
                                 - infinity
                               resources:
                                 requests:
-                                  cpu: 2
-                                  memory: 2Gi
+                                  cpu: 900m
+                                  memory: 3Gi
                         """.stripIndent()
                 }
             }
             steps {
                 checkoutScmWithRetry(3)
+                sh('./CMSIS/Utilities/fetch_devtools.sh')
                 sh('./CMSIS/RTOS/RTX/LIB/fetch_libs.sh')
                 sh('./CMSIS/RTOS2/RTX/Library/fetch_libs.sh')
 
@@ -375,14 +379,14 @@ echo """Stage schedule:
                                             - infinity
                                           resources:
                                             requests:
-                                              cpu: 2
-                                              memory: 2Gi
+                                              cpu: 900m
+                                              memory: 3Gi
                                     """.stripIndent()
                             }
                         }
                         steps {
                             checkoutScmWithRetry(3)
-                            dir('CMSIS/CoreValidation/Tests') {
+                            dir('CMSIS/CoreValidation/Project') {
                                 script {
                                     CONFIGURATION['configs'].each { COMPILER, OPTS ->
                                         tee("CV_${COMPILER}_${DEVICE}.log") {

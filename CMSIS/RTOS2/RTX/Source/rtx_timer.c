@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 Arm Limited. All rights reserved.
+ * Copyright (c) 2013-2022 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -280,6 +280,7 @@ static osStatus_t svcRtxTimerStart (osTimerId_t timer_id, uint32_t ticks) {
   }
 
   if (timer->state == osRtxTimerRunning) {
+    timer->load = ticks;
     TimerRemove(timer);
   } else {
     if (osRtxInfo.timer.tick == NULL) {

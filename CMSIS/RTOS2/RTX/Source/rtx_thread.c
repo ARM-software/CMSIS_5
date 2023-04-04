@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 Arm Limited. All rights reserved.
+ * Copyright (c) 2013-2023 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -339,8 +339,7 @@ void osRtxThreadDelayTick (void) {
           EvrRtxThreadFlagsWaitTimeout(thread);
           break;
         case osRtxThreadWaitingEventFlags:
-          object = osRtxObject(osRtxThreadListRoot(thread));
-          EvrRtxEventFlagsWaitTimeout(osRtxEventFlagsObject(object));
+          EvrRtxEventFlagsWaitTimeout((osEventFlagsId_t)osRtxThreadListRoot(thread));
           break;
         case osRtxThreadWaitingMutex:
           object = osRtxObject(osRtxThreadListRoot(thread));
@@ -348,20 +347,16 @@ void osRtxThreadDelayTick (void) {
           EvrRtxMutexAcquireTimeout(osRtxMutexObject(object));
           break;
         case osRtxThreadWaitingSemaphore:
-          object = osRtxObject(osRtxThreadListRoot(thread));
-          EvrRtxSemaphoreAcquireTimeout(osRtxSemaphoreObject(object));
+          EvrRtxSemaphoreAcquireTimeout((osSemaphoreId_t)osRtxThreadListRoot(thread));
           break;
         case osRtxThreadWaitingMemoryPool:
-          object = osRtxObject(osRtxThreadListRoot(thread));
-          EvrRtxMemoryPoolAllocTimeout(osRtxMemoryPoolObject(object));
+          EvrRtxMemoryPoolAllocTimeout((osMemoryPoolId_t)osRtxThreadListRoot(thread));
           break;
         case osRtxThreadWaitingMessageGet:
-          object = osRtxObject(osRtxThreadListRoot(thread));
-          EvrRtxMessageQueueGetTimeout(osRtxMessageQueueObject(object));
+          EvrRtxMessageQueueGetTimeout((osMessageQueueId_t)osRtxThreadListRoot(thread));
           break;
         case osRtxThreadWaitingMessagePut:
-          object = osRtxObject(osRtxThreadListRoot(thread));
-          EvrRtxMessageQueuePutTimeout(osRtxMessageQueueObject(object));
+          EvrRtxMessageQueuePutTimeout((osMessageQueueId_t)osRtxThreadListRoot(thread));
           break;
         default:
           // Invalid
@@ -546,6 +541,11 @@ uint32_t osRtxTzGetModuleId (void) {
   return tz_module;
 }
 #endif
+
+static __NO_RETURN void osThreadEntry (void *argument, osThreadFunc_t func) {
+  func(argument);
+  osThreadExit();
+}
 
 
 //  ==== Post ISR processing ====
@@ -790,16 +790,16 @@ static osThreadId_t svcRtxThreadNew (osThreadFunc_t func, void *argument, const 
       }
     }
     ptr = (uint32_t *)thread->sp;
-    for (n = 0U; n != 13U; n++) {
-      ptr[n] = 0U;                      // R4..R11, R0..R3, R12
+    for (n = 0U; n != 14U; n++) {
+      ptr[n] = 0U;                      // R4..R11, R0..R3, R12, LR
     }
-    ptr[13] = (uint32_t)osThreadExit;   // LR
-    ptr[14] = (uint32_t)func;           // PC
+    ptr[14] = (uint32_t)osThreadEntry;  // PC
     ptr[15] = xPSR_InitVal(
                 (bool_t)((osRtxConfig.flags & osRtxConfigPrivilegedMode) != 0U),
                 (bool_t)(((uint32_t)func & 1U) != 0U)
               );                        // xPSR
     ptr[8]  = (uint32_t)argument;       // R0
+    ptr[9]  = (uint32_t)func;           // R1
 
     // Register post ISR processing function
     osRtxInfo.post_process.thread = osRtxThreadPostProcess;
@@ -1098,6 +1098,8 @@ static void osRtxThreadJoinWakeup (os_thread_t *thread) {
 /// Free Thread resources.
 /// \param[in]  thread          thread object.
 static void osRtxThreadFree (os_thread_t *thread) {
+
+  osRtxThreadBeforeFree(thread);
 
   // Mark object as inactive and invalid
   thread->state = osRtxThreadInactive;
@@ -1624,6 +1626,13 @@ uint32_t isrRtxThreadFlagsSet (osThreadId_t thread_id, uint32_t flags) {
 
 
 //  ==== Library functions ====
+
+/// RTOS Thread Before Free Hook.
+//lint -esym(759,osRtxThreadBeforeFree) "Prototype in header"
+//lint -esym(765,osRtxThreadBeforeFree) "Global scope (can be overridden)"
+__WEAK void osRtxThreadBeforeFree (os_thread_t *thread) {
+  (void)thread;
+}
 
 /// Thread startup (Idle and Timer Thread).
 /// \return true - success, false - failure.
