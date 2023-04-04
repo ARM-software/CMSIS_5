@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 Arm Limited. All rights reserved.
+ * Copyright (c) 2013-2023 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -175,7 +175,7 @@ __STATIC_INLINE void osRtxThreadSetRunning (os_thread_t *thread) {
 //  ==== Library functions ====
 
 // Kernel Library functions
-extern void         osRtxKernelPreInit (void);
+extern void         osRtxKernelBeforeInit (void);
 
 // Thread Library functions
 extern void         osRtxThreadListPut    (os_object_t *object, os_thread_t *thread);
@@ -192,6 +192,7 @@ extern bool_t       osRtxThreadWaitEnter  (uint8_t state, uint32_t timeout);
 #ifdef RTX_STACK_CHECK
 extern bool_t       osRtxThreadStackCheck (const os_thread_t *thread);
 #endif
+extern void         osRtxThreadBeforeFree (os_thread_t *thread);
 extern bool_t       osRtxThreadStartup    (void);
 
 // Timer Library functions

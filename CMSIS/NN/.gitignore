@@ -1,6 +1,0 @@
-Tests/UnitTest/TestCases/*/Unity/TestRunner/*
-Tests/UnitTest/TestCases/*/Unity/TestRunner/*
-Tests/UnitTest/TestCases/TestData/*/*.tflite
-Tests/UnitTest/TestCases/TestData/*.json
-Tests/UnitTest/Output/*
-Tests/UnitTest/Unity/*

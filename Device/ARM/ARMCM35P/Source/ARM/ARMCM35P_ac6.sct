@@ -78,7 +78,7 @@
 #define __RO_SIZE          ( __ROM_SIZE - __CV_SIZE )
 
 #define __RW_BASE          ( __RAM_BASE )
-#define __RW_SIZE          ( __RAM_SIZE - __STACK_SIZE - __HEAP_SIZE )
+#define __RW_SIZE      (__RAM_SIZE - __STACK_SIZE - __HEAP_SIZE - __STACKSEAL_SIZE )
 
 
 /*----------------------------------------------------------------------------
@@ -92,8 +92,12 @@ LR_ROM __RO_BASE __RO_SIZE  {                       ; load region size_region
    .ANY (+XO)
   }
 
-  RW_RAM __RW_BASE __RW_SIZE  {                     ; RW data
-   .ANY (+RW +ZI)
+  RW_NOINIT __RW_BASE UNINIT __RW_SIZE {
+    *(.bss.noinit)
+  }
+
+  RW_RAM AlignExpr(+0, 8) (__RW_SIZE - AlignExpr(ImageLength(RW_NOINIT), 8)) {
+    *(+RW +ZI)
   }
 
 #if __HEAP_SIZE > 0

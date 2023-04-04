@@ -4,8 +4,10 @@
 Local_Release/
 CMSIS/Documentation/
 CMSIS/RTOS2/RTX/Library/ARM/MDK/RTX_CM.uvguix.*
-CMSIS/CoreValidation/Tests/build
-CMSIS/CoreValidation/Tests/bootloader/build
+CMSIS/CoreValidation/Project/*.zip
+CMSIS/CoreValidation/Project/*.junit
+CMSIS/CoreValidation/Project/Validation.*/
+CMSIS/CoreValidation/Project/Bootloader.*/
 *.uvguix.*
 *.uvmpw.uvgui.*
 *.zip

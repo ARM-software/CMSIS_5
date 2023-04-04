@@ -1,11 +1,11 @@
 /**************************************************************************//**
  * @file     irq_ctrl_gic.c
  * @brief    Interrupt controller handling implementation for GIC
- * @version  V1.1.1
- * @date     29. March 2021
+ * @version  V1.2.0
+ * @date     30. October 2022
  ******************************************************************************/
 /*
- * Copyright (c) 2017-2021 ARM Limited. All rights reserved.
+ * Copyright (c) 2017-2022 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -36,17 +36,23 @@
 #define IRQ_GIC_LINE_COUNT      (1020U)
 #endif
 
+#ifndef IRQ_GIC_EXTERN_IRQ_TABLE
 static IRQHandler_t IRQTable[IRQ_GIC_LINE_COUNT] = { 0U };
+#else
+extern IRQHandler_t IRQTable[IRQ_GIC_LINE_COUNT];
+#endif
 static uint32_t     IRQ_ID0;
 
 /// Initialize interrupt controller.
 __WEAK int32_t IRQ_Initialize (void) {
-  uint32_t i;
+  #ifndef IRQ_GIC_EXTERN_IRQ_TABLE
+    uint32_t i;
 
-  for (i = 0U; i < IRQ_GIC_LINE_COUNT; i++) {
-    IRQTable[i] = (IRQHandler_t)NULL;
-  }
-  GIC_Enable();
+    for (i = 0U; i < IRQ_GIC_LINE_COUNT; i++) {
+      IRQTable[i] = (IRQHandler_t)NULL;
+    }
+    GIC_Enable();
+  #endif
   return (0);
 }
 
@@ -63,6 +69,15 @@ __WEAK int32_t IRQ_SetHandler (IRQn_ID_t irqn, IRQHandler_t handler) {
   }
 
   return (status);
+}
+
+/// The Interrupt Handler.
+__WEAK void IRQ_Handler (void) {
+  IRQn_Type irqn = GIC_AcknowledgePending ();
+  if (irqn < (IRQn_Type)IRQ_GIC_LINE_COUNT) {
+    IRQTable[irqn]();
+  }
+  GIC_EndInterrupt (irqn);
 }
 
 

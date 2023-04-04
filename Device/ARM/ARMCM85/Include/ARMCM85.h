@@ -2,8 +2,8 @@
  * @file     ARMCM85.h
  * @brief    CMSIS Device Header File for ARMCM85 Device
  *           (double precision FPU, DSP extension, MVE, TrustZone)
- * @version  V1.0.0
- * @date     07. February 2022
+ * @version  V1.0.1
+ * @date     21. July 2022
  ******************************************************************************/
 /*
  * Copyright (c) 2022 Arm Limited. All rights reserved.
@@ -59,9 +59,6 @@ typedef enum IRQn
   Interrupt8_IRQn               =   8,
   Interrupt9_IRQn               =   9
   /* Interrupts 10 .. 480 are left out */
- ,TIMER0_IRQn                   =  10,
-  UART0RX_IRQn                  =  11,
-  UART0TX_IRQn                  =  12
 } IRQn_Type;
 
 

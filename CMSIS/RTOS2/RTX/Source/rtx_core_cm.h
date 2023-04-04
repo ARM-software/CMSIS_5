@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 Arm Limited. All rights reserved.
+ * Copyright (c) 2013-2022 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -283,7 +283,7 @@ __STATIC_INLINE t  __svc##f (t1 a1, t2 a2, t3 a3, t4 a4) {                     \
 #endif
 
 #define STRINGIFY(a) #a
-#define SVC_INDIRECT(n) _Pragma(STRINGIFY(swi_number = n)) __swi
+#define SVC_INDIRECT(n) _Pragma(STRINGIFY(svc_number = n)) __svc
 
 #define SVC0_0N(f,t)                                                           \
 SVC_INDIRECT(0) t    svc##f ();                                                \

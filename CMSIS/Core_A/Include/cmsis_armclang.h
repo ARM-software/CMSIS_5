@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     cmsis_armclang.h
- * @brief    CMSIS compiler specific macros, functions, instructions
- * @version  V1.2.1
- * @date     05. May 2021
+ * @brief    CMSIS compiler armclang (Arm Compiler 6) header file
+ * @version  V1.2.2
+ * @date     13. November 2022
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2021 Arm Limited. All rights reserved.
@@ -105,38 +105,55 @@
 /* ##########################  Core Instruction Access  ######################### */
 /**
   \brief   No Operation
+  \details No Operation does nothing. This instruction can be used for code alignment purposes.
  */
 #define __NOP                             __builtin_arm_nop
 
 /**
   \brief   Wait For Interrupt
+  \details Wait For Interrupt is a hint instruction that suspends execution until one of a number of events occurs.
  */
 #define __WFI                             __builtin_arm_wfi
 
+
 /**
   \brief   Wait For Event
+  \details Wait For Event is a hint instruction that permits the processor to enter
+           a low-power state until one of a number of events occurs.
  */
 #define __WFE                             __builtin_arm_wfe
 
+
 /**
   \brief   Send Event
+  \details Send Event is a hint instruction. It causes an event to be signaled to the CPU.
  */
 #define __SEV                             __builtin_arm_sev
 
+
 /**
   \brief   Instruction Synchronization Barrier
+  \details Instruction Synchronization Barrier flushes the pipeline in the processor,
+           so that all instructions following the ISB are fetched from cache or memory,
+           after the instruction has been completed.
  */
 #define __ISB()                           __builtin_arm_isb(0xF)
 
 /**
   \brief   Data Synchronization Barrier
+  \details Acts as a special kind of Data Memory Barrier.
+           It completes when all explicit memory accesses before this instruction complete.
  */
 #define __DSB()                           __builtin_arm_dsb(0xF)
 
+
 /**
   \brief   Data Memory Barrier
+  \details Ensures the apparent order of the explicit memory operations before
+           and after the instruction, without ensuring their completion.
  */
 #define __DMB()                           __builtin_arm_dmb(0xF)
+
 
 /**
   \brief   Reverse byte order (32 bit)
@@ -145,6 +162,7 @@
   \return               Reversed value
  */
 #define __REV(value)   __builtin_bswap32(value)
+
 
 /**
   \brief   Reverse byte order (16 bit)
@@ -184,13 +202,17 @@ __STATIC_FORCEINLINE uint32_t __ROR(uint32_t op1, uint32_t op2)
 
 /**
   \brief   Breakpoint
+  \details Causes the processor to enter Debug state.
+           Debug tools can use this to investigate system state when the instruction at a particular address is reached.
   \param [in]    value  is ignored by the processor.
                  If required, a debugger can use it to store additional information about the breakpoint.
  */
 #define __BKPT(value)   __ASM volatile ("bkpt "#value)
 
+
 /**
   \brief   Reverse bit order of value
+  \details Reverses the bit order of the given value.
   \param [in]    value  Value to reverse
   \return               Reversed value
  */
@@ -198,6 +220,7 @@ __STATIC_FORCEINLINE uint32_t __ROR(uint32_t op1, uint32_t op2)
 
 /**
   \brief   Count leading zeros
+  \details Counts the number of leading zeros of a data value.
   \param [in]  value  Value to count the leading zeros
   \return             number of leading zeros in value
  */
@@ -236,6 +259,7 @@ __STATIC_FORCEINLINE uint8_t __CLZ(uint32_t value)
  */
 #define __LDREXH        (uint16_t)__builtin_arm_ldrex
 
+
 /**
   \brief   LDR Exclusive (32 bit)
   \details Executes a exclusive LDR instruction for 32 bit values.
@@ -243,6 +267,7 @@ __STATIC_FORCEINLINE uint8_t __CLZ(uint32_t value)
   \return        value of type uint32_t at (*ptr)
  */
 #define __LDREXW        (uint32_t)__builtin_arm_ldrex
+
 
 /**
   \brief   STR Exclusive (8 bit)
@@ -254,6 +279,7 @@ __STATIC_FORCEINLINE uint8_t __CLZ(uint32_t value)
  */
 #define __STREXB        (uint32_t)__builtin_arm_strex
 
+
 /**
   \brief   STR Exclusive (16 bit)
   \details Executes a exclusive STR instruction for 16 bit values.
@@ -264,6 +290,7 @@ __STATIC_FORCEINLINE uint8_t __CLZ(uint32_t value)
  */
 #define __STREXH        (uint32_t)__builtin_arm_strex
 
+
 /**
   \brief   STR Exclusive (32 bit)
   \details Executes a exclusive STR instruction for 32 bit values.
@@ -273,6 +300,7 @@ __STATIC_FORCEINLINE uint8_t __CLZ(uint32_t value)
   \return          1  Function failed
  */
 #define __STREXW        (uint32_t)__builtin_arm_strex
+
 
 /**
   \brief   Remove the exclusive lock
@@ -288,6 +316,7 @@ __STATIC_FORCEINLINE uint8_t __CLZ(uint32_t value)
   \return             Saturated value
  */
 #define __SSAT             __builtin_arm_ssat
+
 
 /**
   \brief   Unsigned Saturate
@@ -390,7 +419,7 @@ __STATIC_FORCEINLINE void __disable_irq(void)
 
 /**
   \brief   Enable FIQ
-  \details Enables FIQ interrupts by clearing the F-bit in the CPSR.
+  \details Enables FIQ interrupts by clearing special-purpose register FAULTMASK.
            Can only be executed in Privileged modes.
  */
 __STATIC_FORCEINLINE void __enable_fault_irq(void)
@@ -398,9 +427,10 @@ __STATIC_FORCEINLINE void __enable_fault_irq(void)
   __ASM volatile ("cpsie f" : : : "memory");
 }
 
+
 /**
   \brief   Disable FIQ
-  \details Disables FIQ interrupts by setting the F-bit in the CPSR.
+  \details Disables FIQ interrupts by setting special-purpose register FAULTMASK.
            Can only be executed in Privileged modes.
  */
 __STATIC_FORCEINLINE void __disable_fault_irq(void)

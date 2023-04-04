@@ -10,11 +10,14 @@
   <releases>
     <release version="5.9.1">
       Active development ...
-      CMSIS-NN: 4.0.0 (see revision history for details)
-       - Changed return types of all API's
-       - Support for int16 average pooling DSP implementation
-       - Support for DSP extension optimization for int16 depthwise_conv
-       - Support for MVEI extension optimization for int16 max pooling
+      CMSIS-Core(M): 5.7.0
+       - Added new compiler macros.
+      CMSIS-DSP: Moved into separate pack!
+      CMSIS-NN: Moved into separate pack!
+      CMSIS-RTOS2: 2.1.3 (unchanged)
+        - RTX 5.5.5 (see revision history for details)
+      CMSIS-DAP: 2.1.2 (see revision history for details)
+       - Fix DAP_Transfer handling when transfer fails
     </release>
     <release version="5.9.0" date="2022-05-02">
       CMSIS-Core(M): 5.6.0
@@ -414,7 +417,7 @@
   <devices>
     <!-- ******************************  Cortex-M0  ****************************** -->
     <family Dfamily="ARM Cortex M0" Dvendor="ARM:82">
-      <book name="http://infocenter.arm.com/help/topic/com.arm.doc.dui0497a/index.html" title="Cortex-M0 Device Generic Users Guide"/>
+      <book name="https://developer.arm.com/documentation/dui0497" title="Cortex-M0 Processor Devices Generic Users Guide"/>
       <description>
 The Cortex-M0 processor is an entry-level 32-bit Arm Cortex processor designed for a broad range of embedded applications. It offers significant benefits to developers, including:
 - simple, easy-to-use programmers model
@@ -436,7 +439,7 @@ The Cortex-M0 processor is an entry-level 32-bit Arm Cortex processor designed f
 
     <!-- ******************************  Cortex-M0P  ****************************** -->
     <family Dfamily="ARM Cortex M0 plus" Dvendor="ARM:82">
-      <book name="http://infocenter.arm.com/help/topic/com.arm.doc.dui0662b/index.html" title="Cortex-M0+ Device Generic Users Guide"/>
+      <book name="https://developer.arm.com/documentation/dui0662" title="Cortex-M0+ Processor Devices Generic Users Guide"/>
       <description>
 The Cortex-M0+ processor is an entry-level 32-bit Arm Cortex processor designed for a broad range of embedded applications. It offers significant benefits to developers, including:
 - simple, easy-to-use programmers model
@@ -463,7 +466,7 @@ The Cortex-M0+ processor is an entry-level 32-bit Arm Cortex processor designed 
 
     <!-- ******************************  Cortex-M1  ****************************** -->
     <family Dfamily="ARM Cortex M1" Dvendor="ARM:82">
-      <!--book name="http://infocenter.arm.com/help/topic/com.arm.doc.dui0497a/index.html" title="Cortex-M1 Device Generic Users Guide"/-->
+      <!--book name="https://developer.arm.com/documentation/dui0497" title="Cortex-M0 Processor Devices Generic Users Guide"/-->
       <description>
 The ARM Cortex-M1 FPGA processor is intended for deeply embedded applications that require a small processor integrated into an FPGA.
 The ARM Cortex-M1 processor implements the ARMv6-M architecture profile.
@@ -481,7 +484,7 @@ The ARM Cortex-M1 processor implements the ARMv6-M architecture profile.
 
     <!-- ******************************  Cortex-M3  ****************************** -->
     <family Dfamily="ARM Cortex M3" Dvendor="ARM:82">
-      <book name="http://infocenter.arm.com/help/topic/com.arm.doc.dui0552a/index.html" title="Cortex-M3 Device Generic Users Guide"/>
+      <book name="https://developer.arm.com/documentation/dui0552" title="Cortex-M3 Processor Devices Generic Users Guide"/>
       <description>
 The Cortex-M3 processor is an entry-level 32-bit Arm Cortex processor designed for a broad range of embedded applications. It offers significant benefits to developers, including:
 - simple, easy-to-use programmers model
@@ -503,7 +506,7 @@ The Cortex-M3 processor is an entry-level 32-bit Arm Cortex processor designed f
 
     <!-- ******************************  Cortex-M4  ****************************** -->
     <family Dfamily="ARM Cortex M4" Dvendor="ARM:82">
-      <book name="http://infocenter.arm.com/help/topic/com.arm.doc.dui0553a/index.html" title="Cortex-M4 Device Generic Users Guide"/>
+      <book name="https://developer.arm.com/documentation/dui0553" title="Cortex-M4 Processor Devices Generic Users Guide"/>
       <description>
 The Cortex-M4 processor is an entry-level 32-bit Arm Cortex processor designed for a broad range of embedded applications. It offers significant benefits to developers, including:
 - simple, easy-to-use programmers model
@@ -530,7 +533,7 @@ The Cortex-M4 processor is an entry-level 32-bit Arm Cortex processor designed f
 
     <!-- ******************************  Cortex-M7  ****************************** -->
     <family Dfamily="ARM Cortex M7" Dvendor="ARM:82">
-      <book name="http://infocenter.arm.com/help/topic/com.arm.doc.dui0646b/index.html" title="Cortex-M7 Device Generic Users Guide"/>
+      <book name="https://developer.arm.com/documentation/dui0646" title="Cortex-M7 Processor Devices Generic Users Guide"/>
       <description>
 The Cortex-M7 processor is an entry-level 32-bit Arm Cortex processor designed for a broad range of embedded applications. It offers significant benefits to developers, including:
 - simple, easy-to-use programmers model
@@ -562,7 +565,7 @@ The Cortex-M7 processor is an entry-level 32-bit Arm Cortex processor designed f
 
     <!-- ******************************  Cortex-M23  ********************** -->
     <family Dfamily="ARM Cortex M23" Dvendor="ARM:82">
-      <!--book name="Device/ARM/Documents/??_dgug.pdf"       title="?? Device Generic Users Guide"/-->
+      <book name="https://developer.arm.com/documentation/dui1095"       title="Cortex-M23 Processor Devices Generic Users Guide"/>
       <description>
 The Arm Cortex-M23 is based on the Armv8-M baseline architecture.
 It is the smallest and most energy efficient Arm processor with Arm TrustZone technology.
@@ -588,7 +591,7 @@ Cortex-M23 is the ideal processor for constrained embedded applications requirin
 
     <!-- ******************************  Cortex-M33  ****************************** -->
     <family Dfamily="ARM Cortex M33" Dvendor="ARM:82">
-      <!--book name="Device/ARM/Documents/??_dgug.pdf"       title="?? Device Generic Users Guide"/-->
+      <book name="https://developer.arm.com/documentation/100235"       title="Cortex-M33 Processor Devices Generic Users Guide"/>
       <description>
 The Arm Cortex-M33 is the most configurable of all Cortex-M processors. It is a full featured microcontroller
 class processor based on the Armv8-M mainline architecture with Arm TrustZone security.
@@ -683,7 +686,7 @@ class processor based on the Armv8-M mainline architecture with Arm TrustZone se
 
     <!-- ******************************  Cortex-M55  ****************************** -->
     <family Dfamily="ARM Cortex M55" Dvendor="ARM:82">
-      <!--book name="Device/ARM/Documents/Arm Cortex-M55 Processor Datasheet.pdf" title="Arm Cortex-M55 Processor Datasheet"/-->
+      <book name="https://developer.arm.com/documentation/101273"       title="Cortex-M55 Processor Devices Generic Users Guide"/>
       <description>
 The Arm Cortex-M55 processor is a fully synthesizable, mid-range, microcontroller-class processor that implements the Armv8.1-M mainline architecture and includes support for the M-profile Vector Extension (MVE), also known as Arm Helium technology.
 It is Arm's most AI-capable Cortex-M processor, delivering enhanced, energy-efficient digital signal processing (DSP) and machine learning (ML) performance.
@@ -708,7 +711,7 @@ The Cortex-M55 processor achieves high compute performance across scalar and vec
 
     <!-- ******************************  Cortex-M85  ****************************** -->
     <family Dfamily="ARM Cortex M85" Dvendor="ARM:82">
-      <!--book name="Device/ARM/Documents/Arm Cortex-M85 Processor Datasheet.pdf" title="Arm Cortex-M85 Processor Datasheet"/-->
+      <book name="https://developer.arm.com/documentation/1019283"       title="Cortex-M85 Processor Devices Generic Users Guide"/>
       <description>
 The Arm Cortex-M85 processor is a fully synthesizable high-performance microcontroller class processor that implements the Armv8.1-M Mainline architecture which includes support for the M-profile Vector Extension (MVE).
 The processor also supports previous Armv8-M architectural features.
@@ -774,7 +777,7 @@ The ARM SC300 processor is an entry-level 32-bit ARM Cortex processor designed f
 
     <!-- ******************************  ARMv8-M Baseline  ********************** -->
     <family Dfamily="ARMv8-M Baseline" Dvendor="ARM:82">
-      <!--book name="Device/ARM/Documents/ARMv8MBL_dgug.pdf"       title="ARMv8MBL Device Generic Users Guide"/-->
+      <book name="https://developer.arm.com/documentation/ddi0553"       title="Armv8-M Architecture Reference Manual"/>
       <description>
 Armv8-M Baseline based device with TrustZone
       </description>
@@ -793,7 +796,7 @@ Armv8-M Baseline based device with TrustZone
 
     <!-- ******************************  ARMv8-M Mainline  ****************************** -->
     <family Dfamily="ARMv8-M Mainline" Dvendor="ARM:82">
-      <!--book name="Device/ARM/Documents/ARMv8MML_dgug.pdf"       title="ARMv8MML Device Generic Users Guide"/-->
+      <book name="https://developer.arm.com/documentation/ddi0553"       title="Armv8-M Architecture Reference Manual"/>
       <description>
 Armv8-M Mainline based device with TrustZone
       </description>
@@ -855,7 +858,7 @@ Armv8-M Mainline based device with TrustZone
 
     <!-- ******************************  ARMv8.1-M Mainline  ****************************** -->
     <family Dfamily="ARMv8.1-M Mainline" Dvendor="ARM:82">
-      <!--book name="Device/ARM/Documents/ARMv8MML_dgug.pdf"       title="ARMv8MML Device Generic Users Guide"/-->
+      <book name="https://developer.arm.com/documentation/ddi0553"       title="Armv8-M Architecture Reference Manual"/>
       <description>
 Armv8.1-M Mainline based device with TrustZone and MVE
       </description>
@@ -878,7 +881,7 @@ Armv8.1-M Mainline based device with TrustZone and MVE
 
     <!-- ******************************  Cortex-A5  ****************************** -->
     <family Dfamily="ARM Cortex A5" Dvendor="ARM:82">
-      <book name="http://infocenter.arm.com/help/topic/com.arm.doc.ddi0433c/index.html" title="Cortex-A5 Technical Reference Manual"/>
+      <book name="https://developer.arm.com/documentation/ddi0433" title="Cortex-A5 Technical Reference Manual"/>
       <description>
 The Arm Cortex-A5 processor is a high-performance, low-power, Arm macrocell with an L1 cache subsystem that provides full
 virtual memory capabilities. The Cortex-A5 processor implements the Armv7-A architecture profile and can execute 32-bit
@@ -898,7 +901,7 @@ Arm instructions and 16-bit and 32-bit Thumb instructions. The Cortex-A5 is the 
 
     <!-- ******************************  Cortex-A7  ****************************** -->
     <family Dfamily="ARM Cortex A7" Dvendor="ARM:82">
-      <book name="http://infocenter.arm.com/help/topic/com.arm.doc.ddi0464f/index.html" title="Cortex-A7 MPCore Technical Reference Manual"/>
+      <book name="https://developer.arm.com/documentation/ddi0464" title="Cortex-A7 MPCore Technical Reference Manual"/>
       <description>
 The Cortex-A7 MPCore processor is a high-performance, low-power processor that implements the Armv7-A architecture.
 The Cortex-A7 MPCore processor has one to four processors in a single multiprocessor device with a L1 cache subsystem,
@@ -918,7 +921,7 @@ an optional integrated GIC, and an optional L2 cache controller.
 
     <!-- ******************************  Cortex-A9  ****************************** -->
     <family Dfamily="ARM Cortex A9" Dvendor="ARM:82">
-      <book name="http://infocenter.arm.com/help/topic/com.arm.doc.100511_0401_10_en/index.html" title="Cortex-A9 Technical Reference Manual"/>
+      <book name="https://developer.arm.com/documentation/100511" title="Cortex-A9 Technical Reference Manual"/>
       <description>
 The Cortex-A9 processor is a high-performance, low-power, Arm macrocell with an L1 cache subsystem that provides full virtual memory capabilities.
 The Cortex-A9 processor implements the Armv7-A architecture and runs 32-bit Arm instructions, 16-bit and 32-bit Thumb instructions,
@@ -1137,7 +1140,7 @@ and 8-bit Java bytecodes in Jazelle state.
       <accept Dcore="ARMV81MML"/>
       <accept Dcore="Cortex-M55"/>
       <accept Dcore="Cortex-M85"/>
-    </condition>    
+    </condition>
     <condition id="ARMv8x-MML Device">
       <description>Armv8-M/Armv8.1-M architecture based device</description>
       <accept condition="ARMv8-MML Device"/>
@@ -1308,20 +1311,6 @@ and 8-bit Java bytecodes in Jazelle state.
       <description>Generic Arm Cortex-A9 device startup and depends on CMSIS Core</description>
       <require Dvendor="ARM:82" Dname="ARMCA9"/>
       <require Cclass="CMSIS" Cgroup="CORE"/>
-    </condition>
-
-    <!-- CMSIS DSP -->
-    <condition id="CMSIS DSP">
-      <description>Components required for DSP</description>
-      <require condition="ARMv6_7_8-M Device"/>
-      <require condition="ARMCC GCC IAR"/>
-      <require Cclass="CMSIS" Cgroup="CORE"/>
-    </condition>
-
-    <!-- CMSIS NN -->
-    <condition id="CMSIS NN">
-      <description>Components required for NN</description>
-      <require Cclass="CMSIS" Cgroup="DSP"/>
     </condition>
 
     <!-- RTOS RTX -->
@@ -1677,7 +1666,7 @@ and 8-bit Java bytecodes in Jazelle state.
 
   <components>
     <!-- CMSIS-Core component -->
-    <component Cclass="CMSIS" Cgroup="CORE" Cversion="5.6.0"  condition="ARMv6_7_8-M Device" >
+    <component Cclass="CMSIS" Cgroup="CORE" Cversion="5.7.0"  condition="ARMv6_7_8-M Device" >
       <description>CMSIS-CORE for Cortex-M, SC000, SC300, Star-MC1, ARMv8-M, ARMv8.1-M</description>
       <files>
         <!-- CPU independent -->
@@ -2155,7 +2144,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="sourceC"      name="Device/ARM/ARMCA5/Source/AC6/startup_ARMCA5.c" version="1.0.1" attr="config" condition="ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMCA5/Source/AC6/ARMCA5.sct"       version="1.0.0" attr="config" condition="ARMCC6"/>
         <file category="sourceC"      name="Device/ARM/ARMCA5/Source/GCC/startup_ARMCA5.c" version="1.0.1" attr="config" condition="GCC"/>
-        <file category="other"        name="Device/ARM/ARMCA5/Source/GCC/ARMCA5.ld"        version="1.0.0" attr="config" condition="GCC"/>
+        <file category="linkerScript" name="Device/ARM/ARMCA5/Source/GCC/ARMCA5.ld"        version="1.0.0" attr="config" condition="GCC"/>
         <file category="sourceAsm"    name="Device/ARM/ARMCA5/Source/IAR/startup_ARMCA5.s" version="1.0.0" attr="config" condition="IAR"/>
         <file category="linkerScript" name="Device/ARM/ARMCA5/Source/IAR/ARMCA5.icf"       version="1.0.0" attr="config" condition="IAR"/>
         <file category="sourceC"      name="Device/ARM/ARMCA5/Source/system_ARMCA5.c"      version="1.0.1" attr="config"/>
@@ -2178,7 +2167,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="sourceC"      name="Device/ARM/ARMCA7/Source/AC6/startup_ARMCA7.c" version="1.0.1" attr="config" condition="ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMCA7/Source/AC6/ARMCA7.sct"       version="1.0.0" attr="config" condition="ARMCC6"/>
         <file category="sourceC"      name="Device/ARM/ARMCA7/Source/GCC/startup_ARMCA7.c" version="1.0.1" attr="config" condition="GCC"/>
-        <file category="other"        name="Device/ARM/ARMCA7/Source/GCC/ARMCA7.ld"        version="1.0.0" attr="config" condition="GCC"/>
+        <file category="linkerScript" name="Device/ARM/ARMCA7/Source/GCC/ARMCA7.ld"        version="1.0.0" attr="config" condition="GCC"/>
         <file category="sourceAsm"    name="Device/ARM/ARMCA7/Source/IAR/startup_ARMCA7.s" version="1.0.0" attr="config" condition="IAR"/>
         <file category="linkerScript" name="Device/ARM/ARMCA7/Source/IAR/ARMCA7.icf"       version="1.0.0" attr="config" condition="IAR"/>
         <file category="sourceC"      name="Device/ARM/ARMCA7/Source/system_ARMCA7.c"      version="1.0.1" attr="config"/>
@@ -2200,7 +2189,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="sourceC"      name="Device/ARM/ARMCA9/Source/AC6/startup_ARMCA9.c" version="1.0.1" attr="config" condition="ARMCC6"/>
         <file category="linkerScript" name="Device/ARM/ARMCA9/Source/AC6/ARMCA9.sct"       version="1.0.0" attr="config" condition="ARMCC6"/>
         <file category="sourceC"      name="Device/ARM/ARMCA9/Source/GCC/startup_ARMCA9.c" version="1.0.1" attr="config" condition="GCC"/>
-        <file category="other"        name="Device/ARM/ARMCA9/Source/GCC/ARMCA9.ld"        version="1.0.0" attr="config" condition="GCC"/>
+        <file category="linkerScript" name="Device/ARM/ARMCA9/Source/GCC/ARMCA9.ld"        version="1.0.0" attr="config" condition="GCC"/>
         <file category="sourceAsm"    name="Device/ARM/ARMCA9/Source/IAR/startup_ARMCA9.s" version="1.0.0" attr="config" condition="IAR"/>
         <file category="linkerScript" name="Device/ARM/ARMCA9/Source/IAR/ARMCA9.icf"       version="1.0.0" attr="config" condition="IAR"/>
         <file category="sourceC"      name="Device/ARM/ARMCA9/Source/system_ARMCA9.c"      version="1.0.1" attr="config"/>
@@ -2211,7 +2200,7 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- IRQ Controller -->
-    <component Cclass="Device" Cgroup="IRQ Controller" Csub="GIC" Capiversion="1.0.0" Cversion="1.0.1" condition="ARMv7-A Device">
+    <component Cclass="Device" Cgroup="IRQ Controller" Csub="GIC" Capiversion="1.0.0" Cversion="1.2.0" condition="ARMv7-A Device">
       <description>IRQ Controller implementation using GIC</description>
       <files>
         <file category="sourceC" name="CMSIS/Core_A/Source/irq_ctrl_gic.c"/>
@@ -2230,161 +2219,6 @@ and 8-bit Java bytecodes in Jazelle state.
       <description>OS Tick implementation using Generic Physical Timer</description>
       <files>
         <file category="sourceC" name="CMSIS/RTOS2/Source/os_tick_gtim.c"/>
-      </files>
-    </component>
-
-    <!-- CMSIS-DSP component -->
-    <component Cclass="CMSIS" Cgroup="DSP" Cvariant="Source"  Cversion="1.11.0" isDefaultVariant="true" condition="CMSIS DSP">
-      <description>CMSIS-DSP Library for Cortex-M, SC000, and SC300</description>
-      <files>
-        <!-- CPU independent -->
-        <file category="doc"      name="CMSIS/Documentation/DSP/html/index.html"/>
-        <file category="header"   name="CMSIS/DSP/Include/arm_math.h"/>
-        <file category="header"   name="CMSIS/DSP/Include/arm_math_f16.h"/>
-        <file category="header"   name="CMSIS/DSP/Include/arm_common_tables.h"/>
-        <file category="header"   name="CMSIS/DSP/Include/arm_common_tables_f16.h"/>
-        <file category="header"   name="CMSIS/DSP/Include/arm_const_structs.h"/>
-        <file category="header"   name="CMSIS/DSP/Include/arm_const_structs_f16.h"/>
-
-        <file category="include"  name="CMSIS/DSP/PrivateInclude/"/>
-        <file category="include"  name="CMSIS/DSP/Include/"/>
-
-        <!-- DSP sources (core) -->
-        <file category="source"   name="CMSIS/DSP/Source/BasicMathFunctions/BasicMathFunctions.c"/>
-
-        <file category="source"   name="CMSIS/DSP/Source/QuaternionMathFunctions/QuaternionMathFunctions.c"/>
-
-        <file category="source"   name="CMSIS/DSP/Source/BayesFunctions/BayesFunctions.c"/>
-        <file category="source"   name="CMSIS/DSP/Source/CommonTables/CommonTables.c"/>
-        <file category="source"   name="CMSIS/DSP/Source/ComplexMathFunctions/ComplexMathFunctions.c"/>
-        <file category="source"   name="CMSIS/DSP/Source/ControllerFunctions/ControllerFunctions.c"/>
-        <file category="source"   name="CMSIS/DSP/Source/DistanceFunctions/DistanceFunctions.c"/>
-        <file category="source"   name="CMSIS/DSP/Source/FastMathFunctions/FastMathFunctions.c"/>
-        <file category="source"   name="CMSIS/DSP/Source/FilteringFunctions/FilteringFunctions.c"/>
-        <file category="source"   name="CMSIS/DSP/Source/MatrixFunctions/MatrixFunctions.c"/>
-        <file category="source"   name="CMSIS/DSP/Source/StatisticsFunctions/StatisticsFunctions.c"/>
-        <file category="source"   name="CMSIS/DSP/Source/SupportFunctions/SupportFunctions.c"/>
-        <file category="source"   name="CMSIS/DSP/Source/SVMFunctions/SVMFunctions.c"/>
-        <file category="source"   name="CMSIS/DSP/Source/TransformFunctions/TransformFunctions.c"/>
-
-        <file category="source"   name="CMSIS/DSP/Source/InterpolationFunctions/InterpolationFunctions.c"/>
-
-        <!-- DSP sources F16 versions -->
-        <file category="source"   name="CMSIS/DSP/Source/BasicMathFunctions/BasicMathFunctionsF16.c"/>
-        <file category="source"   name="CMSIS/DSP/Source/ComplexMathFunctions/ComplexMathFunctionsF16.c"/>
-        <file category="source"   name="CMSIS/DSP/Source/FilteringFunctions/FilteringFunctionsF16.c"/>
-        <file category="source"   name="CMSIS/DSP/Source/CommonTables/CommonTablesF16.c"/>
-        <file category="source"   name="CMSIS/DSP/Source/TransformFunctions/TransformFunctionsF16.c"/>
-        <file category="source"   name="CMSIS/DSP/Source/MatrixFunctions/MatrixFunctionsF16.c"/>
-        <file category="source"   name="CMSIS/DSP/Source/InterpolationFunctions/InterpolationFunctionsF16.c"/>
-        <file category="source"   name="CMSIS/DSP/Source/StatisticsFunctions/StatisticsFunctionsF16.c"/>
-        <file category="source"   name="CMSIS/DSP/Source/SupportFunctions/SupportFunctionsF16.c"/>
-        <file category="source"   name="CMSIS/DSP/Source/FastMathFunctions/FastMathFunctionsF16.c"/>
-        <file category="source"   name="CMSIS/DSP/Source/DistanceFunctions/DistanceFunctionsF16.c"/>
-        <file category="source"   name="CMSIS/DSP/Source/BayesFunctions/BayesFunctionsF16.c"/>
-        <file category="source"   name="CMSIS/DSP/Source/SVMFunctions/SVMFunctionsF16.c"/>
-
-        <!-- Compute Library for Cortex-A -->
-        <file category="header"   name="CMSIS/DSP/ComputeLibrary/Include/NEMath.h"        condition="ARMv7-A Device"/>
-        <file category="source"   name="CMSIS/DSP/ComputeLibrary/Source/arm_cl_tables.c"  condition="ARMv7-A Device"/>
-      </files>
-    </component>
-
-    <!-- CMSIS-NN component -->
-    <component Cclass="CMSIS" Cgroup="NN Lib" Cversion="3.1.0" condition="CMSIS NN">
-      <description>CMSIS-NN Neural Network Library</description>
-      <files>
-        <file category="doc" name="CMSIS/Documentation/NN/html/index.html"/>
-        <file category="header" name="CMSIS/NN/Include/arm_nn_types.h"/>
-        <file category="header" name="CMSIS/NN/Include/arm_nnfunctions.h"/>
-        <file category="header" name="CMSIS/NN/Include/arm_nnsupportfunctions.h"/>
-        <file category="header" name="CMSIS/NN/Include/arm_nn_tables.h"/>
-
-        <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q7_fast_nonsquare.c"/>
-        <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q7_fast.c"/>
-        <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q7_RGB.c"/>
-        <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_1_x_n_s8.c"/>
-        <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_nn_mat_mult_kernel_s8_s16.c"/>
-        <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_conv_u8_basic_ver1.c"/>
-        <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_separable_conv_HWC_q7.c"/>
-        <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_conv_wrapper_s8.c"/>
-        <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_nn_mat_mult_kernel_q7_q15.c"/>
-        <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q15_basic.c"/>
-        <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_1x1_s8_fast.c"/>
-        <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_conv_s8.c"/>
-        <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_conv_s16.c"/>
-        <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_conv_fast_s16.c"/>
-        <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_conv_wrapper_s16.c"/>
-        <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_fast_s16.c"/>
-        <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q15_fast_nonsquare.c"/>
-        <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_s8.c"/>
-        <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_s16.c"/>
-        <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_nn_mat_mult_s8.c"/>
-        <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_conv_3x3_s8.c"/>
-        <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_separable_conv_HWC_q7_nonsquare.c"/>
-        <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q7_basic.c"/>
-        <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_conv_s8_opt.c"/>
-        <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_wrapper_s8.c"/>
-        <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_wrapper_s16.c"/>
-        <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q15_fast.c"/>
-        <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_nn_mat_mult_kernel_q7_q15_reordered.c"/>
-        <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_nn_depthwise_conv_s8_core.c"/>
-        <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q7_basic_nonsquare.c"/>
-        <file category="source" name="CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_1x1_HWC_q7_fast_nonsquare.c"/>
-        <file category="source" name="CMSIS/NN/Source/ConcatenationFunctions/arm_concatenation_s8_x.c"/>
-        <file category="source" name="CMSIS/NN/Source/ConcatenationFunctions/arm_concatenation_s8_w.c"/>
-        <file category="source" name="CMSIS/NN/Source/ConcatenationFunctions/arm_concatenation_s8_y.c"/>
-        <file category="source" name="CMSIS/NN/Source/ConcatenationFunctions/arm_concatenation_s8_z.c"/>
-        <file category="source" name="CMSIS/NN/Source/SVDFunctions/arm_svdf_s8.c"/>
-        <file category="source" name="CMSIS/NN/Source/SVDFunctions/arm_svdf_state_s16_s8.c"/>
-        <file category="source" name="CMSIS/NN/Source/PoolingFunctions/arm_max_pool_s8.c"/>
-        <file category="source" name="CMSIS/NN/Source/PoolingFunctions/arm_max_pool_s16.c"/>
-        <file category="source" name="CMSIS/NN/Source/PoolingFunctions/arm_avgpool_s8.c"/>
-        <file category="source" name="CMSIS/NN/Source/PoolingFunctions/arm_avgpool_s16.c"/>
-        <file category="source" name="CMSIS/NN/Source/PoolingFunctions/arm_pool_q7_HWC.c"/>
-        <file category="source" name="CMSIS/NN/Source/BasicMathFunctions/arm_elementwise_mul_s8.c"/>
-        <file category="source" name="CMSIS/NN/Source/BasicMathFunctions/arm_elementwise_mul_s16.c"/>
-        <file category="source" name="CMSIS/NN/Source/BasicMathFunctions/arm_elementwise_add_s8.c"/>
-        <file category="source" name="CMSIS/NN/Source/BasicMathFunctions/arm_elementwise_add_s16.c"/>
-        <file category="source" name="CMSIS/NN/Source/ActivationFunctions/arm_relu6_s8.c"/>
-        <file category="source" name="CMSIS/NN/Source/ActivationFunctions/arm_relu_q15.c"/>
-        <file category="source" name="CMSIS/NN/Source/ActivationFunctions/arm_relu_q7.c"/>
-        <file category="source" name="CMSIS/NN/Source/ActivationFunctions/arm_nn_activations_q15.c"/>
-        <file category="source" name="CMSIS/NN/Source/ActivationFunctions/arm_nn_activations_q7.c"/>
-        <file category="source" name="CMSIS/NN/Source/ReshapeFunctions/arm_reshape_s8.c"/>
-        <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_nn_mult_q7.c"/>
-        <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_q7_to_q15_reordered_no_shift.c"/>
-        <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_nn_vec_mat_mult_t_s8.c"/>
-        <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_nn_vec_mat_mult_t_s16.c"/>
-        <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_nn_vec_mat_mult_t_svdf_s8.c"/>
-        <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_q7_to_q15_with_offset.c"/>
-        <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_nn_accumulate_q7_to_q15.c"/>
-        <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_nn_mat_mult_nt_t_s8.c"/>
-        <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_nn_mat_mul_kernel_s16.c"/>
-        <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_nn_depthwise_conv_nt_t_padded_s8.c"/>
-        <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_nn_add_q7.c"/>
-        <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_nn_mat_mul_core_4x_s8.c"/>
-        <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_nntables.c"/>
-        <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_nn_depthwise_conv_nt_t_s8.c"/>
-        <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_q7_to_q15_no_shift.c"/>
-        <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_q7_to_q15_reordered_with_offset.c"/>
-        <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_nn_mult_q15.c"/>
-        <file category="source" name="CMSIS/NN/Source/NNSupportFunctions/arm_nn_mat_mul_core_1x_s8.c"/>
-        <file category="source" name="CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_s8.c"/>
-        <file category="source" name="CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_s16.c"/>
-        <file category="source" name="CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_q15_opt.c"/>
-        <file category="source" name="CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_q7.c"/>
-        <file category="source" name="CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_mat_q7_vec_q15_opt.c"/>
-        <file category="source" name="CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_q15.c"/>
-        <file category="source" name="CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_q7_opt.c"/>
-        <file category="source" name="CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_mat_q7_vec_q15.c"/>
-        <file category="source" name="CMSIS/NN/Source/SoftmaxFunctions/arm_softmax_q15.c"/>
-        <file category="source" name="CMSIS/NN/Source/SoftmaxFunctions/arm_softmax_s8.c"/>
-        <file category="source" name="CMSIS/NN/Source/SoftmaxFunctions/arm_softmax_s8_s16.c"/>
-        <file category="source" name="CMSIS/NN/Source/SoftmaxFunctions/arm_softmax_s16.c"/>
-        <file category="source" name="CMSIS/NN/Source/SoftmaxFunctions/arm_softmax_u8.c"/>
-        <file category="source" name="CMSIS/NN/Source/SoftmaxFunctions/arm_softmax_q7.c"/>
-        <file category="source" name="CMSIS/NN/Source/SoftmaxFunctions/arm_softmax_with_batch_q7.c"/>
       </files>
     </component>
 
@@ -2482,7 +2316,7 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- CMSIS-RTOS Keil RTX5 component -->
-    <component Cclass="CMSIS" Cgroup="RTOS" Csub="Keil RTX5" Cversion="5.5.4" Capiversion="1.0.0" condition="RTOS RTX5">
+    <component Cclass="CMSIS" Cgroup="RTOS" Csub="Keil RTX5" Cversion="5.5.5" Capiversion="1.0.0" condition="RTOS RTX5">
       <description>CMSIS-RTOS RTX5 implementation for Cortex-M, SC000, and SC300</description>
       <RTE_Components_h>
         <!-- the following content goes into file 'RTE_Components.h' -->
@@ -2498,7 +2332,7 @@ and 8-bit Java bytecodes in Jazelle state.
     </component>
 
     <!-- CMSIS-RTOS2 Keil RTX5 component -->
-    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Library" Cversion="5.5.4" Capiversion="2.1.3" condition="RTOS2 RTX5">
+    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Library" Cversion="5.5.5" Capiversion="2.1.3" condition="RTOS2 RTX5">
       <description>CMSIS-RTOS2 RTX5 for Cortex-M, SC000, SC300, ARMv8-M, ARMv8.1-M (Library)</description>
       <RTE_Components_h>
         <!-- the following content goes into file 'RTE_Components.h' -->
@@ -2557,7 +2391,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="library" condition="IARCC ARMv81-MML FP LE"   name="CMSIS/RTOS2/RTX/Library/IAR/RTX_V81MMF.a"   src="CMSIS/RTOS2/RTX/Source"/>
       </files>
     </component>
-    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Library_NS" Cversion="5.5.4" Capiversion="2.1.3" condition="RTOS2 RTX5 NS">
+    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Library_NS" Cversion="5.5.5" Capiversion="2.1.3" condition="RTOS2 RTX5 NS">
       <description>CMSIS-RTOS2 RTX5 for Armv8-M/Armv8.1-M Non-Secure Domain (Library)</description>
       <RTE_Components_h>
         <!-- the following content goes into file 'RTE_Components.h' -->
@@ -2608,7 +2442,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="library" condition="IARCC ARMv81-MML FP LE"   name="CMSIS/RTOS2/RTX/Library/IAR/RTX_V81MMFN.a"   src="CMSIS/RTOS2/RTX/Source"/>
       </files>
     </component>
-    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Source" Cversion="5.5.4" Capiversion="2.1.3" condition="RTOS2 RTX5">
+    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Source" Cversion="5.5.5" Capiversion="2.1.3" condition="RTOS2 RTX5">
       <description>CMSIS-RTOS2 RTX5 for Cortex-M, SC000, SC300, ARMv8-M, ARMv8.1-M (Source)</description>
       <RTE_Components_h>
         <!-- the following content goes into file 'RTE_Components.h' -->
@@ -2671,7 +2505,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="source" name="CMSIS/RTOS2/Source/os_systick.c"/>
       </files>
     </component>
-    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Source" Cversion="5.5.4" Capiversion="2.1.3" condition="RTOS2 RTX5 v7-A">
+    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Source" Cversion="5.5.5" Capiversion="2.1.3" condition="RTOS2 RTX5 v7-A">
       <description>CMSIS-RTOS2 RTX5 for Armv7-A (Source)</description>
       <RTE_Components_h>
         <!-- the following content goes into file 'RTE_Components.h' -->
@@ -2727,7 +2561,7 @@ and 8-bit Java bytecodes in Jazelle state.
         <file category="source" name="CMSIS/RTOS2/RTX/Source/IAR/irq_armv7a.s" condition="IARASM ARMv7-A"/>
       </files>
     </component>
-    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Source_NS" Cversion="5.5.4" Capiversion="2.1.3" condition="RTOS2 RTX5 NS">
+    <component Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Source_NS" Cversion="5.5.5" Capiversion="2.1.3" condition="RTOS2 RTX5 NS">
       <description>CMSIS-RTOS2 RTX5 for Armv8-M/Armv8.1-M Non-Secure Domain (Source)</description>
       <RTE_Components_h>
         <!-- the following content goes into file 'RTE_Components.h' -->
@@ -2966,188 +2800,6 @@ and 8-bit Java bytecodes in Jazelle state.
   </boards>
 
   <examples>
-    <example name="DSP_Lib Bayes example" doc="Abstract.txt" folder="CMSIS/DSP/Examples/ARM/arm_bayes_example">
-      <description>DSP_Lib Bayes example</description>
-      <board name="uVision Simulator" vendor="Keil"/>
-      <project>
-        <environment name="uv" load="arm_bayes_example.uvprojx"/>
-      </project>
-      <attributes>
-        <component Cclass="CMSIS" Cgroup="CORE"/>
-        <component Cclass="CMSIS" Cgroup="DSP"/>
-        <component Cclass="Device" Cgroup="Startup"/>
-        <category>Getting Started</category>
-      </attributes>
-    </example>
-
-    <example name="DSP_Lib Class Marks example" doc="Abstract.txt" folder="CMSIS/DSP/Examples/ARM/arm_class_marks_example">
-      <description>DSP_Lib Class Marks example</description>
-      <board name="uVision Simulator" vendor="Keil"/>
-      <project>
-        <environment name="uv" load="arm_class_marks_example.uvprojx"/>
-      </project>
-      <attributes>
-        <component Cclass="CMSIS" Cgroup="CORE"/>
-        <component Cclass="CMSIS" Cgroup="DSP"/>
-        <component Cclass="Device" Cgroup="Startup"/>
-        <category>Getting Started</category>
-      </attributes>
-    </example>
-
-    <example name="DSP_Lib Convolution example" doc="Abstract.txt" folder="CMSIS/DSP/Examples/ARM/arm_convolution_example">
-      <description>DSP_Lib Convolution example</description>
-      <board name="uVision Simulator" vendor="Keil"/>
-      <project>
-        <environment name="uv" load="arm_convolution_example.uvprojx"/>
-      </project>
-      <attributes>
-        <component Cclass="CMSIS" Cgroup="CORE"/>
-        <component Cclass="CMSIS" Cgroup="DSP"/>
-        <component Cclass="Device" Cgroup="Startup"/>
-        <category>Getting Started</category>
-      </attributes>
-    </example>
-
-    <example name="DSP_Lib Dotproduct example" doc="Abstract.txt" folder="CMSIS/DSP/Examples/ARM/arm_dotproduct_example">
-      <description>DSP_Lib Dotproduct example</description>
-      <board name="uVision Simulator" vendor="Keil"/>
-      <project>
-        <environment name="uv" load="arm_dotproduct_example.uvprojx"/>
-      </project>
-      <attributes>
-        <component Cclass="CMSIS" Cgroup="CORE"/>
-        <component Cclass="CMSIS" Cgroup="DSP"/>
-        <component Cclass="Device" Cgroup="Startup"/>
-        <category>Getting Started</category>
-      </attributes>
-    </example>
-
-    <example name="DSP_Lib FFT Bin example" doc="Abstract.txt" folder="CMSIS/DSP/Examples/ARM/arm_fft_bin_example">
-      <description>DSP_Lib FFT Bin example</description>
-      <board name="uVision Simulator" vendor="Keil"/>
-      <project>
-        <environment name="uv" load="arm_fft_bin_example.uvprojx"/>
-      </project>
-      <attributes>
-        <component Cclass="CMSIS" Cgroup="CORE"/>
-        <component Cclass="CMSIS" Cgroup="DSP"/>
-        <component Cclass="Device" Cgroup="Startup"/>
-        <category>Getting Started</category>
-      </attributes>
-    </example>
-
-    <example name="DSP_Lib FIR example" doc="Abstract.txt" folder="CMSIS/DSP/Examples/ARM/arm_fir_example">
-      <description>DSP_Lib FIR example</description>
-      <board name="uVision Simulator" vendor="Keil"/>
-      <project>
-        <environment name="uv" load="arm_fir_example.uvprojx"/>
-      </project>
-      <attributes>
-        <component Cclass="CMSIS" Cgroup="CORE"/>
-        <component Cclass="CMSIS" Cgroup="DSP"/>
-        <component Cclass="Device" Cgroup="Startup"/>
-        <category>Getting Started</category>
-      </attributes>
-    </example>
-
-    <example name="DSP_Lib Graphic Equalizer example" doc="Abstract.txt" folder="CMSIS/DSP/Examples/ARM/arm_graphic_equalizer_example">
-      <description>DSP_Lib Graphic Equalizer example</description>
-      <board name="uVision Simulator" vendor="Keil"/>
-      <project>
-        <environment name="uv" load="arm_graphic_equalizer_example.uvprojx"/>
-      </project>
-      <attributes>
-        <component Cclass="CMSIS" Cgroup="CORE"/>
-        <component Cclass="CMSIS" Cgroup="DSP"/>
-        <component Cclass="Device" Cgroup="Startup"/>
-        <category>Getting Started</category>
-      </attributes>
-    </example>
-
-    <example name="DSP_Lib Linear Interpolation example" doc="Abstract.txt" folder="CMSIS/DSP/Examples/ARM/arm_linear_interp_example">
-      <description>DSP_Lib Linear Interpolation example</description>
-      <board name="uVision Simulator" vendor="Keil"/>
-      <project>
-        <environment name="uv" load="arm_linear_interp_example.uvprojx"/>
-      </project>
-      <attributes>
-        <component Cclass="CMSIS" Cgroup="CORE"/>
-        <component Cclass="CMSIS" Cgroup="DSP"/>
-        <component Cclass="Device" Cgroup="Startup"/>
-        <category>Getting Started</category>
-      </attributes>
-    </example>
-
-    <example name="DSP_Lib Matrix example" doc="Abstract.txt" folder="CMSIS/DSP/Examples/ARM/arm_matrix_example">
-      <description>DSP_Lib Matrix example</description>
-      <board name="uVision Simulator" vendor="Keil"/>
-      <project>
-        <environment name="uv" load="arm_matrix_example.uvprojx"/>
-      </project>
-      <attributes>
-        <component Cclass="CMSIS" Cgroup="CORE"/>
-        <component Cclass="CMSIS" Cgroup="DSP"/>
-        <component Cclass="Device" Cgroup="Startup"/>
-        <category>Getting Started</category>
-      </attributes>
-    </example>
-
-    <example name="DSP_Lib Signal Convergence example" doc="Abstract.txt" folder="CMSIS/DSP/Examples/ARM/arm_signal_converge_example">
-      <description>DSP_Lib Signal Convergence example</description>
-      <board name="uVision Simulator" vendor="Keil"/>
-      <project>
-        <environment name="uv" load="arm_signal_converge_example.uvprojx"/>
-      </project>
-      <attributes>
-        <component Cclass="CMSIS" Cgroup="CORE"/>
-        <component Cclass="CMSIS" Cgroup="DSP"/>
-        <component Cclass="Device" Cgroup="Startup"/>
-        <category>Getting Started</category>
-      </attributes>
-    </example>
-
-    <example name="DSP_Lib Sinus/Cosinus example" doc="Abstract.txt" folder="CMSIS/DSP/Examples/ARM/arm_sin_cos_example">
-      <description>DSP_Lib Sinus/Cosinus example</description>
-      <board name="uVision Simulator" vendor="Keil"/>
-      <project>
-        <environment name="uv" load="arm_sin_cos_example.uvprojx"/>
-      </project>
-      <attributes>
-        <component Cclass="CMSIS" Cgroup="CORE"/>
-        <component Cclass="CMSIS" Cgroup="DSP"/>
-        <component Cclass="Device" Cgroup="Startup"/>
-        <category>Getting Started</category>
-      </attributes>
-    </example>
-
-    <example name="DSP_Lib SVM example" doc="Abstract.txt" folder="CMSIS/DSP/Examples/ARM/arm_svm_example">
-      <description>DSP_Lib SVM example</description>
-      <board name="uVision Simulator" vendor="Keil"/>
-      <project>
-        <environment name="uv" load="arm_svm_example.uvprojx"/>
-      </project>
-      <attributes>
-        <component Cclass="CMSIS" Cgroup="CORE"/>
-        <component Cclass="CMSIS" Cgroup="DSP"/>
-        <component Cclass="Device" Cgroup="Startup"/>
-        <category>Getting Started</category>
-      </attributes>
-    </example>
-
-    <example name="DSP_Lib Variance example" doc="Abstract.txt" folder="CMSIS/DSP/Examples/ARM/arm_variance_example">
-      <description>DSP_Lib Variance example</description>
-      <board name="uVision Simulator" vendor="Keil"/>
-      <project>
-        <environment name="uv" load="arm_variance_example.uvprojx"/>
-      </project>
-      <attributes>
-        <component Cclass="CMSIS" Cgroup="CORE"/>
-        <component Cclass="CMSIS" Cgroup="DSP"/>
-        <component Cclass="Device" Cgroup="Startup"/>
-        <category>Getting Started</category>
-      </attributes>
-    </example>
-
     <example name="CMSIS-RTOS2 Blinky" doc="Abstract.txt" folder="CMSIS/RTOS2/RTX/Examples/Blinky">
       <description>CMSIS-RTOS2 Blinky example</description>
       <board name="uVision Simulator" vendor="Keil"/>

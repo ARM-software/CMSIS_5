@@ -17,8 +17,8 @@
  *
  * ----------------------------------------------------------------------
  *
- * $Date:        26. April 2022
- * $Revision:    V2.1.1
+ * $Date:        5. December 2022
+ * $Revision:    V2.1.2
  *
  * Project:      CMSIS-DAP Include
  * Title:        DAP.h Definitions
@@ -33,7 +33,7 @@
 #ifdef  DAP_FW_V1
 #define DAP_FW_VER                      "1.3.0"
 #else
-#define DAP_FW_VER                      "2.1.1"
+#define DAP_FW_VER                      "2.1.2"
 #endif
 
 // DAP Command IDs

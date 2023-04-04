@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     cmsis_iccarm.h
  * @brief    CMSIS compiler ICCARM (IAR Compiler for Arm) header file
- * @version  V5.0.7
- * @date     15. May 2019
+ * @version  V5.0.8
+ * @date     13. November 2022
  ******************************************************************************/
 
 //------------------------------------------------------------------------------
@@ -89,28 +89,28 @@
 #endif
 
 #ifndef   __PACKED
-  /* Needs IAR language extensions */
   #if __ICCARM_V8
     #define __PACKED __attribute__((packed, aligned(1)))
   #else
+    /* Needs IAR language extensions */
     #define __PACKED __packed
   #endif
 #endif
 
 #ifndef   __PACKED_STRUCT
-  /* Needs IAR language extensions */
   #if __ICCARM_V8
     #define __PACKED_STRUCT struct __attribute__((packed, aligned(1)))
   #else
+    /* Needs IAR language extensions */
     #define __PACKED_STRUCT __packed struct
   #endif
 #endif
 
 #ifndef   __PACKED_UNION
-  /* Needs IAR language extensions */
   #if __ICCARM_V8
     #define __PACKED_UNION union __attribute__((packed, aligned(1)))
   #else
+    /* Needs IAR language extensions */
     #define __PACKED_UNION __packed union
   #endif
 #endif
@@ -236,20 +236,20 @@
 
   #include "iccarm_builtin.h"
 
-  #define __enable_irq        __iar_builtin_enable_interrupt
+  #define __disable_fault_irq   __iar_builtin_disable_fiq
   #define __disable_irq       __iar_builtin_disable_interrupt
   #define __enable_fault_irq    __iar_builtin_enable_fiq
-  #define __disable_fault_irq   __iar_builtin_disable_fiq
+  #define __enable_irq        __iar_builtin_enable_interrupt
   #define __arm_rsr           __iar_builtin_rsr
   #define __arm_wsr           __iar_builtin_wsr
 
-  #if __FPU_PRESENT
+  #if ((defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)))
     #define __get_FPSCR()             (__arm_rsr("FPSCR"))
+    #define __set_FPSCR(VALUE)        (__arm_wsr("FPSCR", (VALUE)))
   #else
     #define __get_FPSCR()             ( 0 )
+    #define __set_FPSCR(VALUE)        ((void)VALUE)
   #endif
-
-  #define __set_FPSCR(VALUE)          (__arm_wsr("FPSCR", VALUE))
 
   #define __get_CPSR()                (__arm_rsr("CPSR"))
   #define __get_mode()                (__get_CPSR() & 0x1FU)
@@ -378,8 +378,8 @@
 
 #else /* __ICCARM_INTRINSICS_VERSION__ == 2 */
 
-  #if !__FPU_PRESENT
-  #define __get_FPSCR __cmsis_iar_get_FPSR_not_active
+  #if !((defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)))
+    #define __get_FPSCR __cmsis_iar_get_FPSR_not_active
   #endif
 
   #ifdef __INTRINSICS_INCLUDED
@@ -388,8 +388,8 @@
 
   #include <intrinsics.h>
 
-  #if !__FPU_PRESENT
-  #define __get_FPSCR() (0)
+  #if !((defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)))
+    #define __get_FPSCR() (0)
   #endif
 
   #pragma diag_suppress=Pe940
@@ -434,7 +434,7 @@
 
   __IAR_FT uint32_t __get_FPEXC(void)
   {
-  #if (__FPU_PRESENT == 1)
+  #if ((defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)))
     uint32_t result;
     __ASM volatile("VMRS %0, fpexc" : "=r" (result) : : "memory");
     return(result);
@@ -445,7 +445,7 @@
 
   __IAR_FT void __set_FPEXC(uint32_t fpexc)
   {
-  #if (__FPU_PRESENT == 1)
+  #if ((defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)))
     __ASM volatile ("VMSR fpexc, %0" : : "r" (fpexc) : "memory");
   #endif
   }
