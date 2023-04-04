@@ -99,6 +99,14 @@
       <th>Description</th>
     </tr>
     <tr>
+      <td>V5.5.5</td>
+      <td>
+       - Added de-allocation of Arm C library thread data (libspace) when thread is terminated.
+       - Updated SysTick implementation for OS Tick (initial count value).
+       - Added Thread Entry wrapper (compatible with GDB stack unwind).
+      </td>
+    </tr>
+    <tr>
       <td>V5.5.4</td>
       <td>
        - Fixed potential register R1 corruption when calling OS functions from threads multiple times with same arguments (when using high level compiler optimizations).

@@ -71,13 +71,15 @@ class CompilerAxis(Enum):
     AC6 = ('AC6')
     AC6LTM = ('AC6LTM')
     GCC = ('GCC')
+    IAR = ('IAR')
 
     @property
     def image_ext(self):
         ext = {
             CompilerAxis.AC6: 'axf',
             CompilerAxis.AC6LTM: 'axf',
-            CompilerAxis.GCC: 'elf'
+            CompilerAxis.GCC: 'elf',
+            CompilerAxis.IAR: 'elf'
         }
         return ext[self]
 
@@ -137,11 +139,11 @@ def bl_project_name(config):
 
 
 def output_dir(config):
-    return f"{project_name(config)}_outdir"
+    return "outdir"
 
 
 def bl_output_dir(config):
-    return f"{bl_project_name(config)}_outdir"
+    return "outdir"
 
 
 def model_config(config):

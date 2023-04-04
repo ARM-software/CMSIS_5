@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 Arm Limited. All rights reserved.
+ * Copyright (c) 2013-2023 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -507,10 +507,10 @@ SVC0_0 (KernelGetSysTimerFreq,  uint32_t)
 //  ==== Library functions ====
 
 /// RTOS Kernel Pre-Initialization Hook
-//lint -esym(759,osRtxKernelPreInit) "Prototype in header"
-//lint -esym(765,osRtxKernelPreInit) "Global scope (can be overridden)"
-//lint -esym(522,osRtxKernelPreInit) "Can be overridden (do not lack side-effects)"
-__WEAK void osRtxKernelPreInit (void) {
+//lint -esym(759,osRtxKernelBeforeInit) "Prototype in header"
+//lint -esym(765,osRtxKernelBeforeInit) "Global scope (can be overridden)"
+//lint -esym(522,osRtxKernelBeforeInit) "Can be overridden (do not lack side-effects)"
+__WEAK void osRtxKernelBeforeInit (void) {
 }
 
 /// RTOS Kernel Error Notification Handler
@@ -527,7 +527,7 @@ uint32_t osRtxKernelErrorNotify (uint32_t code, void *object_id) {
 osStatus_t osKernelInitialize (void) {
   osStatus_t status;
 
-  osRtxKernelPreInit();
+  osRtxKernelBeforeInit();
   EvrRtxKernelInitialize();
   if (IsException() || IsIrqMasked()) {
     EvrRtxKernelError((int32_t)osErrorISR);
