@@ -1197,6 +1197,15 @@ __STATIC_FORCEINLINE void L1C_InvalidateBTAC(void) {
   __ISB();     //ensure instruction fetch path sees new state
 }
 
+/** \brief  Clean instruction cache line by address.
+* \param [in] va Pointer to instructions to clear the cache for.
+*/
+__STATIC_FORCEINLINE void L1C_InvalidateICacheMVA(void *va) {
+  __set_ICIMVAC((uint32_t)va);
+  __DSB();     //ensure completion of the invalidation
+  __ISB();     //ensure instruction fetch path sees new I cache state
+}
+
 /** \brief  Invalidate the whole instruction cache
 */
 __STATIC_FORCEINLINE void L1C_InvalidateICacheAll(void) {
