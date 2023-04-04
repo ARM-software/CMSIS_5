@@ -130,8 +130,16 @@ def config_suffix(config, timestamp=True):
     return suffix
 
 
+def image_name(config):
+    return f"{config.compiler}_{config.optimize}+{config.device[1]}"
+
+
 def project_name(config):
     return f"Validation.{config.compiler}_{config.optimize}+{config.device[1]}"
+
+
+def bl_image_name(config):
+    return f"{config.compiler}_{config.optimize}+{config.device.bl_device}"
 
 
 def bl_project_name(config):
@@ -241,9 +249,9 @@ def cbuild(project):
 def model_exec(config):
     cmdline = [MODEL_EXECUTABLE[config.device][0], "-q", "--simlimit", 100, "-f", model_config(config)]
     cmdline += MODEL_EXECUTABLE[config.device][1]
-    cmdline += ["-a", f"{project_name(config)}/{output_dir(config)}/{project_name(config)}.{config.compiler.image_ext}"]
+    cmdline += ["-a", f"{project_name(config)}/{output_dir(config)}/{image_name(config)}.{config.compiler.image_ext}"]
     if config.device.has_bl():
-        cmdline += ["-a", f"{bl_project_name(config)}/{bl_output_dir(config)}/{bl_project_name(config)}.{config.compiler.image_ext}"]
+        cmdline += ["-a", f"{bl_project_name(config)}/{bl_output_dir(config)}/{bl_image_name(config)}.{config.compiler.image_ext}"]
     return cmdline
 
 
