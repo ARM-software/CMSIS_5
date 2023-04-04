@@ -1,11 +1,11 @@
 /**************************************************************************//**
  * @file     core_armv8mbl.h
  * @brief    CMSIS Armv8-M Baseline Core Peripheral Access Layer Header File
- * @version  V5.1.0
- * @date     27. March 2020
+ * @version  V5.2.0
+ * @date     04. April 2023
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2020 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2023 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *

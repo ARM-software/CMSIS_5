@@ -1,11 +1,11 @@
 /**************************************************************************//**
  * @file     cmsis_tiarmclang.h
  * @brief    CMSIS compiler tiarmclang header file
- * @version  V5.6.0
- * @date     20. March 2023
+ * @version  V1.0.0
+ * @date     04. April 2023
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2023 Arm Limited. All rights reserved.
+ * Copyright (c) 2023 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *

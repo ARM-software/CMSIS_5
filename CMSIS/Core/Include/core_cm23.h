@@ -1,11 +1,11 @@
 /**************************************************************************//**
  * @file     core_cm23.h
  * @brief    CMSIS Cortex-M23 Core Peripheral Access Layer Header File
- * @version  V5.1.0
- * @date     11. February 2020
+ * @version  V5.2.0
+ * @date     04. April 2023
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2020 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2023 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *

@@ -1,11 +1,11 @@
 /**************************************************************************//**
  * @file     core_cm1.h
  * @brief    CMSIS Cortex-M1 Core Peripheral Access Layer Header File
- * @version  V1.0.1
- * @date     12. November 2018
+ * @version  V1.1.0
+ * @date     04. April 2023
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2023 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
