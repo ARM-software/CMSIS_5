@@ -38,10 +38,10 @@
 #define ARM_MPU_ATTR_NON_CACHEABLE                    ( 4U )
 
 /** \brief Attribute for Normal memory, Outer and Inner cacheability.
-* \param NT Non-Transient: Set to 1 for non-transient data. Set to 0 for transient data.
-* \param WB Write-Back: Set to 1 to use write-back update policy. Set to 0 to use non-write-back update policy.
-* \param RA Read Allocation: Set to 1 to use cache allocation on read miss. Set to 0 to not use cache allocation on read miss.
-* \param WA Write Allocation: Set to 1 to use cache allocation on write miss. Set to 0 to not use cache allocation on write miss.
+* \param NT Non-Transient: Set to 1 for Non-transient data. Set to 0 for Transient data.
+* \param WB Write-Back: Set to 1 to use a Write-Back policy. Set to 0 to use a Write-Through policy.
+* \param RA Read Allocation: Set to 1 to enable cache allocation on read miss. Set to 0 to disable cache allocation on read miss.
+* \param WA Write Allocation: Set to 1 to enable cache allocation on write miss. Set to 0 to disable cache allocation on write miss.
 */
 #define ARM_MPU_ATTR_MEMORY_(NT, WB, RA, WA) \
   ((((NT) & 1U) << 3U) | (((WB) & 1U) << 2U) | (((RA) & 1U) << 1U) | ((WA) & 1U))
