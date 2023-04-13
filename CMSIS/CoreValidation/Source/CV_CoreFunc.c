@@ -68,7 +68,7 @@ void TC_CoreFunc_EnDisIRQ (void)
 
   // Set the interrupt pending state
   NVIC_SetPendingIRQ(Interrupt0_IRQn);
-  for(uint32_t i = 10U; i > 0U; --i) {}
+  for(uint32_t i = 10U; i > 0U; --i) {__NOP();}
 
   // Interrupt is not taken
   ASSERT_TRUE(irqTaken == 0U);
@@ -80,7 +80,7 @@ void TC_CoreFunc_EnDisIRQ (void)
   // Globally enable interrupt servicing
   __enable_irq();
 
-  for(uint32_t i = 10U; i > 0U; --i) {}
+  for(uint32_t i = 10U; i > 0U; --i) {__NOP();}
 
   // Interrupt was taken
   ASSERT_TRUE(irqTaken == 1U);
@@ -98,7 +98,7 @@ void TC_CoreFunc_EnDisIRQ (void)
 
   // Set interrupt pending
   NVIC_SetPendingIRQ(Interrupt0_IRQn);
-  for(uint32_t i = 10U; i > 0U; --i) {}
+  for(uint32_t i = 10U; i > 0U; --i) {__NOP();}
 
   // Interrupt is not taken again
   ASSERT_TRUE(irqTaken == 1U);
@@ -106,7 +106,7 @@ void TC_CoreFunc_EnDisIRQ (void)
 
   // Clear interrupt pending
   NVIC_ClearPendingIRQ(Interrupt0_IRQn);
-  for(uint32_t i = 10U; i > 0U; --i) {}
+  for(uint32_t i = 10U; i > 0U; --i) {__NOP();}
 
   // Interrupt it not pending anymore.
   ASSERT_TRUE(NVIC_GetPendingIRQ(Interrupt0_IRQn) == 0U);
@@ -293,7 +293,7 @@ void TC_CoreFunc_IPSR (void) {
   __enable_irq();
 
   NVIC_SetPendingIRQ(Interrupt0_IRQn);
-  for(uint32_t i = 10U; i > 0U; --i) {}
+  for(uint32_t i = 10U; i > 0U; --i) {__NOP();}
 
   __disable_irq();
   NVIC_DisableIRQ(Interrupt0_IRQn);
@@ -307,7 +307,7 @@ void TC_CoreFunc_IPSR (void) {
 #if defined(__CC_ARM)
 #define SUBS(Rd, Rm, Rn) __ASM volatile("SUBS " # Rd ", " # Rm ", " # Rn)
 #define ADDS(Rd, Rm, Rn) __ASM volatile("ADDS " # Rd ", " # Rm ", " # Rn)
-#elif defined( __GNUC__ )  && (!defined(__ARMCC_VERSION))  && (defined(__ARM_ARCH_6M__) || defined(__ARM_ARCH_8M_BASE__))
+#elif defined( __GNUC__ ) && (!defined(__ti__)) && (!defined(__ARMCC_VERSION))  && (defined(__ARM_ARCH_6M__) || defined(__ARM_ARCH_8M_BASE__))
 #define SUBS(Rd, Rm, Rn) __ASM volatile("SUB %0, %1, %2" : "=r"(Rd) : "r"(Rm), "r"(Rn) : "cc")
 #define ADDS(Rd, Rm, Rn) __ASM volatile("ADD %0, %1, %2" : "=r"(Rd) : "r"(Rm), "r"(Rn) : "cc")
 #elif defined(_lint)

@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     cmsis_compiler.h
  * @brief    CMSIS compiler generic header file
- * @version  V5.2.0
- * @date     20. January 2023
+ * @version  V5.3.0
+ * @date     04. April 2023
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2023 Arm Limited. All rights reserved.
@@ -46,6 +46,11 @@
 #elif defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6100100)
   #include "cmsis_armclang.h"
 
+/*
+ * TI Arm Clang Compiler (tiarmclang)
+ */
+#elif defined (__ti__)
+  #include "cmsis_tiarmclang.h"
 
 /*
  * GNU Compiler
@@ -62,7 +67,7 @@
 
 
 /*
- * TI Arm Compiler
+ * TI Arm Compiler (armcl)
  */
 #elif defined ( __TI_ARM__ )
   #include <cmsis_ccs.h>
