@@ -1,11 +1,11 @@
 /**************************************************************************//**
  * @file     core_cm35p.h
  * @brief    CMSIS Cortex-M35P Core Peripheral Access Layer Header File
- * @version  V1.1.3
- * @date     13. October 2021
+ * @version  V1.2.0
+ * @date     04. April 2023
  ******************************************************************************/
 /*
- * Copyright (c) 2018-2021 Arm Limited. All rights reserved.
+ * Copyright (c) 2018-2023 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -116,6 +116,29 @@
     #else
       #error "Compiler generates DSP (SIMD) instructions for a devices without DSP extensions (check __DSP_PRESENT)"
       #define __DSP_USED         0U
+    #endif
+  #else
+    #define __DSP_USED         0U
+  #endif
+
+#elif defined (__ti__)
+  #if defined (__ARM_FP)
+    #if defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)
+      #define __FPU_USED       1U
+    #else
+      #warning "Compiler generates FPU instructions for a device without an FPU (check __FPU_PRESENT)"
+      #define __FPU_USED       0U
+    #endif
+  #else
+    #define __FPU_USED         0U
+  #endif
+
+  #if defined (__ARM_FEATURE_DSP) && (__ARM_FEATURE_DSP == 1U)
+    #if defined (__DSP_PRESENT) && (__DSP_PRESENT == 1U)
+      #define __DSP_USED       1U
+    #else
+      #error "Compiler generates DSP (SIMD) instructions for a devices without DSP extensions (check __DSP_PRESENT)"
+      #define __DSP_USED       0U
     #endif
   #else
     #define __DSP_USED         0U

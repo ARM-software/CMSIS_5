@@ -1,11 +1,11 @@
 /**************************************************************************//**
  * @file     core_sc300.h
  * @brief    CMSIS SC300 Core Peripheral Access Layer Header File
- * @version  V5.0.11
- * @date     06. February 2023
+ * @version  V5.1.0
+ * @date     04. April 2023
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2021 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2023 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -82,6 +82,11 @@
 
 #elif defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
   #if defined __ARM_FP
+    #error "Compiler generates FPU instructions for a device without an FPU (check __FPU_PRESENT)"
+  #endif
+
+#elif defined (__ti__)
+  #if defined (__ARM_FP)
     #error "Compiler generates FPU instructions for a device without an FPU (check __FPU_PRESENT)"
   #endif
 

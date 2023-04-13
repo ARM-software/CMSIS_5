@@ -1,11 +1,11 @@
 /**************************************************************************//**
  * @file     core_cm55.h
  * @brief    CMSIS Cortex-M55 Core Peripheral Access Layer Header File
- * @version  V1.2.5
- * @date     12. May 2022
+ * @version  V1.3.0
+ * @date     04. April 2023
  ******************************************************************************/
 /*
- * Copyright (c) 2018-2022 Arm Limited. All rights reserved.
+ * Copyright (c) 2018-2023 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -88,6 +88,29 @@
 
   #if defined(__ARM_FEATURE_DSP)
     #if defined(__DSP_PRESENT) && (__DSP_PRESENT == 1U)
+      #define __DSP_USED       1U
+    #else
+      #error "Compiler generates DSP (SIMD) instructions for a devices without DSP extensions (check __DSP_PRESENT)"
+      #define __DSP_USED       0U
+    #endif
+  #else
+    #define __DSP_USED         0U
+  #endif
+
+#elif defined (__ti__)
+  #if defined (__ARM_FP)
+    #if defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)
+      #define __FPU_USED       1U
+    #else
+      #warning "Compiler generates FPU instructions for a device without an FPU (check __FPU_PRESENT)"
+      #define __FPU_USED       0U
+    #endif
+  #else
+    #define __FPU_USED         0U
+  #endif
+
+  #if defined (__ARM_FEATURE_DSP) && (__ARM_FEATURE_DSP == 1U)
+    #if defined (__DSP_PRESENT) && (__DSP_PRESENT == 1U)
       #define __DSP_USED       1U
     #else
       #error "Compiler generates DSP (SIMD) instructions for a devices without DSP extensions (check __DSP_PRESENT)"

@@ -1,11 +1,11 @@
 /**************************************************************************//**
  * @file     core_cm4.h
  * @brief    CMSIS Cortex-M4 Core Peripheral Access Layer Header File
- * @version  V5.1.3
- * @date     06. February 2023
+ * @version  V5.2.0
+ * @date     04. April 2023
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2020 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2023 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -87,6 +87,18 @@
 
 #elif defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
   #if defined __ARM_FP
+    #if defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)
+      #define __FPU_USED       1U
+    #else
+      #warning "Compiler generates FPU instructions for a device without an FPU (check __FPU_PRESENT)"
+      #define __FPU_USED       0U
+    #endif
+  #else
+    #define __FPU_USED         0U
+  #endif
+
+#elif defined (__ti__)
+  #if defined (__ARM_FP)
     #if defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)
       #define __FPU_USED       1U
     #else
