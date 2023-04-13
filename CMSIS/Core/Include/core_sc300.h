@@ -786,14 +786,14 @@ typedef struct
 #define ITM_TCR_BUSY_Pos                   23U                                            /*!< ITM TCR: BUSY Position */
 #define ITM_TCR_BUSY_Msk                   (1UL << ITM_TCR_BUSY_Pos)                      /*!< ITM TCR: BUSY Mask */
 
-#define ITM_TCR_TraceBusID_Pos             16U                                            /*!< ITM TCR: ATBID Position */
-#define ITM_TCR_TraceBusID_Msk             (0x7FUL << ITM_TCR_TraceBusID_Pos)             /*!< ITM TCR: ATBID Mask */
+#define ITM_TCR_TRACEBUSID_Pos             16U                                            /*!< ITM TCR: ATBID Position */
+#define ITM_TCR_TRACEBUSID_Msk             (0x7FUL << ITM_TCR_TRACEBUSID_Pos)             /*!< ITM TCR: ATBID Mask */
 
 #define ITM_TCR_GTSFREQ_Pos                10U                                            /*!< ITM TCR: Global timestamp frequency Position */
 #define ITM_TCR_GTSFREQ_Msk                (3UL << ITM_TCR_GTSFREQ_Pos)                   /*!< ITM TCR: Global timestamp frequency Mask */
 
-#define ITM_TCR_TSPrescale_Pos              8U                                            /*!< ITM TCR: TSPrescale Position */
-#define ITM_TCR_TSPrescale_Msk             (3UL << ITM_TCR_TSPrescale_Pos)                /*!< ITM TCR: TSPrescale Mask */
+#define ITM_TCR_TSPRESCALE_Pos              8U                                            /*!< ITM TCR: TSPrescale Position */
+#define ITM_TCR_TSPRESCALE_Msk             (3UL << ITM_TCR_TSPRESCALE_Pos)                /*!< ITM TCR: TSPrescale Mask */
 
 #define ITM_TCR_SWOENA_Pos                  4U                                            /*!< ITM TCR: SWOENA Position */
 #define ITM_TCR_SWOENA_Msk                 (1UL << ITM_TCR_SWOENA_Pos)                    /*!< ITM TCR: SWOENA Mask */
@@ -811,14 +811,14 @@ typedef struct
 #define ITM_TCR_ITMENA_Msk                 (1UL /*<< ITM_TCR_ITMENA_Pos*/)                /*!< ITM TCR: ITM Enable bit Mask */
 
 /* ITM Lock Status Register Definitions */
-#define ITM_LSR_ByteAcc_Pos                 2U                                            /*!< ITM LSR: ByteAcc Position */
-#define ITM_LSR_ByteAcc_Msk                (1UL << ITM_LSR_ByteAcc_Pos)                   /*!< ITM LSR: ByteAcc Mask */
+#define ITM_LSR_BYTEACC_Pos                 2U                                            /*!< ITM LSR: ByteAcc Position */
+#define ITM_LSR_BYTEACC_Msk                (1UL << ITM_LSR_BYTEACC_Pos)                   /*!< ITM LSR: ByteAcc Mask */
 
-#define ITM_LSR_Access_Pos                  1U                                            /*!< ITM LSR: Access Position */
-#define ITM_LSR_Access_Msk                 (1UL << ITM_LSR_Access_Pos)                    /*!< ITM LSR: Access Mask */
+#define ITM_LSR_ACCESS_Pos                  1U                                            /*!< ITM LSR: Access Position */
+#define ITM_LSR_ACCESS_Msk                 (1UL << ITM_LSR_ACCESS_Pos)                    /*!< ITM LSR: Access Mask */
 
-#define ITM_LSR_Present_Pos                 0U                                            /*!< ITM LSR: Present Position */
-#define ITM_LSR_Present_Msk                (1UL /*<< ITM_LSR_Present_Pos*/)               /*!< ITM LSR: Present Mask */
+#define ITM_LSR_PRESENT_Pos                 0U                                            /*!< ITM LSR: Present Position */
+#define ITM_LSR_PRESENT_Msk                (1UL /*<< ITM_LSR_PRESENT_Pos*/)               /*!< ITM LSR: Present Mask */
 
 /*@}*/ /* end of group CMSIS_ITM */
 
@@ -1387,6 +1387,35 @@ typedef struct
   #define MPU_BASE          (SCS_BASE +  0x0D90UL)                    /*!< Memory Protection Unit */
   #define MPU               ((MPU_Type       *)     MPU_BASE      )   /*!< Memory Protection Unit */
 #endif
+
+/*@} */
+
+
+/**
+  \ingroup    CMSIS_core_register
+  \defgroup   CMSIS_register_aliases     Backwards Compatibility Aliases
+  \brief      Register alias definitions for backwards compatibility.
+  @{
+ */
+
+/* Capitalize ITM_TCR Register Definitions */
+
+/* ITM Trace Control Register Definitions */
+#define ITM_TCR_TraceBusID_Pos           (ITM_TCR_TRACEBUSID_Pos)     /*!< \deprecated ITM_TCR_TraceBusID_Pos */
+#define ITM_TCR_TraceBusID_Msk           (ITM_TCR_TRACEBUSID_Msk)     /*!< \deprecated ITM_TCR_TraceBusID_Msk */
+
+#define ITM_TCR_TSPrescale_Pos           (ITM_TCR_TSPRESCALE_Pos)     /*!< \deprecated ITM_TCR_TSPrescale_Pos */
+#define ITM_TCR_TSPrescale_Msk           (ITM_TCR_TSPRESCALE_Msk)     /*!< \deprecated ITM_TCR_TSPrescale_Msk */
+
+/* ITM Lock Status Register Definitions */
+#define ITM_LSR_ByteAcc_Pos              (ITM_LSR_BYTEACC_Pos)        /*!< \deprecated ITM_LSR_ByteAcc_Pos */
+#define ITM_LSR_ByteAcc_Msk              (ITM_LSR_BYTEACC_Msk)        /*!< \deprecated ITM_LSR_ByteAcc_Msk */
+
+#define ITM_LSR_Access_Pos               (ITM_LSR_ACCESS_Pos)         /*!< \deprecated ITM_LSR_Access_Pos */
+#define ITM_LSR_Access_Msk               (ITM_LSR_ACCESS_Msk)         /*!< \deprecated ITM_LSR_Access_Msk */
+
+#define ITM_LSR_Present_Pos              (ITM_LSR_PRESENT_Pos)        /*!< \deprecated ITM_LSR_Present_Pos */
+#define ITM_LSR_Present_Msk              (ITM_LSR_PRESENT_Msk)        /*!< \deprecated ITM_LSR_Present_Msk */
 
 /*@} */
 
