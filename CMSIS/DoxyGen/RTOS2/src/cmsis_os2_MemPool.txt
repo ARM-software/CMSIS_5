@@ -180,6 +180,7 @@ Possible \ref osStatus_t return values:
  - \em osOK: the memory has been freed.
  - \em osErrorParameter: parameter \a mp_id is \token{NULL} or invalid, \a block points to invalid memory.
  - \em osErrorResource: the memory pool is in an invalid state.
+ - \em osErrorSafetyClass: the calling thread safety class is lower than the safety class of the specified memory pool.
 
 \note \b osMemoryPoolFree may perform certain checks on the \a block pointer given. But using \b osMemoryPoolFree 
 with a pointer other than one received from \ref osMemoryPoolAlloc has \b UNPREDICTED behaviour.
@@ -244,6 +245,7 @@ Possible \ref osStatus_t return values:
  - \em osErrorParameter: parameter \a mp_id is \token{NULL} or invalid.
  - \em osErrorResource: the memory pool is in an invalid state.
  - \em osErrorISR: \b osMemoryPoolDelete cannot be called from interrupt service routines.
+ - \em osErrorSafetyClass: the calling thread safety class is lower than the safety class of the specified memory pool.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */

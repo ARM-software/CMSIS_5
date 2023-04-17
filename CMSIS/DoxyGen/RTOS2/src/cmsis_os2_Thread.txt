@@ -287,14 +287,66 @@ Specifies the following attributes for the \ref osThreadNew function.
 /**
 \def osThreadJoinable
 \details
+Bitmask for a thread that can be joined.
+Intended for use in \e attr_bits of \ref osThreadAttr_t type argument for \ref osThreadNew function.
+
 A thread in this state can be joined using \ref osThreadJoin.
 */
 
 /**
 \def osThreadDetached
 \details
+Bitmask for a thread that cannot be joined.
+Intended for use in \e attr_bits of \ref osThreadAttr_t type argument for \ref osThreadNew function.
+
 A thread in this state cannot be joined using \ref osThreadJoin.
 */
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\def osThreadUnprivileged
+\details
+Bitmask for a thread that runs in unprivileged mode.
+Intended for use in \e attr_bits of \ref osThreadAttr_t type argument for \ref osThreadNew function.
+
+In \b unprivileged processor mode, a thread:
+- has limited access to the MSR and MRS instructions, and cannot use the CPS instruction.
+- cannot access the system timer, NVIC, or system control block.
+- might have restricted access to memory or peripherals.
+
+\note Ignored on processors that only run in privileged mode.
+
+Refer to the target processor User's Guide for details.
+*/
+
+/**
+\def osThreadPrivileged
+\details
+Bitmask for a thread that runs in privileged mode.
+Intended for use in \e attr_bits of \ref osThreadAttr_t type argument for \ref osThreadNew function.
+
+In \b privileged processor mode, the application software can use all the instructions and has access to all resources.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\def osThreadZone(n)
+\param  n MPU Protected Zone value.
+\brief  MPU zone value in attribute bit field format.
+\details
+
+The preprocessor macro \b osThreadZone constructs attribute bitmask with MPU zone bits set to \a n.
+
+<b>Code Example:</b>
+\code
+/* ThreadB thread attributes */
+const osThreadAttr_t thread_B_attr = {
+  .name      = "ThreadB",       // human readable thread name
+  .attr_bits = osThreadZone(3U) // assign thread to MPU zone 3
+};
+\endcode
+*/
+
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
@@ -341,6 +393,22 @@ void ThreadGetName_example (void) {
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
+\fn uint32_t osThreadGetClass (osThreadId_t thread_id);
+\details
+The function \b osThreadGetClass returns safety class assigned to the thread identified by parameter \a thread_id. In case of an
+error, it returns \ref osErrorId.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn uint32_t osThreadGetZone (osThreadId_t thread_id);
+\details
+The function \b osThreadGetZone returns the MPU Protected Zone value assigned to the thread identified by parameter \a thread_id.
+In case of an error, it returns \ref osErrorId.
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
 \fn osThreadId_t osThreadGetId (void)
 \details
 The function \b osThreadGetId returns the thread object ID of the currently running thread or NULL in case of an error.
@@ -382,6 +450,7 @@ Possible \ref osStatus_t return values:
     - \em osErrorParameter: \a thread_id is \token{NULL} or invalid or \a priority is incorrect.
     - \em osErrorResource: the thread is in an invalid state.
     - \em osErrorISR: the function \b osThreadSetPriority cannot be called from interrupt service routines.
+    - \em osErrorSafetyClass: the calling thread safety class is lower than the safety class of the specified thread.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
@@ -482,6 +551,7 @@ Possible \ref osStatus_t return values:
     - \em osErrorParameter: \a thread_id is \token{NULL} or invalid.
     - \em osErrorResource: the thread is in an invalid state.
     - \em osErrorISR: the function \b osThreadSuspend cannot be called from interrupt service routines.
+    - \em osErrorSafetyClass: the calling thread safety class is lower than the safety class of the specified thread.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 \note This function <b>must not</b> be called to suspend the running thread when the kernel is locked, i.e. \ref osKernelLock.
@@ -512,6 +582,7 @@ Possible \ref osStatus_t return values:
     - \em osErrorParameter: \a thread_id is \token{NULL} or invalid.
     - \em osErrorResource: the thread is in an invalid state.
     - \em osErrorISR: the function \b osThreadResume cannot be called from interrupt service routines.
+    - \em osErrorSafetyClass: the calling thread safety class is lower than the safety class of the specified thread.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 \note This function <b>may be</b> called when kernel is locked (\ref osKernelLock). Under this circumstances
@@ -532,6 +603,7 @@ Possible \ref osStatus_t return values:
     - \em osErrorParameter: \a thread_id is \token{NULL} or invalid.
     - \em osErrorResource: the thread is in an invalid state.
     - \em osErrorISR: the function \b osThreadDetach cannot be called from interrupt service routines.
+    - \em osErrorSafetyClass: the calling thread safety class is lower than the safety class of the specified thread.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
@@ -550,6 +622,7 @@ Possible \ref osStatus_t return values:
     - \em osErrorParameter: \a thread_id is \token{NULL} or invalid.
     - \em osErrorResource: the thread is in an invalid state (ex: not joinable).
     - \em osErrorISR: the function \b osThreadJoin cannot be called from interrupt service routines.
+    - \em osErrorSafetyClass: the calling thread safety class is lower than the safety class of the specified thread.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines". <br>
 \note Only one thread shall call \b osThreadJoin to join the target thread. If multiple threads try to join simultaneously with the same thread,
@@ -589,6 +662,7 @@ Possible \ref osStatus_t return values:
     - \em osErrorParameter: \a thread_id is \token{NULL} or invalid.
     - \em osErrorResource: the thread is in an invalid state or no other \ref ThreadStates "READY" thread exists.
     - \em osErrorISR: the function \b osThreadTerminate cannot be called from interrupt service routines.
+    - \em osErrorSafetyClass: the calling thread safety class is lower than the safety class of the specified thread.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 \note Avoid calling the function with a \em thread_id that does not exist or has been terminated already.
@@ -658,6 +732,219 @@ The function \b osThreadEnumerate returns the number of enumerated threads or \t
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn osStatus_t osThreadFeedWatchdog (uint32_t ticks);
+\details
+The function \b osThreadFeedWatchdog restarts watchdog of the current running thread. If the thread watchdog is not fed again within the \a ticks interval
+\ref osWatchdogAlarm_Handler will be called.
+
+Possible \ref osStatus_t return values:
+    - \em osOK: the watchdog timer was restarted successfully.
+    - \em osError: cannot be executed (kernel not running).
+    - \em osErrorISR: the function \b osThreadFeedWatchdog cannot be called from interrupt service routines.
+
+\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
+<b>Code Example:</b>
+\code
+#include "cmsis_os2.h"
+ 
+void Thread_1 (void const *arg) {          // Thread function
+  osStatus_t status;                       // Status of the executed function
+  :
+  while (1) {
+    status = osThreadFeedWatchdog(500U);   // Feed thread watchdog for 500 ticks
+    // verify status value here
+    :
+  }
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn osStatus_t osThreadProtectPrivileged (void);
+\details
+The function \b osThreadProtectPrivileged disables creation of new privileged threads. After its successful execution, no new
+threads with privilege execution mode (\ref osThreadPrivileged attribute) can be created.
+Kernel shall be in ready state or running when \b osThreadProtectPrivileged is called.
+
+Possible \ref osStatus_t return values:
+    - \em osOK: the creation of new privileged threads is disabled.
+    - \em osError: cannot be executed (kernel not ready).
+    - \em osErrorISR: the function \b osThreadProtectPrivileged cannot be called from interrupt service routines.
+
+\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
+<b>Code Example:</b>
+\code
+#include "cmsis_os2.h"
+ 
+int main (void) {
+  osStatus_t status;
+  :
+  status = osKernelInitialize();        // Initialize CMSIS-RTOS2 kernel
+  // verify status value here.
+  :                                     // Create privileged threads
+  status = osThreadProtectPrivileged(); // Disable creation of new privileged threads.
+  // verify status value here.
+  :                                     // Start the kernel
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn osStatus_t osThreadSuspendClass (uint32_t safety_class, uint32_t mode);
+\details
+The function \b osThreadSuspendClass suspends execution of threads based on safety class assignment. \a safety_class provides the reference safety class value, while \a mode is considered as a bitmap that additionally specifies the safety classes to be suspended.
+
+If \ref osSafetyWithSameClass is set in \a mode than the threads with safety class value equal to \a safety_class will be suspended.
+<br>
+If \ref osSafetyWithLowerClass is set in \a mode than the threads with safety class value lower than \a safety_class will be suspended.
+
+Possible \ref osStatus_t return values:
+    - \em osOK: the threads with specified safety class have been suspended successfully.
+    - \em osErrorParameter: \a safety_class is invalid.
+    - \em osErrorResource: no other \ref ThreadStates "READY" thread exists.
+    - \em osErrorISR: the function \b osThreadSuspendClass is called from interrupt other than \ref osWatchdogAlarm_Handler.
+    - \em osErrorSafetyClass: the calling thread safety class is lower than the safety class specified by \a safety_class and \a mode.
+
+<b>Code Example:</b>
+\code
+#include "cmsis_os2.h"
+ 
+void SuspendNonCriticalClasses (void) {
+  osStatus_t status;
+ 
+  status = osThreadSuspendClass(4U, osSafetyWithSameClass | osSafetyWithLowerClass); // Suspends threads with safety class 4 or lower
+  // verify status value here.
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn osStatus_t osThreadResumeClass (uint32_t safety_class, uint32_t mode);
+\details
+The function \b osThreadResumeClass resumes execution of threads based on safety class assignment. \a safety_class provides the reference safety class value, while \a mode is considered as a bitmap that additionally specifies the safety classes to be resumed.
+
+If \ref osSafetyWithSameClass is set in \a mode than the threads with safety class value equal to \a safety_class will be resumed.
+<br>
+If \ref osSafetyWithLowerClass is set in \a mode than the threads with safety class value lower than \a safety_class will be resumed.
+
+
+Possible \ref osStatus_t return values:
+    - \em osOK: the threads with specified safety class have been resumed successfully.
+    - \em osErrorParameter: \a safety_class is invalid.
+    - \em osErrorISR: the function \b osThreadResumeClass is called from interrupt other than \ref osWatchdogAlarm_Handler.
+    - \em osErrorSafetyClass: the calling thread safety class is lower than the safety class specified by \a safety_class and \a mode.
+
+<b>Code Example:</b>
+\code
+#include "cmsis_os2.h"
+ 
+void ResumeNonCriticalClasses (void) {
+  osStatus_t status;
+ 
+  status = osThreadResumeClass(4U, osSafetyWithSameClass | osSafetyWithLowerClass); // Resumes threads with safety class 4 or lower
+  // verify status value here.
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn osStatus_t osThreadTerminateZone (uint32_t zone);
+\details
+The function \b osThreadTerminateZone terminates execution of threads assigned to the MPU Protected Zone as given by \a zone parameter.
+
+Possible \ref osStatus_t return values:
+    - \em osOK: the threads within the specified MPU Protected Zone have been terminated successfully.
+    - \em osErrorParameter: \a zone is invalid.
+    - \em osErrorResource: no other \ref ThreadStates "READY" thread exists.
+    - \em osErrorISR: the function \b osThreadTerminateZone is called from interrupt other than fault.
+    - \em osError: the function \b osThreadTerminateZone is called from thread.
+
+\note \b osThreadTerminateZone destroys non-joinable threads and removes their thread IDs from the system. Subsequent access to a terminated thread via its thread ID (for example \ref osThreadGetState) will return an \ref osThreadError. Joinable threads will not be destroyed and return the status \ref osThreadTerminated until they are joined with \ref osThreadJoin.
+
+<b>Code Example:</b>
+\code
+#include "cmsis_os2.h"
+ 
+void TerminateFaultedThreads (void) {  // to be called from an exception fault context
+  osStatus_t status;
+ 
+  status = osThreadTerminateZone(3U); // Terminates threads assigned to MPU Protected Zone 3
+  // verify status value here.
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn uint32_t osWatchdogAlarm_Handler (osThreadId_t thread_id);
+\details
+The callback function \b osWatchdogAlarm_Handler is called by the kernel when a thread watchdog expires.
+Parameter \a thread_id identifies the thread which has the expired thread watchdog.
+The function needs to be implemented in user application.
+
+Return new reload value to restart the watchdog. Return \token{0} to stop the thread watchdog.
+
+\note The callback function is called from interrupt.
+
+\note
+When multiple watchdogs expire in the same tick, this function is called for each thread with highest safety class first.
+
+<b>Code Example:</b>
+\code
+#include "cmsis_os2.h"
+ 
+uint32_t osWatchdogAlarm_Handler (osThreadId_t thread_id) {
+  uint32_t safety_class;
+  uint32_t next_interval;
+
+  safety_class = osThreadGetClass(thread_id);
+  
+  /* Handle the watchdog depending on how safety-critical is the thread */
+  if (safety_class < ...){
+    :
+  } else {
+    :
+  }
+ 
+  return next_interval;
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn void osZoneSetup_Callback (uint32_t zone);
+\details
+The callback function \b osZoneSetup_Callback is called by the kernel when MPU Protected Zone changes.
+The function shall be implemented in user application.
+
+<b>Code Example:</b>
+\code
+/* Update MPU settings for newly activating Zone */
+void osZoneSetup_Callback (uint32_t zone) {
+ 
+  if (zone >= ZONES_NUM) {
+    //Issue an error for incorrect zone value
+  }
+ 
+  ARM_MPU_Disable();
+  ARM_MPU_Load(mpu_table[zone], MPU_REGIONS);
+  ARM_MPU_Enable(MPU_CTRL_PRIVDEFENA_Msk);
+}
+\endcode
+
+\c ZONES_NUM is the total amount of zones allocated by the application.
+For \c ARM_MPU_... functions refer to <a href="../../Core/html/group__mpu__functions.html"><b>MPU Functions</b></a> in CMSIS-Core documentation.
+*/
+
 /// @}
 
 
@@ -669,6 +956,12 @@ The function \b osThreadEnumerate returns the number of enumerated threads or \t
 The following bit masks can be used to set options:
  - \ref osThreadDetached : create thread in a detached mode (default).
  - \ref osThreadJoinable : create thread in \ref joinable_threads "joinable mode".  
+ - \ref osThreadUnprivileged : create thread to execute in unprivileged mode.
+ - \ref osThreadPrivileged : create thread to execute in privileged mode.  
+ - \ref osThreadZone (m) : create thread assigned to MPU zone \token{m}.
+ - \ref osSafetyClass (n) : create thread with safety class \token{n} assigned to it.
+
+Default: \token{0} no options set. Safety class and MPU Zone are inherited from running thread. Thread privilege mode is set based on configuration \ref threadConfig_procmode.
 
 \var osThreadAttr_t::cb_mem
 \details
@@ -710,21 +1003,17 @@ The size (in bytes) of the stack specified by \ref stack_mem.
 
 Default: \token{0} as the default is no memory provided with \ref stack_mem.
 
-/**
-\cond (ARMv8M)
-*/
-
 \var osThreadAttr_t::tz_module
 \details
+\if (ARMv8M)
 TrustZone Thread Context Management Identifier to allocate context memory for threads. The RTOS kernel that runs in
 non-secure state calls the interface functions defined by the header file TZ_context.h. Can safely be set to zero
 for threads not using secure calls at all. 
 See <a href="../../Core/html/group__context__trustzone__functions.html">TrustZone RTOS Context Management</a>.
 
 Default: \token{0} not thread context specified.
-
-/**
-\endcond
-*/
+\else
+Applicable only for devices on Armv8-M architecture. Ignored on others.
+\endif
 
 */

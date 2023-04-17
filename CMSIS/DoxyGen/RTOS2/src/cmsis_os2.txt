@@ -2126,7 +2126,10 @@ threads are kept alive until one explicitly calls \ref osThreadJoin.
    - \ref osKernelSuspend : \copybrief osKernelSuspend
    - \ref osKernelGetTickCount : \copybrief osKernelGetTickCount
    - \ref osKernelGetTickFreq : \copybrief osKernelGetTickFreq
-
+   - \ref osKernelDestroyClass : \copybrief osKernelDestroyClass
+   - \ref osKernelProtect : \copybrief osKernelProtect
+   - \ref osFaultResume : \copybrief osFaultResume
+<br><br>
  - \ref CMSIS_RTOS_ThreadMgmt
    - \ref osThreadDetach : \copybrief osThreadDetach
    - \ref osThreadEnumerate : \copybrief osThreadEnumerate
@@ -2145,13 +2148,22 @@ threads are kept alive until one explicitly calls \ref osThreadJoin.
    - \ref osThreadSuspend : \copybrief osThreadSuspend
    - \ref osThreadTerminate : \copybrief osThreadTerminate
    - \ref osThreadYield : \copybrief osThreadYield
-
+   - \ref osThreadGetClass : \copybrief osThreadGetClass
+   - \ref osThreadGetZone : \copybrief osThreadGetZone
+   - \ref osThreadFeedWatchdog : \copybrief osThreadFeedWatchdog
+   - \ref osThreadProtectPrivileged : \copybrief osThreadProtectPrivileged
+   - \ref osThreadResumeClass : \copybrief osThreadResumeClass
+   - \ref osThreadSuspendClass : \copybrief osThreadSuspendClass
+   - \ref osThreadTerminateZone : \copybrief osThreadTerminateZone
+   - \ref osWatchdogAlarm_Handler : \copybrief osWatchdogAlarm_Handler
+   - \ref osZoneSetup_Callback : \copybrief osZoneSetup_Callback
+<br><br>
  - \ref CMSIS_RTOS_ThreadFlagsMgmt
    - \ref osThreadFlagsSet : \copybrief osThreadFlagsSet
    - \ref osThreadFlagsClear : \copybrief osThreadFlagsClear
    - \ref osThreadFlagsGet : \copybrief osThreadFlagsGet
    - \ref osThreadFlagsWait : \copybrief osThreadFlagsWait
-
+<br><br>
  - \ref CMSIS_RTOS_EventFlags
    - \ref osEventFlagsGetName : \copybrief osEventFlagsGetName
    - \ref osEventFlagsNew : \copybrief osEventFlagsNew
@@ -2160,11 +2172,11 @@ threads are kept alive until one explicitly calls \ref osThreadJoin.
    - \ref osEventFlagsClear : \copybrief osEventFlagsClear
    - \ref osEventFlagsGet : \copybrief osEventFlagsGet
    - \ref osEventFlagsWait : \copybrief osEventFlagsWait
-
+<br><br>
  - \ref CMSIS_RTOS_Wait
    - \ref osDelay : \copybrief osDelay
    - \ref osDelayUntil : \copybrief osDelayUntil
-
+<br><br>
  - \ref CMSIS_RTOS_TimerMgmt
    - \ref osTimerDelete : \copybrief osTimerDelete
    - \ref osTimerGetName : \copybrief osTimerGetName
@@ -2172,7 +2184,7 @@ threads are kept alive until one explicitly calls \ref osThreadJoin.
    - \ref osTimerNew : \copybrief osTimerNew
    - \ref osTimerStart : \copybrief osTimerStart
    - \ref osTimerStop : \copybrief osTimerStop
-
+<br><br>
  - \ref CMSIS_RTOS_MutexMgmt
    - \ref osMutexAcquire : \copybrief osMutexAcquire
    - \ref osMutexDelete : \copybrief osMutexDelete
@@ -2180,7 +2192,7 @@ threads are kept alive until one explicitly calls \ref osThreadJoin.
    - \ref osMutexGetOwner : \copybrief osMutexGetOwner
    - \ref osMutexNew : \copybrief osMutexNew
    - \ref osMutexRelease : \copybrief osMutexRelease
-
+<br><br>
  - \ref CMSIS_RTOS_SemaphoreMgmt
    - \ref osSemaphoreAcquire : \copybrief osSemaphoreAcquire
    - \ref osSemaphoreDelete : \copybrief osSemaphoreDelete
@@ -2188,7 +2200,7 @@ threads are kept alive until one explicitly calls \ref osThreadJoin.
    - \ref osSemaphoreGetName : \copybrief osSemaphoreGetName
    - \ref osSemaphoreNew : \copybrief osSemaphoreNew
    - \ref osSemaphoreRelease : \copybrief osSemaphoreRelease
-
+<br><br>
  - \ref CMSIS_RTOS_PoolMgmt
    - \ref osMemoryPoolAlloc : \copybrief osMemoryPoolAlloc
    - \ref osMemoryPoolDelete : \copybrief osMemoryPoolDelete
@@ -2199,7 +2211,7 @@ threads are kept alive until one explicitly calls \ref osThreadJoin.
    - \ref osMemoryPoolGetName : \copybrief osMemoryPoolGetName
    - \ref osMemoryPoolGetSpace : \copybrief osMemoryPoolGetSpace
    - \ref osMemoryPoolNew : \copybrief osMemoryPoolNew
-
+<br><br>
  - \ref CMSIS_RTOS_Message
    - \ref osMessageQueueDelete : \copybrief osMessageQueueDelete
    - \ref osMessageQueueGet : \copybrief osMessageQueueGet

@@ -9,6 +9,21 @@
       <th>Description</th>
     </tr>
     <tr>
+      <td>V2.2.0</td>
+      <td>
+        Added support for Process Isolation (Functional Safety):
+         - Kernel Management: \ref osKernelProtect, \ref osKernelDestroyClass
+         - Thread Management: \ref osThreadGetClass, \ref osThreadGetZone,<br>
+           \ref osThreadSuspendClass, \ref osThreadResumeClass, \ref osThreadTerminateZone,<br>
+           \ref osThreadFeedWatchdog, \ref osThreadProtectPrivileged
+         - Thread attributes: \ref osThreadZone, \ref osThreadUnprivileged, \ref osThreadPrivileged
+         - Object attributes: \ref osSafetyClass
+         - Handler functions: \ref osWatchdogAlarm_Handler
+         - Zone Management: \ref osZoneSetup_Callback
+         - Exception Faults: \ref osFaultResume
+      </td>
+    </tr>
+    <tr>
       <td>V2.1.3</td>
       <td>
         Additional functions allowed to be called from Interrupt Service Routines:
@@ -38,7 +53,7 @@
         Support for critical and uncritical sections (nesting safe):
          - updated: \ref osKernelLock, \ref osKernelUnlock
          - added: \ref osKernelRestoreLock
-         
+
         Updated \ref CMSIS_RTOS_ThreadFlagsMgmt "Thread Flags" and \ref CMSIS_RTOS_EventFlags "Event Flags":
          - changed flags parameter and return type from int32_t to uint32_t
      </td>

@@ -89,6 +89,7 @@ Possible \ref osStatus_t return values:
  - \em osErrorTimeout: the message could not be put into the queue in the given time (wait-timed semantics).
  - \em osErrorResource: not enough space in the queue (try semantics).
  - \em osErrorParameter: parameter \em mq_id is \token{NULL} or invalid, non-zero timeout specified in an ISR.
+ - \em osErrorSafetyClass: the calling thread safety class is lower than the safety class of the specified message queue.
 
 \note May be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines" if the parameter \a timeout is set to
 \token{0}.
@@ -181,6 +182,7 @@ Possible \ref osStatus_t return values:
  - \em osErrorTimeout: the message could not be retrieved from the queue in the given time (timed-wait semantics).
  - \em osErrorResource: nothing to get from the queue (try semantics).
  - \em osErrorParameter: parameter \em mq_id is \token{NULL} or invalid, non-zero timeout specified in an ISR.
+ - \em osErrorSafetyClass: the calling thread safety class is lower than the safety class of the specified message queue.
 
 \note May be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines" if the parameter \a timeout is set to
 \token{0}.
@@ -241,6 +243,7 @@ Possible \ref osStatus_t return values:
  - \em osErrorParameter: parameter \em mq_id is \token{NULL} or invalid.
  - \em osErrorResource: the message queue is in an invalid state.
  - \em osErrorISR: \b osMessageQueueReset cannot be called from interrupt service routines.
+ - \em osErrorSafetyClass: the calling thread safety class is lower than the safety class of the specified message queue.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
@@ -258,6 +261,7 @@ Possible \ref osStatus_t return values:
  - \em osErrorParameter: parameter \em mq_id is \token{NULL} or invalid.
  - \em osErrorResource: the message queue is in an invalid state.
  - \em osErrorISR: \b osMessageQueueDelete cannot be called from interrupt service routines.
+ - \em osErrorSafetyClass: the calling thread safety class is lower than the safety class of the specified message queue.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */

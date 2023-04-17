@@ -264,6 +264,7 @@ Possible \ref osStatus_t return values:
  - \em osErrorResource: the mutex could not be obtained when no \a timeout was specified.
  - \em osErrorParameter: parameter \em mutex_id is \token{NULL} or invalid.
  - \em osErrorISR: cannot be called from interrupt service routines.
+ - \em osErrorSafetyClass: the calling thread safety class is lower than the safety class of the specified mutex.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
@@ -343,6 +344,7 @@ Possible \ref osStatus_t return values:
  - \em osErrorParameter: parameter \em mutex_id is \token{NULL} or invalid.
  - \em osErrorResource: the mutex is in an invalid state.
  - \em osErrorISR: \b osMutexDelete cannot be called from interrupt service routines.
+ - \em osErrorSafetyClass: the calling thread safety class is lower than the safety class of the specified mutex.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 

@@ -50,6 +50,42 @@ Reference:
  - \ref osThreadFlagsWait
 */
 
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\def osSafetyClass(n)
+\param         n        safety class value.
+\brief  Safety class value in attribute bit field format.
+\details
+
+The preprocessor macro \b osSafetyClass constructs attribute bitmask with safety class bits set to \a n.
+
+<b>Code Example:</b>
+\code
+/* Event Flags object attributes */
+const osEventFlagsAttr_t ef_attr = {
+  .name       = "EventFlags1",    // human readable object name
+  .attr_bits  = osSafetyClass(2U) // assign object to safety class 2
+};
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\def osSafetyWithSameClass
+\details
+Definition for RTOS objects with the same safety class. Can be used as mode argument in the following functions:
+ - \ref osThreadSuspendClass : \copybrief osThreadSuspendClass
+ - \ref osThreadResumeClass : \copybrief osThreadResumeClass
+ - \ref osKernelDestroyClass : \copybrief osKernelDestroyClass
+
+\def osSafetyWithLowerClass
+\details
+Definition for RTOS objects with lower safety class.  Can be used as mode argument in the following functions:
+ - \ref osThreadSuspendClass : \copybrief osThreadSuspendClass
+ - \ref osThreadResumeClass : \copybrief osThreadResumeClass
+ - \ref osKernelDestroyClass : \copybrief osKernelDestroyClass
+*/
+
 /// @}
 /**
 \addtogroup flags_error_codes Flags Functions Error Codes
@@ -128,4 +164,3 @@ Reference:
 */
 
 /// @} 
- 
