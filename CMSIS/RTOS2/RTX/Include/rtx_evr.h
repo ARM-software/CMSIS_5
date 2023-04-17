@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 Arm Limited. All rights reserved.
+ * Copyright (c) 2013-2023 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -79,22 +79,23 @@
 
 
 /// Extended Status codes
-#define osRtxErrorKernelNotReady        (-7)
-#define osRtxErrorKernelNotRunning      (-8)
-#define osRtxErrorInvalidControlBlock   (-9)
-#define osRtxErrorInvalidDataMemory     (-10)
-#define osRtxErrorInvalidThreadStack    (-11)
-#define osRtxErrorInvalidPriority       (-12)
-#define osRtxErrorThreadNotJoinable     (-13)
-#define osRtxErrorMutexNotOwned         (-14)
-#define osRtxErrorMutexNotLocked        (-15)
-#define osRtxErrorMutexLockLimit        (-16)
-#define osRtxErrorSemaphoreCountLimit   (-17)
-#define osRtxErrorTZ_InitContext_S      (-18)
-#define osRtxErrorTZ_AllocContext_S     (-19)
-#define osRtxErrorTZ_FreeContext_S      (-20)
-#define osRtxErrorTZ_LoadContext_S      (-21)
-#define osRtxErrorTZ_SaveContext_S      (-22)
+#define osRtxErrorKernelNotReady        (-8)
+#define osRtxErrorKernelNotRunning      (-9)
+#define osRtxErrorInvalidControlBlock   (-10)
+#define osRtxErrorInvalidDataMemory     (-11)
+#define osRtxErrorInvalidThreadStack    (-12)
+#define osRtxErrorInvalidPriority       (-13)
+#define osRtxErrorInvalidPrivilegedMode (-14)
+#define osRtxErrorThreadNotJoinable     (-15)
+#define osRtxErrorMutexNotOwned         (-16)
+#define osRtxErrorMutexNotLocked        (-17)
+#define osRtxErrorMutexLockLimit        (-18)
+#define osRtxErrorSemaphoreCountLimit   (-19)
+#define osRtxErrorTZ_InitContext_S      (-20)
+#define osRtxErrorTZ_AllocContext_S     (-21)
+#define osRtxErrorTZ_FreeContext_S      (-22)
+#define osRtxErrorTZ_LoadContext_S      (-23)
+#define osRtxErrorTZ_SaveContext_S      (-24)
 
 
 //  ==== Memory Events ====
@@ -352,6 +353,25 @@ extern void EvrRtxKernelResumed (void);
 #endif
 
 /**
+  \brief  Event on protect the RTOS Kernel scheduler access (API)
+  \param[in]  safety_class  safety class.
+*/
+#if (!defined(EVR_RTX_DISABLE) && (OS_EVR_KERNEL != 0) && !defined(EVR_RTX_KERNEL_PROTECT_DISABLE))
+extern void EvrRtxKernelProtect (uint32_t safety_class);
+#else
+#define EvrRtxKernelProtect(safety_class)
+#endif
+
+/**
+  \brief  Event on successful RTOS Kernel scheduler protect (API)
+*/
+#if (!defined(EVR_RTX_DISABLE) && (OS_EVR_KERNEL != 0) && !defined(EVR_RTX_KERNEL_PROTECTED_DISABLE))
+extern void EvrRtxKernelProtected (void);
+#else
+#define EvrRtxKernelProtected()
+#endif
+
+/**
   \brief  Event on RTOS kernel tick count retrieve (API)
   \param[in]  count         RTOS kernel current tick count.
 */
@@ -402,6 +422,17 @@ extern void EvrRtxKernelErrorNotify (uint32_t code, void *object_id);
 #define EvrRtxKernelErrorNotify(code, object_id)
 #endif
 
+/**
+  \brief  Event on destroy safety class objects (API)
+  \param[in]  safety_class  safety class.
+  \param[in]  mode          safety mode.
+*/
+#if (!defined(EVR_RTX_DISABLE) && (OS_EVR_KERNEL != 0) && !defined(EVR_RTX_KERNEL_DESTROY_CLASS_DISABLE))
+extern void EvrRtxKernelDestroyClass (uint32_t safety_class, uint32_t mode);
+#else
+#define EvrRtxKernelDestroyClass(safety_class, mode)
+#endif
+
 
 //  ==== Thread Events ====
 
@@ -449,6 +480,28 @@ extern void EvrRtxThreadCreated (osThreadId_t thread_id, uint32_t thread_addr, c
 extern void EvrRtxThreadGetName (osThreadId_t thread_id, const char *name);
 #else
 #define EvrRtxThreadGetName(thread_id, name)
+#endif
+
+/**
+  \brief  Event on thread safety class retrieve (API)
+  \param[in]  thread_id     thread ID obtained by \ref osThreadNew or \ref osThreadGetId.
+  \param[in]  safety_class  thread safety class.
+*/
+#if (!defined(EVR_RTX_DISABLE) && (OS_EVR_THREAD != 0) && !defined(EVR_RTX_THREAD_GET_CLASS_DISABLE))
+extern void EvrRtxThreadGetClass (osThreadId_t thread_id, uint32_t safety_class);
+#else
+#define EvrRtxThreadGetClass(thread_id, safety_class)
+#endif
+
+/**
+  \brief  Event on thread zone retrieve (API)
+  \param[in]  thread_id     thread ID obtained by \ref osThreadNew or \ref osThreadGetId.
+  \param[in]  zone          thread zone.
+*/
+#if (!defined(EVR_RTX_DISABLE) && (OS_EVR_THREAD != 0) && !defined(EVR_RTX_THREAD_GET_ZONE_DISABLE))
+extern void EvrRtxThreadGetZone (osThreadId_t thread_id, uint32_t zone);
+#else
+#define EvrRtxThreadGetZone(thread_id, zone)
 #endif
 
 /**
@@ -698,6 +751,43 @@ extern void EvrRtxThreadDestroyed (osThreadId_t thread_id);
 #endif
 
 /**
+  \brief  Event on thread feed watchdog (API)
+  \param[in]  ticks         timeout in number of ticks.
+*/
+#if (!defined(EVR_RTX_DISABLE) && (OS_EVR_THREAD != 0) && !defined(EVR_RTX_THREAD_FEED_WATCHDOG_DISABLE))
+extern void EvrRtxThreadFeedWatchdog (uint32_t ticks);
+#else
+#define EvrRtxThreadFeedWatchdog(ticks)
+#endif
+
+/**
+  \brief  Event on thread feed watchdog done (Op)
+*/
+#if (!defined(EVR_RTX_DISABLE) && (OS_EVR_THREAD != 0) && !defined(EVR_RTX_THREAD_FEED_WATCHDOG_DONE_DISABLE))
+extern void EvrRtxThreadFeedWatchdogDone (void);
+#else
+#define EvrRtxThreadFeedWatchdogDone()
+#endif
+
+/**
+  \brief  Event on protect the creation of privileged threads (API)
+*/
+#if (!defined(EVR_RTX_DISABLE) && (OS_EVR_THREAD != 0) && !defined(EVR_RTX_THREAD_PROTECT_PRIVILEGED_DISABLE))
+extern void EvrRtxThreadProtectPrivileged (void);
+#else
+#define EvrRtxThreadProtectPrivileged()
+#endif
+
+/**
+  \brief  Event on successful protect the creation of privileged threads (Op)
+*/
+#if (!defined(EVR_RTX_DISABLE) && (OS_EVR_THREAD != 0) && !defined(EVR_RTX_THREAD_PRIVILEGED_PROTECTED_DISABLE))
+extern void EvrRtxThreadPrivilegedProtected (void);
+#else
+#define EvrRtxThreadPrivilegedProtected()
+#endif
+
+/**
   \brief  Event on active thread count retrieve (API)
   \param[in]  count         number of active threads.
 */
@@ -717,6 +807,48 @@ extern void EvrRtxThreadGetCount (uint32_t count);
 extern void EvrRtxThreadEnumerate (osThreadId_t *thread_array, uint32_t array_items, uint32_t count);
 #else
 #define EvrRtxThreadEnumerate(thread_array, array_items, count)
+#endif
+
+/**
+  \brief  Event on thread safety class suspend (API)
+  \param[in]  safety_class  safety class.
+  \param[in]  mode          safety mode.
+*/
+#if (!defined(EVR_RTX_DISABLE) && (OS_EVR_THREAD != 0) && !defined(EVR_RTX_THREAD_SUSPEND_CLASS_DISABLE))
+extern void EvrRtxThreadSuspendClass (uint32_t safety_class, uint32_t mode);
+#else
+#define EvrRtxThreadSuspendClass(safety_class, mode)
+#endif
+
+/**
+  \brief  Event on thread safety class resume (API)
+  \param[in]  safety_class  safety class.
+  \param[in]  mode          safety mode.
+*/
+#if (!defined(EVR_RTX_DISABLE) && (OS_EVR_THREAD != 0) && !defined(EVR_RTX_THREAD_RESUME_CLASS_DISABLE))
+extern void EvrRtxThreadResumeClass (uint32_t safety_class, uint32_t mode);
+#else
+#define EvrRtxThreadResumeClass(safety_class, mode)
+#endif
+
+/**
+  \brief  Event on thread zone terminate (API)
+  \param[in]  zone          thread zone.
+*/
+#if (!defined(EVR_RTX_DISABLE) && (OS_EVR_THREAD != 0) && !defined(EVR_RTX_THREAD_TERMINATE_ZONE_DISABLE))
+extern void EvrRtxThreadTerminateZone (uint32_t zone);
+#else
+#define EvrRtxThreadTerminateZone(zone)
+#endif
+
+/**
+  \brief  Event on thread watchdog expired (Error)
+  \param[in]  thread_id     thread ID obtained by \ref osThreadNew.
+*/
+#if (!defined(EVR_RTX_DISABLE) && (OS_EVR_THREAD != 0) && !defined(EVR_RTX_THREAD_WATCHDOG_EXPIRED_DISABLE))
+extern void EvrRtxThreadWatchdogExpired (osThreadId_t thread_id);
+#else
+#define EvrRtxThreadWatchdogExpired(thread_id)
 #endif
 
 

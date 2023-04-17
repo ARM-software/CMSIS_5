@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 Arm Limited. All rights reserved.
+ * Copyright (c) 2013-2023 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -32,6 +32,38 @@ osRtxObjectMemUsage_t osRtxMutexMemUsage \
 __attribute__((section(".data.os.mutex.obj"))) =
 { 0U, 0U, 0U };
 #endif
+
+
+//  ==== Helper functions ====
+
+/// Verify that Mutex object pointer is valid.
+/// \param[in]  mutex           mutex object.
+/// \return true - valid, false - invalid.
+static bool_t IsMutexPtrValid (const os_mutex_t *mutex) {
+#ifdef RTX_OBJ_PTR_CHECK
+  //lint --e{923} --e{9078} "cast from pointer to unsigned int" [MISRA Note 7]
+  uint32_t cb_start  = (uint32_t)&__os_mutex_cb_start__;
+  uint32_t cb_length = (uint32_t)&__os_mutex_cb_length__;
+
+  // Check the section boundaries
+  if (((uint32_t)mutex - cb_start) >= cb_length) {
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
+    return FALSE;
+  }
+  // Check the object alignment
+  if ((((uint32_t)mutex - cb_start) % sizeof(os_mutex_t)) != 0U) {
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
+    return FALSE;
+  }
+#else
+  // Check NULL pointer
+  if (mutex == NULL) {
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
+    return FALSE;
+  }
+#endif
+  return TRUE;
+}
 
 
 //  ==== Library functions ====
@@ -109,16 +141,125 @@ void osRtxMutexOwnerRestore (const os_mutex_t *mutex, const os_thread_t *thread_
   }
 }
 
+/// Unlock Mutex owner when mutex is deleted.
+/// \param[in]  mutex           mutex object.
+/// \return true - successful, false - not locked.
+static bool_t osRtxMutexOwnerUnlock (os_mutex_t *mutex) {
+  const os_mutex_t  *mutex0;
+        os_thread_t *thread;
+        int8_t       priority;
+
+  // Check if Mutex is locked
+  if (mutex->lock == 0U) {
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
+    return FALSE;
+  }
+
+  thread = mutex->owner_thread;
+
+  // Remove Mutex from Thread owner list
+  if (mutex->owner_next != NULL) {
+    mutex->owner_next->owner_prev = mutex->owner_prev;
+  }
+  if (mutex->owner_prev != NULL) {
+    mutex->owner_prev->owner_next = mutex->owner_next;
+  } else {
+    thread->mutex_list = mutex->owner_next;
+  }
+
+  // Restore owner Thread priority
+  priority = thread->priority_base;
+  mutex0   = thread->mutex_list;
+  // Check Mutexes owned by Thread
+  while (mutex0 != NULL) {
+    if ((mutex0->attr & osMutexPrioInherit) != 0U) {
+      if ((mutex0->thread_list != NULL) && (mutex0->thread_list->priority > priority)) {
+        // Higher priority Thread is waiting for Mutex
+        priority = mutex0->thread_list->priority;
+      }
+    }
+    mutex0 = mutex0->owner_next;
+  }
+  if (thread->priority != priority) {
+    thread->priority = priority;
+    osRtxThreadListSort(thread);
+  }
+
+  // Unblock waiting threads
+  while (mutex->thread_list != NULL) {
+    thread = osRtxThreadListGet(osRtxObject(mutex));
+    osRtxThreadWaitExit(thread, (uint32_t)osErrorResource, FALSE);
+  }
+
+  mutex->lock = 0U;
+
+  return TRUE;
+}
+
+/// Destroy a Mutex object.
+/// \param[in]  mutex           mutex object.
+static void osRtxMutexDestroy (os_mutex_t *mutex) {
+
+  // Mark object as invalid
+  mutex->id = osRtxIdInvalid;
+
+  // Free object memory
+  if ((mutex->flags & osRtxFlagSystemObject) != 0U) {
+#ifdef RTX_OBJ_PTR_CHECK
+    (void)osRtxMemoryPoolFree(osRtxInfo.mpi.mutex, mutex);
+#else
+    if (osRtxInfo.mpi.mutex != NULL) {
+      (void)osRtxMemoryPoolFree(osRtxInfo.mpi.mutex, mutex);
+    } else {
+      (void)osRtxMemoryFree(osRtxInfo.mem.common, mutex);
+    }
+#endif
+#ifdef RTX_OBJ_MEM_USAGE
+    osRtxMutexMemUsage.cnt_free++;
+#endif
+  }
+  EvrRtxMutexDestroyed(mutex);
+}
+
+#ifdef RTX_SAFETY_CLASS
+/// Delete a Mutex safety class.
+/// \param[in]  safety_class    safety class.
+/// \param[in]  mode            safety mode.
+void osRtxMutexDeleteClass (uint32_t safety_class, uint32_t mode) {
+  os_mutex_t *mutex;
+  uint32_t    length;
+
+  //lint --e{923} --e{9078} "cast from pointer to unsigned int" [MISRA Note 7]
+  mutex  = (os_mutex_t *)(uint32_t)&__os_mutex_cb_start__;
+  length =               (uint32_t)&__os_mutex_cb_length__;
+  while (length >= sizeof(os_mutex_t)) {
+    if (   (mutex->id == osRtxIdMutex) &&
+        ((((mode & osSafetyWithSameClass)  != 0U) &&
+          ((mutex->attr >> osRtxAttrClass_Pos) == (uint8_t)safety_class)) ||
+         (((mode & osSafetyWithLowerClass) != 0U) &&
+          ((mutex->attr >> osRtxAttrClass_Pos) <  (uint8_t)safety_class)))) {
+      (void)osRtxMutexOwnerUnlock(mutex);
+      osRtxMutexDestroy(mutex);
+    }
+    length -= sizeof(os_mutex_t);
+    mutex++;
+  }
+}
+#endif
+
 
 //  ==== Service Calls ====
 
 /// Create and Initialize a Mutex object.
 /// \note API identical to osMutexNew
 static osMutexId_t svcRtxMutexNew (const osMutexAttr_t *attr) {
-  os_mutex_t *mutex;
-  uint32_t    attr_bits;
-  uint8_t     flags;
-  const char *name;
+  os_mutex_t        *mutex;
+#ifdef RTX_SAFETY_CLASS
+  const os_thread_t *thread = osRtxThreadGetRunning();
+#endif
+  uint32_t           attr_bits;
+  uint8_t            flags;
+  const char        *name;
 
   // Process attributes
   if (attr != NULL) {
@@ -126,9 +267,19 @@ static osMutexId_t svcRtxMutexNew (const osMutexAttr_t *attr) {
     attr_bits = attr->attr_bits;
     //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 6]
     mutex     = attr->cb_mem;
+#ifdef RTX_SAFETY_CLASS
+    if ((attr_bits & osSafetyClass_Valid) != 0U) {
+      if ((thread != NULL) &&
+          ((thread->attr >> osRtxAttrClass_Pos) <
+          (uint8_t)((attr_bits & osSafetyClass_Msk) >> osSafetyClass_Pos))) {
+        EvrRtxMutexError(NULL, (int32_t)osErrorSafetyClass);
+        //lint -e{904} "Return statement before end of function" [MISRA Note 1]
+        return NULL;
+      }
+    }
+#endif
     if (mutex != NULL) {
-      //lint -e(923) -e(9078) "cast from pointer to unsigned int" [MISRA Note 7]
-      if ((((uint32_t)mutex & 3U) != 0U) || (attr->cb_size < sizeof(os_mutex_t))) {
+      if (!IsMutexPtrValid(mutex) || (attr->cb_size != sizeof(os_mutex_t))) {
         EvrRtxMutexError(NULL, osRtxErrorInvalidControlBlock);
         //lint -e{904} "Return statement before end of function" [MISRA Note 1]
         return NULL;
@@ -151,9 +302,11 @@ static osMutexId_t svcRtxMutexNew (const osMutexAttr_t *attr) {
     if (osRtxInfo.mpi.mutex != NULL) {
       //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 5]
       mutex = osRtxMemoryPoolAlloc(osRtxInfo.mpi.mutex);
+#ifndef RTX_OBJ_PTR_CHECK
     } else {
       //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 5]
       mutex = osRtxMemoryAlloc(osRtxInfo.mem.common, sizeof(os_mutex_t), 1U);
+#endif
     }
 #ifdef RTX_OBJ_MEM_USAGE
     if (mutex != NULL) {
@@ -174,14 +327,24 @@ static osMutexId_t svcRtxMutexNew (const osMutexAttr_t *attr) {
     // Initialize control block
     mutex->id           = osRtxIdMutex;
     mutex->flags        = flags;
-    mutex->attr         = (uint8_t)attr_bits;
+    mutex->attr         = (uint8_t)(attr_bits & ~osRtxAttrClass_Msk);
     mutex->name         = name;
     mutex->thread_list  = NULL;
     mutex->owner_thread = NULL;
     mutex->owner_prev   = NULL;
     mutex->owner_next   = NULL;
     mutex->lock         = 0U;
-
+#ifdef RTX_SAFETY_CLASS
+    if ((attr_bits & osSafetyClass_Valid) != 0U) {
+      mutex->attr      |= (uint8_t)((attr_bits & osSafetyClass_Msk) >>
+                                    (osSafetyClass_Pos - osRtxAttrClass_Pos));
+    } else {
+      // Inherit safety class from the running thread
+      if (thread != NULL) {
+        mutex->attr    |= (uint8_t)(thread->attr & osRtxAttrClass_Msk);
+      }
+    }
+#endif
     EvrRtxMutexCreated(mutex, mutex->name);
   } else {
     EvrRtxMutexError(NULL, (int32_t)osErrorNoMemory);
@@ -196,7 +359,7 @@ static const char *svcRtxMutexGetName (osMutexId_t mutex_id) {
   os_mutex_t *mutex = osRtxMutexId(mutex_id);
 
   // Check parameters
-  if ((mutex == NULL) || (mutex->id != osRtxIdMutex)) {
+  if (!IsMutexPtrValid(mutex) || (mutex->id != osRtxIdMutex)) {
     EvrRtxMutexGetName(mutex, NULL);
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return NULL;
@@ -223,11 +386,20 @@ static osStatus_t svcRtxMutexAcquire (osMutexId_t mutex_id, uint32_t timeout) {
   }
 
   // Check parameters
-  if ((mutex == NULL) || (mutex->id != osRtxIdMutex)) {
+  if (!IsMutexPtrValid(mutex) || (mutex->id != osRtxIdMutex)) {
     EvrRtxMutexError(mutex, (int32_t)osErrorParameter);
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorParameter;
   }
+
+#ifdef RTX_SAFETY_CLASS
+  // Check running thread safety class
+  if ((thread->attr >> osRtxAttrClass_Pos) < (mutex->attr >> osRtxAttrClass_Pos)) {
+    EvrRtxMutexError(mutex, (int32_t)osErrorSafetyClass);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
+    return osErrorSafetyClass;
+  }
+#endif
 
   // Check if Mutex is not locked
   if (mutex->lock == 0U) {
@@ -300,7 +472,7 @@ static osStatus_t svcRtxMutexRelease (osMutexId_t mutex_id) {
   }
 
   // Check parameters
-  if ((mutex == NULL) || (mutex->id != osRtxIdMutex)) {
+  if (!IsMutexPtrValid(mutex) || (mutex->id != osRtxIdMutex)) {
     EvrRtxMutexError(mutex, (int32_t)osErrorParameter);
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorParameter;
@@ -381,7 +553,7 @@ static osThreadId_t svcRtxMutexGetOwner (osMutexId_t mutex_id) {
   os_mutex_t *mutex = osRtxMutexId(mutex_id);
 
   // Check parameters
-  if ((mutex == NULL) || (mutex->id != osRtxIdMutex)) {
+  if (!IsMutexPtrValid(mutex) || (mutex->id != osRtxIdMutex)) {
     EvrRtxMutexGetOwner(mutex, NULL);
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return NULL;
@@ -403,75 +575,34 @@ static osThreadId_t svcRtxMutexGetOwner (osMutexId_t mutex_id) {
 /// \note API identical to osMutexDelete
 static osStatus_t svcRtxMutexDelete (osMutexId_t mutex_id) {
         os_mutex_t  *mutex = osRtxMutexId(mutex_id);
-  const os_mutex_t  *mutex0;
-        os_thread_t *thread;
-        int8_t       priority;
+#ifdef RTX_SAFETY_CLASS
+  const os_thread_t *thread;
+#endif
 
   // Check parameters
-  if ((mutex == NULL) || (mutex->id != osRtxIdMutex)) {
+  if (!IsMutexPtrValid(mutex) || (mutex->id != osRtxIdMutex)) {
     EvrRtxMutexError(mutex, (int32_t)osErrorParameter);
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorParameter;
   }
 
-  // Check if Mutex is locked
-  if (mutex->lock != 0U) {
+#ifdef RTX_SAFETY_CLASS
+  // Check running thread safety class
+  thread = osRtxThreadGetRunning();
+  if ((thread != NULL) &&
+      ((thread->attr >> osRtxAttrClass_Pos) < (mutex->attr >> osRtxAttrClass_Pos))) {
+    EvrRtxMutexError(mutex, (int32_t)osErrorSafetyClass);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
+    return osErrorSafetyClass;
+  }
+#endif
 
-    thread = mutex->owner_thread;
-
-    // Remove Mutex from Thread owner list
-    if (mutex->owner_next != NULL) {
-      mutex->owner_next->owner_prev = mutex->owner_prev;
-    }
-    if (mutex->owner_prev != NULL) {
-      mutex->owner_prev->owner_next = mutex->owner_next;
-    } else {
-      thread->mutex_list = mutex->owner_next;
-    }
-
-    // Restore owner Thread priority
-    priority = thread->priority_base;
-    mutex0   = thread->mutex_list;
-    // Check Mutexes owned by Thread
-    while (mutex0 != NULL) {
-      if ((mutex0->attr & osMutexPrioInherit) != 0U) {
-        if ((mutex0->thread_list != NULL) && (mutex0->thread_list->priority > priority)) {
-          // Higher priority Thread is waiting for Mutex
-          priority = mutex0->thread_list->priority;
-        }
-      }
-      mutex0 = mutex0->owner_next;
-    }
-    if (thread->priority != priority) {
-      thread->priority = priority;
-      osRtxThreadListSort(thread);
-    }
-
-    // Unblock waiting threads
-    while (mutex->thread_list != NULL) {
-      thread = osRtxThreadListGet(osRtxObject(mutex));
-      osRtxThreadWaitExit(thread, (uint32_t)osErrorResource, FALSE);
-    }
-
+  // Unlock the mutex owner
+  if (osRtxMutexOwnerUnlock(mutex)) {
     osRtxThreadDispatch(NULL);
   }
 
-  // Mark object as invalid
-  mutex->id = osRtxIdInvalid;
-
-  // Free object memory
-  if ((mutex->flags & osRtxFlagSystemObject) != 0U) {
-    if (osRtxInfo.mpi.mutex != NULL) {
-      (void)osRtxMemoryPoolFree(osRtxInfo.mpi.mutex, mutex);
-    } else {
-      (void)osRtxMemoryFree(osRtxInfo.mem.common, mutex);
-    }
-#ifdef RTX_OBJ_MEM_USAGE
-    osRtxMutexMemUsage.cnt_free++;
-#endif
-  }
-
-  EvrRtxMutexDestroyed(mutex);
+  osRtxMutexDestroy(mutex);
 
   return osOK;
 }
@@ -508,10 +639,9 @@ const char *osMutexGetName (osMutexId_t mutex_id) {
   const char *name;
 
   if (IsException() || IsIrqMasked()) {
-    EvrRtxMutexGetName(mutex_id, NULL);
-    name = NULL;
+    name = svcRtxMutexGetName(mutex_id);
   } else {
-    name = __svcMutexGetName(mutex_id);
+    name =  __svcMutexGetName(mutex_id);
   }
   return name;
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <component_viewer schemaVersion="1.2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="Component_Viewer.xsd">
-  <component name="CMSIS:RTOS2:Keil RTX5" shortname="RTX5" version="5.5.3"/>    <!-- name and version of the component -->
+  <component name="CMSIS:RTOS2:Keil RTX5" shortname="RTX5" version="5.7.0"/>    <!-- name and version of the component -->
 
   <typedefs>
     <!-- Attributes structure for thread -->
@@ -69,7 +69,7 @@
     </typedef>
 
     <!-- Thread Control Block -->
-    <typedef name="osRtxThread_t" info="" size="68">
+    <typedef name="osRtxThread_t" info="" size="80">
       <member name="id"            type="uint8_t"        offset="0" info="Object Identifier"/>
       <member name="state"         type="uint8_t"        offset="1" info="Object State">
         <enum name="osThreadInactive"    value="0"  info=""/>
@@ -91,8 +91,10 @@
       </member>
       <member name="flags"         type="uint8_t"        offset="2" info="Object Flags"/>
       <member name="attr"          type="uint8_t"        offset="3" info="Object Attributes">
-        <enum name="osThreadDetached" value="0x00" info="Thread created in detached mode"/>
-        <enum name="osThreadJoinable" value="0x01" info="Thread created in joinable mode"/>
+        <enum name="osThreadDetached"     value="0x00" info="Thread created in detached mode"/>
+        <enum name="osThreadJoinable"     value="0x01" info="Thread created in joinable mode"/>
+        <enum name="osThreadUnprivileged" value="0x02" info="Thread created in unprivileged mode"/>
+        <enum name="osThreadPrivileged"   value="0x04" info="Thread created in privileged mode"/>
       </member>
       <member name="name"          type="uint32_t"       offset="4"  info="Object name (type is *uint8_t)"/>
       <member name="thread_next"   type="*osRtxThread_t" offset="8"  info="Link pointer to next Thread in Object list"/>
@@ -170,12 +172,18 @@
       <member name="sp"            type="uint32_t"       offset="56" info="Current stack pointer"/>
       <member name="thread_addr"   type="uint32_t"       offset="60" info="Thread entry address"/>
       <member name="tz_memory"     type="uint32_t"       offset="64" info="TrustZone Memory Identifier"/>
+      <member name="zone"          type="uint8_t"        offset="68" info="Thread Zone"/>
+      <member name="reserved"      type="uint8_t"        offset="69" info="Reserved bytes"/>
+      <member name="wdog_next"     type="*osRtxThread_t" offset="72" info="Link pointer to next Thread in Watchdog list"/>
+      <member name="wdog_tick"     type="uint32_t"       offset="76" info="Watchdog tick counter"/>
 
       <var name="cb_valid"   type="uint32_t" info="Control block validation status (valid=1, invalid=0)"/>
       <var name="sp_valid"   type="uint32_t" info="Stack pointer validation status (valid=1, invalid=0)"/>
       <var name="out_type"   type="uint8_t"  info="Output display type ID"/>
 
       <var name="ex_delay"   type="uint32_t" info="Calculated execution delay"/>
+      <var name="wd_tick"    type="uint32_t" info="Calculated absolute watchdog tick time"/>
+      <var name="wd_state"   type="uint32_t" info="Watchdog state (0=not running, 1=running)"/>
 
       <var name="stack_val"  type="uint32_t" info="Stack usage: analysis result"/>
       <var name="stack_cur"  type="uint32_t" info="Stack usage: current (address)"/>
@@ -195,7 +203,7 @@
         <enum name="Running"  value="2" info="Timer is running"/>
       </member>
       <member name="flags"       type="uint8_t"       offset="2" info="Object Flags"/>
-      <member name="type"        type="uint8_t"       offset="3" info="Timer Type">
+      <member name="attr"        type="uint8_t"       offset="3" info="Object Attributes">
         <enum name="osTimerOnce"     value="0" info="One-shot timer"/>
         <enum name="osTimerPeriodic" value="1" info="Periodic timer"/>
       </member>
@@ -217,7 +225,7 @@
       <member name="id"          type="uint8_t"        offset="0"  info="Object Identifier"/>
       <member name="state"       type="uint8_t"        offset="1"  info="Object State"/>
       <member name="flags"       type="uint8_t"        offset="2"  info="Object Flags"/>
-      <member name="reserved"    type="uint8_t"        offset="3"  info=""/>
+      <member name="attr"        type="uint8_t"        offset="3"  info="Object Attributes"/>
       <member name="name"        type="uint32_t"       offset="4"  info="Object name (type is *uint8_t)"/>
       <member name="thread_list" type="*osRtxThread_t" offset="8"  info="Waiting threads list"/>
       <member name="event_flags" type="int32_t"        offset="12" info="Event flags"/>
@@ -254,7 +262,7 @@
       <member name="id"          type="uint8_t"        offset="0"  info="Object Identifier"/>
       <member name="state"       type="uint8_t"        offset="1"  info="Object State"/>
       <member name="flags"       type="uint8_t"        offset="2"  info="Object Flags"/>
-      <member name="reserved"    type="uint8_t"        offset="3"  info=""/>
+      <member name="attr"        type="uint8_t"        offset="3"  info="Object Attributes"/>
       <member name="name"        type="uint32_t"       offset="4"  info="Object name (type is *uint8_t)"/>
       <member name="thread_list" type="*osRtxThread_t" offset="8"  info="Waiting threads list"/>
       <member name="tokens"      type="uint16_t"       offset="12" info="Current number of tokens"/>
@@ -280,7 +288,7 @@
       <member name="id"          type="uint8_t"        offset="0" info="Object Identifier"/>
       <member name="state"       type="uint8_t"        offset="1" info="Object State"/>
       <member name="flags"       type="uint8_t"        offset="2" info="Object Flags"/>
-      <member name="reserved"    type="uint8_t"        offset="3" info=""/>
+      <member name="attr"        type="uint8_t"        offset="3" info="Object Attributes"/>
       <member name="name"        type="uint32_t"       offset="4" info="Object name (type is *uint8_t)"/>
       <member name="thread_list" type="*osRtxThread_t" offset="8" info="Waiting threads list"/>
 
@@ -314,7 +322,7 @@
       <member name="id"          type="uint8_t"         offset="0" info="Object Identifier"/>
       <member name="state"       type="uint8_t"         offset="1" info="Object State"/>
       <member name="flags"       type="uint8_t"         offset="2" info="Object Flags"/>
-      <member name="reserved"    type="uint8_t"         offset="3" info=""/>
+      <member name="attr"        type="uint8_t"         offset="3" info="Object Attributes"/>
       <member name="name"        type="uint32_t"        offset="4" info="Object name (type is *uint8_t)"/>
       <member name="thread_list" type="*osRtxThread_t"  offset="8" info="Waiting threads list"/>
 
@@ -352,6 +360,7 @@
       </member>
       <member name="kernel_blocked"             type="uint8_t"              offset="9"  info="Kernel blocked"/>
       <member name="kernel_pendSV"              type="uint8_t"              offset="10" info="Kernel pending SV"/>
+      <member name="kernel_protect"             type="uint8_t"              offset="11" info="Protect options"/>
       <member name="kernel_tick"                type="uint32_t"             offset="12" info="Kernel tick counter"/>
       <member name="tick_irqn"                  type="int32_t"              offset="16" info="Tick timer IRQ number"/>
       <member name="thread_run_curr"            type="*osRtxThread_t"       offset="20" info="Current running thread"/>
@@ -361,7 +370,7 @@
       <member name="thread_ready_id"            type="uint8_t"              offset="28+0" info="Object Identifier" />
       <member name="thread_ready_state"         type="uint8_t"              offset="28+1" info="Object State" />
       <member name="thread_ready_flags"         type="uint8_t"              offset="28+2" info="Object Flags" />
-      <member name="thread_ready_rsvd"          type="uint8_t"              offset="28+3" info="Reserved" />
+      <member name="thread_ready_attr"          type="uint8_t"              offset="28+3" info="Object Attributes"/>
       <member name="thread_ready_name"          type="uint32_t"             offset="28+4" info="Object Name (type is *uint8_t)" />
       <member name="thread_ready_thread_list"   type="*osRtxThread_t"       offset="28+8" info="Threads List" />
 
@@ -369,6 +378,7 @@
       <member name="thread_delay_list"          type="*osRtxThread_t"       offset="44"  info="Delay list"/>
       <member name="thread_wait_list"           type="*osRtxThread_t"       offset="48"  info="Wait list (no timeout)"/>
       <member name="thread_terminate_list"      type="*osRtxThread_t"       offset="52"  info="Terminate list"/>
+      <member name="thread_wdog_list"           type="*osRtxThread_t"       offset="56"  info="Watchdog list"/>
 
       <member name="thread_robin_thread"        type="*osRtxThread_t"       offset="60"  info="Round Robin thread"/>
       <member name="thread_timeout"             type="uint32_t"             offset="64"  info="Round Robin timeout"/>
@@ -452,6 +462,12 @@
 
       <var name="stack_check"  type="uint8_t" info="Stack checking (0:disabled, 1:enabled)"/>
       <var name="stack_wmark"  type="uint8_t" info="Stack watermark (0:disabled, 1:enabled)"/>
+      <var name="safety_feat"  type="uint8_t" info="Safety features (0:disabled, 1:enabled)"/>
+      <var name="safety_class" type="uint8_t" info="Thread safety class (0:disabled, 1:enabled)"/>
+      <var name="exec_zone"    type="uint8_t" info="Execution zone (0:disabled, 1:enabled)"/>
+      <var name="watchdog"     type="uint8_t" info="Thread watchdog (0:disabled, 1:enabled)"/>
+      <var name="obj_check"    type="uint8_t" info="Object pointer checking (0:disabled, 1:enabled)"/>
+      <var name="svc_check"    type="uint8_t" info="SVC function pointer checking (0:disabled, 1:enabled)"/>
     </typedef>
 
     <!-- Memory Pool Header -->
@@ -489,29 +505,31 @@
 
     <typedef name="rtx_t" info="Various RTX Definitions" size="8">
       <member name="status" type="int32_t" offset="0" info="RTX5 operations status">
-        <enum name="osOK"                          value="0"   info="Operation completed successfully"/>
-        <enum name="osError"                       value="-1"  info="Unspecified RTOS error: run-time error but no other error message fits."/>
-        <enum name="osErrorTimeout"                value="-2"  info="Operation not completed within the timeout period."/>
-        <enum name="osErrorResource"               value="-3"  info="Resource not available"/>
-        <enum name="osErrorParameter"              value="-4"  info="Parameter error"/>
-        <enum name="osErrorNoMemory"               value="-5"  info="System is out of memory: it was impossible to allocate or reserve memory for the operation"/>
-        <enum name="osErrorISR"                    value="-6"  info="Not allowed in ISR context: the function cannot be called from interrupt service routines"/>
-        <enum name="osRtxErrorKernelNotReady"      value="-7"  info="RTOS Kernel scheduler is not ready"/>
-        <enum name="osRtxErrorKernelNotRunning"    value="-8"  info="RTOS Kernel scheduler is not running"/>
-        <enum name="osRtxErrorInvalidControlBlock" value="-9"  info="Object control block is not properly aligned or has an invalid size"/>
-        <enum name="osRtxErrorInvalidDataMemory"   value="-10" info="Data memory is not is not properly aligned or has an invalid size"/>
-        <enum name="osRtxErrorInvalidThreadStack"  value="-11" info="Thread stack is invalid"/>
-        <enum name="osRtxErrorInvalidPriority"     value="-12" info="Thread priority is invalid"/>
-        <enum name="osRtxErrorThreadNotJoinable"   value="-13" info="Thread is not joinable"/>
-        <enum name="osRtxErrorMutexNotOwned"       value="-14" info="Mutex is not owned by the current running thread"/>
-        <enum name="osRtxErrorMutexNotLocked"      value="-15" info="Mutex is not locked"/>
-        <enum name="osRtxErrorMutexLockLimit"      value="-16" info="Maximum number of recursive mutex locks reached"/>
-        <enum name="osRtxErrorSemaphoreCountLimit" value="-17" info="Semaphore count limit reached"/>
-        <enum name="osRtxErrorTZ_InitContext_S"    value="-18" info=""/>
-        <enum name="osRtxErrorTZ_AllocContext_S"   value="-19" info=""/>
-        <enum name="osRtxErrorTZ_FreeContext_S"    value="-20" info=""/>
-        <enum name="osRtxErrorTZ_LoadContext_S"    value="-21" info=""/>
-        <enum name="osRtxErrorTZ_SaveContext_S"    value="-22" info=""/>
+        <enum name="osOK"                            value="0"   info="Operation completed successfully"/>
+        <enum name="osError"                         value="-1"  info="Unspecified RTOS error: run-time error but no other error message fits."/>
+        <enum name="osErrorTimeout"                  value="-2"  info="Operation not completed within the timeout period."/>
+        <enum name="osErrorResource"                 value="-3"  info="Resource not available"/>
+        <enum name="osErrorParameter"                value="-4"  info="Parameter error"/>
+        <enum name="osErrorNoMemory"                 value="-5"  info="System is out of memory: it was impossible to allocate or reserve memory for the operation"/>
+        <enum name="osErrorISR"                      value="-6"  info="Not allowed in ISR context: the function cannot be called from interrupt service routines"/>
+        <enum name="osErrorSafetyClass"              value="-7"  info="Operation denied because of safety class violation"/>
+        <enum name="osRtxErrorKernelNotReady"        value="-8"  info="RTOS Kernel scheduler is not ready"/>
+        <enum name="osRtxErrorKernelNotRunning"      value="-9"  info="RTOS Kernel scheduler is not running"/>
+        <enum name="osRtxErrorInvalidControlBlock"   value="-10" info="Object control block is not properly aligned or has an invalid size"/>
+        <enum name="osRtxErrorInvalidDataMemory"     value="-11" info="Data memory is not is not properly aligned or has an invalid size"/>
+        <enum name="osRtxErrorInvalidThreadStack"    value="-12" info="Thread stack is invalid"/>
+        <enum name="osRtxErrorInvalidPriority"       value="-13" info="Thread priority is invalid"/>
+        <enum name="osRtxErrorInvalidPrivilegedMode" value="-14" info="Privileged thread cannot be created, kernel protect is active"/>
+        <enum name="osRtxErrorThreadNotJoinable"     value="-15" info="Thread is not joinable"/>
+        <enum name="osRtxErrorMutexNotOwned"         value="-16" info="Mutex is not owned by the current running thread"/>
+        <enum name="osRtxErrorMutexNotLocked"        value="-17" info="Mutex is not locked"/>
+        <enum name="osRtxErrorMutexLockLimit"        value="-18" info="Maximum number of recursive mutex locks reached"/>
+        <enum name="osRtxErrorSemaphoreCountLimit"   value="-19" info="Semaphore count limit reached"/>
+        <enum name="osRtxErrorTZ_InitContext_S"      value="-20" info=""/>
+        <enum name="osRtxErrorTZ_AllocContext_S"     value="-21" info=""/>
+        <enum name="osRtxErrorTZ_FreeContext_S"      value="-22" info=""/>
+        <enum name="osRtxErrorTZ_LoadContext_S"      value="-23" info=""/>
+        <enum name="osRtxErrorTZ_SaveContext_S"      value="-24" info=""/>
       </member>
     </typedef>
 
@@ -616,6 +634,7 @@
         <enum name="osRtxErrorTimerQueueOverflow" value="3" info="User Timer Callback Queue overflow"/>
         <enum name="osRtxErrorClibSpace"          value="4" info="Standard C/C++ library libspace not available"/>
         <enum name="osRtxErrorClibMutex"          value="5" info="Standard C/C++ library mutex initialization failed"/>
+        <enum name="osRtxErrorSVC"                value="6" info="Invalid SVC function called"/>
       </member>
     </typedef>
 
@@ -677,6 +696,12 @@
       <calc>
         os_Config.stack_check  = (os_Config.flags >> 1) &amp; 1;
         os_Config.stack_wmark  = (os_Config.flags >> 2) &amp; 1;
+        os_Config.safety_feat  = (os_Config.flags >> 3) &amp; 1;
+        os_Config.safety_class = (os_Config.flags >> 4) &amp; 1;
+        os_Config.exec_zone    = (os_Config.flags >> 5) &amp; 1;
+        os_Config.watchdog     = (os_Config.flags >> 6) &amp; 1;
+        os_Config.obj_check    = (os_Config.flags >> 7) &amp; 1;
+        os_Config.svc_check    = (os_Config.flags >> 8) &amp; 1;
       </calc>
 
       <calc cond="((os_Info.version / 10000000) == 5) &amp;&amp; (os_Info.kernel_state &gt; 0) &amp;&amp; (os_Info.kernel_state &lt; 5)">
@@ -711,7 +736,7 @@
       </calc>
 
       <!-- Determine number of control blocks to read -->
-      <calc cond="TCB_Rd"> TCB_Rd /= 68; </calc>
+      <calc cond="TCB_Rd"> TCB_Rd /= 80; </calc>
       <calc cond="CCB_Rd"> CCB_Rd /= 32; </calc>
       <calc cond="ECB_Rd"> ECB_Rd /= 16; </calc>
       <calc cond="MCB_Rd"> MCB_Rd /= 28; </calc>
@@ -823,6 +848,9 @@
         <readlist cond="(mem_list_com[i].len &amp; 1) &amp;&amp; (mem_list_com[i].id == 0xFA)" name="QCB" type="osRtxMessageQueue_t" offset="addr" count="1" />
       </list>
 
+      <!-- Read thread watchdog list -->
+      <readlist name="WDL" cond="RTX_En &amp;&amp; os_Config.watchdog &amp;&amp; os_Info.thread_wdog_list" type="osRtxThread_t" offset="os_Info.thread_wdog_list" next="wdog_next" init="1"/>
+
       <!-- Validate and process Thread control blocks -->
       <list name="i" start="0" limit="TCB._count">
         <calc>
@@ -908,6 +936,26 @@
             TCB[i].ex_delay += TDL[j].delay;
           </calc>
         </list>
+
+        <!-- Determine thread absolute watchdog tick value -->
+        <calc cond="os_Config.watchdog">
+          k = 0;
+        </calc>
+
+        <list cond="os_Config.watchdog" name="j" start="0" limit="WDL._count">
+          <calc cond="k == 0">
+            TCB[i].wd_tick += WDL[j].wdog_tick;
+          </calc>
+
+          <calc cond="TCB[i]._addr == WDL[j]._addr">
+            k = 1;
+          </calc>
+        </list>
+
+        <!-- Watchdog is running for a thread that was found in the watchdog list -->
+        <calc cond="os_Config.safety_feat">
+            TCB[i].wd_state = k;
+        </calc>
       </list>
 
       <!-- Validate and process Timer control blocks -->
@@ -1100,6 +1148,10 @@
           <item property="Kernel ID"    value="RTX V%d[V_Major].%d[V_Minor].%d[V_Patch]" cond="RTX_En != 0"/>
           <item property="Kernel State" value="osKernelInactive"         cond="RTX_En == 0"/>
           <item property="Kernel State" value="%E[os_Info.kernel_state]" cond="RTX_En != 0"/>
+          <item>
+            <print property="Kernel Protect" value="osThreadPrivileged: %t[(os_Info.kernel_protect &amp; 1) ? &quot;Disabled&quot; : &quot;Enabled&quot;]"                                               cond="(os_Config.safety_feat == 1) &amp;&amp; (os_Config.safety_class == 0) &amp;&amp; (RTX_En != 0)" />
+            <print property="Kernel Protect" value="osThreadPrivileged: %t[(os_Info.kernel_protect &amp; 1) ? &quot;Disabled&quot; : &quot;Enabled&quot;], osSafetyClass(%d[os_Info.kernel_protect/16])" cond="(os_Config.safety_feat == 1) &amp;&amp; (os_Config.safety_class == 1) &amp;&amp; (RTX_En != 0)" />
+          </item>
           <item property="Kernel Tick Count"      value="%d[os_Info.kernel_tick]"     cond="RTX_En != 0"/>
           <item property="Kernel Tick Frequency"  value="%d[os_Config.tick_freq]"     cond="RTX_En != 0" />
           <item property="Round Robin"            value="Disabled"                    cond="(os_Config.robin_timeout == 0) &amp;&amp; (RTX_En != 0)" />
@@ -1172,7 +1224,12 @@
 
               <item property="State"        value="%E[TCB[i].state &amp; 0x07]"/>
               <item property="Priority"     value="%E[TCB[i].priority]"/>
-              <item property="Attributes"   value="%E[TCB[i].attr &amp; 0x01]"/>
+              <item>
+                <print cond="(os_Config.exec_zone == 0) &amp;&amp; (os_Config.safety_class == 0)" property="Attributes" value="%E[TCB[i].attr &amp; 0x01], %E[TCB[i].attr &amp; 0x06]"/>
+                <print cond="(os_Config.exec_zone == 0) &amp;&amp; (os_Config.safety_class == 1)" property="Attributes" value="%E[TCB[i].attr &amp; 0x01], %E[TCB[i].attr &amp; 0x06], osSafetyClass(%d[TCB[i].attr/16])"/>
+                <print cond="(os_Config.exec_zone == 1) &amp;&amp; (os_Config.safety_class == 0)" property="Attributes" value="%E[TCB[i].attr &amp; 0x01], %E[TCB[i].attr &amp; 0x06], osThreadZone(%d[TCB[i].zone])"/>
+                <print cond="(os_Config.exec_zone == 1) &amp;&amp; (os_Config.safety_class == 1)" property="Attributes" value="%E[TCB[i].attr &amp; 0x01], %E[TCB[i].attr &amp; 0x06], osSafetyClass(%d[TCB[i].attr/16]), osThreadZone(%d[TCB[i].zone])"/>
+              </item>
 
               <item>
                 <print property="Waiting" value="%E[TCB[i].state], Timeout: %d[TCB[i].ex_delay]" cond="((TCB[i].state &amp; 0x07) == 3) &amp;&amp; (TCB[i].ex_delay != -1)"/>
@@ -1231,6 +1288,10 @@
 
               <item property="Stack Overrun" value="Overrun detected" cond="TCB[i].stack_over != 0"/>
               <item property="Flags" value="%x[TCB[i].thread_flags]"/>
+              <item>
+                <print cond="(os_Config.watchdog != 0) &amp;&amp; (TCB[i].wd_state == 0)" property="Watchdog" value="Inactive"/>
+                <print cond="(os_Config.watchdog != 0) &amp;&amp; (TCB[i].wd_state == 1)" property="Watchdog" value="Running, Timeout: %d[TCB[i].wd_tick]"/>
+              </item>
               <item property="Wait Flags" value="%x[TCB[i].wait_flags], %E[TCB[i].flags_options &amp; 1]"                 cond="(TCB[i].wait_flags != 0) &amp;&amp; ((TCB[i].flags_options &amp; 2) == 0)"/>
               <item property="Wait Flags" value="%x[TCB[i].wait_flags], %E[TCB[i].flags_options &amp; 1], osFlagsNoClear" cond="(TCB[i].wait_flags != 0) &amp;&amp; ((TCB[i].flags_options &amp; 2) != 0)"/>
               <item property="TrustZone ID" value="%d[TCB[i].tz_memory]" cond="TCB[i].tz_memory"/>
@@ -1242,11 +1303,12 @@
         <item cond="CCB_En" property="Timers" value="">
           <list name="i" start="0" limit="CCB._count">
             <item cond="CCB[i].cb_valid" property="id: %x[CCB[i]._addr] %N[CCB[i].name]" value="%E[CCB[i].state], Tick: %d[CCB[i].ex_tick]">
-              <item property="State"    value="%E[CCB[i].state]" />
-              <item property="Type"     value="%E[CCB[i].type]" />
-              <item property="Tick"     value="%d[CCB[i].ex_tick]" />
-              <item property="Load"     value="%d[CCB[i].load]" />
-              <item property="Callback" value="Func: %S[CCB[i].finfo_fp], Arg: %x[CCB[i].finfo_arg]" />
+              <item property="State"      value="%E[CCB[i].state]" />
+              <item property="Type"       value="%E[CCB[i].attr &amp; 0x01]" />
+              <item property="Attributes" value="osSafetyClass(%d[CCB[i].attr/16])" cond="os_Config.safety_class == 1"/>
+              <item property="Tick"       value="%d[CCB[i].ex_tick]" />
+              <item property="Load"       value="%d[CCB[i].load]" />
+              <item property="Callback"   value="Func: %S[CCB[i].finfo_fp], Arg: %x[CCB[i].finfo_arg]" />
             </item>
           </list>
         </item>
@@ -1255,6 +1317,7 @@
         <item cond="SCB_En" property="Semaphores" value="">
           <list name="i" start="0" limit="SCB._count">
             <item cond="SCB[i].cb_valid" property="id: %x[SCB[i]._addr] %N[SCB[i].name]" value="Tokens: %d[SCB[i].tokens], Max: %d[SCB[i].max_tokens]">
+            <item property="Attributes" value="osSafetyClass(%d[SCB[i].attr/16])" cond="os_Config.safety_class == 1"/>
             <item property="Tokens"     value="%d[SCB[i].tokens]" />
             <item property="Max Tokens" value="%d[SCB[i].max_tokens]" />
 
@@ -1278,7 +1341,7 @@
           <list name="i" start="0" limit="MCB._count">
             <item cond="MCB[i].cb_valid" property="id: %x[MCB[i]._addr] %N[MCB[i].name]" value="Lock counter: %d[MCB[i].lock]">
               <item property="Lock counter" value="%x[MCB[i].lock]"/>
-              <item property="Attributes" value="%x[MCB[i].attr]">
+              <item property="Attributes" value="osSafetyClass(%d[MCB[i].attr/16])" cond="os_Config.safety_class == 1">
                 <item property="osMutexRecursive"   value="%t[(MCB[i].attr &amp; 0x01) ?  &quot;True&quot; : &quot;False&quot;]" />
                 <item property="osMutexPrioInherit" value="%t[(MCB[i].attr &amp; 0x02) ?  &quot;True&quot; : &quot;False&quot;]" />
                 <item property="osMutexRobust"      value="%t[(MCB[i].attr &amp; 0x08) ?  &quot;True&quot; : &quot;False&quot;]" />
@@ -1307,6 +1370,7 @@
         <item cond="ECB_En" property="Event Flags" value="">
           <list name="i" start="0" limit="ECB._count">
             <item cond="ECB[i].cb_valid" property="id: %x[ECB[i]._addr] %N[ECB[i].name]" value="Flags: %x[ECB[i].event_flags]">
+              <item property="Attributes" value="osSafetyClass(%d[ECB[i].attr/16])" cond="os_Config.safety_class == 1"/>
 
               <!-- Waiting thread list -->
               <item cond="ECB[i].wl_cnt" property="Threads waiting (%d[ECB[i].wl_cnt])" value="">
@@ -1328,6 +1392,7 @@
           <list name="i" start="0" limit="PCB._count">
             <item cond="PCB[i].cb_valid" property="id: %x[PCB[i]._addr] %N[PCB[i].name]" value="Used: %d[PCB[i].used_blocks], Max: %d[PCB[i].max_blocks]">
 
+              <item property="Attributes"  value="osSafetyClass(%d[PCB[i].attr/16])" cond="os_Config.safety_class == 1"/>
               <item property="Used blocks" value="%d[PCB[i].used_blocks]"/>
               <item property="Max blocks"  value="%d[PCB[i].max_blocks]"/>
               <item property="Block size"  value="%d[PCB[i].block_size]"/>
@@ -1354,6 +1419,7 @@
           <list name="i" start="0" limit="QCB._count">
             <item cond="QCB[i].cb_valid" property="id: %x[QCB[i]._addr] %N[QCB[i].name]" value="Messages: %d[QCB[i].msg_count], Max: %d[QCB[i].max_blocks]">
 
+              <item property="Attributes"   value="osSafetyClass(%d[QCB[i].attr/16])" cond="os_Config.safety_class == 1"/>
               <item property="Messages"     value="%d[QCB[i].ml_cnt]"/>
               <item property="Max Messages" value="%d[QCB[i].max_blocks]"/>
               <item property="Message size" value="%d[QCB[i].msg_size]"/>
@@ -1439,17 +1505,22 @@
     <event id="0xF100 + 0x10" level="Op"     property="KernelSuspended"                     value="sleep_ticks=%d[val1]" info="Kernel execution was suspended."/>
     <event id="0xF100 + 0x11" level="API"    property="KernelResume"                        value="sleep_ticks=%d[val1]" info="osKernelResume function was called."/>
     <event id="0xF100 + 0x12" level="Op"     property="KernelResumed"                       value="" info="Kernel execution was resumed."/>
+    <event id="0xF100 + 0x17" level="API"    property="KernelProtect"                       value="safety_class=%d[val1]" info="osKernelProtect function was called."/>
+    <event id="0xF100 + 0x18" level="Op"     property="KernelProtected"                     value="" info="Kernel safety class protection was activated."/>
     <event id="0xF100 + 0x13" level="API"    property="KernelGetTickCount"                  value="count=%d[val1]" info="osKernelGetTickCount function was called."/>
     <event id="0xF100 + 0x14" level="API"    property="KernelGetTickFreq"                   value="freq=%d[val1]" info="osKernelGetTickFreq function was called."/>
     <event id="0xF100 + 0x15" level="API"    property="KernelGetSysTimerCount"              value="count=%d[val1]" info="osKernelGetSysTimerCount function was called."/>
     <event id="0xF100 + 0x16" level="API"    property="KernelGetSysTimerFreq"               value="freq=%d[val1]" info="osKernelGetSysTimerFreq function was called."/>
     <event id="0xF100 + 0x19" level="Error"  property="KernelErrorNotify"                   value="code=%E[val1, rtx_error:id], object_id=%x[val2]" info="osKernelErrorNotify function was called."/>
+    <event id="0xF100 + 0x1A" level="API"    property="KernelDestroyClass"                  value="safety_class=%d[val1], mode=%x[val2]" info="osKernelDestroyClass function was called."/>
 
     <event id="0xF200 + 0x00" level="Error"  property="ThreadError"                                                                       value="thread_id=%x[val1], status=%E[val2, rtx_t:status]" info="Thread error occurred."/>
     <event id="0xF200 + 0x01" level="API"    property="ThreadNew"                                                                         value="func=%S[val1], argument=%x[val2], attr=%x[val3]" info="osThreadNew function was called."/>
     <event id="0xF200 + 0x03" level="Op"     property="ThreadCreated"    tracking="Start" state="Ready"    handle="val1" hname="%S[val2]" value="thread_id=%x[val1]" info="Thread object was created."/>
     <event id="0xF200 + 0x2C" level="Op"     property="ThreadCreated"    tracking="Start" state="Ready"    handle="val1" hname="%N[val2]" value="thread_id=%x[val1]" info="Thread object was created."/>
     <event id="0xF200 + 0x04" level="API"    property="ThreadGetName"                                                                     value="thread_id=%x[val1], name=%N[val2]" info="osThreadGetName function was called and object name was retrieved."/>
+    <event id="0xF200 + 0x30" level="API"    property="ThreadGetClass"                                                                    value="thread_id=%x[val1], safety_class=%d[val2]" info="osThreadGetClass function was called and thread safety class was retrieved."/>
+    <event id="0xF200 + 0x31" level="API"    property="ThreadGetZone"                                                                     value="thread_id=%x[val1], zone=%d[val2]" info="osThreadGetZone function was called and thread execution zone was retrieved."/>
     <event id="0xF200 + 0x06" level="API"    property="ThreadGetId"                                                                       value="thread_id=%x[val1]" info="osThreadGetId function was called and current running thread id was retrieved."/>
     <event id="0xF200 + 0x07" level="API"    property="ThreadGetState"                                                                    value="thread_id=%x[val1], state=%E[val2, rtx_th_state:id]" info="osThreadGetState function was called and thread state was retrieved."/>
     <event id="0xF200 + 0x08" level="API"    property="ThreadGetStackSize"                                                                value="thread_id=%x[val1], stack_size=%d[val2]" info="osThreadGetStackSize function was called and thread stack size was retrieved."/>
@@ -1474,8 +1545,16 @@
     <event id="0xF200 + 0x1A" level="API"    property="ThreadExit"                                                                        value="" info="osThreadExit function was called."/>
     <event id="0xF200 + 0x1B" level="API"    property="ThreadTerminate"                                                                   value="thread_id=%x[val1]" info="osThreadTerminate function was called."/>
     <event id="0xF200 + 0x1C" level="Op"     property="ThreadDestroyed"  tracking="Stop"  state="Inactive" handle="val1"                  value="thread_id=%x[val1]" info="Thread execution was terminated."/>
+    <event id="0xF200 + 0x2E" level="API"    property="ThreadFeedWatchdog"                                                                value="ticks=%d[val1]" info="osThreadFeedWatchdog function was called."/>
+    <event id="0xF200 + 0x2F" level="Op"     property="ThreadFeedWatchdogDone"                                                            value="" info="Thread watchdog timer was feed."/>
+    <event id="0xF200 + 0x32" level="API"    property="ThreadProtectPrivileged"                                                           value="" info="osThreadProtectPrivileged function was called."/>
+    <event id="0xF200 + 0x33" level="Op"     property="ThreadPrivilegedProtected"                                                         value="" info="Creation of privileged threads was protected."/>
     <event id="0xF200 + 0x1D" level="API"    property="ThreadGetCount"                                                                    value="count=%d[val1]" info="osThreadGetCount function was called and number of active threads was retrieved."/>
     <event id="0xF200 + 0x1E" level="API"    property="ThreadEnumerate"                                                                   value="thread_array=%x[val1], array_items=%d[val2], count=%d[val3]" info="osThreadEnumerate function was called and active threads were enumerated."/>
+    <event id="0xF200 + 0x34" level="API"    property="ThreadSuspendClass"                                                                value="safety_class=%d[val1], mode=%x[val2]" info="osThreadSuspendClass function was called."/>
+    <event id="0xF200 + 0x35" level="API"    property="ThreadResumeClass"                                                                 value="safety_class=%d[val1], mode=%x[val2]" info="osThreadResumeClass function was called."/>
+    <event id="0xF200 + 0x36" level="API"    property="ThreadTerminateZone"                                                               value="zone=%d[val1]" info="osThreadTerminateZone function was called."/>
+    <event id="0xF200 + 0x37" level="Error"  property="ThreadWatchdogExpired"                                                             value="thread_id=%x[val1]" info="Thread watchdog timer has expired."/>
 
     <event id="0xF400 + 0x00" level="Error"  property="ThreadFlagsError"            value="thread_id=%x[val1], status=%E[val2, rtx_t:status]" info="Thread flags error occurred."/>
     <event id="0xF400 + 0x01" level="API"    property="ThreadFlagsSet"              value="thread_id=%x[val1], flags=%x[val2]" info="osThreadFlagsSet function was called."/>

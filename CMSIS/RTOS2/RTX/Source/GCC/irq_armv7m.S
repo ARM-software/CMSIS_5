@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 Arm Limited. All rights reserved.
+ * Copyright (c) 2013-2023 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -34,13 +34,15 @@
         .equ     FPU_USED, 0
         #endif
 
-        .equ     I_T_RUN_OFS, 20        // osRtxInfo.thread.run offset
-        .equ     TCB_SP_OFS,  56        // TCB.SP offset
-        .equ     TCB_SF_OFS,  34        // TCB.stack_frame offset
+        .equ     I_T_RUN_OFS,       20  // osRtxInfo.thread.run offset
+        .equ     TCB_SP_OFS,        56  // TCB.SP offset
+        .equ     TCB_SF_OFS,        34  // TCB.stack_frame offset
+        .equ     TCB_ZONE_OFS,      68  // TCB.zone offset
 
         .equ     FPCCR,     0xE000EF34  // FPCCR Address
 
         .equ     osRtxErrorStackOverflow, 1 // Stack overflow
+        .equ     osRtxErrorSVC,           6 // Invalid SVC function called
 
         .section ".rodata"
         .global  irqRtxLib              // Non weak library reference
@@ -70,6 +72,30 @@ SVC_Handler:
         ldrb     r1,[r1,#-2]            // Load SVC number
         cmp      r1,#0                  // Check SVC number
         bne      SVC_User               // Branch if not SVC 0
+
+    #ifdef RTX_SVC_PTR_CHECK
+
+        ldr      r12,[r0,#16]           // Load function address from stack
+        sub      r1,r12,#1              // Clear T-bit of function address
+        lsls     r2,r1,#30              // Check if 4-byte aligned
+        beq      SVC_PtrBoundsCheck     // Branch if address is aligned
+
+SVC_PtrInvalid:
+        push     {r0,lr}                // Save SP and EXC_RETURN
+        mov      r0,#osRtxErrorSVC      // Parameter: code
+        mov      r1,r12                 // Parameter: object_id
+        bl       osRtxKernelErrorNotify // Call osRtxKernelErrorNotify
+        pop      {r12,lr}               // Restore SP and EXC_RETURN
+        b        SVC_Context            // Branch to context handling
+
+SVC_PtrBoundsCheck:
+        ldr      r2,=Image$$RTX_SVC_VENEERS$$Base
+        ldr      r3,=Image$$RTX_SVC_VENEERS$$Length
+        sub      r2,r1,r2               // Subtract SVC table base address
+        cmp      r2,r3                  // Compare with SVC table boundaries
+        bhs      SVC_PtrInvalid         // Branch if address is out of bounds
+
+    #endif // RTX_SVC_PTR_CHECK
 
         push     {r0,lr}                // Save SP and EXC_RETURN
         ldm      r0,{r0-r3,r12}         // Load function parameters and address from stack
@@ -118,13 +144,14 @@ SVC_ContextSave:
         cbnz     r0,SVC_ContextSaveRegs // Branch when stack check is ok
 
       .if (FPU_USED != 0)
-        mov      r4,r1                  // Save osRtxInfo.thread.run.curr
+        mov      r4,r1                  // Assign osRtxInfo.thread.run.curr to R4
       .endif
         mov      r0,#osRtxErrorStackOverflow // Parameter: r0=code, r1=object_id
         bl       osRtxKernelErrorNotify      // Call osRtxKernelErrorNotify
         ldr      r3,=osRtxInfo+I_T_RUN_OFS   // Load address of osRtxInfo.thread.run
         ldr      r2,[r3,#4]             // Load osRtxInfo.thread.run: next
         str      r2,[r3]                // osRtxInfo.thread.run: curr = next
+        movs     r1,#0                  // Simulate deleted running thread
       .if (FPU_USED != 0)
         ldrb     lr,[r4,#TCB_SF_OFS]    // Load stack frame information
         b        SVC_FP_LazyState       // Branch to FP lazy state handling
@@ -153,9 +180,21 @@ SVC_ContextSaveRegs:
     #endif // RTX_STACK_CHECK
 
 SVC_ContextRestore:
-        ldr      r0,[r2,#TCB_SP_OFS]    // Load SP
+        movs     r4,r2                  // Assign osRtxInfo.thread.run.next to R4, clear Z flag
+    #ifdef RTX_EXECUTION_ZONE
+        ldrb     r0,[r2,#TCB_ZONE_OFS]  // Load osRtxInfo.thread.run.next: zone
+        cbz      r1,SVC_ZoneSetup       // Branch if running thread is deleted (Z flag unchanged)
+        ldrb     r1,[r1,#TCB_ZONE_OFS]  // Load osRtxInfo.thread.run.curr: zone
+        cmp      r0,r1                  // Check if next:zone == curr:zone
+
+SVC_ZoneSetup:
+        it       ne                     // If zone has changed or running thread is deleted
+        blne     osZoneSetup_Callback   //  Setup zone for next thread
+    #endif // RTX_EXECUTION_ZONE
+
+        ldr      r0,[r4,#TCB_SP_OFS]    // Load SP
       .if (FPU_USED != 0)
-        ldrb     r1,[r2,#TCB_SF_OFS]    // Load stack frame information
+        ldrb     r1,[r4,#TCB_SF_OFS]    // Load stack frame information
         orn      lr,r1,#0xFF            // Set EXC_RETURN
         tst      lr,#0x10               // Determine stack frame from EXC_RETURN bit 4
         it       eq                     // If extended stack frame
@@ -220,6 +259,24 @@ SysTick_Handler:
 
         .fnend
         .size    SysTick_Handler, .-SysTick_Handler
+
+
+    #ifdef RTX_SAFETY_FEATURES
+
+        .thumb_func
+        .type    osFaultResume, %function
+        .global  osFaultResume
+        .fnstart
+        .cantunwind
+osFaultResume:
+
+        mrs      r12,psp                // Save PSP to R12
+        b        SVC_Context            // Branch to context handling
+
+        .fnend
+        .size   osFaultResume, .-osFaultResume
+
+    #endif // RTX_SAFETY_FEATURES
 
 
         .end

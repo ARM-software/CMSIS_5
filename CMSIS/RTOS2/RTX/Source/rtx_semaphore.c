@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 Arm Limited. All rights reserved.
+ * Copyright (c) 2013-2023 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -102,6 +102,93 @@ static uint32_t SemaphoreTokenIncrement (os_semaphore_t *semaphore) {
   return ret;
 }
 
+/// Verify that Semaphore object pointer is valid.
+/// \param[in]  semaphore       semaphore object.
+/// \return true - valid, false - invalid.
+static bool_t IsSemaphorePtrValid (const os_semaphore_t *semaphore) {
+#ifdef RTX_OBJ_PTR_CHECK
+  //lint --e{923} --e{9078} "cast from pointer to unsigned int" [MISRA Note 7]
+  uint32_t cb_start  = (uint32_t)&__os_semaphore_cb_start__;
+  uint32_t cb_length = (uint32_t)&__os_semaphore_cb_length__;
+
+  // Check the section boundaries
+  if (((uint32_t)semaphore - cb_start) >= cb_length) {
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
+    return FALSE;
+  }
+  // Check the object alignment
+  if ((((uint32_t)semaphore - cb_start) % sizeof(os_semaphore_t)) != 0U) {
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
+    return FALSE;
+  }
+#else
+  // Check NULL pointer
+  if (semaphore == NULL) {
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
+    return FALSE;
+  }
+#endif
+  return TRUE;
+}
+
+
+//  ==== Library functions ====
+
+/// Destroy a Semaphore object.
+/// \param[in]  semaphore       semaphore object.
+static void osRtxSemaphoreDestroy (os_semaphore_t *semaphore) {
+
+  // Mark object as invalid
+  semaphore->id = osRtxIdInvalid;
+
+  // Free object memory
+  if ((semaphore->flags & osRtxFlagSystemObject) != 0U) {
+#ifdef RTX_OBJ_PTR_CHECK
+    (void)osRtxMemoryPoolFree(osRtxInfo.mpi.semaphore, semaphore);
+#else
+    if (osRtxInfo.mpi.semaphore != NULL) {
+      (void)osRtxMemoryPoolFree(osRtxInfo.mpi.semaphore, semaphore);
+    } else {
+      (void)osRtxMemoryFree(osRtxInfo.mem.common, semaphore);
+    }
+#endif
+#ifdef RTX_OBJ_MEM_USAGE
+    osRtxSemaphoreMemUsage.cnt_free++;
+#endif
+  }
+  EvrRtxSemaphoreDestroyed(semaphore);
+}
+
+#ifdef RTX_SAFETY_CLASS
+/// Delete a Semaphore safety class.
+/// \param[in]  safety_class    safety class.
+/// \param[in]  mode            safety mode.
+void osRtxSemaphoreDeleteClass (uint32_t safety_class, uint32_t mode) {
+  os_semaphore_t *semaphore;
+  os_thread_t    *thread;
+  uint32_t        length;
+
+  //lint --e{923} --e{9078} "cast from pointer to unsigned int" [MISRA Note 7]
+  semaphore = (os_semaphore_t *)(uint32_t)&__os_semaphore_cb_start__;
+  length    =                   (uint32_t)&__os_semaphore_cb_length__;
+  while (length >= sizeof(os_semaphore_t)) {
+    if (   (semaphore->id == osRtxIdSemaphore) &&
+        ((((mode & osSafetyWithSameClass)  != 0U) &&
+          ((semaphore->attr >> osRtxAttrClass_Pos) == (uint8_t)safety_class)) ||
+         (((mode & osSafetyWithLowerClass) != 0U) &&
+          ((semaphore->attr >> osRtxAttrClass_Pos) <  (uint8_t)safety_class)))) {
+      while (semaphore->thread_list != NULL) {
+        thread = osRtxThreadListGet(osRtxObject(semaphore));
+        osRtxThreadWaitExit(thread, (uint32_t)osErrorResource, FALSE);
+      }
+      osRtxSemaphoreDestroy(semaphore);
+    }
+    length -= sizeof(os_semaphore_t);
+    semaphore++;
+  }
+}
+#endif
+
 
 //  ==== Post ISR processing ====
 
@@ -128,9 +215,13 @@ static void osRtxSemaphorePostProcess (os_semaphore_t *semaphore) {
 /// Create and Initialize a Semaphore object.
 /// \note API identical to osSemaphoreNew
 static osSemaphoreId_t svcRtxSemaphoreNew (uint32_t max_count, uint32_t initial_count, const osSemaphoreAttr_t *attr) {
-  os_semaphore_t *semaphore;
-  uint8_t         flags;
-  const char     *name;
+  os_semaphore_t    *semaphore;
+#ifdef RTX_SAFETY_CLASS
+  const os_thread_t *thread = osRtxThreadGetRunning();
+  uint32_t           attr_bits;
+#endif
+  uint8_t            flags;
+  const char        *name;
 
   // Check parameters
   if ((max_count == 0U) || (max_count > osRtxSemaphoreTokenLimit) || (initial_count > max_count)) {
@@ -142,11 +233,24 @@ static osSemaphoreId_t svcRtxSemaphoreNew (uint32_t max_count, uint32_t initial_
   // Process attributes
   if (attr != NULL) {
     name      = attr->name;
+#ifdef RTX_SAFETY_CLASS
+    attr_bits = attr->attr_bits;
+#endif
     //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 6]
     semaphore = attr->cb_mem;
+#ifdef RTX_SAFETY_CLASS
+    if ((attr_bits & osSafetyClass_Valid) != 0U) {
+      if ((thread != NULL) &&
+          ((thread->attr >> osRtxAttrClass_Pos) <
+          (uint8_t)((attr_bits & osSafetyClass_Msk) >> osSafetyClass_Pos))) {
+        EvrRtxSemaphoreError(NULL, (int32_t)osErrorSafetyClass);
+        //lint -e{904} "Return statement before end of function" [MISRA Note 1]
+        return NULL;
+      }
+    }
+#endif
     if (semaphore != NULL) {
-      //lint -e(923) -e(9078) "cast from pointer to unsigned int" [MISRA Note 7]
-      if ((((uint32_t)semaphore & 3U) != 0U) || (attr->cb_size < sizeof(os_semaphore_t))) {
+      if (!IsSemaphorePtrValid(semaphore) || (attr->cb_size != sizeof(os_semaphore_t))) {
         EvrRtxSemaphoreError(NULL, osRtxErrorInvalidControlBlock);
         //lint -e{904} "Return statement before end of function" [MISRA Note 1]
         return NULL;
@@ -160,6 +264,9 @@ static osSemaphoreId_t svcRtxSemaphoreNew (uint32_t max_count, uint32_t initial_
     }
   } else {
     name      = NULL;
+#ifdef RTX_SAFETY_CLASS
+    attr_bits = 0U;
+#endif
     semaphore = NULL;
   }
 
@@ -168,9 +275,11 @@ static osSemaphoreId_t svcRtxSemaphoreNew (uint32_t max_count, uint32_t initial_
     if (osRtxInfo.mpi.semaphore != NULL) {
       //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 5]
       semaphore = osRtxMemoryPoolAlloc(osRtxInfo.mpi.semaphore);
+#ifndef RTX_OBJ_PTR_CHECK
     } else {
       //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 5]
       semaphore = osRtxMemoryAlloc(osRtxInfo.mem.common, sizeof(os_semaphore_t), 1U);
+#endif
     }
 #ifdef RTX_OBJ_MEM_USAGE
     if (semaphore != NULL) {
@@ -191,10 +300,22 @@ static osSemaphoreId_t svcRtxSemaphoreNew (uint32_t max_count, uint32_t initial_
     // Initialize control block
     semaphore->id          = osRtxIdSemaphore;
     semaphore->flags       = flags;
+    semaphore->attr        = 0U;
     semaphore->name        = name;
     semaphore->thread_list = NULL;
     semaphore->tokens      = (uint16_t)initial_count;
     semaphore->max_tokens  = (uint16_t)max_count;
+#ifdef RTX_SAFETY_CLASS
+    if ((attr_bits & osSafetyClass_Valid) != 0U) {
+      semaphore->attr     |= (uint8_t)((attr_bits & osSafetyClass_Msk) >>
+                                       (osSafetyClass_Pos - osRtxAttrClass_Pos));
+    } else {
+      // Inherit safety class from the running thread
+      if (thread != NULL) {
+        semaphore->attr   |= (uint8_t)(thread->attr & osRtxAttrClass_Msk);
+      }
+    }
+#endif
 
     // Register post ISR processing function
     osRtxInfo.post_process.semaphore = osRtxSemaphorePostProcess;
@@ -213,7 +334,7 @@ static const char *svcRtxSemaphoreGetName (osSemaphoreId_t semaphore_id) {
   os_semaphore_t *semaphore = osRtxSemaphoreId(semaphore_id);
 
   // Check parameters
-  if ((semaphore == NULL) || (semaphore->id != osRtxIdSemaphore)) {
+  if (!IsSemaphorePtrValid(semaphore) || (semaphore->id != osRtxIdSemaphore)) {
     EvrRtxSemaphoreGetName(semaphore, NULL);
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return NULL;
@@ -227,15 +348,29 @@ static const char *svcRtxSemaphoreGetName (osSemaphoreId_t semaphore_id) {
 /// Acquire a Semaphore token or timeout if no tokens are available.
 /// \note API identical to osSemaphoreAcquire
 static osStatus_t svcRtxSemaphoreAcquire (osSemaphoreId_t semaphore_id, uint32_t timeout) {
-  os_semaphore_t *semaphore = osRtxSemaphoreId(semaphore_id);
-  osStatus_t      status;
+  os_semaphore_t    *semaphore = osRtxSemaphoreId(semaphore_id);
+#ifdef RTX_SAFETY_CLASS
+  const os_thread_t *thread;
+#endif
+  osStatus_t         status;
 
   // Check parameters
-  if ((semaphore == NULL) || (semaphore->id != osRtxIdSemaphore)) {
+  if (!IsSemaphorePtrValid(semaphore) || (semaphore->id != osRtxIdSemaphore)) {
     EvrRtxSemaphoreError(semaphore, (int32_t)osErrorParameter);
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorParameter;
   }
+
+#ifdef RTX_SAFETY_CLASS
+  // Check running thread safety class
+  thread = osRtxThreadGetRunning();
+  if ((thread != NULL) &&
+      ((thread->attr >> osRtxAttrClass_Pos) < (semaphore->attr >> osRtxAttrClass_Pos))) {
+    EvrRtxSemaphoreError(semaphore, (int32_t)osErrorSafetyClass);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
+    return osErrorSafetyClass;
+  }
+#endif
 
   // Try to acquire token
   if (SemaphoreTokenDecrement(semaphore) != 0U) {
@@ -269,11 +404,22 @@ static osStatus_t svcRtxSemaphoreRelease (osSemaphoreId_t semaphore_id) {
   osStatus_t      status;
 
   // Check parameters
-  if ((semaphore == NULL) || (semaphore->id != osRtxIdSemaphore)) {
+  if (!IsSemaphorePtrValid(semaphore) || (semaphore->id != osRtxIdSemaphore)) {
     EvrRtxSemaphoreError(semaphore, (int32_t)osErrorParameter);
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorParameter;
   }
+
+#ifdef RTX_SAFETY_CLASS
+  // Check running thread safety class
+  thread = osRtxThreadGetRunning();
+  if ((thread != NULL) &&
+      ((thread->attr >> osRtxAttrClass_Pos) < (semaphore->attr >> osRtxAttrClass_Pos))) {
+    EvrRtxSemaphoreError(semaphore, (int32_t)osErrorSafetyClass);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
+    return osErrorSafetyClass;
+  }
+#endif
 
   // Check if Thread is waiting for a token
   if (semaphore->thread_list != NULL) {
@@ -303,7 +449,7 @@ static uint32_t svcRtxSemaphoreGetCount (osSemaphoreId_t semaphore_id) {
   os_semaphore_t *semaphore = osRtxSemaphoreId(semaphore_id);
 
   // Check parameters
-  if ((semaphore == NULL) || (semaphore->id != osRtxIdSemaphore)) {
+  if (!IsSemaphorePtrValid(semaphore) || (semaphore->id != osRtxIdSemaphore)) {
     EvrRtxSemaphoreGetCount(semaphore, 0U);
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return 0U;
@@ -321,11 +467,22 @@ static osStatus_t svcRtxSemaphoreDelete (osSemaphoreId_t semaphore_id) {
   os_thread_t    *thread;
 
   // Check parameters
-  if ((semaphore == NULL) || (semaphore->id != osRtxIdSemaphore)) {
+  if (!IsSemaphorePtrValid(semaphore) || (semaphore->id != osRtxIdSemaphore)) {
     EvrRtxSemaphoreError(semaphore, (int32_t)osErrorParameter);
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorParameter;
   }
+
+#ifdef RTX_SAFETY_CLASS
+  // Check running thread safety class
+  thread = osRtxThreadGetRunning();
+  if ((thread != NULL) &&
+      ((thread->attr >> osRtxAttrClass_Pos) < (semaphore->attr >> osRtxAttrClass_Pos))) {
+    EvrRtxSemaphoreError(semaphore, (int32_t)osErrorSafetyClass);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
+    return osErrorSafetyClass;
+  }
+#endif
 
   // Unblock waiting threads
   if (semaphore->thread_list != NULL) {
@@ -336,22 +493,7 @@ static osStatus_t svcRtxSemaphoreDelete (osSemaphoreId_t semaphore_id) {
     osRtxThreadDispatch(NULL);
   }
 
-  // Mark object as invalid
-  semaphore->id = osRtxIdInvalid;
-
-  // Free object memory
-  if ((semaphore->flags & osRtxFlagSystemObject) != 0U) {
-    if (osRtxInfo.mpi.semaphore != NULL) {
-      (void)osRtxMemoryPoolFree(osRtxInfo.mpi.semaphore, semaphore);
-    } else {
-      (void)osRtxMemoryFree(osRtxInfo.mem.common, semaphore);
-    }
-#ifdef RTX_OBJ_MEM_USAGE
-    osRtxSemaphoreMemUsage.cnt_free++;
-#endif
-  }
-
-  EvrRtxSemaphoreDestroyed(semaphore);
+  osRtxSemaphoreDestroy(semaphore);
 
   return osOK;
 }
@@ -377,7 +519,7 @@ osStatus_t isrRtxSemaphoreAcquire (osSemaphoreId_t semaphore_id, uint32_t timeou
   osStatus_t      status;
 
   // Check parameters
-  if ((semaphore == NULL) || (semaphore->id != osRtxIdSemaphore) || (timeout != 0U)) {
+  if (!IsSemaphorePtrValid(semaphore) || (semaphore->id != osRtxIdSemaphore) || (timeout != 0U)) {
     EvrRtxSemaphoreError(semaphore, (int32_t)osErrorParameter);
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorParameter;
@@ -404,7 +546,7 @@ osStatus_t isrRtxSemaphoreRelease (osSemaphoreId_t semaphore_id) {
   osStatus_t      status;
 
   // Check parameters
-  if ((semaphore == NULL) || (semaphore->id != osRtxIdSemaphore)) {
+  if (!IsSemaphorePtrValid(semaphore) || (semaphore->id != osRtxIdSemaphore)) {
     EvrRtxSemaphoreError(semaphore, (int32_t)osErrorParameter);
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorParameter;
@@ -446,10 +588,9 @@ const char *osSemaphoreGetName (osSemaphoreId_t semaphore_id) {
   const char *name;
 
   if (IsException() || IsIrqMasked()) {
-    EvrRtxSemaphoreGetName(semaphore_id, NULL);
-    name = NULL;
+    name = svcRtxSemaphoreGetName(semaphore_id);
   } else {
-    name = __svcSemaphoreGetName(semaphore_id);
+    name =  __svcSemaphoreGetName(semaphore_id);
   }
   return name;
 }

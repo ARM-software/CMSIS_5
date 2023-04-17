@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2022 Arm Limited. All rights reserved.
+ * Copyright (c) 2013-2023 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -116,6 +116,18 @@ __STATIC_INLINE uint32_t StackOffsetR0 (uint8_t stack_frame) {
 /// \return     true=privileged, false=unprivileged
 __STATIC_INLINE bool_t IsPrivileged (void) {
   return ((__get_CONTROL() & 1U) == 0U);
+}
+
+/// Set thread Privileged mode
+/// \param[in]  privileged      true=privileged, false=unprivileged
+__STATIC_INLINE void SetPrivileged (bool_t privileged) {
+  if (privileged) {
+    // Privileged Thread mode & PSP
+    __set_CONTROL(0x02U);
+  } else {
+    // Unprivileged Thread mode & PSP
+    __set_CONTROL(0x03U);
+  }
 }
 
 /// Check if in Exception
@@ -361,8 +373,13 @@ register uint32_t __r##n __ASM("r"#n)
 #define SVC_ArgR(n,a) \
 register uint32_t __r##n __ASM("r"#n) = (uint32_t)a
 
+#if    (defined(RTX_SVC_PTR_CHECK) && !defined(_lint))
 #define SVC_ArgF(f) \
-register uint32_t __rf   __ASM(SVC_RegF) = (uint32_t)f
+register uint32_t __rf   __ASM(SVC_RegF) = (uint32_t)jmpRtx##f
+#else
+#define SVC_ArgF(f) \
+register uint32_t __rf   __ASM(SVC_RegF) = (uint32_t)svcRtx##f
+#endif
 
 #define SVC_In0 "r"(__rf)
 #define SVC_In1 "r"(__rf),"r"(__r0)
@@ -379,71 +396,117 @@ register uint32_t __rf   __ASM(SVC_RegF) = (uint32_t)f
 #define SVC_Call0(in, out, cl)                                                 \
   __ASM volatile ("svc 0" : out : in : cl)
 
+#if    (defined(RTX_SVC_PTR_CHECK) && !defined(_lint))
+#if   ((defined(__ARM_ARCH_7M__)        && (__ARM_ARCH_7M__        != 0)) ||   \
+       (defined(__ARM_ARCH_7EM__)       && (__ARM_ARCH_7EM__       != 0)) ||   \
+       (defined(__ARM_ARCH_8M_MAIN__)   && (__ARM_ARCH_8M_MAIN__   != 0)) ||   \
+       (defined(__ARM_ARCH_8_1M_MAIN__) && (__ARM_ARCH_8_1M_MAIN__ != 0)))
+#define SVC_Jump(f)                                                            \
+  __ASM volatile (                                                             \
+    ".align 2\n\t"                                                             \
+    "b.w %[adr]" : : [adr] "X" (f)                                             \
+  )
+#elif ((defined(__ARM_ARCH_6M__)        && (__ARM_ARCH_6M__        != 0)) ||   \
+       (defined(__ARM_ARCH_8M_BASE__)   && (__ARM_ARCH_8M_BASE__   != 0)))
+#define SVC_Jump(f)                                                            \
+  __ASM volatile (                                                             \
+    ".align 3\n\t"                                                             \
+    "ldr r7,1f\n\t"                                                            \
+    "bx  r7\n"                                                                 \
+    "1: .word %[adr]" : : [adr] "X" (f)                                        \
+  )
+#endif
+#define SVC_Veneer_Prototye(f)                                                 \
+__STATIC_INLINE void jmpRtx##f (void);
+#define SVC_Veneer_Function(f)                                                 \
+__attribute__((naked,section(".text.os.svc.veneer."#f)))                       \
+__STATIC_INLINE void jmpRtx##f (void) {                                        \
+  SVC_Jump(svcRtx##f);                                                         \
+}
+#else
+#define SVC_Veneer_Prototye(f)
+#define SVC_Veneer_Function(f)
+#endif
+
 #define SVC0_0N(f,t)                                                           \
+SVC_Veneer_Prototye(f)                                                         \
 __attribute__((always_inline))                                                 \
 __STATIC_INLINE t __svc##f (void) {                                            \
-  SVC_ArgF(svcRtx##f);                                                         \
+  SVC_ArgF(f);                                                                 \
   SVC_Call0(SVC_In0, SVC_Out0, SVC_CL1);                                       \
-}
+}                                                                              \
+SVC_Veneer_Function(f)
 
 #define SVC0_0(f,t)                                                            \
+SVC_Veneer_Prototye(f)                                                         \
 __attribute__((always_inline))                                                 \
 __STATIC_INLINE t __svc##f (void) {                                            \
   SVC_ArgN(0);                                                                 \
-  SVC_ArgF(svcRtx##f);                                                         \
+  SVC_ArgF(f);                                                                 \
   SVC_Call0(SVC_In0, SVC_Out1, SVC_CL0);                                       \
   return (t) __r0;                                                             \
-}
+}                                                                              \
+SVC_Veneer_Function(f)
 
 #define SVC0_1N(f,t,t1)                                                        \
+SVC_Veneer_Prototye(f)                                                         \
 __attribute__((always_inline))                                                 \
 __STATIC_INLINE t __svc##f (t1 a1) {                                           \
   SVC_ArgR(0,a1);                                                              \
-  SVC_ArgF(svcRtx##f);                                                         \
+  SVC_ArgF(f);                                                                 \
   SVC_Call0(SVC_In1, SVC_Out1, SVC_CL0);                                       \
-}
+}                                                                              \
+SVC_Veneer_Function(f)
 
 #define SVC0_1(f,t,t1)                                                         \
+SVC_Veneer_Prototye(f)                                                         \
 __attribute__((always_inline))                                                 \
 __STATIC_INLINE t __svc##f (t1 a1) {                                           \
   SVC_ArgR(0,a1);                                                              \
-  SVC_ArgF(svcRtx##f);                                                         \
+  SVC_ArgF(f);                                                                 \
   SVC_Call0(SVC_In1, SVC_Out1, SVC_CL0);                                       \
   return (t) __r0;                                                             \
-}
+}                                                                              \
+SVC_Veneer_Function(f)
 
 #define SVC0_2(f,t,t1,t2)                                                      \
+SVC_Veneer_Prototye(f)                                                         \
 __attribute__((always_inline))                                                 \
 __STATIC_INLINE t __svc##f (t1 a1, t2 a2) {                                    \
   SVC_ArgR(0,a1);                                                              \
   SVC_ArgR(1,a2);                                                              \
-  SVC_ArgF(svcRtx##f);                                                         \
+  SVC_ArgF(f);                                                                 \
   SVC_Call0(SVC_In2, SVC_Out1, SVC_CL0);                                       \
   return (t) __r0;                                                             \
-}
+}                                                                              \
+SVC_Veneer_Function(f)
 
 #define SVC0_3(f,t,t1,t2,t3)                                                   \
+SVC_Veneer_Prototye(f)                                                         \
 __attribute__((always_inline))                                                 \
 __STATIC_INLINE t __svc##f (t1 a1, t2 a2, t3 a3) {                             \
   SVC_ArgR(0,a1);                                                              \
   SVC_ArgR(1,a2);                                                              \
   SVC_ArgR(2,a3);                                                              \
-  SVC_ArgF(svcRtx##f);                                                         \
+  SVC_ArgF(f);                                                                 \
   SVC_Call0(SVC_In3, SVC_Out1, SVC_CL0);                                       \
   return (t) __r0;                                                             \
-}
+}                                                                              \
+SVC_Veneer_Function(f)
 
 #define SVC0_4(f,t,t1,t2,t3,t4)                                                \
+SVC_Veneer_Prototye(f)                                                         \
 __attribute__((always_inline))                                                 \
 __STATIC_INLINE t __svc##f (t1 a1, t2 a2, t3 a3, t4 a4) {                      \
   SVC_ArgR(0,a1);                                                              \
   SVC_ArgR(1,a2);                                                              \
   SVC_ArgR(2,a3);                                                              \
   SVC_ArgR(3,a4);                                                              \
-  SVC_ArgF(svcRtx##f);                                                         \
+  SVC_ArgF(f);                                                                 \
   SVC_Call0(SVC_In4, SVC_Out1, SVC_CL0);                                       \
   return (t) __r0;                                                             \
-}
+}                                                                              \
+SVC_Veneer_Function(f)
 
 #endif
 

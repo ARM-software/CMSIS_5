@@ -105,24 +105,25 @@ The event \b KernelError is generated when \ref CMSIS_RTOS_KernelCtrl routines c
 The status parameter indicates the execution status and can be one of the \ref osStatus_t "osStatus_t codes" or one
 of the extended execution status codes which are summarized in the table below.
 
-|      Extended Status Code     | Description |
-|:------------------------------|:------------|
-| osRtxErrorKernelNotReady      | Kernel scheduler is not in Ready state. |
-| osRtxErrorKernelNotRunning    | Kernel scheduler is not executing - there is no running thread. |
-| osRtxErrorInvalidControlBlock | Object control block with invalid alignment or size was specified. |
-| osRtxErrorInvalidDataMemory   | Object data memory with invalid alignment or size was specified. |
-| osRtxErrorInvalidThreadStack  | Thread stack memory with invalid alignment or size was specified. |
-| osRtxErrorInvalidPriority     | Invalid thread priority was specified. |
-| osRtxErrorThreadNotJoinable   | Specified thread is not joinable. |
-| osRtxErrorMutexNotOwned       | Specified mutex is not owned by the current running thread. |
-| osRtxErrorMutexNotLocked      | Specified mutex is not locked. |
-| osRtxErrorMutexLockLimit      | Maximum number of recursive mutex locks reached. |
-| osRtxErrorSemaphoreCountLimit | Semaphore count limit reached. |
-| osRtxErrorTZ_InitContext_S    | Secure context memory system initialization failed. |
-| osRtxErrorTZ_AllocContext_S   | Secure context memory allocation failed. |
-| osRtxErrorTZ_FreeContext_S    | Secure context memory deallocation failed. |
-| osRtxErrorTZ_LoadContext_S    | Secure context load failed. |
-| osRtxErrorTZ_SaveContext_S    | Secure context save failed. |
+|      Extended Status Code       | Description |
+|:--------------------------------|:------------|
+| osRtxErrorKernelNotReady        | Kernel scheduler is not in Ready state. |
+| osRtxErrorKernelNotRunning      | Kernel scheduler is not executing - there is no running thread. |
+| osRtxErrorInvalidControlBlock   | Object control block with invalid alignment or size was specified. |
+| osRtxErrorInvalidDataMemory     | Object data memory with invalid alignment or size was specified. |
+| osRtxErrorInvalidThreadStack    | Thread stack memory with invalid alignment or size was specified. |
+| osRtxErrorInvalidPriority       | Invalid thread priority was specified. |
+| osRtxErrorInvalidPrivilegedMode | Privileged thread cannot be created - kernel protect privileged is active. |
+| osRtxErrorThreadNotJoinable     | Specified thread is not joinable. |
+| osRtxErrorMutexNotOwned         | Specified mutex is not owned by the current running thread. |
+| osRtxErrorMutexNotLocked        | Specified mutex is not locked. |
+| osRtxErrorMutexLockLimit        | Maximum number of recursive mutex locks reached. |
+| osRtxErrorSemaphoreCountLimit   | Semaphore count limit reached. |
+| osRtxErrorTZ_InitContext_S      | Secure context memory system initialization failed. |
+| osRtxErrorTZ_AllocContext_S     | Secure context memory allocation failed. |
+| osRtxErrorTZ_FreeContext_S      | Secure context memory deallocation failed. |
+| osRtxErrorTZ_LoadContext_S      | Secure context load failed. |
+| osRtxErrorTZ_SaveContext_S      | Secure context save failed. |
 
 \b Value in the Event Recorder shows:
   - \b status : execution status code.
@@ -262,6 +263,21 @@ The event \b KernelResumed is generated when the function \ref osKernelResume su
 */
 
 /**
+\fn void EvrRtxKernelProtect (uint32_t safety_class)
+\details
+The event \b KernelProtect is generated when the function \ref osKernelProtect is called.
+
+\b Value in the Event Recorder shows:
+  - \b safety_class : safety class value.
+*/
+
+/**
+\fn void EvrRtxKernelProtected (void)
+\details
+The event \b KernelProtected is generated when the function \ref osKernelProtect successfully applies kernel safety class protection.
+*/
+
+/**
 \fn void EvrRtxKernelGetTickCount (uint32_t count)
 \details
 The event \b KernelGetTickCount is generated when the function \ref osKernelGetTickCount is called.
@@ -306,6 +322,16 @@ The event \b KernelErrorNotify is generated when the function \ref osRtxErrorNot
   - \b code : error code. 
   - \b object_id : object that caused the error.
 */
+
+/**
+\fn void EvrRtxKernelDestroyClass (uint32_t safety_class, uint32_t mode)
+\details
+The event \b KernelDestroyClass is generated when the function \ref osKernelDestroyClass is called.
+
+\b Value in the Event Recorder shows:
+  - \b safety_class : safety class value. 
+  - \b mode : operation mode.
+*/
 */
 
 /**
@@ -327,24 +353,25 @@ The event \b ThreadError is generated when \ref CMSIS_RTOS_ThreadMgmt routines c
 The status parameter indicates the execution status and can be one of the \ref osStatus_t "osStatus_t codes" or one
 of the extended execution status codes which are summarized in the table below.
 
-|      Extended Status Code     | Description |
-|:------------------------------|:------------|
-| osRtxErrorKernelNotReady      | Kernel scheduler is not in Ready state. |
-| osRtxErrorKernelNotRunning    | Kernel scheduler is not executing - there is no running thread. |
-| osRtxErrorInvalidControlBlock | Object control block with invalid alignment or size was specified. |
-| osRtxErrorInvalidDataMemory   | Object data memory with invalid alignment or size was specified. |
-| osRtxErrorInvalidThreadStack  | Thread stack memory with invalid alignment or size was specified. |
-| osRtxErrorInvalidPriority     | Invalid thread priority was specified. |
-| osRtxErrorThreadNotJoinable   | Specified thread is not joinable. |
-| osRtxErrorMutexNotOwned       | Specified mutex is not owned by the current running thread. |
-| osRtxErrorMutexNotLocked      | Specified mutex is not locked. |
-| osRtxErrorMutexLockLimit      | Maximum number of recursive mutex locks reached. |
-| osRtxErrorSemaphoreCountLimit | Semaphore count limit reached. |
-| osRtxErrorTZ_InitContext_S    | Secure context memory system initialization failed. |
-| osRtxErrorTZ_AllocContext_S   | Secure context memory allocation failed. |
-| osRtxErrorTZ_FreeContext_S    | Secure context memory deallocation failed. |
-| osRtxErrorTZ_LoadContext_S    | Secure context load failed. |
-| osRtxErrorTZ_SaveContext_S    | Secure context save failed. |
+|      Extended Status Code       | Description |
+|:--------------------------------|:------------|
+| osRtxErrorKernelNotReady        | Kernel scheduler is not in Ready state. |
+| osRtxErrorKernelNotRunning      | Kernel scheduler is not executing - there is no running thread. |
+| osRtxErrorInvalidControlBlock   | Object control block with invalid alignment or size was specified. |
+| osRtxErrorInvalidDataMemory     | Object data memory with invalid alignment or size was specified. |
+| osRtxErrorInvalidThreadStack    | Thread stack memory with invalid alignment or size was specified. |
+| osRtxErrorInvalidPriority       | Invalid thread priority was specified. |
+| osRtxErrorInvalidPrivilegedMode | Privileged thread cannot be created - kernel protect privileged is active. |
+| osRtxErrorThreadNotJoinable     | Specified thread is not joinable. |
+| osRtxErrorMutexNotOwned         | Specified mutex is not owned by the current running thread. |
+| osRtxErrorMutexNotLocked        | Specified mutex is not locked. |
+| osRtxErrorMutexLockLimit        | Maximum number of recursive mutex locks reached. |
+| osRtxErrorSemaphoreCountLimit   | Semaphore count limit reached. |
+| osRtxErrorTZ_InitContext_S      | Secure context memory system initialization failed. |
+| osRtxErrorTZ_AllocContext_S     | Secure context memory allocation failed. |
+| osRtxErrorTZ_FreeContext_S      | Secure context memory deallocation failed. |
+| osRtxErrorTZ_LoadContext_S      | Secure context load failed. |
+| osRtxErrorTZ_SaveContext_S      | Secure context save failed. |
 
 \b Value in the Event Recorder shows:
   - \b thread_id : thread ID.
@@ -379,6 +406,26 @@ The event \b ThreadGetName is generated when the function \ref osThreadGetName i
 \b Value in the Event Recorder shows:
   - \b thread_id : thread ID.
   - \b name : retrieved memory address of name string (0 in case of a failure).
+*/
+
+/**
+\fn void EvrRtxThreadGetClass (osThreadId_t thread_id, uint32_t safety_class)
+\details
+The event \b ThreadGetClass is generated when the function \ref osThreadGetClass is called and its execution result is known.
+
+\b Value in the Event Recorder shows:
+  - \b thread_id : thread ID.
+  - \b safety_class : retrieved safety class value (osErrorId in case of a failure).
+*/
+
+/**
+\fn void EvrRtxThreadGetZone (osThreadId_t thread_id, uint32_t zone)
+\details
+The event \b ThreadGetZone is generated when the function \ref osThreadGetZone is called and its execution result is known.
+
+\b Value in the Event Recorder shows:
+  - \b thread_id : thread ID.
+  - \b zone : retrieved MPU Protected Zone value (osErrorId in case of a failure).
 */
 
 /**
@@ -600,6 +647,34 @@ The event \b ThreadDestroyed is generated when the function \ref osThreadExit or
 */
 
 /**
+\fn void EvrRtxThreadFeedWatchdog (uint32_t ticks)
+\details
+
+The event \b ThreadFeedWatchdog is generated when the function \ref osThreadFeedWatchdog is called.
+
+\b Value in the Event Recorder shows:
+  - \b ticks : watchdog timeout in number of kernel ticks.
+*/
+
+/**
+\fn void EvrRtxThreadFeedWatchdogDone (void)
+\details
+The event \b ThreadFeedWatchdogDone is generated when the function \ref osThreadFeedWatchdog successfully feeds the watchdog timer.
+*/
+
+/**
+\fn void EvrRtxThreadProtectPrivileged (void)
+\details
+The event \b ThreadProtectPrivileged is generated when the function \ref osThreadProtectPrivileged is called.
+*/
+
+/**
+\fn void EvrRtxThreadPrivilegedProtected (void)
+\details
+The event \b ThreadPrivilegedProtected is generated when the function \ref osThreadProtectPrivileged successfully applies the new privileged thread creation protection.
+*/
+
+/**
 \fn void EvrRtxThreadGetCount (uint32_t count)
 \details
 The event \b ThreadGetCount is generated when the function \ref osThreadGetCount is called and its execution result is known.
@@ -617,6 +692,44 @@ The event \b ThreadEnumerate is generated when the function \ref osThreadEnumera
   - \b thread_array : memory address of array for retrieving thread IDs.
   - \b array_items : maximum number of items in thread_array.
   - \b count : number of enumerated threads (0 in case of a failure).
+*/
+
+/**
+\fn void EvrRtxThreadSuspendClass (uint32_t safety_class, uint32_t mode)
+\details
+The event \b ThreadSuspendClass is generated when the function \ref osThreadSuspendClass is called.
+
+\b Value in the Event Recorder shows:
+  - \b safety_class : safety class value.
+  - \b mode : operation mode.
+*/
+
+/**
+\fn void EvrRtxThreadResumeClass (uint32_t safety_class, uint32_t mode)
+\details
+The event \b ThreadResumeClass is generated when the function \ref osThreadResumeClass is called.
+
+\b Value in the Event Recorder shows:
+  - \b safety_class : safety class value.
+  - \b mode : operation mode.
+*/
+
+/**
+\fn void EvrRtxThreadTerminateZone (uint32_t zone)
+\details
+The event \b ThreadTerminateZone is generated when the function \ref osThreadTerminateZone is called.
+
+\b Value in the Event Recorder shows:
+  - \b zone : MPU Protected Zone value.
+*/
+
+/**
+\fn void EvrRtxThreadWatchdogExpired (osThreadId_t thread_id)
+\details
+The event \b ThreadWatchdogExpired is generated when the thread watchdog timer expires.
+
+\b Value in the Event Recorder shows:
+  - \b thread_id : thread ID.
 */
 
 /**
@@ -638,24 +751,25 @@ The event \b DelayError is generated when \ref CMSIS_RTOS_Wait routines complete
 The status parameter indicates the execution status and can be one of the \ref osStatus_t "osStatus_t codes" or one
 of the extended execution status codes which are summarized in the table below.
 
-|      Extended Status Code     | Description |
-|:------------------------------|:------------|
-| osRtxErrorKernelNotReady      | Kernel scheduler is not in Ready state. |
-| osRtxErrorKernelNotRunning    | Kernel scheduler is not executing - there is no running thread. |
-| osRtxErrorInvalidControlBlock | Object control block with invalid alignment or size was specified. |
-| osRtxErrorInvalidDataMemory   | Object data memory with invalid alignment or size was specified. |
-| osRtxErrorInvalidThreadStack  | Thread stack memory with invalid alignment or size was specified. |
-| osRtxErrorInvalidPriority     | Invalid thread priority was specified. |
-| osRtxErrorThreadNotJoinable   | Specified thread is not joinable. |
-| osRtxErrorMutexNotOwned       | Specified mutex is not owned by the current running thread. |
-| osRtxErrorMutexNotLocked      | Specified mutex is not locked. |
-| osRtxErrorMutexLockLimit      | Maximum number of recursive mutex locks reached. |
-| osRtxErrorSemaphoreCountLimit | Semaphore count limit reached. |
-| osRtxErrorTZ_InitContext_S    | Secure context memory system initialization failed. |
-| osRtxErrorTZ_AllocContext_S   | Secure context memory allocation failed. |
-| osRtxErrorTZ_FreeContext_S    | Secure context memory deallocation failed. |
-| osRtxErrorTZ_LoadContext_S    | Secure context load failed. |
-| osRtxErrorTZ_SaveContext_S    | Secure context save failed. |
+|      Extended Status Code       | Description |
+|:--------------------------------|:------------|
+| osRtxErrorKernelNotReady        | Kernel scheduler is not in Ready state. |
+| osRtxErrorKernelNotRunning      | Kernel scheduler is not executing - there is no running thread. |
+| osRtxErrorInvalidControlBlock   | Object control block with invalid alignment or size was specified. |
+| osRtxErrorInvalidDataMemory     | Object data memory with invalid alignment or size was specified. |
+| osRtxErrorInvalidThreadStack    | Thread stack memory with invalid alignment or size was specified. |
+| osRtxErrorInvalidPriority       | Invalid thread priority was specified. |
+| osRtxErrorInvalidPrivilegedMode | Privileged thread cannot be created - kernel protect privileged is active. |
+| osRtxErrorThreadNotJoinable     | Specified thread is not joinable. |
+| osRtxErrorMutexNotOwned         | Specified mutex is not owned by the current running thread. |
+| osRtxErrorMutexNotLocked        | Specified mutex is not locked. |
+| osRtxErrorMutexLockLimit        | Maximum number of recursive mutex locks reached. |
+| osRtxErrorSemaphoreCountLimit   | Semaphore count limit reached. |
+| osRtxErrorTZ_InitContext_S      | Secure context memory system initialization failed. |
+| osRtxErrorTZ_AllocContext_S     | Secure context memory allocation failed. |
+| osRtxErrorTZ_FreeContext_S      | Secure context memory deallocation failed. |
+| osRtxErrorTZ_LoadContext_S      | Secure context load failed. |
+| osRtxErrorTZ_SaveContext_S      | Secure context save failed. |
 
 \b Value in the Event Recorder shows:
   - \b status : execution status code.
@@ -725,24 +839,25 @@ The event \b ThreadFlagsError is generated when \ref CMSIS_RTOS_ThreadFlagsMgmt 
 The status parameter indicates the execution status and can be one of the \ref osStatus_t "osStatus_t codes" or one
 of the extended execution status codes which are summarized in the table below.
 
-|      Extended Status Code     | Description |
-|:------------------------------|:------------|
-| osRtxErrorKernelNotReady      | Kernel scheduler is not in Ready state. |
-| osRtxErrorKernelNotRunning    | Kernel scheduler is not executing - there is no running thread. |
-| osRtxErrorInvalidControlBlock | Object control block with invalid alignment or size was specified. |
-| osRtxErrorInvalidDataMemory   | Object data memory with invalid alignment or size was specified. |
-| osRtxErrorInvalidThreadStack  | Thread stack memory with invalid alignment or size was specified. |
-| osRtxErrorInvalidPriority     | Invalid thread priority was specified. |
-| osRtxErrorThreadNotJoinable   | Specified thread is not joinable. |
-| osRtxErrorMutexNotOwned       | Specified mutex is not owned by the current running thread. |
-| osRtxErrorMutexNotLocked      | Specified mutex is not locked. |
-| osRtxErrorMutexLockLimit      | Maximum number of recursive mutex locks reached. |
-| osRtxErrorSemaphoreCountLimit | Semaphore count limit reached. |
-| osRtxErrorTZ_InitContext_S    | Secure context memory system initialization failed. |
-| osRtxErrorTZ_AllocContext_S   | Secure context memory allocation failed. |
-| osRtxErrorTZ_FreeContext_S    | Secure context memory deallocation failed. |
-| osRtxErrorTZ_LoadContext_S    | Secure context load failed. |
-| osRtxErrorTZ_SaveContext_S    | Secure context save failed. |
+|      Extended Status Code       | Description |
+|:--------------------------------|:------------|
+| osRtxErrorKernelNotReady        | Kernel scheduler is not in Ready state. |
+| osRtxErrorKernelNotRunning      | Kernel scheduler is not executing - there is no running thread. |
+| osRtxErrorInvalidControlBlock   | Object control block with invalid alignment or size was specified. |
+| osRtxErrorInvalidDataMemory     | Object data memory with invalid alignment or size was specified. |
+| osRtxErrorInvalidThreadStack    | Thread stack memory with invalid alignment or size was specified. |
+| osRtxErrorInvalidPriority       | Invalid thread priority was specified. |
+| osRtxErrorInvalidPrivilegedMode | Privileged thread cannot be created - kernel protect privileged is active. |
+| osRtxErrorThreadNotJoinable     | Specified thread is not joinable. |
+| osRtxErrorMutexNotOwned         | Specified mutex is not owned by the current running thread. |
+| osRtxErrorMutexNotLocked        | Specified mutex is not locked. |
+| osRtxErrorMutexLockLimit        | Maximum number of recursive mutex locks reached. |
+| osRtxErrorSemaphoreCountLimit   | Semaphore count limit reached. |
+| osRtxErrorTZ_InitContext_S      | Secure context memory system initialization failed. |
+| osRtxErrorTZ_AllocContext_S     | Secure context memory allocation failed. |
+| osRtxErrorTZ_FreeContext_S      | Secure context memory deallocation failed. |
+| osRtxErrorTZ_LoadContext_S      | Secure context load failed. |
+| osRtxErrorTZ_SaveContext_S      | Secure context save failed. |
 
 \b Value in the Event Recorder shows:
   - \b thread_id : thread ID.
@@ -868,24 +983,25 @@ The event \b EventFlagsError is generated when \ref CMSIS_RTOS_EventFlags routin
 The status parameter indicates the execution status and can be one of the \ref osStatus_t "osStatus_t codes" or one
 of the extended execution status codes which are summarized in the table below.
 
-|      Extended Status Code     | Description |
-|:------------------------------|:------------|
-| osRtxErrorKernelNotReady      | Kernel scheduler is not in Ready state. |
-| osRtxErrorKernelNotRunning    | Kernel scheduler is not executing - there is no running thread. |
-| osRtxErrorInvalidControlBlock | Object control block with invalid alignment or size was specified. |
-| osRtxErrorInvalidDataMemory   | Object data memory with invalid alignment or size was specified. |
-| osRtxErrorInvalidThreadStack  | Thread stack memory with invalid alignment or size was specified. |
-| osRtxErrorInvalidPriority     | Invalid thread priority was specified. |
-| osRtxErrorThreadNotJoinable   | Specified thread is not joinable. |
-| osRtxErrorMutexNotOwned       | Specified mutex is not owned by the current running thread. |
-| osRtxErrorMutexNotLocked      | Specified mutex is not locked. |
-| osRtxErrorMutexLockLimit      | Maximum number of recursive mutex locks reached. |
-| osRtxErrorSemaphoreCountLimit | Semaphore count limit reached. |
-| osRtxErrorTZ_InitContext_S    | Secure context memory system initialization failed. |
-| osRtxErrorTZ_AllocContext_S   | Secure context memory allocation failed. |
-| osRtxErrorTZ_FreeContext_S    | Secure context memory deallocation failed. |
-| osRtxErrorTZ_LoadContext_S    | Secure context load failed. |
-| osRtxErrorTZ_SaveContext_S    | Secure context save failed. |
+|      Extended Status Code       | Description |
+|:--------------------------------|:------------|
+| osRtxErrorKernelNotReady        | Kernel scheduler is not in Ready state. |
+| osRtxErrorKernelNotRunning      | Kernel scheduler is not executing - there is no running thread. |
+| osRtxErrorInvalidControlBlock   | Object control block with invalid alignment or size was specified. |
+| osRtxErrorInvalidDataMemory     | Object data memory with invalid alignment or size was specified. |
+| osRtxErrorInvalidThreadStack    | Thread stack memory with invalid alignment or size was specified. |
+| osRtxErrorInvalidPriority       | Invalid thread priority was specified. |
+| osRtxErrorInvalidPrivilegedMode | Privileged thread cannot be created - kernel protect privileged is active. |
+| osRtxErrorThreadNotJoinable     | Specified thread is not joinable. |
+| osRtxErrorMutexNotOwned         | Specified mutex is not owned by the current running thread. |
+| osRtxErrorMutexNotLocked        | Specified mutex is not locked. |
+| osRtxErrorMutexLockLimit        | Maximum number of recursive mutex locks reached. |
+| osRtxErrorSemaphoreCountLimit   | Semaphore count limit reached. |
+| osRtxErrorTZ_InitContext_S      | Secure context memory system initialization failed. |
+| osRtxErrorTZ_AllocContext_S     | Secure context memory allocation failed. |
+| osRtxErrorTZ_FreeContext_S      | Secure context memory deallocation failed. |
+| osRtxErrorTZ_LoadContext_S      | Secure context load failed. |
+| osRtxErrorTZ_SaveContext_S      | Secure context save failed. |
 
 \b Value in the Event Recorder shows:
   - \b ef_id : event flags ID.
@@ -1063,24 +1179,25 @@ The event \b TimerError is generated when \ref CMSIS_RTOS_TimerMgmt routines com
 The status parameter indicates the execution status and can be one of the \ref osStatus_t "osStatus_t codes" or one
 of the extended execution status codes which are summarized in the table below.
 
-|      Extended Status Code     | Description |
-|:------------------------------|:------------|
-| osRtxErrorKernelNotReady      | Kernel scheduler is not in Ready state. |
-| osRtxErrorKernelNotRunning    | Kernel scheduler is not executing - there is no running thread. |
-| osRtxErrorInvalidControlBlock | Object control block with invalid alignment or size was specified. |
-| osRtxErrorInvalidDataMemory   | Object data memory with invalid alignment or size was specified. |
-| osRtxErrorInvalidThreadStack  | Thread stack memory with invalid alignment or size was specified. |
-| osRtxErrorInvalidPriority     | Invalid thread priority was specified. |
-| osRtxErrorThreadNotJoinable   | Specified thread is not joinable. |
-| osRtxErrorMutexNotOwned       | Specified mutex is not owned by the current running thread. |
-| osRtxErrorMutexNotLocked      | Specified mutex is not locked. |
-| osRtxErrorMutexLockLimit      | Maximum number of recursive mutex locks reached. |
-| osRtxErrorSemaphoreCountLimit | Semaphore count limit reached. |
-| osRtxErrorTZ_InitContext_S    | Secure context memory system initialization failed. |
-| osRtxErrorTZ_AllocContext_S   | Secure context memory allocation failed. |
-| osRtxErrorTZ_FreeContext_S    | Secure context memory deallocation failed. |
-| osRtxErrorTZ_LoadContext_S    | Secure context load failed. |
-| osRtxErrorTZ_SaveContext_S    | Secure context save failed. |
+|      Extended Status Code       | Description |
+|:--------------------------------|:------------|
+| osRtxErrorKernelNotReady        | Kernel scheduler is not in Ready state. |
+| osRtxErrorKernelNotRunning      | Kernel scheduler is not executing - there is no running thread. |
+| osRtxErrorInvalidControlBlock   | Object control block with invalid alignment or size was specified. |
+| osRtxErrorInvalidDataMemory     | Object data memory with invalid alignment or size was specified. |
+| osRtxErrorInvalidThreadStack    | Thread stack memory with invalid alignment or size was specified. |
+| osRtxErrorInvalidPriority       | Invalid thread priority was specified. |
+| osRtxErrorInvalidPrivilegedMode | Privileged thread cannot be created - kernel protect privileged is active. |
+| osRtxErrorThreadNotJoinable     | Specified thread is not joinable. |
+| osRtxErrorMutexNotOwned         | Specified mutex is not owned by the current running thread. |
+| osRtxErrorMutexNotLocked        | Specified mutex is not locked. |
+| osRtxErrorMutexLockLimit        | Maximum number of recursive mutex locks reached. |
+| osRtxErrorSemaphoreCountLimit   | Semaphore count limit reached. |
+| osRtxErrorTZ_InitContext_S      | Secure context memory system initialization failed. |
+| osRtxErrorTZ_AllocContext_S     | Secure context memory allocation failed. |
+| osRtxErrorTZ_FreeContext_S      | Secure context memory deallocation failed. |
+| osRtxErrorTZ_LoadContext_S      | Secure context load failed. |
+| osRtxErrorTZ_SaveContext_S      | Secure context save failed. |
 
 \b Value in the Event Recorder shows:
   - \b timer_id : timer ID.
@@ -1212,24 +1329,25 @@ The event \b MutexError is generated when \ref CMSIS_RTOS_MutexMgmt routines com
 The status parameter indicates the execution status and can be one of the \ref osStatus_t "osStatus_t codes" or one
 of the extended execution status codes which are summarized in the table below.
 
-|      Extended Status Code     | Description |
-|:------------------------------|:------------|
-| osRtxErrorKernelNotReady      | Kernel scheduler is not in Ready state. |
-| osRtxErrorKernelNotRunning    | Kernel scheduler is not executing - there is no running thread. |
-| osRtxErrorInvalidControlBlock | Object control block with invalid alignment or size was specified. |
-| osRtxErrorInvalidDataMemory   | Object data memory with invalid alignment or size was specified. |
-| osRtxErrorInvalidThreadStack  | Thread stack memory with invalid alignment or size was specified. |
-| osRtxErrorInvalidPriority     | Invalid thread priority was specified. |
-| osRtxErrorThreadNotJoinable   | Specified thread is not joinable. |
-| osRtxErrorMutexNotOwned       | Specified mutex is not owned by the current running thread. |
-| osRtxErrorMutexNotLocked      | Specified mutex is not locked. |
-| osRtxErrorMutexLockLimit      | Maximum number of recursive mutex locks reached. |
-| osRtxErrorSemaphoreCountLimit | Semaphore count limit reached. |
-| osRtxErrorTZ_InitContext_S    | Secure context memory system initialization failed. |
-| osRtxErrorTZ_AllocContext_S   | Secure context memory allocation failed. |
-| osRtxErrorTZ_FreeContext_S    | Secure context memory deallocation failed. |
-| osRtxErrorTZ_LoadContext_S    | Secure context load failed. |
-| osRtxErrorTZ_SaveContext_S    | Secure context save failed. |
+|      Extended Status Code       | Description |
+|:--------------------------------|:------------|
+| osRtxErrorKernelNotReady        | Kernel scheduler is not in Ready state. |
+| osRtxErrorKernelNotRunning      | Kernel scheduler is not executing - there is no running thread. |
+| osRtxErrorInvalidControlBlock   | Object control block with invalid alignment or size was specified. |
+| osRtxErrorInvalidDataMemory     | Object data memory with invalid alignment or size was specified. |
+| osRtxErrorInvalidThreadStack    | Thread stack memory with invalid alignment or size was specified. |
+| osRtxErrorInvalidPriority       | Invalid thread priority was specified. |
+| osRtxErrorInvalidPrivilegedMode | Privileged thread cannot be created - kernel protect privileged is active. |
+| osRtxErrorThreadNotJoinable     | Specified thread is not joinable. |
+| osRtxErrorMutexNotOwned         | Specified mutex is not owned by the current running thread. |
+| osRtxErrorMutexNotLocked        | Specified mutex is not locked. |
+| osRtxErrorMutexLockLimit        | Maximum number of recursive mutex locks reached. |
+| osRtxErrorSemaphoreCountLimit   | Semaphore count limit reached. |
+| osRtxErrorTZ_InitContext_S      | Secure context memory system initialization failed. |
+| osRtxErrorTZ_AllocContext_S     | Secure context memory allocation failed. |
+| osRtxErrorTZ_FreeContext_S      | Secure context memory deallocation failed. |
+| osRtxErrorTZ_LoadContext_S      | Secure context load failed. |
+| osRtxErrorTZ_SaveContext_S      | Secure context save failed. |
 
 \b Value in the Event Recorder shows:
   - \b mutex_id : mutex ID.
@@ -1378,24 +1496,25 @@ The event \b SemaphoreError is generated when \ref CMSIS_RTOS_SemaphoreMgmt rout
 The status parameter indicates the execution status and can be one of the \ref osStatus_t "osStatus_t codes" or one
 of the extended execution status codes which are summarized in the table below.
 
-|      Extended Status Code     | Description |
-|:------------------------------|:------------|
-| osRtxErrorKernelNotReady      | Kernel scheduler is not in Ready state. |
-| osRtxErrorKernelNotRunning    | Kernel scheduler is not executing - there is no running thread. |
-| osRtxErrorInvalidControlBlock | Object control block with invalid alignment or size was specified. |
-| osRtxErrorInvalidDataMemory   | Object data memory with invalid alignment or size was specified. |
-| osRtxErrorInvalidThreadStack  | Thread stack memory with invalid alignment or size was specified. |
-| osRtxErrorInvalidPriority     | Invalid thread priority was specified. |
-| osRtxErrorThreadNotJoinable   | Specified thread is not joinable. |
-| osRtxErrorMutexNotOwned       | Specified mutex is not owned by the current running thread. |
-| osRtxErrorMutexNotLocked      | Specified mutex is not locked. |
-| osRtxErrorMutexLockLimit      | Maximum number of recursive mutex locks reached. |
-| osRtxErrorSemaphoreCountLimit | Semaphore count limit reached. |
-| osRtxErrorTZ_InitContext_S    | Secure context memory system initialization failed. |
-| osRtxErrorTZ_AllocContext_S   | Secure context memory allocation failed. |
-| osRtxErrorTZ_FreeContext_S    | Secure context memory deallocation failed. |
-| osRtxErrorTZ_LoadContext_S    | Secure context load failed. |
-| osRtxErrorTZ_SaveContext_S    | Secure context save failed. |
+|      Extended Status Code       | Description |
+|:--------------------------------|:------------|
+| osRtxErrorKernelNotReady        | Kernel scheduler is not in Ready state. |
+| osRtxErrorKernelNotRunning      | Kernel scheduler is not executing - there is no running thread. |
+| osRtxErrorInvalidControlBlock   | Object control block with invalid alignment or size was specified. |
+| osRtxErrorInvalidDataMemory     | Object data memory with invalid alignment or size was specified. |
+| osRtxErrorInvalidThreadStack    | Thread stack memory with invalid alignment or size was specified. |
+| osRtxErrorInvalidPriority       | Invalid thread priority was specified. |
+| osRtxErrorInvalidPrivilegedMode | Privileged thread cannot be created - kernel protect privileged is active. |
+| osRtxErrorThreadNotJoinable     | Specified thread is not joinable. |
+| osRtxErrorMutexNotOwned         | Specified mutex is not owned by the current running thread. |
+| osRtxErrorMutexNotLocked        | Specified mutex is not locked. |
+| osRtxErrorMutexLockLimit        | Maximum number of recursive mutex locks reached. |
+| osRtxErrorSemaphoreCountLimit   | Semaphore count limit reached. |
+| osRtxErrorTZ_InitContext_S      | Secure context memory system initialization failed. |
+| osRtxErrorTZ_AllocContext_S     | Secure context memory allocation failed. |
+| osRtxErrorTZ_FreeContext_S      | Secure context memory deallocation failed. |
+| osRtxErrorTZ_LoadContext_S      | Secure context load failed. |
+| osRtxErrorTZ_SaveContext_S      | Secure context save failed. |
 
 \b Value in the Event Recorder shows:
   - \b semaphore_id : semaphore ID.
@@ -1546,24 +1665,25 @@ The event \b MemoryPoolError is generated when \ref CMSIS_RTOS_PoolMgmt routines
 The status parameter indicates the execution status and can be one of the \ref osStatus_t "osStatus_t codes" or one
 of the extended execution status codes which are summarized in the table below.
 
-|      Extended Status Code     | Description |
-|:------------------------------|:------------|
-| osRtxErrorKernelNotReady      | Kernel scheduler is not in Ready state. |
-| osRtxErrorKernelNotRunning    | Kernel scheduler is not executing - there is no running thread. |
-| osRtxErrorInvalidControlBlock | Object control block with invalid alignment or size was specified. |
-| osRtxErrorInvalidDataMemory   | Object data memory with invalid alignment or size was specified. |
-| osRtxErrorInvalidThreadStack  | Thread stack memory with invalid alignment or size was specified. |
-| osRtxErrorInvalidPriority     | Invalid thread priority was specified. |
-| osRtxErrorThreadNotJoinable   | Specified thread is not joinable. |
-| osRtxErrorMutexNotOwned       | Specified mutex is not owned by the current running thread. |
-| osRtxErrorMutexNotLocked      | Specified mutex is not locked. |
-| osRtxErrorMutexLockLimit      | Maximum number of recursive mutex locks reached. |
-| osRtxErrorSemaphoreCountLimit | Semaphore count limit reached. |
-| osRtxErrorTZ_InitContext_S    | Secure context memory system initialization failed. |
-| osRtxErrorTZ_AllocContext_S   | Secure context memory allocation failed. |
-| osRtxErrorTZ_FreeContext_S    | Secure context memory deallocation failed. |
-| osRtxErrorTZ_LoadContext_S    | Secure context load failed. |
-| osRtxErrorTZ_SaveContext_S    | Secure context save failed. |
+|      Extended Status Code       | Description |
+|:--------------------------------|:------------|
+| osRtxErrorKernelNotReady        | Kernel scheduler is not in Ready state. |
+| osRtxErrorKernelNotRunning      | Kernel scheduler is not executing - there is no running thread. |
+| osRtxErrorInvalidControlBlock   | Object control block with invalid alignment or size was specified. |
+| osRtxErrorInvalidDataMemory     | Object data memory with invalid alignment or size was specified. |
+| osRtxErrorInvalidThreadStack    | Thread stack memory with invalid alignment or size was specified. |
+| osRtxErrorInvalidPriority       | Invalid thread priority was specified. |
+| osRtxErrorInvalidPrivilegedMode | Privileged thread cannot be created - kernel protect privileged is active. |
+| osRtxErrorThreadNotJoinable     | Specified thread is not joinable. |
+| osRtxErrorMutexNotOwned         | Specified mutex is not owned by the current running thread. |
+| osRtxErrorMutexNotLocked        | Specified mutex is not locked. |
+| osRtxErrorMutexLockLimit        | Maximum number of recursive mutex locks reached. |
+| osRtxErrorSemaphoreCountLimit   | Semaphore count limit reached. |
+| osRtxErrorTZ_InitContext_S      | Secure context memory system initialization failed. |
+| osRtxErrorTZ_AllocContext_S     | Secure context memory allocation failed. |
+| osRtxErrorTZ_FreeContext_S      | Secure context memory deallocation failed. |
+| osRtxErrorTZ_LoadContext_S      | Secure context load failed. |
+| osRtxErrorTZ_SaveContext_S      | Secure context save failed. |
 
 \b Value in the Event Recorder shows:
   - \b mp_id : memory pool ID.
@@ -1755,24 +1875,25 @@ The event \b MessageQueueError is generated when \ref CMSIS_RTOS_Message routine
 The status parameter indicates the execution status and can be one of the \ref osStatus_t "osStatus_t codes" or one
 of the extended execution status codes which are summarized in the table below.
 
-|      Extended Status Code     | Description |
-|:------------------------------|:------------|
-| osRtxErrorKernelNotReady      | Kernel scheduler is not in Ready state. |
-| osRtxErrorKernelNotRunning    | Kernel scheduler is not executing - there is no running thread. |
-| osRtxErrorInvalidControlBlock | Object control block with invalid alignment or size was specified. |
-| osRtxErrorInvalidDataMemory   | Object data memory with invalid alignment or size was specified. |
-| osRtxErrorInvalidThreadStack  | Thread stack memory with invalid alignment or size was specified. |
-| osRtxErrorInvalidPriority     | Invalid thread priority was specified. |
-| osRtxErrorThreadNotJoinable   | Specified thread is not joinable. |
-| osRtxErrorMutexNotOwned       | Specified mutex is not owned by the current running thread. |
-| osRtxErrorMutexNotLocked      | Specified mutex is not locked. |
-| osRtxErrorMutexLockLimit      | Maximum number of recursive mutex locks reached. |
-| osRtxErrorSemaphoreCountLimit | Semaphore count limit reached. |
-| osRtxErrorTZ_InitContext_S    | Secure context memory system initialization failed. |
-| osRtxErrorTZ_AllocContext_S   | Secure context memory allocation failed. |
-| osRtxErrorTZ_FreeContext_S    | Secure context memory deallocation failed. |
-| osRtxErrorTZ_LoadContext_S    | Secure context load failed. |
-| osRtxErrorTZ_SaveContext_S    | Secure context save failed. |
+|      Extended Status Code       | Description |
+|:--------------------------------|:------------|
+| osRtxErrorKernelNotReady        | Kernel scheduler is not in Ready state. |
+| osRtxErrorKernelNotRunning      | Kernel scheduler is not executing - there is no running thread. |
+| osRtxErrorInvalidControlBlock   | Object control block with invalid alignment or size was specified. |
+| osRtxErrorInvalidDataMemory     | Object data memory with invalid alignment or size was specified. |
+| osRtxErrorInvalidThreadStack    | Thread stack memory with invalid alignment or size was specified. |
+| osRtxErrorInvalidPriority       | Invalid thread priority was specified. |
+| osRtxErrorInvalidPrivilegedMode | Privileged thread cannot be created - kernel protect privileged is active. |
+| osRtxErrorThreadNotJoinable     | Specified thread is not joinable. |
+| osRtxErrorMutexNotOwned         | Specified mutex is not owned by the current running thread. |
+| osRtxErrorMutexNotLocked        | Specified mutex is not locked. |
+| osRtxErrorMutexLockLimit        | Maximum number of recursive mutex locks reached. |
+| osRtxErrorSemaphoreCountLimit   | Semaphore count limit reached. |
+| osRtxErrorTZ_InitContext_S      | Secure context memory system initialization failed. |
+| osRtxErrorTZ_AllocContext_S     | Secure context memory allocation failed. |
+| osRtxErrorTZ_FreeContext_S      | Secure context memory deallocation failed. |
+| osRtxErrorTZ_LoadContext_S      | Secure context load failed. |
+| osRtxErrorTZ_SaveContext_S      | Secure context save failed. |
 
 \b Value in the Event Recorder shows:
   - \b mq_id : message queue ID.

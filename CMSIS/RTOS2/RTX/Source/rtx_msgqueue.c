@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 Arm Limited. All rights reserved.
+ * Copyright (c) 2013-2023 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -155,6 +155,99 @@ static void MessageQueueRemove (os_message_queue_t *mq, const os_message_t *msg)
   }
 }
 
+/// Verify that Message Queue object pointer is valid.
+/// \param[in]  mq              message queue object.
+/// \return true - valid, false - invalid.
+static bool_t IsMessageQueuePtrValid (const os_message_queue_t *mq) {
+#ifdef RTX_OBJ_PTR_CHECK
+  //lint --e{923} --e{9078} "cast from pointer to unsigned int" [MISRA Note 7]
+  uint32_t cb_start  = (uint32_t)&__os_msgqueue_cb_start__;
+  uint32_t cb_length = (uint32_t)&__os_msgqueue_cb_length__;
+
+  // Check the section boundaries
+  if (((uint32_t)mq - cb_start) >= cb_length) {
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
+    return FALSE;
+  }
+  // Check the object alignment
+  if ((((uint32_t)mq - cb_start) % sizeof(os_message_queue_t)) != 0U) {
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
+    return FALSE;
+  }
+#else
+  // Check NULL pointer
+  if (mq == NULL) {
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
+    return FALSE;
+  }
+#endif
+  return TRUE;
+}
+
+
+//  ==== Library functions ====
+
+/// Destroy a Message Queue object.
+/// \param[in]  mq              message queue object.
+static void osRtxMessageQueueDestroy (os_message_queue_t *mq) {
+
+  // Mark object as invalid
+  mq->id = osRtxIdInvalid;
+
+  // Free data memory
+  if ((mq->flags & osRtxFlagSystemMemory) != 0U) {
+    (void)osRtxMemoryFree(osRtxInfo.mem.mq_data, mq->mp_info.block_base);
+  }
+
+  // Free object memory
+  if ((mq->flags & osRtxFlagSystemObject) != 0U) {
+#ifdef RTX_OBJ_PTR_CHECK
+    (void)osRtxMemoryPoolFree(osRtxInfo.mpi.message_queue, mq);
+#else
+    if (osRtxInfo.mpi.message_queue != NULL) {
+      (void)osRtxMemoryPoolFree(osRtxInfo.mpi.message_queue, mq);
+    } else {
+      (void)osRtxMemoryFree(osRtxInfo.mem.common, mq);
+    }
+#endif
+#ifdef RTX_OBJ_MEM_USAGE
+    osRtxMessageQueueMemUsage.cnt_free++;
+#endif
+  }
+
+  EvrRtxMessageQueueDestroyed(mq);
+}
+
+#ifdef RTX_SAFETY_CLASS
+/// Delete a Message Queue safety class.
+/// \param[in]  safety_class    safety class.
+/// \param[in]  mode            safety mode.
+void osRtxMessageQueueDeleteClass (uint32_t safety_class, uint32_t mode) {
+  os_message_queue_t *mq;
+  os_thread_t        *thread;
+  uint32_t            length;
+
+  //lint --e{923} --e{9078} "cast from pointer to unsigned int" [MISRA Note 7]
+  mq     = (os_message_queue_t *)(uint32_t)&__os_msgqueue_cb_start__;
+  length =                       (uint32_t)&__os_msgqueue_cb_length__;
+  while (length >= sizeof(os_message_queue_t)) {
+    if (   (mq->id == osRtxIdMessageQueue) &&
+        ((((mode & osSafetyWithSameClass)  != 0U) &&
+          ((mq->attr >> osRtxAttrClass_Pos) == (uint8_t)safety_class)) ||
+         (((mode & osSafetyWithLowerClass) != 0U) &&
+          ((mq->attr >> osRtxAttrClass_Pos) <  (uint8_t)safety_class)))) {
+      while (mq->thread_list != NULL) {
+        thread = osRtxThreadListGet(osRtxObject(mq));
+        osRtxThreadWaitExit(thread, (uint32_t)osErrorResource, FALSE);
+      }
+      osRtxMessageQueueDestroy(mq);
+    }
+    length -= sizeof(os_message_queue_t);
+    mq++;
+  }
+}
+#endif
+
 
 //  ==== Post ISR processing ====
 
@@ -237,6 +330,10 @@ static void osRtxMessageQueuePostProcess (os_message_t *msg) {
 /// \note API identical to osMessageQueueNew
 static osMessageQueueId_t svcRtxMessageQueueNew (uint32_t msg_count, uint32_t msg_size, const osMessageQueueAttr_t *attr) {
   os_message_queue_t *mq;
+#ifdef RTX_SAFETY_CLASS
+  const os_thread_t  *thread = osRtxThreadGetRunning();
+  uint32_t            attr_bits;
+#endif
   void               *mq_mem;
   uint32_t            mq_size;
   uint32_t            block_size;
@@ -257,15 +354,28 @@ static osMessageQueueId_t svcRtxMessageQueueNew (uint32_t msg_count, uint32_t ms
 
   // Process attributes
   if (attr != NULL) {
-    name    = attr->name;
+    name      = attr->name;
+#ifdef RTX_SAFETY_CLASS
+    attr_bits = attr->attr_bits;
+#endif
     //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 6]
-    mq      = attr->cb_mem;
+    mq        = attr->cb_mem;
     //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 6]
-    mq_mem  = attr->mq_mem;
-    mq_size = attr->mq_size;
+    mq_mem    = attr->mq_mem;
+    mq_size   = attr->mq_size;
+#ifdef RTX_SAFETY_CLASS
+    if ((attr_bits & osSafetyClass_Valid) != 0U) {
+      if ((thread != NULL) &&
+          ((thread->attr >> osRtxAttrClass_Pos) <
+          (uint8_t)((attr_bits & osSafetyClass_Msk) >> osSafetyClass_Pos))) {
+        EvrRtxMessageQueueError(NULL, (int32_t)osErrorSafetyClass);
+        //lint -e{904} "Return statement before end of function" [MISRA Note 1]
+        return NULL;
+      }
+    }
+#endif
     if (mq != NULL) {
-      //lint -e(923) -e(9078) "cast from pointer to unsigned int" [MISRA Note 7]
-      if ((((uint32_t)mq & 3U) != 0U) || (attr->cb_size < sizeof(os_message_queue_t))) {
+      if (!IsMessageQueuePtrValid(mq) || (attr->cb_size != sizeof(os_message_queue_t))) {
         EvrRtxMessageQueueError(NULL, osRtxErrorInvalidControlBlock);
         //lint -e{904} "Return statement before end of function" [MISRA Note 1]
         return NULL;
@@ -292,9 +402,12 @@ static osMessageQueueId_t svcRtxMessageQueueNew (uint32_t msg_count, uint32_t ms
       }
     }
   } else {
-    name   = NULL;
-    mq     = NULL;
-    mq_mem = NULL;
+    name      = NULL;
+#ifdef RTX_SAFETY_CLASS
+    attr_bits = 0U;
+#endif
+    mq        = NULL;
+    mq_mem    = NULL;
   }
 
   // Allocate object memory if not provided
@@ -302,9 +415,11 @@ static osMessageQueueId_t svcRtxMessageQueueNew (uint32_t msg_count, uint32_t ms
     if (osRtxInfo.mpi.message_queue != NULL) {
       //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 5]
       mq = osRtxMemoryPoolAlloc(osRtxInfo.mpi.message_queue);
+#ifndef RTX_OBJ_PTR_CHECK
     } else {
       //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 5]
       mq = osRtxMemoryAlloc(osRtxInfo.mem.common, sizeof(os_message_queue_t), 1U);
+#endif
     }
 #ifdef RTX_OBJ_MEM_USAGE
     if (mq != NULL) {
@@ -327,11 +442,15 @@ static osMessageQueueId_t svcRtxMessageQueueNew (uint32_t msg_count, uint32_t ms
     mq_mem = osRtxMemoryAlloc(osRtxInfo.mem.mq_data, size, 0U);
     if (mq_mem == NULL) {
       if ((flags & osRtxFlagSystemObject) != 0U) {
+#ifdef RTX_OBJ_PTR_CHECK
+        (void)osRtxMemoryPoolFree(osRtxInfo.mpi.message_queue, mq);
+#else
         if (osRtxInfo.mpi.message_queue != NULL) {
           (void)osRtxMemoryPoolFree(osRtxInfo.mpi.message_queue, mq);
         } else {
           (void)osRtxMemoryFree(osRtxInfo.mem.common, mq);
         }
+#endif
 #ifdef RTX_OBJ_MEM_USAGE
         osRtxMessageQueueMemUsage.cnt_free++;
 #endif
@@ -347,12 +466,24 @@ static osMessageQueueId_t svcRtxMessageQueueNew (uint32_t msg_count, uint32_t ms
     // Initialize control block
     mq->id          = osRtxIdMessageQueue;
     mq->flags       = flags;
+    mq->attr        = 0U;
     mq->name        = name;
     mq->thread_list = NULL;
     mq->msg_size    = msg_size;
     mq->msg_count   = 0U;
     mq->msg_first   = NULL;
     mq->msg_last    = NULL;
+#ifdef RTX_SAFETY_CLASS
+    if ((attr_bits & osSafetyClass_Valid) != 0U) {
+      mq->attr     |= (uint8_t)((attr_bits & osSafetyClass_Msk) >>
+                                (osSafetyClass_Pos - osRtxAttrClass_Pos));
+    } else {
+      // Inherit safety class from the running thread
+      if (thread != NULL) {
+        mq->attr   |= (uint8_t)(thread->attr & osRtxAttrClass_Msk);
+      }
+    }
+#endif
     (void)osRtxMemoryPoolInit(&mq->mp_info, msg_count, block_size, mq_mem);
 
     // Register post ISR processing function
@@ -372,7 +503,7 @@ static const char *svcRtxMessageQueueGetName (osMessageQueueId_t mq_id) {
   os_message_queue_t *mq = osRtxMessageQueueId(mq_id);
 
   // Check parameters
-  if ((mq == NULL) || (mq->id != osRtxIdMessageQueue)) {
+  if (!IsMessageQueuePtrValid(mq) || (mq->id != osRtxIdMessageQueue)) {
     EvrRtxMessageQueueGetName(mq, NULL);
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return NULL;
@@ -394,11 +525,22 @@ static osStatus_t svcRtxMessageQueuePut (osMessageQueueId_t mq_id, const void *m
   osStatus_t          status;
 
   // Check parameters
-  if ((mq == NULL) || (mq->id != osRtxIdMessageQueue) || (msg_ptr == NULL)) {
+  if (!IsMessageQueuePtrValid(mq) || (mq->id != osRtxIdMessageQueue) || (msg_ptr == NULL)) {
     EvrRtxMessageQueueError(mq, (int32_t)osErrorParameter);
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorParameter;
   }
+
+#ifdef RTX_SAFETY_CLASS
+  // Check running thread safety class
+  thread = osRtxThreadGetRunning();
+  if ((thread != NULL) &&
+      ((thread->attr >> osRtxAttrClass_Pos) < (mq->attr >> osRtxAttrClass_Pos))) {
+    EvrRtxMessageQueueError(mq, (int32_t)osErrorSafetyClass);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
+    return osErrorSafetyClass;
+  }
+#endif
 
   // Check if Thread is waiting to receive a Message
   if ((mq->thread_list != NULL) && (mq->thread_list->state == osRtxThreadWaitingMessageGet)) {
@@ -463,11 +605,22 @@ static osStatus_t svcRtxMessageQueueGet (osMessageQueueId_t mq_id, void *msg_ptr
   osStatus_t          status;
 
   // Check parameters
-  if ((mq == NULL) || (mq->id != osRtxIdMessageQueue) || (msg_ptr == NULL)) {
+  if (!IsMessageQueuePtrValid(mq) || (mq->id != osRtxIdMessageQueue) || (msg_ptr == NULL)) {
     EvrRtxMessageQueueError(mq, (int32_t)osErrorParameter);
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorParameter;
   }
+
+#ifdef RTX_SAFETY_CLASS
+  // Check running thread safety class
+  thread = osRtxThreadGetRunning();
+  if ((thread != NULL) &&
+      ((thread->attr >> osRtxAttrClass_Pos) < (mq->attr >> osRtxAttrClass_Pos))) {
+    EvrRtxMessageQueueError(mq, (int32_t)osErrorSafetyClass);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
+    return osErrorSafetyClass;
+  }
+#endif
 
   // Get Message from Queue
   msg = MessageQueueGet(mq);
@@ -531,7 +684,7 @@ static uint32_t svcRtxMessageQueueGetCapacity (osMessageQueueId_t mq_id) {
   os_message_queue_t *mq = osRtxMessageQueueId(mq_id);
 
   // Check parameters
-  if ((mq == NULL) || (mq->id != osRtxIdMessageQueue)) {
+  if (!IsMessageQueuePtrValid(mq) || (mq->id != osRtxIdMessageQueue)) {
     EvrRtxMessageQueueGetCapacity(mq, 0U);
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return 0U;
@@ -548,7 +701,7 @@ static uint32_t svcRtxMessageQueueGetMsgSize (osMessageQueueId_t mq_id) {
   os_message_queue_t *mq = osRtxMessageQueueId(mq_id);
 
   // Check parameters
-  if ((mq == NULL) || (mq->id != osRtxIdMessageQueue)) {
+  if (!IsMessageQueuePtrValid(mq) || (mq->id != osRtxIdMessageQueue)) {
     EvrRtxMessageQueueGetMsgSize(mq, 0U);
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return 0U;
@@ -565,7 +718,7 @@ static uint32_t svcRtxMessageQueueGetCount (osMessageQueueId_t mq_id) {
   os_message_queue_t *mq = osRtxMessageQueueId(mq_id);
 
   // Check parameters
-  if ((mq == NULL) || (mq->id != osRtxIdMessageQueue)) {
+  if (!IsMessageQueuePtrValid(mq) || (mq->id != osRtxIdMessageQueue)) {
     EvrRtxMessageQueueGetCount(mq, 0U);
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return 0U;
@@ -582,7 +735,7 @@ static uint32_t svcRtxMessageQueueGetSpace (osMessageQueueId_t mq_id) {
   os_message_queue_t *mq = osRtxMessageQueueId(mq_id);
 
   // Check parameters
-  if ((mq == NULL) || (mq->id != osRtxIdMessageQueue)) {
+  if (!IsMessageQueuePtrValid(mq) || (mq->id != osRtxIdMessageQueue)) {
     EvrRtxMessageQueueGetSpace(mq, 0U);
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return 0U;
@@ -603,11 +756,22 @@ static osStatus_t svcRtxMessageQueueReset (osMessageQueueId_t mq_id) {
   const void         *ptr;
 
   // Check parameters
-  if ((mq == NULL) || (mq->id != osRtxIdMessageQueue)) {
+  if (!IsMessageQueuePtrValid(mq) || (mq->id != osRtxIdMessageQueue)) {
     EvrRtxMessageQueueError(mq, (int32_t)osErrorParameter);
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorParameter;
   }
+
+#ifdef RTX_SAFETY_CLASS
+  // Check running thread safety class
+  thread = osRtxThreadGetRunning();
+  if ((thread != NULL) &&
+      ((thread->attr >> osRtxAttrClass_Pos) < (mq->attr >> osRtxAttrClass_Pos))) {
+    EvrRtxMessageQueueError(mq, (int32_t)osErrorSafetyClass);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
+    return osErrorSafetyClass;
+  }
+#endif
 
   // Remove Messages from Queue
   for (;;) {
@@ -661,11 +825,22 @@ static osStatus_t svcRtxMessageQueueDelete (osMessageQueueId_t mq_id) {
   os_thread_t        *thread;
 
   // Check parameters
-  if ((mq == NULL) || (mq->id != osRtxIdMessageQueue)) {
+  if (!IsMessageQueuePtrValid(mq) || (mq->id != osRtxIdMessageQueue)) {
     EvrRtxMessageQueueError(mq, (int32_t)osErrorParameter);
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorParameter;
   }
+
+#ifdef RTX_SAFETY_CLASS
+  // Check running thread safety class
+  thread = osRtxThreadGetRunning();
+  if ((thread != NULL) &&
+      ((thread->attr >> osRtxAttrClass_Pos) < (mq->attr >> osRtxAttrClass_Pos))) {
+    EvrRtxMessageQueueError(mq, (int32_t)osErrorSafetyClass);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
+    return osErrorSafetyClass;
+  }
+#endif
 
   // Unblock waiting threads
   if (mq->thread_list != NULL) {
@@ -676,27 +851,7 @@ static osStatus_t svcRtxMessageQueueDelete (osMessageQueueId_t mq_id) {
     osRtxThreadDispatch(NULL);
   }
 
-  // Mark object as invalid
-  mq->id = osRtxIdInvalid;
-
-  // Free data memory
-  if ((mq->flags & osRtxFlagSystemMemory) != 0U) {
-    (void)osRtxMemoryFree(osRtxInfo.mem.mq_data, mq->mp_info.block_base);
-  }
-
-  // Free object memory
-  if ((mq->flags & osRtxFlagSystemObject) != 0U) {
-    if (osRtxInfo.mpi.message_queue != NULL) {
-      (void)osRtxMemoryPoolFree(osRtxInfo.mpi.message_queue, mq);
-    } else {
-      (void)osRtxMemoryFree(osRtxInfo.mem.common, mq);
-    }
-#ifdef RTX_OBJ_MEM_USAGE
-    osRtxMessageQueueMemUsage.cnt_free++;
-#endif
-  }
-
-  EvrRtxMessageQueueDestroyed(mq);
+  osRtxMessageQueueDestroy(mq);
 
   return osOK;
 }
@@ -727,7 +882,7 @@ osStatus_t isrRtxMessageQueuePut (osMessageQueueId_t mq_id, const void *msg_ptr,
   osStatus_t          status;
 
   // Check parameters
-  if ((mq == NULL) || (mq->id != osRtxIdMessageQueue) || (msg_ptr == NULL) || (timeout != 0U)) {
+  if (!IsMessageQueuePtrValid(mq) || (mq->id != osRtxIdMessageQueue) || (msg_ptr == NULL) || (timeout != 0U)) {
     EvrRtxMessageQueueError(mq, (int32_t)osErrorParameter);
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorParameter;
@@ -768,7 +923,7 @@ osStatus_t isrRtxMessageQueueGet (osMessageQueueId_t mq_id, void *msg_ptr, uint8
   osStatus_t          status;
 
   // Check parameters
-  if ((mq == NULL) || (mq->id != osRtxIdMessageQueue) || (msg_ptr == NULL) || (timeout != 0U)) {
+  if (!IsMessageQueuePtrValid(mq) || (mq->id != osRtxIdMessageQueue) || (msg_ptr == NULL) || (timeout != 0U)) {
     EvrRtxMessageQueueError(mq, (int32_t)osErrorParameter);
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorParameter;
@@ -836,10 +991,9 @@ const char *osMessageQueueGetName (osMessageQueueId_t mq_id) {
   const char *name;
 
   if (IsException() || IsIrqMasked()) {
-    EvrRtxMessageQueueGetName(mq_id, NULL);
-    name = NULL;
+    name = svcRtxMessageQueueGetName(mq_id);
   } else {
-    name = __svcMessageQueueGetName(mq_id);
+    name =  __svcMessageQueueGetName(mq_id);
   }
   return name;
 }

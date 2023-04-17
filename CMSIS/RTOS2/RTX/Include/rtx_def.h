@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Arm Limited. All rights reserved.
+ * Copyright (c) 2021-2023 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -31,12 +31,31 @@
 #endif
 #include "RTX_Config.h"
 
+#if (defined(OS_SAFETY_FEATURES) && (OS_SAFETY_FEATURES != 0))
+ #define RTX_SAFETY_FEATURES
+ #if (defined(OS_SAFETY_CLASS) && (OS_SAFETY_CLASS != 0))
+  #define RTX_SAFETY_CLASS
+ #endif
+ #if (defined(OS_EXECUTION_ZONE) && (OS_EXECUTION_ZONE != 0))
+  #define RTX_EXECUTION_ZONE
+ #endif
+ #if (defined(OS_THREAD_WATCHDOG) && (OS_THREAD_WATCHDOG != 0))
+  #define RTX_THREAD_WATCHDOG
+ #endif
+ #if (defined(OS_OBJ_PTR_CHECK) && (OS_OBJ_PTR_CHECK != 0))
+  #define RTX_OBJ_PTR_CHECK
+ #endif
+ #if (defined(OS_SVC_PTR_CHECK) && (OS_SVC_PTR_CHECK != 0))
+  #define RTX_SVC_PTR_CHECK
+ #endif
+#endif
+
 #if (defined(OS_OBJ_MEM_USAGE) && (OS_OBJ_MEM_USAGE != 0))
-  #define RTX_OBJ_MEM_USAGE
+ #define RTX_OBJ_MEM_USAGE
 #endif
 
 #if (defined(OS_STACK_CHECK) && (OS_STACK_CHECK != 0))
-  #define RTX_STACK_CHECK
+ #define RTX_STACK_CHECK
 #endif
 
 #ifdef  RTE_CMSIS_RTOS2_RTX5_ARMV8M_NS

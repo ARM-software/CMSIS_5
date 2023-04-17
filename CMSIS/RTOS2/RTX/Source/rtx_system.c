@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 Arm Limited. All rights reserved.
+ * Copyright (c) 2013-2023 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -131,6 +131,11 @@ void osRtxTick_Handler (void) {
   if (osRtxInfo.timer.tick != NULL) {
     osRtxInfo.timer.tick();
   }
+
+#ifdef RTX_THREAD_WATCHDOG
+  // Process Watchdog Timers
+  osRtxThreadWatchdogTick();
+#endif
 
   // Check Round Robin timeout
   if (osRtxInfo.thread.robin.timeout != 0U) {

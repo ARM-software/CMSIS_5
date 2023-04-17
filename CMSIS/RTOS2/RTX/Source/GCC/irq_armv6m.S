@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 Arm Limited. All rights reserved.
+ * Copyright (c) 2013-2023 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -28,10 +28,12 @@
 
         #include "rtx_def.h"
 
-        .equ     I_T_RUN_OFS, 20        // osRtxInfo.thread.run offset
-        .equ     TCB_SP_OFS,  56        // TCB.SP offset
+        .equ     I_T_RUN_OFS,       20  // osRtxInfo.thread.run offset
+        .equ     TCB_SP_OFS,        56  // TCB.SP offset
+        .equ     TCB_ZONE_OFS,      68  // TCB.zone offset
 
         .equ     osRtxErrorStackOverflow, 1 // Stack overflow
+        .equ     osRtxErrorSVC,           6 // Invalid SVC function called
 
         .section ".rodata"
         .global  irqRtxLib              // Non weak library reference
@@ -63,6 +65,30 @@ SVC_Number:
         ldrb     r1,[r1]                // Load SVC number
         cmp      r1,#0                  // Check SVC number
         bne      SVC_User               // Branch if not SVC 0
+
+    #ifdef RTX_SVC_PTR_CHECK
+
+        subs     r1,r7,#0x01            // Clear T-bit of function address
+        lsls     r2,r1,#29              // Check if 8-byte aligned
+        beq      SVC_PtrBoundsCheck     // Branch if address is aligned
+
+SVC_PtrInvalid:
+        push     {r0,lr}                // Save SP and EXC_RETURN
+        movs     r0,#osRtxErrorSVC      // Parameter: code
+        mov      r1,r7                  // Parameter: object_id
+        bl       osRtxKernelErrorNotify // Call osRtxKernelErrorNotify
+        pop      {r2,r3}                // Restore SP and EXC_RETURN
+        mov      lr,r3                  // Set EXC_RETURN
+        b        SVC_Context            // Branch to context handling
+
+SVC_PtrBoundsCheck:
+        ldr      r2,=Image$$RTX_SVC_VENEERS$$Base
+        ldr      r3,=Image$$RTX_SVC_VENEERS$$Length
+        subs     r2,r1,r2               // Subtract SVC table base address
+        cmp      r2,r3                  // Compare with SVC table boundaries
+        bhs      SVC_PtrInvalid         // Branch if address is out of bounds
+
+    #endif // RTX_SVC_PTR_CHECK
 
         push     {r0,lr}                // Save SP and EXC_RETURN
         ldmia    r0,{r0-r3}             // Load function parameters from stack
@@ -101,6 +127,7 @@ SVC_ContextSave:
         ldr      r3,=osRtxInfo+I_T_RUN_OFS   // Load address of osRtxInfo.thread.run
         ldr      r2,[r3,#4]             // Load osRtxInfo.thread.run: next
         str      r2,[r3]                // osRtxInfo.thread.run: curr = next
+        movs     r1,#0                  // Simulate deleted running thread
         b        SVC_ContextRestore     // Branch to context restore handling
 
 SVC_ContextSaveRegs:
@@ -116,7 +143,22 @@ SVC_ContextSaveRegs:
         stmia    r0!,{r4-r7}            // Save R8..R11
 
 SVC_ContextRestore:
-        ldr      r0,[r2,#TCB_SP_OFS]    // Load SP
+        movs     r4,r2                  // Assign osRtxInfo.thread.run.next to R4
+    #ifdef RTX_EXECUTION_ZONE
+        movs     r3,#TCB_ZONE_OFS       // Get TCB.zone offset
+        ldrb     r0,[r2,r3]             // Load osRtxInfo.thread.run.next: zone
+        cmp      r1,#0
+        beq      SVC_ZoneSetup          // Branch if running thread is deleted
+        ldrb     r1,[r1,r3]             // Load osRtxInfo.thread.run.curr: zone
+        cmp      r0,r1                  // Check if next:zone == curr:zone
+        beq      SVC_ContextRestore_N   // Branch if zone has not changed
+
+SVC_ZoneSetup:
+        bl       osZoneSetup_Callback   // Setup zone for next thread
+    #endif // RTX_EXECUTION_ZONE
+
+SVC_ContextRestore_N:
+        ldr      r0,[r4,#TCB_SP_OFS]    // Load SP
         adds     r0,r0,#16              // Adjust address
         ldmia    r0!,{r4-r7}            // Restore R8..R11
         mov      r8,r4
@@ -192,6 +234,23 @@ SysTick_Handler:
 
         .fnend
         .size    SysTick_Handler, .-SysTick_Handler
+
+
+    #ifdef RTX_SAFETY_FEATURES
+
+        .thumb_func
+        .type    osFaultResume, %function
+        .global  osFaultResume
+        .fnstart
+        .cantunwind
+osFaultResume:
+
+        b        SVC_Context            // Branch to context handling
+
+        .fnend
+        .size   osFaultResume, .-osFaultResume
+
+    #endif // RTX_SAFETY_FEATURES
 
 
         .end
