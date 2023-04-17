@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     core_cm85.h
  * @brief    CMSIS Cortex-M85 Core Peripheral Access Layer Header File
- * @version  V1.1.0
- * @date     04. April 2023
+ * @version  V1.2.0
+ * @date     17. April 2023
  ******************************************************************************/
 /*
  * Copyright (c) 2022-2023 Arm Limited. All rights reserved.
@@ -323,6 +323,7 @@
   - Core Register
   - Core NVIC Register
   - Core EWIC Register
+  - Core EWIC Interrupt Status Access Register
   - Core SCB Register
   - Core SysTick Register
   - Core Debug Register
@@ -1557,37 +1558,116 @@ typedef struct
  */
 typedef struct
 {
-  __OM  uint32_t EVENTSPR;               /*!< Offset: 0x000 ( /W)  Event Set Pending Register */
-        uint32_t RESERVED0[31U];
-  __IM  uint32_t EVENTMASKA;             /*!< Offset: 0x080 (R/W)  Event Mask A Register */
-  __IM  uint32_t EVENTMASK[15];          /*!< Offset: 0x084 (R/W)  Event Mask Register */
+  __IOM uint32_t EWIC_CR;                /*!< Offset: 0x000 (R/W)  EWIC Control Register */
+  __IOM uint32_t EWIC_ASCR;              /*!< Offset: 0x004 (R/W)  EWIC Automatic Sequence Control Register */
+  __OM  uint32_t EWIC_CLRMASK;           /*!< Offset: 0x008 ( /W)  EWIC Clear Mask Register */
+  __IM  uint32_t EWIC_NUMID;             /*!< Offset: 0x00C (R/ )  EWIC Event Number ID Register */
+        uint32_t RESERVED0[124U]; 
+  __IOM uint32_t EWIC_MASKA;             /*!< Offset: 0x200 (R/W)  EWIC MaskA Register */
+  __IOM uint32_t EWIC_MASKn[15];         /*!< Offset: 0x204 (R/W)  EWIC Maskn Registers */
+        uint32_t RESERVED1[112U];
+  __IM  uint32_t EWIC_PENDA;             /*!< Offset: 0x400 (R/ )  EWIC PendA Event Register */
+  __IOM uint32_t EWIC_PENDn[15];         /*!< Offset: 0x404 (R/W)  EWIC Pendn Event Registers */
+        uint32_t RESERVED2[112U];
+  __IM  uint32_t EWIC_PSR;               /*!< Offset: 0x600 (R/ )  EWIC Pend Summary Register */
 } EWIC_Type;
 
-/* EWIC External Wakeup Interrupt Controller (EVENTSPR) Register Definitions */
-#define EWIC_EVENTSPR_EDBGREQ_Pos   2U                                                 /*!< EWIC EVENTSPR: EDBGREQ Position */
-#define EWIC_EVENTSPR_EDBGREQ_Msk  (0x1UL << EWIC_EVENTSPR_EDBGREQ_Pos)                /*!< EWIC EVENTSPR: EDBGREQ Mask */
+/* EWIC Control (EWIC_CR) Register Definitions */
+#define EWIC_EWIC_CR_EN_Pos                 0U                                         /*!< EWIC EWIC_CR: EN Position */
+#define EWIC_EWIC_CR_EN_Msk                (0x1UL /*<< EWIC_EWIC_CR_EN_Pos*/)          /*!< EWIC EWIC_CR: EN Mask */
 
-#define EWIC_EVENTSPR_NMI_Pos   1U                                                     /*!< EWIC EVENTSPR: NMI Position */
-#define EWIC_EVENTSPR_NMI_Msk  (0x1UL << EWIC_EVENTSPR_NMI_Pos)                        /*!< EWIC EVENTSPR: NMI Mask */
+/* EWIC Automatic Sequence Control (EWIC_ASCR) Register Definitions */
+#define EWIC_EWIC_ASCR_ASPU_Pos             1U                                         /*!< EWIC EWIC_ASCR: ASPU Position */
+#define EWIC_EWIC_ASCR_ASPU_Msk            (0x1UL << EWIC_EWIC_ASCR_ASPU_Pos)          /*!< EWIC EWIC_ASCR: ASPU Mask */
 
-#define EWIC_EVENTSPR_EVENT_Pos   0U                                                   /*!< EWIC EVENTSPR: EVENT Position */
-#define EWIC_EVENTSPR_EVENT_Msk  (0x1UL /*<< EWIC_EVENTSPR_EVENT_Pos*/)                /*!< EWIC EVENTSPR: EVENT Mask */
+#define EWIC_EWIC_ASCR_ASPD_Pos             0U                                         /*!< EWIC EWIC_ASCR: ASPD Position */
+#define EWIC_EWIC_ASCR_ASPD_Msk            (0x1UL /*<< EWIC_EWIC_ASCR_ASPD_Pos*/)      /*!< EWIC EWIC_ASCR: ASPD Mask */
 
-/* EWIC External Wakeup Interrupt Controller (EVENTMASKA) Register Definitions */
-#define EWIC_EVENTMASKA_EDBGREQ_Pos   2U                                               /*!< EWIC EVENTMASKA: EDBGREQ Position */
-#define EWIC_EVENTMASKA_EDBGREQ_Msk  (0x1UL << EWIC_EVENTMASKA_EDBGREQ_Pos)            /*!< EWIC EVENTMASKA: EDBGREQ Mask */
+/* EWIC Event Number ID (EWIC_NUMID) Register Definitions */
+#define EWIC_EWIC_NUMID_NUMEVENT_Pos        0U                                         /*!< EWIC_NUMID: NUMEVENT Position */
+#define EWIC_EWIC_NUMID_NUMEVENT_Msk       (0x1UL /*<< EWIC_EWIC_NUMID_NUMEVENT_Pos*/) /*!< EWIC_NUMID: NUMEVENT Mask */
 
-#define EWIC_EVENTMASKA_NMI_Pos   1U                                                   /*!< EWIC EVENTMASKA: NMI Position */
-#define EWIC_EVENTMASKA_NMI_Msk  (0x1UL << EWIC_EVENTMASKA_NMI_Pos)                    /*!< EWIC EVENTMASKA: NMI Mask */
+/* EWIC MaskA (EWIC_MASKA) Register Definitions */
+#define EWIC_EWIC_MASKA_EDBGREQ_Pos         2U                                         /*!< EWIC EWIC_MASKA: EDBGREQ Position */
+#define EWIC_EWIC_MASKA_EDBGREQ_Msk        (0x1UL << EWIC_EWIC_MASKA_EDBGREQ_Pos)      /*!< EWIC EWIC_MASKA: EDBGREQ Mask */
 
-#define EWIC_EVENTMASKA_EVENT_Pos   0U                                                 /*!< EWIC EVENTMASKA: EVENT Position */
-#define EWIC_EVENTMASKA_EVENT_Msk  (0x1UL /*<< EWIC_EVENTMASKA_EVENT_Pos*/)            /*!< EWIC EVENTMASKA: EVENT Mask */
+#define EWIC_EWIC_MASKA_NMI_Pos             1U                                         /*!< EWIC EWIC_MASKA: NMI Position */
+#define EWIC_EWIC_MASKA_NMI_Msk            (0x1UL << EWIC_EWIC_MASKA_NMI_Pos)          /*!< EWIC EWIC_MASKA: NMI Mask */
 
-/* EWIC External Wakeup Interrupt Controller (EVENTMASK) Register Definitions */
-#define EWIC_EVENTMASK_IRQ_Pos   0U                                                    /*!< EWIC EVENTMASKA: IRQ Position */
-#define EWIC_EVENTMASK_IRQ_Msk  (0xFFFFFFFFUL /*<< EWIC_EVENTMASKA_IRQ_Pos*/)          /*!< EWIC EVENTMASKA: IRQ Mask */
+#define EWIC_EWIC_MASKA_EVENT_Pos           0U                                         /*!< EWIC EWIC_MASKA: EVENT Position */
+#define EWIC_EWIC_MASKA_EVENT_Msk          (0x1UL /*<< EWIC_EWIC_MASKA_EVENT_Pos*/)    /*!< EWIC EWIC_MASKA: EVENT Mask */
+
+/* EWIC Mask n (EWIC_MASKn) Register Definitions */
+#define EWIC_EWIC_MASKn_IRQ_Pos             0U                                           /*!< EWIC EWIC_MASKn: IRQ Position */
+#define EWIC_EWIC_MASKn_IRQ_Msk            (0xFFFFFFFFUL /*<< EWIC_EWIC_MASKn_IRQ_Pos*/) /*!< EWIC EWIC_MASKn: IRQ Mask */
+
+/* EWIC PendA (EWIC_PENDA) Register Definitions */
+#define EWIC_EWIC_PENDA_EDBGREQ_Pos         2U                                         /*!< EWIC EWIC_PENDA: EDBGREQ Position */
+#define EWIC_EWIC_PENDA_EDBGREQ_Msk        (0x1UL << EWIC_EWIC_PENDA_EDBGREQ_Pos)      /*!< EWIC EWIC_PENDA: EDBGREQ Mask */
+
+#define EWIC_EWIC_PENDA_NMI_Pos             1U                                         /*!< EWIC EWIC_PENDA: NMI Position */
+#define EWIC_EWIC_PENDA_NMI_Msk            (0x1UL << EWIC_EWIC_PENDA_NMI_Pos)          /*!< EWIC EWIC_PENDA: NMI Mask */
+
+#define EWIC_EWIC_PENDA_EVENT_Pos           0U                                         /*!< EWIC EWIC_PENDA: EVENT Position */
+#define EWIC_EWIC_PENDA_EVENT_Msk          (0x1UL /*<< EWIC_EWIC_PENDA_EVENT_Pos*/)    /*!< EWIC EWIC_PENDA: EVENT Mask */
+
+/* EWIC Pend n (EWIC_PENDn) Register Definitions */
+#define EWIC_EWIC_PENDn_IRQ_Pos             0U                                           /*!< EWIC EWIC_PENDn: IRQ Position */
+#define EWIC_EWIC_PENDn_IRQ_Msk            (0xFFFFFFFFUL /*<< EWIC_EWIC_PENDn_IRQ_Pos*/) /*!< EWIC EWIC_PENDn: IRQ Mask */
+
+/* EWIC Pend Summary (EWIC_PSR) Register Definitions */
+#define EWIC_EWIC_PSR_NZ_Pos                1U                                         /*!< EWIC EWIC_PSR: NZ Position */
+#define EWIC_EWIC_PSR_NZ_Msk               (0x7FFFUL << EWIC_EWIC_PSR_NZ_Pos)          /*!< EWIC EWIC_PSR: NZ Mask */
+
+#define EWIC_EWIC_PSR_NZA_Pos               0U                                         /*!< EWIC EWIC_PSR: NZA Position */
+#define EWIC_EWIC_PSR_NZA_Msk              (0x1UL /*<< EWIC_EWIC_PSR_NZA_Pos*/)        /*!< EWIC EWIC_PSR: NZA Mask */
 
 /*@}*/ /* end of group EWIC_Type */
+
+
+/**
+  \ingroup  CMSIS_core_register
+  \defgroup EWIC_ISA_Type     External Wakeup Interrupt Controller (EWIC) interrupt status access registers
+  \brief    Type definitions for the External Wakeup Interrupt Controller interrupt status access registers (EWIC_ISA)
+  @{
+ */
+
+/**
+  \brief  Structure type to access the External Wakeup Interrupt Controller interrupt status access registers (EWIC_ISA).
+ */
+typedef struct
+{
+  __OM  uint32_t EVENTSPR;               /*!< Offset: 0x000 ( /W)  Event Set Pending Register */
+        uint32_t RESERVED0[31U];
+  __IM  uint32_t EVENTMASKA;             /*!< Offset: 0x080 (R/ )  Event Mask A Register */
+  __IM  uint32_t EVENTMASKn[15];         /*!< Offset: 0x084 (R/ )  Event Mask Register */
+} EWIC_ISA_Type;
+
+/* EWIC_ISA Event Set Pending (EVENTSPR) Register Definitions */
+#define EWIC_ISA_EVENTSPR_EDBGREQ_Pos   2U                                             /*!< EWIC_ISA EVENTSPR: EDBGREQ Position */
+#define EWIC_ISA_EVENTSPR_EDBGREQ_Msk  (0x1UL << EWIC_ISA_EVENTSPR_EDBGREQ_Pos)        /*!< EWIC_ISA EVENTSPR: EDBGREQ Mask */
+
+#define EWIC_ISA_EVENTSPR_NMI_Pos   1U                                                 /*!< EWIC_ISA EVENTSPR: NMI Position */
+#define EWIC_ISA_EVENTSPR_NMI_Msk  (0x1UL << EWIC_ISA_EVENTSPR_NMI_Pos)                /*!< EWIC_ISA EVENTSPR: NMI Mask */
+
+#define EWIC_ISA_EVENTSPR_EVENT_Pos   0U                                               /*!< EWIC_ISA EVENTSPR: EVENT Position */
+#define EWIC_ISA_EVENTSPR_EVENT_Msk  (0x1UL /*<< EWIC_ISA_EVENTSPR_EVENT_Pos*/)        /*!< EWIC_ISA EVENTSPR: EVENT Mask */
+
+/* EWIC_ISA Event Mask A (EVENTMASKA) Register Definitions */
+#define EWIC_ISA_EVENTMASKA_EDBGREQ_Pos   2U                                           /*!< EWIC_ISA EVENTMASKA: EDBGREQ Position */
+#define EWIC_ISA_EVENTMASKA_EDBGREQ_Msk  (0x1UL << EWIC_ISA_EVENTMASKA_EDBGREQ_Pos)    /*!< EWIC_ISA EVENTMASKA: EDBGREQ Mask */
+
+#define EWIC_ISA_EVENTMASKA_NMI_Pos   1U                                               /*!< EWIC_ISA EVENTMASKA: NMI Position */
+#define EWIC_ISA_EVENTMASKA_NMI_Msk  (0x1UL << EWIC_ISA_EVENTMASKA_NMI_Pos)            /*!< EWIC_ISA EVENTMASKA: NMI Mask */
+
+#define EWIC_ISA_EVENTMASKA_EVENT_Pos   0U                                             /*!< EWIC_ISA EVENTMASKA: EVENT Position */
+#define EWIC_ISA_EVENTMASKA_EVENT_Msk  (0x1UL /*<< EWIC_ISA_EVENTMASKA_EVENT_Pos*/)    /*!< EWIC_ISA EVENTMASKA: EVENT Mask */
+
+/* EWIC_ISA Event Mask n (EVENTMASKn) Register Definitions */
+#define EWIC_ISA_EVENTMASKn_IRQ_Pos   0U                                                /*!< EWIC_ISA EVENTMASKn: IRQ Position */
+#define EWIC_ISA_EVENTMASKn_IRQ_Msk  (0xFFFFFFFFUL /*<< EWIC_ISA_EVENTMASKn_IRQ_Pos*/)  /*!< EWIC_ISA EVENTMASKn: IRQ Mask */
+
+/*@}*/ /* end of group EWIC_ISA_Type */
 
 
 /**
@@ -3485,9 +3565,10 @@ typedef struct
   #define MEMSYSCTL_BASE      (0xE001E000UL)                             /*!< Memory System Control Base Address */
   #define ERRBNK_BASE         (0xE001E100UL)                             /*!< Error Banking Base Address */
   #define PWRMODCTL_BASE      (0xE001E300UL)                             /*!< Power Mode Control Base Address */
-  #define EWIC_BASE           (0xE001E400UL)                             /*!< External Wakeup Interrupt Controller Base Address */
+  #define EWIC_ISA_BASE       (0xE001E400UL)                             /*!< External Wakeup Interrupt Controller interrupt status access Base Address */
   #define PRCCFGINF_BASE      (0xE001E700UL)                             /*!< Processor Configuration Information Base Address */
   #define TPI_BASE            (0xE0040000UL)                             /*!< TPI Base Address */
+  #define EWIC_BASE           (0xE0047000UL)                             /*!< External Wakeup Interrupt Controller Base Address */
   #define CoreDebug_BASE      (0xE000EDF0UL)                             /*!< \deprecated Core Debug Base Address */
   #define DCB_BASE            (0xE000EDF0UL)                             /*!< DCB Base Address */
   #define DIB_BASE            (0xE000EFB0UL)                             /*!< DIB Base Address */
@@ -3505,6 +3586,7 @@ typedef struct
   #define MEMSYSCTL           ((MemSysCtl_Type *)     MEMSYSCTL_BASE   ) /*!< Memory System Control configuration struct */
   #define ERRBNK              ((ErrBnk_Type    *)     ERRBNK_BASE      ) /*!< Error Banking configuration struct */
   #define PWRMODCTL           ((PwrModCtl_Type *)     PWRMODCTL_BASE   ) /*!< Power Mode Control configuration struct */
+  #define EWIC_ISA            ((EWIC_ISA_Type  *)     EWIC_ISA_BASE    ) /*!< EWIC interrupt status access struct */
   #define EWIC                ((EWIC_Type      *)     EWIC_BASE        ) /*!< EWIC configuration struct */
   #define PRCCFGINF           ((PrcCfgInf_Type *)     PRCCFGINF_BASE   ) /*!< Processor Configuration Information configuration struct */
   #define CoreDebug           ((CoreDebug_Type *)     CoreDebug_BASE   ) /*!< \deprecated Core Debug configuration struct */
