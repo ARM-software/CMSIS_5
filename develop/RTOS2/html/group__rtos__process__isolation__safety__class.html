@@ -156,7 +156,76 @@ Handle Object Access Violation</h1>
 <div class="line">{</div>
 <div class="line">  <span class="comment">//handle the safety class error</span></div>
 <div class="line">}</div>
-</div><!-- fragment --> </div><!-- contents -->
+</div><!-- fragment --><p>Following functions compare the safety class of the running thread with the safety class of the target object.</p>
+<p>In <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html">Kernel Information and Control</a> functions:</p>
+<p>Comparison is done with safety class configured with <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gac7e3b012c15c55bda68e0dd96ad9cd72">osKernelProtect</a></p>
+<ul>
+<li><a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga948609ee930d9b38336b9e1c2a4dfe12">osKernelLock</a></li>
+<li><a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gae7d0a71b9586cbbb49fcbdf6a04f0289">osKernelRestoreLock</a></li>
+<li><a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gae26683e1606ec633354a2876c68f0c1f">osKernelSuspend</a></li>
+<li><a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gac7e3b012c15c55bda68e0dd96ad9cd72">osKernelProtect</a></li>
+<li><a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga2065364d1bc805a40e749430377df1e1">osKernelDestroyClass</a></li>
+</ul>
+<p>In <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html">Thread Management</a> functions:</p>
+<ul>
+<li><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga48d68b8666d99d28fa646ee1d2182b8f">osThreadNew</a></li>
+<li><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga861a420fb2d643115b06622903fb3bfb">osThreadSetPriority</a></li>
+<li><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa9de419d0152bf77e9bbcd1f369fb990">osThreadSuspend</a></li>
+<li><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga3dbad90eff394b02de76a452c84c5d80">osThreadResume</a></li>
+<li><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaaad14cd9547341ea8109dc4e8540f1dc">osThreadDetach</a></li>
+<li><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga3fca90fb0679afeb968aa8c3d5874487">osThreadJoin</a></li>
+<li><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga2f8ba6dba6e9c065a6e236ffd410d74a">osThreadTerminate</a></li>
+<li><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gadadb56627094dbb07f6aeddf7d713fd9">osThreadSuspendClass</a></li>
+<li><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gadd0a06b459925eb5cdeab67b380a3970">osThreadResumeClass</a></li>
+</ul>
+<p>In <a class="el" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html">Thread Flags</a> functions:</p>
+<ul>
+<li><a class="el" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#ga6f89ef9caded1d9963c7b12b0f6412c9">osThreadFlagsSet</a></li>
+</ul>
+<p>In <a class="el" href="group__CMSIS__RTOS__EventFlags.html">Event Flags</a> functions:</p>
+<ul>
+<li><a class="el" href="group__CMSIS__RTOS__EventFlags.html#gab14b1caeb12ffa42cce1bfe889cd07df">osEventFlagsNew</a></li>
+<li><a class="el" href="group__CMSIS__RTOS__EventFlags.html#ga33b71d14cecf90b4e72639dd19f23a5e">osEventFlagsSet</a></li>
+<li><a class="el" href="group__CMSIS__RTOS__EventFlags.html#ga93bf258ca0007c6641fbe8e4f2b8a1e5">osEventFlagsClear</a></li>
+<li><a class="el" href="group__CMSIS__RTOS__EventFlags.html#ga52acb34a8322e58020227344fe662b4e">osEventFlagsWait</a></li>
+<li><a class="el" href="group__CMSIS__RTOS__EventFlags.html#ga7c4acf2fb0d506ec82905dee53fb5435">osEventFlagsDelete</a></li>
+</ul>
+<p>In <a class="el" href="group__CMSIS__RTOS__TimerMgmt.html">Timer Management</a> functions:</p>
+<ul>
+<li><a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#gad4e7f785c5f700a509f55a3bf6a62bec">osTimerNew</a></li>
+<li><a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#gab6ee2859ea657641b7adfac599b8121d">osTimerStart</a></li>
+<li><a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#gabd7a89356da7717293eb0bc5d87b8ac9">osTimerStop</a></li>
+<li><a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#gad0001dd74721ab461789324806db2453">osTimerDelete</a></li>
+</ul>
+<p>In <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html">Mutex Management</a> functions:</p>
+<ul>
+<li><a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#gab90920022ab944296821368ef6bb52f8">osMutexNew</a></li>
+<li><a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#gabc54686ea0fc281823b1763422d2a924">osMutexAcquire</a></li>
+<li><a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#gabee73ad227ba4587d3db12ef9bd582bc">osMutexDelete</a></li>
+</ul>
+<p>In <a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html">Semaphores</a> functions:</p>
+<ul>
+<li><a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga2a39806ace781a0008a4374ca701b14a">osSemaphoreNew</a></li>
+<li><a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga7e94c8b242a0c81f2cc79ec22895c87b">osSemaphoreAcquire</a></li>
+<li><a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga0abcee1b5449d7a6928fb9248c690bb6">osSemaphoreRelease</a></li>
+<li><a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga81258ce9c67fa89f07cc49d2e136cd88">osSemaphoreDelete</a></li>
+</ul>
+<p>In <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html">Memory Pool</a> functions:</p>
+<ul>
+<li><a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#ga497ced5d72dc5cd405c4c418516220dc">osMemoryPoolNew</a></li>
+<li><a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#ga8ead54e99ccb8f112356c88f99d38fbe">osMemoryPoolAlloc</a></li>
+<li><a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#gabb4f4560daa6d1f8c8789082ee186d16">osMemoryPoolFree</a></li>
+<li><a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#ga8c39e7e5cd2b9eda907466808e59d62e">osMemoryPoolDelete</a></li>
+</ul>
+<p>In <a class="el" href="group__CMSIS__RTOS__Message.html">Message Queue</a> functions:</p>
+<ul>
+<li><a class="el" href="group__CMSIS__RTOS__Message.html#ga24e895a00f9d484db33aaf784c57bfed">osMessageQueueNew</a></li>
+<li><a class="el" href="group__CMSIS__RTOS__Message.html#gaa515fc8b956f721a8f72b2c505813bfc">osMessageQueuePut</a></li>
+<li><a class="el" href="group__CMSIS__RTOS__Message.html#gad90d4959466a7a65105061da8256ab9e">osMessageQueueGet</a></li>
+<li><a class="el" href="group__CMSIS__RTOS__Message.html#gac6dce7f9ad132d266292c2e979d861b4">osMessageQueueReset</a></li>
+<li><a class="el" href="group__CMSIS__RTOS__Message.html#gaba987f665444e0d83fa6a3a68bc72abe">osMessageQueueDelete</a> </li>
+</ul>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
