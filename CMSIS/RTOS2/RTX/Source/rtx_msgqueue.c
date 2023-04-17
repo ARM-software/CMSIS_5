@@ -254,10 +254,11 @@ void osRtxMessageQueueDeleteClass (uint32_t safety_class, uint32_t mode) {
 /// Message Queue post ISR processing.
 /// \param[in]  msg             message object.
 static void osRtxMessageQueuePostProcess (os_message_t *msg) {
+  //lint --e{954} "Pointer variable 'reg' is not pointing to const"
   os_message_queue_t *mq;
   os_message_t       *msg0;
   os_thread_t        *thread;
-  const uint32_t     *reg;
+  uint32_t           *reg;
   const void         *ptr_src;
         void         *ptr_dst;
 
@@ -517,6 +518,7 @@ static const char *svcRtxMessageQueueGetName (osMessageQueueId_t mq_id) {
 /// Put a Message into a Queue or timeout if Queue is full.
 /// \note API identical to osMessageQueuePut
 static osStatus_t svcRtxMessageQueuePut (osMessageQueueId_t mq_id, const void *msg_ptr, uint8_t msg_prio, uint32_t timeout) {
+  //lint --e{954} "Pointer variable 'reg' is not pointing to const"
   os_message_queue_t *mq = osRtxMessageQueueId(mq_id);
   os_message_t       *msg;
   os_thread_t        *thread;
@@ -600,7 +602,7 @@ static osStatus_t svcRtxMessageQueueGet (osMessageQueueId_t mq_id, void *msg_ptr
   os_message_queue_t *mq = osRtxMessageQueueId(mq_id);
   os_message_t       *msg;
   os_thread_t        *thread;
-  uint32_t           *reg;
+  const uint32_t     *reg;
   const void         *ptr;
   osStatus_t          status;
 
