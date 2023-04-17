@@ -4,6 +4,7 @@ var searchData=
   ['message_20queue',['Message Queue',['../group__CMSIS__RTOS__Message.html',1,'']]],
   ['mutex_20management',['Mutex Management',['../group__CMSIS__RTOS__MutexMgmt.html',1,'']]],
   ['memory_20pool',['Memory Pool',['../group__CMSIS__RTOS__PoolMgmt.html',1,'']]],
+  ['mpu_20protected_20zones',['MPU Protected Zones',['../group__rtos__process__isolation__mpu.html',1,'']]],
   ['macros',['Macros',['../group__rtx5__specific__defines.html',1,'']]],
   ['memory_20functions',['Memory Functions',['../group__rtx__evr__memory.html',1,'']]],
   ['memory_20pool_20functions',['Memory Pool Functions',['../group__rtx__evr__memory__pool.html',1,'']]],

@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.1.3</span>
+   &#160;<span id="projectnumber">Version 2.2.0</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -188,6 +188,15 @@ Functions</h2></td></tr>
 <tr class="memitem:ga4d69215a93220f72be3684cad582f16a"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga4d69215a93220f72be3684cad582f16a">osKernelGetSysTimerFreq</a> (void)</td></tr>
 <tr class="memdesc:ga4d69215a93220f72be3684cad582f16a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the RTOS kernel system timer frequency.  <a href="#ga4d69215a93220f72be3684cad582f16a">More...</a><br/></td></tr>
 <tr class="separator:ga4d69215a93220f72be3684cad582f16a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac7e3b012c15c55bda68e0dd96ad9cd72"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gac7e3b012c15c55bda68e0dd96ad9cd72">osKernelProtect</a> (uint32_t safety_class)</td></tr>
+<tr class="memdesc:gac7e3b012c15c55bda68e0dd96ad9cd72"><td class="mdescLeft">&#160;</td><td class="mdescRight">Protect the RTOS Kernel scheduler access.  <a href="#gac7e3b012c15c55bda68e0dd96ad9cd72">More...</a><br/></td></tr>
+<tr class="separator:gac7e3b012c15c55bda68e0dd96ad9cd72"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2065364d1bc805a40e749430377df1e1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga2065364d1bc805a40e749430377df1e1">osKernelDestroyClass</a> (uint32_t safety_class, uint32_t mode)</td></tr>
+<tr class="memdesc:ga2065364d1bc805a40e749430377df1e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy objects for specified safety classes.  <a href="#ga2065364d1bc805a40e749430377df1e1">More...</a><br/></td></tr>
+<tr class="separator:ga2065364d1bc805a40e749430377df1e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga91b400b21a9093f7751fc45613c12110"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga91b400b21a9093f7751fc45613c12110">osFaultResume</a> (void)</td></tr>
+<tr class="memdesc:ga91b400b21a9093f7751fc45613c12110"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resume normal operation when exiting exception faults.  <a href="#ga91b400b21a9093f7751fc45613c12110">More...</a><br/></td></tr>
+<tr class="separator:ga91b400b21a9093f7751fc45613c12110"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <p>The kernel Information and Control function group allows to:</p>
@@ -502,6 +511,7 @@ Kernel version (major.minor.rev: mmnnnrrrr dec). </td></tr>
 <ul>
 <li><em>osError</em> if an unspecific error occurred.</li>
 <li><em>osErrorISR</em> if called from an <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routine</a>.</li>
+<li><em>osErrorSafetyClass</em> if the calling thread safety class is lower than the kernel protect safety class.</li>
 </ul>
 <dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>.</dd></dl>
 <p><b>Code Example</b> </p>
@@ -811,6 +821,136 @@ Kernel version (major.minor.rev: mmnnnrrrr dec). </td></tr>
 <p>The function <b>osKernelGetSysTimerFreq</b> returns the frequency of the current RTOS kernel system timer.</p>
 <dl class="section note"><dt>Note</dt><dd>This function may be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>. </dd></dl>
 
+</div>
+</div>
+<a class="anchor" id="gac7e3b012c15c55bda68e0dd96ad9cd72"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> osKernelProtect </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>safety_class</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">safety_class</td><td>safety class. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>status code that indicates the execution status of the function.</dd></dl>
+<p>The function <b>osKernelProtect</b> configures kernel access protection. After its successful execution, only threads with safety class equal or higher than the <em>safety_class</em> specified in the argument can execute kernel control functions.</p>
+<ul>
+<li><a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga948609ee930d9b38336b9e1c2a4dfe12">osKernelLock</a></li>
+<li><a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gaf401728b4657456198c33fe75f8d6720">osKernelUnlock</a></li>
+<li><a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gae7d0a71b9586cbbb49fcbdf6a04f0289">osKernelRestoreLock</a></li>
+<li><a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gae26683e1606ec633354a2876c68f0c1f">osKernelSuspend</a></li>
+<li><a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga8c4b4d7ed34cab73c001665d9176aced">osKernelResume</a></li>
+<li><a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gac7e3b012c15c55bda68e0dd96ad9cd72">osKernelProtect</a></li>
+</ul>
+<p>Possible <a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> return values:</p>
+<ul>
+<li><em>osOK</em> in case of success.</li>
+<li><em>osErrorParameter</em> if <em>safety_class</em> is invalid.</li>
+<li><em>osError</em> if kernel is not in ready or running state.</li>
+<li><em>osErrorISR</em> if called from an <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routine</a>.</li>
+<li><em>osErrorSafetyClass</em> if the calling thread safety class is lower than the kernel protect safety class.</li>
+</ul>
+<dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>.</dd></dl>
+<p><b>Code Example:</b> </p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="cmsis__os2_8h.html">cmsis_os2.h</a>&quot;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span> ProtectKernelControlFunctions (<span class="keywordtype">void</span>) {</div>
+<div class="line">  osStatus_t status;</div>
+<div class="line"> </div>
+<div class="line">  status = <a class="code" href="group__CMSIS__RTOS__KernelCtrl.html#gac7e3b012c15c55bda68e0dd96ad9cd72">osKernelProtect</a>(4U); <span class="comment">// Enable Kernel Control for threads with safety class 4 or higher</span></div>
+<div class="line">  <span class="comment">// verify status value here.</span></div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a class="anchor" id="ga2065364d1bc805a40e749430377df1e1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> osKernelDestroyClass </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>safety_class</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mode</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">safety_class</td><td>safety class. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">mode</td><td>safety mode. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>status code that indicates the execution status of the function.</dd></dl>
+<p>The function <b>osKernelDestroyClass</b> destroys RTOS objects based on safety class assignment. <em>safety_class</em> provides the reference safety class value, while <em>mode</em> is considered as a bitmap that additionally specifies the safety classes to be destroyed.</p>
+<p>If <a class="el" href="group__CMSIS__RTOS__Definitions.html#ga7abd2d95425d9e02672778b3464b2eaa">osSafetyWithSameClass</a> is set in <em>mode</em> than the RTOS objects with safety class value equal to <em>safety_class</em> will be destroyed. <br/>
+ If <a class="el" href="group__CMSIS__RTOS__Definitions.html#ga8c77ee126b9215425fc004ee13cdc6de">osSafetyWithLowerClass</a> is set in <em>mode</em> than the RTOS objects with safety class value lower than <em>safety_class</em> will be destroyed.</p>
+<p>Possible <a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> return values:</p>
+<ul>
+<li><em>osOK</em> in case of success.</li>
+<li><em>osErrorParameter</em> if <em>safety_class</em> is invalid.</li>
+<li><em>osErrorResource</em> if no other <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">READY</a> thread exists.</li>
+<li><em>osErrorISR</em> if called from interrupt other than <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga5a02770aaf65c7a3c7562c109884176a">osWatchdogAlarm_Handler</a>.</li>
+<li><em>osErrorSafetyClass</em> if the calling thread safety class is lower than the kernel protect safety class.</li>
+</ul>
+<p><b>Code Example:</b> </p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="cmsis__os2_8h.html">cmsis_os2.h</a>&quot;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span> DestroyNonCriticalClasses (<span class="keywordtype">void</span>) {</div>
+<div class="line">  osStatus_t status;</div>
+<div class="line"> </div>
+<div class="line">  status = <a class="code" href="group__CMSIS__RTOS__KernelCtrl.html#ga2065364d1bc805a40e749430377df1e1">osKernelDestroyClass</a>(4U, <a class="code" href="group__CMSIS__RTOS__Definitions.html#ga7abd2d95425d9e02672778b3464b2eaa">osSafetyWithSameClass</a> | <a class="code" href="group__CMSIS__RTOS__Definitions.html#ga8c77ee126b9215425fc004ee13cdc6de">osSafetyWithLowerClass</a>); <span class="comment">// Destroy objects with safety class 4 or lower</span></div>
+<div class="line">  <span class="comment">// verify status value here.</span></div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a class="anchor" id="ga91b400b21a9093f7751fc45613c12110"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void osFaultResume </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Resume normal RTOS operation when exiting exception faults.</p>
+<p><b>Code Example:</b> </p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> HardFault_Handler (<span class="keywordtype">void</span>) {</div>
+<div class="line">  __ASM <span class="keyword">volatile</span> (</div>
+<div class="line">    <span class="stringliteral">&quot;...                          \n\t&quot;</span> <span class="comment">// Enter assembly and handle faults</span></div>
+<div class="line">    <span class="stringliteral">&quot;...                          \n\t&quot;</span></div>
+<div class="line">    <span class="stringliteral">&quot;ldr  r0,=osFaultResume       \n\t&quot;</span> <span class="comment">// Before exiting the handler load and</span></div>
+<div class="line">    <span class="stringliteral">&quot;bx   r0                      \n\t&quot;</span> <span class="comment">// jump to osFaultResume</span></div>
+<div class="line">  );</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->

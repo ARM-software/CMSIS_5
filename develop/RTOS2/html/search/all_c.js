@@ -22,6 +22,7 @@ var searchData=
   ['msg_5fsize',['msg_size',['../rtx__os_8h.html#a58873af81b75772a41aa5c1ff788a0c2',1,'osRtxMessageQueue_t']]],
   ['mutex_5flist',['mutex_list',['../rtx__os_8h.html#a70b3153655adaf42687fe250983f6c95',1,'osRtxThread_t']]],
   ['migration_20from_20api_20v1_20to_20api_20v2',['Migration from API v1 to API v2',['../os2Migration.html',1,'index']]],
+  ['mpu_20protected_20zones',['MPU Protected Zones',['../group__rtos__process__isolation__mpu.html',1,'']]],
   ['macros',['Macros',['../group__rtx5__specific__defines.html',1,'']]],
   ['memory_20functions',['Memory Functions',['../group__rtx__evr__memory.html',1,'']]],
   ['memory_20pool_20functions',['Memory Pool Functions',['../group__rtx__evr__memory__pool.html',1,'']]],

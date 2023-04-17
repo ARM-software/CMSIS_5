@@ -25,5 +25,8 @@ var group__CMSIS__RTOS__KernelCtrl =
     [ "osKernelGetTickCount", "group__CMSIS__RTOS__KernelCtrl.html#ga84bcdbf2fb76b10c8df4e439f0c7e11b", null ],
     [ "osKernelGetTickFreq", "group__CMSIS__RTOS__KernelCtrl.html#ga7a8d7bd927eaaa58999f91d7d6310cee", null ],
     [ "osKernelGetSysTimerCount", "group__CMSIS__RTOS__KernelCtrl.html#gae0fcaff6cecfb4013bb556c87afcd7d2", null ],
-    [ "osKernelGetSysTimerFreq", "group__CMSIS__RTOS__KernelCtrl.html#ga4d69215a93220f72be3684cad582f16a", null ]
+    [ "osKernelGetSysTimerFreq", "group__CMSIS__RTOS__KernelCtrl.html#ga4d69215a93220f72be3684cad582f16a", null ],
+    [ "osKernelProtect", "group__CMSIS__RTOS__KernelCtrl.html#gac7e3b012c15c55bda68e0dd96ad9cd72", null ],
+    [ "osKernelDestroyClass", "group__CMSIS__RTOS__KernelCtrl.html#ga2065364d1bc805a40e749430377df1e1", null ],
+    [ "osFaultResume", "group__CMSIS__RTOS__KernelCtrl.html#ga91b400b21a9093f7751fc45613c12110", null ]
 ];

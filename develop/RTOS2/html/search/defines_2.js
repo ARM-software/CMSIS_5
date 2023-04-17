@@ -2,7 +2,9 @@ var searchData=
 [
   ['os_5fevr_5fthflags',['OS_EVR_THFLAGS',['../rtx__evr_8h.html#a8e1abf0403e5aabff14bffa28c0bf14b',1,'rtx_evr.h']]],
   ['os_5fevr_5fwait',['OS_EVR_WAIT',['../rtx__evr_8h.html#aad9052994e484a85e2ea7c34b3957f29',1,'rtx_evr.h']]],
+  ['oserrorid',['osErrorId',['../cmsis__os2_8h.html#a6f3bd4b67fb89bd085266fe65ee45b06',1,'cmsis_os2.h']]],
   ['osflagserror',['osFlagsError',['../cmsis__os2_8h.html#a01c1359c3a5640bff6e08f09bf94ce3a',1,'cmsis_os2.h']]],
+  ['osflagserrorsafetyclass',['osFlagsErrorSafetyClass',['../cmsis__os2_8h.html#a20291c61e351702230d4ad5546992be2',1,'cmsis_os2.h']]],
   ['osrtxconfigprivilegedmode',['osRtxConfigPrivilegedMode',['../rtx__os_8h.html#a0eb4da5bed45820d732e23483b870152',1,'rtx_os.h']]],
   ['osrtxconfigstackcheck',['osRtxConfigStackCheck',['../rtx__os_8h.html#a77f3e906438a6693524cdc257cb0bf23',1,'rtx_os.h']]],
   ['osrtxconfigstackwatermark',['osRtxConfigStackWatermark',['../rtx__os_8h.html#a62205cc79ec5d95b45f5ebfdf126438c',1,'rtx_os.h']]],
@@ -66,5 +68,11 @@ var searchData=
   ['osrtxtimerrunning',['osRtxTimerRunning',['../rtx__os_8h.html#aed55034470990d4593eb614e26c1eea7',1,'rtx_os.h']]],
   ['osrtxtimerstopped',['osRtxTimerStopped',['../rtx__os_8h.html#ab01076b285029ac6d22dbde69167c96e',1,'rtx_os.h']]],
   ['osrtxversionapi',['osRtxVersionAPI',['../rtx__os_8h.html#aea20a2b373e98ae88a7cf7e4a56b118f',1,'rtx_os.h']]],
-  ['osrtxversionkernel',['osRtxVersionKernel',['../rtx__os_8h.html#ad854168120979e8c60630e0140e104e8',1,'rtx_os.h']]]
+  ['osrtxversionkernel',['osRtxVersionKernel',['../rtx__os_8h.html#ad854168120979e8c60630e0140e104e8',1,'rtx_os.h']]],
+  ['ossafetyclass_5fmsk',['osSafetyClass_Msk',['../cmsis__os2_8h.html#a5265621e9f1da2a189e7cfa90907f45c',1,'cmsis_os2.h']]],
+  ['ossafetyclass_5fpos',['osSafetyClass_Pos',['../cmsis__os2_8h.html#a3732ae0de04b65cf0291c0bfa0ae5284',1,'cmsis_os2.h']]],
+  ['ossafetyclass_5fvalid',['osSafetyClass_Valid',['../cmsis__os2_8h.html#ad18d1441527dcd76ebf3e558799d32dc',1,'cmsis_os2.h']]],
+  ['osthreadzone_5fmsk',['osThreadZone_Msk',['../cmsis__os2_8h.html#a1f31605585359cbb77ba006d0f735599',1,'cmsis_os2.h']]],
+  ['osthreadzone_5fpos',['osThreadZone_Pos',['../cmsis__os2_8h.html#a31e30a34ed6137443fbe2c453be8bfc0',1,'cmsis_os2.h']]],
+  ['osthreadzone_5fvalid',['osThreadZone_Valid',['../cmsis__os2_8h.html#a45bf09ac779100bd4c52a7e9fca82bf1',1,'cmsis_os2.h']]]
 ];

@@ -16,7 +16,7 @@ var indexSectionsWithContent =
   6: "o",
   7: "o",
   8: "_iot",
-  9: "cdefgkmorst",
+  9: "cdefgkmoprst",
   10: "bcdfghmorst"
 };
 

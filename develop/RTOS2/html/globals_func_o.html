@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.1.3</span>
+   &#160;<span id="projectnumber">Version 2.2.0</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -184,6 +184,12 @@ $(document).ready(function(){initNavTree('globals_func_o.html','');});
 <li>osEventFlagsWait()
 : <a class="el" href="group__CMSIS__RTOS__EventFlags.html#ga52acb34a8322e58020227344fe662b4e">cmsis_os2.h</a>
 </li>
+<li>osFaultResume()
+: <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga91b400b21a9093f7751fc45613c12110">cmsis_os2.h</a>
+</li>
+<li>osKernelDestroyClass()
+: <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga2065364d1bc805a40e749430377df1e1">cmsis_os2.h</a>
+</li>
 <li>osKernelGetInfo()
 : <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga6f7764e7250c5c5364c00c45a5d1d199">cmsis_os2.h</a>
 </li>
@@ -207,6 +213,9 @@ $(document).ready(function(){initNavTree('globals_func_o.html','');});
 </li>
 <li>osKernelLock()
 : <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga948609ee930d9b38336b9e1c2a4dfe12">cmsis_os2.h</a>
+</li>
+<li>osKernelProtect()
+: <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gac7e3b012c15c55bda68e0dd96ad9cd72">cmsis_os2.h</a>
 </li>
 <li>osKernelRestoreLock()
 : <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gae7d0a71b9586cbbb49fcbdf6a04f0289">cmsis_os2.h</a>
@@ -334,6 +343,9 @@ $(document).ready(function(){initNavTree('globals_func_o.html','');});
 <li>osThreadExit()
 : <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaddaa452dd7610e4096647a566d3556fc">cmsis_os2.h</a>
 </li>
+<li>osThreadFeedWatchdog()
+: <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga8f4455b06afb95c1915f15266818a8c6">cmsis_os2.h</a>
+</li>
 <li>osThreadFlagsClear()
 : <a class="el" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#ga656abc1c862c5b9a2b13584c42cc0bfa">cmsis_os2.h</a>
 </li>
@@ -345,6 +357,9 @@ $(document).ready(function(){initNavTree('globals_func_o.html','');});
 </li>
 <li>osThreadFlagsWait()
 : <a class="el" href="group__CMSIS__RTOS__ThreadFlagsMgmt.html#gac11542ad6300b600f872fc96e340ec2b">cmsis_os2.h</a>
+</li>
+<li>osThreadGetClass()
+: <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga1bfbef7da94ed4147d231e8d6eeb5f3e">cmsis_os2.h</a>
 </li>
 <li>osThreadGetCount()
 : <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga495b3f812224e7301f23a691793765db">cmsis_os2.h</a>
@@ -367,14 +382,23 @@ $(document).ready(function(){initNavTree('globals_func_o.html','');});
 <li>osThreadGetState()
 : <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gacc0a98b42f0a5928e12dc91dc76866b9">cmsis_os2.h</a>
 </li>
+<li>osThreadGetZone()
+: <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga4101737fa4fd303d4b41fdca6b994f8e">cmsis_os2.h</a>
+</li>
 <li>osThreadJoin()
 : <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga3fca90fb0679afeb968aa8c3d5874487">cmsis_os2.h</a>
 </li>
 <li>osThreadNew()
 : <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga48d68b8666d99d28fa646ee1d2182b8f">cmsis_os2.h</a>
 </li>
+<li>osThreadProtectPrivileged()
+: <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaee8e6bed82cd58dad31bb90156182032">cmsis_os2.h</a>
+</li>
 <li>osThreadResume()
 : <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga3dbad90eff394b02de76a452c84c5d80">cmsis_os2.h</a>
+</li>
+<li>osThreadResumeClass()
+: <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gadd0a06b459925eb5cdeab67b380a3970">cmsis_os2.h</a>
 </li>
 <li>osThreadSetPriority()
 : <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga861a420fb2d643115b06622903fb3bfb">cmsis_os2.h</a>
@@ -382,8 +406,14 @@ $(document).ready(function(){initNavTree('globals_func_o.html','');});
 <li>osThreadSuspend()
 : <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa9de419d0152bf77e9bbcd1f369fb990">cmsis_os2.h</a>
 </li>
+<li>osThreadSuspendClass()
+: <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gadadb56627094dbb07f6aeddf7d713fd9">cmsis_os2.h</a>
+</li>
 <li>osThreadTerminate()
 : <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga2f8ba6dba6e9c065a6e236ffd410d74a">cmsis_os2.h</a>
+</li>
+<li>osThreadTerminateZone()
+: <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga99ce311cc620c65fbac043d04dc7d755">cmsis_os2.h</a>
 </li>
 <li>osThreadYield()
 : <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gad01c7ec26535b1de6b018bb9466720e2">cmsis_os2.h</a>
@@ -405,6 +435,12 @@ $(document).ready(function(){initNavTree('globals_func_o.html','');});
 </li>
 <li>osTimerStop()
 : <a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#gabd7a89356da7717293eb0bc5d87b8ac9">cmsis_os2.h</a>
+</li>
+<li>osWatchdogAlarm_Handler()
+: <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga5a02770aaf65c7a3c7562c109884176a">cmsis_os2.h</a>
+</li>
+<li>osZoneSetup_Callback()
+: <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga79d4b26de0bfcdaf142f83e585532f93">cmsis_os2.h</a>
 </li>
 </ul>
 </div><!-- contents -->

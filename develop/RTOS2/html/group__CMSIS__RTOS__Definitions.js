@@ -5,6 +5,9 @@ var group__CMSIS__RTOS__Definitions =
     [ "osFlagsWaitAny", "group__CMSIS__RTOS__Definitions.html#ga18e63587b8450d5b8798b6f6ec04e012", null ],
     [ "osFlagsWaitAll", "group__CMSIS__RTOS__Definitions.html#ga8b6f562736fbfb5428940e0c017dec24", null ],
     [ "osFlagsNoClear", "group__CMSIS__RTOS__Definitions.html#gaade844a42237d8c37569d4d9b16b9f1c", null ],
+    [ "osSafetyClass", "group__CMSIS__RTOS__Definitions.html#ga604fce4f5205f92c347eb62fcc216861", null ],
+    [ "osSafetyWithSameClass", "group__CMSIS__RTOS__Definitions.html#ga7abd2d95425d9e02672778b3464b2eaa", null ],
+    [ "osSafetyWithLowerClass", "group__CMSIS__RTOS__Definitions.html#ga8c77ee126b9215425fc004ee13cdc6de", null ],
     [ "osStatus_t", "group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e", [
       [ "osOK", "cmsis__os2_8h.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813ea9e1c9e2550bb4de8969a935acffc968f", null ],
       [ "osError", "cmsis__os2_8h.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813eabb7b2d2c4efa66df42f1c10635467b09", null ],
@@ -13,6 +16,7 @@ var group__CMSIS__RTOS__Definitions =
       [ "osErrorParameter", "cmsis__os2_8h.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813eac24adca6a5d072c9f01c32178ba0d109", null ],
       [ "osErrorNoMemory", "cmsis__os2_8h.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813eaf1fac0240218e51eb30a13da2f8aae81", null ],
       [ "osErrorISR", "cmsis__os2_8h.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813ea21635bdc492d3094fe83027fa4a30e2f", null ],
+      [ "osErrorSafetyClass", "cmsis__os2_8h.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813eafe45a75293a0a97dcabb8bdd193145c5", null ],
       [ "osStatusReserved", "cmsis__os2_8h.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813ea66cc9ce9106b508df0e4a733a55a439d", null ]
     ] ]
 ];

@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['process_20isolation',['Process Isolation',['../group__CMSIS__RTOS__ProcessIsolation.html',1,'']]],
   ['padding',['padding',['../rtx__os_8h.html#a735ef00341a84c02ba561c66de3d20af',1,'osRtxMutex_t']]],
   ['pendsv_5fhandler',['PendSV_Handler',['../rtx__os_8h.html#a6303e1f258cbdc1f970ce579cc015623',1,'rtx_os.h']]],
   ['post_5fprocess',['post_process',['../rtx__os_8h.html#ae64a3e930a8e3d1fb28038db9bc514d9',1,'osRtxInfo_t']]],

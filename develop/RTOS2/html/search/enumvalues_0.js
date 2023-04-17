@@ -5,6 +5,7 @@ var searchData=
   ['oserrornomemory',['osErrorNoMemory',['../cmsis__os2_8h.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813eaf1fac0240218e51eb30a13da2f8aae81',1,'cmsis_os2.h']]],
   ['oserrorparameter',['osErrorParameter',['../cmsis__os2_8h.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813eac24adca6a5d072c9f01c32178ba0d109',1,'cmsis_os2.h']]],
   ['oserrorresource',['osErrorResource',['../cmsis__os2_8h.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813ea8fc5801e8b0482bdf22ad63a77f0155d',1,'cmsis_os2.h']]],
+  ['oserrorsafetyclass',['osErrorSafetyClass',['../cmsis__os2_8h.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813eafe45a75293a0a97dcabb8bdd193145c5',1,'cmsis_os2.h']]],
   ['oserrortimeout',['osErrorTimeout',['../cmsis__os2_8h.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813ea913eb5df15ad85f8557eb3a456b56879',1,'cmsis_os2.h']]],
   ['oskernelerror',['osKernelError',['../cmsis__os2_8h.html#ga08326469274b668140ca934b168a5ad4a0545c92c18ce8e6b24e82a0d694a0b4a',1,'cmsis_os2.h']]],
   ['oskernelinactive',['osKernelInactive',['../cmsis__os2_8h.html#ga08326469274b668140ca934b168a5ad4a2ad3e5912db47b497529d036c89e7995',1,'cmsis_os2.h']]],

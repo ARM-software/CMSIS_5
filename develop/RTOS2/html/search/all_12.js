@@ -4,6 +4,7 @@ var searchData=
   ['thread_20management',['Thread Management',['../group__CMSIS__RTOS__ThreadMgmt.html',1,'']]],
   ['timer_20management',['Timer Management',['../group__CMSIS__RTOS__TimerMgmt.html',1,'']]],
   ['tutorial',['Tutorial',['../rtos2_tutorial.html',1,'rtx5_impl']]],
+  ['thread_20watchdogs',['Thread Watchdogs',['../group__rtos__process__isolation__thread__wdt.html',1,'']]],
   ['thread_20functions',['Thread Functions',['../group__rtx__evr__thread.html',1,'']]],
   ['thread_20flags_20functions',['Thread Flags Functions',['../group__rtx__evr__thread__flags.html',1,'']]],
   ['timer_20functions',['Timer Functions',['../group__rtx__evr__timer.html',1,'']]],

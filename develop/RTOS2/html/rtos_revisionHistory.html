@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.1.3</span>
+   &#160;<span id="projectnumber">Version 2.2.0</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -117,6 +117,24 @@ CMSIS-RTOS API Version 2</h1>
 <table  class="cmtable" summary="Revision History">
 <tr>
 <th>Version </th><th>Description  </th></tr>
+<tr>
+<td>V2.2.0 </td><td><p class="starttd">Added support for Process Isolation (Functional Safety):</p>
+<ul>
+<li>Kernel Management: <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gac7e3b012c15c55bda68e0dd96ad9cd72">osKernelProtect</a>, <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga2065364d1bc805a40e749430377df1e1">osKernelDestroyClass</a></li>
+<li>Thread Management: <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga1bfbef7da94ed4147d231e8d6eeb5f3e">osThreadGetClass</a>, <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga4101737fa4fd303d4b41fdca6b994f8e">osThreadGetZone</a>,<br/>
+ <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gadadb56627094dbb07f6aeddf7d713fd9">osThreadSuspendClass</a>, <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gadd0a06b459925eb5cdeab67b380a3970">osThreadResumeClass</a>, <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga99ce311cc620c65fbac043d04dc7d755">osThreadTerminateZone</a>,<br/>
+ <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga8f4455b06afb95c1915f15266818a8c6">osThreadFeedWatchdog</a>, <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaee8e6bed82cd58dad31bb90156182032">osThreadProtectPrivileged</a></li>
+<li>Thread attributes: <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaefca370070d0b1616421bc3311acfecc">osThreadZone</a>, <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga4c028e5c3f4d86d237a1e09ceaf84792">osThreadUnprivileged</a>, <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga7c2b7db42d23e4f56132e0ed739d02e5">osThreadPrivileged</a></li>
+<li>Object attributes: <a class="el" href="group__CMSIS__RTOS__Definitions.html#ga604fce4f5205f92c347eb62fcc216861">osSafetyClass</a></li>
+<li>Handler functions: <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga5a02770aaf65c7a3c7562c109884176a">osWatchdogAlarm_Handler</a></li>
+<li>Zone Management: <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga79d4b26de0bfcdaf142f83e585532f93">osZoneSetup_Callback</a></li>
+<li>Exception Faults: <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga91b400b21a9093f7751fc45613c12110">osFaultResume</a></li>
+</ul>
+<p class="endtd">Additional functions allowed to be called from Interrupt Service Routines:</p>
+<ul>
+<li><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gac3230f3a55a297514b013ebf38f27e0a">osThreadGetName</a>, <a class="el" href="group__CMSIS__RTOS__EventFlags.html#ga59f4ddf0ee8c395b1672bb978d1cfc88">osEventFlagsGetName</a>, <a class="el" href="group__CMSIS__RTOS__TimerMgmt.html#ga4f82a98eee4d9ea79507e44340d3d319">osTimerGetName</a>, <a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#ga00b5e58cd247a412d1afd18732d8b752">osMutexGetName</a>, <a class="el" href="group__CMSIS__RTOS__SemaphoreMgmt.html#ga9586952051f00285f1482dbe6695bbc4">osSemaphoreGetName</a>, <a class="el" href="group__CMSIS__RTOS__PoolMgmt.html#gab414a1e138205a55820acfa277c8f386">osMemoryPoolGetName</a>, <a class="el" href="group__CMSIS__RTOS__Message.html#gae7cf7bf2b97a5ae481fb60fcce99247a">osMessageQueueGetName</a>   </li>
+</ul>
+</td></tr>
 <tr>
 <td>V2.1.3 </td><td>Additional functions allowed to be called from Interrupt Service Routines:<ul>
 <li><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga8df03548e89fbc56402a5cd584a505da">osThreadGetId</a>   </li>

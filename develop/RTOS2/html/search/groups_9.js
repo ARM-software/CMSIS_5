@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['semaphores',['Semaphores',['../group__CMSIS__RTOS__SemaphoreMgmt.html',1,'']]],
-  ['semaphore_20functions',['Semaphore Functions',['../group__rtx__evr__semaphore.html',1,'']]]
+  ['rtx_20v5_20specific_20api',['RTX v5 Specific API',['../group__rtx5__specific.html',1,'']]]
 ];

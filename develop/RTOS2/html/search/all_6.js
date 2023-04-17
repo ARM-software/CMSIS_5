@@ -6,5 +6,6 @@ var searchData=
   ['flags_5foptions',['flags_options',['../rtx__os_8h.html#a87c898585d0aeffdcf67c9e1b3befefe',1,'osRtxThread_t']]],
   ['func',['func',['../rtx__os_8h.html#aaf8577e5ddcbff356a1d27310baa8a1f',1,'osRtxTimerFinfo_t']]],
   ['function_20overview',['Function Overview',['../functionOverview.html',1,'index']]],
+  ['fault_20handling',['Fault Handling',['../group__rtos__process__isolation__faults.html',1,'']]],
   ['functions',['Functions',['../group__rtx5__specific__functions.html',1,'']]]
 ];

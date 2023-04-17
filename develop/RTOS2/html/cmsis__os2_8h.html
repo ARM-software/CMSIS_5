@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.1.3</span>
+   &#160;<span id="projectnumber">Version 2.2.0</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -180,12 +180,33 @@ Macros</h2></td></tr>
 <tr class="memitem:gaea3abd186643f539877e894b62b63448"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__flags__error__codes.html#gaea3abd186643f539877e894b62b63448">osFlagsErrorISR</a>&#160;&#160;&#160;0xFFFFFFFAU</td></tr>
 <tr class="memdesc:gaea3abd186643f539877e894b62b63448"><td class="mdescLeft">&#160;</td><td class="mdescRight">osErrorISR (-6).  <a href="group__flags__error__codes.html#gaea3abd186643f539877e894b62b63448">More...</a><br/></td></tr>
 <tr class="separator:gaea3abd186643f539877e894b62b63448"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a20291c61e351702230d4ad5546992be2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cmsis__os2_8h.html#a20291c61e351702230d4ad5546992be2">osFlagsErrorSafetyClass</a>&#160;&#160;&#160;0xFFFFFFF9U</td></tr>
+<tr class="memdesc:a20291c61e351702230d4ad5546992be2"><td class="mdescLeft">&#160;</td><td class="mdescRight">osErrorSafetyClass (-7).  <a href="#a20291c61e351702230d4ad5546992be2">More...</a><br/></td></tr>
+<tr class="separator:a20291c61e351702230d4ad5546992be2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa9336c1073858d6b118e2e011636246f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa9336c1073858d6b118e2e011636246f">osThreadDetached</a>&#160;&#160;&#160;0x00000000U</td></tr>
 <tr class="memdesc:gaa9336c1073858d6b118e2e011636246f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thread created in detached mode (default)  <a href="group__CMSIS__RTOS__ThreadMgmt.html#gaa9336c1073858d6b118e2e011636246f">More...</a><br/></td></tr>
 <tr class="separator:gaa9336c1073858d6b118e2e011636246f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga249499c519f3f8eef5673009ab6cfcbe"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga249499c519f3f8eef5673009ab6cfcbe">osThreadJoinable</a>&#160;&#160;&#160;0x00000001U</td></tr>
 <tr class="memdesc:ga249499c519f3f8eef5673009ab6cfcbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thread created in joinable mode.  <a href="group__CMSIS__RTOS__ThreadMgmt.html#ga249499c519f3f8eef5673009ab6cfcbe">More...</a><br/></td></tr>
 <tr class="separator:ga249499c519f3f8eef5673009ab6cfcbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4c028e5c3f4d86d237a1e09ceaf84792"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga4c028e5c3f4d86d237a1e09ceaf84792">osThreadUnprivileged</a>&#160;&#160;&#160;0x00000002U</td></tr>
+<tr class="memdesc:ga4c028e5c3f4d86d237a1e09ceaf84792"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thread runs in unprivileged mode.  <a href="group__CMSIS__RTOS__ThreadMgmt.html#ga4c028e5c3f4d86d237a1e09ceaf84792">More...</a><br/></td></tr>
+<tr class="separator:ga4c028e5c3f4d86d237a1e09ceaf84792"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7c2b7db42d23e4f56132e0ed739d02e5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga7c2b7db42d23e4f56132e0ed739d02e5">osThreadPrivileged</a>&#160;&#160;&#160;0x00000004U</td></tr>
+<tr class="memdesc:ga7c2b7db42d23e4f56132e0ed739d02e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thread runs in privileged mode.  <a href="group__CMSIS__RTOS__ThreadMgmt.html#ga7c2b7db42d23e4f56132e0ed739d02e5">More...</a><br/></td></tr>
+<tr class="separator:ga7c2b7db42d23e4f56132e0ed739d02e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31e30a34ed6137443fbe2c453be8bfc0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cmsis__os2_8h.html#a31e30a34ed6137443fbe2c453be8bfc0">osThreadZone_Pos</a>&#160;&#160;&#160;8U</td></tr>
+<tr class="memdesc:a31e30a34ed6137443fbe2c453be8bfc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">MPU protected zone position.  <a href="#a31e30a34ed6137443fbe2c453be8bfc0">More...</a><br/></td></tr>
+<tr class="separator:a31e30a34ed6137443fbe2c453be8bfc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f31605585359cbb77ba006d0f735599"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cmsis__os2_8h.html#a1f31605585359cbb77ba006d0f735599">osThreadZone_Msk</a>&#160;&#160;&#160;(0x3FUL &lt;&lt; osThreadZone_Pos)</td></tr>
+<tr class="memdesc:a1f31605585359cbb77ba006d0f735599"><td class="mdescLeft">&#160;</td><td class="mdescRight">MPU protected zone mask.  <a href="#a1f31605585359cbb77ba006d0f735599">More...</a><br/></td></tr>
+<tr class="separator:a1f31605585359cbb77ba006d0f735599"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a45bf09ac779100bd4c52a7e9fca82bf1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cmsis__os2_8h.html#a45bf09ac779100bd4c52a7e9fca82bf1">osThreadZone_Valid</a>&#160;&#160;&#160;(0x80UL &lt;&lt; osThreadZone_Pos)</td></tr>
+<tr class="memdesc:a45bf09ac779100bd4c52a7e9fca82bf1"><td class="mdescLeft">&#160;</td><td class="mdescRight">MPU protected zone valid flag.  <a href="#a45bf09ac779100bd4c52a7e9fca82bf1">More...</a><br/></td></tr>
+<tr class="separator:a45bf09ac779100bd4c52a7e9fca82bf1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaefca370070d0b1616421bc3311acfecc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaefca370070d0b1616421bc3311acfecc">osThreadZone</a>(n)</td></tr>
+<tr class="memdesc:gaefca370070d0b1616421bc3311acfecc"><td class="mdescLeft">&#160;</td><td class="mdescRight">MPU zone value in attribute bit field format.  <a href="group__CMSIS__RTOS__ThreadMgmt.html#gaefca370070d0b1616421bc3311acfecc">More...</a><br/></td></tr>
+<tr class="separator:gaefca370070d0b1616421bc3311acfecc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga65c2482cc64a35d03871f3180f305926"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#ga65c2482cc64a35d03871f3180f305926">osMutexRecursive</a>&#160;&#160;&#160;0x00000001U</td></tr>
 <tr class="memdesc:ga65c2482cc64a35d03871f3180f305926"><td class="mdescLeft">&#160;</td><td class="mdescRight">Recursive mutex.  <a href="group__CMSIS__RTOS__MutexMgmt.html#ga65c2482cc64a35d03871f3180f305926">More...</a><br/></td></tr>
 <tr class="separator:ga65c2482cc64a35d03871f3180f305926"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -195,6 +216,27 @@ Macros</h2></td></tr>
 <tr class="memitem:gaf0e1dee376798b4d516d164981526780"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__MutexMgmt.html#gaf0e1dee376798b4d516d164981526780">osMutexRobust</a>&#160;&#160;&#160;0x00000008U</td></tr>
 <tr class="memdesc:gaf0e1dee376798b4d516d164981526780"><td class="mdescLeft">&#160;</td><td class="mdescRight">Robust mutex.  <a href="group__CMSIS__RTOS__MutexMgmt.html#gaf0e1dee376798b4d516d164981526780">More...</a><br/></td></tr>
 <tr class="separator:gaf0e1dee376798b4d516d164981526780"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3732ae0de04b65cf0291c0bfa0ae5284"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cmsis__os2_8h.html#a3732ae0de04b65cf0291c0bfa0ae5284">osSafetyClass_Pos</a>&#160;&#160;&#160;16U</td></tr>
+<tr class="memdesc:a3732ae0de04b65cf0291c0bfa0ae5284"><td class="mdescLeft">&#160;</td><td class="mdescRight">Safety class position.  <a href="#a3732ae0de04b65cf0291c0bfa0ae5284">More...</a><br/></td></tr>
+<tr class="separator:a3732ae0de04b65cf0291c0bfa0ae5284"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5265621e9f1da2a189e7cfa90907f45c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cmsis__os2_8h.html#a5265621e9f1da2a189e7cfa90907f45c">osSafetyClass_Msk</a>&#160;&#160;&#160;(0x0FUL &lt;&lt; osSafetyClass_Pos)</td></tr>
+<tr class="memdesc:a5265621e9f1da2a189e7cfa90907f45c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Safety class mask.  <a href="#a5265621e9f1da2a189e7cfa90907f45c">More...</a><br/></td></tr>
+<tr class="separator:a5265621e9f1da2a189e7cfa90907f45c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad18d1441527dcd76ebf3e558799d32dc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cmsis__os2_8h.html#ad18d1441527dcd76ebf3e558799d32dc">osSafetyClass_Valid</a>&#160;&#160;&#160;(0x10UL &lt;&lt; osSafetyClass_Pos)</td></tr>
+<tr class="memdesc:ad18d1441527dcd76ebf3e558799d32dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Safety class valid flag.  <a href="#ad18d1441527dcd76ebf3e558799d32dc">More...</a><br/></td></tr>
+<tr class="separator:ad18d1441527dcd76ebf3e558799d32dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga604fce4f5205f92c347eb62fcc216861"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__Definitions.html#ga604fce4f5205f92c347eb62fcc216861">osSafetyClass</a>(n)</td></tr>
+<tr class="memdesc:ga604fce4f5205f92c347eb62fcc216861"><td class="mdescLeft">&#160;</td><td class="mdescRight">Safety class value in attribute bit field format.  <a href="group__CMSIS__RTOS__Definitions.html#ga604fce4f5205f92c347eb62fcc216861">More...</a><br/></td></tr>
+<tr class="separator:ga604fce4f5205f92c347eb62fcc216861"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7abd2d95425d9e02672778b3464b2eaa"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__Definitions.html#ga7abd2d95425d9e02672778b3464b2eaa">osSafetyWithSameClass</a>&#160;&#160;&#160;0x00000001U</td></tr>
+<tr class="memdesc:ga7abd2d95425d9e02672778b3464b2eaa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Objects with same safety class.  <a href="group__CMSIS__RTOS__Definitions.html#ga7abd2d95425d9e02672778b3464b2eaa">More...</a><br/></td></tr>
+<tr class="separator:ga7abd2d95425d9e02672778b3464b2eaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8c77ee126b9215425fc004ee13cdc6de"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__Definitions.html#ga8c77ee126b9215425fc004ee13cdc6de">osSafetyWithLowerClass</a>&#160;&#160;&#160;0x00000002U</td></tr>
+<tr class="memdesc:ga8c77ee126b9215425fc004ee13cdc6de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Objects with lower safety class.  <a href="group__CMSIS__RTOS__Definitions.html#ga8c77ee126b9215425fc004ee13cdc6de">More...</a><br/></td></tr>
+<tr class="separator:ga8c77ee126b9215425fc004ee13cdc6de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f3bd4b67fb89bd085266fe65ee45b06"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cmsis__os2_8h.html#a6f3bd4b67fb89bd085266fe65ee45b06">osErrorId</a>&#160;&#160;&#160;0xFFFFFFFFU</td></tr>
+<tr class="memdesc:a6f3bd4b67fb89bd085266fe65ee45b06"><td class="mdescLeft">&#160;</td><td class="mdescRight">osError (-1).  <a href="#a6f3bd4b67fb89bd085266fe65ee45b06">More...</a><br/></td></tr>
+<tr class="separator:a6f3bd4b67fb89bd085266fe65ee45b06"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a78775dae56f0c9698cdab6e1ca74503f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cmsis__os2_8h.html#a78775dae56f0c9698cdab6e1ca74503f">TZ_MODULEID_T</a></td></tr>
 <tr class="separator:a78775dae56f0c9698cdab6e1ca74503f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -394,6 +436,8 @@ Enumerations</h2></td></tr>
 <br/>
 &#160;&#160;<a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813ea21635bdc492d3094fe83027fa4a30e2f">osErrorISR</a> = -6, 
 <br/>
+&#160;&#160;<a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813eafe45a75293a0a97dcabb8bdd193145c5">osErrorSafetyClass</a> = -7, 
+<br/>
 &#160;&#160;<a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813ea66cc9ce9106b508df0e4a733a55a439d">osStatusReserved</a> = 0x7FFFFFFF
 <br/>
  }</td></tr>
@@ -429,6 +473,12 @@ Functions</h2></td></tr>
 <tr class="memitem:ga8c4b4d7ed34cab73c001665d9176aced"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga8c4b4d7ed34cab73c001665d9176aced">osKernelResume</a> (uint32_t sleep_ticks)</td></tr>
 <tr class="memdesc:ga8c4b4d7ed34cab73c001665d9176aced"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resume the RTOS Kernel scheduler.  <a href="group__CMSIS__RTOS__KernelCtrl.html#ga8c4b4d7ed34cab73c001665d9176aced">More...</a><br/></td></tr>
 <tr class="separator:ga8c4b4d7ed34cab73c001665d9176aced"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac7e3b012c15c55bda68e0dd96ad9cd72"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gac7e3b012c15c55bda68e0dd96ad9cd72">osKernelProtect</a> (uint32_t safety_class)</td></tr>
+<tr class="memdesc:gac7e3b012c15c55bda68e0dd96ad9cd72"><td class="mdescLeft">&#160;</td><td class="mdescRight">Protect the RTOS Kernel scheduler access.  <a href="group__CMSIS__RTOS__KernelCtrl.html#gac7e3b012c15c55bda68e0dd96ad9cd72">More...</a><br/></td></tr>
+<tr class="separator:gac7e3b012c15c55bda68e0dd96ad9cd72"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2065364d1bc805a40e749430377df1e1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga2065364d1bc805a40e749430377df1e1">osKernelDestroyClass</a> (uint32_t safety_class, uint32_t mode)</td></tr>
+<tr class="memdesc:ga2065364d1bc805a40e749430377df1e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy objects for specified safety classes.  <a href="group__CMSIS__RTOS__KernelCtrl.html#ga2065364d1bc805a40e749430377df1e1">More...</a><br/></td></tr>
+<tr class="separator:ga2065364d1bc805a40e749430377df1e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga84bcdbf2fb76b10c8df4e439f0c7e11b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga84bcdbf2fb76b10c8df4e439f0c7e11b">osKernelGetTickCount</a> (void)</td></tr>
 <tr class="memdesc:ga84bcdbf2fb76b10c8df4e439f0c7e11b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the RTOS kernel tick count.  <a href="group__CMSIS__RTOS__KernelCtrl.html#ga84bcdbf2fb76b10c8df4e439f0c7e11b">More...</a><br/></td></tr>
 <tr class="separator:ga84bcdbf2fb76b10c8df4e439f0c7e11b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -447,6 +497,12 @@ Functions</h2></td></tr>
 <tr class="memitem:gac3230f3a55a297514b013ebf38f27e0a"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gac3230f3a55a297514b013ebf38f27e0a">osThreadGetName</a> (<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a> thread_id)</td></tr>
 <tr class="memdesc:gac3230f3a55a297514b013ebf38f27e0a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get name of a thread.  <a href="group__CMSIS__RTOS__ThreadMgmt.html#gac3230f3a55a297514b013ebf38f27e0a">More...</a><br/></td></tr>
 <tr class="separator:gac3230f3a55a297514b013ebf38f27e0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1bfbef7da94ed4147d231e8d6eeb5f3e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga1bfbef7da94ed4147d231e8d6eeb5f3e">osThreadGetClass</a> (<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a> thread_id)</td></tr>
+<tr class="memdesc:ga1bfbef7da94ed4147d231e8d6eeb5f3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get safety class of a thread.  <a href="group__CMSIS__RTOS__ThreadMgmt.html#ga1bfbef7da94ed4147d231e8d6eeb5f3e">More...</a><br/></td></tr>
+<tr class="separator:ga1bfbef7da94ed4147d231e8d6eeb5f3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4101737fa4fd303d4b41fdca6b994f8e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga4101737fa4fd303d4b41fdca6b994f8e">osThreadGetZone</a> (<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a> thread_id)</td></tr>
+<tr class="memdesc:ga4101737fa4fd303d4b41fdca6b994f8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get MPU protected zone of a thread.  <a href="group__CMSIS__RTOS__ThreadMgmt.html#ga4101737fa4fd303d4b41fdca6b994f8e">More...</a><br/></td></tr>
+<tr class="separator:ga4101737fa4fd303d4b41fdca6b994f8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8df03548e89fbc56402a5cd584a505da"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga8df03548e89fbc56402a5cd584a505da">osThreadGetId</a> (void)</td></tr>
 <tr class="memdesc:ga8df03548e89fbc56402a5cd584a505da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the thread ID of the current running thread.  <a href="group__CMSIS__RTOS__ThreadMgmt.html#ga8df03548e89fbc56402a5cd584a505da">More...</a><br/></td></tr>
 <tr class="separator:ga8df03548e89fbc56402a5cd584a505da"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -486,6 +542,21 @@ Functions</h2></td></tr>
 <tr class="memitem:ga2f8ba6dba6e9c065a6e236ffd410d74a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga2f8ba6dba6e9c065a6e236ffd410d74a">osThreadTerminate</a> (<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a> thread_id)</td></tr>
 <tr class="memdesc:ga2f8ba6dba6e9c065a6e236ffd410d74a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Terminate execution of a thread.  <a href="group__CMSIS__RTOS__ThreadMgmt.html#ga2f8ba6dba6e9c065a6e236ffd410d74a">More...</a><br/></td></tr>
 <tr class="separator:ga2f8ba6dba6e9c065a6e236ffd410d74a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8f4455b06afb95c1915f15266818a8c6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga8f4455b06afb95c1915f15266818a8c6">osThreadFeedWatchdog</a> (uint32_t ticks)</td></tr>
+<tr class="memdesc:ga8f4455b06afb95c1915f15266818a8c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Feed watchdog of the current running thread.  <a href="group__CMSIS__RTOS__ThreadMgmt.html#ga8f4455b06afb95c1915f15266818a8c6">More...</a><br/></td></tr>
+<tr class="separator:ga8f4455b06afb95c1915f15266818a8c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaee8e6bed82cd58dad31bb90156182032"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaee8e6bed82cd58dad31bb90156182032">osThreadProtectPrivileged</a> (void)</td></tr>
+<tr class="memdesc:gaee8e6bed82cd58dad31bb90156182032"><td class="mdescLeft">&#160;</td><td class="mdescRight">Protect creation of privileged threads.  <a href="group__CMSIS__RTOS__ThreadMgmt.html#gaee8e6bed82cd58dad31bb90156182032">More...</a><br/></td></tr>
+<tr class="separator:gaee8e6bed82cd58dad31bb90156182032"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadadb56627094dbb07f6aeddf7d713fd9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gadadb56627094dbb07f6aeddf7d713fd9">osThreadSuspendClass</a> (uint32_t safety_class, uint32_t mode)</td></tr>
+<tr class="memdesc:gadadb56627094dbb07f6aeddf7d713fd9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Suspend execution of threads for specified safety classes.  <a href="group__CMSIS__RTOS__ThreadMgmt.html#gadadb56627094dbb07f6aeddf7d713fd9">More...</a><br/></td></tr>
+<tr class="separator:gadadb56627094dbb07f6aeddf7d713fd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadd0a06b459925eb5cdeab67b380a3970"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gadd0a06b459925eb5cdeab67b380a3970">osThreadResumeClass</a> (uint32_t safety_class, uint32_t mode)</td></tr>
+<tr class="memdesc:gadd0a06b459925eb5cdeab67b380a3970"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resume execution of threads for specified safety classes.  <a href="group__CMSIS__RTOS__ThreadMgmt.html#gadd0a06b459925eb5cdeab67b380a3970">More...</a><br/></td></tr>
+<tr class="separator:gadd0a06b459925eb5cdeab67b380a3970"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga99ce311cc620c65fbac043d04dc7d755"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga99ce311cc620c65fbac043d04dc7d755">osThreadTerminateZone</a> (uint32_t zone)</td></tr>
+<tr class="memdesc:ga99ce311cc620c65fbac043d04dc7d755"><td class="mdescLeft">&#160;</td><td class="mdescRight">Terminate execution of threads assigned to a specified MPU protected zone.  <a href="group__CMSIS__RTOS__ThreadMgmt.html#ga99ce311cc620c65fbac043d04dc7d755">More...</a><br/></td></tr>
+<tr class="separator:ga99ce311cc620c65fbac043d04dc7d755"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga495b3f812224e7301f23a691793765db"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga495b3f812224e7301f23a691793765db">osThreadGetCount</a> (void)</td></tr>
 <tr class="memdesc:ga495b3f812224e7301f23a691793765db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get number of active threads.  <a href="group__CMSIS__RTOS__ThreadMgmt.html#ga495b3f812224e7301f23a691793765db">More...</a><br/></td></tr>
 <tr class="separator:ga495b3f812224e7301f23a691793765db"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -642,6 +713,15 @@ Functions</h2></td></tr>
 <tr class="memitem:gaba987f665444e0d83fa6a3a68bc72abe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__Message.html#gaba987f665444e0d83fa6a3a68bc72abe">osMessageQueueDelete</a> (<a class="el" href="cmsis__os2_8h.html#a206dbc05367e03c39fc6d4d1ebcff317">osMessageQueueId_t</a> mq_id)</td></tr>
 <tr class="memdesc:gaba987f665444e0d83fa6a3a68bc72abe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete a Message Queue object.  <a href="group__CMSIS__RTOS__Message.html#gaba987f665444e0d83fa6a3a68bc72abe">More...</a><br/></td></tr>
 <tr class="separator:gaba987f665444e0d83fa6a3a68bc72abe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5a02770aaf65c7a3c7562c109884176a"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga5a02770aaf65c7a3c7562c109884176a">osWatchdogAlarm_Handler</a> (<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a> thread_id)</td></tr>
+<tr class="memdesc:ga5a02770aaf65c7a3c7562c109884176a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handler for expired thread watchdogs.  <a href="group__CMSIS__RTOS__ThreadMgmt.html#ga5a02770aaf65c7a3c7562c109884176a">More...</a><br/></td></tr>
+<tr class="separator:ga5a02770aaf65c7a3c7562c109884176a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga79d4b26de0bfcdaf142f83e585532f93"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga79d4b26de0bfcdaf142f83e585532f93">osZoneSetup_Callback</a> (uint32_t zone)</td></tr>
+<tr class="memdesc:ga79d4b26de0bfcdaf142f83e585532f93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setup MPU protected zone (called when zone changes).  <a href="group__CMSIS__RTOS__ThreadMgmt.html#ga79d4b26de0bfcdaf142f83e585532f93">More...</a><br/></td></tr>
+<tr class="separator:ga79d4b26de0bfcdaf142f83e585532f93"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga91b400b21a9093f7751fc45613c12110"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga91b400b21a9093f7751fc45613c12110">osFaultResume</a> (void)</td></tr>
+<tr class="memdesc:ga91b400b21a9093f7751fc45613c12110"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resume normal operation when exiting exception faults.  <a href="group__CMSIS__RTOS__KernelCtrl.html#ga91b400b21a9093f7751fc45613c12110">More...</a><br/></td></tr>
+<tr class="separator:ga91b400b21a9093f7751fc45613c12110"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a class="anchor" id="a153a4a31b276a9758959580538720a51"></a>
@@ -662,6 +742,102 @@ Functions</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">#define osFlagsError&#160;&#160;&#160;0x80000000U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a20291c61e351702230d4ad5546992be2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define osFlagsErrorSafetyClass&#160;&#160;&#160;0xFFFFFFF9U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a31e30a34ed6137443fbe2c453be8bfc0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define osThreadZone_Pos&#160;&#160;&#160;8U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a1f31605585359cbb77ba006d0f735599"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define osThreadZone_Msk&#160;&#160;&#160;(0x3FUL &lt;&lt; osThreadZone_Pos)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a45bf09ac779100bd4c52a7e9fca82bf1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define osThreadZone_Valid&#160;&#160;&#160;(0x80UL &lt;&lt; osThreadZone_Pos)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a3732ae0de04b65cf0291c0bfa0ae5284"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define osSafetyClass_Pos&#160;&#160;&#160;16U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a5265621e9f1da2a189e7cfa90907f45c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define osSafetyClass_Msk&#160;&#160;&#160;(0x0FUL &lt;&lt; osSafetyClass_Pos)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ad18d1441527dcd76ebf3e558799d32dc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define osSafetyClass_Valid&#160;&#160;&#160;(0x10UL &lt;&lt; osSafetyClass_Pos)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a6f3bd4b67fb89bd085266fe65ee45b06"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define osErrorId&#160;&#160;&#160;0xFFFFFFFFU</td>
         </tr>
       </table>
 </div><div class="memdoc">

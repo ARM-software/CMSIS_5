@@ -33,7 +33,7 @@
   <td id="projectlogo"><img alt="Logo" src="CMSIS_Logo_Final.png"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">CMSIS-RTOS2
-   &#160;<span id="projectnumber">Version 2.1.3</span>
+   &#160;<span id="projectnumber">Version 2.2.0</span>
    </div>
    <div id="projectbrief">Real-Time Operating System: API and RTX Reference Implementation</div>
   </td>
@@ -137,6 +137,15 @@ Macros</h2></td></tr>
 <tr class="memitem:gaa9336c1073858d6b118e2e011636246f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa9336c1073858d6b118e2e011636246f">osThreadDetached</a>&#160;&#160;&#160;0x00000000U</td></tr>
 <tr class="memdesc:gaa9336c1073858d6b118e2e011636246f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thread created in detached mode (default)  <a href="#gaa9336c1073858d6b118e2e011636246f">More...</a><br/></td></tr>
 <tr class="separator:gaa9336c1073858d6b118e2e011636246f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4c028e5c3f4d86d237a1e09ceaf84792"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga4c028e5c3f4d86d237a1e09ceaf84792">osThreadUnprivileged</a>&#160;&#160;&#160;0x00000002U</td></tr>
+<tr class="memdesc:ga4c028e5c3f4d86d237a1e09ceaf84792"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thread runs in unprivileged mode.  <a href="#ga4c028e5c3f4d86d237a1e09ceaf84792">More...</a><br/></td></tr>
+<tr class="separator:ga4c028e5c3f4d86d237a1e09ceaf84792"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7c2b7db42d23e4f56132e0ed739d02e5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga7c2b7db42d23e4f56132e0ed739d02e5">osThreadPrivileged</a>&#160;&#160;&#160;0x00000004U</td></tr>
+<tr class="memdesc:ga7c2b7db42d23e4f56132e0ed739d02e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thread runs in privileged mode.  <a href="#ga7c2b7db42d23e4f56132e0ed739d02e5">More...</a><br/></td></tr>
+<tr class="separator:ga7c2b7db42d23e4f56132e0ed739d02e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaefca370070d0b1616421bc3311acfecc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaefca370070d0b1616421bc3311acfecc">osThreadZone</a>(n)</td></tr>
+<tr class="memdesc:gaefca370070d0b1616421bc3311acfecc"><td class="mdescLeft">&#160;</td><td class="mdescRight">MPU zone value in attribute bit field format.  <a href="#gaefca370070d0b1616421bc3311acfecc">More...</a><br/></td></tr>
+<tr class="separator:gaefca370070d0b1616421bc3311acfecc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -285,6 +294,12 @@ Functions</h2></td></tr>
 <tr class="memitem:gac3230f3a55a297514b013ebf38f27e0a"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gac3230f3a55a297514b013ebf38f27e0a">osThreadGetName</a> (<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a> thread_id)</td></tr>
 <tr class="memdesc:gac3230f3a55a297514b013ebf38f27e0a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get name of a thread.  <a href="#gac3230f3a55a297514b013ebf38f27e0a">More...</a><br/></td></tr>
 <tr class="separator:gac3230f3a55a297514b013ebf38f27e0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1bfbef7da94ed4147d231e8d6eeb5f3e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga1bfbef7da94ed4147d231e8d6eeb5f3e">osThreadGetClass</a> (<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a> thread_id)</td></tr>
+<tr class="memdesc:ga1bfbef7da94ed4147d231e8d6eeb5f3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get safety class of a thread.  <a href="#ga1bfbef7da94ed4147d231e8d6eeb5f3e">More...</a><br/></td></tr>
+<tr class="separator:ga1bfbef7da94ed4147d231e8d6eeb5f3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4101737fa4fd303d4b41fdca6b994f8e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga4101737fa4fd303d4b41fdca6b994f8e">osThreadGetZone</a> (<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a> thread_id)</td></tr>
+<tr class="memdesc:ga4101737fa4fd303d4b41fdca6b994f8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get MPU protected zone of a thread.  <a href="#ga4101737fa4fd303d4b41fdca6b994f8e">More...</a><br/></td></tr>
+<tr class="separator:ga4101737fa4fd303d4b41fdca6b994f8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8df03548e89fbc56402a5cd584a505da"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga8df03548e89fbc56402a5cd584a505da">osThreadGetId</a> (void)</td></tr>
 <tr class="memdesc:ga8df03548e89fbc56402a5cd584a505da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the thread ID of the current running thread.  <a href="#ga8df03548e89fbc56402a5cd584a505da">More...</a><br/></td></tr>
 <tr class="separator:ga8df03548e89fbc56402a5cd584a505da"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -330,6 +345,27 @@ Functions</h2></td></tr>
 <tr class="memitem:ga5606604d56e21ece1a654664be877439"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga5606604d56e21ece1a654664be877439">osThreadEnumerate</a> (<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a> *thread_array, uint32_t array_items)</td></tr>
 <tr class="memdesc:ga5606604d56e21ece1a654664be877439"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enumerate active threads.  <a href="#ga5606604d56e21ece1a654664be877439">More...</a><br/></td></tr>
 <tr class="separator:ga5606604d56e21ece1a654664be877439"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8f4455b06afb95c1915f15266818a8c6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga8f4455b06afb95c1915f15266818a8c6">osThreadFeedWatchdog</a> (uint32_t ticks)</td></tr>
+<tr class="memdesc:ga8f4455b06afb95c1915f15266818a8c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Feed watchdog of the current running thread.  <a href="#ga8f4455b06afb95c1915f15266818a8c6">More...</a><br/></td></tr>
+<tr class="separator:ga8f4455b06afb95c1915f15266818a8c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaee8e6bed82cd58dad31bb90156182032"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaee8e6bed82cd58dad31bb90156182032">osThreadProtectPrivileged</a> (void)</td></tr>
+<tr class="memdesc:gaee8e6bed82cd58dad31bb90156182032"><td class="mdescLeft">&#160;</td><td class="mdescRight">Protect creation of privileged threads.  <a href="#gaee8e6bed82cd58dad31bb90156182032">More...</a><br/></td></tr>
+<tr class="separator:gaee8e6bed82cd58dad31bb90156182032"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadadb56627094dbb07f6aeddf7d713fd9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gadadb56627094dbb07f6aeddf7d713fd9">osThreadSuspendClass</a> (uint32_t safety_class, uint32_t mode)</td></tr>
+<tr class="memdesc:gadadb56627094dbb07f6aeddf7d713fd9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Suspend execution of threads for specified safety classes.  <a href="#gadadb56627094dbb07f6aeddf7d713fd9">More...</a><br/></td></tr>
+<tr class="separator:gadadb56627094dbb07f6aeddf7d713fd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadd0a06b459925eb5cdeab67b380a3970"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gadd0a06b459925eb5cdeab67b380a3970">osThreadResumeClass</a> (uint32_t safety_class, uint32_t mode)</td></tr>
+<tr class="memdesc:gadd0a06b459925eb5cdeab67b380a3970"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resume execution of threads for specified safety classes.  <a href="#gadd0a06b459925eb5cdeab67b380a3970">More...</a><br/></td></tr>
+<tr class="separator:gadd0a06b459925eb5cdeab67b380a3970"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga99ce311cc620c65fbac043d04dc7d755"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga99ce311cc620c65fbac043d04dc7d755">osThreadTerminateZone</a> (uint32_t zone)</td></tr>
+<tr class="memdesc:ga99ce311cc620c65fbac043d04dc7d755"><td class="mdescLeft">&#160;</td><td class="mdescRight">Terminate execution of threads assigned to a specified MPU protected zone.  <a href="#ga99ce311cc620c65fbac043d04dc7d755">More...</a><br/></td></tr>
+<tr class="separator:ga99ce311cc620c65fbac043d04dc7d755"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5a02770aaf65c7a3c7562c109884176a"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga5a02770aaf65c7a3c7562c109884176a">osWatchdogAlarm_Handler</a> (<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a> thread_id)</td></tr>
+<tr class="memdesc:ga5a02770aaf65c7a3c7562c109884176a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handler for expired thread watchdogs.  <a href="#ga5a02770aaf65c7a3c7562c109884176a">More...</a><br/></td></tr>
+<tr class="separator:ga5a02770aaf65c7a3c7562c109884176a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga79d4b26de0bfcdaf142f83e585532f93"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga79d4b26de0bfcdaf142f83e585532f93">osZoneSetup_Callback</a> (uint32_t zone)</td></tr>
+<tr class="memdesc:ga79d4b26de0bfcdaf142f83e585532f93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setup MPU protected zone (called when zone changes).  <a href="#ga79d4b26de0bfcdaf142f83e585532f93">More...</a><br/></td></tr>
+<tr class="separator:ga79d4b26de0bfcdaf142f83e585532f93"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <p>The Thread Management function group allows defining, creating, and controlling thread functions in the system.</p>
@@ -508,8 +544,13 @@ attr_bits</td>
 attribute bits <p>The following bit masks can be used to set options:</p>
 <ul>
 <li><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa9336c1073858d6b118e2e011636246f">osThreadDetached</a> : create thread in a detached mode (default).</li>
-<li><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga249499c519f3f8eef5673009ab6cfcbe">osThreadJoinable</a> : create thread in <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#joinable_threads">joinable mode</a>. </li>
+<li><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga249499c519f3f8eef5673009ab6cfcbe">osThreadJoinable</a> : create thread in <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#joinable_threads">joinable mode</a>.</li>
+<li><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga4c028e5c3f4d86d237a1e09ceaf84792">osThreadUnprivileged</a> : create thread to execute in unprivileged mode.</li>
+<li><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga7c2b7db42d23e4f56132e0ed739d02e5">osThreadPrivileged</a> : create thread to execute in privileged mode.</li>
+<li><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaefca370070d0b1616421bc3311acfecc">osThreadZone</a> (m) : create thread assigned to MPU zone <span class="XML-Token">m</span>.</li>
+<li><a class="el" href="group__CMSIS__RTOS__Definitions.html#ga604fce4f5205f92c347eb62fcc216861">osSafetyClass</a> (n) : create thread with safety class <span class="XML-Token">n</span> assigned to it.</li>
 </ul>
+<p>Default: <span class="XML-Token">0</span> no options set. Safety class and MPU Zone are inherited from running thread. Thread privilege mode is set based on configuration <a class="el" href="config_rtx5.html#threadConfig_procmode">Processor Mode for Thread Execution</a>. </p>
 </td></tr>
 <tr><td class="fieldtype">
 <a class="anchor" id="a1e100dc33d403841ed3c344e3397868e"></a>void *</td>
@@ -541,8 +582,7 @@ memory for stack <p>Pointer to a memory location for the thread stack (64-bit al
 stack_size</td>
 <td class="fielddoc">
 size of stack <p>The size (in bytes) of the stack specified by <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ad7c9b42355a4c8b9467130ab3fb19e43">stack_mem</a>.</p>
-<p>Default: <span class="XML-Token">0</span> as the default is no memory provided with <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ad7c9b42355a4c8b9467130ab3fb19e43">stack_mem</a>.</p>
-<p>/** </p>
+<p>Default: <span class="XML-Token">0</span> as the default is no memory provided with <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ad7c9b42355a4c8b9467130ab3fb19e43">stack_mem</a>. </p>
 </td></tr>
 <tr><td class="fieldtype">
 <a class="anchor" id="a6a5183df4c54c3e28dc8dc704f2487d5"></a><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gad4e3e0971b41f2d17584a8c6837342ec">osPriority_t</a></td>
@@ -558,8 +598,7 @@ initial thread priority (default: osPriorityNormal) <p>Specifies the initial thr
 tz_module</td>
 <td class="fielddoc">
 TrustZone module identifier. <p>TrustZone Thread Context Management Identifier to allocate context memory for threads. The RTOS kernel that runs in non-secure state calls the interface functions defined by the header file TZ_context.h. Can safely be set to zero for threads not using secure calls at all. See <a href="../../Core/html/group__context__trustzone__functions.html">TrustZone RTOS Context Management</a>.</p>
-<p>Default: <span class="XML-Token">0</span> not thread context specified.</p>
-<p>/** </p>
+<p>Default: <span class="XML-Token">0</span> not thread context specified. </p>
 </td></tr>
 <tr><td class="fieldtype">
 <a class="anchor" id="a66f538babc389986738ec70104e0562b"></a>uint32_t</td>
@@ -582,6 +621,7 @@ reserved (must be 0) <p>Reserved for future use. </p>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Bitmask for a thread that can be joined. Intended for use in <em>attr_bits</em> of <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#structosThreadAttr__t">osThreadAttr_t</a> type argument for <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga48d68b8666d99d28fa646ee1d2182b8f">osThreadNew</a> function.</p>
 <p>A thread in this state can be joined using <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga3fca90fb0679afeb968aa8c3d5874487">osThreadJoin</a>. </p>
 
 </div>
@@ -595,8 +635,74 @@ reserved (must be 0) <p>Reserved for future use. </p>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Bitmask for a thread that cannot be joined. Intended for use in <em>attr_bits</em> of <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#structosThreadAttr__t">osThreadAttr_t</a> type argument for <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga48d68b8666d99d28fa646ee1d2182b8f">osThreadNew</a> function.</p>
 <p>A thread in this state cannot be joined using <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga3fca90fb0679afeb968aa8c3d5874487">osThreadJoin</a>. </p>
 
+</div>
+</div>
+<a class="anchor" id="ga4c028e5c3f4d86d237a1e09ceaf84792"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define osThreadUnprivileged&#160;&#160;&#160;0x00000002U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Bitmask for a thread that runs in unprivileged mode. Intended for use in <em>attr_bits</em> of <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#structosThreadAttr__t">osThreadAttr_t</a> type argument for <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga48d68b8666d99d28fa646ee1d2182b8f">osThreadNew</a> function.</p>
+<p>In <b>unprivileged</b> processor mode, a thread:</p>
+<ul>
+<li>has limited access to the MSR and MRS instructions, and cannot use the CPS instruction.</li>
+<li>cannot access the system timer, NVIC, or system control block.</li>
+<li>might have restricted access to memory or peripherals.</li>
+</ul>
+<dl class="section note"><dt>Note</dt><dd>Ignored on processors that only run in privileged mode.</dd></dl>
+<p>Refer to the target processor User's Guide for details. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga7c2b7db42d23e4f56132e0ed739d02e5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define osThreadPrivileged&#160;&#160;&#160;0x00000004U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Bitmask for a thread that runs in privileged mode. Intended for use in <em>attr_bits</em> of <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#structosThreadAttr__t">osThreadAttr_t</a> type argument for <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga48d68b8666d99d28fa646ee1d2182b8f">osThreadNew</a> function.</p>
+<p>In <b>privileged</b> processor mode, the application software can use all the instructions and has access to all resources. </p>
+
+</div>
+</div>
+<a class="anchor" id="gaefca370070d0b1616421bc3311acfecc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define osThreadZone</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">n</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>MPU protected zone.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">n</td><td>MPU Protected Zone value.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>The preprocessor macro <b>osThreadZone</b> constructs attribute bitmask with MPU zone bits set to <em>n</em>.</p>
+<p><b>Code Example:</b> </p>
+<div class="fragment"><div class="line"><span class="comment">/* ThreadB thread attributes */</span></div>
+<div class="line"><span class="keyword">const</span> <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#structosThreadAttr__t">osThreadAttr_t</a> thread_B_attr = {</div>
+<div class="line">  .<a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#ab74e6bf80237ddc4109968cedc58c151">name</a>      = <span class="stringliteral">&quot;ThreadB&quot;</span>,       <span class="comment">// human readable thread name</span></div>
+<div class="line">  .attr_bits = <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#gaefca370070d0b1616421bc3311acfecc">osThreadZone</a>(3U) <span class="comment">// assign thread to MPU zone 3</span></div>
+<div class="line">};</div>
+</div><!-- fragment --> 
 </div>
 </div>
 <h2 class="groupheader">Typedef Documentation</h2>
@@ -929,7 +1035,7 @@ reserved (must be 0) <p>Reserved for future use. </p>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>name as null-terminated string.</dd></dl>
 <p>The function <b>osThreadGetName</b> returns the pointer to the name string of the thread identified by parameter <em>thread_id</em> or <span class="XML-Token">NULL</span> in case of an error.</p>
-<dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This function may be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>.</dd></dl>
 <p><b>Code Example</b> </p>
 <div class="fragment"><div class="line"><span class="keywordtype">void</span> ThreadGetName_example (<span class="keywordtype">void</span>) {</div>
 <div class="line">  <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a> thread_id = <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#ga8df03548e89fbc56402a5cd584a505da">osThreadGetId</a>();</div>
@@ -939,6 +1045,54 @@ reserved (must be 0) <p>Reserved for future use. </p>
 <div class="line">  }</div>
 <div class="line">}</div>
 </div><!-- fragment --> 
+</div>
+</div>
+<a class="anchor" id="ga1bfbef7da94ed4147d231e8d6eeb5f3e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t osThreadGetClass </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a>&#160;</td>
+          <td class="paramname"><em>thread_id</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">thread_id</td><td>thread ID obtained by <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga48d68b8666d99d28fa646ee1d2182b8f">osThreadNew</a> or <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga8df03548e89fbc56402a5cd584a505da">osThreadGetId</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>safety class of the specified thread.</dd></dl>
+<p>The function <b>osThreadGetClass</b> returns safety class assigned to the thread identified by parameter <em>thread_id</em>. In case of an error, it returns <a class="el" href="cmsis__os2_8h.html#a6f3bd4b67fb89bd085266fe65ee45b06">osErrorId</a>. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga4101737fa4fd303d4b41fdca6b994f8e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t osThreadGetZone </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a>&#160;</td>
+          <td class="paramname"><em>thread_id</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">thread_id</td><td>thread ID obtained by <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga48d68b8666d99d28fa646ee1d2182b8f">osThreadNew</a> or <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga8df03548e89fbc56402a5cd584a505da">osThreadGetId</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>MPU protected zone of the specified thread.</dd></dl>
+<p>The function <b>osThreadGetZone</b> returns the MPU Protected Zone value assigned to the thread identified by parameter <em>thread_id</em>. In case of an error, it returns <a class="el" href="cmsis__os2_8h.html#a6f3bd4b67fb89bd085266fe65ee45b06">osErrorId</a>. </p>
+
 </div>
 </div>
 <a class="anchor" id="ga8df03548e89fbc56402a5cd584a505da"></a>
@@ -1032,6 +1186,7 @@ reserved (must be 0) <p>Reserved for future use. </p>
 <li><em>osErrorParameter:</em> <em>thread_id</em> is <span class="XML-Token">NULL</span> or invalid or <em>priority</em> is incorrect.</li>
 <li><em>osErrorResource:</em> the thread is in an invalid state.</li>
 <li><em>osErrorISR:</em> the function <b>osThreadSetPriority</b> cannot be called from interrupt service routines.</li>
+<li><em>osErrorSafetyClass:</em> the calling thread safety class is lower than the safety class of the specified thread.</li>
 </ul>
 <dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>.</dd></dl>
 <p><b>Code Example</b> </p>
@@ -1164,6 +1319,7 @@ This function <b>has no impact</b> when called when the kernel is locked, see <a
 <li><em>osErrorParameter:</em> <em>thread_id</em> is <span class="XML-Token">NULL</span> or invalid.</li>
 <li><em>osErrorResource:</em> the thread is in an invalid state.</li>
 <li><em>osErrorISR:</em> the function <b>osThreadSuspend</b> cannot be called from interrupt service routines.</li>
+<li><em>osErrorSafetyClass:</em> the calling thread safety class is lower than the safety class of the specified thread.</li>
 </ul>
 <dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>. </dd>
 <dd>
@@ -1200,6 +1356,7 @@ This function <b>must not</b> be called to suspend the running thread when the k
 <li><em>osErrorParameter:</em> <em>thread_id</em> is <span class="XML-Token">NULL</span> or invalid.</li>
 <li><em>osErrorResource:</em> the thread is in an invalid state.</li>
 <li><em>osErrorISR:</em> the function <b>osThreadResume</b> cannot be called from interrupt service routines.</li>
+<li><em>osErrorSafetyClass:</em> the calling thread safety class is lower than the safety class of the specified thread.</li>
 </ul>
 <dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>. </dd>
 <dd>
@@ -1234,6 +1391,7 @@ This function <b>may be</b> called when kernel is locked (<a class="el" href="gr
 <li><em>osErrorParameter:</em> <em>thread_id</em> is <span class="XML-Token">NULL</span> or invalid.</li>
 <li><em>osErrorResource:</em> the thread is in an invalid state.</li>
 <li><em>osErrorISR:</em> the function <b>osThreadDetach</b> cannot be called from interrupt service routines.</li>
+<li><em>osErrorSafetyClass:</em> the calling thread safety class is lower than the safety class of the specified thread.</li>
 </ul>
 <dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>. </dd></dl>
 
@@ -1266,6 +1424,7 @@ This function <b>may be</b> called when kernel is locked (<a class="el" href="gr
 <li><em>osErrorParameter:</em> <em>thread_id</em> is <span class="XML-Token">NULL</span> or invalid.</li>
 <li><em>osErrorResource:</em> the thread is in an invalid state (ex: not joinable).</li>
 <li><em>osErrorISR:</em> the function <b>osThreadJoin</b> cannot be called from interrupt service routines.</li>
+<li><em>osErrorSafetyClass:</em> the calling thread safety class is lower than the safety class of the specified thread.</li>
 </ul>
 <dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>. <br/>
  </dd>
@@ -1325,6 +1484,7 @@ Only one thread shall call <b>osThreadJoin</b> to join the target thread. If mul
 <li><em>osErrorParameter:</em> <em>thread_id</em> is <span class="XML-Token">NULL</span> or invalid.</li>
 <li><em>osErrorResource:</em> the thread is in an invalid state or no other <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">READY</a> thread exists.</li>
 <li><em>osErrorISR:</em> the function <b>osThreadTerminate</b> cannot be called from interrupt service routines.</li>
+<li><em>osErrorSafetyClass:</em> the calling thread safety class is lower than the safety class of the specified thread.</li>
 </ul>
 <dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>. </dd>
 <dd>
@@ -1455,6 +1615,318 @@ Avoid calling the function with a <em>thread_id</em> that does not exist or has 
 <dl class="section return"><dt>Returns</dt><dd>number of enumerated threads.</dd></dl>
 <p>The function <b>osThreadEnumerate</b> returns the number of enumerated threads or <span class="XML-Token">0</span> in case of an error.</p>
 <dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga8f4455b06afb95c1915f15266818a8c6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> osThreadFeedWatchdog </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>ticks</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ticks</td><td><a class="el" href="theory_of_operation.html#kernelTimer">time ticks</a> value until the thread watchdog expires, or 0 to stop the watchdog </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>status code that indicates the execution status of the function.</dd></dl>
+<p>The function <b>osThreadFeedWatchdog</b> restarts watchdog of the current running thread. If the thread watchdog is not fed again within the <em>ticks</em> interval <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga5a02770aaf65c7a3c7562c109884176a">osWatchdogAlarm_Handler</a> will be called.</p>
+<p>Possible <a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> return values:</p>
+<ul>
+<li><em>osOK:</em> the watchdog timer was restarted successfully.</li>
+<li><em>osError:</em> cannot be executed (kernel not running).</li>
+<li><em>osErrorISR:</em> the function <b>osThreadFeedWatchdog</b> cannot be called from interrupt service routines.</li>
+</ul>
+<dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>.</dd></dl>
+<p><b>Code Example:</b> </p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="cmsis__os2_8h.html">cmsis_os2.h</a>&quot;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span> Thread_1 (<span class="keywordtype">void</span> <span class="keyword">const</span> *arg) {          <span class="comment">// Thread function</span></div>
+<div class="line">  osStatus_t status;                       <span class="comment">// Status of the executed function</span></div>
+<div class="line">  :</div>
+<div class="line">  <span class="keywordflow">while</span> (1) {</div>
+<div class="line">    status = <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#ga8f4455b06afb95c1915f15266818a8c6">osThreadFeedWatchdog</a>(500U);   <span class="comment">// Feed thread watchdog for 500 ticks</span></div>
+<div class="line">    <span class="comment">// verify status value here</span></div>
+<div class="line">    :</div>
+<div class="line">  }</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a class="anchor" id="gaee8e6bed82cd58dad31bb90156182032"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> osThreadProtectPrivileged </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>status code that indicates the execution status of the function.</dd></dl>
+<p>The function <b>osThreadProtectPrivileged</b> disables creation of new privileged threads. After its successful execution, no new threads with privilege execution mode (<a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga7c2b7db42d23e4f56132e0ed739d02e5">osThreadPrivileged</a> attribute) can be created. Kernel shall be in ready state or running when <b>osThreadProtectPrivileged</b> is called.</p>
+<p>Possible <a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> return values:</p>
+<ul>
+<li><em>osOK:</em> the creation of new privileged threads is disabled.</li>
+<li><em>osError:</em> cannot be executed (kernel not ready).</li>
+<li><em>osErrorISR:</em> the function <b>osThreadProtectPrivileged</b> cannot be called from interrupt service routines.</li>
+</ul>
+<dl class="section note"><dt>Note</dt><dd>This function <b>cannot</b> be called from <a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Interrupt Service Routines</a>.</dd></dl>
+<p><b>Code Example:</b> </p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="cmsis__os2_8h.html">cmsis_os2.h</a>&quot;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main (<span class="keywordtype">void</span>) {</div>
+<div class="line">  osStatus_t status;</div>
+<div class="line">  :</div>
+<div class="line">  status = <a class="code" href="group__CMSIS__RTOS__KernelCtrl.html#gae818f6611d25ba3140bede410a52d659">osKernelInitialize</a>();        <span class="comment">// Initialize CMSIS-RTOS2 kernel</span></div>
+<div class="line">  <span class="comment">// verify status value here.</span></div>
+<div class="line">  :                                     <span class="comment">// Create privileged threads</span></div>
+<div class="line">  status = <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#gaee8e6bed82cd58dad31bb90156182032">osThreadProtectPrivileged</a>(); <span class="comment">// Disable creation of new privileged threads.</span></div>
+<div class="line">  <span class="comment">// verify status value here.</span></div>
+<div class="line">  :                                     <span class="comment">// Start the kernel</span></div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a class="anchor" id="gadadb56627094dbb07f6aeddf7d713fd9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> osThreadSuspendClass </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>safety_class</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mode</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">safety_class</td><td>safety class. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">mode</td><td>safety mode. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>status code that indicates the execution status of the function.</dd></dl>
+<p>The function <b>osThreadSuspendClass</b> suspends execution of threads based on safety class assignment. <em>safety_class</em> provides the reference safety class value, while <em>mode</em> is considered as a bitmap that additionally specifies the safety classes to be suspended.</p>
+<p>If <a class="el" href="group__CMSIS__RTOS__Definitions.html#ga7abd2d95425d9e02672778b3464b2eaa">osSafetyWithSameClass</a> is set in <em>mode</em> than the threads with safety class value equal to <em>safety_class</em> will be suspended. <br/>
+ If <a class="el" href="group__CMSIS__RTOS__Definitions.html#ga8c77ee126b9215425fc004ee13cdc6de">osSafetyWithLowerClass</a> is set in <em>mode</em> than the threads with safety class value lower than <em>safety_class</em> will be suspended.</p>
+<p>Possible <a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> return values:</p>
+<ul>
+<li><em>osOK:</em> the threads with specified safety class have been suspended successfully.</li>
+<li><em>osErrorParameter:</em> <em>safety_class</em> is invalid.</li>
+<li><em>osErrorResource:</em> no other <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">READY</a> thread exists.</li>
+<li><em>osErrorISR:</em> the function <b>osThreadSuspendClass</b> is called from interrupt other than <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga5a02770aaf65c7a3c7562c109884176a">osWatchdogAlarm_Handler</a>.</li>
+<li><em>osErrorSafetyClass:</em> the calling thread safety class is lower than the safety class specified by <em>safety_class</em> and <em>mode</em>.</li>
+</ul>
+<p><b>Code Example:</b> </p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="cmsis__os2_8h.html">cmsis_os2.h</a>&quot;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span> SuspendNonCriticalClasses (<span class="keywordtype">void</span>) {</div>
+<div class="line">  osStatus_t status;</div>
+<div class="line"> </div>
+<div class="line">  status = <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#gadadb56627094dbb07f6aeddf7d713fd9">osThreadSuspendClass</a>(4U, <a class="code" href="group__CMSIS__RTOS__Definitions.html#ga7abd2d95425d9e02672778b3464b2eaa">osSafetyWithSameClass</a> | <a class="code" href="group__CMSIS__RTOS__Definitions.html#ga8c77ee126b9215425fc004ee13cdc6de">osSafetyWithLowerClass</a>); <span class="comment">// Suspends threads with safety class 4 or lower</span></div>
+<div class="line">  <span class="comment">// verify status value here.</span></div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a class="anchor" id="gadd0a06b459925eb5cdeab67b380a3970"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> osThreadResumeClass </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>safety_class</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mode</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">safety_class</td><td>safety class. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">mode</td><td>safety mode. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>status code that indicates the execution status of the function.</dd></dl>
+<p>The function <b>osThreadResumeClass</b> resumes execution of threads based on safety class assignment. <em>safety_class</em> provides the reference safety class value, while <em>mode</em> is considered as a bitmap that additionally specifies the safety classes to be resumed.</p>
+<p>If <a class="el" href="group__CMSIS__RTOS__Definitions.html#ga7abd2d95425d9e02672778b3464b2eaa">osSafetyWithSameClass</a> is set in <em>mode</em> than the threads with safety class value equal to <em>safety_class</em> will be resumed. <br/>
+ If <a class="el" href="group__CMSIS__RTOS__Definitions.html#ga8c77ee126b9215425fc004ee13cdc6de">osSafetyWithLowerClass</a> is set in <em>mode</em> than the threads with safety class value lower than <em>safety_class</em> will be resumed.</p>
+<p>Possible <a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> return values:</p>
+<ul>
+<li><em>osOK:</em> the threads with specified safety class have been resumed successfully.</li>
+<li><em>osErrorParameter:</em> <em>safety_class</em> is invalid.</li>
+<li><em>osErrorISR:</em> the function <b>osThreadResumeClass</b> is called from interrupt other than <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga5a02770aaf65c7a3c7562c109884176a">osWatchdogAlarm_Handler</a>.</li>
+<li><em>osErrorSafetyClass:</em> the calling thread safety class is lower than the safety class specified by <em>safety_class</em> and <em>mode</em>.</li>
+</ul>
+<p><b>Code Example:</b> </p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="cmsis__os2_8h.html">cmsis_os2.h</a>&quot;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span> ResumeNonCriticalClasses (<span class="keywordtype">void</span>) {</div>
+<div class="line">  osStatus_t status;</div>
+<div class="line"> </div>
+<div class="line">  status = <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#gadd0a06b459925eb5cdeab67b380a3970">osThreadResumeClass</a>(4U, <a class="code" href="group__CMSIS__RTOS__Definitions.html#ga7abd2d95425d9e02672778b3464b2eaa">osSafetyWithSameClass</a> | <a class="code" href="group__CMSIS__RTOS__Definitions.html#ga8c77ee126b9215425fc004ee13cdc6de">osSafetyWithLowerClass</a>); <span class="comment">// Resumes threads with safety class 4 or lower</span></div>
+<div class="line">  <span class="comment">// verify status value here.</span></div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a class="anchor" id="ga99ce311cc620c65fbac043d04dc7d755"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> osThreadTerminateZone </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>zone</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">zone</td><td>MPU protected zone. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>status code that indicates the execution status of the function.</dd></dl>
+<p>The function <b>osThreadTerminateZone</b> terminates execution of threads assigned to the MPU Protected Zone as given by <em>zone</em> parameter.</p>
+<p>Possible <a class="el" href="group__CMSIS__RTOS__Definitions.html#ga6c0dbe6069e4e7f47bb4cd32ae2b813e">osStatus_t</a> return values:</p>
+<ul>
+<li><em>osOK:</em> the threads within the specified MPU Protected Zone have been terminated successfully.</li>
+<li><em>osErrorParameter:</em> <em>zone</em> is invalid.</li>
+<li><em>osErrorResource:</em> no other <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ThreadStates">READY</a> thread exists.</li>
+<li><em>osErrorISR:</em> the function <b>osThreadTerminateZone</b> is called from interrupt other than fault.</li>
+<li><em>osError:</em> the function <b>osThreadTerminateZone</b> is called from thread.</li>
+</ul>
+<dl class="section note"><dt>Note</dt><dd><b>osThreadTerminateZone</b> destroys non-joinable threads and removes their thread IDs from the system. Subsequent access to a terminated thread via its thread ID (for example <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gacc0a98b42f0a5928e12dc91dc76866b9">osThreadGetState</a>) will return an <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ggad3dc89e942e38d9f3af858a0269a820da339313e26613bc12f66a852e2ff8745e">osThreadError</a>. Joinable threads will not be destroyed and return the status <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ggad3dc89e942e38d9f3af858a0269a820dad5b2726c2d0228f4f1a76cf6b630963c">osThreadTerminated</a> until they are joined with <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga3fca90fb0679afeb968aa8c3d5874487">osThreadJoin</a>.</dd></dl>
+<p><b>Code Example:</b> </p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="cmsis__os2_8h.html">cmsis_os2.h</a>&quot;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span> TerminateFaultedThreads (<span class="keywordtype">void</span>) {  <span class="comment">// to be called from an exception fault context</span></div>
+<div class="line">  osStatus_t status;</div>
+<div class="line"> </div>
+<div class="line">  status = <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#ga99ce311cc620c65fbac043d04dc7d755">osThreadTerminateZone</a>(3U); <span class="comment">// Terminates threads assigned to MPU Protected Zone 3</span></div>
+<div class="line">  <span class="comment">// verify status value here.</span></div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a class="anchor" id="ga5a02770aaf65c7a3c7562c109884176a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t osWatchdogAlarm_Handler </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a>&#160;</td>
+          <td class="paramname"><em>thread_id</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">thread_id</td><td>thread ID obtained by <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga48d68b8666d99d28fa646ee1d2182b8f">osThreadNew</a> or <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga8df03548e89fbc56402a5cd584a505da">osThreadGetId</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>new watchdog reload value or 0 to stop the watchdog.</dd></dl>
+<p>The callback function <b>osWatchdogAlarm_Handler</b> is called by the kernel when a thread watchdog expires. Parameter <em>thread_id</em> identifies the thread which has the expired thread watchdog. The function needs to be implemented in user application.</p>
+<p>Return new reload value to restart the watchdog. Return <span class="XML-Token">0</span> to stop the thread watchdog.</p>
+<dl class="section note"><dt>Note</dt><dd>The callback function is called from interrupt.</dd>
+<dd>
+When multiple watchdogs expire in the same tick, this function is called for each thread with highest safety class first.</dd></dl>
+<p><b>Code Example:</b> </p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="cmsis__os2_8h.html">cmsis_os2.h</a>&quot;</span></div>
+<div class="line"> </div>
+<div class="line">uint32_t <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#ga5a02770aaf65c7a3c7562c109884176a">osWatchdogAlarm_Handler</a> (<a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#gaa6c32fe2a3e0a2e01f212d55b02e51c7">osThreadId_t</a> thread_id) {</div>
+<div class="line">  uint32_t safety_class;</div>
+<div class="line">  uint32_t next_interval;</div>
+<div class="line"></div>
+<div class="line">  safety_class = <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#ga1bfbef7da94ed4147d231e8d6eeb5f3e">osThreadGetClass</a>(thread_id);</div>
+<div class="line">  </div>
+<div class="line">  <span class="comment">/* Handle the watchdog depending on how safety-critical is the thread */</span></div>
+<div class="line">  <span class="keywordflow">if</span> (safety_class &lt; ...){</div>
+<div class="line">    :</div>
+<div class="line">  } <span class="keywordflow">else</span> {</div>
+<div class="line">    :</div>
+<div class="line">  }</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordflow">return</span> next_interval;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a class="anchor" id="ga79d4b26de0bfcdaf142f83e585532f93"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void osZoneSetup_Callback </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>zone</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">zone</td><td>zone number.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>The callback function <b>osZoneSetup_Callback</b> is called by the kernel when MPU Protected Zone changes. The function shall be implemented in user application.</p>
+<p><b>Code Example:</b> </p>
+<div class="fragment"><div class="line"><span class="comment">/* Update MPU settings for newly activating Zone */</span></div>
+<div class="line"><span class="keywordtype">void</span> <a class="code" href="group__CMSIS__RTOS__ThreadMgmt.html#ga79d4b26de0bfcdaf142f83e585532f93">osZoneSetup_Callback</a> (uint32_t zone) {</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordflow">if</span> (zone &gt;= ZONES_NUM) {</div>
+<div class="line">    <span class="comment">//Issue an error for incorrect zone value</span></div>
+<div class="line">  }</div>
+<div class="line"> </div>
+<div class="line">  ARM_MPU_Disable();</div>
+<div class="line">  ARM_MPU_Load(mpu_table[zone], MPU_REGIONS);</div>
+<div class="line">  ARM_MPU_Enable(MPU_CTRL_PRIVDEFENA_Msk);</div>
+<div class="line">}</div>
+</div><!-- fragment --><p><code>ZONES_NUM</code> is the total amount of zones allocated by the application. For <code>ARM_MPU_</code>... functions refer to <a href="../../Core/html/group__mpu__functions.html"><b>MPU Functions</b></a> in CMSIS-Core documentation. </p>
 
 </div>
 </div>

@@ -3,6 +3,7 @@ var searchData=
   ['semaphores',['Semaphores',['../group__CMSIS__RTOS__SemaphoreMgmt.html',1,'']]],
   ['stack_20requirements',['Stack Requirements',['../pStackRequirements.html',1,'technicalData5']]],
   ['supported_20toolchains',['Supported Toolchains',['../pToolchains.html',1,'technicalData5']]],
+  ['safety_20classes',['Safety Classes',['../group__rtos__process__isolation__safety__class.html',1,'']]],
   ['semaphore_20functions',['Semaphore Functions',['../group__rtx__evr__semaphore.html',1,'']]],
   ['sp',['sp',['../rtx__os_8h.html#a382a07e24a852d580d7548b8d517384c',1,'osRtxThread_t']]],
   ['stack_5fframe',['stack_frame',['../rtx__os_8h.html#a1071334ebd46d95b9ab1dcad788b2adc',1,'osRtxThread_t']]],
