@@ -377,7 +377,7 @@ Refer to the \ref thread_examples "Thread Examples" section.
 The function \b osThreadGetName returns the pointer to the name string of the thread identified by parameter \a thread_id or
 \token{NULL} in case of an error.
 
-\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+\note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
 <b>Code Example</b>
 \code
