@@ -295,7 +295,7 @@ Possible \ref osStatus_t return values:
 The function \b osEventFlagsGetName returns the pointer to the name string of the event flags object identified by parameter
 \a ef_id or \token{NULL} in case of an error.
 
-\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+\note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
 <b>Code Example</b>
 \code

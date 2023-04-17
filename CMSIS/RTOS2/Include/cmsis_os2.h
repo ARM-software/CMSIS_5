@@ -36,6 +36,9 @@
  *    - Handler functions: osWatchdogAlarm_Handler
  *    - Zone Management: osZoneSetup_Callback
  *    - Exception Faults: osFaultResume
+ *    Additional functions allowed to be called from Interrupt Service Routines:
+ *    - osThreadGetName, osTimerGetName, osEventFlagsGetName, osMutexGetName,
+ *      osSemaphoreGetName, osMemoryPoolGetName, osMessageQueueGetName
  * Version 2.1.3
  *    Additional functions allowed to be called from Interrupt Service Routines:
  *    - osThreadGetId

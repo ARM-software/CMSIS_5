@@ -21,6 +21,9 @@
          - Handler functions: \ref osWatchdogAlarm_Handler
          - Zone Management: \ref osZoneSetup_Callback
          - Exception Faults: \ref osFaultResume
+
+        Additional functions allowed to be called from Interrupt Service Routines:
+         - \ref osThreadGetName, \ref osEventFlagsGetName, \ref osTimerGetName, \ref osMutexGetName, \ref osSemaphoreGetName, \ref osMemoryPoolGetName, \ref osMessageQueueGetName
       </td>
     </tr>
     <tr>

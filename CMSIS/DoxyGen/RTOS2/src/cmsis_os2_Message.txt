@@ -66,7 +66,7 @@ Refer to \ref osMessageQueuePut
 The function \b osMessageQueueGetName returns the pointer to the name string of the message queue identified by parameter \a
 mq_id or \token{NULL} in case of an error.
 
-\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+\note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
