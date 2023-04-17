@@ -181,7 +181,6 @@ if (status == osErrorSafetyClass)
 }
 \endcode
 
-\if RTX_ISOLATION
 Following functions compare the safety class of the running thread with the safety class of the target object.
 
 In \ref CMSIS_RTOS_KernelCtrl functions:
@@ -243,8 +242,6 @@ In \ref CMSIS_RTOS_Message functions:
 - \ref osMessageQueueGet
 - \ref osMessageQueueReset
 - \ref osMessageQueueDelete
-
-\endif
 
 \addtogroup rtos_process_isolation_thread_wdt Thread Watchdogs
 
