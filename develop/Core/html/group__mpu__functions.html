@@ -415,7 +415,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The function <a class="el" href="group__mpu8__functions.html#ga5a3f40314553baccdeea551f86d9a997">ARM_MPU_Enable</a> writes to the register <a class="el" href="structMPU__Type.html#a769178ef949f0d5d8f18ddbd9e4e926f">MPU-&gt;CTRL</a> and sets bit ENABLE. The parameter <em>MPU_CTRL</em> provides additional bit values (see table below) that configure the MPU behaviour. For processors that implement an <b>MPU Fault Handler</b> the <a class="el" href="group__NVIC__gr.html">MemoryManagement_IRQn</a> exception is enabled by setting the bit MEMFAULTACT in register SBC-&gt;SHCSR.</p>
+<p>The function <a class="el" href="group__mpu__functions.html#ga31406efd492ec9a091a70ffa2d8a42fb">ARM_MPU_Enable</a> writes to the register <a class="el" href="structMPU__Type.html#a769178ef949f0d5d8f18ddbd9e4e926f">MPU-&gt;CTRL</a> and sets bit ENABLE. The parameter <em>MPU_CTRL</em> provides additional bit values (see table below) that configure the MPU behaviour. For processors that implement an <b>MPU Fault Handler</b> the <a class="el" href="group__NVIC__gr.html">MemoryManagement_IRQn</a> exception is enabled by setting the bit MEMFAULTACT in register SBC-&gt;SHCSR.</p>
 <p>The following table contains possible values for the parameter <em>MPU_CTRL</em> that set specific bits in register MPU-&gt;CTRL. </p>
 <table class="doxtable">
 <tr>

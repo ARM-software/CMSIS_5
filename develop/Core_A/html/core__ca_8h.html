@@ -1404,6 +1404,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gad0d732293be6a928db184b59aadc1979"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cmsis__armcc_8h.html#ab904513442afdf77d4f8c74f23cbb040">__STATIC_FORCEINLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__L1__cache__functions.html#gad0d732293be6a928db184b59aadc1979">L1C_InvalidateBTAC</a> (void)</td></tr>
 <tr class="memdesc:gad0d732293be6a928db184b59aadc1979"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invalidate entire branch predictor array.  <a href="group__L1__cache__functions.html#gad0d732293be6a928db184b59aadc1979">More...</a><br/></td></tr>
 <tr class="separator:gad0d732293be6a928db184b59aadc1979"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a703d60af8047cc0d56b74d6814e375c5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cmsis__armcc_8h.html#ab904513442afdf77d4f8c74f23cbb040">__STATIC_FORCEINLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="core__ca_8h.html#a703d60af8047cc0d56b74d6814e375c5">L1C_InvalidateICacheMVA</a> (void *va)</td></tr>
+<tr class="memdesc:a703d60af8047cc0d56b74d6814e375c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clean instruction cache line by address.  <a href="#a703d60af8047cc0d56b74d6814e375c5">More...</a><br/></td></tr>
+<tr class="separator:a703d60af8047cc0d56b74d6814e375c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac932810cfe83f087590859010972645e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="cmsis__armcc_8h.html#ab904513442afdf77d4f8c74f23cbb040">__STATIC_FORCEINLINE</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__L1__cache__functions.html#gac932810cfe83f087590859010972645e">L1C_InvalidateICacheAll</a> (void)</td></tr>
 <tr class="memdesc:gac932810cfe83f087590859010972645e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invalidate the whole instruction cache.  <a href="group__L1__cache__functions.html#gac932810cfe83f087590859010972645e">More...</a><br/></td></tr>
 <tr class="separator:gac932810cfe83f087590859010972645e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1686,8 +1689,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga9de65bea1cabf73dc4302e0e727cc8c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
-<div class="textblock"><dl class="section version"><dt>Version</dt><dd>V1.0.7 </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>22. November 2022 </dd></dl>
+<div class="textblock"><dl class="section version"><dt>Version</dt><dd>V1.0.8 </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>23. March 2023 </dd></dl>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
 <a class="anchor" id="add5658d95f6b79934202e6fbf1795b12"></a>
 <div class="memitem">
@@ -5454,6 +5457,28 @@ Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">IRQn</td><td>The interrupt to be queried. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">group</td><td>Interrupt group number: 0 - Group 0, 1 - Group 1 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a703d60af8047cc0d56b74d6814e375c5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="cmsis__armcc_8h.html#ab904513442afdf77d4f8c74f23cbb040">__STATIC_FORCEINLINE</a> void L1C_InvalidateICacheMVA </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>va</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">va</td><td>Pointer to instructions to clear the cache for. </td></tr>
   </table>
   </dd>
 </dl>

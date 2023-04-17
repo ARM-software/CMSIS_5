@@ -13,6 +13,7 @@ var searchData=
   ['l1c_5finvalidatedcacheall',['L1C_InvalidateDCacheAll',['../group__L1__cache__functions.html#gae895f75c4f3539058232f555d79e5df3',1,'core_ca.h']]],
   ['l1c_5finvalidatedcachemva',['L1C_InvalidateDCacheMVA',['../group__L1__cache__functions.html#ga9209853937940991daf70edd6bc633fe',1,'core_ca.h']]],
   ['l1c_5finvalidateicacheall',['L1C_InvalidateICacheAll',['../group__L1__cache__functions.html#gac932810cfe83f087590859010972645e',1,'core_ca.h']]],
+  ['l1c_5finvalidateicachemva',['L1C_InvalidateICacheMVA',['../core__ca_8h.html#a703d60af8047cc0d56b74d6814e375c5',1,'core_ca.h']]],
   ['l2c_5fcleaninvallbyway',['L2C_CleanInvAllByWay',['../group__L2__cache__functions.html#gabd0a9b10926537fa283c0bb30d54abc7',1,'core_ca.h']]],
   ['l2c_5fcleaninvpa',['L2C_CleanInvPa',['../group__L2__cache__functions.html#gaaff11c6afa9eaacb4cdfcfe5c36f57eb',1,'core_ca.h']]],
   ['l2c_5fcleanpa',['L2C_CleanPa',['../group__L2__cache__functions.html#ga242f6fa13f33e7d5cdd7d92935d52f5f',1,'core_ca.h']]],

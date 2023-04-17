@@ -15,6 +15,7 @@ var searchData=
   ['l1c_5finvalidatedcacheall',['L1C_InvalidateDCacheAll',['../group__L1__cache__functions.html#gae895f75c4f3539058232f555d79e5df3',1,'core_ca.h']]],
   ['l1c_5finvalidatedcachemva',['L1C_InvalidateDCacheMVA',['../group__L1__cache__functions.html#ga9209853937940991daf70edd6bc633fe',1,'core_ca.h']]],
   ['l1c_5finvalidateicacheall',['L1C_InvalidateICacheAll',['../group__L1__cache__functions.html#gac932810cfe83f087590859010972645e',1,'core_ca.h']]],
+  ['l1c_5finvalidateicachemva',['L1C_InvalidateICacheMVA',['../core__ca_8h.html#a703d60af8047cc0d56b74d6814e375c5',1,'core_ca.h']]],
   ['l1pctl',['L1PCTL',['../unionACTLR__Type.html#a5464ac7b26943d2cb868c154b0b1375c',1,'ACTLR_Type']]],
   ['l1pe',['L1PE',['../unionACTLR__Type.html#aacb87aa6bf093e1ee956342e0cb5903e',1,'ACTLR_Type']]],
   ['l1radis',['L1RADIS',['../unionACTLR__Type.html#a3800bdd7abfab1a51dcfa7069e245d65',1,'ACTLR_Type']]],
