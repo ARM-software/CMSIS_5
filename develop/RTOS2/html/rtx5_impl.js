@@ -29,6 +29,7 @@ var rtx5_impl =
       [ "System Configuration", "config_rtx5.html#systemConfig", [
         [ "Global Dynamic Memory size [bytes]", "config_rtx5.html#systemConfig_glob_mem", null ],
         [ "Round-Robin Thread Switching", "config_rtx5.html#systemConfig_rr", null ],
+        [ "Safety features (Source variant only)", "config_rtx5.html#safetyConfig_safety", null ],
         [ "ISR FIFO Queue", "config_rtx5.html#systemConfig_isr_fifo", null ],
         [ "Object Memory Usage Counters", "config_rtx5.html#systemConfig_usage_counters", null ]
       ] ],

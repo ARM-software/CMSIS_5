@@ -164,6 +164,9 @@ Macros</h2></td></tr>
 <tr class="memitem:gac749c24b9cf6c49b392b015ed0517cfc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx5__specific__defines.html#gac749c24b9cf6c49b392b015ed0517cfc">osRtxErrorClibMutex</a>&#160;&#160;&#160;5U</td></tr>
 <tr class="memdesc:gac749c24b9cf6c49b392b015ed0517cfc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Standard C/C++ library mutex initialization failed.  <a href="#gac749c24b9cf6c49b392b015ed0517cfc">More...</a><br/></td></tr>
 <tr class="separator:gac749c24b9cf6c49b392b015ed0517cfc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5ebf507d79cc3fdd69e951db0416249d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx5__specific__defines.html#ga5ebf507d79cc3fdd69e951db0416249d">osRtxErrorSVC</a>&#160;&#160;&#160;6U</td></tr>
+<tr class="memdesc:ga5ebf507d79cc3fdd69e951db0416249d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invalid SVC function called.  <a href="#ga5ebf507d79cc3fdd69e951db0416249d">More...</a><br/></td></tr>
+<tr class="separator:ga5ebf507d79cc3fdd69e951db0416249d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <h2 class="groupheader">Macro Definition Documentation</h2>
@@ -453,6 +456,19 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>This error identifier is used with <a class="el" href="group__rtx5__specific__functions.html#gaf1745a88f9cc60b609ab1c8076bd346d">osRtxErrorNotify</a> when RTX5 fails to create mutexes needed to lock global C/C++ library resources. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga5ebf507d79cc3fdd69e951db0416249d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define osRtxErrorSVC&#160;&#160;&#160;6U</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This error identifier is used with <a class="el" href="group__rtx5__specific__functions.html#gaf1745a88f9cc60b609ab1c8076bd346d">osRtxErrorNotify</a> when RTX5 detects SVC function pointer that is not properly aligned or is located outside of the RTX5 SVC function table. </p>
 
 </div>
 </div>

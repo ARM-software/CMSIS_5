@@ -14,5 +14,6 @@ var group__rtx5__specific__defines =
     [ "osRtxErrorISRQueueOverflow", "group__rtx5__specific__defines.html#ga7377235f9fa3cedee06f682cd93f3e88", null ],
     [ "osRtxErrorTimerQueueOverflow", "group__rtx5__specific__defines.html#gaad420018f26e751ec55d3922a283beb0", null ],
     [ "osRtxErrorClibSpace", "group__rtx5__specific__defines.html#ga14a24724f6e87744ba84674ef76e4256", null ],
-    [ "osRtxErrorClibMutex", "group__rtx5__specific__defines.html#gac749c24b9cf6c49b392b015ed0517cfc", null ]
+    [ "osRtxErrorClibMutex", "group__rtx5__specific__defines.html#gac749c24b9cf6c49b392b015ed0517cfc", null ],
+    [ "osRtxErrorSVC", "group__rtx5__specific__defines.html#ga5ebf507d79cc3fdd69e951db0416249d", null ]
 ];

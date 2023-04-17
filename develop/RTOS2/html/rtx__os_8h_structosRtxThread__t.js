@@ -22,5 +22,9 @@ var rtx__os_8h_structosRtxThread__t =
     [ "stack_size", "rtx__os_8h.html#ad63716408aae5b50857ca8ce74e3a3ff", null ],
     [ "sp", "rtx__os_8h.html#a382a07e24a852d580d7548b8d517384c", null ],
     [ "thread_addr", "rtx__os_8h.html#adf2ebf46aa7018845582f1c70de83598", null ],
-    [ "tz_memory", "rtx__os_8h.html#adaa6c424a231e5f6c788532675f33e16", null ]
+    [ "tz_memory", "rtx__os_8h.html#adaa6c424a231e5f6c788532675f33e16", null ],
+    [ "zone", "rtx__os_8h.html#ac746c3d65092170bfaf5b0d9950d8438", null ],
+    [ "reserved", "rtx__os_8h.html#a72aca6ea6d8153b28ea8f139b932ec3e", null ],
+    [ "wdog_next", "rtx__os_8h.html#a73f4e12f4f2ec40dca37b3af0fd89884", null ],
+    [ "wdog_tick", "rtx__os_8h.html#afcef1b922d2b9644501b0ca482c7d23b", null ]
 ];

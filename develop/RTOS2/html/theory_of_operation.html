@@ -426,9 +426,9 @@ RTX5 Header File</h1>
 <div class="line"><span class="preprocessor"></span> </div>
 <div class="line"> <span class="comment"></span></div>
 <div class="line"><span class="comment">/// Kernel Information</span></div>
-<div class="line"><span class="comment"></span><span class="preprocessor">#define osRtxVersionAPI      20010003   </span><span class="comment">///&lt; API version (2.1.3)</span></div>
-<div class="line"><span class="comment"></span>#define osRtxVersionKernel   50050005   <span class="comment">///&lt; Kernel version (5.5.5)</span></div>
-<div class="line"><span class="comment"></span>#define osRtxKernelId     &quot;RTX V5.5.5&quot;  <span class="comment">///&lt; Kernel identification string</span></div>
+<div class="line"><span class="comment"></span><span class="preprocessor">#define osRtxVersionAPI      20020000   </span><span class="comment">///&lt; API version (2.2.0)</span></div>
+<div class="line"><span class="comment"></span>#define osRtxVersionKernel   50070000   <span class="comment">///&lt; Kernel version (5.7.0)</span></div>
+<div class="line"><span class="comment"></span>#define osRtxKernelId     &quot;RTX V5.7.0&quot;  <span class="comment">///&lt; Kernel identification string</span></div>
 <div class="line"><span class="comment"></span> </div>
 <div class="line"> </div>
 <div class="line"><span class="comment">//  ==== Common definitions ====</span></div>
@@ -447,6 +447,10 @@ RTX5 Header File</h1>
 <div class="line"><span class="comment">/// Object Flags definitions</span></div>
 <div class="line"><span class="comment"></span><span class="preprocessor">#define osRtxFlagSystemObject   0x01U</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#define osRtxFlagSystemMemory   0x02U</span></div>
+<div class="line"><span class="preprocessor"></span> <span class="comment"></span></div>
+<div class="line"><span class="comment">/// Object Attribute Class definitions</span></div>
+<div class="line"><span class="comment"></span><span class="preprocessor">#define osRtxAttrClass_Pos      4U</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define osRtxAttrClass_Msk      0xF0U</span></div>
 <div class="line"><span class="preprocessor"></span> </div>
 <div class="line"> </div>
 <div class="line"><span class="comment">//  ==== Kernel definitions ====</span></div>
@@ -457,6 +461,11 @@ RTX5 Header File</h1>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#define osRtxKernelRunning              ((uint8_t)osKernelRunning)</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#define osRtxKernelLocked               ((uint8_t)osKernelLocked)</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#define osRtxKernelSuspended            ((uint8_t)osKernelSuspended)</span></div>
+<div class="line"><span class="preprocessor"></span> <span class="comment"></span></div>
+<div class="line"><span class="comment">/// Kernel Protect definitions</span></div>
+<div class="line"><span class="comment"></span><span class="preprocessor">#define osRtxKernelProtectPrivileged    0x01U</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define osRtxKernelProtectClass_Pos     4U</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define osRtxKernelProtectClass_Msk     0xF0U</span></div>
 <div class="line"><span class="preprocessor"></span> </div>
 <div class="line"> </div>
 <div class="line"><span class="comment">//  ==== Thread definitions ====</span></div>
@@ -512,10 +521,11 @@ RTX5 Header File</h1>
 <div class="line"><span class="comment"></span>  uint32_t                         sp;  <span class="comment">///&lt; Current Stack Pointer</span></div>
 <div class="line"><span class="comment"></span>  uint32_t                thread_addr;  <span class="comment">///&lt; Thread entry address</span></div>
 <div class="line"><span class="comment"></span>  uint32_t                  tz_memory;  <span class="comment">///&lt; TrustZone Memory Identifier</span></div>
-<div class="line"><span class="comment"></span><span class="preprocessor">#ifdef RTX_TF_M_EXTENSION</span></div>
-<div class="line"><span class="preprocessor"></span>  uint32_t                  tz_module;  <span class="comment">///&lt; TrustZone Module Identifier</span></div>
-<div class="line"><span class="comment"></span><span class="preprocessor">#endif</span></div>
-<div class="line"><span class="preprocessor"></span>} <a class="code" href="rtx__os_8h.html#structosRtxThread__t">osRtxThread_t</a>;</div>
+<div class="line"><span class="comment"></span>  uint8_t                        zone;  <span class="comment">///&lt; Thread Zone</span></div>
+<div class="line"><span class="comment"></span>  uint8_t                 reserved[3];</div>
+<div class="line">  <span class="keyword">struct </span>osRtxThread_s     *wdog_next;  <span class="comment">///&lt; Link pointer to next Thread in Watchdog list</span></div>
+<div class="line"><span class="comment"></span>  uint32_t                  wdog_tick;  <span class="comment">///&lt; Watchdog tick counter</span></div>
+<div class="line"><span class="comment"></span>} <a class="code" href="rtx__os_8h.html#structosRtxThread__t">osRtxThread_t</a>;</div>
 <div class="line"> </div>
 <div class="line"> </div>
 <div class="line"><span class="comment">//  ==== Timer definitions ====</span></div>
@@ -525,9 +535,9 @@ RTX5 Header File</h1>
 <div class="line"><span class="comment"></span>#define osRtxTimerStopped       0x01U   <span class="comment">///&lt; Timer Stopped</span></div>
 <div class="line"><span class="comment"></span>#define osRtxTimerRunning       0x02U   <span class="comment">///&lt; Timer Running</span></div>
 <div class="line"><span class="comment"></span> </div>
-<div class="line"><span class="comment">/// Timer Type definitions</span></div>
-<div class="line"><span class="comment"></span><span class="preprocessor">#define osRtxTimerPeriodic      ((uint8_t)osTimerPeriodic)</span></div>
-<div class="line"><span class="preprocessor"></span> <span class="comment"></span></div>
+<div class="line"><span class="comment">/// Timer attribute definitions</span></div>
+<div class="line"><span class="comment"></span><span class="preprocessor">#define osRtxTimerPeriodic      0x01U   </span><span class="comment">///&lt; Timer Periodic mode</span></div>
+<div class="line"><span class="comment"></span> </div>
 <div class="line"><span class="comment">/// Timer Function Information</span></div>
 <div class="line"><span class="comment"></span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
 <div class="line">  <a class="code" href="group__CMSIS__RTOS__TimerMgmt.html#gaacf768c1ec64b020598afb985d7b30be">osTimerFunc_t</a>                  func;  <span class="comment">///&lt; Function Pointer</span></div>
@@ -539,7 +549,7 @@ RTX5 Header File</h1>
 <div class="line">  uint8_t                          id;  <span class="comment">///&lt; Object Identifier</span></div>
 <div class="line"><span class="comment"></span>  uint8_t                       state;  <span class="comment">///&lt; Object State</span></div>
 <div class="line"><span class="comment"></span>  uint8_t                       flags;  <span class="comment">///&lt; Object Flags</span></div>
-<div class="line"><span class="comment"></span>  uint8_t                        type;  <span class="comment">///&lt; Timer Type (Periodic/One-shot)</span></div>
+<div class="line"><span class="comment"></span>  uint8_t                        attr;  <span class="comment">///&lt; Object Attributes</span></div>
 <div class="line"><span class="comment"></span>  <span class="keyword">const</span> <span class="keywordtype">char</span>                    *name;  <span class="comment">///&lt; Object Name</span></div>
 <div class="line"><span class="comment"></span>  <span class="keyword">struct </span>osRtxTimer_s           *prev;  <span class="comment">///&lt; Pointer to previous active Timer</span></div>
 <div class="line"><span class="comment"></span>  <span class="keyword">struct </span>osRtxTimer_s           *next;  <span class="comment">///&lt; Pointer to next active Timer</span></div>
@@ -556,8 +566,8 @@ RTX5 Header File</h1>
 <div class="line">  uint8_t                          id;  <span class="comment">///&lt; Object Identifier</span></div>
 <div class="line"><span class="comment"></span>  uint8_t              reserved_state;  <span class="comment">///&lt; Object State (not used)</span></div>
 <div class="line"><span class="comment"></span>  uint8_t                       flags;  <span class="comment">///&lt; Object Flags</span></div>
-<div class="line"><span class="comment"></span>  uint8_t                    reserved;</div>
-<div class="line">  <span class="keyword">const</span> <span class="keywordtype">char</span>                    *name;  <span class="comment">///&lt; Object Name</span></div>
+<div class="line"><span class="comment"></span>  uint8_t                        attr;  <span class="comment">///&lt; Object Attributes</span></div>
+<div class="line"><span class="comment"></span>  <span class="keyword">const</span> <span class="keywordtype">char</span>                    *name;  <span class="comment">///&lt; Object Name</span></div>
 <div class="line"><span class="comment"></span>  <a class="code" href="rtx__os_8h.html#structosRtxThread__t">osRtxThread_t</a>          *thread_list;  <span class="comment">///&lt; Waiting Threads List</span></div>
 <div class="line"><span class="comment"></span>  uint32_t                event_flags;  <span class="comment">///&lt; Event Flags</span></div>
 <div class="line"><span class="comment"></span>} <a class="code" href="rtx__os_8h.html#structosRtxEventFlags__t">osRtxEventFlags_t</a>;</div>
@@ -588,8 +598,8 @@ RTX5 Header File</h1>
 <div class="line">  uint8_t                          id;  <span class="comment">///&lt; Object Identifier</span></div>
 <div class="line"><span class="comment"></span>  uint8_t              reserved_state;  <span class="comment">///&lt; Object State (not used)</span></div>
 <div class="line"><span class="comment"></span>  uint8_t                       flags;  <span class="comment">///&lt; Object Flags</span></div>
-<div class="line"><span class="comment"></span>  uint8_t                    reserved;</div>
-<div class="line">  <span class="keyword">const</span> <span class="keywordtype">char</span>                    *name;  <span class="comment">///&lt; Object Name</span></div>
+<div class="line"><span class="comment"></span>  uint8_t                        attr;  <span class="comment">///&lt; Object Attributes</span></div>
+<div class="line"><span class="comment"></span>  <span class="keyword">const</span> <span class="keywordtype">char</span>                    *name;  <span class="comment">///&lt; Object Name</span></div>
 <div class="line"><span class="comment"></span>  <a class="code" href="rtx__os_8h.html#structosRtxThread__t">osRtxThread_t</a>          *thread_list;  <span class="comment">///&lt; Waiting Threads List</span></div>
 <div class="line"><span class="comment"></span>  uint16_t                     tokens;  <span class="comment">///&lt; Current number of tokens</span></div>
 <div class="line"><span class="comment"></span>  uint16_t                 max_tokens;  <span class="comment">///&lt; Maximum number of tokens</span></div>
@@ -613,8 +623,8 @@ RTX5 Header File</h1>
 <div class="line">  uint8_t                          id;  <span class="comment">///&lt; Object Identifier</span></div>
 <div class="line"><span class="comment"></span>  uint8_t              reserved_state;  <span class="comment">///&lt; Object State (not used)</span></div>
 <div class="line"><span class="comment"></span>  uint8_t                       flags;  <span class="comment">///&lt; Object Flags</span></div>
-<div class="line"><span class="comment"></span>  uint8_t                    reserved;</div>
-<div class="line">  <span class="keyword">const</span> <span class="keywordtype">char</span>                    *name;  <span class="comment">///&lt; Object Name</span></div>
+<div class="line"><span class="comment"></span>  uint8_t                        attr;  <span class="comment">///&lt; Object Attributes</span></div>
+<div class="line"><span class="comment"></span>  <span class="keyword">const</span> <span class="keywordtype">char</span>                    *name;  <span class="comment">///&lt; Object Name</span></div>
 <div class="line"><span class="comment"></span>  <a class="code" href="rtx__os_8h.html#structosRtxThread__t">osRtxThread_t</a>          *thread_list;  <span class="comment">///&lt; Waiting Threads List</span></div>
 <div class="line"><span class="comment"></span>  <a class="code" href="rtx__os_8h.html#structosRtxMpInfo__t">osRtxMpInfo_t</a>               mp_info;  <span class="comment">///&lt; Memory Pool Info</span></div>
 <div class="line"><span class="comment"></span>} <a class="code" href="rtx__os_8h.html#structosRtxMemoryPool__t">osRtxMemoryPool_t</a>;</div>
@@ -637,8 +647,8 @@ RTX5 Header File</h1>
 <div class="line">  uint8_t                          id;  <span class="comment">///&lt; Object Identifier</span></div>
 <div class="line"><span class="comment"></span>  uint8_t              reserved_state;  <span class="comment">///&lt; Object State (not used)</span></div>
 <div class="line"><span class="comment"></span>  uint8_t                       flags;  <span class="comment">///&lt; Object Flags</span></div>
-<div class="line"><span class="comment"></span>  uint8_t                    reserved;</div>
-<div class="line">  <span class="keyword">const</span> <span class="keywordtype">char</span>                    *name;  <span class="comment">///&lt; Object Name</span></div>
+<div class="line"><span class="comment"></span>  uint8_t                        attr;  <span class="comment">///&lt; Object Attributes</span></div>
+<div class="line"><span class="comment"></span>  <span class="keyword">const</span> <span class="keywordtype">char</span>                    *name;  <span class="comment">///&lt; Object Name</span></div>
 <div class="line"><span class="comment"></span>  <a class="code" href="rtx__os_8h.html#structosRtxThread__t">osRtxThread_t</a>          *thread_list;  <span class="comment">///&lt; Waiting Threads List</span></div>
 <div class="line"><span class="comment"></span>  <a class="code" href="rtx__os_8h.html#structosRtxMpInfo__t">osRtxMpInfo_t</a>               mp_info;  <span class="comment">///&lt; Memory Pool Info</span></div>
 <div class="line"><span class="comment"></span>  uint32_t                   msg_size;  <span class="comment">///&lt; Message Size</span></div>
@@ -655,8 +665,8 @@ RTX5 Header File</h1>
 <div class="line">  uint8_t                          id;  <span class="comment">///&lt; Object Identifier</span></div>
 <div class="line"><span class="comment"></span>  uint8_t                       state;  <span class="comment">///&lt; Object State</span></div>
 <div class="line"><span class="comment"></span>  uint8_t                       flags;  <span class="comment">///&lt; Object Flags</span></div>
-<div class="line"><span class="comment"></span>  uint8_t                    reserved;</div>
-<div class="line">  <span class="keyword">const</span> <span class="keywordtype">char</span>                    *name;  <span class="comment">///&lt; Object Name</span></div>
+<div class="line"><span class="comment"></span>  uint8_t                        attr;  <span class="comment">///&lt; Object Attributes</span></div>
+<div class="line"><span class="comment"></span>  <span class="keyword">const</span> <span class="keywordtype">char</span>                    *name;  <span class="comment">///&lt; Object Name</span></div>
 <div class="line"><span class="comment"></span>  <a class="code" href="rtx__os_8h.html#structosRtxThread__t">osRtxThread_t</a>          *thread_list;  <span class="comment">///&lt; Threads List</span></div>
 <div class="line"><span class="comment"></span>} <a class="code" href="rtx__os_8h.html#structosRtxObject__t">osRtxObject_t</a>;</div>
 <div class="line"> </div>
@@ -671,8 +681,8 @@ RTX5 Header File</h1>
 <div class="line"><span class="comment"></span>    uint8_t                     state;  <span class="comment">///&lt; State</span></div>
 <div class="line"><span class="comment"></span>    <span class="keyword">volatile</span> uint8_t          blocked;  <span class="comment">///&lt; Blocked</span></div>
 <div class="line"><span class="comment"></span>    uint8_t                    pendSV;  <span class="comment">///&lt; Pending SV</span></div>
-<div class="line"><span class="comment"></span>    uint8_t                  reserved;</div>
-<div class="line">    uint32_t                     tick;  <span class="comment">///&lt; Tick counter</span></div>
+<div class="line"><span class="comment"></span>    uint8_t                   protect;  <span class="comment">///&lt; Protect options</span></div>
+<div class="line"><span class="comment"></span>    uint32_t                     tick;  <span class="comment">///&lt; Tick counter</span></div>
 <div class="line"><span class="comment"></span>  } kernel;</div>
 <div class="line">  int32_t                   tick_irqn;  <span class="comment">///&lt; Tick Timer IRQ Number</span></div>
 <div class="line"><span class="comment"></span>  <span class="keyword">struct </span>{                              <span class="comment">///&lt; Thread Info</span></div>
@@ -685,8 +695,8 @@ RTX5 Header File</h1>
 <div class="line"><span class="comment"></span>    <a class="code" href="rtx__os_8h.html#structosRtxThread__t">osRtxThread_t</a>         *delay_list;  <span class="comment">///&lt; Delay List</span></div>
 <div class="line"><span class="comment"></span>    <a class="code" href="rtx__os_8h.html#structosRtxThread__t">osRtxThread_t</a>          *wait_list;  <span class="comment">///&lt; Wait List (no Timeout)</span></div>
 <div class="line"><span class="comment"></span>    <a class="code" href="rtx__os_8h.html#structosRtxThread__t">osRtxThread_t</a>     *terminate_list;  <span class="comment">///&lt; Terminate Thread List</span></div>
-<div class="line"><span class="comment"></span>    uint32_t                 reserved;</div>
-<div class="line">    <span class="keyword">struct </span>{                            <span class="comment">///&lt; Thread Round Robin Info</span></div>
+<div class="line"><span class="comment"></span>    <a class="code" href="rtx__os_8h.html#structosRtxThread__t">osRtxThread_t</a>          *wdog_list;  <span class="comment">///&lt; Watchdog List</span></div>
+<div class="line"><span class="comment"></span>    <span class="keyword">struct </span>{                            <span class="comment">///&lt; Thread Round Robin Info</span></div>
 <div class="line"><span class="comment"></span>      <a class="code" href="rtx__os_8h.html#structosRtxThread__t">osRtxThread_t</a>           *thread;  <span class="comment">///&lt; Round Robin Thread</span></div>
 <div class="line"><span class="comment"></span>      uint32_t                timeout;  <span class="comment">///&lt; Round Robin Timeout</span></div>
 <div class="line"><span class="comment"></span>    } robin;</div>
@@ -787,6 +797,7 @@ RTX5 Header File</h1>
 <div class="line"><span class="comment"></span>#define osRtxErrorTimerQueueOverflow    3U  <span class="comment">///&lt; User Timer Callback Queue overflow detected for timer.</span></div>
 <div class="line"><span class="comment"></span>#define osRtxErrorClibSpace             4U  <span class="comment">///&lt; Standard C/C++ library libspace not available: increase \c OS_THREAD_LIBSPACE_NUM.</span></div>
 <div class="line"><span class="comment"></span>#define osRtxErrorClibMutex             5U  <span class="comment">///&lt; Standard C/C++ library mutex initialization failed.</span></div>
+<div class="line"><span class="comment"></span>#define osRtxErrorSVC                   6U  <span class="comment">///&lt; Invalid SVC function called.</span></div>
 <div class="line"><span class="comment"></span> </div>
 <div class="line"><span class="comment">/// OS Error Callback function</span></div>
 <div class="line"><span class="comment"></span><span class="keyword">extern</span> uint32_t <a class="code" href="group__rtx5__specific__functions.html#gaf1745a88f9cc60b609ab1c8076bd346d">osRtxErrorNotify</a> (uint32_t code, <span class="keywordtype">void</span> *object_id);</div>
@@ -799,12 +810,7 @@ RTX5 Header File</h1>
 <div class="line"><span class="comment"></span><span class="keyword">extern</span> <span class="keywordtype">void</span> <a class="code" href="rtx__os_8h.html#a3e5ddb3df0d62f2dc357e64a3f04a6ce">SVC_Handler</a>     (<span class="keywordtype">void</span>);</div>
 <div class="line"><span class="keyword">extern</span> <span class="keywordtype">void</span> <a class="code" href="rtx__os_8h.html#a6303e1f258cbdc1f970ce579cc015623">PendSV_Handler</a>  (<span class="keywordtype">void</span>);</div>
 <div class="line"><span class="keyword">extern</span> <span class="keywordtype">void</span> <a class="code" href="rtx__os_8h.html#ab5e09814056d617c521549e542639b7e">SysTick_Handler</a> (<span class="keywordtype">void</span>);</div>
-<div class="line"> <span class="comment"></span></div>
-<div class="line"><span class="comment">/// OS Trusted Firmware M Extension</span></div>
-<div class="line"><span class="comment"></span><span class="preprocessor">#ifdef RTX_TF_M_EXTENSION</span></div>
-<div class="line"><span class="preprocessor"></span><span class="keyword">extern</span> uint32_t osRtxTzGetModuleId (<span class="keywordtype">void</span>);</div>
-<div class="line"><span class="preprocessor">#endif</span></div>
-<div class="line"><span class="preprocessor"></span> </div>
+<div class="line"> </div>
 <div class="line"> </div>
 <div class="line"><span class="comment">//  ==== OS External Configuration ====</span></div>
 <div class="line"> <span class="comment"></span></div>
@@ -812,6 +818,12 @@ RTX5 Header File</h1>
 <div class="line"><span class="comment"></span><span class="preprocessor">#define osRtxConfigPrivilegedMode   (1UL&lt;&lt;0)    </span><span class="comment">///&lt; Threads in Privileged mode</span></div>
 <div class="line"><span class="comment"></span>#define osRtxConfigStackCheck       (1UL&lt;&lt;1)    <span class="comment">///&lt; Stack overrun checking</span></div>
 <div class="line"><span class="comment"></span>#define osRtxConfigStackWatermark   (1UL&lt;&lt;2)    <span class="comment">///&lt; Stack usage Watermark</span></div>
+<div class="line"><span class="comment"></span>#define osRtxConfigSafetyFeatures   (1UL&lt;&lt;3)    <span class="comment">///&lt; Safety features enabled</span></div>
+<div class="line"><span class="comment"></span>#define osRtxConfigSafetyClass      (1UL&lt;&lt;4)    <span class="comment">///&lt; Safety Class feature enabled</span></div>
+<div class="line"><span class="comment"></span>#define osRtxConfigExecutionZone    (1UL&lt;&lt;5)    <span class="comment">///&lt; Execution Zone enabled</span></div>
+<div class="line"><span class="comment"></span>#define osRtxConfigThreadWatchdog   (1UL&lt;&lt;6)    <span class="comment">///&lt; Thread Watchdog enabled</span></div>
+<div class="line"><span class="comment"></span>#define osRtxConfigObjPtrCheck      (1UL&lt;&lt;7)    <span class="comment">///&lt; Object Pointer Checking enabled</span></div>
+<div class="line"><span class="comment"></span>#define osRtxConfigSVCPtrCheck      (1UL&lt;&lt;8)    <span class="comment">///&lt; SVC Pointer Checking enabled</span></div>
 <div class="line"><span class="comment"></span> </div>
 <div class="line"><span class="comment">/// OS Configuration structure</span></div>
 <div class="line"><span class="comment"></span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>

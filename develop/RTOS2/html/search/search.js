@@ -7,11 +7,11 @@
 
 var indexSectionsWithContent =
 {
-  0: "_abcdefghiklmnoprstuvw",
+  0: "_abcdefghiklmnoprstuvwz",
   1: "o",
   2: "chmorv",
   3: "eops",
-  4: "abcdefiklmnoprstuvw",
+  4: "abcdefiklmnoprstuvwz",
   5: "iot",
   6: "o",
   7: "o",

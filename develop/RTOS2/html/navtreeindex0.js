@@ -83,14 +83,15 @@ var NAVTREEINDEX0 =
 "config_rtx5.html#msgQueueConfig_obj":[5,2,7,0],
 "config_rtx5.html#mutexConfig":[5,2,4],
 "config_rtx5.html#mutexConfig_obj":[5,2,4,0],
+"config_rtx5.html#safetyConfig_safety":[5,2,0,2],
 "config_rtx5.html#semaphoreConfig":[5,2,5],
 "config_rtx5.html#semaphoreConfig_obj":[5,2,5,0],
 "config_rtx5.html#systemConfig":[5,2,0],
 "config_rtx5.html#systemConfig_event_recording":[5,2,8,2],
 "config_rtx5.html#systemConfig_glob_mem":[5,2,0,0],
-"config_rtx5.html#systemConfig_isr_fifo":[5,2,0,2],
+"config_rtx5.html#systemConfig_isr_fifo":[5,2,0,3],
 "config_rtx5.html#systemConfig_rr":[5,2,0,1],
-"config_rtx5.html#systemConfig_usage_counters":[5,2,0,3],
+"config_rtx5.html#systemConfig_usage_counters":[5,2,0,4],
 "config_rtx5.html#threadConfig":[5,2,1],
 "config_rtx5.html#threadConfig_countstack":[5,2,1,0],
 "config_rtx5.html#threadConfig_ovfcheck":[5,2,1,1],
@@ -248,6 +249,5 @@ var NAVTREEINDEX0 =
 "group__CMSIS__RTOS__ThreadMgmt.html#ga4101737fa4fd303d4b41fdca6b994f8e":[8,0,3,21],
 "group__CMSIS__RTOS__ThreadMgmt.html#ga48d68b8666d99d28fa646ee1d2182b8f":[8,0,3,18],
 "group__CMSIS__RTOS__ThreadMgmt.html#ga495b3f812224e7301f23a691793765db":[8,0,3,35],
-"group__CMSIS__RTOS__ThreadMgmt.html#ga4c028e5c3f4d86d237a1e09ceaf84792":[8,0,3,3],
-"group__CMSIS__RTOS__ThreadMgmt.html#ga5606604d56e21ece1a654664be877439":[8,0,3,36]
+"group__CMSIS__RTOS__ThreadMgmt.html#ga4c028e5c3f4d86d237a1e09ceaf84792":[8,0,3,3]
 };

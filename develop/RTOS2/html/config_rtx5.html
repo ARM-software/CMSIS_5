@@ -114,7 +114,7 @@ $(document).ready(function(){initNavTree('config_rtx5.html','');});
 <div class="contents">
 <div class="textblock"><p>The file "RTX_Config.h" defines the configuration parameters of CMSIS-RTOS RTX and must be part of every project that is using the CMSIS-RTOS RTX kernel. The configuration options are explained in detail in the following sections:</p>
 <ul>
-<li><a class="el" href="config_rtx5.html#systemConfig">System Configuration</a> covers system-wide settings for the global memory pool, tick frequency, ISR event buffer and round-robin thread switching.</li>
+<li><a class="el" href="config_rtx5.html#systemConfig">System Configuration</a> covers system-wide settings for the global memory pool, tick frequency, ISR event buffer and round-robin thread switching as well as process isolation-related features.</li>
 <li><a class="el" href="config_rtx5.html#threadConfig">Thread Configuration</a> provides several parameters to configure the <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html">Thread Management</a> functions.</li>
 <li><a class="el" href="config_rtx5.html#timerConfig">Timer Configuration</a> provides several parameters to configure the <a class="el" href="group__CMSIS__RTOS__TimerMgmt.html">Timer Management</a> functions.</li>
 <li><a class="el" href="config_rtx5.html#eventFlagsConfig">Event Flags Configuration</a> provides several parameters to configure the <a class="el" href="group__CMSIS__RTOS__EventFlags.html">Event Flags</a> functions.</li>
@@ -145,17 +145,29 @@ RTX_Config.h: System Configuration</div></div>
 <tr>
 <th>Name </th><th>#define </th><th>Description  </th></tr>
 <tr>
-<td>Global Dynamic Memory size [bytes] </td><td><code>OS_DYNAMIC_MEM_SIZE</code> </td><td>Defines the combined global dynamic memory size for the <a class="el" href="theory_of_operation.html#GlobalMemoryPool">Global Memory Pool</a>. Default value is <span class="XML-Token">32768</span>. Value range is <span class="XML-Token">[0-1073741824]</span> bytes, in multiples of <span class="XML-Token">8</span> bytes. </td></tr>
+<td><a class="el" href="config_rtx5.html#systemConfig_glob_mem">Global Dynamic Memory size [bytes]</a> </td><td><code>OS_DYNAMIC_MEM_SIZE</code> </td><td>Defines the combined global dynamic memory size for the <a class="el" href="theory_of_operation.html#GlobalMemoryPool">Global Memory Pool</a>. Default value is <span class="XML-Token">32768</span>. Value range is <span class="XML-Token">[0-1073741824]</span> bytes, in multiples of <span class="XML-Token">8</span> bytes. </td></tr>
 <tr>
-<td>Kernel Tick Frequency (Hz) </td><td><code>OS_TICK_FREQ</code> </td><td>Defines base time unit for delays and timeouts in Hz. Default: 1000Hz = 1ms period. </td></tr>
+<td>Kernel Tick Frequency (Hz) </td><td><code>OS_TICK_FREQ</code> </td><td>Defines base time unit for delays and timeouts in Hz. Default value is <span class="XML-Token">1000</span> (1000 Hz = 1 ms period). </td></tr>
 <tr>
-<td>Round-Robin Thread switching </td><td><code>OS_ROBIN_ENABLE</code> </td><td>Enables Round-Robin Thread switching. </td></tr>
+<td><a class="el" href="config_rtx5.html#systemConfig_rr">Round-Robin Thread Switching</a> </td><td><code>OS_ROBIN_ENABLE</code> </td><td>Enables Round-Robin Thread switching. Default value is <span class="XML-Token">1</span> (enabled). </td></tr>
 <tr>
-<td>Round-Robin Timeout </td><td><code>OS_ROBIN_TIMEOUT</code> </td><td>Defines how long a thread will execute before a thread switch. Default value is <span class="XML-Token">5</span>. Value range is <span class="XML-Token">[1-1000]</span>. </td></tr>
+<td>&#160;&#160;&#160;Round-Robin Timeout </td><td><code>OS_ROBIN_TIMEOUT</code> </td><td>Defines how long a thread will execute before a thread switch. Default value is <span class="XML-Token">5</span>. Value range is <span class="XML-Token">[1-1000]</span>. </td></tr>
 <tr>
-<td>ISR FIFO Queue </td><td><code>OS_ISR_FIFO_QUEUE</code> </td><td>RTOS Functions called from ISR store requests to this buffer. Default value is <span class="XML-Token">16 entries</span>. Value range is <span class="XML-Token">[4-256]</span> entries in multiples of <span class="XML-Token">4</span>. </td></tr>
+<td><a class="el" href="config_rtx5.html#safetyConfig_safety">Safety features (Source variant only)</a> </td><td><code>OS_SAFETY_FEATURES</code> </td><td>Enables safety-related features as configured in this group. Default value is <span class="XML-Token">1</span> (enabled). </td></tr>
 <tr>
-<td>Object Memory usage counters </td><td><code>OS_OBJ_MEM_USAGE</code> </td><td>Enables object memory usage counters to evaluate the maximum memory pool requirements individually for each RTOS object type. </td></tr>
+<td>&#160;&#160;&#160;Safety class </td><td><code>OS_SAFETY_CLASS</code> </td><td>Enables <a class="el" href="group__rtos__process__isolation__safety__class.html">Safety Classes</a> functionality. Default value is <span class="XML-Token">1</span> (enabled). </td></tr>
+<tr>
+<td>&#160;&#160;&#160;MPU Protected Zone </td><td><code>OS_EXECUTION_ZONE</code> </td><td>Enables <a class="el" href="group__rtos__process__isolation__mpu.html">MPU Protected Zones</a>. Default value is <span class="XML-Token">1</span> (enabled). </td></tr>
+<tr>
+<td>&#160;&#160;&#160;Thread Watchdog </td><td><code>OS_THREAD_WATCHDOG</code> </td><td>Enables <a class="el" href="group__rtos__process__isolation__thread__wdt.html">Thread Watchdogs</a> functionality. Default value is <span class="XML-Token">1</span> (enabled). </td></tr>
+<tr>
+<td>&#160;&#160;&#160;Object Pointer checking </td><td><code>OS_OBJ_PTR_CHECK</code> </td><td>Enables verification of object pointer alignment and memory region. Default value is <span class="XML-Token">0</span> (disabled). </td></tr>
+<tr>
+<td>&#160;&#160;&#160;SVC Function Pointer checking </td><td><code>OS_SVC_PTR_CHECK</code> </td><td>Enables verification of SVC function pointer alignment and memory region. Default value is <span class="XML-Token">0</span> (disabled). </td></tr>
+<tr>
+<td><a class="el" href="config_rtx5.html#systemConfig_isr_fifo">ISR FIFO Queue</a> </td><td><code>OS_ISR_FIFO_QUEUE</code> </td><td>RTOS Functions called from ISR store requests to this buffer. Default value is <span class="XML-Token">16 entries</span>. Value range is <span class="XML-Token">[4-256]</span> entries in multiples of <span class="XML-Token">4</span>. </td></tr>
+<tr>
+<td><a class="el" href="config_rtx5.html#systemConfig_usage_counters">Object Memory Usage Counters</a> </td><td><code>OS_OBJ_MEM_USAGE</code> </td><td>Enables object memory usage counters to evaluate the maximum memory pool requirements individually for each RTOS object type. Default value is <span class="XML-Token">0</span> (disabled). </td></tr>
 </table>
 <h2><a class="anchor" id="systemConfig_glob_mem"></a>
 Global Dynamic Memory size [bytes]</h2>
@@ -171,6 +183,50 @@ Round-Robin Thread Switching</h2>
 </ul>
 <p>In other words, threads execute for the duration of their time slice (unless a thread's time slice is given up). Then, RTX switches to the next thread that is in <b>READY</b> state and has the same priority. If no other thread with the same priority is ready to run, the current running thread resumes it execution.</p>
 <p>Round-Robin multitasking is controlled with the <b>#define OS_ROBIN_ENABLE</b>. The time slice period is configured (in RTX timer ticks) with the <b>#define OS_ROBIN_TIMEOUT</b>.</p>
+<h2><a class="anchor" id="safetyConfig_safety"></a>
+Safety features (Source variant only)</h2>
+<p>Safety features group in <a class="el" href="config_rtx5.html#systemConfig">System Configuration</a> enables individual selection of safety-related functionalities. It requires that RTX is used in the source variant.</p>
+<p>It also includes:</p>
+<ul>
+<li>Thread functions: <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaee8e6bed82cd58dad31bb90156182032">osThreadProtectPrivileged</a></li>
+</ul>
+<p><b>MPU Protected Zone</b><br/>
+ Enables <a class="el" href="group__rtos__process__isolation__mpu.html">MPU Protected Zones</a> functionality in the system. This includes:</p>
+<ul>
+<li>Thread attributes: <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gaefca370070d0b1616421bc3311acfecc">osThreadZone</a></li>
+<li>Thread functions: <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga4101737fa4fd303d4b41fdca6b994f8e">osThreadGetZone</a>, <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga99ce311cc620c65fbac043d04dc7d755">osThreadTerminateZone</a></li>
+<li>Zone Management: <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga79d4b26de0bfcdaf142f83e585532f93">osZoneSetup_Callback</a></li>
+</ul>
+<p>When enabled, the MPU Protected Zone values also need to be specified for the threads created by the kernel:</p>
+<ul>
+<li>For Idle thread in <a class="el" href="config_rtx5.html#threadConfig">Thread Configuration</a></li>
+<li>For Timer thread in <a class="el" href="config_rtx5.html#timerConfig">Timer Configuration</a></li>
+</ul>
+<p><b>Safety class</b><br/>
+ Enables <a class="el" href="group__rtos__process__isolation__safety__class.html">Safety Classes</a> functionality in the system RTOS. This includes:</p>
+<ul>
+<li>Object attributes: <a class="el" href="group__CMSIS__RTOS__Definitions.html#ga604fce4f5205f92c347eb62fcc216861">osSafetyClass</a></li>
+<li>Kernel functions: <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gac7e3b012c15c55bda68e0dd96ad9cd72">osKernelProtect</a>, <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga2065364d1bc805a40e749430377df1e1">osKernelDestroyClass</a></li>
+<li>Thread functions: <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga1bfbef7da94ed4147d231e8d6eeb5f3e">osThreadGetClass</a>, <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gadadb56627094dbb07f6aeddf7d713fd9">osThreadSuspendClass</a>, <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#gadd0a06b459925eb5cdeab67b380a3970">osThreadResumeClass</a></li>
+</ul>
+<p>When enabled, the safety class values need to be specified for threads created by the kernel:</p>
+<ul>
+<li>For Idle thread in <a class="el" href="config_rtx5.html#threadConfig">Thread Configuration</a></li>
+<li>For Timer thread in <a class="el" href="config_rtx5.html#timerConfig">Timer Configuration</a></li>
+</ul>
+<p><b>Thread Watchdog</b><br/>
+ Enables <a class="el" href="group__rtos__process__isolation__thread__wdt.html">Thread Watchdogs</a> functionality in the system RTOS. This includes:</p>
+<ul>
+<li>Thread functions: <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga8f4455b06afb95c1915f15266818a8c6">osThreadFeedWatchdog</a></li>
+<li>Handler functions: <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga5a02770aaf65c7a3c7562c109884176a">osWatchdogAlarm_Handler</a></li>
+</ul>
+<p><b>Object Pointer checking</b><br/>
+ Enables verification of object pointer alignment and memory region.</p>
+<p>Before accessing RTX objects the RTX kernel verifies that obtained object pointer is valid (at least not <span class="XML-Token">NULL</span>). When <em>Object Pointer checking</em> is enabled the kernel will additionally verify that the control block of the object is located in the memory section allocated for such object type, and that it is correctly aligned within that memory section.</p>
+<p>If static memory allocation is used, the user shall place the control blocks of the objects into the correct named memory sections as described in <a class="el" href="theory_of_operation.html#StaticObjectMemory">Static Object Memory</a>. For object-specific and dynamic memory allocations the kernel will place the objects correctly.</p>
+<p><b>SVC Function Pointer checking</b><br/>
+ Enables verification of SVC function pointer alignment and memory region.</p>
+<p>Many kernel functions are executed in SVC context. Corresponding function pointers are placed by the kernel into a special named memory section. If <em>SVC Function Pointer checking</em> is enabled the kernel before calling an SVC function will additionally verify that its pointer is located in the expected memory section and is correctly aligned within that memory region.</p>
 <h2><a class="anchor" id="systemConfig_isr_fifo"></a>
 ISR FIFO Queue</h2>
 <p>The RTX functions (<a class="el" href="theory_of_operation.html#CMSIS_RTOS_ISR_Calls">Calls from Interrupt Service Routines</a>), when called from and interrupt handler, store the request type and optional parameter to the ISR FIFO queue buffer to be processed later, after the interrupt handler exits.</p>
@@ -206,11 +262,15 @@ RTX_Config.h: Thread Configuration</div></div>
 <tr>
 <td align="left">Idle Thread TrustZone Module ID </td><td align="left"><code>OS_IDLE_THREAD_TZ_MOD_ID</code> </td><td align="left">Defines the <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#a697f2aad6119d655d212ea10245ae394">TrustZone Module ID</a> the Idle Thread shall use. This needs to be set to a non-zero value if the Idle Thread need to call secure functions. Default value is <span class="XML-Token">0</span>. </td></tr>
 <tr>
+<td align="left">Idle Thread Safety Class </td><td align="left"><code>OS_IDLE_THREAD_CLASS</code> </td><td align="left">Defines the the <a class="el" href="group__rtos__process__isolation__safety__class.html">Safety Class</a> for the Idle thread. Applied only if Safety Class functionality is enabled in <a class="el" href="config_rtx5.html#systemConfig">System Configuration</a>. Default value is <span class="XML-Token">0</span>. </td></tr>
+<tr>
+<td align="left">Idle Thread Zone </td><td align="left"><code>OS_IDLE_THREAD_ZONE</code> </td><td align="left">Defines the <a class="el" href="group__rtos__process__isolation__mpu.html">MPU Protected Zone</a> for the Idle thread. Applied only if MPU protected Zone functionality is enabled in <a class="el" href="config_rtx5.html#systemConfig">System Configuration</a>. Default value is <span class="XML-Token">0</span>. </td></tr>
+<tr>
 <td align="left">Stack overrun checking </td><td align="left"><code>OS_STACK_CHECK</code> </td><td align="left">Enable stack overrun checks at thread switch. </td></tr>
 <tr>
 <td align="left">Stack usage watermark </td><td align="left"><code>OS_STACK_WATERMARK</code> </td><td align="left">Initialize thread stack with watermark pattern for analyzing stack usage. Enabling this option increases significantly the execution time of thread creation. </td></tr>
 <tr>
-<td align="left">Processor mode for Thread execution </td><td align="left"><code>OS_PRIVILEGE_MODE</code> </td><td align="left">Controls the processor mode. Default value is <span class="XML-Token">Privileged</span> mode. Value range is <span class="XML-Token">[0=Unprivileged; 1=Privileged]</span> mode. </td></tr>
+<td align="left">Processor mode for Thread execution </td><td align="left"><code>OS_PRIVILEGE_MODE</code> </td><td align="left">Controls the default processor mode when not specified through thread attributes <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga4c028e5c3f4d86d237a1e09ceaf84792">osThreadUnprivileged</a> or <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga7c2b7db42d23e4f56132e0ed739d02e5">osThreadPrivileged</a>. Default value is <span class="XML-Token">Unprivileged</span> mode. Value range is <span class="XML-Token">[0=Unprivileged; 1=Privileged]</span> mode. </td></tr>
 </table>
 <h2><a class="anchor" id="threadConfig_countstack"></a>
 Configuration of Thread Count and Stack Space</h2>
@@ -242,7 +302,8 @@ Stack Usage Watermark</h2>
 <p>Enabling this option significantly increases the execution time of <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga48d68b8666d99d28fa646ee1d2182b8f">osThreadNew</a> (depends on thread stack size).</p>
 <h2><a class="anchor" id="threadConfig_procmode"></a>
 Processor Mode for Thread Execution</h2>
-<p>RTX5 allows to execute threads in unprivileged or privileged processor mode. The processor mode is controlled with the define <code>OS_PRIVILEGE_MODE</code>.</p>
+<p>RTX5 allows to execute threads in unprivileged or privileged processor mode. The processor mode is configured for all threads with the define <code>OS_PRIVILEGE_MODE</code>.</p>
+<p>It is also possible to specify the privilege level for individual threads. For that use <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga4c028e5c3f4d86d237a1e09ceaf84792">osThreadUnprivileged</a> and <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga7c2b7db42d23e4f56132e0ed739d02e5">osThreadPrivileged</a> defines in the <em>attr_bits</em> of <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#structosThreadAttr__t">osThreadAttr_t</a> argument when creating a thread with <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#ga48d68b8666d99d28fa646ee1d2182b8f">osThreadNew</a>.</p>
 <p>In <b>unprivileged</b> processor mode, the application software:</p>
 <ul>
 <li>has limited access to the MSR and MRS instructions, and cannot use the CPS instruction.</li>
@@ -271,6 +332,10 @@ RTX_Config.h: Timer Configuration</div></div>
 <td>Timer Thread Stack size [bytes] </td><td><code>OS_TIMER_THREAD_STACK_SIZE</code> </td><td>Defines stack size for Timer thread. May be set to 0 when timers are not used. Default value is <span class="XML-Token">512</span>. Value range is <span class="XML-Token">[0-1073741824]</span>, in multiples of <span class="XML-Token">8</span>. </td></tr>
 <tr>
 <td>Timer Thread TrustZone Module ID </td><td><code>OS_TIMER_THREAD_TZ_MOD_ID</code> </td><td>Defines the <a class="el" href="group__CMSIS__RTOS__ThreadMgmt.html#a697f2aad6119d655d212ea10245ae394">TrustZone Module ID</a> the Timer Thread shall use. This needs to be set to a non-zero value if any Timer Callbacks need to call secure functions. Default value is <span class="XML-Token">0</span>. </td></tr>
+<tr>
+<td>Timer Thread Safety Class </td><td><code>OS_TIMER_THREAD_CLASS</code> </td><td>Defines the the <a class="el" href="group__rtos__process__isolation__safety__class.html">Safety Class</a> for the Timer thread. Applied only if Safety class functionality is enabled in <a class="el" href="config_rtx5.html#systemConfig">System Configuration</a>. Default value is <span class="XML-Token">0</span>. </td></tr>
+<tr>
+<td>Timer Thread Zone </td><td><code>OS_TIMER_THREAD_ZONE</code> </td><td>Defines the <a class="el" href="group__rtos__process__isolation__mpu.html">MPU Protected Zone</a> for the Timer thread. Applied only if MPU protected Zone functionality is enabled in <a class="el" href="config_rtx5.html#systemConfig">System Configuration</a>. Default value is <span class="XML-Token">0</span>. </td></tr>
 <tr>
 <td>Timer Callback Queue entries </td><td><code>OS_TIMER_CB_QUEUE</code> </td><td>Number of concurrent active timer callback functions. May be set to 0 when timers are not used. Default value is <span class="XML-Token">4</span>. Value range is <span class="XML-Token">[0-256]</span>. </td></tr>
 </table>
@@ -508,9 +573,9 @@ Manual event configuration</h2>
 <p><b>Memory</b> <b>events</b> <br/>
 <code>EVR_RTX_MEMORY_INIT_DISABLE</code>, <code>EVR_RTX_MEMORY_ALLOC_DISABLE</code>, <code>EVR_RTX_MEMORY_FREE_DISABLE</code>, <code>EVR_RTX_MEMORY_BLOCK_INIT_DISABLE</code>, <code>EVR_RTX_MEMORY_BLOCK_ALLOC_DISABLE</code>, <code>EVR_RTX_MEMORY_BLOCK_FREE_DISABLE</code> </p>
 <p><b>Kernel</b> <b>events</b> <br/>
-<code>EVR_RTX_KERNEL_ERROR_DISABLE</code>, <code>EVR_RTX_KERNEL_INITIALIZE_DISABLE</code>, <code>EVR_RTX_KERNEL_INITIALIZED_DISABLE</code>, <code>EVR_RTX_KERNEL_GET_INFO_DISABLE</code>, <code>EVR_RTX_KERNEL_INFO_RETRIEVED_DISABLE</code>, <code>EVR_RTX_KERNEL_GET_STATE_DISABLE</code>, <code>EVR_RTX_KERNEL_START_DISABLE</code>, <code>EVR_RTX_KERNEL_STARTED_DISABLE</code>, <code>EVR_RTX_KERNEL_LOCK_DISABLE</code>, <code>EVR_RTX_KERNEL_LOCKED_DISABLE</code>, <code>EVR_RTX_KERNEL_UNLOCK_DISABLE</code>, <code>EVR_RTX_KERNEL_UNLOCKED_DISABLE</code>, <code>EVR_RTX_KERNEL_RESTORE_LOCK_DISABLE</code>, <code>EVR_RTX_KERNEL_LOCK_RESTORED_DISABLE</code>, <code>EVR_RTX_KERNEL_SUSPEND_DISABLE</code>, <code>EVR_RTX_KERNEL_SUSPENDED_DISABLE</code>, <code>EVR_RTX_KERNEL_RESUME_DISABLE</code>, <code>EVR_RTX_KERNEL_RESUMED_DISABLE</code>, <code>EVR_RTX_KERNEL_GET_TICK_COUNT_DISABLE</code>, <code>EVR_RTX_KERNEL_GET_TICK_FREQ_DISABLE</code>, <code>EVR_RTX_KERNEL_GET_SYS_TIMER_COUNT_DISABLE</code>, <code>EVR_RTX_KERNEL_GET_SYS_TIMER_FREQ_DISABLE</code> </p>
+<code>EVR_RTX_KERNEL_ERROR_DISABLE</code>, <code>EVR_RTX_KERNEL_INITIALIZE_DISABLE</code>, <code>EVR_RTX_KERNEL_INITIALIZED_DISABLE</code>, <code>EVR_RTX_KERNEL_GET_INFO_DISABLE</code>, <code>EVR_RTX_KERNEL_INFO_RETRIEVED_DISABLE</code>, <code>EVR_RTX_KERNEL_GET_STATE_DISABLE</code>, <code>EVR_RTX_KERNEL_START_DISABLE</code>, <code>EVR_RTX_KERNEL_STARTED_DISABLE</code>, <code>EVR_RTX_KERNEL_LOCK_DISABLE</code>, <code>EVR_RTX_KERNEL_LOCKED_DISABLE</code>, <code>EVR_RTX_KERNEL_UNLOCK_DISABLE</code>, <code>EVR_RTX_KERNEL_UNLOCKED_DISABLE</code>, <code>EVR_RTX_KERNEL_RESTORE_LOCK_DISABLE</code>, <code>EVR_RTX_KERNEL_LOCK_RESTORED_DISABLE</code>, <code>EVR_RTX_KERNEL_SUSPEND_DISABLE</code>, <code>EVR_RTX_KERNEL_SUSPENDED_DISABLE</code>, <code>EVR_RTX_KERNEL_RESUME_DISABLE</code>, <code>EVR_RTX_KERNEL_RESUMED_DISABLE</code>, <code>EVR_RTX_KERNEL_PROTECT_DISABLE</code>, <code>EVR_RTX_KERNEL_PROTECTED_DISABLE</code>, <code>EVR_RTX_KERNEL_GET_TICK_COUNT_DISABLE</code>, <code>EVR_RTX_KERNEL_GET_TICK_FREQ_DISABLE</code>, <code>EVR_RTX_KERNEL_GET_SYS_TIMER_COUNT_DISABLE</code>, <code>EVR_RTX_KERNEL_GET_SYS_TIMER_FREQ_DISABLE</code>, <code>EVR_RTX_KERNEL_DESTROY_CLASS_DISABLE</code>, <code>EVR_RTX_KERNEL_ERROR_NOTIFY_DISABLE</code> </p>
 <p><b>Thread</b> <b>events</b> <br/>
-<code>EVR_RTX_THREAD_ERROR_DISABLE</code>, <code>EVR_RTX_THREAD_NEW_DISABLE</code>, <code>EVR_RTX_THREAD_CREATED_DISABLE</code>, <code>EVR_RTX_THREAD_GET_NAME_DISABLE</code>, <code>EVR_RTX_THREAD_GET_ID_DISABLE</code>, <code>EVR_RTX_THREAD_GET_STATE_DISABLE</code>, <code>EVR_RTX_THREAD_GET_STACK_SIZE_DISABLE</code>, <code>EVR_RTX_THREAD_GET_STACK_SPACE_DISABLE</code>, <code>EVR_RTX_THREAD_SET_PRIORITY_DISABLE</code>, <code>EVR_RTX_THREAD_PRIORITY_UPDATED_DISABLE</code>, <code>EVR_RTX_THREAD_GET_PRIORITY_DISABLE</code>, <code>EVR_RTX_THREAD_YIELD_DISABLE</code>, <code>EVR_RTX_THREAD_SUSPEND_DISABLE</code>, <code>EVR_RTX_THREAD_SUSPENDED_DISABLE</code>, <code>EVR_RTX_THREAD_RESUME_DISABLE</code>, <code>EVR_RTX_THREAD_RESUMED_DISABLE</code>, <code>EVR_RTX_THREAD_DETACH_DISABLE</code>, <code>EVR_RTX_THREAD_DETACHED_DISABLE</code>, <code>EVR_RTX_THREAD_JOIN_DISABLE</code>, <code>EVR_RTX_THREAD_JOIN_PENDING_DISABLE</code>, <code>EVR_RTX_THREAD_JOINED_DISABLE</code>, <code>EVR_RTX_THREAD_BLOCKED_DISABLE</code>, <code>EVR_RTX_THREAD_UNBLOCKED_DISABLE</code>, <code>EVR_RTX_THREAD_PREEMPTED_DISABLE</code>, <code>EVR_RTX_THREAD_SWITCHED_DISABLE</code>, <code>EVR_RTX_THREAD_EXIT_DISABLE</code>, <code>EVR_RTX_THREAD_TERMINATE_DISABLE</code>, <code>EVR_RTX_THREAD_DESTROYED_DISABLE</code>, <code>EVR_RTX_THREAD_GET_COUNT_DISABLE</code>, <code>EVR_RTX_THREAD_ENUMERATE_DISABLE</code> </p>
+<code>EVR_RTX_THREAD_ERROR_DISABLE</code>, <code>EVR_RTX_THREAD_NEW_DISABLE</code>, <code>EVR_RTX_THREAD_CREATED_DISABLE</code>, <code>EVR_RTX_THREAD_GET_NAME_DISABLE</code>, <code>EVR_RTX_THREAD_GET_ID_DISABLE</code>, <code>EVR_RTX_THREAD_GET_STATE_DISABLE</code>, <code>EVR_RTX_THREAD_GET_CLASS_DISABLE</code>, <code>EVR_RTX_THREAD_GET_ZONE_DISABLE</code>, <code>EVR_RTX_THREAD_GET_STACK_SIZE_DISABLE</code>, <code>EVR_RTX_THREAD_GET_STACK_SPACE_DISABLE</code>, <code>EVR_RTX_THREAD_SET_PRIORITY_DISABLE</code>, <code>EVR_RTX_THREAD_PRIORITY_UPDATED_DISABLE</code>, <code>EVR_RTX_THREAD_GET_PRIORITY_DISABLE</code>, <code>EVR_RTX_THREAD_YIELD_DISABLE</code>, <code>EVR_RTX_THREAD_SUSPEND_DISABLE</code>, <code>EVR_RTX_THREAD_SUSPENDED_DISABLE</code>, <code>EVR_RTX_THREAD_RESUME_DISABLE</code>, <code>EVR_RTX_THREAD_RESUMED_DISABLE</code>, <code>EVR_RTX_THREAD_DETACH_DISABLE</code>, <code>EVR_RTX_THREAD_DETACHED_DISABLE</code>, <code>EVR_RTX_THREAD_JOIN_DISABLE</code>, <code>EVR_RTX_THREAD_JOIN_PENDING_DISABLE</code>, <code>EVR_RTX_THREAD_JOINED_DISABLE</code>, <code>EVR_RTX_THREAD_BLOCKED_DISABLE</code>, <code>EVR_RTX_THREAD_UNBLOCKED_DISABLE</code>, <code>EVR_RTX_THREAD_PREEMPTED_DISABLE</code>, <code>EVR_RTX_THREAD_SWITCHED_DISABLE</code>, <code>EVR_RTX_THREAD_EXIT_DISABLE</code>, <code>EVR_RTX_THREAD_TERMINATE_DISABLE</code>, <code>EVR_RTX_THREAD_DESTROYED_DISABLE</code>, <code>EVR_RTX_THREAD_GET_COUNT_DISABLE</code>, <code>EVR_RTX_THREAD_ENUMERATE_DISABLE</code>, <code>EVR_RTX_THREAD_FEED_WATCHDOG_DISABLE</code>, <code>EVR_RTX_THREAD_FEED_WATCHDOG_DONE_DISABLE</code>, <code>EVR_RTX_THREAD_WATCHDOG_EXPIRED_DISABLE</code>, <code>EVR_RTX_THREAD_PROTECT_PRIVILEGED_DISABLE</code>, <code>EVR_RTX_THREAD_PRIVILEGED_PROTECTED_DISABLE</code>, <code>EVR_RTX_THREAD_SUSPEND_CLASS_DISABLE</code>, <code>EVR_RTX_THREAD_RESUME_CLASS_DISABLE</code>, <code>EVR_RTX_THREAD_TERMINATE_ZONE_DISABLE</code> </p>
 <p><b>Generic</b> <b>wait</b> <b>events</b> <br/>
 <code>EVR_RTX_DELAY_ERROR_DISABLE</code>, <code>EVR_RTX_DELAY_DISABLE</code>, <code>EVR_RTX_DELAY_UNTIL_DISABLE</code>, <code>EVR_RTX_DELAY_STARTED_DISABLE</code>, <code>EVR_RTX_DELAY_UNTIL_STARTED_DISABLE</code>, <code>EVR_RTX_DELAY_COMPLETED_DISABLE</code> </p>
 <p><b>Thread</b> <b>flag</b> <b>events</b> <br/>

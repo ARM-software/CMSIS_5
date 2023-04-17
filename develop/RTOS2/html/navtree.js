@@ -28,9 +28,9 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "CodingRules.html",
-"group__CMSIS__RTOS__ThreadMgmt.html#ga5a02770aaf65c7a3c7562c109884176a",
-"group__rtx__evr__thread.html#gabf4a015bd3fb2a33c0d105a871aaba72",
-"rtx__os_8h.html#a9e3fb1e50a1c71b2337df296222d9553"
+"group__CMSIS__RTOS__ThreadMgmt.html#ga5606604d56e21ece1a654664be877439",
+"group__rtx__evr__thread.html#ga6abe7d167bd5bb91c3d6bf6d2bb417aa",
+"rtx__os_8h.html#a8afd5feb676df99867375957b0587451"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

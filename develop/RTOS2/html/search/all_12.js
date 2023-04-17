@@ -28,7 +28,6 @@ var searchData=
   ['timer_5fthread',['timer_thread',['../structosRtxConfig__t.html#a9766a18d196dc2ffa385679c1fcc1cdb',1,'osRtxConfig_t']]],
   ['timer_5fthread_5fattr',['timer_thread_attr',['../structosRtxConfig__t.html#a310b3e01cc8e274529353210db5a78c3',1,'osRtxConfig_t']]],
   ['tokens',['tokens',['../rtx__os_8h.html#a4e2e4e1126848f81d9e943147e07f0e0',1,'osRtxSemaphore_t']]],
-  ['type',['type',['../rtx__os_8h.html#a1d127017fb298b889f4ba24752d08b8e',1,'osRtxTimer_t']]],
   ['tz_5fmemory',['tz_memory',['../rtx__os_8h.html#adaa6c424a231e5f6c788532675f33e16',1,'osRtxThread_t']]],
   ['tz_5fmodule',['tz_module',['../group__CMSIS__RTOS__ThreadMgmt.html#a697f2aad6119d655d212ea10245ae394',1,'osThreadAttr_t']]],
   ['tz_5fmoduleid_5ft',['TZ_ModuleId_t',['../cmsis__os2_8h.html#ad5ef21485fe5f60263bc0b48006202cb',1,'TZ_ModuleId_t():&#160;cmsis_os2.h'],['../cmsis__os2_8h.html#a78775dae56f0c9698cdab6e1ca74503f',1,'TZ_MODULEID_T():&#160;cmsis_os2.h']]]

@@ -4,6 +4,8 @@ var group__rtx__evr__thread =
     [ "EvrRtxThreadNew", "group__rtx__evr__thread.html#ga396ce41f68401a885f0ae46a54e8dd1f", null ],
     [ "EvrRtxThreadCreated", "group__rtx__evr__thread.html#ga5bfa3bc241aea59ebe9bc1edcf6b78d8", null ],
     [ "EvrRtxThreadGetName", "group__rtx__evr__thread.html#ga4f849a33d2c95754b11a499d77503b5c", null ],
+    [ "EvrRtxThreadGetClass", "group__rtx__evr__thread.html#ga31a94fffb571e8cd989f832655d7b4b1", null ],
+    [ "EvrRtxThreadGetZone", "group__rtx__evr__thread.html#ga53781b606b204cbe5981057ff02ad63e", null ],
     [ "EvrRtxThreadGetId", "group__rtx__evr__thread.html#ga40c0d21a5c0d128f09966aeeca37ecba", null ],
     [ "EvrRtxThreadGetState", "group__rtx__evr__thread.html#ga1c3120fb155ca19ea5c9089a446ef19d", null ],
     [ "EvrRtxThreadGetStackSize", "group__rtx__evr__thread.html#ga1200f51e9152810e76386e241904427c", null ],
@@ -28,6 +30,14 @@ var group__rtx__evr__thread =
     [ "EvrRtxThreadExit", "group__rtx__evr__thread.html#gaa557f9732a8a2120f08cfb2694aa26fb", null ],
     [ "EvrRtxThreadTerminate", "group__rtx__evr__thread.html#ga6abe7d167bd5bb91c3d6bf6d2bb417aa", null ],
     [ "EvrRtxThreadDestroyed", "group__rtx__evr__thread.html#gaa5aa707fc2d6b44bfcb86bce2e2e90f3", null ],
+    [ "EvrRtxThreadFeedWatchdog", "group__rtx__evr__thread.html#gaa442af7326f57e7610975c536d3b3add", null ],
+    [ "EvrRtxThreadFeedWatchdogDone", "group__rtx__evr__thread.html#ga31c8171ea65d8f7e21f9707b189d9baa", null ],
+    [ "EvrRtxThreadProtectPrivileged", "group__rtx__evr__thread.html#ga9bb5e6a9db34e629d7a15cc4091901f3", null ],
+    [ "EvrRtxThreadPrivilegedProtected", "group__rtx__evr__thread.html#ga5618c77241ea283787a9ca11835f2c11", null ],
     [ "EvrRtxThreadGetCount", "group__rtx__evr__thread.html#ga6d5932965736e0f2f35fe2d87bd622e7", null ],
-    [ "EvrRtxThreadEnumerate", "group__rtx__evr__thread.html#ga1999d77992b03347abdca7ec17f91cca", null ]
+    [ "EvrRtxThreadEnumerate", "group__rtx__evr__thread.html#ga1999d77992b03347abdca7ec17f91cca", null ],
+    [ "EvrRtxThreadSuspendClass", "group__rtx__evr__thread.html#ga10e2b8c7f9ac67e405f580280471d618", null ],
+    [ "EvrRtxThreadResumeClass", "group__rtx__evr__thread.html#ga1782c35f1b521cdc624702a4615ed7cc", null ],
+    [ "EvrRtxThreadTerminateZone", "group__rtx__evr__thread.html#gaf2b6a75d25979ef16eb4f1b9f09e0c18", null ],
+    [ "EvrRtxThreadWatchdogExpired", "group__rtx__evr__thread.html#ga7134cfa5896a0938721814bea278a809", null ]
 ];

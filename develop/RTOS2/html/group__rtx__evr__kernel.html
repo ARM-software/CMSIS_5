@@ -174,6 +174,12 @@ Functions</h2></td></tr>
 <tr class="memitem:ga26e0a22f49576824d853fb434cf6b079"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__kernel.html#ga26e0a22f49576824d853fb434cf6b079">EvrRtxKernelResumed</a> (void)</td></tr>
 <tr class="memdesc:ga26e0a22f49576824d853fb434cf6b079"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on successful RTOS Kernel scheduler resume (Op)  <a href="#ga26e0a22f49576824d853fb434cf6b079">More...</a><br/></td></tr>
 <tr class="separator:ga26e0a22f49576824d853fb434cf6b079"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga51e666d1461b72ae4147f8b7892fa7fd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__kernel.html#ga51e666d1461b72ae4147f8b7892fa7fd">EvrRtxKernelProtect</a> (uint32_t safety_class)</td></tr>
+<tr class="memdesc:ga51e666d1461b72ae4147f8b7892fa7fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on protect the RTOS Kernel scheduler access (API)  <a href="#ga51e666d1461b72ae4147f8b7892fa7fd">More...</a><br/></td></tr>
+<tr class="separator:ga51e666d1461b72ae4147f8b7892fa7fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa9aba671a5c3180111a02f0655f3e93b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__kernel.html#gaa9aba671a5c3180111a02f0655f3e93b">EvrRtxKernelProtected</a> (void)</td></tr>
+<tr class="memdesc:gaa9aba671a5c3180111a02f0655f3e93b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on successful RTOS Kernel scheduler protect (API)  <a href="#gaa9aba671a5c3180111a02f0655f3e93b">More...</a><br/></td></tr>
+<tr class="separator:gaa9aba671a5c3180111a02f0655f3e93b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga64431a63437506a6f7fe22637d4891c5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__kernel.html#ga64431a63437506a6f7fe22637d4891c5">EvrRtxKernelGetTickCount</a> (uint32_t count)</td></tr>
 <tr class="memdesc:ga64431a63437506a6f7fe22637d4891c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on RTOS kernel tick count retrieve (API)  <a href="#ga64431a63437506a6f7fe22637d4891c5">More...</a><br/></td></tr>
 <tr class="separator:ga64431a63437506a6f7fe22637d4891c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -189,6 +195,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gad0c7f0aa30cff035db31854479c1d6bd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__kernel.html#gad0c7f0aa30cff035db31854479c1d6bd">EvrRtxKernelErrorNotify</a> (uint32_t code, void *object_id)</td></tr>
 <tr class="memdesc:gad0c7f0aa30cff035db31854479c1d6bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on RTOS kernel system error (Error)  <a href="#gad0c7f0aa30cff035db31854479c1d6bd">More...</a><br/></td></tr>
 <tr class="separator:gad0c7f0aa30cff035db31854479c1d6bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf327e956f15025b77bd2cd933beb47e0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__rtx__evr__kernel.html#gaf327e956f15025b77bd2cd933beb47e0">EvrRtxKernelDestroyClass</a> (uint32_t safety_class, uint32_t mode)</td></tr>
+<tr class="memdesc:gaf327e956f15025b77bd2cd933beb47e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event on destroy safety class objects (API)  <a href="#gaf327e956f15025b77bd2cd933beb47e0">More...</a><br/></td></tr>
+<tr class="separator:gaf327e956f15025b77bd2cd933beb47e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description</h2>
 <h2 class="groupheader">Function Documentation</h2>
@@ -228,6 +237,8 @@ Functions</h2></td></tr>
 <td align="left">osRtxErrorInvalidThreadStack </td><td align="left">Thread stack memory with invalid alignment or size was specified. </td></tr>
 <tr>
 <td align="left">osRtxErrorInvalidPriority </td><td align="left">Invalid thread priority was specified. </td></tr>
+<tr>
+<td align="left">osRtxErrorInvalidPrivilegedMode </td><td align="left">Privileged thread cannot be created - kernel protect privileged is active. </td></tr>
 <tr>
 <td align="left">osRtxErrorThreadNotJoinable </td><td align="left">Specified thread is not joinable. </td></tr>
 <tr>
@@ -675,6 +686,50 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="ga51e666d1461b72ae4147f8b7892fa7fd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void EvrRtxKernelProtect </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>safety_class</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">safety_class</td><td>safety class.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>The event <b>KernelProtect</b> is generated when the function <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gac7e3b012c15c55bda68e0dd96ad9cd72">osKernelProtect</a> is called.</p>
+<p><b>Value</b> in the Event Recorder shows:</p>
+<ul>
+<li><b>safety_class</b> : safety class value. </li>
+</ul>
+
+</div>
+</div>
+<a class="anchor" id="gaa9aba671a5c3180111a02f0655f3e93b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void EvrRtxKernelProtected </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The event <b>KernelProtected</b> is generated when the function <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#gac7e3b012c15c55bda68e0dd96ad9cd72">osKernelProtect</a> successfully applies kernel safety class protection. </p>
+
+</div>
+</div>
 <a class="anchor" id="ga64431a63437506a6f7fe22637d4891c5"></a>
 <div class="memitem">
 <div class="memproto">
@@ -818,6 +873,45 @@ Functions</h2></td></tr>
 <ul>
 <li><b>code</b> : error code.</li>
 <li><b>object_id</b> : object that caused the error. </li>
+</ul>
+
+</div>
+</div>
+<a class="anchor" id="gaf327e956f15025b77bd2cd933beb47e0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void EvrRtxKernelDestroyClass </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>safety_class</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>mode</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">safety_class</td><td>safety class. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">mode</td><td>safety mode.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>The event <b>KernelDestroyClass</b> is generated when the function <a class="el" href="group__CMSIS__RTOS__KernelCtrl.html#ga2065364d1bc805a40e749430377df1e1">osKernelDestroyClass</a> is called.</p>
+<p><b>Value</b> in the Event Recorder shows:</p>
+<ul>
+<li><b>safety_class</b> : safety class value.</li>
+<li><b>mode</b> : operation mode. </li>
 </ul>
 
 </div>

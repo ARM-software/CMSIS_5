@@ -18,9 +18,12 @@ var group__rtx__evr__kernel =
     [ "EvrRtxKernelSuspended", "group__rtx__evr__kernel.html#gabdaa26d7774111af4913b5d6669d0f85", null ],
     [ "EvrRtxKernelResume", "group__rtx__evr__kernel.html#ga9a8cac0fed8d3cf06f7301c944ad26d1", null ],
     [ "EvrRtxKernelResumed", "group__rtx__evr__kernel.html#ga26e0a22f49576824d853fb434cf6b079", null ],
+    [ "EvrRtxKernelProtect", "group__rtx__evr__kernel.html#ga51e666d1461b72ae4147f8b7892fa7fd", null ],
+    [ "EvrRtxKernelProtected", "group__rtx__evr__kernel.html#gaa9aba671a5c3180111a02f0655f3e93b", null ],
     [ "EvrRtxKernelGetTickCount", "group__rtx__evr__kernel.html#ga64431a63437506a6f7fe22637d4891c5", null ],
     [ "EvrRtxKernelGetTickFreq", "group__rtx__evr__kernel.html#ga7404f3a22af84ad4091c24811fc1bf87", null ],
     [ "EvrRtxKernelGetSysTimerCount", "group__rtx__evr__kernel.html#gafb6530be8201b119015a3f45d66c2f09", null ],
     [ "EvrRtxKernelGetSysTimerFreq", "group__rtx__evr__kernel.html#gaf2bdfcb7b099295c7b0123abe88e10a3", null ],
-    [ "EvrRtxKernelErrorNotify", "group__rtx__evr__kernel.html#gad0c7f0aa30cff035db31854479c1d6bd", null ]
+    [ "EvrRtxKernelErrorNotify", "group__rtx__evr__kernel.html#gad0c7f0aa30cff035db31854479c1d6bd", null ],
+    [ "EvrRtxKernelDestroyClass", "group__rtx__evr__kernel.html#gaf327e956f15025b77bd2cd933beb47e0", null ]
 ];
