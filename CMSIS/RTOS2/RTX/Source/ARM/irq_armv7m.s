@@ -90,7 +90,7 @@ SVC_Handler     PROC
 
 SVC_PtrInvalid
                 PUSH     {R0,LR}                ; Save SP and EXC_RETURN
-                MOV      R0,#osRtxErrorSVC      ; Parameter: code
+                MOVS     R0,#osRtxErrorSVC      ; Parameter: code
                 MOV      R1,R12                 ; Parameter: object_id
                 BL       osRtxKernelErrorNotify ; Call osRtxKernelErrorNotify
                 POP      {R12,LR}               ; Restore SP and EXC_RETURN
@@ -99,7 +99,7 @@ SVC_PtrInvalid
 SVC_PtrBoundsCheck
                 LDR      R2,=|Image$$RTX_SVC_VENEERS$$Base|
                 LDR      R3,=|Image$$RTX_SVC_VENEERS$$Length|
-                SUB      R2,R1,R2               ; Subtract SVC table base address
+                SUBS     R2,R1,R2               ; Subtract SVC table base address
                 CMP      R2,R3                  ; Compare with SVC table boundaries
                 BHS      SVC_PtrInvalid         ; Branch if address is out of bounds
 
@@ -154,14 +154,14 @@ SVC_ContextSave
               IF FPU_USED != 0
                 MOV      R4,R1                  ; Assign osRtxInfo.thread.run.curr to R4
               ENDIF
-                MOV      R0,#osRtxErrorStackOverflow ; Parameter: r0=code, r1=object_id
+                MOVS     R0,#osRtxErrorStackOverflow ; Parameter: r0=code, r1=object_id
                 BL       osRtxKernelErrorNotify      ; Call osRtxKernelErrorNotify
                 LDR      R3,=osRtxInfo+I_T_RUN_OFS   ; Load address of osRtxInfo.thread.run
                 LDR      R2,[R3,#4]             ; Load osRtxInfo.thread.run: next
                 STR      R2,[R3]                ; osRtxInfo.thread.run: curr = next
                 MOVS     R1,#0                  ; Simulate deleted running thread
               IF FPU_USED != 0
-                LDRB     LR,[R4,#TCB_SF_OFS]    ; Load stack frame information
+                LDRSB    LR,[R4,#TCB_SF_OFS]    ; Load stack frame information
                 B        SVC_FP_LazyState       ; Branch to FP lazy state handling
               ELSE
                 B        SVC_ContextRestore     ; Branch to context restore handling
@@ -170,7 +170,7 @@ SVC_ContextSave
 SVC_ContextSaveRegs
                 LDR      R12,[R1,#TCB_SP_OFS]   ; Load SP
               IF FPU_USED != 0
-                LDRB     LR, [R1,#TCB_SF_OFS]   ; Load stack frame information
+                LDRSB    LR, [R1,#TCB_SF_OFS]   ; Load stack frame information
                 TST      LR,#0x10               ; Determine stack frame from EXC_RETURN bit 4
                 IT       EQ                     ; If extended stack frame
                 VSTMIAEQ R12!,{S16-S31}         ;  Save VFP S16..S31
@@ -202,8 +202,7 @@ SVC_ZoneSetup
 
                 LDR      R0,[R4,#TCB_SP_OFS]    ; Load SP
               IF FPU_USED != 0
-                LDRB     R1,[R4,#TCB_SF_OFS]    ; Load stack frame information
-                ORN      LR,R1,#0xFF            ; Set EXC_RETURN
+                LDRSB    LR,[R4,#TCB_SF_OFS]    ; Load stack frame information
                 TST      LR,#0x10               ; Determine stack frame from EXC_RETURN bit 4
                 IT       EQ                     ; If extended stack frame
                 VLDMIAEQ R0!,{S16-S31}          ;  Restore VFP S16..S31

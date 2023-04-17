@@ -94,7 +94,7 @@ SVC_Handler:
 
 SVC_PtrInvalid:
         push     {r0,lr}                // Save SP and EXC_RETURN
-        mov      r0,#osRtxErrorSVC      // Parameter: code
+        movs     r0,#osRtxErrorSVC      // Parameter: code
         mov      r1,r12                 // Parameter: object_id
         bl       osRtxKernelErrorNotify // Call osRtxKernelErrorNotify
         pop      {r12,lr}               // Restore SP and EXC_RETURN
@@ -103,7 +103,7 @@ SVC_PtrInvalid:
 SVC_PtrBoundsCheck:
         ldr      r2,=Image$$RTX_SVC_VENEERS$$Base
         ldr      r3,=Image$$RTX_SVC_VENEERS$$Length
-        sub      r2,r1,r2               // Subtract SVC table base address
+        subs     r2,r1,r2               // Subtract SVC table base address
         cmp      r2,r3                  // Compare with SVC table boundaries
         bhs      SVC_PtrInvalid         // Branch if address is out of bounds
 
@@ -174,21 +174,21 @@ SVC_ContextSaveSP:
       .if (FPU_USED != 0) || (MVE_USED != 0)
         mov      r4,r1                  // Assign osRtxInfo.thread.run.curr to R4
       .endif
-        mov      r0,#osRtxErrorStackOverflow // Parameter: r0=code, r1=object_id
+        movs     r0,#osRtxErrorStackOverflow // Parameter: r0=code, r1=object_id
         bl       osRtxKernelErrorNotify      // Call osRtxKernelErrorNotify
         ldr      r3,=osRtxInfo+I_T_RUN_OFS   // Load address of osRtxInfo.thread.run
         ldr      r2,[r3,#4]             // Load osRtxInfo.thread.run: next
         str      r2,[r3]                // osRtxInfo.thread.run: curr = next
         movs     r1,#0                  // Simulate deleted running thread
       .if (FPU_USED != 0) || (MVE_USED != 0)
-        ldrb     lr,[r4,#TCB_SF_OFS]    // Load stack frame information
+        ldrsb    lr,[r4,#TCB_SF_OFS]    // Load stack frame information
         b        SVC_FP_LazyState       // Branch to FP lazy state handling
       .else
         b        SVC_ContextRestore     // Branch to context restore handling
       .endif
 
 SVC_ContextSaveRegs:
-        ldrb     lr,[r1,#TCB_SF_OFS]    // Load stack frame information
+        ldrsb    lr,[r1,#TCB_SF_OFS]    // Load stack frame information
       #if (DOMAIN_NS != 0)
         tst      lr,#0x40               // Check domain of interrupted thread
         bne      SVC_ContextRestore     // Branch if secure
@@ -227,19 +227,20 @@ SVC_ZoneSetup:
 
     #if (DOMAIN_NS != 0)
         ldr      r0,[r4,#TCB_TZM_OFS]   // Load TrustZone memory identifier
-        cbz      r0,SVC_ContextRestore_NS // Branch if there is no secure context
-        bl       TZ_LoadContext_S       // Load secure context
+        cmp      r0,#0
+        it       ne                     // If TrustZone memory allocated
+        blne     TZ_LoadContext_S       //  Load secure context
     #endif
 
-SVC_ContextRestore_NS:
         ldr      r0,[r4,#TCB_SP_OFS]    // Load SP
         ldr      r1,[r4,#TCB_SM_OFS]    // Load stack memory base
         msr      psplim,r1              // Set PSPLIM
-        ldrb     r1,[r4,#TCB_SF_OFS]    // Load stack frame information
-        orn      lr,r1,#0xFF            // Set EXC_RETURN
+        ldrsb    lr,[r4,#TCB_SF_OFS]    // Load stack frame information
     #if (DOMAIN_NS != 0)
         tst      lr,#0x40               // Check domain of interrupted thread
-        bne      SVC_ContextRestoreSP   // Branch if secure
+        itt      ne                     // If secure
+        msrne    psp,r0                 //  Set PSP
+        bxne     lr                     //  Exit from handler
     #endif
 
       .if (FPU_USED != 0) || (MVE_USED != 0)
@@ -248,8 +249,6 @@ SVC_ContextRestore_NS:
         vldmiaeq r0!,{s16-s31}          //  Restore VFP S16..S31
       .endif
         ldmia    r0!,{r4-r11}           // Restore R4..R11
-
-SVC_ContextRestoreSP:
         msr      psp,r0                 // Set PSP
 
 SVC_Exit:

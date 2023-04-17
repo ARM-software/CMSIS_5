@@ -133,13 +133,13 @@ SVC_Context
 
 SVC_ContextSave
             #if (DOMAIN_NS != 0)
+                MOV      R3,LR                  ; Get EXC_RETURN
                 LDR      R0,[R1,#TCB_TZM_OFS]   ; Load TrustZone memory identifier
                 CBZ      R0,SVC_ContextSave_NS  ; Branch if there is no secure context
-                PUSH     {R1,R2,R3,R7}          ; Save registers
-                MOV      R7,LR                  ; Get EXC_RETURN
+                PUSH     {R0-R3}                ; Save registers
                 BL       TZ_StoreContext_S      ; Store secure context
-                MOV      LR,R7                  ; Set EXC_RETURN
-                POP      {R1,R2,R3,R7}          ; Restore registers
+                POP      {R0-R3}                ; Restore registers
+                MOV      LR,R3                  ; Set EXC_RETURN
             #endif
 
 SVC_ContextSave_NS
@@ -156,16 +156,14 @@ SVC_ContextSave_NS
 SVC_ContextSaveSP
                 STR      R0,[R1,#TCB_SP_OFS]    ; Store SP
                 MOV      R3,LR                  ; Get EXC_RETURN
-                MOV      R0,R1                  ; osRtxInfo.thread.run.curr
-                ADDS     R0,R0,#TCB_SF_OFS      ; Adjust address
-                STRB     R3,[R0]                ; Store stack frame information
+                MOVS     R0,#TCB_SF_OFS         ; Get TCB.stack_frame offset
+                STRB     R3,[R1,R0]             ; Store stack frame information
 
                 PUSH     {R1,R2}                ; Save osRtxInfo.thread.run: curr & next
                 MOV      R0,R1                  ; Parameter: osRtxInfo.thread.run.curr
                 BL       osRtxThreadStackCheck  ; Check if thread stack is overrun
                 POP      {R1,R2}                ; Restore osRtxInfo.thread.run: curr & next
-                CMP      R0,#0
-                BNE      SVC_ContextSaveRegs    ; Branch when stack check is ok
+                CBNZ     R0,SVC_ContextSaveRegs ; Branch when stack check is ok
 
                 MOVS     R0,#osRtxErrorStackOverflow ; Parameter: r0=code, r1=object_id
                 BL       osRtxKernelErrorNotify      ; Call osRtxKernelErrorNotify
@@ -177,9 +175,8 @@ SVC_ContextSaveSP
 
 SVC_ContextSaveRegs
               #if (DOMAIN_NS != 0)
-                MOV      R0,R1                  ; osRtxInfo.thread.run.curr
-                ADDS     R0,R0,#TCB_SF_OFS      ; Adjust address
-                LDRB     R3,[R0]                ; Load stack frame information
+                MOVS     R0,#TCB_SF_OFS         ; Get TCB.stack_frame offset
+                LDRSB    R3,[R1,R0]             ; Load stack frame information
                 LSLS     R3,R3,#25              ; Check domain of interrupted thread
                 BMI      SVC_ContextRestore     ; Branch if secure
               #endif
@@ -201,9 +198,9 @@ SVC_ContextSaveRegs
                 SUBS     R0,R0,#32              ; Adjust address
 SVC_ContextSaveSP
                 STR      R0,[R1,#TCB_SP_OFS]    ; Store SP
-                MOV      R0,LR                  ; Get EXC_RETURN
-                ADDS     R1,R1,#TCB_SF_OFS      ; Adjust address
-                STRB     R0,[R1]                ; Store stack frame information
+                MOV      R3,LR                  ; Get EXC_RETURN
+                MOVS     R0,#TCB_SF_OFS         ; Get TCB.stack_frame offset
+                STRB     R3,[R1,R0]             ; Store stack frame information
             #endif
 
 SVC_ContextRestore
@@ -230,12 +227,8 @@ SVC_ContextRestore_S
 SVC_ContextRestore_NS
                 LDR      R0,[R4,#TCB_SM_OFS]    ; Load stack memory base
                 MSR      PSPLIM,R0              ; Set PSPLIM
-                MOV      R0,R4                  ; osRtxInfo.thread.run.next
-                ADDS     R0,R0,#TCB_SF_OFS      ; Adjust address
-                LDRB     R3,[R0]                ; Load stack frame information
-                MOVS     R0,#0xFF
-                MVNS     R0,R0                  ; R0=0xFFFFFF00
-                ORRS     R3,R3,R0
+                MOVS     R0,#TCB_SF_OFS         ; Get TCB.stack_frame offset
+                LDRSB    R3,[R4,R0]             ; Load stack frame information
                 MOV      LR,R3                  ; Set EXC_RETURN
                 LDR      R0,[R4,#TCB_SP_OFS]    ; Load SP
             #if (DOMAIN_NS != 0)
@@ -276,9 +269,8 @@ SVC_User
                 BLX      R12                    ; Call service function
                 POP      {R2,R3}                ; Restore SP and EXC_RETURN
                 STR      R0,[R2]                ; Store function return value
-                MOV      LR,R3                  ; Set EXC_RETURN
 
-                BX       LR                     ; Return from handler
+                BX       R3                     ; Return from handler
 
 
 PendSV_Handler

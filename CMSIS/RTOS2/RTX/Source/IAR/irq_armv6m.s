@@ -207,9 +207,8 @@ SVC_User
                 BLX      R12                    ; Call service function
                 POP      {R2,R3}                ; Restore SP and EXC_RETURN
                 STR      R0,[R2]                ; Store function return value
-                MOV      LR,R3                  ; Set EXC_RETURN
 
-                BX       LR                     ; Return from handler
+                BX       R3                     ; Return from handler
 
 
 PendSV_Handler

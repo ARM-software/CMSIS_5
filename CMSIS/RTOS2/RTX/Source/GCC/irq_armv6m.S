@@ -194,9 +194,8 @@ SVC_User:
         blx      r12                    // Call service function
         pop      {r2,r3}                // Restore SP and EXC_RETURN
         str      r0,[r2]                // Store function return value
-        mov      lr,r3                  // Set EXC_RETURN
 
-        bx       lr                     // Return from handler
+        bx       r3                     // Return from handler
 
         .fnend
         .size    SVC_Handler, .-SVC_Handler

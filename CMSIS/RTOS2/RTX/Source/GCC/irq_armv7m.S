@@ -82,7 +82,7 @@ SVC_Handler:
 
 SVC_PtrInvalid:
         push     {r0,lr}                // Save SP and EXC_RETURN
-        mov      r0,#osRtxErrorSVC      // Parameter: code
+        movs     r0,#osRtxErrorSVC      // Parameter: code
         mov      r1,r12                 // Parameter: object_id
         bl       osRtxKernelErrorNotify // Call osRtxKernelErrorNotify
         pop      {r12,lr}               // Restore SP and EXC_RETURN
@@ -91,7 +91,7 @@ SVC_PtrInvalid:
 SVC_PtrBoundsCheck:
         ldr      r2,=Image$$RTX_SVC_VENEERS$$Base
         ldr      r3,=Image$$RTX_SVC_VENEERS$$Length
-        sub      r2,r1,r2               // Subtract SVC table base address
+        subs     r2,r1,r2               // Subtract SVC table base address
         cmp      r2,r3                  // Compare with SVC table boundaries
         bhs      SVC_PtrInvalid         // Branch if address is out of bounds
 
@@ -146,14 +146,14 @@ SVC_ContextSave:
       .if (FPU_USED != 0)
         mov      r4,r1                  // Assign osRtxInfo.thread.run.curr to R4
       .endif
-        mov      r0,#osRtxErrorStackOverflow // Parameter: r0=code, r1=object_id
+        movs     r0,#osRtxErrorStackOverflow // Parameter: r0=code, r1=object_id
         bl       osRtxKernelErrorNotify      // Call osRtxKernelErrorNotify
         ldr      r3,=osRtxInfo+I_T_RUN_OFS   // Load address of osRtxInfo.thread.run
         ldr      r2,[r3,#4]             // Load osRtxInfo.thread.run: next
         str      r2,[r3]                // osRtxInfo.thread.run: curr = next
         movs     r1,#0                  // Simulate deleted running thread
       .if (FPU_USED != 0)
-        ldrb     lr,[r4,#TCB_SF_OFS]    // Load stack frame information
+        ldrsb    lr,[r4,#TCB_SF_OFS]    // Load stack frame information
         b        SVC_FP_LazyState       // Branch to FP lazy state handling
       .else
         b        SVC_ContextRestore     // Branch to context restore handling
@@ -162,7 +162,7 @@ SVC_ContextSave:
 SVC_ContextSaveRegs:
         ldr      r12,[r1,#TCB_SP_OFS]   // Load SP
       .if (FPU_USED != 0)
-        ldrb     lr, [r1,#TCB_SF_OFS]   // Load stack frame information
+        ldrsb    lr, [r1,#TCB_SF_OFS]   // Load stack frame information
         tst      lr,#0x10               // Determine stack frame from EXC_RETURN bit 4
         it       eq                     // If extended stack frame
         vstmiaeq r12!,{s16-s31}         //  Save VFP S16..S31
@@ -194,8 +194,7 @@ SVC_ZoneSetup:
 
         ldr      r0,[r4,#TCB_SP_OFS]    // Load SP
       .if (FPU_USED != 0)
-        ldrb     r1,[r4,#TCB_SF_OFS]    // Load stack frame information
-        orn      lr,r1,#0xFF            // Set EXC_RETURN
+        ldrsb    lr,[r4,#TCB_SF_OFS]    // Load stack frame information
         tst      lr,#0x10               // Determine stack frame from EXC_RETURN bit 4
         it       eq                     // If extended stack frame
         vldmiaeq r0!,{s16-s31}          //  Restore VFP S16..S31

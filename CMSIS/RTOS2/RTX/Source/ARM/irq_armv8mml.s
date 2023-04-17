@@ -100,7 +100,7 @@ SVC_Handler     PROC
 
 SVC_PtrInvalid
                 PUSH     {R0,LR}                ; Save SP and EXC_RETURN
-                MOV      R0,#osRtxErrorSVC      ; Parameter: code
+                MOVS     R0,#osRtxErrorSVC      ; Parameter: code
                 MOV      R1,R12                 ; Parameter: object_id
                 BL       osRtxKernelErrorNotify ; Call osRtxKernelErrorNotify
                 POP      {R12,LR}               ; Restore SP and EXC_RETURN
@@ -109,7 +109,7 @@ SVC_PtrInvalid
 SVC_PtrBoundsCheck
                 LDR      R2,=|Image$$RTX_SVC_VENEERS$$Base|
                 LDR      R3,=|Image$$RTX_SVC_VENEERS$$Length|
-                SUB      R2,R1,R2               ; Subtract SVC table base address
+                SUBS     R2,R1,R2               ; Subtract SVC table base address
                 CMP      R2,R3                  ; Compare with SVC table boundaries
                 BHS      SVC_PtrInvalid         ; Branch if address is out of bounds
 
@@ -180,21 +180,21 @@ SVC_ContextSaveSP
               IF FPU_USED != 0
                 MOV      R4,R1                  ; Assign osRtxInfo.thread.run.curr to R4
               ENDIF
-                MOV      R0,#osRtxErrorStackOverflow ; Parameter: r0=code, r1=object_id
+                MOVS     R0,#osRtxErrorStackOverflow ; Parameter: r0=code, r1=object_id
                 BL       osRtxKernelErrorNotify      ; Call osRtxKernelErrorNotify
                 LDR      R3,=osRtxInfo+I_T_RUN_OFS   ; Load address of osRtxInfo.thread.run
                 LDR      R2,[R3,#4]             ; Load osRtxInfo.thread.run: next
                 STR      R2,[R3]                ; osRtxInfo.thread.run: curr = next
                 MOVS     R1,#0                  ; Simulate deleted running thread
               IF FPU_USED != 0
-                LDRB     LR,[R4,#TCB_SF_OFS]    ; Load stack frame information
+                LDRSB    LR,[R4,#TCB_SF_OFS]    ; Load stack frame information
                 B        SVC_FP_LazyState       ; Branch to FP lazy state handling
               ELSE
                 B        SVC_ContextRestore     ; Branch to context restore handling
               ENDIF
 
 SVC_ContextSaveRegs
-                LDRB     LR,[R1,#TCB_SF_OFS]    ; Load stack frame information
+                LDRSB    LR,[R1,#TCB_SF_OFS]    ; Load stack frame information
               IF DOMAIN_NS != 0
                 TST      LR,#0x40               ; Check domain of interrupted thread
                 BNE      SVC_ContextRestore     ; Branch if secure
@@ -233,20 +233,21 @@ SVC_ZoneSetup
 
             IF DOMAIN_NS != 0
                 LDR      R0,[R4,#TCB_TZM_OFS]   ; Load TrustZone memory identifier
-                CBZ      R0,SVC_ContextRestore_NS ; Branch if there is no secure context
-                BL       TZ_LoadContext_S       ; Load secure context
+                CMP      R0,#0
+                IT       NE                     ; If TrustZone memory allocated
+                BLNE     TZ_LoadContext_S       ;  Load secure context
             ENDIF
 
-SVC_ContextRestore_NS
                 LDR      R0,[R4,#TCB_SP_OFS]    ; Load SP
                 LDR      R1,[R4,#TCB_SM_OFS]    ; Load stack memory base
                 MSR      PSPLIM,R1              ; Set PSPLIM
-                LDRB     R1,[R4,#TCB_SF_OFS]    ; Load stack frame information
-                ORN      LR,R1,#0xFF            ; Set EXC_RETURN
+                LDRSB    LR,[R4,#TCB_SF_OFS]    ; Load stack frame information
 
             IF DOMAIN_NS != 0
                 TST      LR,#0x40               ; Check domain of interrupted thread
-                BNE      SVC_ContextRestoreSP   ; Branch if secure
+                ITT      NE                     ; If secure
+                MSRNE    PSP,R0                 ;  Set PSP
+                BXNE     LR                     ;  Exit from handler
             ENDIF
 
               IF FPU_USED != 0
@@ -255,8 +256,6 @@ SVC_ContextRestore_NS
                 VLDMIAEQ R0!,{S16-S31}          ;  Restore VFP S16..S31
               ENDIF
                 LDMIA    R0!,{R4-R11}           ; Restore R4..R11
-
-SVC_ContextRestoreSP
                 MSR      PSP,R0                 ; Set PSP
 
 SVC_Exit
