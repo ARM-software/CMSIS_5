@@ -115,7 +115,7 @@ static osStatus_t svcRtxKernelInitialize (void) {
     return osError;
   }
 
-#if (DOMAIN_NS == 1)
+#ifdef RTX_TZ_CONTEXT
   // Initialize Secure Process Stack
   if (TZ_InitContextSystem_S() == 0U) {
     EvrRtxKernelError(osRtxErrorTZ_InitContext_S);

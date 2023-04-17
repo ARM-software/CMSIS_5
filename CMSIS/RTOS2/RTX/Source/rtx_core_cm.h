@@ -44,18 +44,6 @@ typedef bool bool_t;
 #define TRUE                    ((bool_t)1)
 #endif
 
-#ifndef DOMAIN_NS
-#define DOMAIN_NS               0
-#endif
-
-#if    (DOMAIN_NS == 1)
-#if   ((!defined(__ARM_ARCH_8M_BASE__)   || (__ARM_ARCH_8M_BASE__   == 0)) && \
-       (!defined(__ARM_ARCH_8M_MAIN__)   || (__ARM_ARCH_8M_MAIN__   == 0)) && \
-       (!defined(__ARM_ARCH_8_1M_MAIN__) || (__ARM_ARCH_8_1M_MAIN__ == 0)))
-#error "Non-secure domain requires ARMv8-M Architecture!"
-#endif
-#endif
-
 #ifndef EXCLUSIVE_ACCESS
 #if   ((defined(__ARM_ARCH_7M__)        && (__ARM_ARCH_7M__        != 0)) || \
        (defined(__ARM_ARCH_7EM__)       && (__ARM_ARCH_7EM__       != 0)) || \

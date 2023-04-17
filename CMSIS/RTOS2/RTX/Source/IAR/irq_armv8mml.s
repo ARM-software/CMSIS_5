@@ -29,10 +29,6 @@
 
                 #include "rtx_def.h"
 
-#ifndef DOMAIN_NS
-#define DOMAIN_NS        0
-#endif
-
 #ifdef __ARMVFP__
 FPU_USED        EQU      1
 #else
@@ -87,7 +83,7 @@ SVC_Handler
             #ifdef RTX_EXECUTION_ZONE
                 IMPORT   osZoneSetup_Callback
             #endif
-            #if (DOMAIN_NS != 0)
+            #ifdef RTX_TZ_CONTEXT
                 IMPORT   TZ_LoadContext_S
                 IMPORT   TZ_StoreContext_S
             #endif
@@ -156,7 +152,7 @@ SVC_FP_LazyState
               #endif
 
 SVC_ContextSave
-            #if (DOMAIN_NS != 0)
+            #ifdef RTX_TZ_CONTEXT
                 LDR      R0,[R1,#TCB_TZM_OFS]   ; Load TrustZone memory identifier
                 CBZ      R0,SVC_ContextSave_NS  ; Branch if there is no secure context
                 PUSH     {R1,R2,R12,LR}         ; Save registers and EXC_RETURN
@@ -242,7 +238,8 @@ SVC_ZoneSetup
                  IT       NE                    ; If zone has changed or running thread is deleted
                  BLNE     osZoneSetup_Callback  ;  Setup zone for next thread
             #endif
-            #if (DOMAIN_NS != 0)
+
+            #ifdef RTX_TZ_CONTEXT
                 LDR      R0,[R4,#TCB_TZM_OFS]   ; Load TrustZone memory identifier
                 CMP      R0,#0
                 IT       NE                     ; If TrustZone memory allocated

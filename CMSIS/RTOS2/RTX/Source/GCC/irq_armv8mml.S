@@ -28,10 +28,6 @@
 
         #include "rtx_def.h"
 
-        #ifndef  DOMAIN_NS
-        #define  DOMAIN_NS    0
-        #endif
-
         #if (defined(__ARM_FP) && (__ARM_FP > 0))
         .equ     FPU_USED,    1
         #else
@@ -139,7 +135,7 @@ SVC_FP_LazyState:
       .endif
 
 SVC_ContextSave:
-    #if (DOMAIN_NS != 0)
+    #ifdef RTX_TZ_CONTEXT
         ldr      r0,[r1,#TCB_TZM_OFS]   // Load TrustZone memory identifier
         cbz      r0,SVC_ContextSave_NS  // Branch if there is no secure context
         push     {r1,r2,r12,lr}         // Save registers and EXC_RETURN
@@ -225,7 +221,7 @@ SVC_ZoneSetup:
         blne     osZoneSetup_Callback   //  Setup zone for next thread
     #endif // RTX_EXECUTION_ZONE
 
-    #if (DOMAIN_NS != 0)
+    #ifdef RTX_TZ_CONTEXT
         ldr      r0,[r4,#TCB_TZM_OFS]   // Load TrustZone memory identifier
         cmp      r0,#0
         it       ne                     // If TrustZone memory allocated

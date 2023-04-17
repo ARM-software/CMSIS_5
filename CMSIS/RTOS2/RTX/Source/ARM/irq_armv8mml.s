@@ -76,7 +76,7 @@ SVC_Handler     PROC
             IF :DEF:RTX_EXECUTION_ZONE
                 IMPORT   osZoneSetup_Callback
             ENDIF
-            IF DOMAIN_NS != 0
+            IF :DEF:RTX_TZ_CONTEXT
                 IMPORT   TZ_LoadContext_S
                 IMPORT   TZ_StoreContext_S
             ENDIF
@@ -145,7 +145,7 @@ SVC_FP_LazyState
               ENDIF
 
 SVC_ContextSave
-            IF DOMAIN_NS != 0
+            IF :DEF:RTX_TZ_CONTEXT
                 LDR      R0,[R1,#TCB_TZM_OFS]   ; Load TrustZone memory identifier
                 CBZ      R0,SVC_ContextSave_NS  ; Branch if there is no secure context
                 PUSH     {R1,R2,R12,LR}         ; Save registers and EXC_RETURN
@@ -231,7 +231,7 @@ SVC_ZoneSetup
                  BLNE     osZoneSetup_Callback  ;  Setup zone for next thread
             ENDIF
 
-            IF DOMAIN_NS != 0
+            IF :DEF:RTX_TZ_CONTEXT
                 LDR      R0,[R4,#TCB_TZM_OFS]   ; Load TrustZone memory identifier
                 CMP      R0,#0
                 IT       NE                     ; If TrustZone memory allocated

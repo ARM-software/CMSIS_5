@@ -28,10 +28,6 @@
 
         #include "rtx_def.h"
 
-        #ifndef  DOMAIN_NS
-        #define  DOMAIN_NS    0
-        #endif
-
         .equ     I_T_RUN_OFS, 20        // osRtxInfo.thread.run offset
         .equ     TCB_SM_OFS,  48        // TCB.stack_mem offset
         .equ     TCB_SP_OFS,  56        // TCB.SP offset
@@ -115,7 +111,7 @@ SVC_Context:
         cbz      r1,SVC_ContextRestore  // Branch if running thread is deleted
 
 SVC_ContextSave:
-    #if (DOMAIN_NS != 0)
+    #ifdef RTX_TZ_CONTEXT
         mov      r3,lr                  // Get EXC_RETURN
         ldr      r0,[r1,#TCB_TZM_OFS]   // Load TrustZone memory identifier
         cbz      r0,SVC_ContextSave_NS  // Branch if there is no secure context
@@ -201,7 +197,7 @@ SVC_ZoneSetup:
     #endif // RTX_EXECUTION_ZONE
 
 SVC_ContextRestore_S:
-    #if (DOMAIN_NS != 0)
+    #ifdef RTX_TZ_CONTEXT
         ldr      r0,[r4,#TCB_TZM_OFS]   // Load TrustZone memory identifier
         cbz      r0,SVC_ContextRestore_NS // Branch if there is no secure context
         bl       TZ_LoadContext_S       // Load secure context

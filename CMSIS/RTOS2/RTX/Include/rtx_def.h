@@ -58,8 +58,16 @@
  #define RTX_STACK_CHECK
 #endif
 
-#ifdef  RTE_CMSIS_RTOS2_RTX5_ARMV8M_NS
+#if (defined(OS_TZ_CONTEXT) && (OS_TZ_CONTEXT != 0))
+ #define RTX_TZ_CONTEXT
+#endif
+
+#ifndef DOMAIN_NS
+ #ifdef RTE_CMSIS_RTOS2_RTX5_ARMV8M_NS
   #define DOMAIN_NS             1
+ #else
+  #define DOMAIN_NS             0
+ #endif
 #endif
 
 #endif  // RTX_DEF_H_

@@ -68,7 +68,7 @@ SVC_Handler     PROC
             IF :DEF:RTX_EXECUTION_ZONE
                 IMPORT   osZoneSetup_Callback
             ENDIF
-            IF DOMAIN_NS != 0
+            IF :DEF:RTX_TZ_CONTEXT
                 IMPORT   TZ_LoadContext_S
                 IMPORT   TZ_StoreContext_S
             ENDIF
@@ -127,7 +127,7 @@ SVC_Context
                 CBZ      R1,SVC_ContextRestore  ; Branch if running thread is deleted
 
 SVC_ContextSave
-            IF DOMAIN_NS != 0
+            IF :DEF:RTX_TZ_CONTEXT
                 MOV      R3,LR                  ; Get EXC_RETURN
                 LDR      R0,[R1,#TCB_TZM_OFS]   ; Load TrustZone memory identifier
                 CBZ      R0,SVC_ContextSave_NS  ; Branch if there is no secure context
@@ -213,7 +213,7 @@ SVC_ZoneSetup
             ENDIF
 
 SVC_ContextRestore_S
-            IF DOMAIN_NS != 0
+            IF :DEF:RTX_TZ_CONTEXT
                 LDR      R0,[R4,#TCB_TZM_OFS]   ; Load TrustZone memory identifier
                 CBZ      R0,SVC_ContextRestore_NS ; Branch if there is no secure context
                 BL       TZ_LoadContext_S       ; Load secure context

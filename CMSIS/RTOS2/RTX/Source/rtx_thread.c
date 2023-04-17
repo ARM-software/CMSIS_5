@@ -746,7 +746,7 @@ static osThreadId_t svcRtxThreadNew (osThreadFunc_t func, void *argument, const 
   const char        *name;
   uint32_t          *ptr;
   uint32_t           n;
-#if (DOMAIN_NS == 1)
+#ifdef RTX_TZ_CONTEXT
   TZ_ModuleId_t      tz_module;
   TZ_MemoryId_t      tz_memory;
 #endif
@@ -768,7 +768,7 @@ static osThreadId_t svcRtxThreadNew (osThreadFunc_t func, void *argument, const 
     stack_mem  = attr->stack_mem;
     stack_size = attr->stack_size;
     priority   = attr->priority;
-#if (DOMAIN_NS == 1)
+#ifdef RTX_TZ_CONTEXT
     tz_module  = attr->tz_module;
 #endif
     if (((attr_bits & osThreadPrivileged) != 0U) && ((attr_bits & osThreadUnprivileged) != 0U)) {
@@ -824,7 +824,7 @@ static osThreadId_t svcRtxThreadNew (osThreadFunc_t func, void *argument, const 
     stack_mem  = NULL;
     stack_size = 0U;
     priority   = osPriorityNormal;
-#if (DOMAIN_NS == 1)
+#ifdef RTX_TZ_CONTEXT
     tz_module  = 0U;
 #endif
   }
@@ -931,7 +931,7 @@ static osThreadId_t svcRtxThreadNew (osThreadFunc_t func, void *argument, const 
     flags |= osRtxFlagSystemMemory;
   }
 
-#if (DOMAIN_NS == 1)
+#ifdef RTX_TZ_CONTEXT
   // Allocate secure process stack
   if ((thread != NULL) && (tz_module != 0U)) {
     tz_memory = TZ_AllocModuleContext_S(tz_module);
@@ -992,7 +992,7 @@ static osThreadId_t svcRtxThreadNew (osThreadFunc_t func, void *argument, const 
     thread->stack_size    = stack_size;
     thread->sp            = (uint32_t)stack_mem + stack_size - 64U;
     thread->thread_addr   = (uint32_t)func;
-  #if (DOMAIN_NS == 1)
+  #ifdef RTX_TZ_CONTEXT
     thread->tz_memory     = tz_memory;
   #endif
   #ifdef RTX_SAFETY_CLASS
@@ -1435,7 +1435,7 @@ static void osRtxThreadFree (os_thread_t *thread) {
   thread->state = osRtxThreadInactive;
   thread->id    = osRtxIdInvalid;
 
-#if (DOMAIN_NS == 1)
+#ifdef RTX_TZ_CONTEXT
   // Free secure process stack
   if (thread->tz_memory != 0U) {
     (void)TZ_FreeModuleContext_S(thread->tz_memory);
