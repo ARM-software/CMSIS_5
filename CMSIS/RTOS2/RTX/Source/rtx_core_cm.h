@@ -229,6 +229,10 @@ __STATIC_INLINE void SetPendSV (void) {
 
 #if defined(__CC_ARM)
 
+#if defined(RTX_SVC_PTR_CHECK)
+#warning "SVC Function Pointer checking is not supported!"
+#endif
+
 #if   ((defined(__ARM_ARCH_7M__)        && (__ARM_ARCH_7M__        != 0)) ||   \
        (defined(__ARM_ARCH_7EM__)       && (__ARM_ARCH_7EM__       != 0)) ||   \
        (defined(__ARM_ARCH_8M_MAIN__)   && (__ARM_ARCH_8M_MAIN__   != 0)) ||   \
@@ -289,6 +293,10 @@ __STATIC_INLINE t  __svc##f (t1 a1, t2 a2, t3 a3, t4 a4) {                     \
 }
 
 #elif defined(__ICCARM__)
+
+#if defined(RTX_SVC_PTR_CHECK)
+#warning "SVC Function Pointer checking is not supported!"
+#endif
 
 #if   ((defined(__ARM_ARCH_7M__)        && (__ARM_ARCH_7M__        != 0)) ||   \
        (defined(__ARM_ARCH_7EM__)       && (__ARM_ARCH_7EM__       != 0)) ||   \
