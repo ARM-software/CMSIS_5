@@ -261,9 +261,8 @@ negative number representing an error code otherwise (refer to \ref osStatus_t).
 
 Possible \ref osStatus_t return values:
 - \em osError if an unspecific error occurred.
-- \em osErrorISR if called from an \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routine".
-
-\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+- \em osErrorISR if called from interrupt other than fault or \ref osWatchdogAlarm_Handler.
+- \em osErrorSafetyClass if the calling thread safety class is lower than the kernel protect safety class.
 
 <b>Code Example</b>
 \code
