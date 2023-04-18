@@ -849,10 +849,14 @@ int32_t osKernelRestoreLock (int32_t lock) {
 
   EvrRtxKernelRestoreLock(lock);
   if (IsException() || IsIrqMasked()) {
-    EvrRtxKernelError((int32_t)osErrorISR);
-    lock_new = (int32_t)osErrorISR;
+    if (IsFault() || IsSVCallIrq() || IsPendSvIrq() || IsTickIrq(osRtxInfo.tick_irqn)) {
+      lock_new = svcRtxKernelRestoreLock(lock);
+    } else {
+      EvrRtxKernelError((int32_t)osErrorISR);
+      lock_new = (int32_t)osErrorISR;
+    }
   } else {
-    lock_new = __svcKernelRestoreLock(lock);
+    lock_new   =  __svcKernelRestoreLock(lock);
   }
   return lock_new;
 }

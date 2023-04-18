@@ -124,6 +124,32 @@ __STATIC_INLINE bool_t IsException (void) {
   return (__get_IPSR() != 0U);
 }
 
+/// Check if in Fault
+/// \return     true, false
+__STATIC_INLINE bool_t IsFault (void) {
+  uint32_t ipsr = __get_IPSR();
+  return (((int32_t)ipsr < ((int32_t)SVCall_IRQn + 16)) &&
+          ((int32_t)ipsr > ((int32_t)NonMaskableInt_IRQn + 16)));
+}
+
+/// Check if in SVCall IRQ
+/// \return     true, false
+__STATIC_INLINE bool_t IsSVCallIrq (void) {
+  return ((int32_t)__get_IPSR() == ((int32_t)SVCall_IRQn + 16));
+}
+
+/// Check if in PendSV IRQ
+/// \return     true, false
+__STATIC_INLINE bool_t IsPendSvIrq (void) {
+  return ((int32_t)__get_IPSR() == ((int32_t)PendSV_IRQn + 16));
+}
+
+/// Check if in Tick Timer IRQ
+/// \return     true, false
+__STATIC_INLINE bool_t IsTickIrq (int32_t tick_irqn) {
+  return ((int32_t)__get_IPSR() == (tick_irqn + 16));
+}
+
 /// Check if IRQ is Masked
 /// \return     true=masked, false=not masked
 __STATIC_INLINE bool_t IsIrqMasked (void) {
