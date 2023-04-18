@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     core_cm85.h
  * @brief    CMSIS Cortex-M85 Core Peripheral Access Layer Header File
- * @version  V1.2.0
- * @date     17. April 2023
+ * @version  V1.3.0
+ * @date     18. April 2023
  ******************************************************************************/
 /*
  * Copyright (c) 2022-2023 Arm Limited. All rights reserved.
@@ -1562,7 +1562,7 @@ typedef struct
   __IOM uint32_t EWIC_ASCR;              /*!< Offset: 0x004 (R/W)  EWIC Automatic Sequence Control Register */
   __OM  uint32_t EWIC_CLRMASK;           /*!< Offset: 0x008 ( /W)  EWIC Clear Mask Register */
   __IM  uint32_t EWIC_NUMID;             /*!< Offset: 0x00C (R/ )  EWIC Event Number ID Register */
-        uint32_t RESERVED0[124U]; 
+        uint32_t RESERVED0[124U];
   __IOM uint32_t EWIC_MASKA;             /*!< Offset: 0x200 (R/W)  EWIC MaskA Register */
   __IOM uint32_t EWIC_MASKn[15];         /*!< Offset: 0x204 (R/W)  EWIC Maskn Registers */
         uint32_t RESERVED1[112U];
@@ -4347,6 +4347,42 @@ __STATIC_INLINE uint32_t TZ_NVIC_GetPriority_NS(IRQn_Type IRQn)
 #define ARMCM85_PMU_AXI_READ_ACCESS                  0xC303             /*!< Any beat access to M-AXI read interface */
 #define ARMCM85_PMU_DOSTIMEOUT_DOUBLE                0xC400             /*!< Denial of Service timeout has fired twice and caused buffers to drain to allow forward progress */
 #define ARMCM85_PMU_DOSTIMEOUT_TRIPLE                0xC401             /*!< Denial of Service timeout has fired three times and blocked the LSU to force forward progress */
+#define ARMCM85_PMU_FUSED_INST_RETIRED               0xC500             /*!< Fused instructions architecturally executed */
+#define ARMCM85_PMU_BR_INDIRECT                      0xC501             /*!< Indirect branch instruction architecturally executed */
+#define ARMCM85_PMU_BTAC_HIT                         0xC502             /*!< BTAC branch predictor hit */
+#define ARMCM85_PMU_BTAC_HIT_RETURNS                 0xC503             /*!< Return branch hits BTAC */
+#define ARMCM85_PMU_BTAC_HIT_CALLS                   0xC504             /*!< Call branch hits BTAC */
+#define ARMCM85_PMU_BTAC_HIT_INDIRECT                0xC505             /*!< Indirect branch hits BTACT */
+#define ARMCM85_PMU_BTAC_NEW_ALLOC                   0xC506             /*!< New allocation to BTAC */
+#define ARMCM85_PMU_BR_IND_MIS_PRED                  0xC507             /*!< Indirect branch mis-predicted */
+#define ARMCM85_PMU_BR_RETURN_MIS_PRED               0xC508             /*!< Return branch mis-predicted */
+#define ARMCM85_PMU_BR_BTAC_OFFSET_OVERFLOW          0xC509             /*!< Branch does not allocate in BTAC due to offset overflow */
+#define ARMCM85_PMU_STB_FULL_STALL_AXI               0xC50A             /*!< STore Buffer (STB) full with AXI requests causing CPU to stall */
+#define ARMCM85_PMU_STB_FULL_STALL_TCM               0xC50B             /*!< STB full with TCM requests causing CPU to stall */
+#define ARMCM85_PMU_CPU_STALLED_AHBS                 0xC50C             /*!< CPU is stalled because TCM access through AHBS */
+#define ARMCM85_PMU_AHBS_STALLED_CPU                 0xC50D             /*!< AHBS is stalled due to TCM access by CPU */
+#define ARMCM85_PMU_BR_INTERSTATING_MIS_PRED         0xC50E             /*!< Inter-stating branch is mis-predicted. */
+#define ARMCM85_PMU_DWT_STALL                        0xC50F             /*!< Data Watchpoint and Trace (DWT) stall */
+#define ARMCM85_PMU_DWT_FLUSH                        0xC510             /*!< DWT flush */
+#define ARMCM85_PMU_ETM_STALL                        0xC511             /*!< Embedded Trace Macrocell (ETM) stall */
+#define ARMCM85_PMU_ETM_FLUSH                        0xC512             /*!< ETM flush */
+#define ARMCM85_PMU_ADDRESS_BANK_CONFLICT            0xC513             /*!< Bank conflict prevents memory instruction dual issue */
+#define ARMCM85_PMU_BLOCKED_DUAL_ISSUE               0xC514             /*!< Dual instruction issuing is prevented */
+#define ARMCM85_PMU_FP_CONTEXT_TRIGGER               0xC515             /*!< Floating Point Context is created */
+#define ARMCM85_PMU_TAIL_CHAIN                       0xC516             /*!< New exception is handled without first unstacking */
+#define ARMCM85_PMU_LATE_ARRIVAL                     0xC517             /*!< Late-arriving exception taken during exception entry */
+#define ARMCM85_PMU_INT_STALL_FAULT                  0xC518             /*!< Delayed exception entry due to ongoing fault processing */
+#define ARMCM85_PMU_INT_STALL_DEV                    0xC519             /*!< Delayed exception entry due to outstanding device access */
+#define ARMCM85_PMU_PAC_STALL                        0xC51A             /*!< Stall caused by authentication code computation */
+#define ARMCM85_PMU_PAC_RETIRED                      0xC51B             /*!< PAC instruction architecturally executed */
+#define ARMCM85_PMU_AUT_RETIRED                      0xC51C             /*!< AUT instruction architecturally executed */
+#define ARMCM85_PMU_BTI_RETIRED                      0xC51D             /*!< BTI instruction architecturally executed */
+#define ARMCM85_PMU_PF_NL_MODE                       0xC51E             /*!< Prefetch in next line mode */
+#define ARMCM85_PMU_PF_STREAM_MODE                   0xC51F             /*!< Prefetch in stream mode */
+#define ARMCM85_PMU_PF_BUFF_CACHE_HIT                0xC520             /*!< Prefetch request that hit in the cache */
+#define ARMCM85_PMU_PF_REQ_LFB_HIT                   0xC521             /*!< Prefetch request that hit in line fill buffers */
+#define ARMCM85_PMU_PF_BUFF_FULL                     0xC522             /*!< Number of times prefetch buffer is full */
+#define ARMCM85_PMU_PF_REQ_DCACHE_HIT                0xC523             /*!< Generated prefetch request address that hit in D-Cache */
 
 #endif
 
