@@ -390,7 +390,6 @@ register uint32_t __rf   __ASM(SVC_RegF) = (uint32_t)svcRtx##f
     ".align 2\n\t"                                                             \
     "b.w %[adr]" : : [adr] "X" (f)                                             \
   )
-#endif
 #define SVC_Veneer_Prototye(f)                                                 \
 __STATIC_INLINE void jmpRtx##f (void);
 #define SVC_Veneer_Function(f)                                                 \
