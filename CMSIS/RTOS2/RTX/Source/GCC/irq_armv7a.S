@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 Arm Limited. All rights reserved.
+ * Copyright (c) 2013-2023 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -23,7 +23,10 @@
  * -----------------------------------------------------------------------------
  */
 
+
                 .syntax  unified
+
+                #include "rtx_def.h"
 
                 .equ   MODE_FIQ,        0x11
                 .equ   MODE_IRQ,        0x12
@@ -39,6 +42,7 @@
                 .equ   I_T_RUN_OFS,     20          // osRtxInfo.thread.run offset
                 .equ   TCB_SP_FRAME,    34          // osRtxThread_t.stack_frame offset
                 .equ   TCB_SP_OFS,      56          // osRtxThread_t.sp offset
+                .equ   TCB_ZONE_OFS,    68          // osRtxThread_t.zone offset
 
 
                 .section ".rodata"
@@ -330,8 +334,8 @@ osRtxContextSwitch:
 
 osRtxContextCheck:
                 str     r1, [r12]                   // Store run.next as run.curr
-                // R0 = curr, R1 = next, R2 = &IRQ_PendSV, R3 = IRQ_PendSV, R12 = &osRtxInfo.thread.run
-                push    {r1-r3, r12}
+                // R0 = curr, R1 = next, R2 = &IRQ_PendSV, R12 = &osRtxInfo.thread.run
+                push    {r0-r2, r12}
 
                 cmp     r0, #0                      // Is osRtxInfo.thread.run.curr == 0
                 beq     osRtxPostProcess            // Current deleted, skip context save
@@ -350,8 +354,8 @@ osRtxContextSave:
                 stmia   r1!, {r4-r8}                // Store them to user stack
                 stm     r1, {lr}^                   // Store LR_usr directly
                 add     r1, r1, #4                  // Adjust user sp to PC
-                ldmib   r0!, {r5-r6}                // Load current PC, CPSR
-                stmia   r1!, {r5-r6}                // Restore user PC and CPSR
+                ldmib   r0!, {r5-r6}                // Load stacked PC, CPSR
+                stmia   r1!, {r5-r6}                // Store them to user stack
 
                 sub     r1, r1, #64                 // Adjust SP_usr to stacked R4
 
@@ -382,8 +386,9 @@ osRtxContextSaveSP:
 
 osRtxPostProcess:
                 // RTX IRQ post processing check
-                pop     {r8-r11}                    // Pop R8 = run.next, R9 = &IRQ_PendSV, R10 = IRQ_PendSV, R11 = &osRtxInfo.thread.run
-                cmp     r10, #1                     // Compare PendSV value
+                pop     {r8-r11}                    // Pop R8 = curr, R9 = next, R10 = &IRQ_PendSV, R11 = &osRtxInfo.thread.run
+                ldrb    r0, [r10]                   // Load PendSV flag
+                cmp     r0, #1                      // Compare PendSV value
                 bne     osRtxContextRestore         // Skip post processing if not pending
 
                 mov     r4, sp                      // Move SP_svc into R4
@@ -398,14 +403,14 @@ osRtxPostProcess:
                 mov     r6, #0                      // Set PendSV clear value
                 b       osRtxPendCheck
 osRtxPendExec:
-                strb    r6, [r9]                    // Clear PendSV flag
+                strb    r6, [r10]                   // Clear PendSV flag
                 cpsie   i                           // Re-enable interrupts
                 blx     osRtxPendSV_Handler         // Post process pending objects
                 cpsid   i                           // Disable interrupts
 osRtxPendCheck:
                 ldr     r8, [r11, #4]               // Load osRtxInfo.thread.run.next
                 str     r8, [r11]                   // Store run.next as run.curr
-                ldrb    r0, [r9]                    // Load PendSV flag
+                ldrb    r0, [r10]                   // Load PendSV flag
                 cmp     r0, #1                      // Compare PendSV value
                 beq     osRtxPendExec               // Branch to PendExec if PendSV is set
 
@@ -416,8 +421,20 @@ osRtxPendCheck:
                 add     sp, sp, r4                  // Restore stack adjustment
 
 osRtxContextRestore:
-                ldr     lr, [r8, #TCB_SP_OFS]       // Load next osRtxThread_t.sp
-                ldrb    r2, [r8, #TCB_SP_FRAME]     // Load next osRtxThread_t.stack_frame
+            #ifdef RTX_EXECUTION_ZONE
+                ldrb    r0, [r9, #TCB_ZONE_OFS]     // Load osRtxInfo.thread.run.next: zone
+                cmp     r8, #0
+                beq     osRtxZoneSetup              // Branch if running thread is deleted
+                ldrb    r1, [r8, #TCB_ZONE_OFS]     // Load osRtxInfo.thread.run.curr: zone
+                cmp     r0, r1                      // Check if next:zone == curr:zone
+                beq     osRtxContextRestoreFrame    // Branch if zone has not changed
+osRtxZoneSetup:
+                bl      osZoneSetup_Callback        // Setup zone for next thread
+            #endif
+
+osRtxContextRestoreFrame:
+                ldr     lr, [r9, #TCB_SP_OFS]       // Load next osRtxThread_t.sp
+                ldrb    r2, [r9, #TCB_SP_FRAME]     // Load next osRtxThread_t.stack_frame
 
                 ands    r2, r2, #0x6                // Check stack frame for VFP context
                 mrc     p15, 0, r2, c1, c0, 2       // Read CPACR

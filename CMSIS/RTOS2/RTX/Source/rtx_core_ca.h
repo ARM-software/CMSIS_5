@@ -50,10 +50,6 @@ typedef bool bool_t;
 #warning "Stack overrun checking is not supported!"
 #endif
 
-#if defined(RTX_EXECUTION_ZONE)
-#warning "MPU Protected Zones are not supported!"
-#endif
-
 #define EXCLUSIVE_ACCESS        1
 
 #define OS_TICK_HANDLER         osRtxTick_Handler
