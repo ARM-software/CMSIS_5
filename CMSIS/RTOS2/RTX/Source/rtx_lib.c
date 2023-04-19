@@ -730,7 +730,8 @@ void osRtxKernelBeforeInit (void) {
       (defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050))) && \
       !defined(__MICROLIB))
 
-#if  ((defined(__FPU_PRESENT) && (__FPU_PRESENT == 1U)) && \
+#if  (!defined(__ARM_ARCH_7A__) && \
+      (defined(__FPU_PRESENT) && (__FPU_PRESENT == 1U)) && \
       (defined(__FPU_USED   ) && (__FPU_USED    == 1U)))
 
 extern void $Super$$_fp_init (void);
