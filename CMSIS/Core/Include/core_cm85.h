@@ -2,7 +2,7 @@
  * @file     core_cm85.h
  * @brief    CMSIS Cortex-M85 Core Peripheral Access Layer Header File
  * @version  V1.3.1
- * @date     18. April 2023
+ * @date     19. April 2023
  ******************************************************************************/
 /*
  * Copyright (c) 2022-2023 Arm Limited. All rights reserved.

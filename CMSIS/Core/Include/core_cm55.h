@@ -2,7 +2,7 @@
  * @file     core_cm55.h
  * @brief    CMSIS Cortex-M55 Core Peripheral Access Layer Header File
  * @version  V1.5.2
- * @date     18. April 2023
+ * @date     19. April 2023
  ******************************************************************************/
 /*
  * Copyright (c) 2018-2023 Arm Limited. All rights reserved.
