@@ -51,9 +51,12 @@ irqRtxLib:
                 .byte    0
 
                 .section ".data"
+                .global  SVC_Active
                 .global  IRQ_PendSV
 IRQ_NestLevel:
                 .word    0                          // IRQ nesting level counter
+SVC_Active:
+                .byte    0                          // SVC Handler Active
 IRQ_PendSV:
                 .byte    0                          // Pending SVC flag
 
@@ -250,6 +253,10 @@ SVC_Handler:
 
                 push    {r0-r3}                     // Push arguments to stack
 
+                ldr     r0, =SVC_Active
+                mov     r1, #1
+                strb    r1, [r0]                    // Set SVC Handler Active
+
                 ldr     r0, =IRQ_NestLevel
                 ldr     r1, [r0]
                 add     r1, r1, #1                  // Increment IRQ nesting level
@@ -284,6 +291,10 @@ SVC_ContextCheck:
                 ldr     r1, [r0]
                 sub     r1, r1, #1                  // Decrement IRQ nesting level
                 str     r1, [r0]
+
+                ldr     r0, =SVC_Active
+                mov     r1, #0
+                strb    r1, [r0]                    // Clear SVC Handler Active
 
                 clrex                               // Clear exclusive monitor
                 pop     {r0-r3, r12, lr}            // Restore stacked APCS registers

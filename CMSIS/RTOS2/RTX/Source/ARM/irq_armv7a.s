@@ -50,8 +50,10 @@ irqRtxLib       DCB      0                          ; Non weak library reference
 
 
                 AREA     |.data|, DATA, READWRITE
+                EXPORT   SVC_Active
                 EXPORT   IRQ_PendSV
 IRQ_NestLevel   DCD      0                          ; IRQ nesting level counter
+SVC_Active      DCB      0                          ; SVC Handler Active
 IRQ_PendSV      DCB      0                          ; Pending SVC flag
 
 
@@ -243,6 +245,10 @@ SVC_Handler\
 
                 PUSH    {R0-R3}                     ; Push arguments to stack
 
+                LDR     R0, =SVC_Active
+                MOV     R1, #1
+                STRB    R1, [R0]                    ; Set SVC Handler Active
+
                 LDR     R0, =IRQ_NestLevel
                 LDR     R1, [R0]
                 ADD     R1, R1, #1                  ; Increment IRQ nesting level
@@ -277,6 +283,10 @@ SVC_ContextCheck
                 LDR     R1, [R0]
                 SUB     R1, R1, #1                  ; Decrement IRQ nesting level
                 STR     R1, [R0]
+
+                LDR     R0, =SVC_Active
+                MOV     R1, #0
+                STRB    R1, [R0]                    ; Clear SVC Handler Active
 
                 CLREX                               ; Clear exclusive monitor
                 POP     {R0-R3, R12, LR}            ; Restore stacked APCS registers

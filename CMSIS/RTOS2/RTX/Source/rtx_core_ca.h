@@ -142,6 +142,7 @@ __STATIC_INLINE uint32_t __get_PSP (void) {
 #endif
 
 
+extern uint8_t SVC_Active;      // SVC Handler Active
 extern uint8_t IRQ_PendSV;      // Pending SVC flag
 
 
@@ -174,19 +175,19 @@ __STATIC_INLINE bool_t IsFault (void) {
 /// Check if in SVCall IRQ
 /// \return     true, false
 __STATIC_INLINE bool_t IsSVCallIrq (void) {
-  return (__get_mode() == CPSR_M_SVC);
+  return (SVC_Active != 0U);
 }
 
 /// Check if in PendSV IRQ
 /// \return     true, false
 __STATIC_INLINE bool_t IsPendSvIrq (void) {
-  return ((__get_mode() == CPSR_M_IRQ) && (IRQ_PendSV != 0U));
+  return ((__get_mode() == CPSR_M_SVC) && (SVC_Active == 0U) && (IRQ_PendSV != 0U));
 }
 
 /// Check if in Tick Timer IRQ
 /// \return     true, false
 __STATIC_INLINE bool_t IsTickIrq (int32_t tick_irqn) {
-  return ((__get_mode() == CPSR_M_IRQ) && (IRQ_GetActiveIRQ() == OS_Tick_GetIRQn()));
+  return ((__get_mode() == CPSR_M_SVC) && (IRQ_GetActiveIRQ() == OS_Tick_GetIRQn()));
 }
 
 /// Check if IRQ is Masked
