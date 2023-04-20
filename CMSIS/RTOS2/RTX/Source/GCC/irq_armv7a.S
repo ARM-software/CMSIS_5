@@ -419,8 +419,8 @@ osRtxPendExec:
                 blx     osRtxPendSV_Handler         // Post process pending objects
                 cpsid   i                           // Disable interrupts
 osRtxPendCheck:
-                ldr     r8, [r11, #4]               // Load osRtxInfo.thread.run.next
-                str     r8, [r11]                   // Store run.next as run.curr
+                ldr     r9, [r11, #4]               // Load osRtxInfo.thread.run.next
+                str     r9, [r11]                   // Store run.next as run.curr
                 ldrb    r0, [r10]                   // Load PendSV flag
                 cmp     r0, #1                      // Compare PendSV value
                 beq     osRtxPendExec               // Branch to PendExec if PendSV is set
