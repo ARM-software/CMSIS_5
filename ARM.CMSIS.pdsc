@@ -1182,7 +1182,7 @@ and 8-bit Java bytecodes in Jazelle state.
     <condition id="TZ Non-secure">
       <description>TrustZone (Non-secure)</description>
       <require Dtz="TZ"/>
-      <accept Dsecure="Non-secure"/>
+      <require Dsecure="Non-secure"/>
     </condition>
 
     <!-- Startup -->
