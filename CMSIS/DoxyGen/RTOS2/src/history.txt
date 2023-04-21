@@ -121,6 +121,7 @@
       <td>
        - Based on CMSIS-RTOS API V2.2.0.
        - Added support for Process Isolation: MPU Protected Zones, Safety Classes, Thread Watchdogs.
+       - Reduced component variants: Library (Library_NS replacement), Source (Source_NS replacement).
       </td>
     </tr>
     <tr>
