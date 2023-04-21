@@ -1170,9 +1170,18 @@ and 8-bit Java bytecodes in Jazelle state.
       <accept Dcore="Cortex-A9"/>
     </condition>
 
+    <condition id="No TrustZone">
+      <description>No TrustZone</description>
+      <require Dtz="NO_TZ"/>
+    </condition>
     <condition id="TrustZone">
       <description>TrustZone</description>
       <require Dtz="TZ"/>
+    </condition>
+    <condition id="TZ Disabled">
+      <description>TrustZone (Disabled)</description>
+      <require Dtz="TZ"/>
+      <require Dsecure="TZ-disabled"/>
     </condition>
     <condition id="TZ Secure">
       <description>TrustZone (Secure)</description>
@@ -1183,6 +1192,27 @@ and 8-bit Java bytecodes in Jazelle state.
       <description>TrustZone (Non-secure)</description>
       <require Dtz="TZ"/>
       <require Dsecure="Non-secure"/>
+    </condition>
+
+    <condition id="ARMv8-M Device without TrustZone">
+      <description>Armv8-M architecture based device without TrustZone</description>
+      <require condition="ARMv8-M Device"/>
+      <require condition="No TrustZone"/>
+    </condition>
+    <condition id="ARMv8-M Device with TZ Disabled">
+      <description>Armv8-M architecture based device with TrustZone (Disabled)</description>
+      <require condition="ARMv8-M Device"/>
+      <require condition="TZ Disabled"/>
+    </condition>
+    <condition id="ARMv8-M Device with TZ Secure">
+      <description>Armv8-M architecture based device with TrustZone (Secure)</description>
+      <require condition="ARMv8-M Device"/>
+      <require condition="TZ Secure"/>
+    </condition>
+    <condition id="ARMv8-M Device with TZ Non-secure">
+      <description>Armv8-M architecture based device with TrustZone (Non-secure)</description>
+      <require condition="ARMv8-M Device"/>
+      <require condition="TZ Non-secure"/>
     </condition>
 
     <!-- Startup -->
@@ -1336,8 +1366,10 @@ and 8-bit Java bytecodes in Jazelle state.
     </condition>
     <condition id="RTOS2 RTX5">
       <description>Components required for RTOS2 RTX5</description>
-      <require condition="ARMv6_7_8-M Device"/>
-      <deny    condition="TZ Non-secure"/>
+      <accept  condition="ARMv6_7-M Device"/>
+      <accept  condition="ARMv8-M Device without TrustZone"/>
+      <accept  condition="ARMv8-M Device with TZ Disabled"/>
+      <accept  condition="ARMv8-M Device with TZ Secure"/>
       <require condition="ARMCC GCC IAR"/>
       <require Cclass="CMSIS"  Cgroup="CORE"/>
       <require Cclass="Device" Cgroup="Startup"/>
@@ -1353,8 +1385,7 @@ and 8-bit Java bytecodes in Jazelle state.
     </condition>
     <condition id="RTOS2 RTX5 NS">
       <description>Components required for RTOS2 RTX5 in Non-Secure Domain</description>
-      <require condition="ARMv8-M Device"/>
-      <require condition="TZ Non-secure"/>
+      <require condition="ARMv8-M Device with TZ Non-secure"/>
       <require condition="ARMCC GCC IAR"/>
       <require Cclass="CMSIS"  Cgroup="CORE"/>
       <require Cclass="Device" Cgroup="Startup"/>
