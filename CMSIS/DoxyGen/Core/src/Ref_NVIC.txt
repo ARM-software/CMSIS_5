@@ -1,14 +1,14 @@
 /**
 \defgroup   NVIC_gr  Interrupts and Exceptions (NVIC)
-  @{
+@{
 \brief      Functions to access the Nested Vector Interrupt Controller (NVIC).
 \details
 This section explains how to use interrupts and exceptions and access functions for the Nested Vector Interrupt Controller (NVIC).
 
 Arm provides a template file <strong>startup_<em>device</em></strong> for each supported
-compiler. The file must be adapted by the silicon vendor to include interrupt vectors for all device-specific 
-interrupt handlers. Each interrupt handler is defined as a <strong><em>weak</em></strong> function 
-to an dummy handler. These interrupt handlers can be used directly in application software 
+compiler. The file must be adapted by the silicon vendor to include interrupt vectors for all device-specific
+interrupt handlers. Each interrupt handler is defined as a <strong><em>weak</em></strong> function
+to an dummy handler. These interrupt handlers can be used directly in application software
 without being adapted by the programmer.
 
 The table below lists the core exception vectors of the various Cortex-M processors.
@@ -168,16 +168,16 @@ and SC300
 </table>
 
 
-Vector Table 
+Vector Table
 ============
 The Vector Table defines the entry addresses of the processor exceptions and the
-device specific interrupts.  It is typically located at the beginning of the 
-program memory, however \ref using_VTOR_pg it can be relocated to RAM.  The symbol 
+device specific interrupts.  It is typically located at the beginning of the
+program memory, however \ref using_VTOR_pg it can be relocated to RAM.  The symbol
 <b>__Vectors</b> is the address of the vector table in the startup code and the
-register <b>SCB->VTOR</b> holds the start address of the vector table. 
+register <b>SCB->VTOR</b> holds the start address of the vector table.
 
 \if ARMv8M
-An Armv8-M implementation with TrustZone provides two vector tables: 
+An Armv8-M implementation with TrustZone provides two vector tables:
   - vector table for Secure handlers
   - vector table for Non-Secure handlers
 
@@ -186,8 +186,8 @@ Refer to \ref Model_TrustZone for more information.
 
 Processor Exceptions
 --------------------
-At the beginning of the vector table, the initial stack value and the 
-exception vectors of the processor are defined. The vector table below 
+At the beginning of the vector table, the initial stack value and the
+exception vectors of the processor are defined. The vector table below
 shows the exception vectors of a Armv8-M Mainline processor. Other processor
 variants may have fewer vectors.
 
@@ -223,7 +223,7 @@ device specific interrupt vectors.
                 DCD     TAMPER_IRQHandler         ; Tamper
 \endcode
 
-All device specific interrupts should have a default interrupt handler function that can 
+All device specific interrupts should have a default interrupt handler function that can
 be overwritten in user code. Below is an example for this default handler function.
 
 \code
@@ -241,7 +241,7 @@ Default_Handler PROC
                 B .
                 ENDP
 \endcode
-                
+
 
 The user application may simply define an interrupt handler function by using the handler name
 as shown below.
@@ -258,30 +258,30 @@ NVIC Function Usage
 The code below shows the usage of various CMSIS NVIC functions with an LPC1700 device.
 
 Code Example 1
---------------  
+--------------
 \code
 #include "LPC17xx.h"
- 
-uint32_t priorityGroup;                                     /* Variables to store priority group and priority */
+
+uint32_t priorityGroup;                                     /* Variables to store priority group and priority*/
 uint32_t priority;
 uint32_t preemptPriority;
 uint32_t subPriority;
- 
+
 int main (void)  {
   NVIC_SetPriorityGrouping(5);                              /* Set priority group to 5:
-                                                               Bit[7..6] preempt priority Bits, 
-                                                               Bit[5..3] subpriority Bits 
-                                                               (valid for five priority bits) */
-     
-  priorityGroup =  NVIC_GetPriorityGrouping();              /* Get used priority grouping */
- 
+                                                               Bit[7..6] preempt priority Bits,
+                                                               Bit[5..3] subpriority Bits
+                                                               (valid for five priority bits)*/
+
+  priorityGroup =  NVIC_GetPriorityGrouping();              /* Get used priority grouping*/
+
   priority = NVIC_EncodePriority(priorityGroup, 1, 6);      /* Encode priority with 6 for subpriority and 1 for preempt priority
-                                                               Note: priority depends on the used priority grouping */
-  NVIC_SetPriority(UART0_IRQn, priority);                   /* Set new priority */
- 
-  priority =  NVIC_GetPriority(UART0_IRQn);                 /* Retrieve priority again */    
+                                                               Note: priority depends on the used priority grouping*/
+  NVIC_SetPriority(UART0_IRQn, priority);                   /* Set new priority*/
+
+  priority =  NVIC_GetPriority(UART0_IRQn);                 /* Retrieve priority again*/
   NVIC_DecodePriority(priority, priorityGroup, &preemptPriority, &subPriority);
- 
+
   while(1);
 }
 \endcode
@@ -291,25 +291,25 @@ Code Example 2
 --------------
 \code
 #include "LPC17xx.h"
- 
-uint32_t active;                                            /* Variable to store interrupt active state */
- 
-void TIMER0_IRQHandler(void)  {                             /* Timer 0 interrupt handler  */
- 
-  if (LPC_TIM0->IR & (1 << 0))  {                           /* Check if interrupt for match channel 0 occurred */ 
-    LPC_TIM0->IR |= (1 << 0);                               /* Acknowledge interrupt for match channel 0 occurred */
+
+uint32_t active;                                            /* Variable to store interrupt active state*/
+
+void TIMER0_IRQHandler(void)  {                             /* Timer 0 interrupt handler */
+
+  if (LPC_TIM0->IR & (1 << 0))  {                           /* Check if interrupt for match channel 0 occurred*/
+    LPC_TIM0->IR |= (1 << 0);                               /* Acknowledge interrupt for match channel 0 occurred*/
   }
-  active = NVIC_GetActive(TIMER0_IRQn);                     /* Get interrupt active state of timer 0 */
+  active = NVIC_GetActive(TIMER0_IRQn);                     /* Get interrupt active state of timer 0*/
 }
- 
+
 int main (void) {
-                                                            /* Set match channel register MR0 to 1 millisecond */
-  LPC_TIM0->MR0 = (((SystemCoreClock / 1000) / 4) - 1);	    /* 1 ms? */
-   
-  LPC_TIM0->MCR = (3 << 0);                                 /* Enable interrupt and reset for match channel MR0 */
-  NVIC_EnableIRQ(TIMER0_IRQn);                              /* Enable NVIC interrupt for timer 0 */
-  LPC_TIM0->TCR = (1 << 0);                                 /* Enable timer 0 */
- 
+                                                            /* Set match channel register MR0 to 1 millisecond*/
+  LPC_TIM0->MR0 = (((SystemCoreClock / 1000) / 4) - 1);	    /* 1 ms?*/
+
+  LPC_TIM0->MCR = (3 << 0);                                 /* Enable interrupt and reset for match channel MR0*/
+  NVIC_EnableIRQ(TIMER0_IRQn);                              /* Enable NVIC interrupt for timer 0*/
+  LPC_TIM0->TCR = (1 << 0);                                 /* Enable timer 0*/
+
   while(1);
 }
 \endcode
@@ -326,7 +326,7 @@ The NVIC function virtualization is enabled with the following \#define symbols:
   - \ref CMSIS_NVIC_VIRTUAL enables overriding the CMSIS-Core (Cortex-M) NVIC functions.
   - \ref CMSIS_VECTAB_VIRTUAL enables overriding the CMSIS-Core (Cortex-M) interrupt vector table access functions.
 
-*/     
+*/
 
 #define CMSIS_NVIC_VIRTUAL   ///< Virtualization of the NVIC API
 /**
@@ -349,13 +349,13 @@ NVIC_SetPriority          | __NVIC_SetPriority
 NVIC_GetPriority          | __NVIC_GetPriority
 NVIC_SetPriorityGrouping  | __NVIC_SetPriorityGrouping
 NVIC_GetPriorityGrouping  | __NVIC_GetPriorityGrouping
-*/     
+*/
 
 #define CMSIS_VECTAB_VIRTUAL   ///< Virtualization of interrupt vector table access functions
 /**
 
 \def CMSIS_VECTAB_VIRTUAL
-When \ref CMSIS_NVIC_VIRTUAL is defined, the functions in the table below must be replaced 
+When \ref CMSIS_NVIC_VIRTUAL is defined, the functions in the table below must be replaced
 to virtualize the API access functions to the interrupt vector table. The NVIC vector table API should be implemented
 in a separate source module. This allows, for example, alternate implementations to relocate the vector table from flash to RAM on the first vector table update.
 
@@ -366,7 +366,7 @@ Interrupt Vector Table Access  | CMSIS-Core Functions
 NVIC_GetVector                 | __NVIC_GetVector
 NVIC_SetVector                 | __NVIC_SetVector
 
-*/     
+*/
 
 
 /**************************************************************************************************/
@@ -376,7 +376,7 @@ NVIC_SetVector                 | __NVIC_SetVector
 The core exception enumeration names for IRQn values are defined in the \ref device_h_pg.
 
  - Negative IRQn values represent processor core exceptions (internal interrupts).
- - Positive IRQn values represent device-specific exceptions (external interrupts). 
+ - Positive IRQn values represent device-specific exceptions (external interrupts).
  - The first device-specific interrupt has the IRQn value 0.
 
 The table below describes the core exception names and their availability in various Cortex-M cores.
@@ -389,9 +389,9 @@ typedef enum IRQn
   MemoryManagement_IRQn    = -12,      ///<  Exception 4: Memory Management Interrupt [not on Cortex-M0 variants]
   BusFault_IRQn            = -11,      ///<  Exception 5: Bus Fault Interrupt [not on Cortex-M0 variants]
   UsageFault_IRQn          = -10,      ///<  Exception 6: Usage Fault Interrupt [not on Cortex-M0 variants]
-\if ARMv8M  
+\if ARMv8M
   SecureFault_IRQn         = -9,       ///<  Exception 7: Secure Fault Interrupt [only on Armv8-M]
-\endif  
+\endif
   SVCall_IRQn              = -5,       ///<  Exception 11: SVC Interrupt
   DebugMonitor_IRQn        = -4,       ///<  Exception 12: Debug Monitor Interrupt [not on Cortex-M0 variants]
   PendSV_IRQn              = -2,       ///<  Exception 14: Pend SV Interrupt [not on Cortex-M0 variants]
@@ -412,12 +412,12 @@ typedef enum IRQn
   priority bits (__NVIC_PRIO_BITS), the smallest possible priority group is set.
 
     \param [in]      PriorityGroup  Priority group
-    
+
     \remarks
         - not for Cortex-M0, Cortex-M0+, or SC000.
         - By default, priority group setting is zero.
-        
-    \sa 
+
+    \sa
         - \ref NVIC_GetPriorityGrouping; NVIC_SetPriority; SCB_Type
         - \ref ref_man_sec
 */
@@ -425,7 +425,7 @@ void NVIC_SetPriorityGrouping(uint32_t PriorityGroup);
 
 
 /**************************************************************************************************/
-/** 
+/**
     \brief  Read the priority grouping [not for Cortex-M0, Cortex-M0+, or SC000]
 
   This function returns the priority grouping (flag PRIGROUP in AIRCR[10:8]).
@@ -435,21 +435,21 @@ void NVIC_SetPriorityGrouping(uint32_t PriorityGroup);
     \remarks
         - not for Cortex-M0, Cortex-M0+, or SC000.
         - By default, priority group setting is zero.
-        
-    \sa 
+
+    \sa
         - \ref NVIC_SetPriorityGrouping; NVIC_GetPriority; SCB_Type
         - \ref ref_man_sec
-    
+
 */
 uint32_t NVIC_GetPriorityGrouping(void);
 
 
 /**************************************************************************************************/
-/** 
+/**
     \brief  Enable a device specific interrupt
 
-    This function enables the specified device specific interrupt \em IRQn. 
-    \em IRQn cannot be a negative value. 
+    This function enables the specified device specific interrupt \em IRQn.
+    \em IRQn cannot be a negative value.
 
     \param [in]      IRQn  Interrupt number
 
@@ -458,13 +458,13 @@ uint32_t NVIC_GetPriorityGrouping(void);
         - The registers that control the enabling and disabling of interrupts are called
         SETENA and CLRENA.
         - The number of supported interrupts depends on the implementation of the chip designer
-        and can be read form the Interrupt Controller Type Register (ICTR) in granularities of 32: 
-        \n ICTR[4:0] 
+        and can be read form the Interrupt Controller Type Register (ICTR) in granularities of 32:
+        \n ICTR[4:0]
                 - 0 - 32 interrupts supported
                 - 1 - 64 interrupts supported
                 - ...
-        
-    \sa     
+
+    \sa
         - \ref NVIC_DisableIRQ; SCnSCB_Type;
         - \ref ref_man_sec
 */
@@ -472,23 +472,23 @@ void NVIC_EnableIRQ(IRQn_Type IRQn);
 
 
 /**************************************************************************************************/
-/** 
+/**
     \brief  Get a device specific interrupt enable status
 
-    This function returns the interrupt enable status for the specified device specific interrupt \em IRQn. 
-    \em IRQn cannot be a negative value. 
+    This function returns the interrupt enable status for the specified device specific interrupt \em IRQn.
+    \em IRQn cannot be a negative value.
 
     \param [in]      IRQn  Interrupt number
-    
-    \returns    
+
+    \returns
             - 0  Interrupt is not enabled
             - 1  Interrupt is enabled
 
     \remarks
         - IRQn must not be negative.
         - The registers that control the enabling and disabling of interrupts are called SETENA and CLRENA.
-        
-    \sa     
+
+    \sa
         - \ref NVIC_EnableIRQ; NVIC_DisableIRQ;
         - \ref ref_man_sec
 */
@@ -496,11 +496,11 @@ uint32_t NVIC_GetEnableIRQ(IRQn_Type IRQn);
 
 
 /**************************************************************************************************/
-/** 
+/**
     \brief  Disable a device specific interrupt
 
-    This function disables the specified device specific interrupt \em IRQn. 
-    \em IRQn cannot be a negative value. 
+    This function disables the specified device specific interrupt \em IRQn.
+    \em IRQn cannot be a negative value.
 
     \param [in]      IRQn  Number of the external interrupt to disable
 
@@ -508,8 +508,8 @@ uint32_t NVIC_GetEnableIRQ(IRQn_Type IRQn);
         - IRQn must not be negative.
         - The registers that control the enabling and disabling of interrupts are called
         SETENA and CLRENA.
-        
-    \sa     
+
+    \sa
         - \ref NVIC_EnableIRQ
         - \ref ref_man_sec
 */
@@ -517,22 +517,22 @@ void NVIC_DisableIRQ(IRQn_Type IRQn);
 
 
 /**************************************************************************************************/
-/** 
+/**
     \brief  Get the pending device specific interrupt
 
-    This function returns the pending status of the specified device specific interrupt \em IRQn. 
+    This function returns the pending status of the specified device specific interrupt \em IRQn.
 
     \param [in]      IRQn  Interrupt number
-    
-    \returns    
+
+    \returns
             - 0  Interrupt is not pending
             - 1  Interrupt is pending
-            
+
     \remarks
         - IRQn must not be negative.
         - The registers that control the status of interrupts are called SETPEND and CLRPEND.
 
-    \sa     
+    \sa
         - \ref NVIC_SetPendingIRQ; NVIC_ClearPendingIRQ
         - \ref ref_man_sec
 */
@@ -540,19 +540,19 @@ uint32_t NVIC_GetPendingIRQ(IRQn_Type IRQn);
 
 
 /**************************************************************************************************/
-/** 
+/**
     \brief  Set a device specific interrupt to pending
 
     This function sets the pending bit for the specified device specific interrupt \em IRQn.
     \em IRQn cannot be a negative value.
 
-    \param [in]      IRQn  Interrupt number 
-    
+    \param [in]      IRQn  Interrupt number
+
     \remarks
         - IRQn must not be negative.
         - The registers that control the status of interrupts are called SETPEND and CLRPEND.
 
-    \sa     
+    \sa
         - \ref NVIC_GetPendingIRQ; NVIC_ClearPendingIRQ
         - \ref ref_man_sec
 */
@@ -560,20 +560,20 @@ void NVIC_SetPendingIRQ(IRQn_Type IRQn);
 
 
 /**************************************************************************************************/
-/** 
-    \brief  Clear a device specific interrupt from pending  
-    
-    This function removes the pending state of the specified device specific interrupt \em IRQn. 
+/**
+    \brief  Clear a device specific interrupt from pending
+
+    This function removes the pending state of the specified device specific interrupt \em IRQn.
     \em IRQn cannot be a negative number.
 
     \param [in]      IRQn  Interrupt number
-    
+
     \remarks
         - IRQn must not be negative.
         - The registers that control the status of interrupts are called SETPEND and CLRPEND.
         - An interrupt can have the status pending though it is not active.
-        
-    \sa     
+
+    \sa
         - \ref NVIC_SetPendingIRQ; NVIC_GetPendingIRQ
         - \ref ref_man_sec
 */
@@ -581,67 +581,67 @@ void NVIC_ClearPendingIRQ(IRQn_Type IRQn);
 
 
 /**************************************************************************************************/
-/** 
+/**
     \brief  Get the device specific interrupt active status [not for Cortex-M0, Cortex-M0+, or SC000]
 
-    This function reads the Interrupt Active Register (NVIC_IABR0-NVIC_IABR7) in NVIC and 
+    This function reads the Interrupt Active Register (NVIC_IABR0-NVIC_IABR7) in NVIC and
     returns the active bit of the interrupt \em IRQn.
-    
+
     \param [in]      IRQn  Interrupt number
 
-    \returns            
+    \returns
         - 0  Interrupt is not active
         - 1  Interrupt is active, or active and pending
-    
+
     \remarks
         - not for Cortex-M0, Cortex-M0+, or SC000.
         - IRQn must not be negative.
-        - Each external interrupt has an active status bit. When the processor starts the interrupt 
+        - Each external interrupt has an active status bit. When the processor starts the interrupt
         handler the bit is set to 1 and cleared when the interrupt return is executed.
-        - When an ISR is preempted and the processor executes another interrupt handler, the 
+        - When an ISR is preempted and the processor executes another interrupt handler, the
         previous interrupt is still defined as active.
-    
-    \sa     
+
+    \sa
         - \ref ref_man_sec
-    
+
 */
 uint32_t NVIC_GetActive(IRQn_Type IRQn);
 
 
 /**************************************************************************************************/
-/** 
+/**
     \brief  Set the priority for an interrupt
 
-    Sets the priority for the interrupt specified by \em IRQn.\em IRQn can can specify any 
-    device specific interrupt, or processor exception. The \em priority specifies 
-    the interrupt priority value, whereby lower values indicate a higher priority. The default 
+    Sets the priority for the interrupt specified by \em IRQn.\em IRQn can can specify any
+    device specific interrupt, or processor exception. The \em priority specifies
+    the interrupt priority value, whereby lower values indicate a higher priority. The default
     priority is 0 for every interrupt. This is the highest possible priority.
 
-    The priority cannot be set for every core interrupt. HardFault and NMI have a fixed (negative) 
+    The priority cannot be set for every core interrupt. HardFault and NMI have a fixed (negative)
     priority that is higher than any configurable exception or interrupt.
 
     \param [in]      IRQn  Interrupt Number
     \param [in]  priority  Priority to set
 
-    \remarks   
-    - The number of priority levels is configurable and depends on the implementation of the 
-    chip designer. To determine the number of bits implemented for interrupt priority-level 
-    registers, write \em 0xFF to one of the priority-level register, then read back the value. For 
+    \remarks
+    - The number of priority levels is configurable and depends on the implementation of the
+    chip designer. To determine the number of bits implemented for interrupt priority-level
+    registers, write \em 0xFF to one of the priority-level register, then read back the value. For
     example, if the minimum number of 3 bits have been implemented, the read-back value is \em 0xE0.
     - Writes to unimplemented bits are ignored.
-    - <b>For Cortex-M0</b>: 
-        - Dynamic switching of interrupt priority levels is not supported. The priority level of 
-        an interrupt should not be changed after it has been enabled. 
+    - <b>For Cortex-M0</b>:
+        - Dynamic switching of interrupt priority levels is not supported. The priority level of
+        an interrupt should not be changed after it has been enabled.
         - Supports 0 to 192 priority levels.
-        - Priority-level registers are 2 bit wide, occupying the two MSBs. 
+        - Priority-level registers are 2 bit wide, occupying the two MSBs.
         Each Interrupt Priority Level Register is 1-byte wide.
-    - <b>For Cortex-M3, Cortex-M4, and Cortex-M7</b>: 
+    - <b>For Cortex-M3, Cortex-M4, and Cortex-M7</b>:
         - Dynamic switching of interrupt priority levels is supported.
         - Supports 0 to 255 priority levels.
         - Priority-level registers have a maximum width of 8 bits and a minimum of 3 bits.
         Each register can be further divided into preempt priority level and subpriority level.
-        
-    \sa     
+
+    \sa
         - \ref NVIC_GetPriority;  NVIC_SetPriorityGrouping; __set_BASEPRI;
         - \ref ref_man_sec
 */
@@ -649,24 +649,24 @@ void NVIC_SetPriority(IRQn_Type IRQn, uint32_t priority);
 
 
 /**************************************************************************************************/
-/** 
+/**
     \brief  Get the priority of an interrupt
 
-    This function reads the priority for the specified interrupt \em IRQn. \em IRQn can can specify 
+    This function reads the priority for the specified interrupt \em IRQn. \em IRQn can can specify
     any device specific interrupt, or processor exception.
 
     The returned priority value is automatically aligned to the implemented
     priority bits of the microcontroller.
 
     \param [in]   IRQn  Interrupt number
-    
+
     \returns            Interrupt priority
 
     \remarks
-    - Each external interrupt has an associated priority-level register. 
+    - Each external interrupt has an associated priority-level register.
     - Unimplemented bits are read as zero.
 
-    \sa     
+    \sa
         - \ref NVIC_SetPriority;  NVIC_GetPriorityGrouping; __get_BASEPRI;
         - \ref ref_man_sec
 */
@@ -674,50 +674,50 @@ uint32_t NVIC_GetPriority(IRQn_Type IRQn);
 
 
 /**************************************************************************************************/
-/** 
+/**
     \brief  Encodes Priority [not for Cortex-M0, Cortex-M0+, or SC000]
 
     This function encodes the priority for an interrupt with the priority group \em PriorityGroup,
     preemptive priority value \em PreemptPriority, and subpriority value \em SubPriority.
     In case of a conflict between priority grouping and available
     priority bits (__NVIC_PRIO_BITS) the smallest possible priority group is set.
- 
+
     \param [in]     PriorityGroup  Priority group
     \param [in]   PreemptPriority  Preemptive priority value (starting from 0)
     \param [in]       SubPriority  Subpriority value (starting from 0)
 
     \returns                        Encoded priority for the interrupt
 
-    
+
     \remarks
     - not for Cortex-M0, Cortex-M0+, or SC000.
-    
-    \sa     
-        - \ref NVIC_DecodePriority;  NVIC_SetPriority; 
+
+    \sa
+        - \ref NVIC_DecodePriority;  NVIC_SetPriority;
         - \ref ref_man_sec
 */
 uint32_t NVIC_EncodePriority (uint32_t PriorityGroup, uint32_t PreemptPriority, uint32_t SubPriority);
 
 
 /**************************************************************************************************/
-/** 
+/**
     \brief  Decode the interrupt priority [not for Cortex-M0, Cortex-M0+, or SC000]
 
-    This function decodes an interrupt priority value with the priority group \em PriorityGroup to 
+    This function decodes an interrupt priority value with the priority group \em PriorityGroup to
     preemptive priority value \em pPreemptPriority and subpriority value \em pSubPriority.
     In case of a conflict between priority grouping and available
     priority bits (__NVIC_PRIO_BITS) the smallest possible priority group is set.
- 
-    \param [in]         Priority    Priority 
+
+    \param [in]         Priority    Priority
     \param [in]     PriorityGroup   Priority group
     \param [out] *pPreemptPriority  Preemptive priority value (starting from 0)
     \param [out]     *pSubPriority  Subpriority value (starting from 0)
 
-    
+
     \remarks
     - not for Cortex-M0, Cortex-M0+, or SC000.
-    
-    \sa     
+
+    \sa
         - \ref NVIC_EncodePriority;  NVIC_GetPriority; NVIC_GetPriorityGrouping;
         - \ref ref_man_sec
 */
@@ -725,7 +725,7 @@ void NVIC_DecodePriority (uint32_t Priority, uint32_t PriorityGroup, uint32_t* p
 
 
 /**************************************************************************************************/
-/** 
+/**
     \brief  Read Interrupt Vector [not for Cortex-M0, SC000]
 
     This function allows to read the address of an interrupt handler function.
@@ -733,11 +733,11 @@ void NVIC_DecodePriority (uint32_t Priority, uint32_t PriorityGroup, uint32_t* p
     \param [in]      IRQn  Interrupt number
 
     \returns               Address of interrupt handler function
-    
+
     \remarks
 		- For using this function with Cortex-M0+ processor based devices, the SBC->VTOR register must be implemented.
-        
-    \sa     
+
+    \sa
         - \ref NVIC_SetVector
         - \ref ref_man_sec
 */
@@ -745,19 +745,19 @@ uint32_t NVIC_GetVector(IRQn_Type IRQn);
 
 
 /**************************************************************************************************/
-/** 
+/**
     \brief  Modify Interrupt Vector [not for Cortex-M0, SC000]
 
     This function allows to change the address of an interrupt handler function.
 
     \param [in]      IRQn  Interrupt number
     \param [in]    vector  Address of new interrupt handler function
-    
+
     \remarks
         - Usage of this function requires vector relocation to RAM. Refer to \ref using_VTOR_pg for more information.
 		- For using this function with Cortex-M0+ processor based devices, the SBC->VTOR register must be implemented.
-        
-    \sa     
+
+    \sa
         - \ref NVIC_GetVector
         - \ref ref_man_sec
 */
@@ -765,16 +765,16 @@ void NVIC_SetVector(IRQn_Type IRQn, uint32_t vector);
 
 
 /**************************************************************************************************/
-/** 
+/**
     \brief  Reset the system
 
     This function requests a system reset by setting the SYSRESETREQ flag in the AIRCR register.
-    
+
     \remarks
-        - In most microcontroller designs, setting the SYSRESETREQ flag resets the processor and 
+        - In most microcontroller designs, setting the SYSRESETREQ flag resets the processor and
         most parts of the system, but should not affect the debug system.
-        
-    \sa     
+
+    \sa
         - \ref ref_man_sec
 */
 void NVIC_SystemReset (void);
@@ -786,51 +786,47 @@ void NVIC_SystemReset (void);
   \brief   Get Interrupt Target State
   \details Reads the interrupt target field from the non-secure NVIC when in secure state.
   \param [in]      IRQn  External interrupt number. Value cannot be negative.
-    \returns            
+    \returns
         - 0  if interrupt is assigned to Secure
         - 1  if interrupt is assigned to Non Secure
     \remarks
         - Only available for Armv8-M in secure state.
-        
-    \sa     
+
+    \sa
         - \ref NVIC_ClearTargetState; NVIC_SetTargetState;
- */
+*/
 uint32_t NVIC_GetTargetState(IRQn_Type IRQn);
 
 /**
   \brief   Set Interrupt Target State
   \details Sets the interrupt target field in the non-secure NVIC when in secure state.
   \param [in]      IRQn  External interrupt number. Value cannot be negative.
-    \returns            
+    \returns
         - 0  if interrupt is assigned to Secure
         - 1  if interrupt is assigned to Non Secure
     \remarks
         - Only available for Armv8-M in secure state.
-        
-    \sa     
+
+    \sa
         - \ref NVIC_ClearTargetState; NVIC_GetTargetState;
- */
+*/
 uint32_t NVIC_SetTargetState(IRQn_Type IRQn);
 
 /**
   \brief   Clear Interrupt Target State
   \details Clears the interrupt target field in the non-secure NVIC when in secure state.
   \param [in]      IRQn  External interrupt number. Value cannot be negative.
-    \returns            
+    \returns
         - 0  if interrupt is assigned to Secure
         - 1  if interrupt is assigned to Non Secure
     \remarks
         - Only available for Armv8-M in secure state.
-        
-    \sa     
+
+    \sa
         - \ref NVIC_GetTargetState; NVIC_SetTargetState;
- */
+*/
 uint32_t NVIC_ClearTargetState(IRQn_Type IRQn);
 
-/**
-\endcond
-*/
+/** \endcond*/
 
-/*@} end of NVIC_gr */
-
-
+/** @} end of NVIC_gr*/

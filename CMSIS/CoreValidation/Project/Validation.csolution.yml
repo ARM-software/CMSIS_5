@@ -1,9 +1,12 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/Open-CMSIS-Pack/devtools/schemas/projmgr/1.3.0/tools/projmgr/schemas/csolution.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Open-CMSIS-Pack/devtools/schemas/projmgr/1.5.0/tools/projmgr/schemas/csolution.schema.json
 
 solution:
   packs:
     - pack: ARM::CMSIS
       path: ../../../
+    - pack: ARM::CMSIS_DFP
+
+  compiler: AC6
 
   misc:
     - compiler: AC6
@@ -13,6 +16,7 @@ solution:
       C: [-std=gnu99, -gdwarf-2, -ffunction-sections, -fdata-sections]
       Link: [--specs=nano.specs, --specs=rdimon.specs]
     - compiler: IAR
+      C: [--dlib_config DLib_Config_Full.h]
       Link: [--semihosting]
 
   target-types:
@@ -34,7 +38,7 @@ solution:
 
     #CM4FP
     - type: CM4FP
-      device: ARMCM4_FP
+      device: ARMCM4
 
     #CM7
     - type: CM7
@@ -42,89 +46,63 @@ solution:
 
     #CM7SP
     - type: CM7SP
-      device: ARMCM7_SP
+      device: ARMCM7
 
     #CM7DP
     - type: CM7DP
-      device: ARMCM7_DP
+      device: ARMCM7
 
     #CM23
     - type: CM23
       device: ARMCM23
-      processor:
-        trustzone: off
 
      #CM23S
     - type: CM23S
-      device: ARMCM23_TZ
-      processor:
-        trustzone: secure
+      device: ARMCM23
 
      #CM23NS
     - type: CM23NS
-      device: ARMCM23_TZ
-      processor:
-        trustzone: non-secure
+      device: ARMCM23
 
     #CM33
     - type: CM33
-      device: ARMCM33_DSP_FP
-      processor:
-        trustzone: off
+      device: ARMCM33
 
      #CM33S
     - type: CM33S
-      device: ARMCM33_DSP_FP_TZ
-      processor:
-        trustzone: secure
+      device: ARMCM33
 
      #CM33NS
     - type: CM33NS
-      device: ARMCM33_DSP_FP_TZ
-      processor:
-        trustzone: non-secure
+      device: ARMCM33
 
     #CM35P
     - type: CM35P
-      device: ARMCM35P_DSP_FP
-      processor:
-        trustzone: off
+      device: ARMCM35P
 
      #CM35PS
     - type: CM35PS
-      device: ARMCM35P_DSP_FP_TZ
-      processor:
-        trustzone: secure
+      device: ARMCM35P
 
      #CM35PNS
     - type: CM35PNS
-      device: ARMCM35P_DSP_FP_TZ
-      processor:
-        trustzone: non-secure
+      device: ARMCM35P
 
      #CM55S
     - type: CM55S
       device: ARMCM55
-      processor:
-        trustzone: secure
 
      #CM55NS
     - type: CM55NS
       device: ARMCM55
-      processor:
-        trustzone: non-secure
 
      #CM85S
     - type: CM85S
       device: ARMCM85
-      processor:
-        trustzone: secure
 
      #CM85NS
     - type: CM85NS
       device: ARMCM85
-      processor:
-        trustzone: non-secure
 
     #CA5
     - type: CA5
@@ -139,97 +117,33 @@ solution:
       device: ARMCA9
 
   build-types:
-  #AC6_low, AC6_mid, AC6_high, AC6_size, AC6_OZ,
-    - type: AC6_low
-      compiler: AC6
-      misc:
-        - compiler: AC6
-          C: [-O1]
-    - type: AC6_mid
-      compiler: AC6
-      misc:
-        - compiler: AC6
-          C: [-O2]
-    - type: AC6_high
-      compiler: AC6
-      misc:
-        - compiler: AC6
-          C: [-O3]
-    - type: AC6_size
-      compiler: AC6
-      misc:
-        - compiler: AC6
-          C: [-Os]
-    - type: AC6_tiny
-      compiler: AC6
-      misc:
-        - compiler: AC6
-          C: [-Oz]
-  #GCC_low, GCC_mid, GCC_high, GCC_size, GCC_OZ,
-    - type: GCC_low
-      compiler: GCC
-      misc:
-        - compiler: GCC
-          C: [-O1]
-    - type: GCC_mid
-      compiler: GCC
-      misc:
-        - compiler: GCC
-          C: [-O2]
-    - type: GCC_high
-      compiler: GCC
-      misc:
-        - compiler: GCC
-          C: [-O3]
-    - type: GCC_size
-      compiler: GCC
-      misc:
-        - compiler: GCC
-          C: [-Os]
-    - type: GCC_tiny
-      compiler: GCC
-      misc:
-        - compiler: GCC
-          C: [-Ofast]
-  #IAR_low
-    - type: IAR_low
-      compiler: IAR
-      misc:
-        - compiler: IAR
-          C: [-Ol, --dlib_config DLib_Config_Full.h]
-    - type: IAR_mid
-      compiler: IAR
-      misc:
-        - compiler: IAR
-          C: [-Om, --dlib_config DLib_Config_Full.h]
-    - type: IAR_high
-      compiler: IAR
-      misc:
-        - compiler: IAR
-          C: [-Oh, --dlib_config DLib_Config_Full.h]
-    - type: IAR_size
-      compiler: IAR
-      misc:
-        - compiler: IAR
-          C: [-Ohz, --dlib_config DLib_Config_Full.h]
-    - type: IAR_tiny
-      compiler: IAR
-      misc:
-        - compiler: IAR
-          C: [-Ohs, --dlib_config DLib_Config_Full.h]
+    - type: none
+      optimize: none
+      debug: on
+
+    - type: balanced
+      optimize: balanced
+      debug: on
+
+    - type: size
+      optimize: size
+      debug: on
+
+    - type: speed
+      optimize: speed
+      debug: on
 
   projects:
-    - project: ./Validation.cproject.yml
-
-    - project: ./Bootloader.cproject.yml
-      for-type:
-        - +CM23S
-        - +CM33S
-        - +CM35PS
-        - +CM55S
-        - +CM85S
+    - project: ./validation.cproject.yml
+    - project: ./bootloader.cproject.yml
+      for-context:
+        - +CM23NS
+        - +CM33NS
+        - +CM35PNS
+        - +CM55NS
+        - +CM85NS
 
   output-dirs:
-    cprjdir: ./$Project$.$BuildType$+$TargetType$
-    intdir:  ./$Project$.$BuildType$+$TargetType$/intdir
-    outdir:  ./$Project$.$BuildType$+$TargetType$/outdir
+    cprjdir: ./build/$TargetType$/$Compiler$/$BuildType$/$Project$
+    intdir:  ./build/$TargetType$/$Compiler$/$BuildType$/$Project$/intdir
+    outdir:  ./build/$TargetType$/$Compiler$/$BuildType$/$Project$/outdir

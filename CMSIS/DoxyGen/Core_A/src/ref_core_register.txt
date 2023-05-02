@@ -1,5 +1,5 @@
 /* ###########################  Core Function Access  ########################### */
-/** 
+/**
 \defgroup CMSIS_core_register Core Register Access
 \brief Functions to access the Cortex-A core registers
 \details
@@ -145,23 +145,23 @@ raw register usage.
 @{
 */
 /**
-\fn __STATIC_INLINE void __set_BPIALL(uint32_t value)   
+\fn __STATIC_INLINE void __set_BPIALL(uint32_t value)
 \details
   This function writes the provided value to the Branch Predictor Invalidate All (BPIALL) register.
 
-\fn __STATIC_INLINE void __set_DCCIMVAC(uint32_t value) 
+\fn __STATIC_INLINE void __set_DCCIMVAC(uint32_t value)
 \details
   This function cleans and invalidates data or unified cache line by MVA to PoC.
 
-  \fn __STATIC_INLINE void __set_DCCMVAC(uint32_t value) 
+  \fn __STATIC_INLINE void __set_DCCMVAC(uint32_t value)
 \details
   This function cleans data or unified cache line by MVA to PoC.
 
-\fn __STATIC_INLINE void __set_DCIMVAC(uint32_t value) 
+\fn __STATIC_INLINE void __set_DCIMVAC(uint32_t value)
 \details
   This function invalidates data or unified cache line by MVA to PoC.
 
-\fn __STATIC_INLINE void __set_ICIALLU(uint32_t value) 
+\fn __STATIC_INLINE void __set_ICIALLU(uint32_t value)
 \details
   This function invalidates all instruction cache.
 */
@@ -194,7 +194,7 @@ Consider \ref __get_CBAR to access this register.
 \brief Bit position and mask macros
 @{
 
-@}          
+@}
 */
 
 /** @} */
@@ -248,21 +248,21 @@ Consider \ref __get_CPACR and \ref __set_CPACR to access this register.
 \defgroup CMSIS_CPACR_BITS CPACR Bits
 \brief Bit position and mask macros
 @{
-\def CPACR_ASEDIS_Pos         
+\def CPACR_ASEDIS_Pos
 \def CPACR_ASEDIS_Msk
-\def CPACR_D32DIS_Pos         
+\def CPACR_D32DIS_Pos
 \def CPACR_D32DIS_Msk
 \def CPACR_TRCDIS_Pos
 \def CPACR_TRCDIS_Msk
 \def CPACR_CP_Pos_(n)
 \def CPACR_CP_Msk_(n)
-@}       
+@}
 
 \defgroup CMSIS_CPACR_CP CPACR CP field values
 \brief Valid values for CPACR CP field.
 \details Defines the access rights for a coprocessor.
 @{
-\def CPACR_CP_NA 
+\def CPACR_CP_NA
 Any attempt to access the coprocessor generates an Undefined
 Instruction exception.
 
@@ -270,7 +270,7 @@ Instruction exception.
 Any attempt to access the coprocessor from unprivileged
 software generates an Undefined Instruction exception.
 
-\def CPACR_CP_FA 
+\def CPACR_CP_FA
 The meaning of full access is defined by the appropriate coprocessor.
 @}
 */
@@ -312,7 +312,7 @@ Consider using \ref __get_CPSR and \ref __set_CPSR for accessing this register.
 \fn __STATIC_INLINE uint32_t __get_CPSR(void)
 \details
 	This function returns the content of the \ref CMSIS_CPSR.
-  
+
 \fn __STATIC_INLINE void __set_CPSR(uint32_t cpsr)
 \details
 	This function assigns the given value to the \ref CMSIS_CPSR.
@@ -323,35 +323,35 @@ Consider using \ref __get_CPSR and \ref __set_CPSR for accessing this register.
 \defgroup CMSIS_CPSR_BITS CPSR Bits
 \brief Bit position and mask macros
 @{
-\def CPSR_N_Pos                  
+\def CPSR_N_Pos
 \def CPSR_N_Msk
-\def CPSR_Z_Pos                  
-\def CPSR_Z_Msk                  
-\def CPSR_C_Pos                  
+\def CPSR_Z_Pos
+\def CPSR_Z_Msk
+\def CPSR_C_Pos
 \def CPSR_C_Msk
-\def CPSR_V_Pos                  
+\def CPSR_V_Pos
 \def CPSR_V_Msk
-\def CPSR_Q_Pos                  
+\def CPSR_Q_Pos
 \def CPSR_Q_Msk
-\def CPSR_IT0_Pos                
+\def CPSR_IT0_Pos
 \def CPSR_IT0_Msk
-\def CPSR_J_Pos                  
+\def CPSR_J_Pos
 \def CPSR_J_Msk
-\def CPSR_GE_Pos                 
+\def CPSR_GE_Pos
 \def CPSR_GE_Msk
-\def CPSR_IT1_Pos                
+\def CPSR_IT1_Pos
 \def CPSR_IT1_Msk
-\def CPSR_E_Pos                  
+\def CPSR_E_Pos
 \def CPSR_E_Msk
-\def CPSR_A_Pos                  
+\def CPSR_A_Pos
 \def CPSR_A_Msk
-\def CPSR_I_Pos                  
+\def CPSR_I_Pos
 \def CPSR_I_Msk
-\def CPSR_F_Pos                  
+\def CPSR_F_Pos
 \def CPSR_F_Msk
-\def CPSR_T_Pos                  
+\def CPSR_T_Pos
 \def CPSR_T_Msk
-\def CPSR_M_Pos                  
+\def CPSR_M_Pos
 \def CPSR_M_Msk
 @}
 
@@ -450,27 +450,27 @@ Consider \ref __get_DFSR and \ref __set_DFSR to access this register.
 \fn __STATIC_INLINE void __set_DFSR(uint32_t dfsr)
 \details
   This function assigns the given value to the \ref CMSIS_DFSR.
-  
+
 \defgroup CMSIS_DFSR_BITS ACTLR Bits
 \brief Bit position and mask macros
 @{
-\def DFSR_CM_Pos             
+\def DFSR_CM_Pos
 \def DFSR_CM_Msk
-\def DFSR_Ext_Pos            
+\def DFSR_Ext_Pos
 \def DFSR_Ext_Msk
-\def DFSR_WnR_Pos            
+\def DFSR_WnR_Pos
 \def DFSR_WnR_Msk
 \def DFSR_LPAE_Pos
 \def DFSR_LPAE_Msk
-\def DFSR_FS1_Pos            
+\def DFSR_FS1_Pos
 \def DFSR_FS1_Msk
-\def DFSR_Domain_Pos         
+\def DFSR_Domain_Pos
 \def DFSR_Domain_Msk
 \def DFSR_FS0_Pos
 \def DFSR_FS0_Msk
 \def DFSR_STATUS_Pos
 \def DFSR_STATUS_Msk
-@}    
+@}
 
 */
 /** @} */
@@ -507,18 +507,18 @@ Consider \ref __get_DACR and \ref __set_DACR to access this register.
 @{
 */
 /**
-\fn __STATIC_INLINE uint32_t __get_DACR() 
+\fn __STATIC_INLINE uint32_t __get_DACR()
 \details
   This function returns the value of the \ref CMSIS_DACR.
 
-\fn __STATIC_INLINE void __set_DACR(uint32_t dacr) 
+\fn __STATIC_INLINE void __set_DACR(uint32_t dacr)
 \details
   This function assigns the given value to the \ref CMSIS_DACR.
 
 \defgroup CMSIS_DACR_BITS DACR Bits
 \brief Bit position and mask macros
 @{
-\def DACR_D_Pos_(n) 
+\def DACR_D_Pos_(n)
 \details Get the bit position for domain n access permission.
 
 \b Example:
@@ -527,7 +527,7 @@ Consider \ref __get_DACR and \ref __set_DACR to access this register.
 uint32_t domain5 = (__get_DACR() & DACR_D_Msk_(5)) >> DACR_D_Pos_(5);
 \endcode
 
-\def DACR_D_Msk_(n)  
+\def DACR_D_Msk_(n)
 \details Get the bit mask for domain n access permission.
 
 \b Example:
@@ -544,10 +544,10 @@ __set_DACR(__get_DACR() & ~DACR_D_Msk_(7));
 \def DACR_Dn_NOACCESS
 \details Any access to the domain generates a Domain fault.
 
-\def DACR_Dn_CLIENT  
+\def DACR_Dn_CLIENT
 \details Accesses are checked against the permission bits in the translation tables.
 
-\def DACR_Dn_MANAGER 
+\def DACR_Dn_MANAGER
 \details Accesses are not checked against the permission bits in the translation tables.
 @}
 */
@@ -629,18 +629,18 @@ Consider \ref __get_FPSCR and \ref __set_FPSCR to access this register.
 \brief Bit field declaration for FPSCR layout.
 
 \fn __STATIC_INLINE uint32_t __get_FPSCR(void)
-\details 
+\details
   This function returns the current value of the \ref CMSIS_FPSCR.
 
 \fn __STATIC_INLINE void __set_FPSCR(uint32_t fpscr)
-\details 
+\details
   Assigns the given value to the \ref CMSIS_FPSCR.
 
 \defgroup CMSIS_FPSCR_BITS FPSCR Bits
 \brief Bit position and mask macros
 @{
 
-@}          
+@}
 */
 
 /** @} */
@@ -694,15 +694,15 @@ Consider \ref __get_IFSR and \ref __set_IFSR to access this register.
 \defgroup CMSIS_IFSR_BITS IFSR Bits
 \brief Bit position and mask macros
 @{
-\def IFSR_ExT_Pos           
+\def IFSR_ExT_Pos
 \def IFSR_ExT_Msk
 \def IFSR_LPAE_Pos
 \def IFSR_LPAE_Msk
-\def IFSR_FS1_Pos           
+\def IFSR_FS1_Pos
 \def IFSR_FS1_Msk
-\def IFSR_FS0_Pos           
+\def IFSR_FS0_Pos
 \def IFSR_FS0_Msk
-\def IFSR_STATUS_Pos           
+\def IFSR_STATUS_Pos
 \def IFSR_STATUS_Msk
 @}
 */
@@ -738,13 +738,13 @@ Consider \ref __get_IFSR to access this register.
 \defgroup CMSIS_ISR_BITS ISR Bits
 \brief Bit position and mask macros
 @{
-\def ISR_A_Pos             
+\def ISR_A_Pos
 \def ISR_A_Msk
-\def ISR_I_Pos             
+\def ISR_I_Pos
 \def ISR_I_Msk
-\def ISR_F_Pos   
+\def ISR_F_Pos
 \def ISR_F_Msk
-@}          
+@}
 */
 
 /** @} */
@@ -794,11 +794,11 @@ Consider using \ref PL1_timer_functions for controlling the PL1 Timer instead.
 @{
 */
 /**
-\fn __STATIC_INLINE void __set_CNTFRQ(uint32_t value) 
+\fn __STATIC_INLINE void __set_CNTFRQ(uint32_t value)
 \details
   This function assigns the given value to \ref CMSIS_CNTFRQ.
 
-\fn __STATIC_INLINE uint32_t __get_CNTFRQ() 
+\fn __STATIC_INLINE uint32_t __get_CNTFRQ()
 \details
   This function returns the value of the \ref CMSIS_CNTFRQ.
 */
@@ -826,11 +826,11 @@ Consider using \ref PL1_timer_functions for controlling the PL1 Timer instead.
 @{
 */
 /**
-\fn __STATIC_INLINE void __set_CNTP_CTL(uint32_t value) 
+\fn __STATIC_INLINE void __set_CNTP_CTL(uint32_t value)
 \details
   This function assigns the given value to PL1 Physical Timer Control Register (CNTP_CTL).
-  
-\fn __STATIC_INLINE uint32_t __get_CNTP_CTL() 
+
+\fn __STATIC_INLINE uint32_t __get_CNTP_CTL()
 \details
   This function returns the value of the PL1 Physical Timer Control Register. (CNTP_CTL).
 */
@@ -850,11 +850,11 @@ Consider using \ref PL1_timer_functions for controlling the PL1 Timer instead.
 @{
 */
 /**
-\fn __STATIC_INLINE void __set_CNTP_CVAL(uint32_t value) 
+\fn __STATIC_INLINE void __set_CNTP_CVAL(uint32_t value)
 \details
   This function assigns the given value to \ref CMSIS_CNTP_CVAL.
 
-\fn __STATIC_INLINE uint32_t __get_CNTP_CVAL() 
+\fn __STATIC_INLINE uint32_t __get_CNTP_CVAL()
 \details
   This function returns the value of the \ref CMSIS_CNTP_CVAL.
 */
@@ -874,11 +874,11 @@ Consider using \ref PL1_timer_functions for controlling the PL1 Timer instead.
 @{
 */
 /**
-\fn __STATIC_INLINE void __set_CNTP_TVAL(uint32_t value) 
+\fn __STATIC_INLINE void __set_CNTP_TVAL(uint32_t value)
 \details
   This function assigns the given value to \ref CMSIS_CNTP_TVAL.
 
-\fn __STATIC_INLINE uint32_t __get_CNTP_TVAL() 
+\fn __STATIC_INLINE uint32_t __get_CNTP_TVAL()
 \details
   This function returns the value of the \ref CMSIS_CNTP_TVAL.
 */
@@ -898,7 +898,7 @@ Consider using \ref PL1_timer_functions for controlling the PL1 Timer instead.
 @{
 */
 /**
-\fn __STATIC_INLINE uint64_t __get_CNTPCT() 
+\fn __STATIC_INLINE uint64_t __get_CNTPCT()
 \details
   This function returns the value of the \ref CMSIS_CNTPCT.
 */
@@ -911,8 +911,8 @@ Consider using \ref PL1_timer_functions for controlling the PL1 Timer instead.
 \defgroup CMSIS_SP Stack Pointer (SP/R13)
 \ingroup CMSIS_core_register
 \brief The processor uses SP as a pointer to the active stack.
-\details 
-The Stack Pointer is banked per processor mode. Accessing the 
+\details
+The Stack Pointer is banked per processor mode. Accessing the
 active stack pointer actually returns/modifies the stack pointer
 of the current processor execution mode.
 
@@ -950,7 +950,7 @@ Consider \ref __set_SP and \ref __set_SP_usr to access this register.
 \defgroup CMSIS_SCTLR System Control Register (SCTLR)
 \ingroup CMSIS_core_register
 \brief The SCTLR provides the top level control of the system, including its memory system.
-\details 
+\details
 In a VMSAv7 implementation, the SCTLR bit assignments are:
 
 | Bits    | Name          | Function                                                      |
@@ -983,7 +983,7 @@ Consider using \ref __get_SCTLR and \ref __set_SCTLR for accessing this register
 \details
   This function assigns the given value to the \ref CMSIS_SCTLR.
 
-\fn __STATIC_INLINE uint32_t __get_SCTLR() 
+\fn __STATIC_INLINE uint32_t __get_SCTLR()
 \details
   This function returns the value of the \ref CMSIS_SCTLR.
 
@@ -993,47 +993,47 @@ Consider using \ref __get_SCTLR and \ref __set_SCTLR for accessing this register
 \defgroup CMSIS_SCTLR_BITS SCTLR Bits
 \brief Bit position and mask macros
 @{
-\def SCTLR_TE_Pos                  
+\def SCTLR_TE_Pos
 \def SCTLR_TE_Msk
-\def SCTLR_AFE_Pos                 
+\def SCTLR_AFE_Pos
 \def SCTLR_AFE_Msk
-\def SCTLR_TRE_Pos                 
+\def SCTLR_TRE_Pos
 \def SCTLR_TRE_Msk
-\def SCTLR_NMFI_Pos                
+\def SCTLR_NMFI_Pos
 \def SCTLR_NMFI_Msk
-\def SCTLR_EE_Pos                  
+\def SCTLR_EE_Pos
 \def SCTLR_EE_Msk
-\def SCTLR_VE_Pos                  
+\def SCTLR_VE_Pos
 \def SCTLR_VE_Msk
-\def SCTLR_U_Pos                   
+\def SCTLR_U_Pos
 \def SCTLR_U_Msk
-\def SCTLR_FI_Pos                  
+\def SCTLR_FI_Pos
 \def SCTLR_FI_Msk
-\def SCTLR_UWXN_Pos                
+\def SCTLR_UWXN_Pos
 \def SCTLR_UWXN_Msk
-\def SCTLR_WXN_Pos                 
+\def SCTLR_WXN_Pos
 \def SCTLR_WXN_Msk
-\def SCTLR_HA_Pos                  
+\def SCTLR_HA_Pos
 \def SCTLR_HA_Msk
-\def SCTLR_RR_Pos                  
+\def SCTLR_RR_Pos
 \def SCTLR_RR_Msk
-\def SCTLR_V_Pos                   
+\def SCTLR_V_Pos
 \def SCTLR_V_Msk
-\def SCTLR_I_Pos                   
+\def SCTLR_I_Pos
 \def SCTLR_I_Msk
-\def SCTLR_Z_Pos                   
+\def SCTLR_Z_Pos
 \def SCTLR_Z_Msk
-\def SCTLR_SW_Pos                  
+\def SCTLR_SW_Pos
 \def SCTLR_SW_Msk
-\def SCTLR_B_Pos                   
+\def SCTLR_B_Pos
 \def SCTLR_B_Msk
-\def SCTLR_CP15BEN_Pos             
+\def SCTLR_CP15BEN_Pos
 \def SCTLR_CP15BEN_Msk
-\def SCTLR_C_Pos                   
+\def SCTLR_C_Pos
 \def SCTLR_C_Msk
-\def SCTLR_A_Pos                   
+\def SCTLR_A_Pos
 \def SCTLR_A_Msk
-\def SCTLR_M_Pos                   
+\def SCTLR_M_Pos
 \def SCTLR_M_Msk
 @}
 */
@@ -1045,14 +1045,14 @@ Consider using \ref __get_SCTLR and \ref __set_SCTLR for accessing this register
 \defgroup CMSIS_TLB TLB maintenance operations
 \ingroup CMSIS_core_register
 \brief This section describes the TLB operations that are implemented on all Armv7-A implementations.
-\details 
+\details
 TLB maintenance operations provide a mechanism to invalidate entries from a TLB.
 
 Consider using \ref MMU_functions instead of raw register usage.
 @{
 */
 /**
-\fn __STATIC_INLINE void __set_TLBIALL(uint32_t value) 
+\fn __STATIC_INLINE void __set_TLBIALL(uint32_t value)
 \details
   This function invalidates entire unified TLB.
 */
@@ -1064,7 +1064,7 @@ Consider using \ref MMU_functions instead of raw register usage.
 \defgroup CMSIS_TTBR Translation Table Base Registers (TTBR0/TTBR1)
 \ingroup CMSIS_core_register
 \brief TTBRn holds the base address of translation table n, and information about the memory it occupies.
-\details 
+\details
 <b>32-bit TTBR format</b>
 | Bits    | Name          | Function                                                      |
 | :------ | :------------ | :------------------------------------------------------------ |
@@ -1096,11 +1096,11 @@ Consider using \ref __get_TTBR0 and \ref __set_TTBR0 for accessing TTBR0 registe
 @{
 */
 /**
-\fn __STATIC_INLINE uint32_t __get_TTBR0() 
+\fn __STATIC_INLINE uint32_t __get_TTBR0()
 \details
   This function returns the value of the Translation Table Base Register 0.
 
-\fn __STATIC_INLINE void __set_TTBR0(uint32_t ttbr0) 
+\fn __STATIC_INLINE void __set_TTBR0(uint32_t ttbr0)
 \details
   This function assigns the given value to the Translation Table Base Register 0.
 */
@@ -1113,7 +1113,7 @@ Consider using \ref __get_TTBR0 and \ref __set_TTBR0 for accessing TTBR0 registe
 \ingroup CMSIS_core_register
 \brief When high exception vectors are not selected, the VBAR holds the exception base address
 for exceptions that are not taken to Monitor mode or to Hyp mode.
-\details 
+\details
 
 | Bits    | Name          | Function                                                      |
 | :------ | :------------ | :------------------------------------------------------------ |
@@ -1142,7 +1142,7 @@ Consider using \ref __get_VBAR and \ref __set_VBAR for accessing this register.
 \ingroup CMSIS_core_register
 \brief The MVBAR holds the exception base address for all exceptions that are taken to Monitor
 mode.
-\details 
+\details
 
 | Bits    | Name          | Function                                                      |
 | :------ | :------------ | :------------------------------------------------------------ |
@@ -1164,6 +1164,3 @@ Consider using \ref __get_MVBAR and \ref __set_MVBAR for accessing this register
 */
 /** @} */
 /* end group CMSIS_MVBAR */
-
-/** @} */ 
-/* end of group CMSIS_core_register */
