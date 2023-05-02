@@ -2,8 +2,8 @@
  * @file     ARMCM7_DP.h
  * @brief    CMSIS Core Peripheral Access Layer Header File for
  *           ARMCM7 Device (configured for CM7 with double precision FPU)
- * @version  V5.3.2
- * @date     27. March 2020
+ * @version  V5.3.3
+ * @date     01. May 2023
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2020 Arm Limited. All rights reserved.
@@ -48,7 +48,16 @@ typedef enum IRQn
 
 /* -------------------  Processor Interrupt Numbers  ------------------------------ */
   Interrupt0_IRQn               =   0,
-  /* Interrupts 1 .. 223 are left out */
+  Interrupt1_IRQn               =   1,
+  Interrupt2_IRQn               =   2,
+  Interrupt3_IRQn               =   3,
+  Interrupt4_IRQn               =   4,
+  Interrupt5_IRQn               =   5,
+  Interrupt6_IRQn               =   6,
+  Interrupt7_IRQn               =   7,
+  Interrupt8_IRQn               =   8,
+  Interrupt9_IRQn               =   9,
+  /* Interrupts 10 .. 223 are left out */
   Interrupt224_IRQn             =   224
 } IRQn_Type;
 
