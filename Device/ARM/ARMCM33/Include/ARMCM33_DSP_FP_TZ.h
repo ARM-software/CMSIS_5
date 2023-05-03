@@ -2,8 +2,8 @@
  * @file     ARMCM33_DSP_FP_TZ.h
  * @brief    CMSIS Core Peripheral Access Layer Header File for
  *           ARMCM33 Device (configured for ARMCM33 with FPU, with DSP extension, with TrustZone)
- * @version  V5.3.1
- * @date     09. July 2018
+ * @version  V5.3.2
+ * @date     01. May 2023
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
@@ -57,8 +57,9 @@ typedef enum IRQn
   Interrupt6_IRQn               =   6,
   Interrupt7_IRQn               =   7,
   Interrupt8_IRQn               =   8,
-  Interrupt9_IRQn               =   9
-  /* Interrupts 10 .. 480 are left out */
+  Interrupt9_IRQn               =   9,
+  /* Interrupts 10 .. 479 are left out */
+  Interrupt480_IRQn             =   480
 } IRQn_Type;
 
 

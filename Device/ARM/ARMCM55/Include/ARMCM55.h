@@ -3,8 +3,8 @@
  * @brief    CMSIS Core Peripheral Access Layer Header File for
  *           ARMCM55 Device Series (configured for ARMCM55 with double precision FPU,
  *                                  DSP extension, MVE, TrustZone)
- * @version  V1.0.0
- * @date     27. March 2020
+ * @version  V1.0.1
+ * @date     01. May 2023
  ******************************************************************************/
 /*
  * Copyright (c) 2020 Arm Limited. All rights reserved.
@@ -58,8 +58,9 @@ typedef enum IRQn
   Interrupt6_IRQn               =   6,
   Interrupt7_IRQn               =   7,
   Interrupt8_IRQn               =   8,
-  Interrupt9_IRQn               =   9
-  /* Interrupts 10 .. 480 are left out */
+  Interrupt9_IRQn               =   9,
+  /* Interrupts 10 .. 479 are left out */
+  Interrupt480_IRQn             =   480
 } IRQn_Type;
 
 
