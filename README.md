@@ -1,26 +1,17 @@
-# CMSIS Version 6
+# CMSIS Version 6 - Preview (Work in Progres)
 
-[![Version](https://img.shields.io/github/v/release/arm-software/CMSIS_5)](https://github.com/ARM-software/CMSIS_5/releases/latest) [![License](https://img.shields.io/github/license/arm-software/CMSIS_5)](https://arm-software.github.io/CMSIS_5/General/html/LICENSE.txt)
+[![Version](https://img.shields.io/github/v/release/arm-software/CMSIS_6)](https://github.com/ARM-software/CMSIS_6/releases/latest) [![License](https://img.shields.io/github/license/arm-software/CMSIS_6)](https://arm-software.github.io/CMSIS_6/General/html/LICENSE.txt)
 
-The branch *main* of this GitHub repository contains ![Version](https://img.shields.io/github/v/release/arm-software/CMSIS_5?display_name=release&label=%20&sort=semver).
-The [documentation](http://arm-software.github.io/CMSIS_5/General/html/index.html) is available under http://arm-software.github.io/CMSIS_5/General/html/index.html
+The branch *main* of this GitHub repository contains ![Version](https://img.shields.io/github/v/release/arm-software/CMSIS_6?display_name=release&label=%20&sort=semver).
 
-Use [Issues](https://github.com/ARM-software/CMSIS_5#issues-and-labels) to provide feedback and report problems for CMSIS Version 6.
+The [documentation](http://arm-software.github.io/CMSIS_6/General/html/index.html) is available under http://arm-software.github.io/CMSIS_6/General/html/index.html
 
-**Note:** The branch *main* of this GitHub repository reflects our current state of development and is constantly updated. It gives our users and partners contiguous access to the CMSIS development. It allows you to review the work and provide feedback or create pull requests for contributions.
+Use [Issues](https://github.com/ARM-software/CMSIS_6#issues-and-labels) to provide feedback and report problems for CMSIS Version 6.
 
-A [pre-built documentation](https://arm-software.github.io/CMSIS_5/develop/General/html/index.html) is updated from time to time, but may be also generated using the instructions under [Generate CMSIS Pack for Release](https://github.com/ARM-software/CMSIS_5#generate-cmsis-pack-for-release).
+**Note:** The branch *main* of this GitHub repository reflects our current state of development and is constantly updated. It gives our users and partners contiguous access to the CMSIS development. It allows you to review the work and provide feedback or create pull requests for contributions. A [pre-built documentation](https://arm-software.github.io/CMSIS_5/develop/General/html/index.html) is updated from time to time, but may be also generated using the instructions under [Generate CMSIS Pack for Release](https://github.com/ARM-software/CMSIS_5#generate-cmsis-pack-for-release).
 
-## Overview of CMSIS Components
+For a list of all CMSIS components refer to [**Introduction - CMSIS Components**](./CMSIS/DoxyGen/General/src/introduction.md#structure)
 
-The following is an list of all CMSIS components that are available.
-
-| CMSIS-... | Target Processors   | Description  |
-|:----------|:--------------------|:-------------|
-|[Core(M)](http://arm-software.github.io/CMSIS_5/latest/core_m/index.html)  | All Cortex-M, SecurCore | Standardized API for the Cortex-M processor core and peripherals. Includes intrinsic functions for Cortex-M4/M7/M33/M35P SIMD instructions.|
-|[Core(A)](http://arm-software.github.io/CMSIS_5/latest/core_a/index.html)| Cortex-A5/A7/A9 | API and basic run-time system for the Cortex-A5/A7/A9 processor core and peripherals.|
-|[Driver](http://arm-software.github.io/CMSIS_5/latest/driver/index.html) | All Cortex-M, SecurCore | Generic peripheral driver interfaces for middleware. Connects microcontroller peripherals with middleware that implements for example communication stacks, file systems, or graphic user interfaces.|
-|[RTOS v2](http://arm-software.github.io/CMSIS_5/latest/rtos2/index.html)| All Cortex-M, Cortex-A5/A7/A9 | Extends CMSIS-RTOS v1 with Armv8-M support, dynamic object creation, provisions for multi-core systems, binary compatible interface. |
 
 ## Other related GitHub repositories
 
@@ -38,13 +29,13 @@ The following is an list of all CMSIS components that are available.
 
 ## Directory Structure
 
-| Directory            | Content                                                   |
-|:-------------------- |:--------------------------------------------------------- |
-| CMSIS/Core           | CMSIS-Core(M) related files (for release)                 |
-| CMSIS/Core_A         | CMSIS-Core(A) related files (for release)                 |
-| CMSIS/CoreValidation | Validation for Core(M) and Core(A) (NOT part of release)  |
-| CMSIS/Driver         | CMSIS-Driver API headers and template files               |
-| CMSIS/RTOS2          | RTOS v2 related files (for Cortex-M & Armv8-M)            |
+Directory            | Content
+:------------------- |:---------------------------------------------------------
+CMSIS/Core           | CMSIS-Core(M) related files (for release)
+CMSIS/Core_A         | CMSIS-Core(A) related files (for release)
+CMSIS/CoreValidation | Validation for Core(M) and Core(A) (NOT part of release)  
+CMSIS/Driver         | CMSIS-Driver API headers and template files
+CMSIS/RTOS2          | RTOS v2 related files (for Cortex-M & Armv8-M)
 
 ## Generate CMSIS Pack for Release
 
@@ -54,13 +45,15 @@ This causes some sort of inconvenience. Hence the pre-built libraries may be mov
 in the future.
 
 To build a complete CMSIS pack for installation the following additional tools are required:
- - **doxygen.exe**    Version: 1.9.2 (Documentation Generator)
- - **mscgen.exe**     Version: 0.20  (Message Sequence Chart Converter)
- - **7z.exe (7-Zip)** Version: 16.02 (File Archiver)
+
+- **doxygen.exe**    Version: 1.9.2 (Documentation Generator)
+- **mscgen.exe**     Version: 0.20  (Message Sequence Chart Converter)
+- **7z.exe (7-Zip)** Version: 16.02 (File Archiver)
 
 Using these tools, you can generate on a Windows PC:
- - **CMSIS Documentation** using the shell script **gen_doc.sh** (located in ./CMSIS/DoxyGen).
- - **CMSIS Software Pack** using the shell script **gen_pack.sh**.
+
+- **CMSIS Documentation** using the shell script **gen_doc.sh** (located in ./CMSIS/DoxyGen).
+- **CMSIS Software Pack** using the shell script **gen_pack.sh**.
 
 ## License
 
