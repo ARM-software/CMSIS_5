@@ -397,10 +397,10 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __RBIT(uint32_t value)
 
 /**
   \brief   Unsigned Saturate
-  \details Saturates an unsigned value.
-  \param [in]  value  Value to be saturated
+  \details Saturates a signed value into an unsigned value.
+  \param [in]  value  Value to be saturated (signed)
   \param [in]    sat  Bit position to saturate to (0..31)
-  \return             Saturated value
+  \return             Saturated value (unsigned)
  */
 #define __USAT                            __usat
 
@@ -504,10 +504,10 @@ __attribute__((always_inline)) __STATIC_INLINE int32_t __SSAT(int32_t val, uint3
 
 /**
   \brief   Unsigned Saturate
-  \details Saturates an unsigned value.
-  \param [in]  value  Value to be saturated
+  \details Saturates a signed value into an unsigned value.
+  \param [in]  value  Value to be saturated (signed)
   \param [in]    sat  Bit position to saturate to (0..31)
-  \return             Saturated value
+  \return             Saturated value (unsigned)
  */
 __attribute__((always_inline)) __STATIC_INLINE uint32_t __USAT(int32_t val, uint32_t sat)
 {

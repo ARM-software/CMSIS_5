@@ -575,15 +575,16 @@ __extension__ \
 
 /**
   \brief   Unsigned Saturate
-  \details Saturates an unsigned value.
-  \param [in]  ARG1  Value to be saturated
+  \details Saturates a signed value into an unsigned value.
+  \param [in]  ARG1  Value to be saturated (signed)
   \param [in]  ARG2  Bit position to saturate to (0..31)
-  \return             Saturated value
+  \return             Saturated value (unsigned)
  */
 #define __USAT(ARG1, ARG2) \
 __extension__ \
 ({                          \
-  uint32_t __RES, __ARG1 = (ARG1); \
+  uint32_t __RES; \
+  int32_t __ARG1 = (ARG1); \
   __ASM volatile ("usat %0, %1, %2" : "=r" (__RES) :  "I" (ARG2), "r" (__ARG1) : "cc" ); \
   __RES; \
  })
@@ -730,10 +731,10 @@ __STATIC_FORCEINLINE int32_t __SSAT(int32_t val, uint32_t sat)
 
 /**
   \brief   Unsigned Saturate
-  \details Saturates an unsigned value.
-  \param [in]  value  Value to be saturated
+  \details Saturates a signed value into an unsigned value.
+  \param [in]  value  Value to be saturated (signed)
   \param [in]    sat  Bit position to saturate to (0..31)
-  \return             Saturated value
+  \return             Saturated value (unsigned)
  */
 __STATIC_FORCEINLINE uint32_t __USAT(int32_t val, uint32_t sat)
 {
