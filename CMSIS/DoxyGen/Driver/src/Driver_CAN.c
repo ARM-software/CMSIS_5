@@ -500,7 +500,7 @@ These controls set the CAN operation using the function \ref ARM_CAN_Control.
 \defgroup can_bus_mode_ctrls CAN Bus Communication Mode
 @{
 \brief Set or initialize the CAN bus
-\enum ARM_CAN_MODE 
+\typedef ARM_CAN_MODE
 \details
 The enumerations below initialize and set the bus communication mode.
 
@@ -528,7 +528,7 @@ The following codes are used with the function \ref ARM_CAN_SetBitrate.
 *******************************************************************************************************************/
 
 /**
-\enum ARM_CAN_BITRATE_SELECT 
+\typedef ARM_CAN_BITRATE_SELECT
 \brief Set the bit rate.
 \details 
 Provides the typedef for setting the bit rate. 
@@ -545,7 +545,7 @@ Provides the typedef for setting the bit rate.
 @{
 \brief Set CAN filter manipulation codes.
 
-\enum ARM_CAN_FILTER_OPERATION
+\typedef ARM_CAN_FILTER_OPERATION
 \details
 
 \b ARM_CAN_FILTER_OPERATION provides the controls for setting the filter type.
@@ -560,7 +560,7 @@ Refer to \ref can_filtering for details.
 \defgroup can_obj_config_ctrls CAN Object Configuration Codes
 @{
 \brief CAN Object Configuration codes
-\enum ARM_CAN_OBJ_CONFIG 
+\typedef ARM_CAN_OBJ_CONFIG
 \details 
 Provides defined values for the configuration of CAN objects.
 
@@ -1117,7 +1117,7 @@ Parameter \em event                | Value |Description
 \ref ARM_CAN_EVENT_UNIT_PASSIVE    |   3   | Unit entered Error Passive state.
 \ref ARM_CAN_EVENT_UNIT_BUS_OFF    |   4   | Unit entered Bus-off state.
 
-\sa \ref ARM_CAN_GetStatus 
+\sa \ref ARM_CAN_GetStatus
 *******************************************************************************************************************/
 
 void ARM_CAN_SignalObjectEvent (uint32_t obj_idx, uint32_t event)  {

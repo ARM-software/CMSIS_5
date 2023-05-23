@@ -169,12 +169,13 @@ typedef struct {
 } ARM_MPU_Region_t;
 
 /**
-  \brief  Read MPU Type Register
-  \return Number of MPU regions
+* \brief  Read MPU Type Register
+* \return Number of MPU regions
 */
-__STATIC_INLINE uint32_t ARM_MPU_TYPE()
+__STATIC_INLINE uint32_t ARM_MPU_TYPE();
 
-/** Enable the MPU.
+/** 
+* \brief Enable the MPU.
 * \param MPU_Control Default access permissions for unconfigured regions.
 */
 __STATIC_INLINE void ARM_MPU_Enable(uint32_t MPU_Control);

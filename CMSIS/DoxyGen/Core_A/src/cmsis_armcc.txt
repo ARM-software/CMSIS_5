@@ -19,14 +19,14 @@ Each CMSIS compliant compiler should support the functionality described in this
 */
 
 /**
-\def __ARM_ARCH_7A__    
+\def __ARM_ARCH_7A__
 \brief Set to 1 when generating code for Armv7-A (Cortex-A7)
 \details
 The \b \#define __ARM_ARCH_7A__ is set to 1 when generating code for the Armv7-A architecture. This architecture is for example used by the Cortex-A7 processor.
 */
 
-/**      
-\def __ASM           
+/**
+\def __ASM
 \brief Pass information from the compiler to the assembler.
 \details
 The \b __ASM keyword can declare or define an embedded assembly function or incorporate inline assembly into a function
@@ -46,8 +46,8 @@ __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __RBIT(uint32_t valu
 \endcode
 */
 
-/**        
-\def __INLINE         
+/**
+\def __INLINE
 \brief Recommend that function should be inlined by the compiler.
 \details
 Inline functions offer a trade-off between code size and performance. By default, the compiler decides during optimization whether to
@@ -69,7 +69,7 @@ __INLINE static void LED_On (uint32_t led) {
 */
 
 /**
-\def __STATIC_INLINE  
+\def __STATIC_INLINE
 \brief Define a static function should be inlined by the compiler.
 \details
 Defines a static function that may be inlined by the compiler. If the compiler generates inline code for 
@@ -108,7 +108,7 @@ __STATIC_FORCEINLINE uint32_t NVIC_GetVector(IRQn_Type IRQn)
 #define __STATIC_FORCEINLINE
 
 /**  
-\def __NO_RETURN             
+\def __NO_RETURN
 \brief Inform the compiler that a function does not return.
 \details
 Informs the compiler that the function does not return. The compiler can then perform optimizations by
@@ -123,7 +123,7 @@ __NO_RETURN void os_idle_demon (void);
 */
 
 /**
-\def __USED     
+\def __USED
 \brief Inform that a variable shall be retained in executable image.
 \details
 Definitions tagged with \b __USED in the source code should be not removed by the linker when detected as unused.
@@ -138,8 +138,8 @@ __USED uint32_t const os_timernum  = 0;
 \endcode
 **/
 
-/**             
-\def __WEAK                  
+/**
+\def __WEAK
 \brief Export a function or variable weakly to allow overwrites.
 \details
 Functions defined with \b __WEAK export their symbols weakly. A function defined weak behaves like a normal defined
@@ -160,7 +160,7 @@ __WEAK void SystemInit(void)
 */
 
 /**
-\def __ALIGNED(x)  
+\def __ALIGNED(x)
 \brief Minimum alignment for a variable.
 \details
 Specifies a minimum alignment for a variable or structure field, measured in bytes.
@@ -172,7 +172,7 @@ uint32_t stack_space[0x100] __ALIGNED(8);   // 8-byte alignment required
 */
 
 /**
-\def __PACKED   
+\def __PACKED
 \brief Request smallest possible alignment.
 \details
 Specifies that a type must have the smallest possible alignment.
@@ -325,17 +325,17 @@ void test (uint8_t *ptr) {
 */
 
 /**
-\def __NOP                         
+\def __NOP
 \details No Operation does nothing. This instruction can be used for code alignment purposes.
 
 
-\def __WFI                         
+\def __WFI
 \details Wait For Interrupt is a hint instruction that suspends execution until one of a number of events occurs.
 
-\def __WFE                         
+\def __WFE
 \details Wait For Event is a hint instruction that permits the processor to enter
 
-\def __SEV                         
+\def __SEV
 \details Send Event is a hint instruction. It causes an event to be signaled to the CPU.
 
 \def __ISB()
@@ -351,7 +351,7 @@ void test (uint8_t *ptr) {
 \details Ensures the apparent order of the explicit memory operations before
            and after the instruction, without ensuring their completion.
 
-\def __BKPT(value) 
+\def __BKPT(value)
 \details Causes the processor to enter Debug state.
            Debug tools can use this to investigate system state when the instruction at a particular address is reached.
 */

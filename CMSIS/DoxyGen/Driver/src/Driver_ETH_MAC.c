@@ -524,17 +524,17 @@ Refer to the \ref ARM_ETH_MAC_Control function for further details.
 \brief Configure and control the Ethernet MAC interface.
 \details
 @{
-\def ARM_ETH_MAC_CONFIGURE          
+\def ARM_ETH_MAC_CONFIGURE
 \sa ARM_ETH_MAC_Control
-\def ARM_ETH_MAC_CONTROL_TX         
+\def ARM_ETH_MAC_CONTROL_TX
 \sa ARM_ETH_MAC_Control
-\def ARM_ETH_MAC_CONTROL_RX         
+\def ARM_ETH_MAC_CONTROL_RX
 \sa ARM_ETH_MAC_Control
-\def ARM_ETH_MAC_FLUSH              
+\def ARM_ETH_MAC_FLUSH
 \sa ARM_ETH_MAC_Control
-\def ARM_ETH_MAC_SLEEP              
+\def ARM_ETH_MAC_SLEEP
 \sa ARM_ETH_MAC_Control
-\def ARM_ETH_MAC_VLAN_FILTER        
+\def ARM_ETH_MAC_VLAN_FILTER
 \sa ARM_ETH_MAC_Control
 @}
 */
@@ -548,17 +548,17 @@ Refer to the \ref ARM_ETH_MAC_Control function for further details.
 The function \ref ARM_ETH_MAC_Control with \em control = \ref ARM_ETH_MAC_CONFIGURE configures the Ethernet MAC interface
 as specified with \em arg listed bellow.
 
-\def ARM_ETH_MAC_SPEED_10M           
-\def ARM_ETH_MAC_SPEED_100M          
-\def ARM_ETH_MAC_SPEED_1G            
-\def ARM_ETH_MAC_DUPLEX_HALF         
-\def ARM_ETH_MAC_DUPLEX_FULL         
-\def ARM_ETH_MAC_LOOPBACK            
-\def ARM_ETH_MAC_CHECKSUM_OFFLOAD_RX 
-\def ARM_ETH_MAC_CHECKSUM_OFFLOAD_TX 
-\def ARM_ETH_MAC_ADDRESS_BROADCAST   
-\def ARM_ETH_MAC_ADDRESS_MULTICAST   
-\def ARM_ETH_MAC_ADDRESS_ALL         
+\def ARM_ETH_MAC_SPEED_10M
+\def ARM_ETH_MAC_SPEED_100M
+\def ARM_ETH_MAC_SPEED_1G
+\def ARM_ETH_MAC_DUPLEX_HALF
+\def ARM_ETH_MAC_DUPLEX_FULL
+\def ARM_ETH_MAC_LOOPBACK
+\def ARM_ETH_MAC_CHECKSUM_OFFLOAD_RX
+\def ARM_ETH_MAC_CHECKSUM_OFFLOAD_TX
+\def ARM_ETH_MAC_ADDRESS_BROADCAST
+\def ARM_ETH_MAC_ADDRESS_MULTICAST
+\def ARM_ETH_MAC_ADDRESS_ALL
 @}
 */
 
@@ -570,8 +570,8 @@ as specified with \em arg listed bellow.
 The function \ref ARM_ETH_MAC_Control with \em control = \ref ARM_ETH_MAC_FLUSH flushes the buffer
 which is specified with \em arg listed bellow.
 
-\def ARM_ETH_MAC_FLUSH_RX           
-\def ARM_ETH_MAC_FLUSH_TX           
+\def ARM_ETH_MAC_FLUSH_RX
+\def ARM_ETH_MAC_FLUSH_TX
 @}
 */
 
@@ -603,17 +603,17 @@ Specifying \em arg=0 disables the VLAN Filter.
 \details 
 The following timer controls are used as parameter \em control for the \ref ARM_ETH_MAC_ControlTimer function:
 @{
-\def ARM_ETH_MAC_TIMER_GET_TIME     
+\def ARM_ETH_MAC_TIMER_GET_TIME
 \sa ARM_ETH_MAC_ControlTimer
-\def ARM_ETH_MAC_TIMER_SET_TIME     
+\def ARM_ETH_MAC_TIMER_SET_TIME
 \sa ARM_ETH_MAC_ControlTimer
-\def ARM_ETH_MAC_TIMER_INC_TIME     
+\def ARM_ETH_MAC_TIMER_INC_TIME
 \sa ARM_ETH_MAC_ControlTimer
-\def ARM_ETH_MAC_TIMER_DEC_TIME     
+\def ARM_ETH_MAC_TIMER_DEC_TIME
 \sa ARM_ETH_MAC_ControlTimer
-\def ARM_ETH_MAC_TIMER_SET_ALARM    
+\def ARM_ETH_MAC_TIMER_SET_ALARM
 \sa ARM_ETH_MAC_ControlTimer
-\def ARM_ETH_MAC_TIMER_ADJUST_CLOCK 
+\def ARM_ETH_MAC_TIMER_ADJUST_CLOCK
 \sa ARM_ETH_MAC_ControlTimer
 @}
 */
@@ -624,11 +624,11 @@ The following timer controls are used as parameter \em control for the \ref ARM_
 \brief Specify frame transmit flags
 \details
 @{
-\def ARM_ETH_MAC_TX_FRAME_FRAGMENT  
+\def ARM_ETH_MAC_TX_FRAME_FRAGMENT
 \sa ARM_ETH_MAC_SendFrame
-\def ARM_ETH_MAC_TX_FRAME_EVENT     
+\def ARM_ETH_MAC_TX_FRAME_EVENT
 \sa ARM_ETH_MAC_SendFrame
-\def ARM_ETH_MAC_TX_FRAME_TIMESTAMP 
+\def ARM_ETH_MAC_TX_FRAME_TIMESTAMP
 \sa ARM_ETH_MAC_SendFrame
 @}
 */

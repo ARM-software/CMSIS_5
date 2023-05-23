@@ -234,6 +234,8 @@ Once the target application generates event information, it can be viewed in the
 /**
 \page theory_of_operation Theory of Operation
 
+[TOC]
+
 Many aspects of the kernel are configurable and the configuration options are mentioned where applicable.
 
 \section SystemStartup System Startup
@@ -590,7 +592,7 @@ If you require some of the RTX specific functions in your application code, \#in
 \include rtx_os.h
 
 
-\section CMSIS_RTOS_TimeOutValue Timeout Value   
+\section CMSIS_RTOS_TimeOutValue Timeout Value
 
 Timeout values are an argument to several \b osXxx functions to allow time for resolving a request. A timeout value of \b 0
 means that the RTOS does not wait and the function returns instantly, even when no resource is available. A timeout value of
@@ -2091,19 +2093,17 @@ The functions that call the Event Recorder are in the module \em rtx_evr.c and t
 \page functionOverview Function Overview
 
 CMSIS-RTOS2 provides following API interfaces:
-  - \subpage rtos_api2 is the C function interface that supports dynamic object creation \if ARMv8M and Armv8-M (Arm Cortex-M23,
-    Cortex-M33 and Cortex-M35P) \endif.
-\ifnot FuSaRTS	
+  - \subpage rtos_api2 is the C function interface that supports dynamic object creation.
   - <a class="el" href="../../RTOS/html/functionOverview.html">CMSIS-RTOS C API v1</a> is a C function API that is backward
     compatible with CMSIS-RTOS v1.
   - \subpage rtos_apicpp is a C++ class function API (future extension).
 
 It is possible to intermix the different API variants in the same application and even in the same C/C++ source module.
 However, the functions of the <a class="el" href="../../RTOS/html/functionOverview.html">CMSIS-RTOS C API v1</a> may be deprecated in future versions of CMSIS-RTOS.
-\endif
 
 CMSIS-RTOS2 defines also a generic system timer interface that works across the supported Arm Cortex processors:
   - \subpage rtos_os_tick_api is the interface to a kernel system timer.
+
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/

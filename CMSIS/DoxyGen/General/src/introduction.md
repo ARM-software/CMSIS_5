@@ -97,7 +97,7 @@ The CMSIS is documented within the source files with:
 
 Doxygen	comment example:
 
-```c
+``` c
 /**
  * @brief  Enable Interrupt in NVIC Interrupt Controller
  * @param  IRQn  interrupt number that specifies the interrupt
@@ -144,7 +144,7 @@ File/Directory     |Content
 :------------------|:-------------------
 **ARM.CMSIS.pdsc** |Package description file in CMSIS-Pack format.
 **LICENSE.txt**    |CMSIS License Agreement (Apache 2.0)
-**CMSIS**          |\ref CM_Components "CMSIS components" (see also table below)
+**CMSIS**          |\ref cmsis_components "CMSIS components" (see also table below)
 **Device**         |CMSIS reference implementations of Arm Cortex processor based devices
 
 CMSIS Directory
@@ -350,7 +350,7 @@ In addition, each CMSIS component has its own release history:
             - removed macro UNALIGNED_SUPPORT_DISABLE
             - added const-correctness
             - replaced SIMD pointer construct with memcopy solution
-            - replaced macro combination "CMSIS_INLINE __STATIC_INLINE with "__STATIC_FORCEINLINE"
+            - replaced macro combination `CMSIS_INLINE __STATIC_INLINE` with `__STATIC_FORCEINLINE`
           - reworked DSP library documentation
           - Changed DSP folder structure
             - moved DSP libraries to ./DSP/Lib
@@ -568,5 +568,3 @@ In addition, each CMSIS component has its own release history:
       <td>Initial release of CMSIS-Core (Cortex-M) for Cortex-M3 processor</td>
     </tr>
 </table>
-
-*/

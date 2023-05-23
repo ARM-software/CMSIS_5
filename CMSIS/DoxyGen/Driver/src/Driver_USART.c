@@ -71,7 +71,7 @@ Structure with information about the status of the USART. The data fields encode
 *****************************************************************************************************************/
 
 /**
-\enum     ARM_USART_MODEM_CONTROL
+\typedef     ARM_USART_MODEM_CONTROL
 \details
 Specifies values for controlling the modem control lines.
 

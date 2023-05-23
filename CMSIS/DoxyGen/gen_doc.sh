@@ -15,7 +15,7 @@ REQUIRED_GEN_PACK_LIB="0.8.2"
 
 DIRNAME=$(dirname $(readlink -f $0))
 GENDIR=../Documentation
-REQ_DXY_VERSION="1.9.2"
+REQ_DXY_VERSION="1.9.6"
 REQ_MSCGEN_VERSION="0.20"
 
 ############ DO NOT EDIT BELOW ###########
@@ -83,6 +83,7 @@ function generate() {
 
   mkdir -p "${DIRNAME}/${GENDIR}/$1/html/search/"
   cp -f "${DIRNAME}/Doxygen_Templates/search.css" "${DIRNAME}/${GENDIR}/$1/html/search/"
+  cp -f "${DIRNAME}/Doxygen_Templates/navtree.js" "${DIRNAME}/${GENDIR}/$1/html/"
 
   sed -e "s/{datetime}/${datetime}/" "${DIRNAME}/Doxygen_Templates/footer.js.in" \
     | sed -e "s/{year}/${year}/" \

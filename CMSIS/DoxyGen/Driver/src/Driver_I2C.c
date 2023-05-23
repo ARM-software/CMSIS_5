@@ -55,7 +55,7 @@ The driver functions are published in the access struct as explained in \ref Dri
   - \ref ARM_DRIVER_I2C : access struct for I2C driver functions
 
 
-\anchor example <b>Example Code</b>
+\anchor i2c_example <b>Example Code</b>
 
 The following example code shows the usage of the I<sup>2</sup>C interface in Master mode.
 
@@ -236,7 +236,7 @@ returns with \ref ARM_DRIVER_OK. Refer to \ref CallSequence for more information
 \sa ARM_I2C_Uninitialize
 
 \b Example:
- - refer to \ref example "Example Code"
+ - refer to \ref i2c_example "Example Code"
  
 *******************************************************************************************************************/
 
@@ -593,7 +593,7 @@ Specifies the address type for the functions \ref ARM_I2C_MasterReceive, \ref AR
 \sa ARM_I2C_OWN_ADDRESS
 \sa ARM_I2C_MasterTransmit
 \sa ARM_I2C_MasterReceive
-\def ARM_I2C_ADDRESS_GC     
+\def ARM_I2C_ADDRESS_GC
 \sa ARM_I2C_OWN_ADDRESS
 @}
 */

@@ -94,7 +94,6 @@ Arm Keil MDK uses the provided SCVD file to display the VIO signals in Component
 
 \image html vioComponentViewer.png
 
-@{
 */
 
 /**

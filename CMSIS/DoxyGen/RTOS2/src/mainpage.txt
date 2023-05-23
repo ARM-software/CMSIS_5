@@ -1,6 +1,5 @@
-﻿/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
-/**
-\mainpage
+﻿/**
+\mainpage Overview
 
 The <b>CMSIS-RTOS v2 (CMSIS-RTOS2)</b> provides generic RTOS interfaces for Arm&reg; Cortex&reg; processor-based
 devices. It provides a standardized API for software components that require RTOS functionality and gives therefore serious
@@ -46,24 +45,19 @@ within the same application. Over time, you may migrate to the new API as explai
 CMSIS-RTOS2 is not POSIX compliant, but has provisions to enable a C++11/C++14 interface.
 
 The following sections provide further details about CMSIS-RTOS2 and the RTX reference implementation.
- - \subpage rtos_revisionHistory documents changes made in each version for CMSIS-RTOS v2 and RTX v5.
- - \subpage genRTOS2IF provides an overview about the APIs available with CMSIS-RTOS v2.
- - \subpage functionOverview lists the CMSIS-RTOS2 API functions and the header file %cmsis_os2.h.
+ - \ref rtos_revisionHistory documents changes made in each version for CMSIS-RTOS v2 and RTX v5.
+ - \ref genRTOS2IF provides an overview about the APIs available with CMSIS-RTOS v2.
+ - \ref functionOverview lists the CMSIS-RTOS2 API functions and the header file %cmsis_os2.h.
 \ifnot FuSaRTS
- - \subpage rtosValidation describes the validation suite that is publicly available.
- - \subpage os2Migration shows how to use CMSIS-RTOS2 in existing projects and lists function differences to CMSIS-RTOS v1.
+ - \ref rtosValidation describes the validation suite that is publicly available.
+ - \ref os2Migration shows how to use CMSIS-RTOS2 in existing projects and lists function differences to CMSIS-RTOS v1.
 \endif
- - \subpage rtx5_impl provides general information about the operation and usage of RTX v5.
+ - \ref rtx5_impl provides general information about the operation and usage of RTX v5.
 \if FuSaRTS
- - \subpage rtx_safety provides comprehensive instructions for highly reliable applications.
+ - \ref rtx_safety provides comprehensive instructions for highly reliable applications.
 \endif
 
-
-<hr>
-
-CMSIS-RTOS2 in ARM::CMSIS Pack
-------------------------------
-\anchor directory
+\section directory CMSIS-RTOS2 in ARM::CMSIS Pack
 
 The following files relevant to CMSIS-RTOS2 are present in the <b>ARM::CMSIS</b> Pack directories:
 Directory                    | Content                                                                

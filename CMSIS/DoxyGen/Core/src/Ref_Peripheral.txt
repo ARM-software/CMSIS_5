@@ -1,8 +1,8 @@
-/**************************************************************************************************/
 /**
-    \defgroup   peripheral_gr    Peripheral Access
-    \brief      Naming conventions and optional features for accessing peripherals.
-    \details
+\defgroup   peripheral_gr    Peripheral Access
+@{
+\brief      Naming conventions and optional features for accessing peripherals.
+\details
 	
 The section below describes the naming conventions, requirements, and optional features for accessing device specific peripherals.
 Most of the rules also apply to the core peripherals.  The \ref device_h_pg contains typically these definition and also includes
@@ -226,6 +226,7 @@ The macro \ref _FLD2VAL uses the \#define's <i>_Pos</i> and <i>_Msk</i> of the r
 #define _FLD2VAL(field, value)
 
 /**
-@} 
+@}
 
+/** @} end of peripheral_gr */
 */

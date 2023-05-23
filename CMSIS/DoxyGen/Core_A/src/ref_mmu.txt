@@ -153,15 +153,15 @@ The function sets section access privileges
 \def OFFSET_4K               
 \def DESCRIPTOR_FAULT             
 
-\enum mmu_region_size_Type
-\enum mmu_memory_Type
-\enum mmu_cacheability_Type
-\enum mmu_ecc_check_Type
-\enum mmu_execute_Type
-\enum mmu_global_Type
-\enum mmu_shared_Type
-\enum mmu_secure_Type
-\enum mmu_access_Type
+\typedef mmu_region_size_Type
+\typedef mmu_memory_Type
+\typedef mmu_cacheability_Type
+\typedef mmu_ecc_check_Type
+\typedef mmu_execute_Type
+\typedef mmu_global_Type
+\typedef mmu_shared_Type
+\typedef mmu_secure_Type
+\typedef mmu_access_Type
 
 \struct  mmu_region_attributes_Type
 

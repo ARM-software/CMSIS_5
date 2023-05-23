@@ -190,7 +190,7 @@ underlying storage driver:
     }
 \endcode
 
-THis example is mixing synchronous and asynchronous APIs: \ref SampleUseOfStorageDriver
+This example is mixing synchronous and asynchronous APIs: \ref SampleUseOfStorageDriver
 *******************************************************************************************************************/
 
 /**
@@ -236,7 +236,7 @@ The flag \em error flag is cleared on start of read/program/erase operation and 
 *****************************************************************************************************************/
 
 /**
-\enum       ARM_STORAGE_OPERATION
+\typedef        ARM_STORAGE_OPERATION
 \details
 Command opcodes for the Storage interface. Completion callbacks use these codes
 to refer to completing commands. Refer to \ref ARM_Storage_Callback_t.
@@ -291,7 +291,7 @@ void read_version (void)  {
 }
 \endcode
 
-\note This API returns synchronously--it does not result in an invocation
+\note HAPI returns synchronously--it does not result in an invocation
    of a completion callback.
 
 \note The function GetVersion() can be called any time to obtain the

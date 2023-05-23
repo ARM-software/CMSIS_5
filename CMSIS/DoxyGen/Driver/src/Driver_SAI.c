@@ -251,25 +251,25 @@ The SAI driver has additional status error codes that are listed below.
 - The SAI driver also returns the common \ref execution_status.
   
 @{
-\def ARM_SAI_ERROR_SYNCHRONIZATION       
+\def ARM_SAI_ERROR_SYNCHRONIZATION
 The \b synchronization requested with the function \ref ARM_SAI_Control is not supported.
 
 \def ARM_SAI_ERROR_PROTOCOL
 The \b protocol requested with the function \ref ARM_SAI_Control is not supported.
 
-\def ARM_SAI_ERROR_DATA_SIZE     
+\def ARM_SAI_ERROR_DATA_SIZE
 The <b>data size</b> requested with the function \ref ARM_SAI_Control is not supported.
 
 \def ARM_SAI_ERROR_BIT_ORDER
 The <b>bit order</b> requested with the function \ref ARM_SAI_Control is not supported.
 
-\def ARM_SAI_ERROR_MONO_MODE            
+\def ARM_SAI_ERROR_MONO_MODE
 The <b>mono mode</b> requested with the function \ref ARM_SAI_Control is not supported.
 
-\def ARM_SAI_ERROR_COMPANDING   
+\def ARM_SAI_ERROR_COMPANDING
 The <b>companding</b> requested with the function \ref ARM_SAI_Control is not supported.
 
-\def ARM_SAI_ERROR_CLOCK_POLARITY 
+\def ARM_SAI_ERROR_CLOCK_POLARITY
 The <b>clock polarity</b> requested with the function \ref ARM_SAI_Control is not supported.
 
 \def ARM_SAI_ERROR_AUDIO_FREQ
@@ -278,7 +278,7 @@ The <b>audio frequency</b> requested with the function \ref ARM_SAI_Control is n
 \def ARM_SAI_ERROR_MCLK_PIN
 The <b>MCLK pin</b> setting requested with the function \ref ARM_SAI_Control is not supported.
 
-\def ARM_SAI_ERROR_MCLK_PRESCALER       
+\def ARM_SAI_ERROR_MCLK_PRESCALER
 The <b>MCLK prescaler</b> requested with the function \ref ARM_SAI_Control is not supported.
 
 \def ARM_SAI_ERROR_FRAME_LENGTH
@@ -290,10 +290,10 @@ The <b>frame sync width</b> requested with the function \ref ARM_SAI_Control is 
 \def ARM_SAI_ERROR_FRAME_SYNC_POLARITY
 The <b>frame sync polarity</b> requested with the function \ref ARM_SAI_Control is not supported.
 
-\def ARM_SAI_ERROR_FRAME_SYNC_EARLY      
+\def ARM_SAI_ERROR_FRAME_SYNC_EARLY
 The <b>frame sync early</b> requested with the function \ref ARM_SAI_Control is not supported.
 
-\def ARM_SAI_ERROR_SLOT_COUNT 
+\def ARM_SAI_ERROR_SLOT_COUNT
 The <b>slot count</b> requested with the function \ref ARM_SAI_Control is not supported.
 
 \def ARM_SAI_ERROR_SLOT_SIZE
@@ -315,11 +315,11 @@ This section provides the event values for the \ref ARM_SAI_SignalEvent callback
 
 The following call back notification events are generated:
 @{
-\def ARM_SAI_EVENT_SEND_COMPLETE    
-\def ARM_SAI_EVENT_RECEIVE_COMPLETE 
-\def ARM_SAI_EVENT_TX_UNDERFLOW     
-\def ARM_SAI_EVENT_RX_OVERFLOW      
-\def ARM_SAI_EVENT_FRAME_ERROR      
+\def ARM_SAI_EVENT_SEND_COMPLETE
+\def ARM_SAI_EVENT_RECEIVE_COMPLETE
+\def ARM_SAI_EVENT_TX_UNDERFLOW
+\def ARM_SAI_EVENT_RX_OVERFLOW
+\def ARM_SAI_EVENT_FRAME_ERROR
 @}
 */
 
@@ -806,11 +806,11 @@ The table lists the operation values for \em control. Values from different cate
     <td> A-Law companding (8-bit data)          </td></tr>
 <tr><td> \ref ARM_SAI_COMPANDING_U_LAW          </td>   
     <td> u-Law companding (8-bit data)          </td></tr>
-<tr><td> \ref ARM_SAI_CLOCK_POLARITY_0&nbsp;(default)  \anchor sai_clk_polarity > </td><td rowspan="2" style="text-align:right">    23   </td><td rowspan="2"> Clock Polarity </td>
+<tr><td> \ref ARM_SAI_CLOCK_POLARITY_0 &nbsp;(default)  \anchor sai_clk_polarity > </td><td rowspan="2" style="text-align:right">    23   </td><td rowspan="2"> Clock Polarity </td>
     <td> Drive on falling edge, capture on rising  edge. </td></tr>
-<tr><td> \ref ARM_SAI_CLOCK_POLARITY_1         \anchor master_clock </td>
+<tr><td> \ref ARM_SAI_CLOCK_POLARITY_1   &nbsp; \anchor master_clock </td>
     <td> Drive on rising  edge, capture on falling edge. </td></tr>
-<tr><td> \ref ARM_SAI_MCLK_PIN_INACTIVE&nbsp;(default)  </td><td rowspan="3" style="text-align:right"> 24..26 </td><td rowspan="3"> Master Clock pin (MCLK) </td>
+<tr><td> \ref ARM_SAI_MCLK_PIN_INACTIVE &nbsp;(default)  </td><td rowspan="3" style="text-align:right"> 24..26 </td><td rowspan="3"> Master Clock pin (MCLK) </td>
     <td> MCLK not used.                         </td></tr>
 <tr><td> \ref ARM_SAI_MCLK_PIN_OUTPUT           </td>   
     <td> MCLK is output (Master mode only).     </td></tr>
@@ -847,7 +847,7 @@ The parameter \em arg1 provides frame-specific values depending on the \em contr
     <td style="text-align:right"> 20..24         </td>
 	<td> Frame Sync Count                        </td>
     <td> Number of slots in frame; the possible range for \em n is \token{1..32}; default=\token{1};  User protocol only, ignored otherwise.  </td></tr>
-<tr><td> \ref ARM_SAI_SLOT_SIZE_DEFAULT   \anchor frame_slot_size  </td>
+<tr><td> \ref ARM_SAI_SLOT_SIZE_DEFAULT &nbsp; \anchor frame_slot_size  </td>
     <td rowspan="3" style="text-align:right"> 25..26                </td>
 	<td rowspan="3">  Frame Slot Size                               </td>
     <td> Slot size is equal to data size (default).                 </td></tr>

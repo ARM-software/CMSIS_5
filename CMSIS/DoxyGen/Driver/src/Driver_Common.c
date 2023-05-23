@@ -7,9 +7,8 @@ for a general overview.
 @{
 */
 
-
 /**
-\enum ARM_POWER_STATE
+\typedef ARM_POWER_STATE
 \details 
 The access structure of each CMSIS-Driver provides the function \b PowerControl, which handles the power
 profile for a peripheral using the parameter \ref ARM_POWER_STATE. Depending on this parameter, 

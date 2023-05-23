@@ -208,7 +208,7 @@ __NO_RETURN void thread1 (void *argument) {
 */
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\enum osThreadState_t
+\typedef osThreadState_t
 \details
 State of a thread as retrieved by \ref osThreadGetState. In case \b osThreadGetState fails or if it is called from an ISR, it
 will return \c osThreadError, otherwise it returns the thread state.
@@ -234,7 +234,7 @@ will return \c osThreadError, otherwise it returns the thread state.
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\enum osPriority_t
+\typedef osPriority_t
 \details
 
 The \b osPriority_t value specifies the priority for a thread. The default thread priority should be \a osPriorityNormal.

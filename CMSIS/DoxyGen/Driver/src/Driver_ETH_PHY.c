@@ -280,11 +280,11 @@ mode (half/full duplex) and communication speed. Information is only valid when 
 \brief Specify operation modes of the Ethernet PHY interface
 \details
 @{
-\def ARM_ETH_PHY_SPEED_10M 
+\def ARM_ETH_PHY_SPEED_10M
 \sa ARM_ETH_PHY_SetMode
 \def ARM_ETH_PHY_SPEED_100M
 \sa ARM_ETH_PHY_SetMode
-\def ARM_ETH_PHY_SPEED_1G  
+\def ARM_ETH_PHY_SPEED_1G
 \sa ARM_ETH_PHY_SetMode
 \def ARM_ETH_PHY_DUPLEX_HALF
 \sa ARM_ETH_PHY_SetMode
@@ -292,9 +292,9 @@ mode (half/full duplex) and communication speed. Information is only valid when 
 \sa ARM_ETH_PHY_SetMode
 \def ARM_ETH_PHY_AUTO_NEGOTIATE
 \sa ARM_ETH_PHY_SetMode
-\def ARM_ETH_PHY_LOOPBACK      
+\def ARM_ETH_PHY_LOOPBACK
 \sa ARM_ETH_PHY_SetMode
-\def ARM_ETH_PHY_ISOLATE       
+\def ARM_ETH_PHY_ISOLATE
 \sa ARM_ETH_PHY_SetMode
 @}
 */

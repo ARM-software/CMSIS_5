@@ -53,15 +53,6 @@
     margin:0px;
 }
 
-.tablist .MSearchBoxInactive {
-    opacity:0.75;
-}
-
-.tablist .MSearchBoxInactive:hover {
-    opacity:1.0;
-}
-
-
 .tabs1 .tablist li {
     background-color: var(--arm_black);
     font-weight: 1000;

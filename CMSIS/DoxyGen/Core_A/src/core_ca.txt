@@ -244,7 +244,7 @@ The macro \ref _FLD2VAL uses the \#define's <i>_Pos</i> and <i>_Msk</i> of the r
 
 /*  CMSIS CA definitions */
 /**
-\def __CA_CMSIS_VERSION_MAIN  
+\def __CA_CMSIS_VERSION_MAIN
 \details
 Use this define to query the major version of CMSIS-Core(A) component. 
 
@@ -255,7 +255,7 @@ Use this define to query the major version of CMSIS-Core(A) component.
 #endif
 \endcode
 
-\def __CA_CMSIS_VERSION_SUB   
+\def __CA_CMSIS_VERSION_SUB
 \details
 Use this define to query the minor version of CMSIS-Core(A) component. 
 
@@ -270,7 +270,7 @@ Use this define to query the minor version of CMSIS-Core(A) component.
 #endif
 \endcode
 
-\def __CA_CMSIS_VERSION       
+\def __CA_CMSIS_VERSION
 \details
 Use this define to query the full version of CMSIS-Core(A) component. 
 
@@ -350,5 +350,3 @@ Reference: <a href="http://infocenter.arm.com/help/topic/com.arm.doc.ddi0406c/in
 \fn __STATIC_INLINE __ASM void __FPU_Enable(void) 
 @}
 */
-
-

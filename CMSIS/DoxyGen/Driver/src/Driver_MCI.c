@@ -93,27 +93,27 @@ This section provides the event values for the \ref ARM_MCI_SignalEvent callback
 
 The following call back notification events are generated:
 @{
-\def ARM_MCI_EVENT_CARD_INSERTED   
+\def ARM_MCI_EVENT_CARD_INSERTED
 \sa \ref ARM_MCI_SignalEvent
-\def ARM_MCI_EVENT_CARD_REMOVED    
+\def ARM_MCI_EVENT_CARD_REMOVED
 \sa \ref  ARM_MCI_SignalEvent
-\def ARM_MCI_EVENT_COMMAND_COMPLETE 
+\def ARM_MCI_EVENT_COMMAND_COMPLETE
 \sa \ref ARM_MCI_SignalEvent
-\def ARM_MCI_EVENT_COMMAND_TIMEOUT  
+\def ARM_MCI_EVENT_COMMAND_TIMEOUT
 \sa \ref ARM_MCI_SignalEvent
-\def ARM_MCI_EVENT_COMMAND_ERROR    
+\def ARM_MCI_EVENT_COMMAND_ERROR
 \sa \ref ARM_MCI_SignalEvent
 \def ARM_MCI_EVENT_TRANSFER_COMPLETE
 \sa \ref ARM_MCI_SignalEvent
-\def ARM_MCI_EVENT_TRANSFER_TIMEOUT 
+\def ARM_MCI_EVENT_TRANSFER_TIMEOUT
 \sa \ref ARM_MCI_SignalEvent
-\def ARM_MCI_EVENT_TRANSFER_ERROR   
+\def ARM_MCI_EVENT_TRANSFER_ERROR
 \sa \ref ARM_MCI_SignalEvent
-\def ARM_MCI_EVENT_SDIO_INTERRUPT   
+\def ARM_MCI_EVENT_SDIO_INTERRUPT
 \sa \ref ARM_MCI_SignalEvent
-\def ARM_MCI_EVENT_CCS              
+\def ARM_MCI_EVENT_CCS
 \sa \ref ARM_MCI_SignalEvent
-\def ARM_MCI_EVENT_CCS_TIMEOUT      
+\def ARM_MCI_EVENT_CCS_TIMEOUT
 \sa \ref ARM_MCI_SignalEvent
 @}
 *******************************************************************************************************************/
@@ -149,21 +149,21 @@ Refer to the function \ref ARM_MCI_Control for further details.
 \details
 The following codes are used as values for the parameter \em control of the function \ref ARM_MCI_Control to setup the MCI interface.
 @{
-\def ARM_MCI_BUS_SPEED       
-\def ARM_MCI_BUS_SPEED_MODE       
-\def ARM_MCI_BUS_CMD_MODE         
-\def ARM_MCI_BUS_DATA_WIDTH       
-\def ARM_MCI_DRIVER_STRENGTH       
-\def ARM_MCI_CONTROL_RESET         
-\def ARM_MCI_CONTROL_CLOCK_IDLE    
-\def ARM_MCI_UHS_TUNING_OPERATION 
+\def ARM_MCI_BUS_SPEED
+\def ARM_MCI_BUS_SPEED_MODE
+\def ARM_MCI_BUS_CMD_MODE
+\def ARM_MCI_BUS_DATA_WIDTH
+\def ARM_MCI_DRIVER_STRENGTH
+\def ARM_MCI_CONTROL_RESET
+\def ARM_MCI_CONTROL_CLOCK_IDLE
+\def ARM_MCI_UHS_TUNING_OPERATION
 \def ARM_MCI_UHS_TUNING_RESULT
-\def ARM_MCI_DATA_TIMEOUT          
-\def ARM_MCI_CSS_TIMEOUT            
-\def ARM_MCI_MONITOR_SDIO_INTERRUPT 
-\def ARM_MCI_CONTROL_READ_WAIT      
-\def ARM_MCI_SUSPEND_TRANSFER       
-\def ARM_MCI_RESUME_TRANSFER        
+\def ARM_MCI_DATA_TIMEOUT
+\def ARM_MCI_CSS_TIMEOUT
+\def ARM_MCI_MONITOR_SDIO_INTERRUPT
+\def ARM_MCI_CONTROL_READ_WAIT
+\def ARM_MCI_SUSPEND_TRANSFER
+\def ARM_MCI_RESUME_TRANSFER
 @}
 *******************************************************************************************************************/
 
@@ -190,13 +190,13 @@ whether the driver supports 1.8 volt UHS signaling.
 
 The following codes are defined:
 
-\def ARM_MCI_BUS_DEFAULT_SPEED     
-\def ARM_MCI_BUS_HIGH_SPEED        
-\def ARM_MCI_BUS_UHS_SDR12         
-\def ARM_MCI_BUS_UHS_SDR25         
-\def ARM_MCI_BUS_UHS_SDR50         
-\def ARM_MCI_BUS_UHS_SDR104        
-\def ARM_MCI_BUS_UHS_DDR50         
+\def ARM_MCI_BUS_DEFAULT_SPEED
+\def ARM_MCI_BUS_HIGH_SPEED
+\def ARM_MCI_BUS_UHS_SDR12
+\def ARM_MCI_BUS_UHS_SDR25
+\def ARM_MCI_BUS_UHS_SDR50
+\def ARM_MCI_BUS_UHS_SDR104
+\def ARM_MCI_BUS_UHS_DDR50
 @}
 *******************************************************************************************************************/
 
@@ -214,11 +214,11 @@ of the structure ARM_MCI_CAPABILITIES encode whether the driver supports a speci
 
 The following codes are defined:
 
-\def ARM_MCI_BUS_DATA_WIDTH_1        
-\def ARM_MCI_BUS_DATA_WIDTH_4        
-\def ARM_MCI_BUS_DATA_WIDTH_8        
-\def ARM_MCI_BUS_DATA_WIDTH_4_DDR    
-\def ARM_MCI_BUS_DATA_WIDTH_8_DDR    
+\def ARM_MCI_BUS_DATA_WIDTH_1
+\def ARM_MCI_BUS_DATA_WIDTH_4
+\def ARM_MCI_BUS_DATA_WIDTH_8
+\def ARM_MCI_BUS_DATA_WIDTH_4_DDR
+\def ARM_MCI_BUS_DATA_WIDTH_8_DDR
 @}
 *******************************************************************************************************************/
 
@@ -232,8 +232,8 @@ The following codes are defined:
 Set the CMD line type with the function \ref ARM_MCI_Control. 
 The CMD line mode is push-pull (default) or open drain (needed for older MMC).
 
-\def ARM_MCI_BUS_CMD_PUSH_PULL       
-\def ARM_MCI_BUS_CMD_OPEN_DRAIN      
+\def ARM_MCI_BUS_CMD_PUSH_PULL
+\def ARM_MCI_BUS_CMD_OPEN_DRAIN
 @}
 *******************************************************************************************************************/
 
@@ -251,10 +251,10 @@ The function \ref ARM_MCI_Control with \em control = \ref ARM_MCI_DRIVER_STRENGT
 
 The following codes are defined:
 
-\def ARM_MCI_DRIVER_TYPE_A      
-\def ARM_MCI_DRIVER_TYPE_B      
-\def ARM_MCI_DRIVER_TYPE_C      
-\def ARM_MCI_DRIVER_TYPE_D      
+\def ARM_MCI_DRIVER_TYPE_A
+\def ARM_MCI_DRIVER_TYPE_B
+\def ARM_MCI_DRIVER_TYPE_C
+\def ARM_MCI_DRIVER_TYPE_D
 @}
 *******************************************************************************************************************/
 
@@ -272,22 +272,22 @@ It controls the behavior of the command sent to the card and provides informatio
 
 The following codes are defined:
 @{
-\def ARM_MCI_RESPONSE_NONE           
-\def ARM_MCI_RESPONSE_SHORT          
-\def ARM_MCI_RESPONSE_SHORT_BUSY     
-\def ARM_MCI_RESPONSE_LONG           
-\def ARM_MCI_RESPONSE_INDEX          
-\def ARM_MCI_RESPONSE_CRC            
-\def ARM_MCI_WAIT_BUSY             
-\def ARM_MCI_TRANSFER_DATA         
-\def ARM_MCI_CARD_INITIALIZE       
-\def ARM_MCI_INTERRUPT_COMMAND     
-\def ARM_MCI_INTERRUPT_RESPONSE    
-\def ARM_MCI_BOOT_OPERATION        
-\def ARM_MCI_BOOT_ALTERNATIVE      
-\def ARM_MCI_BOOT_ACK              
-\def ARM_MCI_CCSD                  
-\def ARM_MCI_CCS                   
+\def ARM_MCI_RESPONSE_NONE
+\def ARM_MCI_RESPONSE_SHORT
+\def ARM_MCI_RESPONSE_SHORT_BUSY
+\def ARM_MCI_RESPONSE_LONG
+\def ARM_MCI_RESPONSE_INDEX
+\def ARM_MCI_RESPONSE_CRC
+\def ARM_MCI_WAIT_BUSY
+\def ARM_MCI_TRANSFER_DATA
+\def ARM_MCI_CARD_INITIALIZE
+\def ARM_MCI_INTERRUPT_COMMAND
+\def ARM_MCI_INTERRUPT_RESPONSE
+\def ARM_MCI_BOOT_OPERATION
+\def ARM_MCI_BOOT_ALTERNATIVE
+\def ARM_MCI_BOOT_ACK
+\def ARM_MCI_CCSD
+\def ARM_MCI_CCS
 @}
 *******************************************************************************************************************/
 
@@ -300,10 +300,10 @@ Data transfer codes specifies the transfer direction and type and are used with 
 
 The following codes are defined:
 @{
-\def ARM_MCI_TRANSFER_READ          
-\def ARM_MCI_TRANSFER_WRITE         
-\def ARM_MCI_TRANSFER_BLOCK         
-\def ARM_MCI_TRANSFER_STREAM        
+\def ARM_MCI_TRANSFER_READ
+\def ARM_MCI_TRANSFER_WRITE
+\def ARM_MCI_TRANSFER_BLOCK
+\def ARM_MCI_TRANSFER_STREAM
 @}
 *******************************************************************************************************************/
 
@@ -316,13 +316,13 @@ Specifies the power supply volatge for a memory card. Used with the function \re
 
 The following codes are defined:
 @{
-\def ARM_MCI_POWER_VDD_OFF      
-\def ARM_MCI_POWER_VDD_3V3      
-\def ARM_MCI_POWER_VDD_1V8      
-\def ARM_MCI_POWER_VCCQ_OFF     
-\def ARM_MCI_POWER_VCCQ_3V3     
-\def ARM_MCI_POWER_VCCQ_1V8     
-\def ARM_MCI_POWER_VCCQ_1V2     
+\def ARM_MCI_POWER_VDD_OFF
+\def ARM_MCI_POWER_VDD_3V3
+\def ARM_MCI_POWER_VDD_1V8
+\def ARM_MCI_POWER_VCCQ_OFF
+\def ARM_MCI_POWER_VCCQ_3V3
+\def ARM_MCI_POWER_VCCQ_1V8
+\def ARM_MCI_POWER_VCCQ_1V2
 @}
 *******************************************************************************************************************/
 

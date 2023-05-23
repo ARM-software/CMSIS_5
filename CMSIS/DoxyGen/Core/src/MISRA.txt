@@ -1,6 +1,8 @@
-/** \page coreMISRA_Exceptions_pg MISRA-C Deviations
+/** 
+\page coreMISRA_Exceptions_pg MISRA-C Deviations
+
 CMSIS-Core (Cortex-M) uses the common coding rules for CMSIS components that are documented under 
-\ifnot FuSaRTS <a href="../../General/html/index.html"><b>Introduction</b></a> \endif \if FuSaRTS <a href="../../Safety/html/index.html#CodingRules"><b>Coding Rules</b></a> \endif.
+<a href="../../General/html/index.html"><b>Introduction</b></a>.
 */
 
 /*  MISRA-C:2004 no longer included in build

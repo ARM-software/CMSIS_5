@@ -20,8 +20,6 @@ The following sections provide details about the CMSIS-Core (Cortex-M):
  - <a href="modules.html">\b Reference </a> describe the features and functions of the \ref device_h_pg in detail.
  - <a href="annotated.html">\b Data \b Structures </a> describe the data structures of the \ref device_h_pg in detail.
 
-<hr>
-
 CMSIS-Core (Cortex-M) in ARM::CMSIS Pack
 -----------------------------
 
@@ -32,8 +30,6 @@ Files relevant to CMSIS-Core (Cortex-M) are present in the following <b>ARM::CMS
 |\b CMSIS\\Core\\Include       | CMSIS-Core (Cortex-M) header files (for example core_cm3.h, core_cmInstr.h, etc.) |
 |\b Device                     | \ref using_ARM_pg "Arm reference implementations" of Cortex-M devices  |
 |\b Device\\\_Template_Vendor  | \ref templates_pg for extension by silicon vendors                     |
-
-<hr>
 
 \section ref_v6-v8M Processor Support
 
@@ -71,8 +67,6 @@ The Armv8-M architecture is described in the <a href="https://developer.arm.com/
 
 The Armv8.1-M architecture further extends Armv8-M with Helium (the so called M-Profile Vector Extension (MVE)), as well as further instruction set and debug extensions.
 More information about Armv8.1-M architecture is available under <a href="https://developer.arm.com/technologies/helium" target="_blank"><b>Arm Helium technology</b></a>.
-
-<hr>
 
 \section tested_tools_sec Tested and Verified Toolchains
 
@@ -129,10 +123,8 @@ The \ref templates_pg supplied by Arm have been tested and verified with the fol
       <td>V5.4.0</td>
       <td>
         <ul>
-\if ARMv8M
           <li>Added: Cortex-M55 cpu support</li>
           <li>Enhanced: MVE support for Armv8.1-MML</li>
-\endif
           <li>Fixed: Device config define checks</li>
           <li>Added: L1 Cache functions for Armv7-M and later</li>
         </ul>
@@ -268,10 +260,8 @@ The \ref templates_pg supplied by Arm have been tested and verified with the fol
       <td>V5.00<br>Beta 2</td>
       <td>
         <ul>
-\if ARMv8M
           <li>Changed: ARMv8M SAU regions to 8.</li>
           <li>Changed: moved function \ref TZ_SAU_Setup to file partition_&lt;device&gt;.h.</li>
-\endif
           <li>Changed: license under Apache-2.0.</li>
           <li>Added: check if macro is defined before use.</li>
           <li>Corrected: function \ref SCB_DisableDCache.</li>
@@ -453,5 +443,3 @@ The \ref templates_pg supplied by Arm have been tested and verified with the fol
 </table>
 
 */
-
-

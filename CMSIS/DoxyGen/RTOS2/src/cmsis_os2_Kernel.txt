@@ -53,7 +53,7 @@ Use \ref osKernelGetInfo to retrieve the version numbers.
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
-\enum osKernelState_t
+\typedef osKernelState_t
 \details
 State of the kernel as retrieved by \ref osKernelGetState. In case \b osKernelGetState fails or if it is called from an ISR,
 it will return \c osKernelError, otherwise it returns the kernel state.

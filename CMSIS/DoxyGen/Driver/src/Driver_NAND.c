@@ -34,7 +34,7 @@ The driver functions are published in the access struct as explained in \ref Dri
   - \ref ARM_DRIVER_NAND : access struct for NAND driver functions
 
 @{
-\anchor example <b>Example Code:</b>
+\anchor nand_example <b>Example Code:</b>
 
 \include NAND_Demo.c
 */
@@ -117,28 +117,28 @@ These controls can be used in the function \ref ARM_NAND_Control for the paramet
 \details
 The defines can be used in the function \ref ARM_NAND_Control for the parameter \em arg and with the \ref ARM_NAND_BUS_MODE as the \em control code.
 @{
-\def ARM_NAND_BUS_SDR               
-\def ARM_NAND_BUS_DDR               
-\def ARM_NAND_BUS_DDR2              
-\def ARM_NAND_BUS_TIMING_MODE_0     
-\def ARM_NAND_BUS_TIMING_MODE_1     
-\def ARM_NAND_BUS_TIMING_MODE_2     
-\def ARM_NAND_BUS_TIMING_MODE_3     
-\def ARM_NAND_BUS_TIMING_MODE_4     
-\def ARM_NAND_BUS_TIMING_MODE_5     
-\def ARM_NAND_BUS_TIMING_MODE_6     
-\def ARM_NAND_BUS_TIMING_MODE_7     
-\def ARM_NAND_BUS_DDR2_DO_WCYC_0    
-\def ARM_NAND_BUS_DDR2_DO_WCYC_1    
-\def ARM_NAND_BUS_DDR2_DO_WCYC_2    
-\def ARM_NAND_BUS_DDR2_DO_WCYC_4    
-\def ARM_NAND_BUS_DDR2_DI_WCYC_0    
-\def ARM_NAND_BUS_DDR2_DI_WCYC_1    
-\def ARM_NAND_BUS_DDR2_DI_WCYC_2    
-\def ARM_NAND_BUS_DDR2_DI_WCYC_4    
-\def ARM_NAND_BUS_DDR2_VEN          
-\def ARM_NAND_BUS_DDR2_CMPD         
-\def ARM_NAND_BUS_DDR2_CMPR         
+\def ARM_NAND_BUS_SDR
+\def ARM_NAND_BUS_DDR
+\def ARM_NAND_BUS_DDR2
+\def ARM_NAND_BUS_TIMING_MODE_0
+\def ARM_NAND_BUS_TIMING_MODE_1
+\def ARM_NAND_BUS_TIMING_MODE_2
+\def ARM_NAND_BUS_TIMING_MODE_3
+\def ARM_NAND_BUS_TIMING_MODE_4
+\def ARM_NAND_BUS_TIMING_MODE_5
+\def ARM_NAND_BUS_TIMING_MODE_6
+\def ARM_NAND_BUS_TIMING_MODE_7
+\def ARM_NAND_BUS_DDR2_DO_WCYC_0
+\def ARM_NAND_BUS_DDR2_DO_WCYC_1
+\def ARM_NAND_BUS_DDR2_DO_WCYC_2
+\def ARM_NAND_BUS_DDR2_DO_WCYC_4
+\def ARM_NAND_BUS_DDR2_DI_WCYC_0
+\def ARM_NAND_BUS_DDR2_DI_WCYC_1
+\def ARM_NAND_BUS_DDR2_DI_WCYC_2
+\def ARM_NAND_BUS_DDR2_DI_WCYC_4
+\def ARM_NAND_BUS_DDR2_VEN
+\def ARM_NAND_BUS_DDR2_CMPD
+\def ARM_NAND_BUS_DDR2_CMPR
 @}
 */
 
@@ -149,8 +149,8 @@ The defines can be used in the function \ref ARM_NAND_Control for the parameter 
 \details
 The defines can be used in the function \ref ARM_NAND_Control for the parameter \em arg and with the \ref ARM_NAND_BUS_DATA_WIDTH as the \em control code.
 @{
-\def ARM_NAND_BUS_DATA_WIDTH_8   
-\def ARM_NAND_BUS_DATA_WIDTH_16  
+\def ARM_NAND_BUS_DATA_WIDTH_8
+\def ARM_NAND_BUS_DATA_WIDTH_16
 @}
 */
 
@@ -161,10 +161,10 @@ The defines can be used in the function \ref ARM_NAND_Control for the parameter 
 \details
 The defines can be used in the function \ref ARM_NAND_Control for the parameter \em arg and with the \ref ARM_NAND_DRIVER_STRENGTH as the \em control code.
 @{
-\def ARM_NAND_DRIVER_STRENGTH_18 
-\def ARM_NAND_DRIVER_STRENGTH_25 
-\def ARM_NAND_DRIVER_STRENGTH_35 
-\def ARM_NAND_DRIVER_STRENGTH_50 
+\def ARM_NAND_DRIVER_STRENGTH_18
+\def ARM_NAND_DRIVER_STRENGTH_25
+\def ARM_NAND_DRIVER_STRENGTH_35
+\def ARM_NAND_DRIVER_STRENGTH_50
 @}
 */
 
@@ -195,19 +195,19 @@ and in the function \ref ARM_NAND_ExecuteSequence for the parameter \em code.
 \details
 The defines can be used in the function \ref ARM_NAND_ExecuteSequence for the parameter \em code.
 @{
-\def ARM_NAND_CODE_SEND_CMD1       
-\def ARM_NAND_CODE_SEND_ADDR_COL1  
-\def ARM_NAND_CODE_SEND_ADDR_COL2  
-\def ARM_NAND_CODE_SEND_ADDR_ROW1  
-\def ARM_NAND_CODE_SEND_ADDR_ROW2  
-\def ARM_NAND_CODE_SEND_ADDR_ROW3  
-\def ARM_NAND_CODE_INC_ADDR_ROW    
-\def ARM_NAND_CODE_WRITE_DATA      
-\def ARM_NAND_CODE_SEND_CMD2       
-\def ARM_NAND_CODE_WAIT_BUSY       
-\def ARM_NAND_CODE_READ_DATA       
-\def ARM_NAND_CODE_SEND_CMD3       
-\def ARM_NAND_CODE_READ_STATUS     
+\def ARM_NAND_CODE_SEND_CMD1
+\def ARM_NAND_CODE_SEND_ADDR_COL1
+\def ARM_NAND_CODE_SEND_ADDR_COL2
+\def ARM_NAND_CODE_SEND_ADDR_ROW1
+\def ARM_NAND_CODE_SEND_ADDR_ROW2
+\def ARM_NAND_CODE_SEND_ADDR_ROW3
+\def ARM_NAND_CODE_INC_ADDR_ROW
+\def ARM_NAND_CODE_WRITE_DATA
+\def ARM_NAND_CODE_SEND_CMD2
+\def ARM_NAND_CODE_WAIT_BUSY
+\def ARM_NAND_CODE_READ_DATA
+\def ARM_NAND_CODE_SEND_CMD3
+\def ARM_NAND_CODE_READ_STATUS
 @}
 */
 
@@ -753,7 +753,7 @@ The table lists values for the parameter \em arg used with the \em control opera
 <tr><td> \ref ARM_NAND_BUS_DDR2_DI_WCYC_1           </td><td> Set the DDR2 Data Input Warm-up to \token{1} cycles </td></tr>
 <tr><td> \ref ARM_NAND_BUS_DDR2_DI_WCYC_2           </td><td> Set the DDR2 Data Input Warm-up to \token{2} cycles </td></tr>
 <tr><td> \ref ARM_NAND_BUS_DDR2_DI_WCYC_4           </td><td> Set the DDR2 Data Input Warm-up to \token{4} cycles </td></tr>
-<tr><td style="white-space: nowrap"> \ref ARM_NAND_BUS_DDR2_VEN \anchor bus_misc_tab </td>
+<tr><td style="white-space: nowrap"> \ref ARM_NAND_BUS_DDR2_VEN &nbsp; \anchor bus_misc_tab </td>
     <td style="text-align:right"> 16 </td>
     <td rowspan="3" style="white-space: nowrap">   Miscellaneous   </td>
 	<td> Set the DDR2 Enable external VREFQ as reference      </td>
