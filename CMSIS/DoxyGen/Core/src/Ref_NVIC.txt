@@ -39,12 +39,12 @@ and SC300
       <td><b>NonMaskableInt_IRQn</b></td>
       <td>NMI_Handler</td>
       <td>-14</td>
-      <td><img src="check.png" alt="available"></td>
-      <td><img src="check.png" alt="available"></td>
+      <td><center>&radic;</center></td>
+      <td><center>&radic;</center></td>
 \if ARMv8M
-      <td><img src="check.png" alt="available"></td>
-      <td><img src="check.png" alt="available"></td>
-      <td><img src="check.png" alt="available"></td>
+      <td><center>&radic;</center></td>
+      <td><center>&radic;</center></td>
+      <td><center>&radic;</center></td>
 \endif
       <td>Non Maskable Interrupt</td>
     </tr>
@@ -52,12 +52,12 @@ and SC300
       <td><b>HardFault_IRQn</b></td>
       <td>HardFault_Handler</td>
       <td>-13</td>
-      <td><img src="check.png" alt="available"></td>
-      <td><img src="check.png" alt="available"></td>
+      <td><center>&radic;</center></td>
+      <td><center>&radic;</center></td>
 \if ARMv8M
-      <td><img src="check.png" alt="available"></td>
-      <td><img src="check.png" alt="available"></td>
-      <td><img src="check.png" alt="available"></td>
+      <td><center>&radic;</center></td>
+      <td><center>&radic;</center></td>
+      <td><center>&radic;</center></td>
 \endif
       <td>Hard Fault Interrupt</td>
     </tr>
@@ -65,12 +65,12 @@ and SC300
       <td><b>MemoryManagement_IRQn</b></td>
       <td>MemManage_Handler</td>
       <td>-12</td>
-      <td>&nbsp;</td>
-      <td><img src="check.png" alt="available"></td>
+      <td><center>&mdash;</center></td>
+      <td><center>&radic;</center></td>
 \if ARMv8M
-      <td>&nbsp;</td>
-      <td><img src="check.png" alt="available"></td>
-      <td><img src="check.png" alt="available"></td>
+      <td><center>&mdash;</center></td>
+      <td><center>&radic;</center></td>
+      <td><center>&radic;</center></td>
 \endif
       <td>Memory Management Interrupt</td>
     </tr>
@@ -78,12 +78,12 @@ and SC300
       <td><b>BusFault_IRQn</b></td>
       <td>BusFault_Handler</td>
       <td>-11</td>
-      <td>&nbsp;</td>
-      <td><img src="check.png" alt="available"></td>
+      <td><center>&mdash;</center></td>
+      <td><center>&radic;</center></td>
 \if ARMv8M
-      <td>&nbsp;</td>
-      <td><img src="check.png" alt="available"></td>
-      <td><img src="check.png" alt="available"></td>
+      <td><center>&mdash;</center></td>
+      <td><center>&radic;</center></td>
+      <td><center>&radic;</center></td>
 \endif
       <td>Bus Fault Interrupt</td>
     </tr>
@@ -91,12 +91,12 @@ and SC300
       <td><b>UsageFault_IRQn</b></td>
       <td>UsageFault_Handler</td>
       <td>-10</td>
-      <td>&nbsp;</td>
-      <td><img src="check.png" alt="available"></td>
+      <td><center>&mdash;</center></td>
+      <td><center>&radic;</center></td>
 \if ARMv8M
-      <td>&nbsp;</td>
-      <td><img src="check.png" alt="available"></td>
-      <td><img src="check.png" alt="available"></td>
+      <td><center>&mdash;</center></td>
+      <td><center>&radic;</center></td>
+      <td><center>&radic;</center></td>
 \endif
       <td>Usage Fault Interrupt</td>
     </tr>
@@ -105,11 +105,11 @@ and SC300
       <td><b>SecureFault_IRQn</b></td>
       <td>SecureFault_Handler</td>
       <td>-9</td>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
-      <td><img src="check.png" alt="available"></td>
-      <td><img src="check.png" alt="available"></td>
-      <td><img src="check.png" alt="available"></td>
+      <td><center>&mdash;</center></td>
+      <td><center>&mdash;</center></td>
+      <td><center>&radic;</center></td>
+      <td><center>&radic;</center></td>
+      <td><center>&radic;</center></td>
       <td>Secure Fault Interrupt</td>
     </tr>
 \endif
@@ -117,12 +117,12 @@ and SC300
       <td><b>SVCall_IRQn</b></td>
       <td>SVC_Handler</td>
       <td>-5</td>
-      <td><img src="check.png" alt="available"></td>
-      <td><img src="check.png" alt="available"></td>
+      <td><center>&radic;</center></td>
+      <td><center>&radic;</center></td>
 \if ARMv8M
-      <td><img src="check.png" alt="available"></td>
-      <td><img src="check.png" alt="available"></td>
-      <td><img src="check.png" alt="available"></td>
+      <td><center>&radic;</center></td>
+      <td><center>&radic;</center></td>
+      <td><center>&radic;</center></td>
 \endif
       <td>SVC Interrupt </td>
     </tr>
@@ -130,12 +130,12 @@ and SC300
       <td><b>DebugMonitor_IRQn</b></td>
       <td>DebugMon_Handler</td>
       <td>-4</td>
-      <td>&nbsp;</td>
-      <td><img src="check.png" alt="available"></td>
+      <td><center>&mdash;</center></td>
+      <td><center>&radic;</center></td>
 \if ARMv8M
-      <td>&nbsp;</td>
-      <td><img src="check.png" alt="available"></td>
-      <td><img src="check.png" alt="available"></td>
+      <td><center>&mdash;</center></td>
+      <td><center>&radic;</center></td>
+      <td><center>&radic;</center></td>
 \endif
       <td>Debug Monitor Interrupt</td>
     </tr>
@@ -143,12 +143,12 @@ and SC300
       <td><b>PendSV_IRQn</b></td>
       <td>PendSV_Handler</td>
       <td>-2</td>
-      <td><img src="check.png" alt="available"></td>
-      <td><img src="check.png" alt="available"></td>
+      <td><center>&radic;</center></td>
+      <td><center>&radic;</center></td>
 \if ARMv8M
-      <td><img src="check.png" alt="available"></td>
-      <td><img src="check.png" alt="available"></td>
-      <td><img src="check.png" alt="available"></td>
+      <td><center>&radic;</center></td>
+      <td><center>&radic;</center></td>
+      <td><center>&radic;</center></td>
 \endif
       <td>Pend SV Interrupt</td>
     </tr>
@@ -156,12 +156,12 @@ and SC300
       <td><b>SysTick_IRQn</b></td>
       <td>SysTick_Handler</td>
       <td>-1</td>
-      <td><img src="check.png" alt="available"></td>
-      <td><img src="check.png" alt="available"></td>
+      <td><center>&radic;</center></td>
+      <td><center>&radic;</center></td>
 \if ARMv8M
-      <td><img src="check.png" alt="available"></td>
-      <td><img src="check.png" alt="available"></td>
-      <td><img src="check.png" alt="available"></td>
+      <td><center>&radic;</center></td>
+      <td><center>&radic;</center></td>
+      <td><center>&radic;</center></td>
 \endif
       <td>System Tick Interrupt</td>
     </tr>
