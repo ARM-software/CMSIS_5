@@ -373,6 +373,54 @@ body, table, div, p, dl {
 	line-height: 22px;
 }
 
+
+.tiles {
+  width: 950;
+  font-size: 0;
+  margin: 0 auto;
+}
+
+.tile {
+  width: calc(1000px / 5);
+  height: 130px;
+  display: inline-grid;
+  padding-inline: 5px;
+  padding-bottom: 5px;
+  vertical-align:text-top;
+  text-align:center;
+}
+
+.tile:hover {
+ border-color: var(--arm_blue);
+ border-style: solid;
+ border-width: 1px;
+ padding-inline: 4px;
+ padding-bottom: 4px;
+}
+
+
+.tile h2 {
+  font-size: 18px;
+  margin-top:5px;
+  margin-bottom:0px;
+  text-align:center;
+}
+
+.tile .tileh {
+  font-size: 18px;
+  font-weight:bold;
+  margin-top:5px;
+  margin-bottom:0px;
+  text-align:center;
+  color:var(--page-link-color);
+}
+
+.tile-link {
+ vertical-align:text-bottom;
+ margin-top:20px;
+}
+
+
 /* styles */
 
 .style1 {
