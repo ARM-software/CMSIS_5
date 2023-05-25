@@ -13,5 +13,6 @@ CMSIS/CoreValidation/Project/RTE/_**/*
 *.uvmpw.uvgui.*
 *.zip
 *.bak
+build
 output
 linkchecker-out.csv
