@@ -20,6 +20,7 @@
       CMSIS-RTOS2: 2.2.0 (see revision history for details)
         - RTX5 Moved into separate pack!
       CMSIS-Driver: 2.9.0
+        - Updated VIO API 1.0.0
         - Added GPIO Driver API 1.0.0
       CMSIS-DAP: Moved into separate pack!
       CMSIS-Pack: Moved to Open-CMSIS-Pack!
@@ -550,7 +551,7 @@
         <file category="header" name="CMSIS/Driver/Include/Driver_WiFi.h" />
       </files>
     </api>
-    <api Cclass="CMSIS Driver" Cgroup="VIO" Capiversion="0.1.0" exclusive="1">
+    <api Cclass="CMSIS Driver" Cgroup="VIO" Capiversion="1.0.0" exclusive="1">
       <description>Virtual I/O</description>
       <files>
         <file category="doc"    name="CMSIS/Documentation/Driver/html/group__vio__interface__gr.html" />
@@ -802,13 +803,13 @@
     </component>
 
     <!-- VIO components -->
-    <component Cclass="CMSIS Driver" Cgroup="VIO" Csub="Custom" Cversion="1.0.0" Capiversion="0.1.0" custom="1">
+    <component Cclass="CMSIS Driver" Cgroup="VIO" Csub="Custom" Cversion="1.0.0" Capiversion="1.0.0" custom="1">
       <description>Virtual I/O custom implementation template</description>
       <files>
         <file category="sourceC" name="CMSIS/Driver/VIO/Source/vio.c" attr="template" select="Virtual I/O"/>
       </files>
     </component>
-    <component Cclass="CMSIS Driver" Cgroup="VIO" Csub="Virtual" Cversion="1.0.0" Capiversion="0.1.0">
+    <component Cclass="CMSIS Driver" Cgroup="VIO" Csub="Virtual" Cversion="1.0.0" Capiversion="1.0.0">
       <description>Virtual I/O implementation using memory only</description>
       <files>
         <file category="sourceC" name="CMSIS/Driver/VIO/Source/vio_memory.c"/>

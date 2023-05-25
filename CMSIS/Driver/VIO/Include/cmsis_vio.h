@@ -1,11 +1,11 @@
 /******************************************************************************
  * @file     cmsis_vio.h
  * @brief    CMSIS Virtual I/O header file
- * @version  V0.1.0
- * @date     23. March 2020
+ * @version  V1.0.0
+ * @date     24. May 2023
  ******************************************************************************/
 /*
- * Copyright (c) 2019-2020 Arm Limited. All rights reserved.
+ * Copyright (c) 2019-2023 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -67,35 +67,7 @@
 #define vioAIN1             (1U)        ///< \ref vioSetValue / \ref vioGetValue \a id parameter: Analog input value 1
 #define vioAIN2             (2U)        ///< \ref vioSetValue / \ref vioGetValue \a id parameter: Analog input value 2
 #define vioAIN3             (3U)        ///< \ref vioSetValue / \ref vioGetValue \a id parameter: Analog input value 3
-#define vioAOUT0            (3U)        ///< \ref vioSetValue / \ref vioGetValue \a id parameter: Analog output value 0
-
-// vioSetXYZ / vioGetXZY: id values
-#define vioMotionGyro       (0U)        ///< \ref vioSetXYZ / \ref vioGetXYZ \a id parameter: for Gyroscope
-#define vioMotionAccelero   (1U)        ///< \ref vioSetXYZ / \ref vioGetXYZ \a id parameter: for Accelerometer
-#define vioMotionMagneto    (2U)        ///< \ref vioSetXYZ / \ref vioGetXYZ \a id parameter: for Magnetometer
-
-// vioPrint: levels
-#define vioLevelNone        (0U)        ///< \ref vioPrint \a level parameter: None
-#define vioLevelHeading     (1U)        ///< \ref vioPrint \a level parameter: Heading
-#define vioLevelMessage     (2U)        ///< \ref vioPrint \a level parameter: Message
-#define vioLevelError       (3U)        ///< \ref vioPrint \a level parameter: Error
-
-/// 3-D vector value
-typedef struct {
-  int32_t   X;                          ///< X coordinate
-  int32_t   Y;                          ///< Y coordinate
-  int32_t   Z;                          ///< Z coordinate
-} vioValueXYZ_t;
-
-/// IPv4 Internet Address
-typedef struct {
-  uint8_t   addr[4];                    ///< IPv4 address value used in \ref vioSetIPv4 / \ref vioGetIPv4 
-} vioAddrIPv4_t;
-
-/// IPv6 Internet Address
-typedef struct {
-  uint8_t   addr[16];                   ///< IPv6 address value used in \ref vioSetIPv6 / \ref vioGetIPv6
-} vioAddrIPv6_t;
+#define vioAOUT0            (4U)        ///< \ref vioSetValue / \ref vioGetValue \a id parameter: Analog output value 0
 
 #ifdef  __cplusplus
 extern "C"
@@ -103,20 +75,11 @@ extern "C"
 #endif
 
 /// Initialize test input, output.
-/// \return none.
 void vioInit (void);
-
-/// Print formated string to test terminal.
-/// \param[in]     level        level (vioLevel...).
-/// \param[in]     format       formated string to print.
-/// \param[in]     ...          optional arguments (depending on format string).
-/// \return number of characters written or -1 in case of error.
-int32_t vioPrint (uint32_t level, const char *format, ...);
 
 /// Set signal output.
 /// \param[in]     mask         bit mask of signals to set.
 /// \param[in]     signal       signal value to set.
-/// \return none.
 void vioSetSignal (uint32_t mask, uint32_t signal);
 
 /// Get signal input.
@@ -127,46 +90,12 @@ uint32_t vioGetSignal (uint32_t mask);
 /// Set value output.
 /// \param[in]     id           output identifier.
 /// \param[in]     value        value to set.
-/// \return none.
 void vioSetValue (uint32_t id, int32_t value);
 
 /// Get value input.
 /// \param[in]     id           input identifier.
 /// \return  value retrieved from input.
 int32_t vioGetValue (uint32_t id);
-
-/// Set XYZ value output.
-/// \param[in]     id           output identifier.
-/// \param[in]     valueXYZ     XYZ data to set.
-/// \return none.
-void vioSetXYZ (uint32_t id, vioValueXYZ_t valueXYZ);
-
-/// Get XYZ value input.
-/// \param[in]     id           input identifier.
-/// \return  XYZ data retrieved from XYZ peripheral.
-vioValueXYZ_t vioGetXYZ (uint32_t id);
-
-/// Set IPv4 address output.
-/// \param[in]     id           output identifier.
-/// \param[in]     addrIPv4     pointer to IPv4 address.
-/// \return none.
-void vioSetIPv4 (uint32_t id, vioAddrIPv4_t addrIPv4);
-
-/// Get IPv4 address input.
-/// \param[in]     id           input identifier.
-/// \return IPv4 address retrieved from peripheral.
-vioAddrIPv4_t vioGetIPv4 (uint32_t id);
-
-/// Set IPv6 address output.
-/// \param[in]     id           output identifier.
-/// \param[in]     addrIPv6     pointer to IPv6 address.
-/// \return none.
-void vioSetIPv6 (uint32_t id, vioAddrIPv6_t addrIPv6);
-
-/// Get IPv6 address from peripheral.
-/// \param[in]     id           input identifier.
-/// \return IPv6 address retrieved from peripheral.
-vioAddrIPv6_t vioGetIPv6 (uint32_t id);
 
 #ifdef  __cplusplus
 }
