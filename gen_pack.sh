@@ -56,7 +56,7 @@ PACK_BASE_FILES="
 # Specify addition argument to packchk
 # Default: empty
 #
-PACKCHK_ARGS=(-x M353 -x M379 -x M336)
+PACKCHK_ARGS=(-x M336)
 
 # Specify additional dependencies for packchk
 # Default: empty
