@@ -109,6 +109,14 @@ generate "Core_A"
 generate "Core"
 generate "Driver"
 generate "RTOS2"
+generate "DSP"
+generate "NN"
+generate "DAP"
+generate "View"
+generate "Compiler"
+generate "Toolbox"
+generate "Stream"
+generate "Zone"
 
 popd > /dev/null
 
