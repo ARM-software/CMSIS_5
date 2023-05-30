@@ -380,7 +380,96 @@ __STATIC_FORCEINLINE uint32_t __get_CNTP_CTL(void)
   __get_CP(15, 0, result, 14, 2, 1);
   return result;
 }
+/******************************* VIRTUAL TIMER *******************************/
+/** see [ARM DDI 0406C.d] :
+    . §B4.1.31 "CNTV_CTL, Counter-timer Virtual Timer Control register"
+    . §B4.1.32 "CNTV_CVAL, Counter-timer Virtual Timer CompareValue register"
+    . §B4.1.33 "CNTV_TVAL, Counter-timer Virtual Timer TimerValue register"
+    . §B4.1.34 "CNTVCT, Counter-timer Virtual Count register"
+**/
+/** \brief  Set CNTV_TVAL
 
+  This function assigns the given value to VL1 Virtual Timer Value Register (CNTV_TVAL).
+
+  \param [in]    value  CNTV_TVAL Register value to set
+*/
+__STATIC_FORCEINLINE void __set_CNTV_TVAL(uint32_t value)
+{
+  __set_CP(15, 0, value, 14, 3, 0);
+}
+
+/** \brief  Get CNTV_TVAL
+
+    This function returns the value of the VL1 Virtual Timer Value Register (CNTV_TVAL).
+
+    \return               CNTV_TVAL Register value
+ */
+__STATIC_FORCEINLINE uint32_t __get_CNTV_TVAL(void)
+{
+  uint32_t result;
+  __get_CP(15, 0, result, 14, 3, 0);
+  return result;
+}
+
+/** \brief  Get CNTVCT
+
+    This function returns the value of the 64 bits VL1 Virtual Count Register (CNTVCT).
+
+    \return               CNTVCT Register value
+ */
+__STATIC_FORCEINLINE uint64_t __get_CNTVCT(void)
+{
+  uint64_t result;
+  __get_CP64(15, 1, result, 14);
+  return result;
+}
+
+/** \brief  Set CNTV_CVAL
+
+  This function assigns the given value to 64bits VL1 Virtual Timer CompareValue Register (CNTV_CVAL).
+
+  \param [in]    value  CNTV_CVAL Register value to set
+*/
+__STATIC_FORCEINLINE void __set_CNTV_CVAL(uint64_t value)
+{
+  __set_CP64(15, 3, value, 14);
+}
+
+/** \brief  Get CNTV_CVAL
+
+    This function returns the value of the 64 bits VL1 Virtual Timer CompareValue Register (CNTV_CVAL).
+
+    \return               CNTV_CVAL Register value
+ */
+__STATIC_FORCEINLINE uint64_t __get_CNTV_CVAL(void)
+{
+  uint64_t result;
+  __get_CP64(15, 3, result, 14);
+  return result;
+}
+
+/** \brief  Set CNTV_CTL
+
+  This function assigns the given value to VL1 Virtual Timer Control Register (CNTV_CTL).
+
+  \param [in]    value  CNTV_CTL Register value to set
+*/
+__STATIC_FORCEINLINE void __set_CNTV_CTL(uint32_t value)
+{
+  __set_CP(15, 0, value, 14, 3, 1);
+}
+
+/** \brief  Get CNTV_CTL register
+    \return               CNTV_CTL Register value
+ */
+__STATIC_FORCEINLINE uint32_t __get_CNTV_CTL(void)
+{
+  uint32_t result;
+  __get_CP(15, 0, result, 14, 3, 1);
+  return result;
+}
+
+/***************************** VIRTUAL TIMER END *****************************/
 #endif
 
 /** \brief  Set TLBIALL
