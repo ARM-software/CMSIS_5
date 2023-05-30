@@ -1939,6 +1939,68 @@ __STATIC_INLINE uint32_t PL1_GetControl(void)
 {
   return(__get_CNTP_CTL());
 }
+/******************************* VIRTUAL TIMER *******************************/
+/** \brief Virtual Timer Control register */
+
+/** \brief Sets the reset value of the virtual timer.
+* \param [in] value The value the virtual timer is loaded with.
+*/
+__STATIC_INLINE void VL1_SetCurrentTimerValue(uint32_t value)
+{
+  __set_CNTV_TVAL(value);
+  __ISB();
+}
+
+/** \brief Get the current virtual timer value.
+* \return Current virtual timer value.
+*/
+__STATIC_INLINE uint32_t VL1_GetCurrentTimerValue(void)
+{
+  return(__get_CNTV_TVAL());
+}
+
+/** \brief Get the current virtual count value.
+* \return Current virtual count value.
+*/
+__STATIC_INLINE uint64_t VL1_GetCurrentCountValue(void)
+{
+  return(__get_CNTVCT());
+}
+
+/** \brief Set the virtual timer compare value.
+* \param [in] value New virtual timer compare value.
+*/
+__STATIC_INLINE void VL1_SetTimerCompareValue(uint64_t value)
+{
+  __set_CNTV_CVAL(value);
+  __ISB();
+}
+
+/** \brief Get the virtual timer compare value.
+* \return Virtual timer compare value.
+*/
+__STATIC_INLINE uint64_t VL1_GetTimerCompareValue(void)
+{
+  return(__get_CNTV_CVAL());
+}
+
+/** \brief Configure the virtual timer by setting the control value.
+* \param [in] value New virtual timer control value.
+*/
+__STATIC_INLINE void VL1_SetControl(uint32_t value)
+{
+  __set_CNTV_CTL(value);
+  __ISB();
+}
+
+/** \brief Get the virtual timer control value.
+* \return Virtual timer control value.
+*/
+__STATIC_INLINE uint32_t VL1_GetControl(void)
+{
+  return(__get_CNTV_CTL());
+}
+/***************************** VIRTUAL TIMER END *****************************/
 #endif
 
 /* Private Timer */
