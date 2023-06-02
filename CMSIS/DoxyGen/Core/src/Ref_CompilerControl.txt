@@ -121,7 +121,7 @@ all calls to this functions, no additional function implementation is generated 
 \\ Get Interrupt Vector
 __STATIC_INLINE uint32_t NVIC_GetVector(IRQn_Type IRQn)
 {
-    uint32_t *vectors = (uint32_t *)SCB->VTOR;
+    uint32_t *vectors = (uint32_t *) ((uintptr_t) SCB->VTOR);
     return vectors[(int32_t)IRQn + NVIC_USER_IRQ_OFFSET];
 }
 \endcode
@@ -144,7 +144,7 @@ For compilers that do not allow to force function inlining, the macro maps to \r
 \\ Get Interrupt Vector
 __STATIC_FORCEINLINE uint32_t NVIC_GetVector(IRQn_Type IRQn)
 {
-    uint32_t *vectors = (uint32_t *)SCB->VTOR;
+    uint32_t *vectors = (uint32_t *) ((uintptr_t) SCB->VTOR);
     return vectors[(int32_t)IRQn + NVIC_USER_IRQ_OFFSET];
 }
 \endcode
