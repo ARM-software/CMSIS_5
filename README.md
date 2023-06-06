@@ -1,6 +1,6 @@
 # CMSIS Version 6 - Preview (Work in Progres)
 
-[![Version](https://img.shields.io/github/v/release/arm-software/CMSIS_6)](https://github.com/ARM-software/CMSIS_6/releases/latest) [![License](https://img.shields.io/github/license/arm-software/CMSIS_6)](https://arm-software.github.io/CMSIS_6/General/html/LICENSE.txt)
+[![Version](https://img.shields.io/github/v/release/arm-software/CMSIS_6)](https://github.com/ARM-software/CMSIS_6/releases/latest) [![License](https://img.shields.io/github/license/arm-software/CMSIS_6)](https://arm-software.github.io/CMSIS_6/General/html/LICENSE)
 
 The branch *main* of this GitHub repository contains ![Version](https://img.shields.io/github/v/release/arm-software/CMSIS_6?display_name=release&label=%20&sort=semver).
 

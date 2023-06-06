@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Version: 2.7
-# Date: 2023-05-23
+# Date: 2023-06-06
 # This bash script generates a CMSIS Software Pack:
 #
 
@@ -40,7 +40,7 @@ PACK_DIRS="
 # Default: empty
 #
 PACK_BASE_FILES="
-  LICENSE.txt
+  LICENSE
 "
 
 # Specify file names to be deleted from pack build directory

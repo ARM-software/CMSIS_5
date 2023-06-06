@@ -1427,7 +1427,7 @@ HTML_EXTRA_FILES       = ../Doxygen_Templates/tabs.css \
                          ../Doxygen_Templates/printComponentTabs.js \
                          ../Doxygen_Templates/darkmode_toggle.js \
                          ../Doxygen_Templates/navtree.js \
-                         ../Doxygen_Templates/dropdown.png \
+                         ../Doxygen_Templates/dropdown.png
 
 # The HTML_COLORSTYLE tag can be used to specify if the generated HTML output
 # should be rendered with a dark or light theme.
