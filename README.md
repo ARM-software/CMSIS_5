@@ -4,7 +4,7 @@
 
 The branch *main* of this GitHub repository contains ![Version](https://img.shields.io/github/v/release/arm-software/CMSIS_6?display_name=release&label=%20&sort=semver).
 
-The [documentation](http://arm-software.github.io/CMSIS_6/General/html/index.html) is available under http://arm-software.github.io/CMSIS_6/General/html/index.html
+The [documentation](https://arm-software.github.io/CMSIS_6/) is available under https://arm-software.github.io/CMSIS_6/
 
 Use [Issues](https://github.com/ARM-software/CMSIS_6#issues-and-labels) to provide feedback and report problems for CMSIS Version 6.
 
