@@ -240,9 +240,9 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
-            <td></td>
-            <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
+            <td></td>
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
@@ -259,9 +259,9 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
-            <td></td>
-            <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
+            <td></td>
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
@@ -278,9 +278,9 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
-            <td></td>
-            <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
+            <td></td>
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
@@ -328,6 +328,25 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td><center>&radic;</center></td>
+        </tr>
+        <tr>
+            <td>FMD</td>
+            <td>FT32F1xx</td>
+            <td><center>&radic;</center></td>
+            <td></td>
+            <td></td>
+            <td><center>&radic;</center></td>
+            <td><center>&radic;</center></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><center>&radic;</center></td>
+            <td></td>
+            <td><center>&radic;</center></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
         </tr>
         <tr>
             <td>Infineon</td>
@@ -1757,6 +1776,44 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
         <tr>
             <td></td>
             <td>MIMXRT1024</td>
+            <td></td>
+            <td><center>&radic;</center></td>
+            <td><center>&radic;</center></td>
+            <td><center>&radic;</center></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><center>&radic;</center></td>
+            <td></td>
+            <td><center>&radic;</center></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>MIMXRT1041</td>
+            <td></td>
+            <td></td>
+            <td><center>&radic;</center></td>
+            <td><center>&radic;</center></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><center>&radic;</center></td>
+            <td></td>
+            <td><center>&radic;</center></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>MIMXRT1042</td>
             <td></td>
             <td><center>&radic;</center></td>
             <td><center>&radic;</center></td>
@@ -3694,6 +3751,25 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
         </tr>
         <tr>
             <td>STMicroelectronics</td>
+            <td>STM32C0xx</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><center>&radic;</center></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>STMicroelectronics</td>
             <td>STM32F0xx</td>
             <td><center>&radic;</center></td>
             <td></td>
@@ -4016,6 +4092,8 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
         </tr>
 </table>
+
+Last update: 2023-06-13.
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/

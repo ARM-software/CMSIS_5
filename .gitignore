@@ -16,3 +16,4 @@ CMSIS/CoreValidation/Project/RTE/_**/*
 build
 output
 linkchecker-out.csv
+.DS_STORE
