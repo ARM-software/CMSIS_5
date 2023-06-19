@@ -13,7 +13,7 @@ layer:
     - component: Device:Startup&C Startup
 
   misc:
-    - compiler: IAR
+    - for-compiler: IAR
       Link: [--config generic_cortex.icf]
 
   groups:

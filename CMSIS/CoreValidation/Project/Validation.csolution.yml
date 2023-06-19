@@ -9,13 +9,13 @@ solution:
   compiler: AC6
 
   misc:
-    - compiler: AC6
+    - for-compiler: AC6
       C: [-std=c99, -gdwarf-4, -ffunction-sections]
       Link: [--entry=Reset_Handler, --symbols, --map]
-    - compiler: GCC
+    - for-compiler: GCC
       C: [-std=gnu99, -gdwarf-2, -ffunction-sections, -fdata-sections]
       Link: [--specs=nano.specs, --specs=rdimon.specs]
-    - compiler: IAR
+    - for-compiler: IAR
       C: [--dlib_config DLib_Config_Full.h]
       Link: [--semihosting]
 
@@ -134,8 +134,8 @@ solution:
       debug: on
 
   projects:
-    - project: ./validation.cproject.yml
-    - project: ./bootloader.cproject.yml
+    - project: ./Validation.cproject.yml
+    - project: ./Bootloader.cproject.yml
       for-context:
         - +CM23NS
         - +CM33NS

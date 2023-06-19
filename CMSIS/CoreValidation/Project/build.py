@@ -233,7 +233,7 @@ def preprocess(infile, outfile):
 @matrix_command()
 def cbuild(config):
     return ["cbuild", "--toolchain", config.compiler.toolchain, "--update-rte", \
-             "--configuration", f".{config.optimize}+{config.device[1]}", \
+             "--context", f".{config.optimize}+{config.device[1]}", \
              "Validation.csolution.yml" ]
 
 

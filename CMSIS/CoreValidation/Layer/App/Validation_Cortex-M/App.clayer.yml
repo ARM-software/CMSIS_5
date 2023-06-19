@@ -8,20 +8,20 @@ layer:
   # packs:
   #   - pack: ARM::CMSIS
 
-  defines:
-    - PRINT_XML_REPORT=1
+  define:
+    - PRINT_XML_REPORT: 1
 
-  add-paths:
+  add-path:
     - ../../../Include
     - ../../../Source/Config
 
   misc:
-    - compiler: AC6
-      C*:
+    - for-compiler: AC6
+      C-CPP:
       - -Wno-declaration-after-statement
       - -Wno-covered-switch-default
-    - compiler: GCC
-      C*:
+    - for-compiler: GCC
+      C-CPP:
       - -Wno-declaration-after-statement
       - -Wno-covered-switch-default
 
@@ -42,7 +42,7 @@ layer:
         - file: ../../../Source/CV_CoreSimd.c
         - file: ../../../Source/CV_CML1Cache.c
         - file: ../../../Source/CV_MPU_ARMv7.c
-          for-type:
+          for-context:
             - +CM0
             - +CM0plus
             - +CM3
@@ -52,7 +52,7 @@ layer:
             - +CM7SP
             - +CM7DP
         - file: ../../../Source/CV_MPU_ARMv8.c
-          for-type:
+          for-context:
             - +CM23
             - +CM23S
             - +CM23NS

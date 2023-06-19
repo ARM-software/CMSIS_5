@@ -14,7 +14,7 @@ layer:
     - component: Device:IRQ Controller:GIC
 
   misc:
-    - compiler: IAR
+    - for-compiler: IAR
       Link: [--config generic_cortex.icf]
 
   groups:
