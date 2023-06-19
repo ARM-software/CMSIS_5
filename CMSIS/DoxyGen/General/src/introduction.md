@@ -59,16 +59,16 @@ CMSIS Components {#cmsis_components}
 
 <div class="tiles">
   <div class="tile">
-    <span class="tileh h2">CMSIS-Toolbox</span><span style="color:var(--page-foreground-color);">A set of command-line tools to work with software packs</span><span style="align-self:end;"><a href="...">Guide</a> | <a href="https://github.com/Open-CMSIS-Pack/cmsis-toolbox">GitHub</a></span>
+    <span class="tileh h2">CMSIS-Toolbox</span><span style="color:var(--page-foreground-color);">A set of command-line tools to work with software packs</span><span style="align-self:end;"><a href="">Guide</a> | <a href="https://github.com/Open-CMSIS-Pack/cmsis-toolbox">GitHub</a></span>
   </div>
   <div class="tile">
-    <span class="tileh h2">CMSIS-Stream</span><span style="color:var(--page-foreground-color);">Peripheral description of a device for debug view</span><span style="align-self:end;"><a href="...">Guide</a> | <a href="...">GitHub</a></span>
+    <span class="tileh h2">CMSIS-Stream</span><span style="color:var(--page-foreground-color);">Peripheral description of a device for debug view</span><span style="align-self:end;"><a href="">Guide</a> | <a href="">GitHub</a></span>
   </div>
   <div class="tile">
-    <span class="tileh h2">CMSIS-DAP</span><span style="color:var(--page-foreground-color);">Firmware for debug units interfacing to CoreSight Debug Access Port</span><span style="align-self:end;"><a href="...">Guide</a> | <a href="...">GitHub</a></span>
+    <span class="tileh h2">CMSIS-DAP</span><span style="color:var(--page-foreground-color);">Firmware for debug units interfacing to CoreSight Debug Access Port</span><span style="align-self:end;"><a href="">Guide</a> | <a href="">GitHub</a></span>
   </div>
   <div class="tile">
-    <span class="tileh h2">CMSIS-Zone</span><span style="color:var(--page-foreground-color);">Defines methods to describe system resources and to partition them</span><span style="align-self:end;"><a href="...">Guide</a> | <a href="https://github.com/ARM-software/CMSIS-Zone">GitHub</a></span>
+    <span class="tileh h2">CMSIS-Zone</span><span style="color:var(--page-foreground-color);">Defines methods to describe system resources and to partition them</span><span style="align-self:end;"><a href="">Guide</a> | <a href="https://github.com/ARM-software/CMSIS-Zone">GitHub</a></span>
   </div>
 </div>
 
@@ -80,7 +80,7 @@ CMSIS Components {#cmsis_components}
     <span class="tileh h2">CMSIS-Pack</span><span style="color:var(--page-foreground-color);">Delivery mechanism for software components and device/board support</span><span style="align-self:end;"><a href="https://open-cmsis-pack.github.io/Open-CMSIS-Pack-Spec/main/html/index.html">Guide</a> | <a href="https://github.com/Open-CMSIS-Pack/Open-CMSIS-Pack-Spec">GitHub</a></span>
   </div>
   <div class="tile">
-    <span class="tileh h2">CMSIS-SVD</span><span style="color:var(--page-foreground-color);">Peripheral description of a device for debug view</span><span style="align-self:end;"><a href="...">Guide</a> | <a href="...">GitHub</a></span>
+    <span class="tileh h2">CMSIS-SVD</span><span style="color:var(--page-foreground-color);">Peripheral description of a device for debug view</span><span style="align-self:end;"><a href="">Guide</a> | <a href="">GitHub</a></span>
   </div>
 </div>
 
