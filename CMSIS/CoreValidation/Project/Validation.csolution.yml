@@ -6,13 +6,13 @@ solution:
       path: ../../../
 
   misc:
-    - compiler: AC6
+    - for-compiler: AC6
       C: [-std=c99, -gdwarf-4, -ffunction-sections]
       Link: [--entry=Reset_Handler, --symbols, --map]
-    - compiler: GCC
+    - for-compiler: GCC
       C: [-std=gnu99, -gdwarf-2, -ffunction-sections, -fdata-sections]
       Link: [--specs=nano.specs, --specs=rdimon.specs]
-    - compiler: IAR
+    - for-compiler: IAR
       Link: [--semihosting]
 
   target-types:
@@ -143,86 +143,86 @@ solution:
     - type: AC6_low
       compiler: AC6
       misc:
-        - compiler: AC6
+        - for-compiler: AC6
           C: [-O1]
     - type: AC6_mid
       compiler: AC6
       misc:
-        - compiler: AC6
+        - for-compiler: AC6
           C: [-O2]
     - type: AC6_high
       compiler: AC6
       misc:
-        - compiler: AC6
+        - for-compiler: AC6
           C: [-O3]
     - type: AC6_size
       compiler: AC6
       misc:
-        - compiler: AC6
+        - for-compiler: AC6
           C: [-Os]
     - type: AC6_tiny
       compiler: AC6
       misc:
-        - compiler: AC6
+        - for-compiler: AC6
           C: [-Oz]
   #GCC_low, GCC_mid, GCC_high, GCC_size, GCC_OZ,
     - type: GCC_low
       compiler: GCC
       misc:
-        - compiler: GCC
+        - for-compiler: GCC
           C: [-O1]
     - type: GCC_mid
       compiler: GCC
       misc:
-        - compiler: GCC
+        - for-compiler: GCC
           C: [-O2]
     - type: GCC_high
       compiler: GCC
       misc:
-        - compiler: GCC
+        - for-compiler: GCC
           C: [-O3]
     - type: GCC_size
       compiler: GCC
       misc:
-        - compiler: GCC
+        - for-compiler: GCC
           C: [-Os]
     - type: GCC_tiny
       compiler: GCC
       misc:
-        - compiler: GCC
+        - for-compiler: GCC
           C: [-Ofast]
   #IAR_low
     - type: IAR_low
       compiler: IAR
       misc:
-        - compiler: IAR
+        - for-compiler: IAR
           C: [-Ol, --dlib_config DLib_Config_Full.h]
     - type: IAR_mid
       compiler: IAR
       misc:
-        - compiler: IAR
+        - for-compiler: IAR
           C: [-Om, --dlib_config DLib_Config_Full.h]
     - type: IAR_high
       compiler: IAR
       misc:
-        - compiler: IAR
+        - for-compiler: IAR
           C: [-Oh, --dlib_config DLib_Config_Full.h]
     - type: IAR_size
       compiler: IAR
       misc:
-        - compiler: IAR
+        - for-compiler: IAR
           C: [-Ohz, --dlib_config DLib_Config_Full.h]
     - type: IAR_tiny
       compiler: IAR
       misc:
-        - compiler: IAR
+        - for-compiler: IAR
           C: [-Ohs, --dlib_config DLib_Config_Full.h]
 
   projects:
     - project: ./Validation.cproject.yml
 
     - project: ./Bootloader.cproject.yml
-      for-type:
+      for-context:
         - +CM23S
         - +CM33S
         - +CM35PS

@@ -131,7 +131,7 @@ def config_suffix(config, timestamp=True):
 
 
 def image_name(config):
-    return f"{config.compiler}_{config.optimize}+{config.device[1]}"
+    return f"Validation"
 
 
 def project_name(config):
@@ -139,7 +139,7 @@ def project_name(config):
 
 
 def bl_image_name(config):
-    return f"{config.compiler}_{config.optimize}+{config.device.bl_device}"
+    return f"Bootloader"
 
 
 def bl_project_name(config):

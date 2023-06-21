@@ -8,20 +8,20 @@ layer:
   # packs:
   #   - pack: ARM::CMSIS
 
-  defines:
-    - PRINT_XML_REPORT=1
+  define:
+    - PRINT_XML_REPORT: 1
 
-  add-paths:
+  add-path:
     - ../../../Include
     - ../../../Source/ConfigA
 
   misc:
-    - compiler: AC6
-      C*:
+    - for-compiler: AC6
+      C-CPP:
       - -Wno-declaration-after-statement
       - -Wno-covered-switch-default
-    - compiler: GCC
-      C*:
+    - for-compiler: GCC
+      C-CPP:
       - -Wno-declaration-after-statement
       - -Wno-covered-switch-default
 
