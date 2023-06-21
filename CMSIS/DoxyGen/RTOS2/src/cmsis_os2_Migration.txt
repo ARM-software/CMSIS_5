@@ -2,17 +2,12 @@
 /**
 \page os2Migration Migration from API v1 to API v2
 
-To use the API version 2 functions follow the steps described in:
- - \subpage os2MigrationGuide - Steps to migrate from API version 1 to API version 2
- - \subpage os2MigrationFunctions - List of function differences
-
 \if NEVER_ENABLE
 =======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====
        Functions 
 \endif
-\page os2MigrationFunctions Detailed API Function Differences 
 
-This section lists the CMSIS-RTOS API v1 and API v2 functions along with the differences in functionality.
+This page lists the CMSIS-RTOS API v1 and API v2 functions along with the differences in functionality.
 The list is sorted alphabetically by API v2 function names and is structured the following way:
 
   - RTOS API v2 function prototype

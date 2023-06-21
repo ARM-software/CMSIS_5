@@ -38,9 +38,6 @@ states change as follows:
    returning from the thread function. Threads that are terminated are in the \ref ThreadStates "INACTIVE" state and typically do not consume
    any dynamic memory resources. 
 
-\note 
-Refer to \ref threadConfig for RTX5 configuration options.
-
 \anchor thread_examples
 Thread Examples
 ===============
