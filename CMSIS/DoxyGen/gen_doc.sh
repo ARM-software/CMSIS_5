@@ -13,7 +13,7 @@ set -o pipefail
 # Set version of gen pack library
 # For available versions see https://github.com/Open-CMSIS-Pack/gen-pack/tags.
 # Use the tag name without the prefix "v", e.g., 0.7.0
-REQUIRED_GEN_PACK_LIB="0.8.3"
+REQUIRED_GEN_PACK_LIB="0.8.4"
 
 DIRNAME=$(dirname $(readlink -f $0))
 GENDIR=../Documentation
