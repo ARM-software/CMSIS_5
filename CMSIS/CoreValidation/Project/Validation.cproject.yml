@@ -4,7 +4,7 @@ project:
   layers:
     # App: CMSIS-Core Validation for Cortex-M
     - layer: ../Layer/App/Validation_Cortex-M/App.clayer.yml
-      for-type:
+      for-context:
         - +CM0
         - +CM0plus
         - +CM3
@@ -29,14 +29,14 @@ project:
 
     # App: CMSIS-Core Validation for Cortex-A
     - layer: ../Layer/App/Validation_Cortex-A/App.clayer.yml
-      for-type:
+      for-context:
         - +CA5
         - +CA7
         - +CA9
 
     #Target: CM0
     - layer: ../Layer/Target/CM0/Target.clayer.yml
-      for-type:
+      for-context:
         - .AC6_low+CM0
         - .AC6_mid+CM0
         - .AC6_high+CM0
@@ -55,7 +55,7 @@ project:
 
     #Target: CM0plus
     - layer: ../Layer/Target/CM0plus/Target.clayer.yml
-      for-type:
+      for-context:
         - .AC6_low+CM0plus
         - .AC6_mid+CM0plus
         - .AC6_high+CM0plus
@@ -74,7 +74,7 @@ project:
 
     #Target: CM3
     - layer: ../Layer/Target/CM3/Target.clayer.yml
-      for-type:
+      for-context:
         - .AC6_low+CM3
         - .AC6_mid+CM3
         - .AC6_high+CM3
@@ -93,7 +93,7 @@ project:
 
     #Target: CM4
     - layer: ../Layer/Target/CM4/Target.clayer.yml
-      for-type:
+      for-context:
         - .AC6_low+CM4
         - .AC6_mid+CM4
         - .AC6_high+CM4
@@ -112,7 +112,7 @@ project:
 
     #Target: CM4FP
     - layer: ../Layer/Target/CM4FP/Target.clayer.yml
-      for-type:
+      for-context:
         - .AC6_low+CM4FP
         - .AC6_mid+CM4FP
         - .AC6_high+CM4FP
@@ -131,7 +131,7 @@ project:
 
     #Target: CM7
     - layer: ../Layer/Target/CM7/Target.clayer.yml
-      for-type:
+      for-context:
         - .AC6_low+CM7
         - .AC6_mid+CM7
         - .AC6_high+CM7
@@ -150,7 +150,7 @@ project:
 
     #Target: CM7SP
     - layer: ../Layer/Target/CM7SP/Target.clayer.yml
-      for-type:
+      for-context:
         - .AC6_low+CM7SP
         - .AC6_mid+CM7SP
         - .AC6_high+CM7SP
@@ -169,7 +169,7 @@ project:
 
     #Target: CM7DP
     - layer: ../Layer/Target/CM7DP/Target.clayer.yml
-      for-type:
+      for-context:
         - .AC6_low+CM7DP
         - .AC6_mid+CM7DP
         - .AC6_high+CM7DP
@@ -188,7 +188,7 @@ project:
 
     #Target: CM23
     - layer: ../Layer/Target/CM23/Target.clayer.yml
-      for-type:
+      for-context:
         - .AC6_low+CM23
         - .AC6_mid+CM23
         - .AC6_high+CM23
@@ -207,7 +207,7 @@ project:
 
     #Target: CM23S
     - layer: ../Layer/Target/CM23S/Target.clayer.yml
-      for-type:
+      for-context:
         - .AC6_low+CM23S
         - .AC6_mid+CM23S
         - .AC6_high+CM23S
@@ -226,7 +226,7 @@ project:
 
     #Target: CM23NS
     - layer: ../Layer/Target/CM23NS/Target.clayer.yml
-      for-type:
+      for-context:
         - .AC6_low+CM23NS
         - .AC6_mid+CM23NS
         - .AC6_high+CM23NS
@@ -245,7 +245,7 @@ project:
 
     #Target: CM33
     - layer: ../Layer/Target/CM33/Target.clayer.yml
-      for-type:
+      for-context:
         - .AC6_low+CM33
         - .AC6_mid+CM33
         - .AC6_high+CM33
@@ -264,7 +264,7 @@ project:
 
     #Target: CM33S
     - layer: ../Layer/Target/CM33S/Target.clayer.yml
-      for-type:
+      for-context:
         - .AC6_low+CM33S
         - .AC6_mid+CM33S
         - .AC6_high+CM33S
@@ -283,7 +283,7 @@ project:
 
     #Target: CM33NS
     - layer: ../Layer/Target/CM33NS/Target.clayer.yml
-      for-type:
+      for-context:
         - .AC6_low+CM33NS
         - .AC6_mid+CM33NS
         - .AC6_high+CM33NS
@@ -302,7 +302,7 @@ project:
 
     #Target: CM35P
     - layer: ../Layer/Target/CM35P/Target.clayer.yml
-      for-type:
+      for-context:
         - .AC6_low+CM35P
         - .AC6_mid+CM35P
         - .AC6_high+CM35P
@@ -321,7 +321,7 @@ project:
 
     #Target: CM35PS
     - layer: ../Layer/Target/CM35PS/Target.clayer.yml
-      for-type:
+      for-context:
         - .AC6_low+CM35PS
         - .AC6_mid+CM35PS
         - .AC6_high+CM35PS
@@ -340,7 +340,7 @@ project:
 
     #Target: CM35PNS
     - layer: ../Layer/Target/CM35PNS/Target.clayer.yml
-      for-type:
+      for-context:
         - .AC6_low+CM35PNS
         - .AC6_mid+CM35PNS
         - .AC6_high+CM35PNS
@@ -359,7 +359,7 @@ project:
 
     #Target: CM55S
     - layer: ../Layer/Target/CM55S/Target.clayer.yml
-      for-type:
+      for-context:
         - .AC6_low+CM55S
         - .AC6_mid+CM55S
         - .AC6_high+CM55S
@@ -378,7 +378,7 @@ project:
 
     #Target: CM55NS
     - layer: ../Layer/Target/CM55NS/Target.clayer.yml
-      for-type:
+      for-context:
         - .AC6_low+CM55NS
         - .AC6_mid+CM55NS
         - .AC6_high+CM55NS
@@ -397,7 +397,7 @@ project:
 
     #Target: CM85S
     - layer: ../Layer/Target/CM85S/Target.clayer.yml
-      for-type:
+      for-context:
         - .AC6_low+CM85S
         - .AC6_mid+CM85S
         - .AC6_high+CM85S
@@ -416,7 +416,7 @@ project:
 
     #Target: CM85NS
     - layer: ../Layer/Target/CM85NS/Target.clayer.yml
-      for-type:
+      for-context:
         - .AC6_low+CM85NS
         - .AC6_mid+CM85NS
         - .AC6_high+CM85NS
@@ -435,7 +435,7 @@ project:
 
     #Target: CA5
     - layer: ../Layer/Target/CA5/Target.clayer.yml
-      for-type:
+      for-context:
         - .AC6_low+CA5
         - .AC6_mid+CA5
         - .AC6_high+CA5
@@ -454,7 +454,7 @@ project:
 
     #Target: CA7
     - layer: ../Layer/Target/CA7/Target.clayer.yml
-      for-type:
+      for-context:
         - .AC6_low+CA7
         - .AC6_mid+CA7
         - .AC6_high+CA7
@@ -473,7 +473,7 @@ project:
 
     #Target: CA9
     - layer: ../Layer/Target/CA9/Target.clayer.yml
-      for-type:
+      for-context:
         - .AC6_low+CA9
         - .AC6_mid+CA9
         - .AC6_high+CA9

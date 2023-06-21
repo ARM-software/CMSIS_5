@@ -4,7 +4,7 @@ project:
   layers:
     # App: CMSIS-Core Validation for Cortex-M (Bootloader part)
     - layer: ../Layer/App/Bootloader_Cortex-M/App.clayer.yml
-      for-type:
+      for-context:
         - .AC6_low
         - .AC6_mid
         - .AC6_high
@@ -23,7 +23,7 @@ project:
 
     #Target: CM23S
     - layer: ../Layer/Target/CM23S_BL/Target.clayer.yml
-      for-type:
+      for-context:
         - .AC6_low+CM23S
         - .AC6_mid+CM23S
         - .AC6_high+CM23S
@@ -42,7 +42,7 @@ project:
 
     #Target: CM33S
     - layer: ../Layer/Target/CM33S_BL/Target.clayer.yml
-      for-type:
+      for-context:
         - .AC6_low+CM33S
         - .AC6_mid+CM33S
         - .AC6_high+CM33S
@@ -61,7 +61,7 @@ project:
 
     #Target: CM35PS
     - layer: ../Layer/Target/CM35PS_BL/Target.clayer.yml
-      for-type:
+      for-context:
         - .AC6_low+CM35PS
         - .AC6_mid+CM35PS
         - .AC6_high+CM35PS
@@ -80,7 +80,7 @@ project:
 
     #Target: CM55S
     - layer: ../Layer/Target/CM55S_BL/Target.clayer.yml
-      for-type:
+      for-context:
         - .AC6_low+CM55S
         - .AC6_mid+CM55S
         - .AC6_high+CM55S
@@ -99,7 +99,7 @@ project:
 
     #Target: CM85S
     - layer: ../Layer/Target/CM85S_BL/Target.clayer.yml
-      for-type:
+      for-context:
         - .AC6_low+CM85S
         - .AC6_mid+CM85S
         - .AC6_high+CM85S
