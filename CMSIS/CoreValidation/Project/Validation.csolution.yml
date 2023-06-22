@@ -1,23 +1,14 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/Open-CMSIS-Pack/devtools/schemas/projmgr/1.5.0/tools/projmgr/schemas/csolution.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Open-CMSIS-Pack/devtools/schemas/projmgr/2.0.0-dev2/tools/projmgr/schemas/csolution.schema.json
 
 solution:
+  created-for: cmsis-toobox@2.0.0-dev2
+
+  cdefault: null
+
   packs:
     - pack: ARM::CMSIS
       path: ../../../
     - pack: ARM::CMSIS_DFP
-
-  compiler: AC6
-
-  misc:
-    - for-compiler: AC6
-      C: [-std=c99, -gdwarf-4, -ffunction-sections]
-      Link: [--entry=Reset_Handler, --symbols, --map]
-    - for-compiler: GCC
-      C: [-std=gnu99, -gdwarf-2, -ffunction-sections, -fdata-sections]
-      Link: [--specs=nano.specs, --specs=rdimon.specs]
-    - for-compiler: IAR
-      C: [--dlib_config DLib_Config_Full.h]
-      Link: [--semihosting]
 
   target-types:
     #CM0
