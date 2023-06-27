@@ -1,8 +1,24 @@
-# About CMSIS-View {#mainpage}
+# CMSIS-Zone {#mainpage}
 
+**CMSIS-Zone** is an open source utility that helps to manage software configurations for partitions that have different access permissions to system resources in devices with Arm Cortex-M processors. It implements the infrastructure that is required for:
+- Split of a multi-processor system for single processor views
+- TrustZone setup (SAU, Interrupt assignment to Secure/Non-Secure)
+- Setup of Memory Protection Unit (MPU)
+- Setup of device specific Memory Protection Controller (MPC)
+- Setup of device specific Peripheral Protection Controller (PPC)
 
-## Section 1 {#section1}
+## Acess to CMSIS-Zone
 
-## Section 2 {#section2}
+CMSIS-Zone is maintained in a GitHub repository and is released as a standalone Eclipse plugin.
 
+- [**CMSIS-Zone GitHub Repo**](https://github.com/Arm-Software/CMSIS-Zone) provides the full source code as well as releases as Eclipse Plugins.
+- [**CMSIS-Zone Documentation**](https://arm-software.github.io/CMSIS-Zone/latest/) explains in details how to use the utility.
 
+## Key Features and Benefits
+
+- CMSIS-Zone reduces the complexity of configuring access permissions in embedded software.
+- Allows to setup of access permissions to memory and peripherals in secure/non-secure modes, and privilege execution levels.
+- Provides graphical (GUI) and command line (CLI) interfaces.
+- Generates the code for the setup of protection hardware such as SAU, MPC, PPC, MPU.
+- Generates the linker scripts for the defined partitions.
+- Includes multiple examples for real hardware.

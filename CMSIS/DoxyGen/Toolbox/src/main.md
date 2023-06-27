@@ -5,6 +5,11 @@ The **CMSIS-Toolbox** provides command-line tools for:
 - Project creation and build of embedded applications utilizing [Software Packs](https://www.keil.arm.com/packs/) with support for multiple compilation tools.
 - Software Pack creation, maintenance, and distribution utilizing the [CMSIS-Pack format](https://open-cmsis-pack.github.io/Open-CMSIS-Pack-Spec/main/html/index.html).
 
+## Access to CMSIS-Toolbox
+
+- [**CMSIS-Toolbox GitHub Repo**](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/releases) - direct access to the release versions for the tools.
+- [**vcpkg**](todo) - uses the Arm tools artifactory for consistent installation of development tools.
+
 ## Project Creation
 
 The following tools support the creation of build information for embedded applications:
@@ -53,7 +58,3 @@ Hands-on Tutorial         | Description
 [**DFP-Pack-HandsOn**](https://github.com/Open-CMSIS-Pack/DFP-Pack-HandsOn)  | Explains the structure and creation of a Device Family Pack (DFP).
 [**BSP-Pack-HandsOn**](https://github.com/Open-CMSIS-Pack/DFP-Pack-HandsOn)  | Explains the structure and creation of a Board Support Pack (BSP).  
 
-## Access to CMSIS-Toolbox
-
-- [**vcpkg**](todo) - uses the Arm tools artifactory for consistent installation of development tools.
-- [**GitHub Repo**](https://github.com/Open-CMSIS-Pack/cmsis-toolbox/releases) - direct access to the release versions for the tools.
