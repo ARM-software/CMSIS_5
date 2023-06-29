@@ -14,8 +14,8 @@ var arr = [];
 
 // fill array
  arr.push( new tabElement( "GEN",     "General",     "Overview"));
- arr.push( new tabElement( "CORE_A",  "Core_A",      "Core (A)"));
  arr.push( new tabElement( "CORE_M",  "Core",        "Core (M)"));
+ arr.push( new tabElement( "CORE_A",  "Core_A",      "Core (A)"));
  arr.push( new tabElement( "DRV",     "Driver",      "Driver"));
  arr.push( new tabElement( "RTOS2",   "RTOS2",       "RTOS2"));
  arr.push( new tabElement( "DSP",     "DSP",         "DSP"));

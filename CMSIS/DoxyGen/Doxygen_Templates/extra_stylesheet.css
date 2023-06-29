@@ -186,6 +186,7 @@ html {
 	--tooltip-declaration-color: #006318;
 	--tooltip-link-color: #4665A2;
 	--tooltip-shadow: 1px 1px 7px gray;
+	--tile-hover-border-coler: var(--arm_dark_gray);
 	
 	/** font-family */
 	--font-family-normal: Lato, Calibri, sans-serif;
@@ -354,6 +355,7 @@ html.dark-mode {
 	--tooltip-declaration-color: #20C348;
 	--tooltip-link-color: #79C0FF;
 	--tooltip-shadow: none;
+	--tile-hover-border-coler: var(--arm_light_gray);
 	
 
 	/** font-family */
@@ -388,26 +390,30 @@ body, table, div, p, dl {
   padding-bottom: 5px;
   vertical-align:text-top;
   text-align:center;
+  margin: 2px;
+  background-color: var(--group-header-separator-color);
 }
 
 .tile:hover {
- border-color: var(--arm_blue);
+ border-color: var(--tile-hover-border-coler);
  border-style: solid;
  border-width: 1px;
- padding-inline: 4px;
- padding-bottom: 4px;
+ height: 130px;
+ margin:1px;
+ margin-bottom:0px;
+ padding-inline: 5px;
+ padding-bottom: 3px;
 }
-
-
+	
 .tile h2 {
-  font-size: 18px;
+  font-size: 17px;
   margin-top:5px;
   margin-bottom:0px;
   text-align:center;
 }
 
 .tile .tileh {
-  font-size: 18px;
+  font-size: 17px;
   font-weight:bold;
   margin-top:5px;
   margin-bottom:0px;
@@ -415,9 +421,16 @@ body, table, div, p, dl {
   color:var(--page-link-color);
 }
 
-.tile-link {
- vertical-align:text-bottom;
- margin-top:20px;
+.tiletxt {
+	font-size: 15px;
+	color:var(--page-foreground-color);
+	margin:0px;
+	padding:0px;
+}
+
+.tilelinks {
+	font-size: 14px;
+    align-self: end;
 }
 
 
