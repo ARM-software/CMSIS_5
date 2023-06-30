@@ -344,6 +344,16 @@ const osThreadAttr_t thread_B_attr = {
 \endcode
 */
 
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\def osThreadProcessor(n)
+\param  n Processor number.
+\brief  Thread processor affinity mask value in attribute affinity_mask format.
+\details
+
+The preprocessor macro \b osThreadProcessor constructs attribute affinity_mask derived from \a n.
+*/
+
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
@@ -881,6 +891,66 @@ void TerminateFaultedThreads (void) {  // to be called from an exception fault c
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
 /**
+\fn osStatus_t osThreadSetAffinityMask (osThreadId_t thread_id, uint32_t affinity_mask);
+\details
+The function \b osThreadSetAffinityMask sets the affinity mask of the thread specified by parameter \a thread_id to the mask specified by the parameter \a affinity_mask. 
+The mask indicates on which processor(s) the thread should run (\token{0} indicates on any processor).
+
+Possible \ref osStatus_t return values:
+    - \em osOK: the affinity mask of the specified thread has been set successfully.
+    - \em osErrorParameter: \a thread_id is \token{NULL} or invalid or \a priority is incorrect.
+    - \em osErrorResource: the thread is in an invalid state.
+    - \em osErrorISR: the function \b osThreadSetAffinityMask cannot be called from interrupt service routines.
+    - \em osErrorSafetyClass: the calling thread safety class is lower than the safety class of the specified thread.
+
+\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
+<b>Code Example</b>
+\code
+#include "cmsis_os2.h"
+ 
+void Thread_1 (void const *arg) {               // Thread function
+  osThreadId_t id;                              // id for the currently running thread
+  osStatus_t   status;                          // status of the executed function
+ 
+  id = osThreadGetId();                         // Obtain ID of current running thread
+ 
+  status = osThreadSetAffinityMask(id, osThreadProcessor(1));  // Set thread affinity mask
+  if (status == osOK) {
+    // Thread affinity mask set to processor number 1
+  }
+  else {
+    // Failed to set the affinity mask
+  }
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn uint32_t osThreadGetAffinityMask (osThreadId_t thread_id);
+\details
+The function \b osThreadGetAffinityMask returns the affinity mask of the thread specified by parameter \a thread_id. 
+In case of an error, it returns \token{0}.
+
+\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
+<b>Code Example</b>
+\code
+#include "cmsis_os2.h"
+ 
+void Thread_1 (void const *arg) {               // Thread function
+  osThreadId_t id;                              // id for the currently running thread
+  uint32_t     affinity_mask;                   // thread affinity mask
+   
+  id = osThreadGetId();                         // Obtain ID of current running thread
+  affinity_mask = osThreadGetAffinityMask(id);  // Obtain the thread affinity mask
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
 \fn uint32_t osWatchdogAlarm_Handler (osThreadId_t thread_id);
 \details
 The callback function \b osWatchdogAlarm_Handler is called by the kernel when a thread watchdog expires.
@@ -1012,5 +1082,11 @@ Default: \token{0} not thread context specified.
 \else
 Applicable only for devices on Armv8-M architecture. Ignored on others.
 \endif
+
+\var osThreadAttr_t::affinity_mask
+\details
+The affinity mask specified by \ref osThreadProcessor macro (multiple processors can be specified by OR-ing macros).
+
+Default: \token{0} to run on any processor.
 
 */

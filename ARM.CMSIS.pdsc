@@ -17,7 +17,7 @@
       CMSIS-NN: Moved into separate pack!
       CMSIS-RTOS: Deprecated and removed!
         - RTX4 Deprecated and removed!
-      CMSIS-RTOS2: 2.2.0 (see revision history for details)
+      CMSIS-RTOS2: 2.3.0 (see revision history for details)
         - RTX5 Moved into separate pack!
       CMSIS-Driver: 2.9.0
         - Updated VIO API 1.0.0
@@ -437,7 +437,7 @@
       </files>
     </api>
     <!-- CMSIS-RTOS API -->
-    <api Cclass="CMSIS" Cgroup="RTOS2" Capiversion="2.2.0" exclusive="1">
+    <api Cclass="CMSIS" Cgroup="RTOS2" Capiversion="2.3.0" exclusive="1">
       <description>CMSIS-RTOS API for Cortex-M, SC000, and SC300</description>
       <files>
         <file category="doc" name="CMSIS/Documentation/RTOS2/html/index.html"/>

@@ -17,12 +17,16 @@
  *
  * ----------------------------------------------------------------------
  *
- * $Date:        3. April 2023
- * $Revision:    V2.2.0
+ * $Date:        30. June 2023
+ * $Revision:    V2.3.0
  *
  * Project:      CMSIS-RTOS2 API
  * Title:        cmsis_os2.h header file
  *
+ * Version 2.3.0
+ *    Added provisional support for processor affinity in SMP systems:
+      - osThreadAttr_t: affinity_mask
+ *    - osThreadSetAffinityMask, osThreadGetAffinityMask
  * Version 2.2.0
  *    Added support for Process Isolation (Functional Safety):
  *    - Kernel Management: osKernelProtect, osKernelDestroyClass
@@ -214,12 +218,15 @@ typedef enum {
 #define osThreadZone(n)         ((((n) << osThreadZone_Pos) & osThreadZone_Msk) | \
                                  osThreadZone_Valid)          ///< MPU protected zone
  
+// Thread processor affinity (affinity_mask in \ref osThreadAttr_t).
+#define osThreadProcessor(n)    (1UL << (n))    ///< Thread processor number for SMP systems
+ 
 // Mutex attributes (attr_bits in \ref osMutexAttr_t).
 #define osMutexRecursive        0x00000001U ///< Recursive mutex.
 #define osMutexPrioInherit      0x00000002U ///< Priority inherit protocol.
 #define osMutexRobust           0x00000008U ///< Robust mutex.
  
-// Object attributes (attr_bits in all objects)
+// Object attributes (attr_bits in all objects).
 #define osSafetyClass_Pos       16U                           ///< Safety class position
 #define osSafetyClass_Msk       (0x0FUL << osSafetyClass_Pos) ///< Safety class mask
 #define osSafetyClass_Valid     (0x10UL << osSafetyClass_Pos) ///< Safety class valid flag
@@ -286,7 +293,7 @@ typedef struct {
   uint32_t                stack_size;   ///< size of stack
   osPriority_t              priority;   ///< initial thread priority (default: osPriorityNormal)
   TZ_ModuleId_t            tz_module;   ///< TrustZone module identifier
-  uint32_t                  reserved;   ///< reserved (must be 0)
+  uint32_t             affinity_mask;   ///< processor affinity mask (0 when not used)
 } osThreadAttr_t;
  
 /// Attributes structure for timer.
@@ -523,6 +530,17 @@ osStatus_t osThreadResumeClass (uint32_t safety_class, uint32_t mode);
 /// \param[in]     zone          MPU protected zone.
 /// \return status code that indicates the execution status of the function.
 osStatus_t osThreadTerminateZone (uint32_t zone);
+ 
+/// Set processor affinity mask of a thread.
+/// \param[in]     thread_id     thread ID obtained by \ref osThreadNew or \ref osThreadGetId.
+/// \param[in]     affinity_mask processor affinity mask for the thread.
+/// \return status code that indicates the execution status of the function.
+osStatus_t osThreadSetAffinityMask (osThreadId_t thread_id, uint32_t affinity_mask);
+ 
+/// Get current processor affinity mask of a thread.
+/// \param[in]     thread_id     thread ID obtained by \ref osThreadNew or \ref osThreadGetId.
+/// \return current processor affinity mask of the specified thread.
+uint32_t osThreadGetAffinityMask (osThreadId_t thread_id);
  
 /// Get number of active threads.
 /// \return number of active threads.

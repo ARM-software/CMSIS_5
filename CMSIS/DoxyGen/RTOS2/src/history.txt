@@ -9,6 +9,14 @@
       <th>Description</th>
     </tr>
     <tr>
+      <td>V2.3.0</td>
+      <td>
+         Added provisional support for processor affinity in SMP systems:
+         - \ref osThreadAttr_t :: affinity_mask
+         - \ref osThreadSetAffinityMask, \ref osThreadGetAffinityMask
+      </td>
+    </tr>
+    <tr>
       <td>V2.2.0</td>
       <td>
         Added support for Process Isolation (Functional Safety):
