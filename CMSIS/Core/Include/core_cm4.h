@@ -1110,11 +1110,38 @@ typedef struct
 #define TPI_FFSR_FlInProg_Msk              (0x1UL /*<< TPI_FFSR_FlInProg_Pos*/)        /*!< TPI FFSR: FlInProg Mask */
 
 /* TPI Formatter and Flush Control Register Definitions */
+#define TPI_FFCR_StopTrig_Pos               13U                                        /*!< TPI FFCR: StopTrig Position */
+#define TPI_FFCR_StopTrig_Msk              (0x1UL << TPI_FFCR_StopTrig_Pos)            /*!< TPI FFCR: StopTrig Mask */
+
+#define TPI_FFCR_StopFI_Pos                 12U                                        /*!< TPI FFCR: StopFI Position */
+#define TPI_FFCR_StopFI_Msk                (0x1UL << TPI_FFCR_StopFI_Pos)              /*!< TPI FFCR: StopFI Mask */
+
+#define TPI_FFCR_TrigFI_Pos                 10U                                        /*!< TPI FFCR: TrigFI Position */
+#define TPI_FFCR_TrigFI_Msk                (0x1UL << TPI_FFCR_TrigFI_Pos)              /*!< TPI FFCR: TrigFI Mask */
+
+#define TPI_FFCR_TrigEVT_Pos                9U                                         /*!< TPI FFCR: TrigEVT Position */
+#define TPI_FFCR_TrigEVT_Msk               (0x1UL << TPI_FFCR_TrigEVT_Pos)             /*!< TPI FFCR: TrigEVT Mask */
+
+#define TPI_FFCR_TrigIN_Pos                 8U                                         /*!< TPI FFCR: TrigIN Position */
+#define TPI_FFCR_TrigIN_Msk                (0x1UL << TPI_FFCR_TrigIN_Pos)              /*!< TPI FFCR: TrigIN Mask */
+
 #define TPI_FFCR_TrigIn_Pos                 8U                                         /*!< TPI FFCR: TrigIn Position */
 #define TPI_FFCR_TrigIn_Msk                (0x1UL << TPI_FFCR_TrigIn_Pos)              /*!< TPI FFCR: TrigIn Mask */
 
+#define TPI_FFCR_FOnMan_Pos                 6U                                         /*!< TPI FFCR: FOnMan Position */
+#define TPI_FFCR_FOnMan_Msk                (0x1UL << TPI_FFCR_FOnMan_Pos)              /*!< TPI FFCR: FOnMan Mask */
+
+#define TPI_FFCR_FOnTrig_Pos                5U                                         /*!< TPI FFCR: FOnTrig Position */
+#define TPI_FFCR_FOnTrig_Msk               (0x1UL << TPI_FFCR_FOnTrig_Pos)             /*!< TPI FFCR: FOnTrig Mask */
+
+#define TPI_FFCR_FOnFlln_Pos                4U                                         /*!< TPI FFCR: FOnFlln Position */
+#define TPI_FFCR_FOnFlln_Msk               (0x1UL << TPI_FFCR_FOnFlln_Pos)             /*!< TPI FFCR: FOnFlln Mask */
+
 #define TPI_FFCR_EnFCont_Pos                1U                                         /*!< TPI FFCR: EnFCont Position */
 #define TPI_FFCR_EnFCont_Msk               (0x1UL << TPI_FFCR_EnFCont_Pos)             /*!< TPI FFCR: EnFCont Mask */
+
+#define TPI_FFCR_EnFTC_Pos                  0U                                         /*!< TPI FFCR: EnFTC Position */
+#define TPI_FFCR_EnFTC_Msk                 (0x1UL << TPI_FFCR_EnFTC_Pos)               /*!< TPI FFCR: EnFTC Mask */
 
 /* TPI TRIGGER Register Definitions */
 #define TPI_TRIGGER_TRIGGER_Pos             0U                                         /*!< TPI TRIGGER: TRIGGER Position */
