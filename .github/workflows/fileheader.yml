@@ -5,6 +5,7 @@ on:
     branches: [ develop ]
     paths:
       - 'CMSIS/Core/**'
+      - 'CMSIS/Core_M/**'
       - 'CMSIS/Core_A/**'
       - 'CMSIS/RTOS2/Include/**'
       - 'CMSIS/RTOS2/Source/**'

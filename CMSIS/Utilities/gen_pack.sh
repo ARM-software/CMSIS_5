@@ -134,8 +134,8 @@ PACK_BUILD=./build
 # Specify directory names to be added to pack base directory
 PACK_DIRS="
   Device
-  CMSIS/Core/Include
-  CMSIS/Core/Template
+  CMSIS/Core_M/Include
+  CMSIS/Core_M/Template
   CMSIS/Core_A
   CMSIS/DAP
   CMSIS/Driver

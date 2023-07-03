@@ -188,8 +188,8 @@ class CmsisPackLinter(PackLinter):
   def check_corem(self):
     """CMSIS-Core(M) version"""
     v = self.cmsis_corem_component()
-    self.verify_version("CMSIS/DoxyGen/Core/core.dxy", v)
-    self.verify_version("CMSIS/DoxyGen/Core/src/Overview.txt", v)
+    self.verify_version("CMSIS/DoxyGen/Core_M/core.dxy", v)
+    self.verify_version("CMSIS/DoxyGen/Core_M/src/Overview.txt", v)
     self.verify_version("CMSIS/DoxyGen/General/src/introduction.txt", v, component="CMSIS-Core (Cortex-M)")
     self.verify_version(self._pack.location(), v, component="CMSIS-Core(M)")
 

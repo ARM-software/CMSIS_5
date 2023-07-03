@@ -6,6 +6,7 @@ on:
     paths:
       - .github/workflows/caller-corevalidation.yml
       - CMSIS/Core/**/*
+      - CMSIS/Core_M/**/*
       - CMSIS/Core_A/**/*
       - CMSIS/CoreValidation/**/*
       - Device/ARM/**/*

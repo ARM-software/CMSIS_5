@@ -6,6 +6,7 @@ on:
     branches: [ develop ]
     paths:
       - 'CMSIS/Core/**'
+      - 'CMSIS/Core_M/**'
       - 'CMSIS/Core_A/**'
       - 'CMSIS/CoreValidation/**'
       - 'Device/ARM/**'
@@ -14,6 +15,7 @@ on:
     paths:
       - '.github/workflows/codeql-analysis.yml'
       - 'CMSIS/Core/**'
+      - 'CMSIS/Core_M/**'
       - 'CMSIS/Core_A/**'
       - 'CMSIS/CoreValidation/**'
       - 'Device/ARM/**'

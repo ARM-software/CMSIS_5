@@ -1,7 +1,7 @@
 /**************************************************************************//**
- * @file     compiler.h
- * @brief    CMSIS compiler generic header file
- * @version  V5.2.0
+ * @file     cmsis_armclang.h
+ * @brief    CMSIS compiler armclang (Arm Compiler 6) header file
+ * @version  V5.0.0
  * @date     04. December 2022
  ******************************************************************************/
 /*
@@ -22,10 +22,12 @@
  * limitations under the License.
  */
 
-#ifndef __CMSIS_COMPILER_H
-#define __CMSIS_COMPILER_H
+#ifndef __CMSIS_ARMCLANG_H
+#define __CMSIS_ARMCLANG_H
 
-#include "../../Core/cmsis_generic_compiler.h"
+#pragma clang system_header   /* treat file as system include file */
 
-#endif /* __CMSIS_COMPILER_H */
+// Include the generic settigs:
+#include "../../Core/cmsis_generic_armclang.h"
 
+#endif /* __CMSIS_ARMCLANG_H */

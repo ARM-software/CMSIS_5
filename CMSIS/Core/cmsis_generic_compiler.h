@@ -1,11 +1,11 @@
 /**************************************************************************//**
- * @file     cmsis_compiler.h
+ * @file     compiler.h
  * @brief    CMSIS compiler generic header file
- * @version  V5.3.0
- * @date     04. April 2023
+ * @version  V5.0.0
+ * @date     04. December 2022
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2023 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2022 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -22,8 +22,8 @@
  * limitations under the License.
  */
 
-#ifndef __CMSIS_COMPILER_H
-#define __CMSIS_COMPILER_H
+#ifndef __CMSIS_GENERIC_COMPILER_H
+#define __CMSIS_GENERIC_COMPILER_H
 
 #include <stdint.h>
 
@@ -40,7 +40,7 @@
 #elif defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050) && (__ARMCC_VERSION < 6100100)
   #include "cmsis_armclang_ltm.h"
 
-  /*
+/*
  * Arm Compiler above 6.10.1 (armclang)
  */
 #elif defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6100100)
@@ -57,7 +57,6 @@
  */
 #elif defined ( __GNUC__ )
   #include "cmsis_gcc.h"
-
 
 /*
  * IAR Compiler
@@ -86,6 +85,9 @@
   #endif
   #ifndef   __NO_RETURN
     #define __NO_RETURN                            __attribute__((noreturn))
+  #endif
+  #ifndef   CMSIS_DEPRECATED
+    #define CMSIS_DEPRECATED                       __attribute__((deprecated))
   #endif
   #ifndef   __USED
     #define __USED                                 __attribute__((used))
@@ -139,6 +141,7 @@
     #define __ALIAS(x)                             __attribute__ ((alias(x)))
   #endif
 
+
 /*
  * TASKING Compiler
  */
@@ -163,6 +166,9 @@
   #endif
   #ifndef   __NO_RETURN
     #define __NO_RETURN                            __attribute__((noreturn))
+  #endif
+  #ifndef   CMSIS_DEPRECATED
+    #define CMSIS_DEPRECATED                       __attribute__((deprecated))
   #endif
   #ifndef   __USED
     #define __USED                                 __attribute__((used))
@@ -200,7 +206,7 @@
     #define __UNALIGNED_UINT32_READ(addr)          (((const struct T_UINT32_READ *)(const void *)(addr))->v)
   #endif
   #ifndef   __ALIGNED
-    #define __ALIGNED(x)              __align(x)
+    #define __ALIGNED(x)                           __align(x)
   #endif
   #ifndef   __RESTRICT
     #warning No compiler specific solution for __RESTRICT. __RESTRICT is ignored.
@@ -216,6 +222,7 @@
   #ifndef __ALIAS
     #define __ALIAS(x)                             __attribute__ ((alias(x)))
   #endif
+
 
 /*
  * COSMIC Compiler
@@ -242,6 +249,10 @@
   #ifndef   __USED
     #warning No compiler specific solution for __USED. __USED is ignored.
     #define __USED
+  #endif
+  #ifndef   CMSIS_DEPRECATED
+    #warning No compiler specific solution for CMSIS_DEPRECATED. CMSIS_DEPRECATED is ignored.
+    #define CMSIS_DEPRECATED
   #endif
   #ifndef   __WEAK
     #define __WEAK                                 __weak
@@ -299,5 +310,5 @@
 #endif
 
 
-#endif /* __CMSIS_COMPILER_H */
+#endif /* __CMSIS_GENERIC_COMPILER_H */
 
