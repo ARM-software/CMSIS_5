@@ -68,6 +68,7 @@ extern "C"
 #define ARM_WIFI_IP6_DNS1                   20U         ///< Station/AP Set/Get IPv6 primary   DNS address;             data = &ip6,      len = 16, uint8_t[16]
 #define ARM_WIFI_IP6_DNS2                   21U         ///< Station/AP Set/Get IPv6 secondary DNS address;             data = &ip6,      len = 16, uint8_t[16]
 #define ARM_WIFI_IP6_DHCP_MODE              22U         ///< Station/AP Set/Get IPv6 DHCPv6 client mode;                data = &mode,     len =  4, uint32_t: ARM_WIFI_IP6_DHCP_xxx (default Off)
+#define ARM_WIFI_HOSTNAME                   23U	        ///< Station    Set/Get HostName;                               data = &hostname, len = 32, char[32]
 
 /****** WiFi Security Type *****/
 #define ARM_WIFI_SECURITY_OPEN              0U          ///< Open
@@ -98,6 +99,7 @@ extern "C"
 typedef struct ARM_WIFI_CONFIG_s {
   const char   *ssid;                                   ///< Pointer to Service Set Identifier (SSID) null-terminated string
   const char   *pass;                                   ///< Pointer to Password null-terminated string
+  const uint8_t *bssid;                                 ///< Pointer to the target AP’s MAC address
         uint8_t security;                               ///< Security type (ARM_WIFI_SECURITY_xxx)
         uint8_t ch;                                     ///< WiFi Channel (0 = auto, otherwise = exact channel)
         uint8_t reserved;                               ///< Reserved
@@ -122,6 +124,7 @@ typedef struct ARM_WIFI_SCAN_INFO_s {
 typedef struct ARM_WIFI_NET_INFO_s {
   char    ssid[32+1];                                   ///< Service Set Identifier (SSID) null-terminated string
   char    pass[64+1];                                   ///< Password null-terminated string
+  uint8_t bssid[6];                                     ///< AP’s MAC address
   uint8_t security;                                     ///< Security type (ARM_WIFI_SECURITY_xxx)
   uint8_t ch;                                           ///< WiFi Channel
   uint8_t rssi;                                         ///< Received Signal Strength Indicator
