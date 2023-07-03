@@ -36,6 +36,10 @@
 #define TZ_PROCESS_STACK_SIZE      256U
 #endif
 
+#define TZ_PROCESS_STACK_SEAL_SIZE     8U
+
+#define TZ_PROCESS_STACK_SEAL_VALUE    0xFEF5EDA5FEF5EDA5UL
+
 typedef struct {
   uint32_t sp_top;      // stack space top
   uint32_t sp_limit;    // stack space limit
@@ -43,7 +47,7 @@ typedef struct {
 } stack_info_t;
 
 static stack_info_t ProcessStackInfo  [TZ_PROCESS_STACK_SLOTS];
-static uint64_t     ProcessStackMemory[TZ_PROCESS_STACK_SLOTS][TZ_PROCESS_STACK_SIZE/8U];
+static uint64_t     ProcessStackMemory[TZ_PROCESS_STACK_SLOTS][(TZ_PROCESS_STACK_SIZE + TZ_PROCESS_STACK_SEAL_SIZE)/8U];
 static uint32_t     ProcessStackFreeSlot = 0xFFFFFFFFU;
 
 
@@ -62,6 +66,9 @@ uint32_t TZ_InitContextSystem_S (void) {
     ProcessStackInfo[n].sp_limit = (uint32_t)&ProcessStackMemory[n];
     ProcessStackInfo[n].sp_top   = (uint32_t)&ProcessStackMemory[n] + TZ_PROCESS_STACK_SIZE;
     *((uint32_t *)ProcessStackMemory[n]) = n + 1U;
+
+    /* Seal each process stack. */
+    ProcessStackMemory[n][TZ_PROCESS_STACK_SIZE/8U] = TZ_PROCESS_STACK_SEAL_VALUE;
   }
   *((uint32_t *)ProcessStackMemory[--n]) = 0xFFFFFFFFU;
 
