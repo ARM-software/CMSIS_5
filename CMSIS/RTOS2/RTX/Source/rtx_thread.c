@@ -471,7 +471,7 @@ static void osRtxThreadBlock (os_thread_t *thread) {
   prev = osRtxThreadObject(&osRtxInfo.thread.ready);
   next = prev->thread_next;
 
-  while ((next != NULL) && (next->priority > priority)) {
+  while ((next != NULL) && (next->priority >= priority)) {
     prev = next;
     next = next->thread_next;
   }
