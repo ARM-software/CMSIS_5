@@ -1,0 +1,86 @@
+name: Build CoreValidation tests
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  corevalidation:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - working-directory: /home/runner
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ -d CMSIS-DFP ]; then
+            cd CMSIS-DFP
+            git fetch origin main
+            git checkout -f origin/main
+          else
+            gh repo clone ARM-software/CMSIS-DFP
+          fi
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'    
+          cache: 'pip'
+
+      - name: Cache vcpkg
+        uses: actions/cache@v3
+        with:
+          key: vcpkg
+          path: /home/runner/.vcpkg
+
+      - name: Cache Arm Compiler 6
+        uses: actions/cache@v3
+        with:
+          key: armcompiler-6.20.0
+          path: /home/runner/standalone-linux-x86_64-rel.tgz
+
+      - name: Install Arm Compiler 6
+        working-directory: /home/runner
+        run: |
+          test -f standalone-linux-x86_64-rel.tgz || \
+            wget https://artifacts.keil.arm.com/arm-compiler/6.20/21/standalone-linux-x86_64-rel.tgz
+          mkdir -p arm-compiler-6.20.0
+          tar xf standalone-linux-x86_64-rel.tgz -C arm-compiler-6.20.0
+          echo "AC6_TOOLCHAIN_6_20_0=$(pwd)/arm-compiler-6.20.0/bin" >> $GITHUB_ENV
+        
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          languages: cpp
+          queries: security-and-quality
+
+      - name: Execute build
+        working-directory: ./CMSIS/CoreValidation/Project
+        run: |
+          echo "Install Python requirements"
+          pip install -r requirements.txt
+
+          echo "Activate vcpkg environment"
+          . <(curl https://aka.ms/vcpkg-init.sh -L)
+          vcpkg activate
+
+          echo "Activate Arm tool license"
+          ${AC6_TOOLCHAIN_6_20_0}/armlm activate --server https://mdk-preview.keil.arm.com --product KEMDK-COM0
+
+          echo "Register local CMSIS-DFP pack"
+          cpackget add /home/runner/CMSIS-DFP/ARM.CMSIS_DFP.pdsc
+
+          echo "Run build script"
+          ./build.py --verbose -m FVP -c GCC -c AC6 build || echo "=== Something failed! ==="
+
+      - name: Perform CodeQL Analysis
+        if: always()
+        uses: github/codeql-action/analyze@v2
+    

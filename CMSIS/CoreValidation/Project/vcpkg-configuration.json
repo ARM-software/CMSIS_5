@@ -1,0 +1,20 @@
+{
+    "registries": [
+      {
+        "kind": "artifact",
+        "location": "https://aka.ms/vcpkg-ce-default",
+        "name": "microsoft"
+      },
+      {
+        "kind": "artifact",
+        "location": "https://artifacts.keil.arm.com/vcpkg-ce-registry/registry.zip",
+        "name": "arm"
+      }
+    ],
+    "requires": {
+      "microsoft:ninja": "^1.10.2",
+      "arm:compilers/arm/arm-none-eabi-gcc": "^12.2.1-0",
+      "arm:tools/open-cmsis-pack/cmsis-toolbox": "^2.0.0-0"
+    }
+  }
+  
