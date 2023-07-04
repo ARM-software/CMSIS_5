@@ -540,7 +540,7 @@
     <api Cclass="CMSIS Driver" Cgroup="GPIO" Capiversion="1.0.0" exclusive="0">
       <description>GPIO Driver API for Cortex-M</description>
       <files>
-        <!-- <file category="doc" name="CMSIS/Documentation/Driver/html/group__gpio__interface__gr.html" /> -->
+        <file category="doc" name="CMSIS/Documentation/Driver/html/group__gpio__interface__gr.html" />
         <file category="header" name="CMSIS/Driver/Include/Driver_GPIO.h" />
       </files>
     </api>
@@ -792,6 +792,13 @@
       <files>
         <file category="header" name="CMSIS/Driver/Include/Driver_USBH.h" />
         <file category="sourceC" attr="template" name="CMSIS/Driver/DriverTemplates/Driver_USBH.c" select="USB Host Driver"/>
+      </files>
+    </component>
+    <component Cclass="CMSIS Driver" Cgroup="GPIO" Csub="Custom" Cversion="1.0.0" Capiversion="1.0.0" custom="1">
+      <description>Access to #include Driver_GPIO.h file and code template for custom implementation</description>
+      <files>
+        <file category="header" name="CMSIS/Driver/Include/Driver_GPIO.h" />
+        <file category="sourceC" attr="template" name="CMSIS/Driver/DriverTemplates/Driver_GPIO.c" select="GPIO Driver"/>
       </files>
     </component>
     <component Cclass="CMSIS Driver" Cgroup="WiFi" Csub="Custom" Cversion="1.0.0" Capiversion="1.1.0" custom="1">

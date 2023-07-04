@@ -34,6 +34,7 @@ The following CMSIS-Driver API groups are defined:
   - \ref storage_interface_gr "Storage": Storage device interface driver.
   - \ref usart_interface_gr "USART": Universal Synchronous and Asynchronous Receiver/Transmitter interface driver.
   - \ref usb_interface_gr "USB": Interface driver for USB Host and USB Device communication.
+  - \ref gpio_interface_gr "GPIO": General-purpose Input/Output driver.
   - \ref vio_interface_gr "VIO": API for virtual I/Os (VIO).
   - \ref wifi_interface_gr "WiFi": Interface driver for wireless communication.
 
@@ -68,6 +69,16 @@ The following files relevant to CMSIS-Driver are present in the <b>ARM::CMSIS</b
     <tr>
       <th>Version</th>
       <th>Description</th>
+    </tr>
+    <tr>
+      <td>2.9.0</td>
+      <td>
+        - Updated VIO API 1.0.0:
+          - removed: vioPrint
+          - removed: vioSetXYZ, vioGetXYZ
+          - removed: vioSetIPv4, vioGetIPv4, vioSetIPv6, vioGetIPv6
+        - Added GPIO Driver API 1.0.0
+      </td>
     </tr>
     <tr>
       <td>2.8.0</td>
@@ -154,6 +165,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
 [USART]: \ref usart_interface_gr "USART".
 [USB Host]: \ref usbh_interface_gr "USB Host".
 [USB Device]: \ref usbd_interface_gr "USB Device".
+[GPIO]: \ref gpio_interface_gr "GPIO".
 [VIO]: \ref vio_interface_gr "VIO".
 [WiFi]: \ref wifi_interface_gr "WiFi"
 
@@ -174,6 +186,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <th>[USART]</th>
             <th>[USB Host]</th>
             <th>[USB Device]</th>
+            <th>[GPIO]</th>
             <th>[VIO]</th>
             <th>[WiFi]</th>
         </tr>
@@ -191,6 +204,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -214,6 +228,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -229,6 +244,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -252,6 +268,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -267,6 +284,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -290,10 +308,12 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td>Espressif</td>
             <td>ESP32</td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -313,6 +333,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
         <tr>
             <td></td>
             <td>ESP8266</td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -347,6 +368,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td>Infineon</td>
@@ -358,6 +380,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -385,6 +408,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -404,10 +428,12 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td>Inventek</td>
             <td>ISM43362</td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -442,6 +468,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -449,6 +476,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -480,6 +508,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -487,6 +516,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -518,6 +548,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -525,6 +556,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -556,6 +588,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -563,6 +596,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td><center>&radic;</center></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -594,6 +628,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td>Micron</td>
@@ -605,6 +640,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -632,6 +668,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td>NXP</td>
@@ -649,6 +686,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
         </tr>
@@ -670,6 +708,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -687,6 +726,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td><center>&radic;</center></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
         </tr>
@@ -708,6 +748,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -725,6 +766,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td><center>&radic;</center></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
         </tr>
@@ -746,6 +788,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -765,6 +808,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -782,6 +826,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td><center>&radic;</center></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td><center>&radic;</center></td>
             <td></td>
         </tr>
@@ -799,6 +844,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -822,6 +868,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -837,6 +884,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -860,6 +908,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -875,6 +924,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -898,6 +948,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -913,6 +964,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -936,6 +988,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -951,6 +1004,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -974,6 +1028,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -989,6 +1044,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -1012,6 +1068,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -1027,6 +1084,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -1050,6 +1108,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -1065,6 +1124,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -1088,6 +1148,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -1103,6 +1164,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -1126,6 +1188,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -1141,6 +1204,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -1164,6 +1228,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -1179,6 +1244,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -1202,6 +1268,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -1217,6 +1284,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -1240,6 +1308,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -1255,6 +1324,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -1278,6 +1348,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -1293,6 +1364,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -1316,6 +1388,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -1331,6 +1404,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -1354,6 +1428,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -1369,6 +1444,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -1392,6 +1468,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -1407,6 +1484,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -1430,6 +1508,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -1445,6 +1524,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -1468,6 +1548,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -1483,6 +1564,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -1506,6 +1588,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -1521,6 +1604,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -1544,6 +1628,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -1559,6 +1644,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -1582,6 +1668,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -1597,6 +1684,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -1620,6 +1708,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -1635,6 +1724,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -1658,6 +1748,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -1673,6 +1764,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -1696,6 +1788,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -1711,6 +1804,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -1734,6 +1828,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -1749,6 +1844,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -1772,6 +1868,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -1787,6 +1884,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -1810,6 +1908,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -1825,6 +1924,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -1848,6 +1948,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -1863,6 +1964,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -1886,6 +1988,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -1901,6 +2004,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -1924,6 +2028,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -1939,6 +2044,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -1962,6 +2068,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -1977,6 +2084,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -2000,6 +2108,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -2015,6 +2124,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -2038,6 +2148,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -2053,6 +2164,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -2076,6 +2188,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -2091,6 +2204,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -2114,6 +2228,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -2129,6 +2244,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -2152,6 +2268,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -2167,6 +2284,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -2190,6 +2308,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -2205,6 +2324,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -2228,6 +2348,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -2243,6 +2364,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -2266,6 +2388,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -2281,6 +2404,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -2304,6 +2428,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -2319,6 +2444,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -2342,6 +2468,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -2357,6 +2484,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -2380,6 +2508,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -2395,6 +2524,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -2418,6 +2548,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -2433,6 +2564,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -2456,6 +2588,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -2471,6 +2604,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -2494,6 +2628,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -2509,6 +2644,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -2532,6 +2668,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -2547,6 +2684,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -2570,6 +2708,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -2589,6 +2728,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -2604,6 +2744,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -2627,6 +2768,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -2642,6 +2784,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -2665,6 +2808,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -2680,6 +2824,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -2703,6 +2848,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -2718,6 +2864,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -2741,6 +2888,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -2756,6 +2904,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -2779,6 +2928,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -2794,6 +2944,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -2817,6 +2968,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -2832,6 +2984,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -2855,6 +3008,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -2870,6 +3024,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -2893,6 +3048,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -2908,6 +3064,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -2931,6 +3088,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -2946,6 +3104,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -2969,6 +3128,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -2984,6 +3144,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -3007,6 +3168,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -3022,6 +3184,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -3045,6 +3208,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -3060,6 +3224,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -3083,6 +3248,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -3098,6 +3264,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -3121,6 +3288,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -3136,6 +3304,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -3159,6 +3328,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -3174,6 +3344,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -3197,6 +3368,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -3212,6 +3384,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -3235,6 +3408,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -3250,6 +3424,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -3273,6 +3448,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -3288,6 +3464,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -3311,6 +3488,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -3326,6 +3504,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -3349,6 +3528,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -3364,6 +3544,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -3387,6 +3568,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -3402,6 +3584,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -3425,6 +3608,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -3440,6 +3624,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -3463,6 +3648,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -3478,6 +3664,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -3501,6 +3688,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -3516,6 +3704,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -3539,6 +3728,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -3554,6 +3744,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -3577,6 +3768,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -3592,6 +3784,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -3615,10 +3808,12 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
             <td>S32K3</td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -3638,6 +3833,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
         <tr>
             <td>Qualcomm</td>
             <td>QCA400x</td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -3672,6 +3868,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -3691,6 +3888,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td>Renesas</td>
@@ -3702,6 +3900,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -3729,10 +3928,12 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
             <td>DA16200</td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -3752,6 +3953,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
         <tr>
             <td>STMicroelectronics</td>
             <td>STM32C0xx</td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -3786,6 +3988,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -3803,6 +4006,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td><center>&radic;</center></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
         </tr>
@@ -3824,6 +4028,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -3841,6 +4046,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
         </tr>
@@ -3862,6 +4068,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -3879,12 +4086,14 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td><center>&radic;</center></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td><center>&radic;</center></td>
             <td></td>
         </tr>
         <tr>
             <td></td>
             <td>STM32G0xx</td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -3917,6 +4126,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td></td>
+            <td></td>
             <td><center>&radic;</center></td>
             <td></td>
         </tr>
@@ -3936,6 +4146,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td><center>&radic;</center></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td><center>&radic;</center></td>
             <td></td>
         </tr>
@@ -3957,10 +4168,12 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
             <td>STM32L1xx</td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -3995,6 +4208,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -4010,6 +4224,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td><center>&radic;</center></td>
@@ -4031,6 +4246,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td><center>&radic;</center></td>
             <td></td>
             <td></td>
+            <td></td>
             <td><center>&radic;</center></td>
             <td></td>
         </tr>
@@ -4040,6 +4256,7 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td><center>&radic;</center></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -4071,10 +4288,12 @@ The following table shows a list of current CMSIS-Driver implementations. It is 
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
         </tr>
         <tr>
             <td>WizNet</td>
             <td>WizFi360</td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -4302,6 +4521,7 @@ Driver_CANn
 Driver_ETH_MACn
 Driver_ETH_PHYn
 Driver_Flashn
+Driver_GPIOn
 Driver_I2Cn
 Driver_MCIn
 Driver_NANDn
@@ -4368,6 +4588,7 @@ The following header files are available in the directory <b>.\\CMSIS\\Driver\\I
 | %Driver_ETH_MAC.h    | \ref eth_mac_interface_gr
 | %Driver_ETH_PHY.h    | \ref eth_phy_interface_gr
 | %Driver_Flash.h      | \ref flash_interface_gr
+| %Driver_GPIO.h       | \ref gpio_interface_gr
 | %Driver_I2C.h        | \ref i2c_interface_gr
 | %Driver_MCI.h        | \ref mci_interface_gr
 | %Driver_NAND.h       | \ref nand_interface_gr
@@ -4392,6 +4613,7 @@ available in the directory <b>.\\CMSIS\\Driver\\DriverTemplates</b>.
 | %Driver_ETH_MAC.c | \ref eth_mac_interface_gr
 | %Driver_ETH_PHY.c | \ref eth_mac_interface_gr
 | %Driver_Flash.c   | \ref flash_interface_gr
+| %Driver_GPIO.c    | \ref gpio_interface_gr
 | %Driver_I2C.c     | \ref i2c_interface_gr
 | %Driver_MCI.c     | \ref mci_interface_gr
 | %Driver_SAI.c     | \ref sai_interface_gr

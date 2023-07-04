@@ -509,7 +509,7 @@ void ARM_I2C_SignalEvent (uint32_t event)  {
 \fn void ARM_I2C_SignalEvent (uint32_t event)
 \details
 The function \b ARM_I2C_SignalEvent is a callback function registered by the function \ref ARM_I2C_Initialize..
-It is called by the I2C driver to notify the application about \ref I2C_events occured during operation.
+It is called by the I2C driver to notify the application about \ref I2C_events occurred during operation.
 
 The parameter \a event indicates one or more events that occurred during driver operation.
 Each event is encoded in a separate bit and therefore it is possible to signal multiple events within the same call. 

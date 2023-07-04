@@ -1238,7 +1238,7 @@ void Echo_Client_Thread (void *arg) {
       wifi->SocketSend (sock, message, sizeof(message));
       res = wifi->SocketRecv (sock, dbuf, sizeof(dbuf));
       if (res < 0) {
-        break;               // Error occured
+        break;               // Error occurred
       }
       if (res > 0) {
         if (memcmp (dbuf, message, res) != 0) {
