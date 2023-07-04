@@ -9,9 +9,17 @@ layer:
     - component: ARM::CMSIS:CORE
     - component: Device:Startup&C Startup
 
-  misc:
-    - for-compiler: IAR
-      Link: [--config generic_cortex.icf]
+  linker:
+    - script: RTE/Device/ARMCM7/ARMCM7_ac6.sct
+      for-compiler:
+        - AC6
+    - script: RTE/Device/ARMCM7/ARMCM7_gcc.ld
+      for-compiler:
+        - GCC
+    - script: RTE/Device/ARMCM4/ARMCM7_iar.icf
+      for-compiler:
+        - IAR
+    - regions: RTE/Device/ARMCM7/mem_ARMCM7.h
 
   groups:
     - group: VHT/FVP

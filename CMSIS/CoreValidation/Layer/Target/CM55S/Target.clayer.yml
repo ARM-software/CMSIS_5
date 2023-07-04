@@ -12,9 +12,19 @@ layer:
     - component: ARM::CMSIS:CORE
     - component: Device:Startup&C Startup
 
-  misc:
-    - for-compiler: IAR
-      Link: [--config generic_cortex.icf]
+  linker:
+    - define:
+      - __ARM_FEATURE_CMSEx : 3
+    - script: RTE/Device/ARMCM55/ARMCM55_ac6.sct
+      for-compiler:
+        - AC6
+    - script: RTE/Device/ARMCM55/ARMCM55_gcc.ld
+      for-compiler:
+        - GCC
+    - script: RTE/Device/ARMCM55/ARMCM55_iar.icf
+      for-compiler:
+        - IAR
+    - regions: RTE/Device/ARMCM55/mem_ARMCM55.h
 
   groups:
     - group: VHT/FVP

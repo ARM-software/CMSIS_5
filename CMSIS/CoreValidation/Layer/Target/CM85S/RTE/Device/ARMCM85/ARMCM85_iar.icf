@@ -1,0 +1,45 @@
+/*
+ * Copyright (c) 2023 Arm Limited. All rights reserved.
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ *
+ * Licensed under the Apache License, Version 2.0 (the License); you may
+ * not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an AS IS BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+define memory mem with size = 4G;
+
+define region ROM_region = mem:[from __ROM_BASE to (__ROM_BASE+__ROM_SIZE-1)];
+define region RAM_region = mem:[from __RAM_BASE to (__RAM_BASE+__RAM0_SIZE-1)];
+
+do not initialize  { section .noinit };
+initialize by copy { readwrite };
+if (isdefinedsymbol(__USE_DLIB_PERTHREAD))
+{
+  // Required in a multi-threaded application
+  initialize by copy with packing = none { section __DLIB_PERTHREAD };
+}
+
+place at address mem:__ROM_BASE { readonly section .intvec };
+
+if (!isempty(ROM_region))
+{
+  place in ROM_region  { readonly };
+}
+
+if (!isempty(RAM_region))
+{
+  define block CSTACK     with alignment = 8, size = __STACK_SIZE     { };
+  define block PROC_STACK with alignment = 8, size = 0 { };
+  define block HEAP       with alignment = 8, size = __HEAP_SIZE       { };
+  place in RAM_region  { readwrite, block CSTACK, block PROC_STACK, block HEAP };
+}

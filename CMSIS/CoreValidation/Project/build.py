@@ -180,11 +180,6 @@ def build(config, results):
 
     logging.info("Compiling Tests...")
 
-    if config.compiler == CompilerAxis.GCC and config.device.match("CA*"):
-        ldfile = Path(f"{project_name(config)}/RTE/Device/ARM{config.device[1]}/ARM{config.device[1]}.ld")
-        infile = ldfile.replace(ldfile.with_suffix('.ld.in'))
-        yield preprocess(infile, ldfile)
-
     yield cbuild(config)
 
     if not all(r.success for r in results):

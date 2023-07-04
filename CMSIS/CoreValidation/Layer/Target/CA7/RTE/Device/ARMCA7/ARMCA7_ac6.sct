@@ -1,15 +1,3 @@
-#! armclang -E --target=arm-arm-none-eabi -mcpu=cortex-a7 -xc
-;**************************************************
-; Copyright (c) 2017 ARM Ltd.  All rights reserved.
-;**************************************************
-
-; Scatter-file for RTX Example on Versatile Express
-
-; This scatter-file places application code, data, stack and heap at suitable addresses in the memory map.
-
-; This platform has 2GB SDRAM starting at 0x80000000.
-
-#include "mem_ARMCA7.h"
 
 SDRAM __ROM_BASE __ROM_SIZE       ; load region size_region
 {

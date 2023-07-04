@@ -17,6 +17,21 @@ layer:
     - for-compiler: IAR
       Link: [--config generic_cortex.icf]
 
+  linker:
+    - script: RTE/Device/ARMCA5/ARMCA5_ac6.sct
+      for-compiler:
+        - AC6
+    - script: RTE/Device/ARMCA5/ARMCA5_gcc.ld
+      for-compiler:
+        - GCC
+    - script: RTE/Device/ARMCA5/ARMCA5_iar.icf
+      for-compiler:
+        - IAR
+    - regions: RTE/Device/ARMCA5/mem_ARMCA5.h
+      for-compiler:
+        - AC6
+        - GCC
+
   groups:
     - group: VHT/FVP
       files:

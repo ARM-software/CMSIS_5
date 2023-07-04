@@ -4,17 +4,22 @@ layer:
   # type: Target
   description: Target setup
 
-  # packs:
-  #   - pack: ARM::CMSIS
-
   components:
     # [Cvendor::] Cclass [&Cbundle] :Cgroup [:Csub] [&Cvariant] [@[>=]Cversion]
     - component: ARM::CMSIS:CORE
     - component: Device:Startup&C Startup
 
-  misc:
-    - for-compiler: IAR
-      Link: [--config generic_cortex.icf]
+  linker:
+    - script: RTE/Device/ARMCM0/ARMCM0_ac6.sct
+      for-compiler:
+        - AC6
+    - script: RTE/Device/ARMCM0/ARMCM0_gcc.ld
+      for-compiler:
+        - GCC
+    - script: RTE/Device/ARMCM0/ARMCM0_iar.icf
+      for-compiler:
+        - IAR
+    - regions: RTE/Device/ARMCM0/mem_ARMCM0.h
 
   groups:
     - group: VHT/FVP

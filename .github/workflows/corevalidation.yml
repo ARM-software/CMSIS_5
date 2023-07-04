@@ -61,6 +61,8 @@ jobs:
           languages: cpp
           queries: security-and-quality
 
+      - uses: ammaraskar/gcc-problem-matcher@master
+
       - name: Execute build
         working-directory: ./CMSIS/CoreValidation/Project
         run: |
