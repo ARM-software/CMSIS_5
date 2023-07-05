@@ -23,7 +23,6 @@ layer:
     - for-compiler: GCC
       C-CPP:
       - -Wno-declaration-after-statement
-      - -Wno-covered-switch-default
 
   groups:
     - group: Documentation

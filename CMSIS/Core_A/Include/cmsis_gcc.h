@@ -895,24 +895,20 @@ __STATIC_FORCEINLINE void __set_FPEXC(uint32_t fpexc)
  */
 __STATIC_INLINE void __FPU_Enable(void)
 {
+  // Permit access to VFP/NEON, registers by modifying CPACR
+  const uint32_t cpacr = __get_CPACR();
+  __set_CPACR(cpacr | 0x00F00000ul);
+  __ISB();
+
+  // Enable VFP/NEON
+  const uint32_t fpexc = __get_FPEXC();
+  __set_FPEXC(fpexc | 0x40000000ul);
+
   __ASM volatile(
-    //Permit access to VFP/NEON, registers by modifying CPACR
-    "        MRC     p15,0,R1,c1,c0,2  \n"
-    "        ORR     R1,R1,#0x00F00000 \n"
-    "        MCR     p15,0,R1,c1,c0,2  \n"
-
-    //Ensure that subsequent instructions occur in the context of VFP/NEON access permitted
-    "        ISB                       \n"
-
-    //Enable VFP/NEON
-    "        VMRS    R1,FPEXC          \n"
-    "        ORR     R1,R1,#0x40000000 \n"
-    "        VMSR    FPEXC,R1          \n"
-
-    //Initialise VFP/NEON registers to 0
+    // Initialise VFP/NEON registers to 0
     "        MOV     R2,#0             \n"
 
-    //Initialise D16 registers to 0
+    // Initialise D16 registers to 0
     "        VMOV    D0, R2,R2         \n"
     "        VMOV    D1, R2,R2         \n"
     "        VMOV    D2, R2,R2         \n"
@@ -931,7 +927,7 @@ __STATIC_INLINE void __FPU_Enable(void)
     "        VMOV    D15,R2,R2         \n"
 
 #if (defined(__ARM_NEON) && (__ARM_NEON == 1))
-    //Initialise D32 registers to 0
+    // Initialise D32 registers to 0
     "        VMOV    D16,R2,R2         \n"
     "        VMOV    D17,R2,R2         \n"
     "        VMOV    D18,R2,R2         \n"
@@ -949,14 +945,12 @@ __STATIC_INLINE void __FPU_Enable(void)
     "        VMOV    D30,R2,R2         \n"
     "        VMOV    D31,R2,R2         \n"
 #endif
-
-    //Initialise FPSCR to a known state
-    "        VMRS    R1,FPSCR          \n"
-    "        LDR     R2,=0x00086060    \n" //Mask off all bits that do not have to be preserved. Non-preserved bits can/should be zero.
-    "        AND     R1,R1,R2          \n"
-    "        VMSR    FPSCR,R1            "
-    : : : "cc", "r1", "r2"
+    : : : "cc", "r2"
   );
+
+  // Initialise FPSCR to a known state
+  const uint32_t fpscr = __get_FPSCR();
+  __set_FPSCR(fpscr & 0x00086060ul);
 }
 
 /*@} end of group CMSIS_Core_intrinsics */
