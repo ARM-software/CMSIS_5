@@ -131,7 +131,12 @@ html {
 	--nav-menu-toggle-color: rgba(255, 255, 255, 0.5);
 	--nav-arrow-color: var(--arm_blue);
 	--nav-arrow-selected-color: var(--arm_blue);
-	
+	--nav_tabs-text-color:var(--arm_dark_gray);
+	--nav_tabs-text-active-color:white;
+	--nav_tabs-background-color:var(--arm_black2);
+	--nav_tabs-background-active-color:var(--arm_dark_gray);
+	--nav_tabs-border-color:var(--arm_dark_gray);
+
 	/* table of contents */
 	--toc-background-color: var(--nav-background-color); 
 	--toc-foreground-color: var(--nav-foreground-color); 
@@ -300,6 +305,11 @@ html.dark-mode {
 	--nav-menu-toggle-color: rgba(255, 255, 255, 0.2);
 	--nav-arrow-color: var(--arm_blue);
 	--nav-arrow-selected-color: var(--arm_blue);
+	--nav_tabs-text-color:var(--arm_dark_gray);
+	--nav_tabs-text-active-color:white;
+	--nav_tabs-background-color:var(--arm_black2);
+	--nav_tabs-background-active-color:var(--arm_dark_gray);
+	--nav_tabs-border-color:var(--arm_dark_gray);
 	
 	/* table of contents */
 	--toc-background-color: var(--nav-background-color);
@@ -1709,4 +1719,3 @@ tr.heading h2 {
     display:inline;
   }
 }
-

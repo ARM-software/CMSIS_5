@@ -105,17 +105,17 @@ function generate() {
 }
 
 generate "General" "${VERSION_FULL}"
-generate "Core_A"
 generate "Core"
+generate "Core_A"
 generate "Driver"
 generate "RTOS2"
 generate "DSP"
 generate "NN"
-generate "DAP"
 generate "View"
 generate "Compiler"
 generate "Toolbox"
 generate "Stream"
+generate "DAP"
 generate "Zone"
 
 popd > /dev/null

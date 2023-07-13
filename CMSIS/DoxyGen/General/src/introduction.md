@@ -15,10 +15,7 @@ CMSIS has been created to help the industry in standardization. It enables consi
  - Maintained in the same GitHub repository and delivered as a bundle in \ref cmsis_pack.
 <div class="tiles">
   <div class="tile">
-    <span class="tileh h2">CMSIS-Core (M)</span><span class="tiletxt">Standardized API for Cortex-M processor cores</span><span class="tilelinks"><a href="https://arm-software.github.io/CMSIS_6/latest/Core/html/index.html">Guide</a> | <a href="https://github.com/ARM-software/CMSIS_6">GitHub</a></span>
-  </div>
-  <div class="tile">
-    <span class="tileh h2">CMSIS-Core (A)</span><span class="tiletxt">Standardized API for Cortex-A5/A7/A9 cores</span><span class="tilelinks"><a href="https://arm-software.github.io/CMSIS_6/latest/Core_A/html/index.html">Guide</a> | <a href="https://github.com/ARM-software/CMSIS_6">GitHub</a></span>
+    <span class="tileh h2">CMSIS-Core</span><span class="tiletxt">Standardized access to Arm Cortex processor cores</span><span class="tilelinks"><a href="https://arm-software.github.io/CMSIS_6/latest/Core/html/index.html">Guide</a> | <a href="https://github.com/ARM-software/CMSIS_6">GitHub</a></span>
   </div>
 <div class="tile">
     <span class="tileh h2">CMSIS-Driver</span><span class="tiletxt">Generic peripheral driver interfaces for middleware</span><span class="tilelinks"><a href="https://arm-software.github.io/CMSIS_6/latest/Driver/html/index.html">Guide</a> | <a href="https://github.com/ARM-software/CMSIS_6">GitHub</a></span>
