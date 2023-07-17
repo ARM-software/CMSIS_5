@@ -363,7 +363,7 @@
 /*
 //   <e>Initialize ITNS 0 (Interrupts 0..31)
 */
-#define NVIC_INIT_ITNS0    1
+#define NVIC_INIT_ITNS0    0
 
 /*
 // Interrupts 0..31
@@ -409,7 +409,7 @@
 /*
 //   <e>Initialize ITNS 1 (Interrupts 32..63)
 */
-#define NVIC_INIT_ITNS1    1
+#define NVIC_INIT_ITNS1    0
 
 /*
 // Interrupts 32..63

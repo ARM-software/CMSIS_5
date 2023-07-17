@@ -11,5 +11,5 @@ armcortexm7ct.semihosting-heap_limit=0x0              # (int   , init-time) defa
 armcortexm7ct.semihosting-stack_base=0x0              # (int   , init-time) default = '0x10700000' : Virtual address of base of descending stack : [0x0..0xFFFFFFFF]
 armcortexm7ct.semihosting-stack_limit=0x0             # (int   , init-time) default = '0x10800000' : Virtual address of stack limit : [0x0..0xFFFFFFFF]
 armcortexm7ct.semihosting-cwd=""                      # (string, init-time) default = ''       : Base directory for semihosting file access.
-armcortexm7ct.DP_FLOAT=0                              # (bool  , init-time) default = '1'      : Support 8-byte floats
+armcortexm7ct.DP_FLOAT=1                              # (bool  , init-time) default = '1'      : Support 8-byte floats
 #----------------------------------------------------------------------------------------------

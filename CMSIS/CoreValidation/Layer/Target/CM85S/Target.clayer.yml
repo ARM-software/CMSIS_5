@@ -13,8 +13,6 @@ layer:
     - component: Device:Startup&C Startup
 
   linker:
-    - define:
-      - __ARM_FEATURE_CMSEx : 3
     - script: RTE/Device/ARMCM85/ARMCM85_ac6.sct
       for-compiler:
         - AC6

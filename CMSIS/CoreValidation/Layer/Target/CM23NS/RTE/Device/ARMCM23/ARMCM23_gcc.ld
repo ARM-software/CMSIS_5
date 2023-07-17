@@ -17,16 +17,27 @@
  */
 
 
-#if defined (__ARM_FEATURE_CMSEx) && (__ARM_FEATURE_CMSEx == 3U)
+#if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
 #define __STACKSEAL_SIZE   ( 8 )
 #else
 #define __STACKSEAL_SIZE   ( 0 )
 #endif
 
+#if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
+#define __CV_BASE          ( __ROM_BASE + __ROM_SIZE - __CMSEVENEER_SIZE )
+#define __CV_SIZE          ( __CMSEVENEER_SIZE )
+#else
+#define __CV_BASE          ( 0xFFFFFFFF )
+#define __CV_SIZE          ( 0 )
+#endif
+
 
 MEMORY
 {
-  ROM   (rx)  : ORIGIN = __ROM_BASE, LENGTH = __ROM_SIZE
+  ROM   (rx)  : ORIGIN = __ROM_BASE, LENGTH = ( __ROM_SIZE - __CV_SIZE )
+#if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
+  CV    (rx)  : ORIGIN = __CV_BASE,  LENGTH = __CV_SIZE
+#endif
   RAM   (rwx) : ORIGIN = __RAM_BASE, LENGTH = __RAM_SIZE
 }
 
@@ -67,6 +78,16 @@ ENTRY(Reset_Handler)
 
 SECTIONS
 {
+  /*
+   * SG veneers:
+   * All SG veneers are placed in the special output section .gnu.sgstubs.
+   */
+#if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
+  .gnu.sgstubs :  {
+    . = ALIGN(32);
+  } > CV
+#endif
+
   .text :
   {
     KEEP(*(.vectors))
@@ -93,16 +114,6 @@ SECTIONS
 
     KEEP(*(.eh_frame*))
   } > ROM
-
-  /*
-   * SG veneers:
-   * All SG veneers are placed in the special output section .gnu.sgstubs.
-   */
-#if defined (__ARM_FEATURE_CMSEx) && (__ARM_FEATURE_CMSEx == 3U)
-  .gnu.sgstubs :  {
-    . = ALIGN(32);
-  } > ROM
-#endif
 
   .ARM.extab :
   {

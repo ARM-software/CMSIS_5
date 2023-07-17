@@ -57,6 +57,10 @@ int main(void) {
  
   /* Set non-secure main stack (MSP_NS) */
   __TZ_set_MSP_NS(*((uint32_t *)(TZ_START_NS)));
+
+  /* Set Non-Secure state for Interrupt 0
+    (used in Non-Secure TC_CoreInstr_LoadStoreExclusive Test) */
+  NVIC->ITNS[0] |= 1U;
  
   /* Get non-secure reset handler */
   NonSecure_ResetHandler = (funcptr_void)(*((uint32_t *)((TZ_START_NS) + 4U)));

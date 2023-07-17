@@ -17,7 +17,7 @@
  */
 
 
-#if defined (__ARM_FEATURE_CMSEx) && (__ARM_FEATURE_CMSEx == 3U)
+#if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
 #define __STACKSEAL_SIZE   ( 8 )
 #else
 #define __STACKSEAL_SIZE   ( 0 )
@@ -27,7 +27,7 @@
 #define __HEAP_BASE  ( AlignExpr(+0, 8) )                            /* starts after RW_RAM or RW_NOINIT section, 8 byte aligned */
 
 
-#if defined (__ARM_FEATURE_CMSEx) && (__ARM_FEATURE_CMSEx == 3U)
+#if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
 #define __CV_BASE          ( __ROM_BASE + __ROM_SIZE - __CMSEVENEER_SIZE )
 #define __CV_SIZE          ( __CMSEVENEER_SIZE )
 #else
@@ -72,7 +72,7 @@ LR_APP __LR_BASE __LR_SIZE  {                                        /* load reg
 #endif
 }
 
-#if defined (__ARM_FEATURE_CMSEx) && (__ARM_FEATURE_CMSEx == 3U)
+#if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
 LR_CMSE_VENEER __CV_BASE ALIGN 32 __CV_SIZE  {                       /* load/execution region for CMSE Veneers */
   ER_CMSE_VENEER __CV_BASE __CV_SIZE  {
    *(Veneer$$CMSE)
