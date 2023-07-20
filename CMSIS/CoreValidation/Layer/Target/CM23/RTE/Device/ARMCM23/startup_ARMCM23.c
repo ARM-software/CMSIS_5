@@ -1,11 +1,11 @@
 /******************************************************************************
  * @file     startup_ARMCM23.c
  * @brief    CMSIS-Core Device Startup File for a Cortex-M23 Device
- * @version  V2.1.0
- * @date     16. December 2020
+ * @version  V3.0.0
+ * @date     06. April 2023
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2020 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2023 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -24,8 +24,6 @@
 
 #if defined (ARMCM23)
   #include "ARMCM23.h"
-#elif defined (ARMCM23_TZ)
-  #include "ARMCM23_TZ.h"
 #else
   #error device not specified!
 #endif

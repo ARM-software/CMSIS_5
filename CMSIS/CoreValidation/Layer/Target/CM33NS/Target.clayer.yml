@@ -12,18 +12,6 @@ layer:
     - component: ARM::CMSIS:CORE
     - component: Device:Startup&C Startup
 
-  linker:
-    - script: RTE/Device/ARMCM33/ARMCM33_ac6.sct
-      for-compiler:
-        - AC6
-    - script: RTE/Device/ARMCM33/ARMCM33_gcc.ld
-      for-compiler:
-        - GCC
-    - script: RTE/Device/ARMCM33/ARMCM33_iar.icf
-      for-compiler:
-        - IAR
-    - regions: RTE/Device/ARMCM33/mem_ARMCM33.h
-
   groups:
     - group: VHT/FVP
       files:

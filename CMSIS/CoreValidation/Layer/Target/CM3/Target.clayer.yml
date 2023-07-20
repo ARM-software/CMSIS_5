@@ -1,5 +1,3 @@
-
-
 layer:
   # type: Target
   description: Target setup
@@ -8,18 +6,6 @@ layer:
     # [Cvendor::] Cclass [&Cbundle] :Cgroup [:Csub] [&Cvariant] [@[>=]Cversion]
     - component: ARM::CMSIS:CORE
     - component: Device:Startup&C Startup
-
-  linker:
-    - script: RTE/Device/ARMCM3/ARMCM3_ac6.sct
-      for-compiler:
-        - AC6
-    - script: RTE/Device/ARMCM3/ARMCM3_gcc.ld
-      for-compiler:
-        - GCC
-    - script: RTE/Device/ARMCM3/ARMCM3_iar.icf
-      for-compiler:
-        - IAR
-    - regions: RTE/Device/ARMCM3/mem_ARMCM3.h
 
   groups:
     - group: VHT/FVP

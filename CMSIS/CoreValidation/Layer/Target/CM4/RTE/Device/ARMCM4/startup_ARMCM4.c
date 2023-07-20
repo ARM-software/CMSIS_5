@@ -1,11 +1,11 @@
 /******************************************************************************
  * @file     startup_ARMCM4.c
  * @brief    CMSIS-Core(M) Device Startup File for a Cortex-M4 Device
- * @version  V2.0.3
- * @date     31. March 2020
+ * @version  V3.0.0
+ * @date     06. April 2023
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2020 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2023 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -24,8 +24,6 @@
 
 #if defined (ARMCM4)
   #include "ARMCM4.h"
-#elif defined (ARMCM4_FP)
-  #include "ARMCM4_FP.h"
 #else
   #error device not specified!
 #endif

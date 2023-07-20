@@ -1,9 +1,14 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/Open-CMSIS-Pack/devtools/schemas/projmgr/2.0.0-dev2/tools/projmgr/schemas/csolution.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Open-CMSIS-Pack/devtools/schemas/projmgr/2.0.0/tools/projmgr/schemas/csolution.schema.json
 
 solution:
   created-for: cmsis-toobox@2.0.0-dev2
 
-  cdefault: null
+  cdefault:
+
+  misc:
+    - for-compiler: GCC
+      C-CPP: 
+        - -masm-syntax-unified
 
   packs:
     - pack: ARM::CMSIS

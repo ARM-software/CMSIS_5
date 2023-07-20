@@ -2,11 +2,11 @@
  * @file     system_ARMCM23.c
  * @brief    CMSIS Device System Source File for
  *           ARMCM23 Device
- * @version  V1.0.1
- * @date     15. November 2019
+ * @version  V2.0.0
+ * @date     06. April 2023
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2023 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -25,9 +25,6 @@
 
 #if defined (ARMCM23)
   #include "ARMCM23.h"
-#elif defined (ARMCM23_TZ)
-  #include "ARMCM23_TZ.h"
-
   #if defined (__ARM_FEATURE_CMSE) &&  (__ARM_FEATURE_CMSE == 3U)
     #include "partition_ARMCM23.h"
   #endif

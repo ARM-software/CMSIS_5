@@ -1,11 +1,11 @@
 /******************************************************************************
  * @file     startup_ARMCM0plus.c
  * @brief    CMSIS-Core(M) Device Startup File for a Cortex-M0+ Device
- * @version  V2.0.3
- * @date     31. March 2020
+ * @version  V3.0.0
+ * @date     06. April 2023
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2020 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2023 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -24,8 +24,6 @@
 
 #if defined (ARMCM0P)
   #include "ARMCM0plus.h"
-#elif defined (ARMCM0P_MPU)
-  #include "ARMCM0plus_MPU.h"
 #else
   #error device not specified!
 #endif

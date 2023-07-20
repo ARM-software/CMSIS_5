@@ -2,11 +2,11 @@
  * @file     system_ARMCM35P.c
  * @brief    CMSIS Device System Source File for
  *           ARMCM35P Device
- * @version  V1.0.1
- * @date     15. November 2019
+ * @version  V2.0.0
+ * @date     13. July 2023
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2023 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *

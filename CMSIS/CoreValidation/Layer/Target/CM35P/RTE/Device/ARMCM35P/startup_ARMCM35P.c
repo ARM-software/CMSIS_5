@@ -1,11 +1,11 @@
 /******************************************************************************
  * @file     startup_ARMCM35P.c
  * @brief    CMSIS-Core Device Startup File for Cortex-M35P Device
- * @version  V2.1.0
- * @date     16. December 2020
+ * @version  V3.0.0
+ * @date     13. July 2023
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2020 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2023 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *

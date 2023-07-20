@@ -2,11 +2,11 @@
  * @file     system_ARMCM7.c
  * @brief    CMSIS Device System Source File for
  *           ARMCM7 Device
- * @version  V1.0.1
- * @date     15. November 2019
+ * @version  V2.0.0
+ * @date     06. April 2023
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2023 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -25,10 +25,6 @@
 
 #if defined (ARMCM7)
   #include "ARMCM7.h"
-#elif defined (ARMCM7_SP)
-  #include "ARMCM7_SP.h"
-#elif defined (ARMCM7_DP)
-  #include "ARMCM7_DP.h"
 #else
   #error device not specified!
 #endif

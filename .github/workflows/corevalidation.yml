@@ -54,6 +54,23 @@ jobs:
           mkdir -p arm-compiler-6.20.0
           tar xf standalone-linux-x86_64-rel.tgz -C arm-compiler-6.20.0
           echo "AC6_TOOLCHAIN_6_20_0=$(pwd)/arm-compiler-6.20.0/bin" >> $GITHUB_ENV
+          
+      - name: Cache LLVM/Clang
+        uses: actions/cache@v3
+        with:
+          key: clang-16.0.0
+          path: /home/runner/LLVMEmbeddedToolchainForArm-16.0.0-Linux-x86_64.tar.gz
+
+      - name: Install LLVM/Clang
+        working-directory: /home/runner
+        run: |
+          sudo apt-get update
+          sudo apt-get install libtinfo5
+          test -f LLVMEmbeddedToolchainForArm-16.0.0-Linux-x86_64.tar.gz || \
+            wget https://github.com/ARM-software/LLVM-embedded-toolchain-for-Arm/releases/download/release-16.0.0/LLVMEmbeddedToolchainForArm-16.0.0-Linux-x86_64.tar.gz
+          tar xf LLVMEmbeddedToolchainForArm-16.0.0-Linux-x86_64.tar.gz
+          ./LLVMEmbeddedToolchainForArm-16.0.0-Linux-x86_64/bin/clang --version
+          echo "CLANG_TOOLCHAIN_16_0_0=$(pwd)/LLVMEmbeddedToolchainForArm-16.0.0-Linux-x86_64/bin" >> $GITHUB_ENV
         
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v2
@@ -72,15 +89,26 @@ jobs:
           echo "Activate vcpkg environment"
           . <(curl https://aka.ms/vcpkg-init.sh -L)
           vcpkg activate
-
+          
           echo "Activate Arm tool license"
           ${AC6_TOOLCHAIN_6_20_0}/armlm activate --server https://mdk-preview.keil.arm.com --product KEMDK-COM0
+
+          echo "Patch CMSIS-Toolbox"
+          pushd $(dirname $(which cbuild))/../etc
+          curl -O https://raw.githubusercontent.com/Open-CMSIS-Pack/devtools/main/tools/buildmgr/cbuildgen/config/CLANG.16.0.0.cmake
+          curl -O https://raw.githubusercontent.com/Open-CMSIS-Pack/devtools/main/tools/buildmgr/cbuildgen/config/CMSIS-Build-Utils.cmake
+          curl -O https://raw.githubusercontent.com/Open-CMSIS-Pack/devtools/main/tools/projmgr/templates/cdefault.yml
+          curl -O https://raw.githubusercontent.com/Open-CMSIS-Pack/devtools/main/tools/projmgr/templates/clang_linker_script.ld
+          popd
 
           echo "Register local CMSIS-DFP pack"
           cpackget add /home/runner/CMSIS-DFP/ARM.CMSIS_DFP.pdsc
 
           echo "Run build script"
-          ./build.py --verbose -m FVP -c GCC -c AC6 build || echo "=== Something failed! ==="
+          ./build.py --verbose -m FVP -c AC6 -c GCC -c Clang build || echo "=== Something failed! ==="
+
+          echo "Deactivate Arm tool license"
+          ${AC6_TOOLCHAIN_6_20_0}/armlm deactivate --product KEMDK-COM0
 
       - name: Perform CodeQL Analysis
         if: always()

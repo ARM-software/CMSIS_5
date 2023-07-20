@@ -2,11 +2,11 @@
  * @file     system_ARMCM0plus.c
  * @brief    CMSIS Device System Source File for
  *           ARMCM0plus Device
- * @version  V1.0.1
- * @date     05. September 2022
+ * @version  V2.0.0
+ * @date     06. April 2023
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2022 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2023 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -23,7 +23,11 @@
  * limitations under the License.
  */
 
-#include "ARMCM0plus.h"
+#if defined (ARMCM0P)
+  #include "ARMCM0plus.h"
+#else
+  #error device not specified!
+#endif
 
 /*----------------------------------------------------------------------------
   Define clocks

@@ -72,6 +72,7 @@ class CompilerAxis(Enum):
     AC6LTM = ('AC6LTM')
     GCC = ('GCC')
     IAR = ('IAR')
+    CLANG = ('Clang')
 
     @property
     def image_ext(self):
@@ -79,7 +80,8 @@ class CompilerAxis(Enum):
             CompilerAxis.AC6: 'axf',
             CompilerAxis.AC6LTM: 'axf',
             CompilerAxis.GCC: 'elf',
-            CompilerAxis.IAR: 'elf'
+            CompilerAxis.IAR: 'elf',
+            CompilerAxis.CLANG: 'elf',
         }
         return ext[self]
 
@@ -89,7 +91,8 @@ class CompilerAxis(Enum):
             CompilerAxis.AC6: 'AC6',
             CompilerAxis.AC6LTM: 'AC6@6.16.2',
             CompilerAxis.GCC: 'GCC',
-            CompilerAxis.IAR: 'IAR'
+            CompilerAxis.IAR: 'IAR',
+            CompilerAxis.CLANG: 'CLANG'
         }
         return ext[self]
 
@@ -251,6 +254,16 @@ def model_exec(config):
     if config.device.has_bl():
         cmdline += ["-a", f"{build_dir(config)}/{bl_output_dir(config)}/Bootloader.{config.compiler.image_ext}"]
     return cmdline
+
+
+@matrix_filter
+def filter_clang_v8m(config):
+    return config.compiler == CompilerAxis.CLANG and config.device.match('CM[2358][35]*S')
+
+
+@matrix_filter
+def filter_clang_cortex_a(config):
+    return config.compiler == CompilerAxis.CLANG and config.device.match('CA*')
 
 
 if __name__ == "__main__":
