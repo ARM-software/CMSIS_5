@@ -77,7 +77,10 @@ function generate() {
   projectName=$(grep -E "PROJECT_NAME\s+=" $1.dxy.in | sed -r -e 's/[^"]*"([^"]+)".*/\1/')
   projectNumberFull="$2"
   if [ -z "${projectNumberFull}" ]; then
-    projectNumberFull=$(grep -E "PROJECT_NUMBER\s+=" $1.dxy.in | sed -r -e 's/[^"]*"[^0-9]*([0-9]+\.[0-9]+(\.[0-9]+)?(-.+)?)".*/\1/')
+    projectNumberFull=$(grep -E "PROJECT_NUMBER\s+=" $1.dxy.in | sed -r -e 's/[^"]*"[^0-9]*(([0-9]+\.[0-9]+(\.[0-9]+)?(-.+)?)?)".*/\1/')
+  fi
+  if [ -z "${projectNumberFull}" ]; then
+    projectNumberFull="$(git rev-parse --short HEAD)"
   fi
   projectNumber="${projectNumberFull%+*}"
   datetime=$(date -u +'%a %b %e %Y %H:%M:%S')
