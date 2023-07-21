@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     cmsis_clang.h
  * @brief    CMSIS compiler LLVM/Clang header file
- * @version  V1.0.0
- * @date     28. June 2023
+ * @version  V1.0.1
+ * @date     21. July 2023
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2023 Arm Limited. All rights reserved.
@@ -131,7 +131,7 @@
 #define __VECTOR_TABLE_ATTRIBUTE  __attribute__((used, section(".vectors")))
 #endif
 
-#if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
+#if (__ARM_FEATURE_CMSE == 3)
 #ifndef __STACK_SEAL
 #define __STACK_SEAL              __stack_seal
 #endif
@@ -779,7 +779,7 @@ __STATIC_FORCEINLINE uint32_t __get_CONTROL(void)
 }
 
 
-#if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3))
+#if (__ARM_FEATURE_CMSE == 3)
 /**
   \brief   Get Control Register (non-secure)
   \details Returns the content of the non-secure Control Register when in secure mode.
@@ -807,7 +807,7 @@ __STATIC_FORCEINLINE void __set_CONTROL(uint32_t control)
 }
 
 
-#if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3))
+#if (__ARM_FEATURE_CMSE == 3)
 /**
   \brief   Set Control Register (non-secure)
   \details Writes the given value to the non-secure Control Register when in secure state.
@@ -877,7 +877,7 @@ __STATIC_FORCEINLINE uint32_t __get_PSP(void)
 }
 
 
-#if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3))
+#if (__ARM_FEATURE_CMSE == 3)
 /**
   \brief   Get Process Stack Pointer (non-secure)
   \details Returns the current value of the non-secure Process Stack Pointer (PSP) when in secure state.
@@ -904,7 +904,7 @@ __STATIC_FORCEINLINE void __set_PSP(uint32_t topOfProcStack)
 }
 
 
-#if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3))
+#if (__ARM_FEATURE_CMSE == 3)
 /**
   \brief   Set Process Stack Pointer (non-secure)
   \details Assigns the given value to the non-secure Process Stack Pointer (PSP) when in secure state.
@@ -931,7 +931,7 @@ __STATIC_FORCEINLINE uint32_t __get_MSP(void)
 }
 
 
-#if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3))
+#if (__ARM_FEATURE_CMSE == 3)
 /**
   \brief   Get Main Stack Pointer (non-secure)
   \details Returns the current value of the non-secure Main Stack Pointer (MSP) when in secure state.
@@ -958,7 +958,7 @@ __STATIC_FORCEINLINE void __set_MSP(uint32_t topOfMainStack)
 }
 
 
-#if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3))
+#if (__ARM_FEATURE_CMSE == 3)
 /**
   \brief   Set Main Stack Pointer (non-secure)
   \details Assigns the given value to the non-secure Main Stack Pointer (MSP) when in secure state.
@@ -971,7 +971,7 @@ __STATIC_FORCEINLINE void __TZ_set_MSP_NS(uint32_t topOfMainStack)
 #endif
 
 
-#if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3))
+#if (__ARM_FEATURE_CMSE == 3)
 /**
   \brief   Get Stack Pointer (non-secure)
   \details Returns the current value of the non-secure Stack Pointer (SP) when in secure state.
@@ -1012,7 +1012,7 @@ __STATIC_FORCEINLINE uint32_t __get_PRIMASK(void)
 }
 
 
-#if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3))
+#if (__ARM_FEATURE_CMSE == 3)
 /**
   \brief   Get Priority Mask (non-secure)
   \details Returns the current state of the non-secure priority mask bit from the Priority Mask Register when in secure state.
@@ -1039,7 +1039,7 @@ __STATIC_FORCEINLINE void __set_PRIMASK(uint32_t priMask)
 }
 
 
-#if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3))
+#if (__ARM_FEATURE_CMSE == 3)
 /**
   \brief   Set Priority Mask (non-secure)
   \details Assigns the given value to the non-secure Priority Mask Register when in secure state.
@@ -1089,7 +1089,7 @@ __STATIC_FORCEINLINE uint32_t __get_BASEPRI(void)
 }
 
 
-#if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3))
+#if (__ARM_FEATURE_CMSE == 3)
 /**
   \brief   Get Base Priority (non-secure)
   \details Returns the current value of the non-secure Base Priority register when in secure state.
@@ -1116,7 +1116,7 @@ __STATIC_FORCEINLINE void __set_BASEPRI(uint32_t basePri)
 }
 
 
-#if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3))
+#if (__ARM_FEATURE_CMSE == 3)
 /**
   \brief   Set Base Priority (non-secure)
   \details Assigns the given value to the non-secure Base Priority register when in secure state.
@@ -1155,7 +1155,7 @@ __STATIC_FORCEINLINE uint32_t __get_FAULTMASK(void)
 }
 
 
-#if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3))
+#if (__ARM_FEATURE_CMSE == 3)
 /**
   \brief   Get Fault Mask (non-secure)
   \details Returns the current value of the non-secure Fault Mask register when in secure state.
@@ -1182,7 +1182,7 @@ __STATIC_FORCEINLINE void __set_FAULTMASK(uint32_t faultMask)
 }
 
 
-#if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3))
+#if (__ARM_FEATURE_CMSE == 3)
 /**
   \brief   Set Fault Mask (non-secure)
   \details Assigns the given value to the non-secure Fault Mask register when in secure state.
@@ -1210,7 +1210,8 @@ __STATIC_FORCEINLINE void __TZ_set_FAULTMASK_NS(uint32_t faultMask)
  */
 __STATIC_FORCEINLINE uint32_t __get_PSPLIM(void)
 {
-#if (!defined (__ARM_FEATURE_CMSE) || (__ARM_FEATURE_CMSE < 3))
+#if ((__ARM_ARCH_ISA_THUMB < 2) && \
+     (__ARM_FEATURE_CMSE   < 3)   )
     // without main extensions, the non-secure PSPLIM is RAZ/WI
   return 0U;
 #else
@@ -1220,7 +1221,7 @@ __STATIC_FORCEINLINE uint32_t __get_PSPLIM(void)
 #endif
 }
 
-#if (defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3))
+#if (__ARM_FEATURE_CMSE == 3)
 /**
   \brief   Get Process Stack Pointer Limit (non-secure)
   Devices without ARMv8-M Main Extensions (i.e. Cortex-M23) lack the non-secure
@@ -1254,7 +1255,8 @@ __STATIC_FORCEINLINE uint32_t __TZ_get_PSPLIM_NS(void)
  */
 __STATIC_FORCEINLINE void __set_PSPLIM(uint32_t ProcStackPtrLimit)
 {
-#if (__ARM_ARCH_ISA_THUMB < 2) && (!defined (__ARM_FEATURE_CMSE) || (__ARM_FEATURE_CMSE < 3))
+#if ((__ARM_ARCH_ISA_THUMB < 2) && \
+     (__ARM_FEATURE_CMSE   < 3)   )
   // without main extensions, the non-secure PSPLIM is RAZ/WI
   (void)ProcStackPtrLimit;
 #else
@@ -1263,7 +1265,7 @@ __STATIC_FORCEINLINE void __set_PSPLIM(uint32_t ProcStackPtrLimit)
 }
 
 
-#if (defined (__ARM_FEATURE_CMSE  ) && (__ARM_FEATURE_CMSE   == 3))
+#if (__ARM_FEATURE_CMSE == 3)
 /**
   \brief   Set Process Stack Pointer (non-secure)
   Devices without ARMv8-M Main Extensions (i.e. Cortex-M23) lack the non-secure
@@ -1295,7 +1297,8 @@ __STATIC_FORCEINLINE void __TZ_set_PSPLIM_NS(uint32_t ProcStackPtrLimit)
  */
 __STATIC_FORCEINLINE uint32_t __get_MSPLIM(void)
 {
-#if (__ARM_ARCH_ISA_THUMB < 2) && (!defined (__ARM_FEATURE_CMSE) || (__ARM_FEATURE_CMSE < 3))
+#if ((__ARM_ARCH_ISA_THUMB < 2) && \
+     (__ARM_FEATURE_CMSE   < 3)   )
   // without main extensions, the non-secure MSPLIM is RAZ/WI
   return 0U;
 #else
@@ -1306,7 +1309,7 @@ __STATIC_FORCEINLINE uint32_t __get_MSPLIM(void)
 }
 
 
-#if (defined (__ARM_FEATURE_CMSE  ) && (__ARM_FEATURE_CMSE   == 3))
+#if (__ARM_FEATURE_CMSE == 3)
 /**
   \brief   Get Main Stack Pointer Limit (non-secure)
   Devices without ARMv8-M Main Extensions (i.e. Cortex-M23) lack the non-secure
@@ -1340,7 +1343,8 @@ __STATIC_FORCEINLINE uint32_t __TZ_get_MSPLIM_NS(void)
  */
 __STATIC_FORCEINLINE void __set_MSPLIM(uint32_t MainStackPtrLimit)
 {
-#if (__ARM_ARCH_ISA_THUMB < 2) && (!defined (__ARM_FEATURE_CMSE) || (__ARM_FEATURE_CMSE < 3))
+#if ((__ARM_ARCH_ISA_THUMB < 2) && \
+     (__ARM_FEATURE_CMSE   < 3)   )
   // without main extensions, the non-secure MSPLIM is RAZ/WI
   (void)MainStackPtrLimit;
 #else
@@ -1349,7 +1353,7 @@ __STATIC_FORCEINLINE void __set_MSPLIM(uint32_t MainStackPtrLimit)
 }
 
 
-#if (defined (__ARM_FEATURE_CMSE  ) && (__ARM_FEATURE_CMSE   == 3))
+#if (__ARM_FEATURE_CMSE == 3)
 /**
   \brief   Set Main Stack Pointer Limit (non-secure)
   Devices without ARMv8-M Main Extensions (i.e. Cortex-M23) lack the non-secure
@@ -1413,7 +1417,7 @@ __STATIC_FORCEINLINE void __set_FPSCR(uint32_t fpscr)
   @{
 */
 
-#if (defined (__ARM_FEATURE_DSP) && (__ARM_FEATURE_DSP == 1))
+#if (__ARM_FEATURE_DSP == 1)
 
 #define     __SADD8                 __sadd8
 #define     __QADD8                 __qadd8
