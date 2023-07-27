@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     cmsis_compiler.h
  * @brief    CMSIS compiler generic header file
- * @version  V5.4.0
- * @date     27. June 2023
+ * @version  V6.0.0
+ * @date     27. July 2023
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2023 Arm Limited. All rights reserved.
@@ -28,22 +28,9 @@
 #include <stdint.h>
 
 /*
- * Arm Compiler 4/5
- */
-#if   defined ( __CC_ARM )
-  #include "cmsis_armcc.h"
-
-
-/*
- * Arm Compiler 6.6 LTM (armclang)
- */
-#elif defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050) && (__ARMCC_VERSION < 6100100)
-  #include "cmsis_armclang_ltm.h"
-
-  /*
  * Arm Compiler above 6.10.1 (armclang)
  */
-#elif defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6100100)
+#if defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6100100)
   #include "cmsis_armclang.h"
 
 /*

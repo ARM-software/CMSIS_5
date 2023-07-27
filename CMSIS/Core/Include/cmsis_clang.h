@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     cmsis_clang.h
  * @brief    CMSIS compiler LLVM/Clang header file
- * @version  V1.0.1
- * @date     21. July 2023
+ * @version  V1.1.0
+ * @date     27. July 2023
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2023 Arm Limited. All rights reserved.
@@ -25,9 +25,13 @@
 #ifndef __CMSIS_CLANG_H
 #define __CMSIS_CLANG_H
 
-#pragma clang system_header
+#pragma clang system_header   /* treat file as system include file */
 
-#include <arm_acle.h>
+#if (__ARM_ACLE >= 200)
+  #include <arm_acle.h>
+#else
+  #error Compiler must support ACLE V2.0
+#endif /* (__ARM_ACLE >= 200) */
 
 /* Fallback for __has_builtin */
 #ifndef __has_builtin
@@ -110,7 +114,6 @@
 #endif
 
 /* #########################  Startup and Lowlevel Init  ######################## */
-
 #ifndef __PROGRAM_START
 #define __PROGRAM_START           _start
 #endif
@@ -174,13 +177,14 @@ __STATIC_FORCEINLINE void __TZ_set_STACKSEAL_S (uint32_t* stackTop) {
   \brief   No Operation
   \details No Operation does nothing. This instruction can be used for code alignment purposes.
  */
-#define __NOP() __nop()
+#define __NOP()         __nop()
+
 
 /**
   \brief   Wait For Interrupt
   \details Wait For Interrupt is a hint instruction that suspends execution until one of a number of events occurs.
  */
-#define __WFI() __wfi()
+#define __WFI()         __wfi()
 
 
 /**
@@ -188,14 +192,14 @@ __STATIC_FORCEINLINE void __TZ_set_STACKSEAL_S (uint32_t* stackTop) {
   \details Wait For Event is a hint instruction that permits the processor to enter
            a low-power state until one of a number of events occurs.
  */
-#define __WFE() __wfe()
+#define __WFE()         __wfe()
 
 
 /**
   \brief   Send Event
   \details Send Event is a hint instruction. It causes an event to be signaled to the CPU.
  */
-#define __SEV() __sev()
+#define __SEV()         __sev()
 
 
 /**
@@ -204,21 +208,24 @@ __STATIC_FORCEINLINE void __TZ_set_STACKSEAL_S (uint32_t* stackTop) {
            so that all instructions following the ISB are fetched from cache or memory,
            after the instruction has been completed.
  */
-#define __ISB() __isb(0xF)
+#define __ISB()         __isb(0xF)
+
 
 /**
   \brief   Data Synchronization Barrier
   \details Acts as a special kind of Data Memory Barrier.
            It completes when all explicit memory accesses before this instruction complete.
  */
-#define __DSB() __dsb(0xF)
+#define __DSB()         __dsb(0xF)
+
 
 /**
   \brief   Data Memory Barrier
   \details Ensures the apparent order of the explicit memory operations before
            and after the instruction, without ensuring their completion.
  */
-#define __DMB() __dmb(0xF)
+#define __DMB()         __dmb(0xF)
+
 
 /**
   \brief   Reverse byte order (32 bit)
@@ -226,7 +233,8 @@ __STATIC_FORCEINLINE void __TZ_set_STACKSEAL_S (uint32_t* stackTop) {
   \param [in]    value  Value to reverse
   \return               Reversed value
  */
-#define __REV(value) __rev(value)
+#define __REV(value)    __rev(value)
+
 
 /**
   \brief   Reverse byte order (16 bit)
@@ -234,7 +242,8 @@ __STATIC_FORCEINLINE void __TZ_set_STACKSEAL_S (uint32_t* stackTop) {
   \param [in]    value  Value to reverse
   \return               Reversed value
  */
-#define __REV16(value) __rev16(value)
+#define __REV16(value)  __rev16(value)
+
 
 /**
   \brief   Reverse byte order (16 bit)
@@ -242,7 +251,8 @@ __STATIC_FORCEINLINE void __TZ_set_STACKSEAL_S (uint32_t* stackTop) {
   \param [in]    value  Value to reverse
   \return               Reversed value
  */
-#define __REVSH(value) __revsh(value)
+#define __REVSH(value)  __revsh(value)
+
 
 /**
   \brief   Rotate Right in unsigned value (32 bit)
@@ -253,6 +263,7 @@ __STATIC_FORCEINLINE void __TZ_set_STACKSEAL_S (uint32_t* stackTop) {
  */
 #define __ROR(op1, op2) __ror(op1, op2)
 
+
 /**
   \brief   Breakpoint
   \details Causes the processor to enter Debug state.
@@ -260,7 +271,8 @@ __STATIC_FORCEINLINE void __TZ_set_STACKSEAL_S (uint32_t* stackTop) {
   \param [in]    value  is ignored by the processor.
                  If required, a debugger can use it to store additional information about the breakpoint.
  */
-#define __BKPT(value) __ASM volatile ("bkpt "#value)
+#define __BKPT(value)   __ASM volatile ("bkpt "#value)
+
 
 /**
   \brief   Reverse bit order of value
@@ -268,7 +280,8 @@ __STATIC_FORCEINLINE void __TZ_set_STACKSEAL_S (uint32_t* stackTop) {
   \param [in]    value  Value to reverse
   \return               Reversed value
  */
-#define __RBIT(value) __rbit(value)
+#define __RBIT(value)   __rbit(value)
+
 
 /**
   \brief   Count leading zeros
@@ -276,10 +289,12 @@ __STATIC_FORCEINLINE void __TZ_set_STACKSEAL_S (uint32_t* stackTop) {
   \param [in]  value  Value to count the leading zeros
   \return             number of leading zeros in value
  */
-#define __CLZ(value) __clz(value)
+#define __CLZ(value)    __clz(value)
 
-// Workaround for wrong features set by Clang for Armv8-M Baseline devices
-#if defined(__ARM_FEATURE_SAT) && (__ARM_ARCH_ISA_THUMB >= 2)
+
+#if ((__ARM_FEATURE_SAT    >= 1) && \
+     (__ARM_ARCH_ISA_THUMB >= 2)    )
+/* __ARM_FEATURE_SAT is wrong for Armv8-M Baseline devices */
 /**
   \brief   Signed Saturate
   \details Saturates a signed value.
@@ -288,6 +303,7 @@ __STATIC_FORCEINLINE void __TZ_set_STACKSEAL_S (uint32_t* stackTop) {
   \return             Saturated value
  */
 #define __SSAT(value, sat) __ssat(value, sat)
+
 
 /**
   \brief   Unsigned Saturate
@@ -298,8 +314,7 @@ __STATIC_FORCEINLINE void __TZ_set_STACKSEAL_S (uint32_t* stackTop) {
  */
 #define __USAT(value, sat) __usat(value, sat)
 
-#else /* __ARM_FEATURE_SAT */
-
+#else /* (__ARM_FEATURE_SAT >= 1) */
 /**
   \brief   Signed Saturate
   \details Saturates a signed value.
@@ -315,15 +330,16 @@ __STATIC_FORCEINLINE int32_t __SSAT(int32_t val, uint32_t sat)
     const int32_t min = -1 - max ;
     if (val > max)
     {
-      return max;
+      return (max);
     }
     else if (val < min)
     {
-      return min;
+      return (min);
     }
   }
-  return val;
+  return (val);
 }
+
 
 /**
   \brief   Unsigned Saturate
@@ -339,19 +355,92 @@ __STATIC_FORCEINLINE uint32_t __USAT(int32_t val, uint32_t sat)
     const uint32_t max = ((1U << sat) - 1U);
     if (val > (int32_t)max)
     {
-      return max;
+      return (max);
     }
     else if (val < 0)
     {
-      return 0U;
+      return (0U);
     }
   }
-  return (uint32_t)val;
+  return ((uint32_t)val);
 }
+#endif /* (__ARM_FEATURE_SAT >= 1) */
 
-#endif /* __ARM_FEATURE_SAT */
 
-#if __ARM_ARCH_ISA_THUMB >= 2
+#if (__ARM_FEATURE_LDREX >= 1)
+/**
+  \brief   Remove the exclusive lock
+  \details Removes the exclusive lock which is created by LDREX.
+ */
+#define __CLREX             __builtin_arm_clrex
+
+
+/**
+  \brief   LDR Exclusive (8 bit)
+  \details Executes a exclusive LDR instruction for 8 bit value.
+  \param [in]    ptr  Pointer to data
+  \return             value of type uint8_t at (*ptr)
+ */
+#define __LDREXB        (uint8_t)__builtin_arm_ldrex
+
+
+/**
+  \brief   STR Exclusive (8 bit)
+  \details Executes a exclusive STR instruction for 8 bit values.
+  \param [in]  value  Value to store
+  \param [in]    ptr  Pointer to location
+  \return          0  Function succeeded
+  \return          1  Function failed
+ */
+#define __STREXB        (uint32_t)__builtin_arm_strex
+#endif /* (__ARM_FEATURE_LDREX >= 1) */
+
+
+#if (__ARM_FEATURE_LDREX >= 2)
+/**
+  \brief   LDR Exclusive (16 bit)
+  \details Executes a exclusive LDR instruction for 16 bit values.
+  \param [in]    ptr  Pointer to data
+  \return        value of type uint16_t at (*ptr)
+ */
+#define __LDREXH        (uint16_t)__builtin_arm_ldrex
+
+
+/**
+  \brief   STR Exclusive (16 bit)
+  \details Executes a exclusive STR instruction for 16 bit values.
+  \param [in]  value  Value to store
+  \param [in]    ptr  Pointer to location
+  \return          0  Function succeeded
+  \return          1  Function failed
+ */
+#define __STREXH        (uint32_t)__builtin_arm_strex
+#endif /* (__ARM_FEATURE_LDREX >= 2) */
+
+
+#if (__ARM_FEATURE_LDREX >= 4)
+/**
+  \brief   LDR Exclusive (32 bit)
+  \details Executes a exclusive LDR instruction for 32 bit values.
+  \param [in]    ptr  Pointer to data
+  \return        value of type uint32_t at (*ptr)
+ */
+#define __LDREXW        (uint32_t)__builtin_arm_ldrex
+
+
+/**
+  \brief   STR Exclusive (32 bit)
+  \details Executes a exclusive STR instruction for 32 bit values.
+  \param [in]  value  Value to store
+  \param [in]    ptr  Pointer to location
+  \return          0  Function succeeded
+  \return          1  Function failed
+ */
+#define __STREXW        (uint32_t)__builtin_arm_strex
+#endif /* (__ARM_FEATURE_LDREX >= 4) */
+
+
+#if (__ARM_ARCH_ISA_THUMB >= 2)
 /**
   \brief   Rotate Right with Extend (32 bit)
   \details Moves each bit of a bitstring right by one bit.
@@ -364,115 +453,9 @@ __STATIC_FORCEINLINE uint32_t __RRX(uint32_t value)
   uint32_t result;
 
   __ASM volatile ("rrx %0, %1" : "=r" (result) : "r" (value));
-  return result;
-}
-#endif /* __ARM_ARCH_ISA_THUMB >= 2 */
-
-#if __ARM_FEATURE_LDREX >= 4
-/**
-  \brief   LDR Exclusive (32 bit)
-  \details Executes a exclusive LDR instruction for 32 bit values.
-  \param [in]    ptr  Pointer to data
-  \return        value of type uint32_t at (*ptr)
- */
-__STATIC_FORCEINLINE uint32_t __LDREXW(volatile uint32_t *addr)
-{
-    uint32_t result;
-
-   __ASM volatile ("ldrex %0, %1" : "=r" (result) : "Q" (*addr) );
-   return result;
+  return (result);
 }
 
-/**
-  \brief   STR Exclusive (32 bit)
-  \details Executes a exclusive STR instruction for 32 bit values.
-  \param [in]  value  Value to store
-  \param [in]    ptr  Pointer to location
-  \return          0  Function succeeded
-  \return          1  Function failed
- */
-__STATIC_FORCEINLINE uint32_t __STREXW(uint32_t value, volatile uint32_t *addr)
-{
-   uint32_t result;
-
-   __ASM volatile ("strex %0, %2, %1" : "=&r" (result), "=Q" (*addr) : "r" (value) );
-   return result;
-}
-
-#endif /* __ARM_FEATURE_LDREX => 4 */
-
-#if __ARM_FEATURE_LDREX >= 7
-/**
-  \brief   LDR Exclusive (16 bit)
-  \details Executes a exclusive LDR instruction for 16 bit values.
-  \param [in]    ptr  Pointer to data
-  \return        value of type uint16_t at (*ptr)
- */
-__STATIC_FORCEINLINE uint16_t __LDREXH(volatile uint16_t *addr)
-{
-    uint32_t result;
-
-   __ASM volatile ("ldrexh %0, %1" : "=r" (result) : "Q" (*addr) );
-   return ((uint16_t) result);    /* Add explicit type cast here */
-}
-
-/**
-  \brief   STR Exclusive (16 bit)
-  \details Executes a exclusive STR instruction for 16 bit values.
-  \param [in]  value  Value to store
-  \param [in]    ptr  Pointer to location
-  \return          0  Function succeeded
-  \return          1  Function failed
- */
-__STATIC_FORCEINLINE uint32_t __STREXH(uint16_t value, volatile uint16_t *addr)
-{
-   uint32_t result;
-
-   __ASM volatile ("strexh %0, %2, %1" : "=&r" (result), "=Q" (*addr) : "r" ((uint32_t)value) );
-   return result;
-}
-
-/**
-  \brief   LDR Exclusive (8 bit)
-  \details Executes a exclusive LDR instruction for 8 bit value.
-  \param [in]    ptr  Pointer to data
-  \return             value of type uint8_t at (*ptr)
- */
-__STATIC_FORCEINLINE uint8_t __LDREXB(volatile uint8_t *addr)
-{
-    uint32_t result;
-
-   __ASM volatile ("ldrexb %0, %1" : "=r" (result) : "Q" (*addr) );
-   return ((uint8_t) result);    /* Add explicit type cast here */
-}
-
-/**
-  \brief   STR Exclusive (8 bit)
-  \details Executes a exclusive STR instruction for 8 bit values.
-  \param [in]  value  Value to store
-  \param [in]    ptr  Pointer to location
-  \return          0  Function succeeded
-  \return          1  Function failed
- */
-__STATIC_FORCEINLINE uint32_t __STREXB(uint8_t value, volatile uint8_t *addr)
-{
-   uint32_t result;
-
-   __ASM volatile ("strexb %0, %2, %1" : "=&r" (result), "=Q" (*addr) : "r" ((uint32_t)value) );
-   return result;
-}
-
-/**
-  \brief   Remove the exclusive lock
-  \details Removes the exclusive lock which is created by LDREX.
- */
-__STATIC_FORCEINLINE void __CLREX(void)
-{
-  __ASM volatile ("clrex" ::: "memory");
-}
-#endif /* __ARM_FEATURE_LDREX */
-
-#if __ARM_ARCH_ISA_THUMB >= 2
 
 /**
   \brief   LDRT Unprivileged (8 bit)
@@ -482,10 +465,10 @@ __STATIC_FORCEINLINE void __CLREX(void)
  */
 __STATIC_FORCEINLINE uint8_t __LDRBT(volatile uint8_t *ptr)
 {
-    uint32_t result;
+  uint32_t result;
 
-   __ASM volatile ("ldrbt %0, %1" : "=r" (result) : "Q" (*ptr) );
-   return ((uint8_t) result);    /* Add explicit type cast here */
+  __ASM volatile ("ldrbt %0, %1" : "=r" (result) : "Q" (*ptr) );
+  return ((uint8_t)result);    /* Add explicit type cast here */
 }
 
 
@@ -497,10 +480,10 @@ __STATIC_FORCEINLINE uint8_t __LDRBT(volatile uint8_t *ptr)
  */
 __STATIC_FORCEINLINE uint16_t __LDRHT(volatile uint16_t *ptr)
 {
-    uint32_t result;
+  uint32_t result;
 
-   __ASM volatile ("ldrht %0, %1" : "=r" (result) : "Q" (*ptr) );
-   return ((uint16_t) result);    /* Add explicit type cast here */
+  __ASM volatile ("ldrht %0, %1" : "=r" (result) : "Q" (*ptr) );
+  return ((uint16_t)result);    /* Add explicit type cast here */
 }
 
 
@@ -512,10 +495,10 @@ __STATIC_FORCEINLINE uint16_t __LDRHT(volatile uint16_t *ptr)
  */
 __STATIC_FORCEINLINE uint32_t __LDRT(volatile uint32_t *ptr)
 {
-    uint32_t result;
+  uint32_t result;
 
-   __ASM volatile ("ldrt %0, %1" : "=r" (result) : "Q" (*ptr) );
-   return result;
+  __ASM volatile ("ldrt %0, %1" : "=r" (result) : "Q" (*ptr) );
+  return (result);
 }
 
 
@@ -527,7 +510,7 @@ __STATIC_FORCEINLINE uint32_t __LDRT(volatile uint32_t *ptr)
  */
 __STATIC_FORCEINLINE void __STRBT(uint8_t value, volatile uint8_t *ptr)
 {
-   __ASM volatile ("strbt %1, %0" : "=Q" (*ptr) : "r" ((uint32_t)value) );
+  __ASM volatile ("strbt %1, %0" : "=Q" (*ptr) : "r" ((uint32_t)value) );
 }
 
 
@@ -539,7 +522,7 @@ __STATIC_FORCEINLINE void __STRBT(uint8_t value, volatile uint8_t *ptr)
  */
 __STATIC_FORCEINLINE void __STRHT(uint16_t value, volatile uint16_t *ptr)
 {
-   __ASM volatile ("strht %1, %0" : "=Q" (*ptr) : "r" ((uint32_t)value) );
+  __ASM volatile ("strht %1, %0" : "=Q" (*ptr) : "r" ((uint32_t)value) );
 }
 
 
@@ -551,11 +534,12 @@ __STATIC_FORCEINLINE void __STRHT(uint16_t value, volatile uint16_t *ptr)
  */
 __STATIC_FORCEINLINE void __STRT(uint32_t value, volatile uint32_t *ptr)
 {
-   __ASM volatile ("strt %1, %0" : "=Q" (*ptr) : "r" (value) );
+  __ASM volatile ("strt %1, %0" : "=Q" (*ptr) : "r" (value) );
 }
-#endif /* __ARM_ARCH_ISA_THUMB >= 2 */
+#endif /* (__ARM_ARCH_ISA_THUMB >= 2) */
 
-#if __ARM_ARCH >= 8
+
+#if (__ARM_ARCH >= 8)
 /**
   \brief   Load-Acquire (8 bit)
   \details Executes a LDAB instruction for 8 bit value.
@@ -564,10 +548,10 @@ __STATIC_FORCEINLINE void __STRT(uint32_t value, volatile uint32_t *ptr)
  */
 __STATIC_FORCEINLINE uint8_t __LDAB(volatile uint8_t *ptr)
 {
-    uint32_t result;
+  uint32_t result;
 
-   __ASM volatile ("ldab %0, %1" : "=r" (result) : "Q" (*ptr) : "memory" );
-   return ((uint8_t) result);
+  __ASM volatile ("ldab %0, %1" : "=r" (result) : "Q" (*ptr) : "memory" );
+  return ((uint8_t)result);    /* Add explicit type cast here */
 }
 
 
@@ -579,10 +563,10 @@ __STATIC_FORCEINLINE uint8_t __LDAB(volatile uint8_t *ptr)
  */
 __STATIC_FORCEINLINE uint16_t __LDAH(volatile uint16_t *ptr)
 {
-    uint32_t result;
+  uint32_t result;
 
-   __ASM volatile ("ldah %0, %1" : "=r" (result) : "Q" (*ptr) : "memory" );
-   return ((uint16_t) result);
+  __ASM volatile ("ldah %0, %1" : "=r" (result) : "Q" (*ptr) : "memory" );
+  return ((uint16_t)result);    /* Add explicit type cast here */
 }
 
 
@@ -594,10 +578,10 @@ __STATIC_FORCEINLINE uint16_t __LDAH(volatile uint16_t *ptr)
  */
 __STATIC_FORCEINLINE uint32_t __LDA(volatile uint32_t *ptr)
 {
-    uint32_t result;
+  uint32_t result;
 
-   __ASM volatile ("lda %0, %1" : "=r" (result) : "Q" (*ptr) : "memory" );
-   return result;
+  __ASM volatile ("lda %0, %1" : "=r" (result) : "Q" (*ptr) : "memory" );
+  return (result);
 }
 
 
@@ -609,7 +593,7 @@ __STATIC_FORCEINLINE uint32_t __LDA(volatile uint32_t *ptr)
  */
 __STATIC_FORCEINLINE void __STLB(uint8_t value, volatile uint8_t *ptr)
 {
-   __ASM volatile ("stlb %1, %0" : "=Q" (*ptr) : "r" ((uint32_t)value) : "memory" );
+  __ASM volatile ("stlb %1, %0" : "=Q" (*ptr) : "r" ((uint32_t)value) : "memory" );
 }
 
 
@@ -621,7 +605,7 @@ __STATIC_FORCEINLINE void __STLB(uint8_t value, volatile uint8_t *ptr)
  */
 __STATIC_FORCEINLINE void __STLH(uint16_t value, volatile uint16_t *ptr)
 {
-   __ASM volatile ("stlh %1, %0" : "=Q" (*ptr) : "r" ((uint32_t)value) : "memory" );
+  __ASM volatile ("stlh %1, %0" : "=Q" (*ptr) : "r" ((uint32_t)value) : "memory" );
 }
 
 
@@ -633,7 +617,7 @@ __STATIC_FORCEINLINE void __STLH(uint16_t value, volatile uint16_t *ptr)
  */
 __STATIC_FORCEINLINE void __STL(uint32_t value, volatile uint32_t *ptr)
 {
-   __ASM volatile ("stl %1, %0" : "=Q" (*ptr) : "r" ((uint32_t)value) : "memory" );
+  __ASM volatile ("stl %1, %0" : "=Q" (*ptr) : "r" ((uint32_t)value) : "memory" );
 }
 
 
@@ -643,13 +627,7 @@ __STATIC_FORCEINLINE void __STL(uint32_t value, volatile uint32_t *ptr)
   \param [in]    ptr  Pointer to data
   \return             value of type uint8_t at (*ptr)
  */
-__STATIC_FORCEINLINE uint8_t __LDAEXB(volatile uint8_t *ptr)
-{
-    uint32_t result;
-
-   __ASM volatile ("ldaexb %0, %1" : "=r" (result) : "Q" (*ptr) : "memory" );
-   return ((uint8_t) result);
-}
+#define __LDAEXB                 (uint8_t)__builtin_arm_ldaex
 
 
 /**
@@ -658,13 +636,7 @@ __STATIC_FORCEINLINE uint8_t __LDAEXB(volatile uint8_t *ptr)
   \param [in]    ptr  Pointer to data
   \return        value of type uint16_t at (*ptr)
  */
-__STATIC_FORCEINLINE uint16_t __LDAEXH(volatile uint16_t *ptr)
-{
-    uint32_t result;
-
-   __ASM volatile ("ldaexh %0, %1" : "=r" (result) : "Q" (*ptr) : "memory" );
-   return ((uint16_t) result);
-}
+#define __LDAEXH                 (uint16_t)__builtin_arm_ldaex
 
 
 /**
@@ -673,13 +645,7 @@ __STATIC_FORCEINLINE uint16_t __LDAEXH(volatile uint16_t *ptr)
   \param [in]    ptr  Pointer to data
   \return        value of type uint32_t at (*ptr)
  */
-__STATIC_FORCEINLINE uint32_t __LDAEX(volatile uint32_t *ptr)
-{
-    uint32_t result;
-
-   __ASM volatile ("ldaex %0, %1" : "=r" (result) : "Q" (*ptr) : "memory" );
-   return result;
-}
+#define __LDAEX                  (uint32_t)__builtin_arm_ldaex
 
 
 /**
@@ -690,13 +656,7 @@ __STATIC_FORCEINLINE uint32_t __LDAEX(volatile uint32_t *ptr)
   \return          0  Function succeeded
   \return          1  Function failed
  */
-__STATIC_FORCEINLINE uint32_t __STLEXB(uint8_t value, volatile uint8_t *ptr)
-{
-   uint32_t result;
-
-   __ASM volatile ("stlexb %0, %2, %1" : "=&r" (result), "=Q" (*ptr) : "r" ((uint32_t)value) : "memory" );
-   return result;
-}
+#define __STLEXB                 (uint32_t)__builtin_arm_stlex
 
 
 /**
@@ -707,13 +667,7 @@ __STATIC_FORCEINLINE uint32_t __STLEXB(uint8_t value, volatile uint8_t *ptr)
   \return          0  Function succeeded
   \return          1  Function failed
  */
-__STATIC_FORCEINLINE uint32_t __STLEXH(uint16_t value, volatile uint16_t *ptr)
-{
-   uint32_t result;
-
-   __ASM volatile ("stlexh %0, %2, %1" : "=&r" (result), "=Q" (*ptr) : "r" ((uint32_t)value) : "memory" );
-   return result;
-}
+#define __STLEXH                 (uint32_t)__builtin_arm_stlex
 
 
 /**
@@ -724,15 +678,9 @@ __STATIC_FORCEINLINE uint32_t __STLEXH(uint16_t value, volatile uint16_t *ptr)
   \return          0  Function succeeded
   \return          1  Function failed
  */
-__STATIC_FORCEINLINE uint32_t __STLEX(uint32_t value, volatile uint32_t *ptr)
-{
-   uint32_t result;
+#define __STLEX                  (uint32_t)__builtin_arm_stlex
 
-   __ASM volatile ("stlex %0, %2, %1" : "=&r" (result), "=Q" (*ptr) : "r" ((uint32_t)value) : "memory" );
-   return result;
-}
-
-#endif /* __ARM_ARCH >= 8 */
+#endif /* (__ARM_ARCH >= 8) */
 
 /** @}*/ /* end of group CMSIS_Core_InstructionInterface */
 
@@ -775,7 +723,7 @@ __STATIC_FORCEINLINE uint32_t __get_CONTROL(void)
   uint32_t result;
 
   __ASM volatile ("MRS %0, control" : "=r" (result) );
-  return result;
+  return (result);
 }
 
 
@@ -790,7 +738,7 @@ __STATIC_FORCEINLINE uint32_t __TZ_get_CONTROL_NS(void)
   uint32_t result;
 
   __ASM volatile ("MRS %0, control_ns" : "=r" (result) );
-  return result;
+  return (result);
 }
 #endif
 
@@ -831,7 +779,7 @@ __STATIC_FORCEINLINE uint32_t __get_IPSR(void)
   uint32_t result;
 
   __ASM volatile ("MRS %0, ipsr" : "=r" (result) );
-  return result;
+  return (result);
 }
 
 
@@ -845,7 +793,7 @@ __STATIC_FORCEINLINE uint32_t __get_APSR(void)
   uint32_t result;
 
   __ASM volatile ("MRS %0, apsr" : "=r" (result) );
-  return result;
+  return (result);
 }
 
 
@@ -859,7 +807,7 @@ __STATIC_FORCEINLINE uint32_t __get_xPSR(void)
   uint32_t result;
 
   __ASM volatile ("MRS %0, xpsr" : "=r" (result) );
-  return result;
+  return (result);
 }
 
 
@@ -873,7 +821,7 @@ __STATIC_FORCEINLINE uint32_t __get_PSP(void)
   uint32_t result;
 
   __ASM volatile ("MRS %0, psp"  : "=r" (result) );
-  return result;
+  return (result);
 }
 
 
@@ -888,7 +836,7 @@ __STATIC_FORCEINLINE uint32_t __TZ_get_PSP_NS(void)
   uint32_t result;
 
   __ASM volatile ("MRS %0, psp_ns"  : "=r" (result) );
-  return result;
+  return (result);
 }
 #endif
 
@@ -927,7 +875,7 @@ __STATIC_FORCEINLINE uint32_t __get_MSP(void)
   uint32_t result;
 
   __ASM volatile ("MRS %0, msp" : "=r" (result) );
-  return result;
+  return (result);
 }
 
 
@@ -942,7 +890,7 @@ __STATIC_FORCEINLINE uint32_t __TZ_get_MSP_NS(void)
   uint32_t result;
 
   __ASM volatile ("MRS %0, msp_ns" : "=r" (result) );
-  return result;
+  return (result);
 }
 #endif
 
@@ -982,7 +930,7 @@ __STATIC_FORCEINLINE uint32_t __TZ_get_SP_NS(void)
   uint32_t result;
 
   __ASM volatile ("MRS %0, sp_ns" : "=r" (result) );
-  return result;
+  return (result);
 }
 
 
@@ -1008,7 +956,7 @@ __STATIC_FORCEINLINE uint32_t __get_PRIMASK(void)
   uint32_t result;
 
   __ASM volatile ("MRS %0, primask" : "=r" (result) );
-  return result;
+  return (result);
 }
 
 
@@ -1023,7 +971,7 @@ __STATIC_FORCEINLINE uint32_t __TZ_get_PRIMASK_NS(void)
   uint32_t result;
 
   __ASM volatile ("MRS %0, primask_ns" : "=r" (result) );
-  return result;
+  return (result);
 }
 #endif
 
@@ -1052,7 +1000,7 @@ __STATIC_FORCEINLINE void __TZ_set_PRIMASK_NS(uint32_t priMask)
 #endif
 
 
-#if __ARM_ARCH_ISA_THUMB >= 2
+#if (__ARM_ARCH_ISA_THUMB >= 2)
 /**
   \brief   Enable FIQ
   \details Enables FIQ interrupts by clearing special-purpose register FAULTMASK.
@@ -1085,7 +1033,7 @@ __STATIC_FORCEINLINE uint32_t __get_BASEPRI(void)
   uint32_t result;
 
   __ASM volatile ("MRS %0, basepri" : "=r" (result) );
-  return result;
+  return (result);
 }
 
 
@@ -1100,7 +1048,7 @@ __STATIC_FORCEINLINE uint32_t __TZ_get_BASEPRI_NS(void)
   uint32_t result;
 
   __ASM volatile ("MRS %0, basepri_ns" : "=r" (result) );
-  return result;
+  return (result);
 }
 #endif
 
@@ -1151,7 +1099,7 @@ __STATIC_FORCEINLINE uint32_t __get_FAULTMASK(void)
   uint32_t result;
 
   __ASM volatile ("MRS %0, faultmask" : "=r" (result) );
-  return result;
+  return (result);
 }
 
 
@@ -1166,7 +1114,7 @@ __STATIC_FORCEINLINE uint32_t __TZ_get_FAULTMASK_NS(void)
   uint32_t result;
 
   __ASM volatile ("MRS %0, faultmask_ns" : "=r" (result) );
-  return result;
+  return (result);
 }
 #endif
 
@@ -1194,11 +1142,10 @@ __STATIC_FORCEINLINE void __TZ_set_FAULTMASK_NS(uint32_t faultMask)
 }
 #endif
 
-#endif /* __ARM_ARCH_ISA_THUMB >= 2 */
+#endif /* (__ARM_ARCH_ISA_THUMB >= 2) */
 
 
-#if __ARM_ARCH >= 8
-
+#if (__ARM_ARCH >= 8)
 /**
   \brief   Get Process Stack Pointer Limit
   Devices without ARMv8-M Main Extensions (i.e. Cortex-M23) lack the non-secure
@@ -1210,14 +1157,15 @@ __STATIC_FORCEINLINE void __TZ_set_FAULTMASK_NS(uint32_t faultMask)
  */
 __STATIC_FORCEINLINE uint32_t __get_PSPLIM(void)
 {
-#if ((__ARM_ARCH_ISA_THUMB < 2) && \
-     (__ARM_FEATURE_CMSE   < 3)   )
-    // without main extensions, the non-secure PSPLIM is RAZ/WI
-  return 0U;
+#if (((__ARM_ARCH_8M_MAIN__   < 1) && \
+      (__ARM_ARCH_8_1M_MAIN__ < 1)    ) && \
+	 (__ARM_FEATURE_CMSE < 3)              )
+  /* without main extensions, the non-secure PSPLIM is RAZ/WI */
+  return (0U);
 #else
   uint32_t result;
   __ASM volatile ("MRS %0, psplim"  : "=r" (result) );
-  return result;
+  return (result);
 #endif
 }
 
@@ -1232,13 +1180,14 @@ __STATIC_FORCEINLINE uint32_t __get_PSPLIM(void)
  */
 __STATIC_FORCEINLINE uint32_t __TZ_get_PSPLIM_NS(void)
 {
-#if __ARM_ARCH_ISA_THUMB < 2
-  // without main extensions, the non-secure PSPLIM is RAZ/WI
-  return 0U;
+#if ((__ARM_ARCH_8M_MAIN__   < 1) && \
+     (__ARM_ARCH_8_1M_MAIN__ < 1)    )
+  /* without main extensions, the non-secure PSPLIM is RAZ/WI */
+  return (0U);
 #else
   uint32_t result;
   __ASM volatile ("MRS %0, psplim_ns"  : "=r" (result) );
-  return result;
+  return (result);
 #endif
 }
 #endif
@@ -1255,9 +1204,10 @@ __STATIC_FORCEINLINE uint32_t __TZ_get_PSPLIM_NS(void)
  */
 __STATIC_FORCEINLINE void __set_PSPLIM(uint32_t ProcStackPtrLimit)
 {
-#if ((__ARM_ARCH_ISA_THUMB < 2) && \
-     (__ARM_FEATURE_CMSE   < 3)   )
-  // without main extensions, the non-secure PSPLIM is RAZ/WI
+#if (((__ARM_ARCH_8M_MAIN__   < 1) && \
+      (__ARM_ARCH_8_1M_MAIN__ < 1)    ) && \
+	 (__ARM_FEATURE_CMSE < 3)              )
+  /* without main extensions, the non-secure PSPLIM is RAZ/WI */
   (void)ProcStackPtrLimit;
 #else
   __ASM volatile ("MSR psplim, %0" : : "r" (ProcStackPtrLimit));
@@ -1276,8 +1226,9 @@ __STATIC_FORCEINLINE void __set_PSPLIM(uint32_t ProcStackPtrLimit)
  */
 __STATIC_FORCEINLINE void __TZ_set_PSPLIM_NS(uint32_t ProcStackPtrLimit)
 {
-#if __ARM_ARCH_ISA_THUMB < 2
-  // without main extensions, the non-secure PSPLIM is RAZ/WI
+#if ((__ARM_ARCH_8M_MAIN__   < 1) && \
+     (__ARM_ARCH_8_1M_MAIN__ < 1)    )
+  /* without main extensions, the non-secure PSPLIM is RAZ/WI */
   (void)ProcStackPtrLimit;
 #else
   __ASM volatile ("MSR psplim_ns, %0\n" : : "r" (ProcStackPtrLimit));
@@ -1289,22 +1240,22 @@ __STATIC_FORCEINLINE void __TZ_set_PSPLIM_NS(uint32_t ProcStackPtrLimit)
 /**
   \brief   Get Main Stack Pointer Limit
   Devices without ARMv8-M Main Extensions (i.e. Cortex-M23) lack the non-secure
-  Stack Pointer Limit register hence zero is returned always in non-secure
-  mode.
+  Stack Pointer Limit register hence zero is returned always.
 
   \details Returns the current value of the Main Stack Pointer Limit (MSPLIM).
   \return               MSPLIM Register value
  */
 __STATIC_FORCEINLINE uint32_t __get_MSPLIM(void)
 {
-#if ((__ARM_ARCH_ISA_THUMB < 2) && \
-     (__ARM_FEATURE_CMSE   < 3)   )
-  // without main extensions, the non-secure MSPLIM is RAZ/WI
-  return 0U;
+#if (((__ARM_ARCH_8M_MAIN__   < 1) && \
+      (__ARM_ARCH_8_1M_MAIN__ < 1)    ) && \
+	 (__ARM_FEATURE_CMSE < 3)              )
+  /* without main extensions, the non-secure MSPLIM is RAZ/WI */
+  return (0U);
 #else
   uint32_t result;
   __ASM volatile ("MRS %0, msplim" : "=r" (result) );
-  return result;
+  return (result);
 #endif
 }
 
@@ -1320,13 +1271,14 @@ __STATIC_FORCEINLINE uint32_t __get_MSPLIM(void)
  */
 __STATIC_FORCEINLINE uint32_t __TZ_get_MSPLIM_NS(void)
 {
-#if __ARM_ARCH_ISA_THUMB < 2
-  // without main extensions, the non-secure MSPLIM is RAZ/WI
-  return 0U;
+#if ((__ARM_ARCH_8M_MAIN__   < 1) && \
+     (__ARM_ARCH_8_1M_MAIN__ < 1)    )
+  /* without main extensions, the non-secure MSPLIM is RAZ/WI */
+  return (0U);
 #else
   uint32_t result;
   __ASM volatile ("MRS %0, msplim_ns" : "=r" (result) );
-  return result;
+  return (result);
 #endif
 }
 #endif
@@ -1335,17 +1287,17 @@ __STATIC_FORCEINLINE uint32_t __TZ_get_MSPLIM_NS(void)
 /**
   \brief   Set Main Stack Pointer Limit
   Devices without ARMv8-M Main Extensions (i.e. Cortex-M23) lack the non-secure
-  Stack Pointer Limit register hence the write is silently ignored in non-secure
-  mode.
+  Stack Pointer Limit register hence the write is silently ignored.
 
   \details Assigns the given value to the Main Stack Pointer Limit (MSPLIM).
   \param [in]    MainStackPtrLimit  Main Stack Pointer Limit value to set
  */
 __STATIC_FORCEINLINE void __set_MSPLIM(uint32_t MainStackPtrLimit)
 {
-#if ((__ARM_ARCH_ISA_THUMB < 2) && \
-     (__ARM_FEATURE_CMSE   < 3)   )
-  // without main extensions, the non-secure MSPLIM is RAZ/WI
+#if (((__ARM_ARCH_8M_MAIN__   < 1) && \
+      (__ARM_ARCH_8_1M_MAIN__ < 1)    ) && \
+	 (__ARM_FEATURE_CMSE < 3)              )
+  /* without main extensions, the non-secure MSPLIM is RAZ/WI */
   (void)MainStackPtrLimit;
 #else
   __ASM volatile ("MSR msplim, %0" : : "r" (MainStackPtrLimit));
@@ -1364,8 +1316,9 @@ __STATIC_FORCEINLINE void __set_MSPLIM(uint32_t MainStackPtrLimit)
  */
 __STATIC_FORCEINLINE void __TZ_set_MSPLIM_NS(uint32_t MainStackPtrLimit)
 {
-#if __ARM_ARCH_ISA_THUMB < 2
-  // without main extensions, the non-secure MSPLIM is RAZ/WI
+#if ((__ARM_ARCH_8M_MAIN__   < 1) && \
+     (__ARM_ARCH_8_1M_MAIN__ < 1)    )
+  /* without main extensions, the non-secure MSPLIM is RAZ/WI */
   (void)MainStackPtrLimit;
 #else
   __ASM volatile ("MSR msplim_ns, %0" : : "r" (MainStackPtrLimit));
@@ -1373,7 +1326,7 @@ __STATIC_FORCEINLINE void __TZ_set_MSPLIM_NS(uint32_t MainStackPtrLimit)
 }
 #endif
 
-#endif /* __ARM_ARCH >= 8 */
+#endif /* (__ARM_ARCH >= 8) */
 
 
 /**
@@ -1383,11 +1336,10 @@ __STATIC_FORCEINLINE void __TZ_set_MSPLIM_NS(uint32_t MainStackPtrLimit)
  */
 __STATIC_FORCEINLINE uint32_t __get_FPSCR(void)
 {
-#if ((defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)) && \
-     (defined (__FPU_USED   ) && (__FPU_USED    == 1U))     )
-  return __builtin_arm_get_fpscr();
+#if (__ARM_FP >= 1)
+  return (__builtin_arm_get_fpscr());
 #else
-  return 0U;
+  return (0U);
 #endif
 }
 
@@ -1399,8 +1351,7 @@ __STATIC_FORCEINLINE uint32_t __get_FPSCR(void)
  */
 __STATIC_FORCEINLINE void __set_FPSCR(uint32_t fpscr)
 {
-#if ((defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)) && \
-     (defined (__FPU_USED   ) && (__FPU_USED    == 1U))     )
+#if (__ARM_FP >= 1)
   __builtin_arm_set_fpscr(fpscr);
 #else
   (void)fpscr;
@@ -1418,7 +1369,6 @@ __STATIC_FORCEINLINE void __set_FPSCR(uint32_t fpscr)
 */
 
 #if (__ARM_FEATURE_DSP == 1)
-
 #define     __SADD8                 __sadd8
 #define     __QADD8                 __qadd8
 #define     __SHADD8                __shadd8
@@ -1504,13 +1454,14 @@ __extension__ \
 
 __STATIC_FORCEINLINE int32_t __SMMLA (int32_t op1, int32_t op2, int32_t op3)
 {
- int32_t result;
+  int32_t result;
 
- __ASM ("smmla %0, %1, %2, %3" : "=r" (result): "r"  (op1), "r" (op2), "r" (op3) );
- return result;
+  __ASM volatile ("smmla %0, %1, %2, %3" : "=r" (result): "r"  (op1), "r" (op2), "r" (op3) );
+  return (result);
 }
 
 #endif /* (__ARM_FEATURE_DSP == 1) */
 /** @} end of group CMSIS_SIMD_intrinsics */
+
 
 #endif /* __CMSIS_CLANG_H */
