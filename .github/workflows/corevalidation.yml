@@ -58,19 +58,19 @@ jobs:
       - name: Cache LLVM/Clang
         uses: actions/cache@v3
         with:
-          key: clang-16.0.0
-          path: /home/runner/LLVMEmbeddedToolchainForArm-16.0.0-Linux-x86_64.tar.gz
+          key: clang-17.0.0-devdrop0
+          path: /home/runner/LLVMEmbeddedToolchainForArm-17.0.0-Linux-x86_64.tar.gz
 
       - name: Install LLVM/Clang
         working-directory: /home/runner
         run: |
           sudo apt-get update
           sudo apt-get install libtinfo5
-          test -f LLVMEmbeddedToolchainForArm-16.0.0-Linux-x86_64.tar.gz || \
-            wget https://github.com/ARM-software/LLVM-embedded-toolchain-for-Arm/releases/download/release-16.0.0/LLVMEmbeddedToolchainForArm-16.0.0-Linux-x86_64.tar.gz
-          tar xf LLVMEmbeddedToolchainForArm-16.0.0-Linux-x86_64.tar.gz
-          ./LLVMEmbeddedToolchainForArm-16.0.0-Linux-x86_64/bin/clang --version
-          echo "CLANG_TOOLCHAIN_16_0_0=$(pwd)/LLVMEmbeddedToolchainForArm-16.0.0-Linux-x86_64/bin" >> $GITHUB_ENV
+          test -f LLVMEmbeddedToolchainForArm-17.0.0-Linux-x86_64.tar.xz || \
+            wget https://github.com/ARM-software/LLVM-embedded-toolchain-for-Arm/releases/download/preview-17.0.0-devdrop0/LLVMEmbeddedToolchainForArm-17.0.0-Linux-x86_64.tar.xz
+          tar -xf LLVMEmbeddedToolchainForArm-17.0.0-Linux-x86_64.tar.xz
+          ./LLVMEmbeddedToolchainForArm-17.0.0-Linux-x86_64/bin/clang --version
+          echo "CLANG_TOOLCHAIN_17_0_0=$(pwd)/LLVMEmbeddedToolchainForArm-17.0.0-Linux-x86_64/bin" >> $GITHUB_ENV
         
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v2
