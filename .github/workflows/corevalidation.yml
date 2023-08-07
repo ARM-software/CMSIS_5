@@ -37,7 +37,10 @@ jobs:
       - name: Cache vcpkg
         uses: actions/cache@v3
         with:
-          key: vcpkg
+          key: vcpkg-${{ runner.os }}-${{ runner.arch }}-${{ github.run_id }}
+          restore-keys: |
+            vcpkg-${{ runner.os }}-${{ runner.arch }}-
+            vcpkg
           path: /home/runner/.vcpkg
 
       - name: Cache Arm Compiler 6
@@ -88,6 +91,7 @@ jobs:
 
           echo "Activate vcpkg environment"
           . <(curl https://aka.ms/vcpkg-init.sh -L)
+          vcpkg x-update-registry --all
           vcpkg activate
           
           echo "Activate Arm tool license"
