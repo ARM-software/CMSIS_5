@@ -1,11 +1,11 @@
 /**************************************************************************//**
  * @file     os_systick.c
  * @brief    CMSIS OS Tick SysTick implementation
- * @version  V1.0.2
- * @date     6. March 2020
+ * @version  V1.0.4
+ * @date     20. January 2023
  ******************************************************************************/
 /*
- * Copyright (c) 2017-2020 ARM Limited. All rights reserved.
+ * Copyright (c) 2017-2023 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -34,7 +34,7 @@
 #define SYSTICK_IRQ_PRIORITY    0xFFU
 #endif
 
-static uint8_t PendST;
+static uint8_t PendST __attribute__((section(".bss.os")));
 
 // Setup OS Tick.
 __WEAK int32_t OS_Tick_Setup (uint32_t freq, IRQHandler_t handler) {
@@ -121,13 +121,22 @@ __WEAK uint32_t OS_Tick_GetInterval (void) {
 
 // Get OS Tick count value.
 __WEAK uint32_t OS_Tick_GetCount (void) {
-  uint32_t load = SysTick->LOAD;
-  return  (load - SysTick->VAL);
+  uint32_t val;
+  uint32_t count;
+
+  val = SysTick->VAL;
+  if (val != 0U) {
+    count = (SysTick->LOAD - val) + 1U;
+  } else {
+    count = 0U;
+  }
+
+  return (count);
 }
 
 // Get OS Tick overflow status.
 __WEAK uint32_t OS_Tick_GetOverflow (void) {
-  return ((SysTick->CTRL >> 16) & 1U);
+  return ((SCB->ICSR & SCB_ICSR_PENDSTSET_Msk) >> SCB_ICSR_PENDSTSET_Pos);
 }
 
 #endif  // SysTick

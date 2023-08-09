@@ -25,7 +25,7 @@
       <files>
         <file category="sourceC" name="Source/component.c"/>
         <file category="header"  name="Include/component.h"/>
-        <file category="doc" name="ReadMe.txt"/>
+        <file category="doc" name="README.md"/>
       </files>
     </component>
   </components>

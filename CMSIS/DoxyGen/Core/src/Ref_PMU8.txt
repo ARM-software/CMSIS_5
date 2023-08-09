@@ -2,7 +2,7 @@
 \defgroup pmu8_functions  PMU Functions for Armv8.1-M
 \brief Functions that relate to the Performance Monitoring Unit.
 \details
-The following functions support the Performance Monitoring Unit (PMU) that is available on the Cortex-M55 processor.
+The following functions support the Performance Monitoring Unit (PMU) that is available on the Cortex-M55/M85 processors.
 
 The PMU is used to monitor events that occur during run-time of an application.
 
@@ -15,6 +15,9 @@ unsigned int l1_dcache_miss_count = 0;
 unsigned int instructions_retired_count = 0;
  
 // Enable the PMU
+// Note: Before using the PMU, software needs to ensure 
+// that trace is enabled via the Debug Exception Monitor Control Register, DEMCR:
+// CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
  
 ARM_PMU_Enable();
  
@@ -218,10 +221,48 @@ These events are available on a Cortex-M55 device including a PMU.
 #define ARMCM55_PMU_NWAMODE_ENTER                    0xC200             /*!< \brief No write-allocate mode entry */
 #define ARMCM55_PMU_NWAMODE                          0xC201             /*!< \brief Write-allocate store is not allocated into the data cache due to no-write-allocate mode */
 #define ARMCM55_PMU_SAHB_ACCESS                      0xC300             /*!< \brief Read or write access on the S-AHB interface to the TCM */
+#define ARMCM55_PMU_SAHB_ACCESS                      0xC300             /*!< \brief Read or write access on the S-AHB interface to the TCM */
+#define ARMCM55_PMU_PAHB_ACCESS                      0xC301             /*!< \brief Read or write access on the P-AHB interface */
+#define ARMCM55_PMU_AXI_WRITE_ACCESS                 0xC302             /*!< \brief Any beat access to M-AXI write interface */
+#define ARMCM55_PMU_AXI_READ_ACCESS                  0xC303             /*!< \brief Any beat access to M-AXI read interface */
 #define ARMCM55_PMU_DOSTIMEOUT_DOUBLE                0xC400             /*!< \brief Denial of Service timeout has fired twice and caused buffers to drain to allow forward progress */
 #define ARMCM55_PMU_DOSTIMEOUT_TRIPLE                0xC401             /*!< \brief Denial of Service timeout has fired three times and blocked the LSU to force forward progress */
 
 /** @} */
+
+/**
+\defgroup pmu8_events_armcm85  PMU Events for Cortex-M85
+\ingroup pmu8_functions
+\brief IDs for additional events defined for Cortex-M85.
+\details
+These events are available on a Cortex-M85 device including a PMU.
+@{
+*/
+
+#define ARMCM85_PMU_ECC_ERR                          0xC000             /*!< \brief Any ECC error */
+#define ARMCM85_PMU_ECC_ERR_MBIT                     0xC001             /*!< \brief Any multi-bit ECC error */
+#define ARMCM85_PMU_ECC_ERR_DCACHE                   0xC010             /*!< \brief Any ECC error in the data cache */
+#define ARMCM85_PMU_ECC_ERR_ICACHE                   0xC011             /*!< \brief Any ECC error in the instruction cache */
+#define ARMCM85_PMU_ECC_ERR_MBIT_DCACHE              0xC012             /*!< \brief Any multi-bit ECC error in the data cache */
+#define ARMCM85_PMU_ECC_ERR_MBIT_ICACHE              0xC013             /*!< \brief Any multi-biy ECC error in the instruction cache*/
+#define ARMCM85_PMU_ECC_ERR_DTCM                     0xC020             /*!< \brief Any ECC error in the DTCM */
+#define ARMCM85_PMU_ECC_ERR_ITCM                     0xC021             /*!< \brief Any ECC error in the ITCM */
+#define ARMCM85_PMU_ECC_ERR_MBIT_DTCM                0xC022             /*!< \brief Any multi-bit ECC error in the DTCM */
+#define ARMCM85_PMU_ECC_ERR_MBIT_ITCM                0xC023             /*!< \brief Any multi-bit ECC error in the ITCM */
+#define ARMCM85_PMU_PF_LINEFILL                      0xC100             /*!< \brief A prefetcher starts a line-fill */
+#define ARMCM85_PMU_PF_CANCEL                        0xC101             /*!< \brief A prefetcher stops prefetching */
+#define ARMCM85_PMU_PF_DROP_LINEFILL                 0xC102             /*!< \brief A linefill triggered by a prefetcher has been dropped because of lack of buffering */
+#define ARMCM85_PMU_NWAMODE_ENTER                    0xC200             /*!< \brief No write-allocate mode entry */
+#define ARMCM85_PMU_NWAMODE                          0xC201             /*!< \brief Write-allocate store is not allocated into the data cache due to no-write-allocate mode */
+#define ARMCM85_PMU_SAHB_ACCESS                      0xC300             /*!< \brief Read or write access on the S-AHB interface to the TCM */
+#define ARMCM85_PMU_PAHB_ACCESS                      0xC301             /*!< \brief Read or write access on the P-AHB interface */
+#define ARMCM85_PMU_AXI_WRITE_ACCESS                 0xC302             /*!< \brief Any beat access to M-AXI write interface  */
+#define ARMCM85_PMU_AXI_READ_ACCESS                  0xC303             /*!< \brief Any beat access to M-AXI read interface */
+#define ARMCM85_PMU_DOSTIMEOUT_DOUBLE                0xC400             /*!< \brief Denial of Service timeout has fired twice and caused buffers to drain to allow forward progress */
+#define ARMCM85_PMU_DOSTIMEOUT_TRIPLE                0xC401             /*!< \brief Denial of Service timeout has fired three times and blocked the LSU to force forward progress */
+
+/** @} */
+
 
 /**
   \brief  Structure type to access the Performance Monitoring Unit (PMU).

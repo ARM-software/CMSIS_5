@@ -1,11 +1,11 @@
 /**************************************************************************//**
  * @file     core_cm7.h
  * @brief    CMSIS Cortex-M7 Core Peripheral Access Layer Header File
- * @version  V5.1.3
- * @date     19. April 2020
+ * @version  V5.2.0
+ * @date     04. April 2023
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2020 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2023 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -87,6 +87,18 @@
 
 #elif defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
   #if defined __ARM_FP
+    #if defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)
+      #define __FPU_USED       1U
+    #else
+      #warning "Compiler generates FPU instructions for a device without an FPU (check __FPU_PRESENT)"
+      #define __FPU_USED       0U
+    #endif
+  #else
+    #define __FPU_USED         0U
+  #endif
+
+#elif defined (__ti__)
+  #if defined (__ARM_FP)
     #if defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)
       #define __FPU_USED       1U
     #else
@@ -213,7 +225,7 @@
     #define __VTOR_PRESENT             1U
     #warning "__VTOR_PRESENT not defined in device header file; using default!"
   #endif
-  
+
   #ifndef __NVIC_PRIO_BITS
     #define __NVIC_PRIO_BITS          3U
     #warning "__NVIC_PRIO_BITS not defined in device header file; using default!"
@@ -501,7 +513,8 @@ typedef struct
   __OM  uint32_t DCCSW;                  /*!< Offset: 0x26C ( /W)  D-Cache Clean by Set-way */
   __OM  uint32_t DCCIMVAC;               /*!< Offset: 0x270 ( /W)  D-Cache Clean and Invalidate by MVA to PoC */
   __OM  uint32_t DCCISW;                 /*!< Offset: 0x274 ( /W)  D-Cache Clean and Invalidate by Set-way */
-        uint32_t RESERVED7[6U];
+  __OM  uint32_t BPIALL;                 /*!< Offset: 0x278 ( /W)  Branch Predictor Invalidate All */
+        uint32_t RESERVED7[5U];
   __IOM uint32_t ITCMCR;                 /*!< Offset: 0x290 (R/W)  Instruction Tightly-Coupled Memory Control Register */
   __IOM uint32_t DTCMCR;                 /*!< Offset: 0x294 (R/W)  Data Tightly-Coupled Memory Control Registers */
   __IOM uint32_t AHBPCR;                 /*!< Offset: 0x298 (R/W)  AHBP Control Register */
@@ -676,22 +689,22 @@ typedef struct
 #define SCB_CFSR_MEMFAULTSR_Msk            (0xFFUL /*<< SCB_CFSR_MEMFAULTSR_Pos*/)        /*!< SCB CFSR: Memory Manage Fault Status Register Mask */
 
 /* MemManage Fault Status Register (part of SCB Configurable Fault Status Register) */
-#define SCB_CFSR_MMARVALID_Pos             (SCB_SHCSR_MEMFAULTACT_Pos + 7U)               /*!< SCB CFSR (MMFSR): MMARVALID Position */
+#define SCB_CFSR_MMARVALID_Pos             (SCB_CFSR_MEMFAULTSR_Pos + 7U)                 /*!< SCB CFSR (MMFSR): MMARVALID Position */
 #define SCB_CFSR_MMARVALID_Msk             (1UL << SCB_CFSR_MMARVALID_Pos)                /*!< SCB CFSR (MMFSR): MMARVALID Mask */
 
-#define SCB_CFSR_MLSPERR_Pos               (SCB_SHCSR_MEMFAULTACT_Pos + 5U)               /*!< SCB CFSR (MMFSR): MLSPERR Position */
+#define SCB_CFSR_MLSPERR_Pos               (SCB_CFSR_MEMFAULTSR_Pos + 5U)                 /*!< SCB CFSR (MMFSR): MLSPERR Position */
 #define SCB_CFSR_MLSPERR_Msk               (1UL << SCB_CFSR_MLSPERR_Pos)                  /*!< SCB CFSR (MMFSR): MLSPERR Mask */
 
-#define SCB_CFSR_MSTKERR_Pos               (SCB_SHCSR_MEMFAULTACT_Pos + 4U)               /*!< SCB CFSR (MMFSR): MSTKERR Position */
+#define SCB_CFSR_MSTKERR_Pos               (SCB_CFSR_MEMFAULTSR_Pos + 4U)                 /*!< SCB CFSR (MMFSR): MSTKERR Position */
 #define SCB_CFSR_MSTKERR_Msk               (1UL << SCB_CFSR_MSTKERR_Pos)                  /*!< SCB CFSR (MMFSR): MSTKERR Mask */
 
-#define SCB_CFSR_MUNSTKERR_Pos             (SCB_SHCSR_MEMFAULTACT_Pos + 3U)               /*!< SCB CFSR (MMFSR): MUNSTKERR Position */
+#define SCB_CFSR_MUNSTKERR_Pos             (SCB_CFSR_MEMFAULTSR_Pos + 3U)                 /*!< SCB CFSR (MMFSR): MUNSTKERR Position */
 #define SCB_CFSR_MUNSTKERR_Msk             (1UL << SCB_CFSR_MUNSTKERR_Pos)                /*!< SCB CFSR (MMFSR): MUNSTKERR Mask */
 
-#define SCB_CFSR_DACCVIOL_Pos              (SCB_SHCSR_MEMFAULTACT_Pos + 1U)               /*!< SCB CFSR (MMFSR): DACCVIOL Position */
+#define SCB_CFSR_DACCVIOL_Pos              (SCB_CFSR_MEMFAULTSR_Pos + 1U)                 /*!< SCB CFSR (MMFSR): DACCVIOL Position */
 #define SCB_CFSR_DACCVIOL_Msk              (1UL << SCB_CFSR_DACCVIOL_Pos)                 /*!< SCB CFSR (MMFSR): DACCVIOL Mask */
 
-#define SCB_CFSR_IACCVIOL_Pos              (SCB_SHCSR_MEMFAULTACT_Pos + 0U)               /*!< SCB CFSR (MMFSR): IACCVIOL Position */
+#define SCB_CFSR_IACCVIOL_Pos              (SCB_CFSR_MEMFAULTSR_Pos + 0U)                 /*!< SCB CFSR (MMFSR): IACCVIOL Position */
 #define SCB_CFSR_IACCVIOL_Msk              (1UL /*<< SCB_CFSR_IACCVIOL_Pos*/)             /*!< SCB CFSR (MMFSR): IACCVIOL Mask */
 
 /* BusFault Status Register (part of SCB Configurable Fault Status Register) */
@@ -875,8 +888,11 @@ typedef struct
 #define SCB_CACR_FORCEWT_Pos                2U                                            /*!< SCB CACR: FORCEWT Position */
 #define SCB_CACR_FORCEWT_Msk               (1UL << SCB_CACR_FORCEWT_Pos)                  /*!< SCB CACR: FORCEWT Mask */
 
-#define SCB_CACR_ECCEN_Pos                  1U                                            /*!< SCB CACR: ECCEN Position */
-#define SCB_CACR_ECCEN_Msk                 (1UL << SCB_CACR_ECCEN_Pos)                    /*!< SCB CACR: ECCEN Mask */
+#define SCB_CACR_ECCEN_Pos                  1U                                            /*!< \deprecated SCB CACR: ECCEN Position */
+#define SCB_CACR_ECCEN_Msk                 (1UL << SCB_CACR_ECCEN_Pos)                    /*!< \deprecated SCB CACR: ECCEN Mask */
+
+#define SCB_CACR_ECCDIS_Pos                 1U                                            /*!< SCB CACR: ECCDIS Position */
+#define SCB_CACR_ECCDIS_Msk                (1UL << SCB_CACR_ECCDIS_Pos)                   /*!< SCB CACR: ECCDIS Mask */
 
 #define SCB_CACR_SIWT_Pos                   0U                                            /*!< SCB CACR: SIWT Position */
 #define SCB_CACR_SIWT_Msk                  (1UL /*<< SCB_CACR_SIWT_Pos*/)                 /*!< SCB CACR: SIWT Mask */
@@ -1074,14 +1090,14 @@ typedef struct
 #define ITM_TCR_BUSY_Pos                   23U                                            /*!< ITM TCR: BUSY Position */
 #define ITM_TCR_BUSY_Msk                   (1UL << ITM_TCR_BUSY_Pos)                      /*!< ITM TCR: BUSY Mask */
 
-#define ITM_TCR_TraceBusID_Pos             16U                                            /*!< ITM TCR: ATBID Position */
-#define ITM_TCR_TraceBusID_Msk             (0x7FUL << ITM_TCR_TraceBusID_Pos)             /*!< ITM TCR: ATBID Mask */
+#define ITM_TCR_TRACEBUSID_Pos             16U                                            /*!< ITM TCR: ATBID Position */
+#define ITM_TCR_TRACEBUSID_Msk             (0x7FUL << ITM_TCR_TRACEBUSID_Pos)             /*!< ITM TCR: ATBID Mask */
 
 #define ITM_TCR_GTSFREQ_Pos                10U                                            /*!< ITM TCR: Global timestamp frequency Position */
 #define ITM_TCR_GTSFREQ_Msk                (3UL << ITM_TCR_GTSFREQ_Pos)                   /*!< ITM TCR: Global timestamp frequency Mask */
 
-#define ITM_TCR_TSPrescale_Pos              8U                                            /*!< ITM TCR: TSPrescale Position */
-#define ITM_TCR_TSPrescale_Msk             (3UL << ITM_TCR_TSPrescale_Pos)                /*!< ITM TCR: TSPrescale Mask */
+#define ITM_TCR_TSPRESCALE_Pos              8U                                            /*!< ITM TCR: TSPrescale Position */
+#define ITM_TCR_TSPRESCALE_Msk             (3UL << ITM_TCR_TSPRESCALE_Pos)                /*!< ITM TCR: TSPrescale Mask */
 
 #define ITM_TCR_SWOENA_Pos                  4U                                            /*!< ITM TCR: SWOENA Position */
 #define ITM_TCR_SWOENA_Msk                 (1UL << ITM_TCR_SWOENA_Pos)                    /*!< ITM TCR: SWOENA Mask */
@@ -1099,14 +1115,14 @@ typedef struct
 #define ITM_TCR_ITMENA_Msk                 (1UL /*<< ITM_TCR_ITMENA_Pos*/)                /*!< ITM TCR: ITM Enable bit Mask */
 
 /* ITM Lock Status Register Definitions */
-#define ITM_LSR_ByteAcc_Pos                 2U                                            /*!< ITM LSR: ByteAcc Position */
-#define ITM_LSR_ByteAcc_Msk                (1UL << ITM_LSR_ByteAcc_Pos)                   /*!< ITM LSR: ByteAcc Mask */
+#define ITM_LSR_BYTEACC_Pos                 2U                                            /*!< ITM LSR: ByteAcc Position */
+#define ITM_LSR_BYTEACC_Msk                (1UL << ITM_LSR_BYTEACC_Pos)                   /*!< ITM LSR: ByteAcc Mask */
 
-#define ITM_LSR_Access_Pos                  1U                                            /*!< ITM LSR: Access Position */
-#define ITM_LSR_Access_Msk                 (1UL << ITM_LSR_Access_Pos)                    /*!< ITM LSR: Access Mask */
+#define ITM_LSR_ACCESS_Pos                  1U                                            /*!< ITM LSR: Access Position */
+#define ITM_LSR_ACCESS_Msk                 (1UL << ITM_LSR_ACCESS_Pos)                    /*!< ITM LSR: Access Mask */
 
-#define ITM_LSR_Present_Pos                 0U                                            /*!< ITM LSR: Present Position */
-#define ITM_LSR_Present_Msk                (1UL /*<< ITM_LSR_Present_Pos*/)               /*!< ITM LSR: Present Mask */
+#define ITM_LSR_PRESENT_Pos                 0U                                            /*!< ITM LSR: Present Position */
+#define ITM_LSR_PRESENT_Msk                (1UL /*<< ITM_LSR_PRESENT_Pos*/)               /*!< ITM LSR: Present Mask */
 
 /*@}*/ /* end of group CMSIS_ITM */
 
@@ -1795,6 +1811,35 @@ typedef struct
 
 #define FPU_BASE            (SCS_BASE +  0x0F30UL)                    /*!< Floating Point Unit */
 #define FPU                 ((FPU_Type       *)     FPU_BASE      )   /*!< Floating Point Unit */
+
+/*@} */
+
+
+/**
+  \ingroup    CMSIS_core_register
+  \defgroup   CMSIS_register_aliases     Backwards Compatibility Aliases
+  \brief      Register alias definitions for backwards compatibility.
+  @{
+ */
+
+/* Capitalize ITM_TCR Register Definitions */
+
+/* ITM Trace Control Register Definitions */
+#define ITM_TCR_TraceBusID_Pos           (ITM_TCR_TRACEBUSID_Pos)     /*!< \deprecated ITM_TCR_TraceBusID_Pos */
+#define ITM_TCR_TraceBusID_Msk           (ITM_TCR_TRACEBUSID_Msk)     /*!< \deprecated ITM_TCR_TraceBusID_Msk */
+
+#define ITM_TCR_TSPrescale_Pos           (ITM_TCR_TSPRESCALE_Pos)     /*!< \deprecated ITM_TCR_TSPrescale_Pos */
+#define ITM_TCR_TSPrescale_Msk           (ITM_TCR_TSPRESCALE_Msk)     /*!< \deprecated ITM_TCR_TSPrescale_Msk */
+
+/* ITM Lock Status Register Definitions */
+#define ITM_LSR_ByteAcc_Pos              (ITM_LSR_BYTEACC_Pos)        /*!< \deprecated ITM_LSR_ByteAcc_Pos */
+#define ITM_LSR_ByteAcc_Msk              (ITM_LSR_BYTEACC_Msk)        /*!< \deprecated ITM_LSR_ByteAcc_Msk */
+
+#define ITM_LSR_Access_Pos               (ITM_LSR_ACCESS_Pos)         /*!< \deprecated ITM_LSR_Access_Pos */
+#define ITM_LSR_Access_Msk               (ITM_LSR_ACCESS_Msk)         /*!< \deprecated ITM_LSR_Access_Msk */
+
+#define ITM_LSR_Present_Pos              (ITM_LSR_PRESENT_Pos)        /*!< \deprecated ITM_LSR_Present_Pos */
+#define ITM_LSR_Present_Msk              (ITM_LSR_PRESENT_Msk)        /*!< \deprecated ITM_LSR_Present_Msk */
 
 /*@} */
 

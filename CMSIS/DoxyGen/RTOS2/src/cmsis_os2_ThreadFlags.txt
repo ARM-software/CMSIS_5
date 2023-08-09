@@ -73,6 +73,7 @@ Possible \ref flags_error_codes return values:
     - \em osFlagsErrorUnknown: unspecified error.
     - \em osFlagsErrorParameter: parameter \em thread_id is not a valid thread or \em flags has highest bit set.
     - \em osFlagsErrorResource: the thread is in invalid state.
+    - \em osFlagsErrorSafetyClass: the calling thread safety class is lower than the safety class of the specified thread.
 
 \note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
@@ -143,7 +144,8 @@ flags before clearing, or an error code if highest bit is set (refer to \ref fla
 
 Possible \ref flags_error_codes return values:
     - \em osFlagsErrorUnknown: unspecified error, i.e. not called from a running threads context.
-    - \em osFlagsErrorParameter: parameter \em flags has highest bit set. 
+    - \em osFlagsErrorParameter: parameter \em flags has highest bit set.
+    - \em osFlagsErrorISR: the function \b osThreadFlagsClear cannot be called from interrupt service routines.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */

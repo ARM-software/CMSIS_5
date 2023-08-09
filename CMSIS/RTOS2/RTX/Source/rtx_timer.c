@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2019 Arm Limited. All rights reserved.
+ * Copyright (c) 2013-2023 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -27,7 +27,7 @@
 
 
 //  OS Runtime Object Memory Usage
-#if ((defined(OS_OBJ_MEM_USAGE) && (OS_OBJ_MEM_USAGE != 0)))
+#ifdef RTX_OBJ_MEM_USAGE
 osRtxObjectMemUsage_t osRtxTimerMemUsage \
 __attribute__((section(".data.os.timer.obj"))) =
 { 0U, 0U, 0U };
@@ -88,13 +88,43 @@ static void TimerUnlink (const os_timer_t *timer) {
   osRtxInfo.timer.list = timer->next;
 }
 
+/// Verify that Timer object pointer is valid.
+/// \param[in]  timer           timer object.
+/// \return true - valid, false - invalid.
+static bool_t IsTimerPtrValid (const os_timer_t *timer) {
+#ifdef RTX_OBJ_PTR_CHECK
+  //lint --e{923} --e{9078} "cast from pointer to unsigned int" [MISRA Note 7]
+  uint32_t cb_start  = (uint32_t)&__os_timer_cb_start__;
+  uint32_t cb_length = (uint32_t)&__os_timer_cb_length__;
+
+  // Check the section boundaries
+  if (((uint32_t)timer - cb_start) >= cb_length) {
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
+    return FALSE;
+  }
+  // Check the object alignment
+  if ((((uint32_t)timer - cb_start) % sizeof(os_timer_t)) != 0U) {
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
+    return FALSE;
+  }
+#else
+  // Check NULL pointer
+  if (timer == NULL) {
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
+    return FALSE;
+  }
+#endif
+  return TRUE;
+}
+
 
 //  ==== Library functions ====
 
 /// Timer Tick (called each SysTick).
 static void osRtxTimerTick (void) {
-  os_timer_t *timer;
-  osStatus_t  status;
+  os_thread_t *thread_running;
+  os_timer_t  *timer;
+  osStatus_t   status;
 
   timer = osRtxInfo.timer.list;
   if (timer == NULL) {
@@ -102,36 +132,60 @@ static void osRtxTimerTick (void) {
     return;
   }
 
+  thread_running = osRtxThreadGetRunning();
+
   timer->tick--;
   while ((timer != NULL) && (timer->tick == 0U)) {
     TimerUnlink(timer);
     status = osMessageQueuePut(osRtxInfo.timer.mq, &timer->finfo, 0U, 0U);
     if (status != osOK) {
-      (void)osRtxErrorNotify(osRtxErrorTimerQueueOverflow, timer);
+      const os_thread_t *thread = osRtxThreadGetRunning();
+      osRtxThreadSetRunning(osRtxInfo.thread.run.next);
+      (void)osRtxKernelErrorNotify(osRtxErrorTimerQueueOverflow, timer);
+      if (osRtxThreadGetRunning() == NULL) {
+        if (thread_running == thread) {
+          thread_running = NULL;
+        }
+      }
     }
-    if (timer->type == osRtxTimerPeriodic) {
+    if ((timer->attr & osRtxTimerPeriodic) != 0U) {
       TimerInsert(timer, timer->load);
     } else {
       timer->state = osRtxTimerStopped;
     }
     timer = osRtxInfo.timer.list;
   }
+
+  osRtxThreadSetRunning(thread_running);
+}
+
+/// Setup Timer Thread objects.
+//lint -esym(714,osRtxTimerSetup) "Referenced from library configuration"
+//lint -esym(759,osRtxTimerSetup) "Prototype in header"
+//lint -esym(765,osRtxTimerSetup) "Global scope"
+int32_t osRtxTimerSetup (void) {
+  int32_t ret = -1;
+
+  if (osRtxMessageQueueTimerSetup() == 0) {
+    osRtxInfo.timer.tick = osRtxTimerTick;
+    ret = 0;
+  }
+
+  return ret;
 }
 
 /// Timer Thread
-__WEAK __NO_RETURN void osRtxTimerThread (void *argument) {
-  os_timer_finfo_t finfo;
-  osStatus_t       status;
-  (void)           argument;
-
-  osRtxInfo.timer.mq = osRtxMessageQueueId(
-    osMessageQueueNew(osRtxConfig.timer_mq_mcnt, sizeof(os_timer_finfo_t), osRtxConfig.timer_mq_attr)
-  );
-  osRtxInfo.timer.tick = osRtxTimerTick;
+//lint -esym(714,osRtxTimerThread) "Referenced from library configuration"
+//lint -esym(759,osRtxTimerThread) "Prototype in header"
+//lint -esym(765,osRtxTimerThread) "Global scope"
+__NO_RETURN void osRtxTimerThread (void *argument) {
+  os_timer_finfo_t   finfo;
+  osStatus_t         status;
+  osMessageQueueId_t mq = (osMessageQueueId_t)argument;
 
   for (;;) {
     //lint -e{934} "Taking address of near auto variable"
-    status = osMessageQueueGet(osRtxInfo.timer.mq, &finfo, NULL, osWaitForever);
+    status = osMessageQueueGet(mq, &finfo, NULL, osWaitForever);
     if (status == osOK) {
       EvrRtxTimerCallback(finfo.func, finfo.arg);
       (finfo.func)(finfo.arg);
@@ -139,14 +193,74 @@ __WEAK __NO_RETURN void osRtxTimerThread (void *argument) {
   }
 }
 
+/// Destroy a Timer object.
+/// \param[in]  timer           timer object.
+static void osRtxTimerDestroy (os_timer_t *timer) {
+
+  // Mark object as inactive and invalid
+  timer->state = osRtxTimerInactive;
+  timer->id    = osRtxIdInvalid;
+
+  // Free object memory
+  if ((timer->flags & osRtxFlagSystemObject) != 0U) {
+#ifdef RTX_OBJ_PTR_CHECK
+    (void)osRtxMemoryPoolFree(osRtxInfo.mpi.timer, timer);
+#else
+    if (osRtxInfo.mpi.timer != NULL) {
+      (void)osRtxMemoryPoolFree(osRtxInfo.mpi.timer, timer);
+    } else {
+      (void)osRtxMemoryFree(osRtxInfo.mem.common, timer);
+    }
+#endif
+#ifdef RTX_OBJ_MEM_USAGE
+    osRtxTimerMemUsage.cnt_free++;
+#endif
+  }
+
+  EvrRtxTimerDestroyed(timer);
+}
+
+#ifdef RTX_SAFETY_CLASS
+/// Delete a Timer safety class.
+/// \param[in]  safety_class    safety class.
+/// \param[in]  mode            safety mode.
+void osRtxTimerDeleteClass (uint32_t safety_class, uint32_t mode) {
+  os_timer_t *timer;
+  uint32_t    length;
+
+  //lint --e{923} --e{9078} "cast from pointer to unsigned int" [MISRA Note 7]
+  timer = (os_timer_t *)(uint32_t)&__os_timer_cb_start__;
+  length    =           (uint32_t)&__os_timer_cb_length__;
+  while (length >= sizeof(os_timer_t)) {
+    if (   (timer->id == osRtxIdTimer) &&
+        ((((mode & osSafetyWithSameClass)  != 0U) &&
+          ((timer->attr >> osRtxAttrClass_Pos) == (uint8_t)safety_class)) ||
+         (((mode & osSafetyWithLowerClass) != 0U) &&
+          ((timer->attr >> osRtxAttrClass_Pos) <  (uint8_t)safety_class)))) {
+      if (timer->state == osRtxTimerRunning) {
+        TimerRemove(timer);
+      }
+      osRtxTimerDestroy(timer);
+    }
+    length -= sizeof(os_timer_t);
+    timer++;
+  }
+}
+#endif
+
+
 //  ==== Service Calls ====
 
 /// Create and Initialize a timer.
 /// \note API identical to osTimerNew
 static osTimerId_t svcRtxTimerNew (osTimerFunc_t func, osTimerType_t type, void *argument, const osTimerAttr_t *attr) {
-  os_timer_t *timer;
-  uint8_t     flags;
-  const char *name;
+  os_timer_t        *timer;
+#ifdef RTX_SAFETY_CLASS
+  const os_thread_t *thread = osRtxThreadGetRunning();
+  uint32_t           attr_bits;
+#endif
+  uint8_t            flags;
+  const char        *name;
 
   // Check parameters
   if ((func == NULL) || ((type != osTimerOnce) && (type != osTimerPeriodic))) {
@@ -157,12 +271,25 @@ static osTimerId_t svcRtxTimerNew (osTimerFunc_t func, osTimerType_t type, void 
 
   // Process attributes
   if (attr != NULL) {
-    name  = attr->name;
+    name      = attr->name;
+#ifdef RTX_SAFETY_CLASS
+    attr_bits = attr->attr_bits;
+#endif
     //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 6]
-    timer = attr->cb_mem;
+    timer      = attr->cb_mem;
+#ifdef RTX_SAFETY_CLASS
+    if ((attr_bits & osSafetyClass_Valid) != 0U) {
+      if ((thread != NULL) &&
+          ((thread->attr >> osRtxAttrClass_Pos) <
+          (uint8_t)((attr_bits & osSafetyClass_Msk) >> osSafetyClass_Pos))) {
+        EvrRtxTimerError(NULL, (int32_t)osErrorSafetyClass);
+        //lint -e{904} "Return statement before end of function" [MISRA Note 1]
+        return NULL;
+      }
+    }
+#endif
     if (timer != NULL) {
-      //lint -e(923) -e(9078) "cast from pointer to unsigned int" [MISRA Note 7]
-      if ((((uint32_t)timer & 3U) != 0U) || (attr->cb_size < sizeof(os_timer_t))) {
+      if (!IsTimerPtrValid(timer) || (attr->cb_size != sizeof(os_timer_t))) {
         EvrRtxTimerError(NULL, osRtxErrorInvalidControlBlock);
         //lint -e{904} "Return statement before end of function" [MISRA Note 1]
         return NULL;
@@ -175,8 +302,11 @@ static osTimerId_t svcRtxTimerNew (osTimerFunc_t func, osTimerType_t type, void 
       }
     }
   } else {
-    name  = NULL;
-    timer = NULL;
+    name      = NULL;
+#ifdef RTX_SAFETY_CLASS
+    attr_bits = 0U;
+#endif
+    timer     = NULL;
   }
 
   // Allocate object memory if not provided
@@ -184,11 +314,13 @@ static osTimerId_t svcRtxTimerNew (osTimerFunc_t func, osTimerType_t type, void 
     if (osRtxInfo.mpi.timer != NULL) {
       //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 5]
       timer = osRtxMemoryPoolAlloc(osRtxInfo.mpi.timer);
+#ifndef RTX_OBJ_PTR_CHECK
     } else {
       //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 5]
       timer = osRtxMemoryAlloc(osRtxInfo.mem.common, sizeof(os_timer_t), 1U);
+#endif
     }
-#if (defined(OS_OBJ_MEM_USAGE) && (OS_OBJ_MEM_USAGE != 0))
+#ifdef RTX_OBJ_MEM_USAGE
     if (timer != NULL) {
       uint32_t used;
       osRtxTimerMemUsage.cnt_alloc++;
@@ -208,7 +340,11 @@ static osTimerId_t svcRtxTimerNew (osTimerFunc_t func, osTimerType_t type, void 
     timer->id         = osRtxIdTimer;
     timer->state      = osRtxTimerStopped;
     timer->flags      = flags;
-    timer->type       = (uint8_t)type;
+    if (type == osTimerPeriodic) {
+      timer->attr     = osRtxTimerPeriodic;
+    } else {
+      timer->attr     = 0U;
+    }
     timer->name       = name;
     timer->prev       = NULL;
     timer->next       = NULL;
@@ -216,7 +352,17 @@ static osTimerId_t svcRtxTimerNew (osTimerFunc_t func, osTimerType_t type, void 
     timer->load       = 0U;
     timer->finfo.func = func;
     timer->finfo.arg  = argument;
-
+#ifdef RTX_SAFETY_CLASS
+    if ((attr_bits & osSafetyClass_Valid) != 0U) {
+      timer->attr    |= (uint8_t)((attr_bits & osSafetyClass_Msk) >>
+                                  (osSafetyClass_Pos - osRtxAttrClass_Pos));
+    } else {
+      // Inherit safety class from the running thread
+      if (thread != NULL) {
+        timer->attr  |= (uint8_t)(thread->attr & osRtxAttrClass_Msk);
+      }
+    }
+#endif
     EvrRtxTimerCreated(timer, timer->name);
   } else {
     EvrRtxTimerError(NULL, (int32_t)osErrorNoMemory);
@@ -231,7 +377,7 @@ static const char *svcRtxTimerGetName (osTimerId_t timer_id) {
   os_timer_t *timer = osRtxTimerId(timer_id);
 
   // Check parameters
-  if ((timer == NULL) || (timer->id != osRtxIdTimer)) {
+  if (!IsTimerPtrValid(timer) || (timer->id != osRtxIdTimer)) {
     EvrRtxTimerGetName(timer, NULL);
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return NULL;
@@ -245,16 +391,31 @@ static const char *svcRtxTimerGetName (osTimerId_t timer_id) {
 /// Start or restart a timer.
 /// \note API identical to osTimerStart
 static osStatus_t svcRtxTimerStart (osTimerId_t timer_id, uint32_t ticks) {
-  os_timer_t *timer = osRtxTimerId(timer_id);
+  os_timer_t        *timer = osRtxTimerId(timer_id);
+#ifdef RTX_SAFETY_CLASS
+  const os_thread_t *thread;
+#endif
 
   // Check parameters
-  if ((timer == NULL) || (timer->id != osRtxIdTimer) || (ticks == 0U)) {
+  if (!IsTimerPtrValid(timer) || (timer->id != osRtxIdTimer) || (ticks == 0U)) {
     EvrRtxTimerError(timer, (int32_t)osErrorParameter);
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorParameter;
   }
 
+#ifdef RTX_SAFETY_CLASS
+  // Check running thread safety class
+  thread = osRtxThreadGetRunning();
+  if ((thread != NULL) &&
+      ((thread->attr >> osRtxAttrClass_Pos) < (timer->attr >> osRtxAttrClass_Pos))) {
+    EvrRtxTimerError(timer, (int32_t)osErrorSafetyClass);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
+    return osErrorSafetyClass;
+  }
+#endif
+
   if (timer->state == osRtxTimerRunning) {
+    timer->load = ticks;
     TimerRemove(timer);
   } else {
     if (osRtxInfo.timer.tick == NULL) {
@@ -277,14 +438,28 @@ static osStatus_t svcRtxTimerStart (osTimerId_t timer_id, uint32_t ticks) {
 /// Stop a timer.
 /// \note API identical to osTimerStop
 static osStatus_t svcRtxTimerStop (osTimerId_t timer_id) {
-  os_timer_t *timer = osRtxTimerId(timer_id);
+  os_timer_t        *timer = osRtxTimerId(timer_id);
+#ifdef RTX_SAFETY_CLASS
+  const os_thread_t *thread;
+#endif
 
   // Check parameters
-  if ((timer == NULL) || (timer->id != osRtxIdTimer)) {
+  if (!IsTimerPtrValid(timer) || (timer->id != osRtxIdTimer)) {
     EvrRtxTimerError(timer, (int32_t)osErrorParameter);
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorParameter;
   }
+
+#ifdef RTX_SAFETY_CLASS
+  // Check running thread safety class
+  thread = osRtxThreadGetRunning();
+  if ((thread != NULL) &&
+      ((thread->attr >> osRtxAttrClass_Pos) < (timer->attr >> osRtxAttrClass_Pos))) {
+    EvrRtxTimerError(timer, (int32_t)osErrorSafetyClass);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
+    return osErrorSafetyClass;
+  }
+#endif
 
   // Check object state
   if (timer->state != osRtxTimerRunning) {
@@ -309,7 +484,7 @@ static uint32_t svcRtxTimerIsRunning (osTimerId_t timer_id) {
   uint32_t    is_running;
 
   // Check parameters
-  if ((timer == NULL) || (timer->id != osRtxIdTimer)) {
+  if (!IsTimerPtrValid(timer) || (timer->id != osRtxIdTimer)) {
     EvrRtxTimerIsRunning(timer, 0U);
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return 0U;
@@ -329,36 +504,34 @@ static uint32_t svcRtxTimerIsRunning (osTimerId_t timer_id) {
 /// Delete a timer.
 /// \note API identical to osTimerDelete
 static osStatus_t svcRtxTimerDelete (osTimerId_t timer_id) {
-  os_timer_t *timer = osRtxTimerId(timer_id);
+  os_timer_t        *timer = osRtxTimerId(timer_id);
+#ifdef RTX_SAFETY_CLASS
+  const os_thread_t *thread;
+#endif
 
   // Check parameters
-  if ((timer == NULL) || (timer->id != osRtxIdTimer)) {
+  if (!IsTimerPtrValid(timer) || (timer->id != osRtxIdTimer)) {
     EvrRtxTimerError(timer, (int32_t)osErrorParameter);
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorParameter;
   }
 
+#ifdef RTX_SAFETY_CLASS
+  // Check running thread safety class
+  thread = osRtxThreadGetRunning();
+  if ((thread != NULL) &&
+      ((thread->attr >> osRtxAttrClass_Pos) < (timer->attr >> osRtxAttrClass_Pos))) {
+    EvrRtxTimerError(timer, (int32_t)osErrorSafetyClass);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
+    return osErrorSafetyClass;
+  }
+#endif
+
   if (timer->state == osRtxTimerRunning) {
     TimerRemove(timer);
   }
 
-  // Mark object as inactive and invalid
-  timer->state = osRtxTimerInactive;
-  timer->id    = osRtxIdInvalid;
-
-  // Free object memory
-  if ((timer->flags & osRtxFlagSystemObject) != 0U) {
-    if (osRtxInfo.mpi.timer != NULL) {
-      (void)osRtxMemoryPoolFree(osRtxInfo.mpi.timer, timer);
-    } else {
-      (void)osRtxMemoryFree(osRtxInfo.mem.common, timer);
-    }
-#if (defined(OS_OBJ_MEM_USAGE) && (OS_OBJ_MEM_USAGE != 0))
-    osRtxTimerMemUsage.cnt_free++;
-#endif
-  }
-
-  EvrRtxTimerDestroyed(timer);
+  osRtxTimerDestroy(timer);
 
   return osOK;
 }
@@ -381,7 +554,7 @@ osTimerId_t osTimerNew (osTimerFunc_t func, osTimerType_t type, void *argument, 
   osTimerId_t timer_id;
 
   EvrRtxTimerNew(func, type, argument, attr);
-  if (IsIrqMode() || IsIrqMasked()) {
+  if (IsException() || IsIrqMasked()) {
     EvrRtxTimerError(NULL, (int32_t)osErrorISR);
     timer_id = NULL;
   } else {
@@ -394,11 +567,10 @@ osTimerId_t osTimerNew (osTimerFunc_t func, osTimerType_t type, void *argument, 
 const char *osTimerGetName (osTimerId_t timer_id) {
   const char *name;
 
-  if (IsIrqMode() || IsIrqMasked()) {
-    EvrRtxTimerGetName(timer_id, NULL);
-    name = NULL;
+  if (IsException() || IsIrqMasked()) {
+    name = svcRtxTimerGetName(timer_id);
   } else {
-    name = __svcTimerGetName(timer_id);
+    name =  __svcTimerGetName(timer_id);
   }
   return name;
 }
@@ -408,7 +580,7 @@ osStatus_t osTimerStart (osTimerId_t timer_id, uint32_t ticks) {
   osStatus_t status;
 
   EvrRtxTimerStart(timer_id, ticks);
-  if (IsIrqMode() || IsIrqMasked()) {
+  if (IsException() || IsIrqMasked()) {
     EvrRtxTimerError(timer_id, (int32_t)osErrorISR);
     status = osErrorISR;
   } else {
@@ -422,7 +594,7 @@ osStatus_t osTimerStop (osTimerId_t timer_id) {
   osStatus_t status;
 
   EvrRtxTimerStop(timer_id);
-  if (IsIrqMode() || IsIrqMasked()) {
+  if (IsException() || IsIrqMasked()) {
     EvrRtxTimerError(timer_id, (int32_t)osErrorISR);
     status = osErrorISR;
   } else {
@@ -435,7 +607,7 @@ osStatus_t osTimerStop (osTimerId_t timer_id) {
 uint32_t osTimerIsRunning (osTimerId_t timer_id) {
   uint32_t is_running;
 
-  if (IsIrqMode() || IsIrqMasked()) {
+  if (IsException() || IsIrqMasked()) {
     EvrRtxTimerIsRunning(timer_id, 0U);
     is_running = 0U;
   } else {
@@ -449,7 +621,7 @@ osStatus_t osTimerDelete (osTimerId_t timer_id) {
   osStatus_t status;
 
   EvrRtxTimerDelete(timer_id);
-  if (IsIrqMode() || IsIrqMasked()) {
+  if (IsException() || IsIrqMasked()) {
     EvrRtxTimerError(timer_id, (int32_t)osErrorISR);
     status = osErrorISR;
   } else {

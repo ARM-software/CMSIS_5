@@ -1,11 +1,11 @@
-/**************************************************************************//**
+/******************************************************************************
  * @file     startup_ARMv8MML.S
- * @brief    CMSIS-Core(M) Device Startup File for ARMv8MML evice
- * @version  V2.0.1
- * @date     23. July 2019
+ * @brief    CMSIS-Core Device Startup File for ARMv8MML evice
+ * @version  V2.3.0
+ * @date     26. May 2021
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2021 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -25,13 +25,19 @@
                 .syntax  unified
                 .arch    armv8-m.main
 
+                #define __INITIAL_SP     __StackTop
+                #define __STACK_LIMIT    __StackLimit
+                #if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
+                #define __STACK_SEAL     __StackSeal
+                #endif
+
                 .section .vectors
                 .align   2
                 .globl   __Vectors
                 .globl   __Vectors_End
                 .globl   __Vectors_Size
 __Vectors:
-                .long    __StackTop                         /*     Top of Stack */
+                .long    __INITIAL_SP                       /*     Initial Stack Pointer */
                 .long    Reset_Handler                      /*     Reset Handler */
                 .long    NMI_Handler                        /* -14 NMI Handler */
                 .long    HardFault_Handler                  /* -13 Hard Fault Handler */
@@ -42,7 +48,7 @@ __Vectors:
                 .long    0                                  /*     Reserved */
                 .long    0                                  /*     Reserved */
                 .long    0                                  /*     Reserved */
-                .long    SVC_Handler                        /*  -5 SVCall Handler */
+                .long    SVC_Handler                        /*  -5 SVC Handler */
                 .long    DebugMon_Handler                   /*  -4 Debug Monitor Handler */
                 .long    0                                  /*     Reserved */
                 .long    PendSV_Handler                     /*  -2 PendSV Handler */
@@ -75,10 +81,19 @@ __Vectors_End:
                 .globl   Reset_Handler
                 .fnstart
 Reset_Handler:
-                ldr      r0, =__StackLimit
-                msr      msplim, r0
+                ldr      r0, =__INITIAL_SP
+                msr      psp, r0
 
-/* CMSIS System Initialization */
+                ldr      r0, =__STACK_LIMIT
+                msr      msplim, r0
+                msr      psplim, r0
+
+                #if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
+                ldr      r0, =__STACK_SEAL
+                ldr      r1, =0xFEF5EDA5U
+                strd     r1,r1,[r0,#0]
+                #endif
+
                 bl       SystemInit
 
                 ldr      r4, =__copy_table_start__
@@ -87,12 +102,13 @@ Reset_Handler:
 .L_loop0:
                 cmp      r4, r5
                 bge      .L_loop0_done
-                ldr      r1, [r4]
-                ldr      r2, [r4, #4]
-                ldr      r3, [r4, #8]
+                ldr      r1, [r4]                /* source address */
+                ldr      r2, [r4, #4]            /* destination address */
+                ldr      r3, [r4, #8]            /* word count */
+                lsls     r3, r3, #2              /* byte count */
 
 .L_loop0_0:
-                subs     r3, #4
+                subs     r3, #4                  /* decrement byte count */
                 ittt     ge
                 ldrge    r0, [r1, r3]
                 strge    r0, [r2, r3]
@@ -108,12 +124,13 @@ Reset_Handler:
 .L_loop2:
                 cmp      r3, r4
                 bge      .L_loop2_done
-                ldr      r1, [r3]
-                ldr      r2, [r3, #4]
+                ldr      r1, [r3]                /* destination address */
+                ldr      r2, [r3, #4]            /* word count */
+                lsls     r2, r2, #2              /* byte count */
                 movs     r0, 0
 
 .L_loop2_0:
-                subs     r2, #4
+                subs     r2, #4                  /* decrement byte count */
                 itt      ge
                 strge    r0, [r1, r2]
                 bge      .L_loop2_0
@@ -126,6 +143,7 @@ Reset_Handler:
 
                 .fnend
                 .size    Reset_Handler, . - Reset_Handler
+
 
 /* The default macro is not used for HardFault_Handler
  * because this results in a poor debug illusion.
@@ -180,6 +198,5 @@ Default_Handler:
                 Set_Default_Handler  Interrupt7_Handler
                 Set_Default_Handler  Interrupt8_Handler
                 Set_Default_Handler  Interrupt9_Handler
-
 
                 .end

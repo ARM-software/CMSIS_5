@@ -1,11 +1,11 @@
 /**************************************************************************//**
  * @file     core_armv8mml.h
  * @brief    CMSIS Armv8-M Mainline Core Peripheral Access Layer Header File
- * @version  V5.2.0
- * @date     27. March 2020
+ * @version  V5.3.0
+ * @date     04. April 2023
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2020 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2023 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -116,6 +116,29 @@
     #else
       #error "Compiler generates DSP (SIMD) instructions for a devices without DSP extensions (check __DSP_PRESENT)"
       #define __DSP_USED         0U
+    #endif
+  #else
+    #define __DSP_USED         0U
+  #endif
+
+#elif defined (__ti__)
+  #if defined (__ARM_FP)
+    #if defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)
+      #define __FPU_USED       1U
+    #else
+      #warning "Compiler generates FPU instructions for a device without an FPU (check __FPU_PRESENT)"
+      #define __FPU_USED       0U
+    #endif
+  #else
+    #define __FPU_USED         0U
+  #endif
+
+  #if defined (__ARM_FEATURE_DSP) && (__ARM_FEATURE_DSP == 1U)
+    #if defined (__DSP_PRESENT) && (__DSP_PRESENT == 1U)
+      #define __DSP_USED       1U
+    #else
+      #error "Compiler generates DSP (SIMD) instructions for a devices without DSP extensions (check __DSP_PRESENT)"
+      #define __DSP_USED       0U
     #endif
   #else
     #define __DSP_USED         0U
@@ -254,7 +277,7 @@
     #define __VTOR_PRESENT             1U
     #warning "__VTOR_PRESENT not defined in device header file; using default!"
   #endif
-  
+
   #ifndef __NVIC_PRIO_BITS
     #define __NVIC_PRIO_BITS          3U
     #warning "__NVIC_PRIO_BITS not defined in device header file; using default!"
@@ -287,7 +310,7 @@
 #define     __OM     volatile            /*! Defines 'write only' structure member permissions */
 #define     __IOM    volatile            /*! Defines 'read / write' structure member permissions */
 
-/*@} end of group ARMv8MML */
+/** @} end of group ARMv8MML */
 
 
 
@@ -452,7 +475,7 @@ typedef union
 #define CONTROL_nPRIV_Pos                   0U                                            /*!< CONTROL: nPRIV Position */
 #define CONTROL_nPRIV_Msk                  (1UL /*<< CONTROL_nPRIV_Pos*/)                 /*!< CONTROL: nPRIV Mask */
 
-/*@} end of group CMSIS_CORE */
+/** @} end of group CMSIS_CORE */
 
 
 /**
@@ -488,7 +511,7 @@ typedef struct
 #define NVIC_STIR_INTID_Pos                 0U                                         /*!< STIR: INTLINESNUM Position */
 #define NVIC_STIR_INTID_Msk                (0x1FFUL /*<< NVIC_STIR_INTID_Pos*/)        /*!< STIR: INTLINESNUM Mask */
 
-/*@} end of group CMSIS_NVIC */
+/** @} end of group CMSIS_NVIC */
 
 
 /**
@@ -519,7 +542,7 @@ typedef struct
   __IOM uint32_t AFSR;                   /*!< Offset: 0x03C (R/W)  Auxiliary Fault Status Register */
   __IM  uint32_t ID_PFR[2U];             /*!< Offset: 0x040 (R/ )  Processor Feature Register */
   __IM  uint32_t ID_DFR;                 /*!< Offset: 0x048 (R/ )  Debug Feature Register */
-  __IM  uint32_t ID_ADR;                 /*!< Offset: 0x04C (R/ )  Auxiliary Feature Register */
+  __IM  uint32_t ID_AFR;                 /*!< Offset: 0x04C (R/ )  Auxiliary Feature Register */
   __IM  uint32_t ID_MMFR[4U];            /*!< Offset: 0x050 (R/ )  Memory Model Feature Register */
   __IM  uint32_t ID_ISAR[6U];            /*!< Offset: 0x060 (R/ )  Instruction Set Attributes Register */
   __IM  uint32_t CLIDR;                  /*!< Offset: 0x078 (R/ )  Cache Level ID register */
@@ -528,7 +551,10 @@ typedef struct
   __IOM uint32_t CSSELR;                 /*!< Offset: 0x084 (R/W)  Cache Size Selection Register */
   __IOM uint32_t CPACR;                  /*!< Offset: 0x088 (R/W)  Coprocessor Access Control Register */
   __IOM uint32_t NSACR;                  /*!< Offset: 0x08C (R/W)  Non-Secure Access Control Register */
-        uint32_t RESERVED3[92U];
+        uint32_t RESERVED7[21U];
+  __IOM uint32_t SFSR;                   /*!< Offset: 0x0E4 (R/W)  Secure Fault Status Register */
+  __IOM uint32_t SFAR;                   /*!< Offset: 0x0E8 (R/W)  Secure Fault Address Register */
+        uint32_t RESERVED3[69U];
   __OM  uint32_t STIR;                   /*!< Offset: 0x200 ( /W)  Software Triggered Interrupt Register */
         uint32_t RESERVED4[15U];
   __IM  uint32_t MVFR0;                  /*!< Offset: 0x240 (R/ )  Media and VFP Feature Register 0 */
@@ -545,6 +571,7 @@ typedef struct
   __OM  uint32_t DCCSW;                  /*!< Offset: 0x26C ( /W)  D-Cache Clean by Set-way */
   __OM  uint32_t DCCIMVAC;               /*!< Offset: 0x270 ( /W)  D-Cache Clean and Invalidate by MVA to PoC */
   __OM  uint32_t DCCISW;                 /*!< Offset: 0x274 ( /W)  D-Cache Clean and Invalidate by Set-way */
+  __OM  uint32_t BPIALL;                 /*!< Offset: 0x278 ( /W)  Branch Predictor Invalidate All */
 } SCB_Type;
 
 /* SCB CPUID Register Definitions */
@@ -745,22 +772,22 @@ typedef struct
 #define SCB_CFSR_MEMFAULTSR_Msk            (0xFFUL /*<< SCB_CFSR_MEMFAULTSR_Pos*/)        /*!< SCB CFSR: Memory Manage Fault Status Register Mask */
 
 /* MemManage Fault Status Register (part of SCB Configurable Fault Status Register) */
-#define SCB_CFSR_MMARVALID_Pos             (SCB_SHCSR_MEMFAULTACT_Pos + 7U)               /*!< SCB CFSR (MMFSR): MMARVALID Position */
+#define SCB_CFSR_MMARVALID_Pos             (SCB_CFSR_MEMFAULTSR_Pos + 7U)                 /*!< SCB CFSR (MMFSR): MMARVALID Position */
 #define SCB_CFSR_MMARVALID_Msk             (1UL << SCB_CFSR_MMARVALID_Pos)                /*!< SCB CFSR (MMFSR): MMARVALID Mask */
 
-#define SCB_CFSR_MLSPERR_Pos               (SCB_SHCSR_MEMFAULTACT_Pos + 5U)               /*!< SCB CFSR (MMFSR): MLSPERR Position */
+#define SCB_CFSR_MLSPERR_Pos               (SCB_CFSR_MEMFAULTSR_Pos + 5U)                 /*!< SCB CFSR (MMFSR): MLSPERR Position */
 #define SCB_CFSR_MLSPERR_Msk               (1UL << SCB_CFSR_MLSPERR_Pos)                  /*!< SCB CFSR (MMFSR): MLSPERR Mask */
 
-#define SCB_CFSR_MSTKERR_Pos               (SCB_SHCSR_MEMFAULTACT_Pos + 4U)               /*!< SCB CFSR (MMFSR): MSTKERR Position */
+#define SCB_CFSR_MSTKERR_Pos               (SCB_CFSR_MEMFAULTSR_Pos + 4U)                 /*!< SCB CFSR (MMFSR): MSTKERR Position */
 #define SCB_CFSR_MSTKERR_Msk               (1UL << SCB_CFSR_MSTKERR_Pos)                  /*!< SCB CFSR (MMFSR): MSTKERR Mask */
 
-#define SCB_CFSR_MUNSTKERR_Pos             (SCB_SHCSR_MEMFAULTACT_Pos + 3U)               /*!< SCB CFSR (MMFSR): MUNSTKERR Position */
+#define SCB_CFSR_MUNSTKERR_Pos             (SCB_CFSR_MEMFAULTSR_Pos + 3U)                 /*!< SCB CFSR (MMFSR): MUNSTKERR Position */
 #define SCB_CFSR_MUNSTKERR_Msk             (1UL << SCB_CFSR_MUNSTKERR_Pos)                /*!< SCB CFSR (MMFSR): MUNSTKERR Mask */
 
-#define SCB_CFSR_DACCVIOL_Pos              (SCB_SHCSR_MEMFAULTACT_Pos + 1U)               /*!< SCB CFSR (MMFSR): DACCVIOL Position */
+#define SCB_CFSR_DACCVIOL_Pos              (SCB_CFSR_MEMFAULTSR_Pos + 1U)                 /*!< SCB CFSR (MMFSR): DACCVIOL Position */
 #define SCB_CFSR_DACCVIOL_Msk              (1UL << SCB_CFSR_DACCVIOL_Pos)                 /*!< SCB CFSR (MMFSR): DACCVIOL Mask */
 
-#define SCB_CFSR_IACCVIOL_Pos              (SCB_SHCSR_MEMFAULTACT_Pos + 0U)               /*!< SCB CFSR (MMFSR): IACCVIOL Position */
+#define SCB_CFSR_IACCVIOL_Pos              (SCB_CFSR_MEMFAULTSR_Pos + 0U)                 /*!< SCB CFSR (MMFSR): IACCVIOL Position */
 #define SCB_CFSR_IACCVIOL_Msk              (1UL /*<< SCB_CFSR_IACCVIOL_Pos*/)             /*!< SCB CFSR (MMFSR): IACCVIOL Mask */
 
 /* BusFault Status Register (part of SCB Configurable Fault Status Register) */
@@ -920,7 +947,7 @@ typedef struct
 #define SCB_DCCISW_SET_Pos                  5U                                            /*!< SCB DCCISW: Set Position */
 #define SCB_DCCISW_SET_Msk                 (0x1FFUL << SCB_DCCISW_SET_Pos)                /*!< SCB DCCISW: Set Mask */
 
-/*@} end of group CMSIS_SCB */
+/** @} end of group CMSIS_SCB */
 
 
 /**
@@ -945,7 +972,7 @@ typedef struct
 #define SCnSCB_ICTR_INTLINESNUM_Pos         0U                                         /*!< ICTR: INTLINESNUM Position */
 #define SCnSCB_ICTR_INTLINESNUM_Msk        (0xFUL /*<< SCnSCB_ICTR_INTLINESNUM_Pos*/)  /*!< ICTR: INTLINESNUM Mask */
 
-/*@} end of group CMSIS_SCnotSCB */
+/** @} end of group CMSIS_SCnotSCB */
 
 
 /**
@@ -997,7 +1024,7 @@ typedef struct
 #define SysTick_CALIB_TENMS_Pos             0U                                            /*!< SysTick CALIB: TENMS Position */
 #define SysTick_CALIB_TENMS_Msk            (0xFFFFFFUL /*<< SysTick_CALIB_TENMS_Pos*/)    /*!< SysTick CALIB: TENMS Mask */
 
-/*@} end of group CMSIS_SysTick */
+/** @} end of group CMSIS_SysTick */
 
 
 /**
@@ -1097,7 +1124,7 @@ typedef struct
 #define ITM_LSR_Present_Pos                 0U                                            /*!< ITM LSR: Present Position */
 #define ITM_LSR_Present_Msk                (1UL /*<< ITM_LSR_Present_Pos*/)               /*!< ITM LSR: Present Mask */
 
-/*@}*/ /* end of group CMSIS_ITM */
+/** @}*/ /* end of group CMSIS_ITM */
 
 
 /**
@@ -1283,7 +1310,7 @@ typedef struct
 #define DWT_FUNCTION_MATCH_Pos              0U                                         /*!< DWT FUNCTION: MATCH Position */
 #define DWT_FUNCTION_MATCH_Msk             (0xFUL /*<< DWT_FUNCTION_MATCH_Pos*/)       /*!< DWT FUNCTION: MATCH Mask */
 
-/*@}*/ /* end of group CMSIS_DWT */
+/** @}*/ /* end of group CMSIS_DWT */
 
 
 /**
@@ -1381,7 +1408,7 @@ typedef struct
 #define TPI_DEVTYPE_MajorType_Pos           0U                                         /*!< TPI DEVTYPE: MajorType Position */
 #define TPI_DEVTYPE_MajorType_Msk          (0xFUL << TPI_DEVTYPE_MajorType_Pos)        /*!< TPI DEVTYPE: MajorType Mask */
 
-/*@}*/ /* end of group CMSIS_TPI */
+/** @}*/ /* end of group CMSIS_TPI */
 
 
 #if defined (__MPU_PRESENT) && (__MPU_PRESENT == 1U)
@@ -1493,7 +1520,7 @@ typedef struct
 #define MPU_MAIR1_Attr4_Pos                 0U                                            /*!< MPU MAIR1: Attr4 Position */
 #define MPU_MAIR1_Attr4_Msk                (0xFFUL /*<< MPU_MAIR1_Attr4_Pos*/)            /*!< MPU MAIR1: Attr4 Mask */
 
-/*@} end of group CMSIS_MPU */
+/** @} end of group CMSIS_MPU */
 #endif
 
 
@@ -1580,7 +1607,7 @@ typedef struct
 #define SAU_SFSR_INVEP_Pos                  0U                                            /*!< SAU SFSR: INVEP Position */
 #define SAU_SFSR_INVEP_Msk                 (1UL /*<< SAU_SFSR_INVEP_Pos*/)                /*!< SAU SFSR: INVEP Mask */
 
-/*@} end of group CMSIS_SAU */
+/** @} end of group CMSIS_SAU */
 #endif /* defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U) */
 
 
@@ -1716,7 +1743,7 @@ typedef struct
 #define FPU_MVFR2_FPMisc_Pos                4U                                            /*!< MVFR2: FPMisc bits Position */
 #define FPU_MVFR2_FPMisc_Msk               (0xFUL << FPU_MVFR2_FPMisc_Pos)                /*!< MVFR2: FPMisc bits Mask */
 
-/*@} end of group CMSIS_FPU */
+/** @} end of group CMSIS_FPU */
 
 /* CoreDebug is deprecated. replaced by DCB (Debug Control Block) */
 /**
@@ -1850,7 +1877,7 @@ typedef struct
 #define CoreDebug_DSCSR_SBRSELEN_Pos        0U                                            /*!< \deprecated CoreDebug DSCSR: SBRSELEN Position */
 #define CoreDebug_DSCSR_SBRSELEN_Msk       (1UL /*<< CoreDebug_DSCSR_SBRSELEN_Pos*/)      /*!< \deprecated CoreDebug DSCSR: SBRSELEN Mask */
 
-/*@} end of group CMSIS_CoreDebug */
+/** @} end of group CMSIS_CoreDebug */
 
 
 /**
@@ -2006,7 +2033,7 @@ typedef struct
 #define DCB_DSCSR_SBRSELEN_Pos              0U                                            /*!< DCB DSCSR: Secure banked register select enable Position */
 #define DCB_DSCSR_SBRSELEN_Msk             (0x1UL /*<< DCB_DSCSR_SBRSELEN_Pos*/)          /*!< DCB DSCSR: Secure banked register select enable Mask */
 
-/*@} end of group CMSIS_DCB */
+/** @} end of group CMSIS_DCB */
 
 
 
@@ -2080,7 +2107,7 @@ typedef struct
 #define DIB_DDEVTYPE_MAJOR_Msk             (0xFUL /*<< DIB_DDEVTYPE_MAJOR_Pos*/)          /*!< DIB DDEVTYPE: Major type Mask */
 
 
-/*@} end of group CMSIS_DIB */
+/** @} end of group CMSIS_DIB */
 
 
 /**
@@ -2106,7 +2133,7 @@ typedef struct
 */
 #define _FLD2VAL(field, value)    (((uint32_t)(value) & field ## _Msk) >> field ## _Pos)
 
-/*@} end of group CMSIS_core_bitfield */
+/** @} end of group CMSIS_core_bitfield */
 
 
 /**
@@ -2178,8 +2205,17 @@ typedef struct
   #define FPU_NS              ((FPU_Type       *)     FPU_BASE_NS      ) /*!< Floating Point Unit               (non-secure address space) */
 
 #endif /* defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U) */
-/*@} */
+/** @} */
 
+
+/**
+  \ingroup    CMSIS_core_register
+  \defgroup   CMSIS_register_aliases     Backwards Compatibility Aliases
+  \brief      Register alias definitions for backwards compatibility.
+  @{
+ */
+#define ID_ADR  (ID_AFR)    /*!< SCB Auxiliary Feature Register */
+/*@} */
 
 
 /*******************************************************************************
@@ -2837,7 +2873,7 @@ __STATIC_INLINE uint32_t TZ_NVIC_GetPriority_NS(IRQn_Type IRQn)
 }
 #endif /*  defined (__ARM_FEATURE_CMSE) &&(__ARM_FEATURE_CMSE == 3U) */
 
-/*@} end of CMSIS_Core_NVICFunctions */
+/** @} end of CMSIS_Core_NVICFunctions */
 
 /* ##########################  MPU functions  #################################### */
 
@@ -2883,7 +2919,7 @@ __STATIC_INLINE uint32_t SCB_GetFPUType(void)
 }
 
 
-/*@} end of CMSIS_Core_FpuFunctions */
+/** @} end of CMSIS_Core_FpuFunctions */
 
 
 /* ##########################  Cache functions  #################################### */
@@ -2926,7 +2962,7 @@ __STATIC_INLINE void TZ_SAU_Disable(void)
 
 #endif /* defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U) */
 
-/*@} end of CMSIS_Core_SAUFunctions */
+/** @} end of CMSIS_Core_SAUFunctions */
 
 
 
@@ -2939,7 +2975,7 @@ __STATIC_INLINE void TZ_SAU_Disable(void)
   @{
  */
 
- 
+
 /**
   \brief   Set Debug Authentication Control Register
   \details writes to Debug Authentication Control register.
@@ -2993,7 +3029,7 @@ __STATIC_INLINE uint32_t TZ_DCB_GetAuthCtrl_NS(void)
 }
 #endif /* defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U) */
 
-/*@} end of CMSIS_Core_DCBFunctions */
+/** @} end of CMSIS_Core_DCBFunctions */
 
 
 
@@ -3006,7 +3042,7 @@ __STATIC_INLINE uint32_t TZ_DCB_GetAuthCtrl_NS(void)
   @{
  */
 
- 
+
 /**
   \brief   Get Debug Authentication Status Register
   \details Reads Debug Authentication Status register.
@@ -3030,7 +3066,7 @@ __STATIC_INLINE uint32_t TZ_DIB_GetAuthStatus_NS(void)
 }
 #endif /* defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U) */
 
-/*@} end of CMSIS_Core_DCBFunctions */
+/** @} end of CMSIS_Core_DCBFunctions */
 
 
 
@@ -3104,7 +3140,7 @@ __STATIC_INLINE uint32_t TZ_SysTick_Config_NS(uint32_t ticks)
 
 #endif
 
-/*@} end of CMSIS_Core_SysTickFunctions */
+/** @} end of CMSIS_Core_SysTickFunctions */
 
 
 
@@ -3182,7 +3218,7 @@ __STATIC_INLINE int32_t ITM_CheckChar (void)
   }
 }
 
-/*@} end of CMSIS_core_DebugFunctions */
+/** @} end of CMSIS_core_DebugFunctions */
 
 
 

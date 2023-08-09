@@ -1,11 +1,11 @@
 /**************************************************************************//**
  * @file     cmsis_gcc.h
- * @brief    CMSIS compiler specific macros, functions, instructions
- * @version  V1.3.0
- * @date     17. December 2019
+ * @brief    CMSIS compiler GCC header file
+ * @version  V1.3.3
+ * @date     13. November 2022
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2022 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -37,7 +37,6 @@
 #endif
 
 /* CMSIS compiler specific defines */
-
 #ifndef   __ASM
   #define __ASM                                  __asm
 #endif
@@ -57,7 +56,7 @@
   #define __NO_RETURN                            __attribute__((__noreturn__))
 #endif
 #ifndef   CMSIS_DEPRECATED
- #define  CMSIS_DEPRECATED                       __attribute__((deprecated))
+  #define CMSIS_DEPRECATED                       __attribute__((deprecated))
 #endif
 #ifndef   __USED
   #define __USED                                 __attribute__((used))
@@ -74,7 +73,7 @@
 #ifndef   __UNALIGNED_UINT16_WRITE
   #pragma GCC diagnostic push
   #pragma GCC diagnostic ignored "-Wpacked"
-/*lint -esym(9058, T_UINT16_WRITE)*/ /* disable MISRA 2012 Rule 2.4 for T_UINT16_WRITE */
+  #pragma GCC diagnostic ignored "-Wattributes"
   __PACKED_STRUCT T_UINT16_WRITE { uint16_t v; };
   #pragma GCC diagnostic pop
   #define __UNALIGNED_UINT16_WRITE(addr, val)    (void)((((struct T_UINT16_WRITE *)(void *)(addr))->v) = (val))
@@ -82,7 +81,7 @@
 #ifndef   __UNALIGNED_UINT16_READ
   #pragma GCC diagnostic push
   #pragma GCC diagnostic ignored "-Wpacked"
-/*lint -esym(9058, T_UINT16_READ)*/ /* disable MISRA 2012 Rule 2.4 for T_UINT16_READ */
+  #pragma GCC diagnostic ignored "-Wattributes"
   __PACKED_STRUCT T_UINT16_READ { uint16_t v; };
   #pragma GCC diagnostic pop
   #define __UNALIGNED_UINT16_READ(addr)          (((const struct T_UINT16_READ *)(const void *)(addr))->v)
@@ -90,7 +89,7 @@
 #ifndef   __UNALIGNED_UINT32_WRITE
   #pragma GCC diagnostic push
   #pragma GCC diagnostic ignored "-Wpacked"
-/*lint -esym(9058, T_UINT32_WRITE)*/ /* disable MISRA 2012 Rule 2.4 for T_UINT32_WRITE */
+  #pragma GCC diagnostic ignored "-Wattributes"
   __PACKED_STRUCT T_UINT32_WRITE { uint32_t v; };
   #pragma GCC diagnostic pop
   #define __UNALIGNED_UINT32_WRITE(addr, val)    (void)((((struct T_UINT32_WRITE *)(void *)(addr))->v) = (val))
@@ -98,6 +97,7 @@
 #ifndef   __UNALIGNED_UINT32_READ
   #pragma GCC diagnostic push
   #pragma GCC diagnostic ignored "-Wpacked"
+  #pragma GCC diagnostic ignored "-Wattributes"
   __PACKED_STRUCT T_UINT32_READ { uint32_t v; };
   #pragma GCC diagnostic pop
   #define __UNALIGNED_UINT32_READ(addr)          (((const struct T_UINT32_READ *)(const void *)(addr))->v)
@@ -105,245 +105,42 @@
 #ifndef   __ALIGNED
   #define __ALIGNED(x)                           __attribute__((aligned(x)))
 #endif
+#ifndef   __RESTRICT
+  #define __RESTRICT                             __restrict
+#endif
 #ifndef   __COMPILER_BARRIER
   #define __COMPILER_BARRIER()                   __ASM volatile("":::"memory")
 #endif
 
 
-__STATIC_FORCEINLINE uint32_t __QSUB16(uint32_t op1, uint32_t op2)
-{
-  uint32_t result;
-
-  __ASM volatile ("qsub16 %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
-}
-
-
-__STATIC_FORCEINLINE uint32_t __QSUB8(uint32_t op1, uint32_t op2)
-{
-  uint32_t result;
-
-  __ASM volatile ("qsub8 %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
-}
-
-
-__STATIC_FORCEINLINE uint32_t __QADD16(uint32_t op1, uint32_t op2)
-{
-  uint32_t result;
-
-  __ASM volatile ("qadd16 %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
-}
-
-__STATIC_FORCEINLINE uint32_t __QADD8(uint32_t op1, uint32_t op2)
-{
-  uint32_t result;
-
-  __ASM volatile ("qadd8 %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
-}
-
-__STATIC_FORCEINLINE  int32_t __QADD( int32_t op1,  int32_t op2)
-{
-  int32_t result;
-
-  __ASM volatile ("qadd %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
-}
-
-__STATIC_FORCEINLINE uint32_t __QSAX(uint32_t op1, uint32_t op2)
-{
-  uint32_t result;
-
-  __ASM ("qsax %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
-}
-
-__STATIC_FORCEINLINE uint32_t __SHSAX(uint32_t op1, uint32_t op2)
-{
-  uint32_t result;
-
-  __ASM ("shsax %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
-}
-
-__STATIC_FORCEINLINE uint64_t __SMLALD (uint32_t op1, uint32_t op2, uint64_t acc)
-{
-  union llreg_u{
-    uint32_t w32[2];
-    uint64_t w64;
-  } llr;
-  llr.w64 = acc;
-
-#ifndef __ARMEB__   /* Little endian */
-  __ASM volatile ("smlald %0, %1, %2, %3" : "=r" (llr.w32[0]), "=r" (llr.w32[1]): "r" (op1), "r" (op2) , "0" (llr.w32[0]), "1" (llr.w32[1]) );
-#else               /* Big endian */
-  __ASM volatile ("smlald %0, %1, %2, %3" : "=r" (llr.w32[1]), "=r" (llr.w32[0]): "r" (op1), "r" (op2) , "0" (llr.w32[1]), "1" (llr.w32[0]) );
-#endif
-
-  return(llr.w64);
-}
-
-__STATIC_FORCEINLINE  int32_t __QSUB( int32_t op1,  int32_t op2)
-{
-  int32_t result;
-
-  __ASM volatile ("qsub %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
-}
-
-__STATIC_FORCEINLINE uint32_t __SXTB16(uint32_t op1)
-{
-  uint32_t result;
-
-  __ASM ("sxtb16 %0, %1" : "=r" (result) : "r" (op1));
-  return(result);
-}
-
-
-__STATIC_FORCEINLINE uint32_t __SMUAD  (uint32_t op1, uint32_t op2)
-{
-  uint32_t result;
-
-  __ASM volatile ("smuad %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
-}
-
-
-
-#define __PKHBT(ARG1,ARG2,ARG3)          ( ((((uint32_t)(ARG1))          ) & 0x0000FFFFUL) |  \
-                                           ((((uint32_t)(ARG2)) << (ARG3)) & 0xFFFF0000UL)  )
-
-#define __PKHTB(ARG1,ARG2,ARG3)          ( ((((uint32_t)(ARG1))          ) & 0xFFFF0000UL) |  \
-                                           ((((uint32_t)(ARG2)) >> (ARG3)) & 0x0000FFFFUL)  )
-
-__STATIC_FORCEINLINE uint32_t __SMLAD (uint32_t op1, uint32_t op2, uint32_t op3)
-{
-  uint32_t result;
-
-  __ASM volatile ("smlad %0, %1, %2, %3" : "=r" (result) : "r" (op1), "r" (op2), "r" (op3) );
-  return(result);
-}
-
-__STATIC_FORCEINLINE uint32_t __SMUADX (uint32_t op1, uint32_t op2)
-{
-  uint32_t result;
-
-  __ASM volatile ("smuadx %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
-}
-
-__STATIC_FORCEINLINE uint32_t __SMLADX (uint32_t op1, uint32_t op2, uint32_t op3)
-{
-  uint32_t result;
-
-  __ASM volatile ("smladx %0, %1, %2, %3" : "=r" (result) : "r" (op1), "r" (op2), "r" (op3) );
-  return(result);
-}
-
-__STATIC_FORCEINLINE uint64_t __SMLALDX (uint32_t op1, uint32_t op2, uint64_t acc)
-{
-  union llreg_u{
-    uint32_t w32[2];
-    uint64_t w64;
-  } llr;
-  llr.w64 = acc;
-
-#ifndef __ARMEB__   /* Little endian */
-  __ASM volatile ("smlaldx %0, %1, %2, %3" : "=r" (llr.w32[0]), "=r" (llr.w32[1]): "r" (op1), "r" (op2) , "0" (llr.w32[0]), "1" (llr.w32[1]) );
-#else               /* Big endian */
-  __ASM volatile ("smlaldx %0, %1, %2, %3" : "=r" (llr.w32[1]), "=r" (llr.w32[0]): "r" (op1), "r" (op2) , "0" (llr.w32[1]), "1" (llr.w32[0]) );
-#endif
-
-  return(llr.w64);
-}
-
-__STATIC_FORCEINLINE int32_t __SMMLA (int32_t op1, int32_t op2, int32_t op3)
-{
- int32_t result;
-
- __ASM volatile ("smmla %0, %1, %2, %3" : "=r" (result): "r"  (op1), "r" (op2), "r" (op3) );
- return(result);
-}
-
-__STATIC_FORCEINLINE uint32_t __SMUSD  (uint32_t op1, uint32_t op2)
-{
-  uint32_t result;
-
-  __ASM volatile ("smusd %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
-}
-
-__STATIC_FORCEINLINE uint32_t __SMUSDX (uint32_t op1, uint32_t op2)
-{
-  uint32_t result;
-
-  __ASM volatile ("smusdx %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
-}
-
-__STATIC_FORCEINLINE uint32_t __QASX(uint32_t op1, uint32_t op2)
-{
-  uint32_t result;
-
-  __ASM ("qasx %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
-}
-
-__STATIC_FORCEINLINE uint32_t __SHADD16(uint32_t op1, uint32_t op2)
-{
-  uint32_t result;
-
-  __ASM ("shadd16 %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
-}
-
-__STATIC_FORCEINLINE uint32_t __SHSUB16(uint32_t op1, uint32_t op2)
-{
-  uint32_t result;
-
-  __ASM ("shsub16 %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
-}
-
-__STATIC_FORCEINLINE uint32_t __SHASX(uint32_t op1, uint32_t op2)
-{
-  uint32_t result;
-
-  __ASM ("shasx %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
-  return(result);
-}
-
-__STATIC_FORCEINLINE uint32_t __SMLSDX (uint32_t op1, uint32_t op2, uint32_t op3)
-{
-  uint32_t result;
-
-  __ASM volatile ("smlsdx %0, %1, %2, %3" : "=r" (result) : "r" (op1), "r" (op2), "r" (op3) );
-  return(result);
-}
-
-
 /* ##########################  Core Instruction Access  ######################### */
 /**
   \brief   No Operation
+  \details No Operation does nothing. This instruction can be used for code alignment purposes.
  */
 #define __NOP()                             __ASM volatile ("nop")
 
 /**
   \brief   Wait For Interrupt
+  \details Wait For Interrupt is a hint instruction that suspends execution until one of a number of events occurs.
  */
 #define __WFI()                             __ASM volatile ("wfi":::"memory")
 
+
 /**
   \brief   Wait For Event
+  \details Wait For Event is a hint instruction that permits the processor to enter
+           a low-power state until one of a number of events occurs.
  */
 #define __WFE()                             __ASM volatile ("wfe":::"memory")
 
+
 /**
   \brief   Send Event
+  \details Send Event is a hint instruction. It causes an event to be signaled to the CPU.
  */
 #define __SEV()                             __ASM volatile ("sev")
+
 
 /**
   \brief   Instruction Synchronization Barrier
@@ -367,6 +164,7 @@ __STATIC_FORCEINLINE  void __DSB(void)
   __ASM volatile ("dsb 0xF":::"memory");
 }
 
+
 /**
   \brief   Data Memory Barrier
   \details Ensures the apparent order of the explicit memory operations before
@@ -376,6 +174,7 @@ __STATIC_FORCEINLINE  void __DMB(void)
 {
   __ASM volatile ("dmb 0xF":::"memory");
 }
+
 
 /**
   \brief   Reverse byte order (32 bit)
@@ -395,6 +194,7 @@ __STATIC_FORCEINLINE  uint32_t __REV(uint32_t value)
 #endif
 }
 
+
 /**
   \brief   Reverse byte order (16 bit)
   \details Reverses the byte order within each halfword of a word. For example, 0x12345678 becomes 0x34127856.
@@ -407,6 +207,7 @@ __STATIC_FORCEINLINE uint32_t __REV16(uint32_t value)
   __ASM ("rev16 %0, %1" : "=r" (result) : "r" (value));
   return result;
 }
+
 
 /**
   \brief   Reverse byte order (16 bit)
@@ -426,6 +227,7 @@ __STATIC_FORCEINLINE  int16_t __REVSH(int16_t value)
 #endif
 }
 
+
 /**
   \brief   Rotate Right in unsigned value (32 bit)
   \details Rotate Right (immediate) provides the value of the contents of a register rotated by a variable number of bits.
@@ -433,10 +235,11 @@ __STATIC_FORCEINLINE  int16_t __REVSH(int16_t value)
   \param [in]    op2  Number of Bits to rotate
   \return               Rotated value
  */
-__STATIC_FORCEINLINE  uint32_t __ROR(uint32_t op1, uint32_t op2)
+__STATIC_FORCEINLINE uint32_t __ROR(uint32_t op1, uint32_t op2)
 {
   op2 %= 32U;
-  if (op2 == 0U) {
+  if (op2 == 0U)
+  {
     return op1;
   }
   return (op1 >> op2) | (op1 << (32U - op2));
@@ -445,10 +248,13 @@ __STATIC_FORCEINLINE  uint32_t __ROR(uint32_t op1, uint32_t op2)
 
 /**
   \brief   Breakpoint
+  \details Causes the processor to enter Debug state.
+           Debug tools can use this to investigate system state when the instruction at a particular address is reached.
   \param [in]    value  is ignored by the processor.
                  If required, a debugger can use it to store additional information about the breakpoint.
  */
-#define __BKPT(value)                       __ASM volatile ("bkpt "#value)
+#define __BKPT(value)   __ASM volatile ("bkpt "#value)
+
 
 /**
   \brief   Reverse bit order of value
@@ -459,28 +265,14 @@ __STATIC_FORCEINLINE  uint32_t __ROR(uint32_t op1, uint32_t op2)
 __STATIC_FORCEINLINE  uint32_t __RBIT(uint32_t value)
 {
   uint32_t result;
-
-#if ((defined (__ARM_ARCH_7M__      ) && (__ARM_ARCH_7M__      == 1)) || \
-     (defined (__ARM_ARCH_7EM__     ) && (__ARM_ARCH_7EM__     == 1)) || \
-     (defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1))    )
    __ASM ("rbit %0, %1" : "=r" (result) : "r" (value) );
-#else
-  int32_t s = (4U /*sizeof(v)*/ * 8U) - 1U; /* extra shift needed at end */
-
-  result = value;                      /* r will be reversed bits of v; first get LSB of v */
-  for (value >>= 1U; value; value >>= 1U)
-  {
-    result <<= 1U;
-    result |= value & 1U;
-    s--;
-  }
-  result <<= s;                        /* shift when v's highest bits are zero */
-#endif
   return result;
 }
 
+
 /**
   \brief   Count leading zeros
+  \details Counts the number of leading zeros of a data value.
   \param [in]  value  Value to count the leading zeros
   \return             number of leading zeros in value
  */
@@ -624,8 +416,8 @@ __STATIC_FORCEINLINE  void __CLREX(void)
 /**
   \brief   Signed Saturate
   \details Saturates a signed value.
-  \param [in]  value  Value to be saturated
-  \param [in]    sat  Bit position to saturate to (1..32)
+  \param [in]  ARG1  Value to be saturated
+  \param [in]  ARG2  Bit position to saturate to (1..32)
   \return             Saturated value
  */
 #define __SSAT(ARG1, ARG2) \
@@ -640,8 +432,8 @@ __extension__ \
 /**
   \brief   Unsigned Saturate
   \details Saturates an unsigned value.
-  \param [in]  value  Value to be saturated
-  \param [in]    sat  Bit position to saturate to (0..31)
+  \param [in]  ARG1  Value to be saturated
+  \param [in]  ARG2  Bit position to saturate to (0..31)
   \return             Saturated value
  */
 #define __USAT(ARG1, ARG2) \
@@ -653,10 +445,14 @@ __extension__ \
  })
 
 /* ###########################  Core Function Access  ########################### */
+/** \ingroup  CMSIS_Core_FunctionInterface
+    \defgroup CMSIS_Core_RegAccFunctions CMSIS Core Register Access Functions
+  @{
+ */
 
 /**
   \brief   Enable IRQ Interrupts
-  \details Enables IRQ interrupts by clearing the I-bit in the CPSR.
+  \details Enables IRQ interrupts by clearing special-purpose register PRIMASK.
            Can only be executed in Privileged modes.
  */
 __STATIC_FORCEINLINE void __enable_irq(void)
@@ -664,21 +460,43 @@ __STATIC_FORCEINLINE void __enable_irq(void)
   __ASM volatile ("cpsie i" : : : "memory");
 }
 
+
 /**
   \brief   Disable IRQ Interrupts
-  \details Disables IRQ interrupts by setting the I-bit in the CPSR.
+  \details Disables IRQ interrupts by setting special-purpose register PRIMASK.
   Can only be executed in Privileged modes.
  */
-__STATIC_FORCEINLINE  void __disable_irq(void)
+__STATIC_FORCEINLINE void __disable_irq(void)
 {
   __ASM volatile ("cpsid i" : : : "memory");
 }
 
 /**
+  \brief   Enable FIQ
+  \details Enables FIQ interrupts by clearing special-purpose register FAULTMASK.
+           Can only be executed in Privileged modes.
+ */
+__STATIC_FORCEINLINE void __enable_fault_irq(void)
+{
+  __ASM volatile ("cpsie f" : : : "memory");
+}
+
+
+/**
+  \brief   Disable FIQ
+  \details Disables FIQ interrupts by setting special-purpose register FAULTMASK.
+           Can only be executed in Privileged modes.
+ */
+__STATIC_FORCEINLINE void __disable_fault_irq(void)
+{
+  __ASM volatile ("cpsid f" : : : "memory");
+}
+
+/**
   \brief   Get FPSCR
   \details Returns the current value of the Floating Point Status/Control register.
-  \return Floating Point Status/Control register value
-*/
+  \return               Floating Point Status/Control register value
+ */
 __STATIC_FORCEINLINE  uint32_t __get_FPSCR(void)
 {
   #if ((defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)) && \
@@ -699,11 +517,12 @@ __STATIC_FORCEINLINE  uint32_t __get_FPSCR(void)
   #endif
 }
 
+
 /**
   \brief   Set FPSCR
   \details Assigns the given value to the Floating Point Status/Control register.
-  \param [in] fpscr  Floating Point Status/Control value to set
-*/
+  \param [in]    fpscr  Floating Point Status/Control value to set
+ */
 __STATIC_FORCEINLINE void __set_FPSCR(uint32_t fpscr)
 {
   #if ((defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)) && \
@@ -721,6 +540,238 @@ __STATIC_FORCEINLINE void __set_FPSCR(uint32_t fpscr)
   #endif
 }
 
+
+/*@} end of CMSIS_Core_RegAccFunctions */
+
+
+/* ###################  Compiler specific Intrinsics  ########################### */
+/** \defgroup CMSIS_SIMD_intrinsics CMSIS SIMD Intrinsics
+  Access to dedicated SIMD instructions
+  @{
+*/
+
+__STATIC_FORCEINLINE uint32_t __QADD8(uint32_t op1, uint32_t op2)
+{
+  uint32_t result;
+
+  __ASM ("qadd8 %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
+  return(result);
+}
+
+
+__STATIC_FORCEINLINE uint32_t __QSUB8(uint32_t op1, uint32_t op2)
+{
+  uint32_t result;
+
+  __ASM ("qsub8 %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
+  return(result);
+}
+
+
+__STATIC_FORCEINLINE uint32_t __QADD16(uint32_t op1, uint32_t op2)
+{
+  uint32_t result;
+
+  __ASM ("qadd16 %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
+  return(result);
+}
+
+__STATIC_FORCEINLINE uint32_t __SHADD16(uint32_t op1, uint32_t op2)
+{
+  uint32_t result;
+
+  __ASM ("shadd16 %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
+  return(result);
+}
+
+__STATIC_FORCEINLINE uint32_t __QSUB16(uint32_t op1, uint32_t op2)
+{
+  uint32_t result;
+
+  __ASM ("qsub16 %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
+  return(result);
+}
+
+__STATIC_FORCEINLINE uint32_t __SHSUB16(uint32_t op1, uint32_t op2)
+{
+  uint32_t result;
+
+  __ASM ("shsub16 %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
+  return(result);
+}
+
+__STATIC_FORCEINLINE uint32_t __QASX(uint32_t op1, uint32_t op2)
+{
+  uint32_t result;
+
+  __ASM ("qasx %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
+  return(result);
+}
+
+__STATIC_FORCEINLINE uint32_t __SHASX(uint32_t op1, uint32_t op2)
+{
+  uint32_t result;
+
+  __ASM ("shasx %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
+  return(result);
+}
+
+__STATIC_FORCEINLINE uint32_t __QSAX(uint32_t op1, uint32_t op2)
+{
+  uint32_t result;
+
+  __ASM ("qsax %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
+  return(result);
+}
+
+__STATIC_FORCEINLINE uint32_t __SHSAX(uint32_t op1, uint32_t op2)
+{
+  uint32_t result;
+
+  __ASM ("shsax %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
+  return(result);
+}
+
+__STATIC_FORCEINLINE uint32_t __SXTB16(uint32_t op1)
+{
+  uint32_t result;
+
+  __ASM ("sxtb16 %0, %1" : "=r" (result) : "r" (op1));
+  return(result);
+}
+
+__STATIC_FORCEINLINE uint32_t __SMUADX (uint32_t op1, uint32_t op2)
+{
+  uint32_t result;
+
+  __ASM volatile ("smuadx %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
+  return(result);
+}
+
+__STATIC_FORCEINLINE uint32_t __SMLADX (uint32_t op1, uint32_t op2, uint32_t op3)
+{
+  uint32_t result;
+
+  __ASM volatile ("smladx %0, %1, %2, %3" : "=r" (result) : "r" (op1), "r" (op2), "r" (op3) );
+  return(result);
+}
+
+__STATIC_FORCEINLINE uint64_t __SMLALD (uint32_t op1, uint32_t op2, uint64_t acc)
+{
+  union llreg_u{
+    uint32_t w32[2];
+    uint64_t w64;
+  } llr;
+  llr.w64 = acc;
+
+#ifndef __ARMEB__   /* Little endian */
+  __ASM volatile ("smlald %0, %1, %2, %3" : "=r" (llr.w32[0]), "=r" (llr.w32[1]): "r" (op1), "r" (op2) , "0" (llr.w32[0]), "1" (llr.w32[1]) );
+#else               /* Big endian */
+  __ASM volatile ("smlald %0, %1, %2, %3" : "=r" (llr.w32[1]), "=r" (llr.w32[0]): "r" (op1), "r" (op2) , "0" (llr.w32[1]), "1" (llr.w32[0]) );
+#endif
+
+  return(llr.w64);
+}
+
+__STATIC_FORCEINLINE uint64_t __SMLALDX (uint32_t op1, uint32_t op2, uint64_t acc)
+{
+  union llreg_u{
+    uint32_t w32[2];
+    uint64_t w64;
+  } llr;
+  llr.w64 = acc;
+
+#ifndef __ARMEB__   /* Little endian */
+  __ASM volatile ("smlaldx %0, %1, %2, %3" : "=r" (llr.w32[0]), "=r" (llr.w32[1]): "r" (op1), "r" (op2) , "0" (llr.w32[0]), "1" (llr.w32[1]) );
+#else               /* Big endian */
+  __ASM volatile ("smlaldx %0, %1, %2, %3" : "=r" (llr.w32[1]), "=r" (llr.w32[0]): "r" (op1), "r" (op2) , "0" (llr.w32[1]), "1" (llr.w32[0]) );
+#endif
+
+  return(llr.w64);
+}
+
+__STATIC_FORCEINLINE uint32_t __SMUSD  (uint32_t op1, uint32_t op2)
+{
+  uint32_t result;
+
+  __ASM volatile ("smusd %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
+  return(result);
+}
+
+__STATIC_FORCEINLINE uint32_t __SMUSDX (uint32_t op1, uint32_t op2)
+{
+  uint32_t result;
+
+  __ASM volatile ("smusdx %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
+  return(result);
+}
+
+__STATIC_FORCEINLINE uint32_t __SMLSDX (uint32_t op1, uint32_t op2, uint32_t op3)
+{
+  uint32_t result;
+
+  __ASM volatile ("smlsdx %0, %1, %2, %3" : "=r" (result) : "r" (op1), "r" (op2), "r" (op3) );
+  return(result);
+}
+
+__STATIC_FORCEINLINE  int32_t __QADD( int32_t op1,  int32_t op2)
+{
+  int32_t result;
+
+  __ASM volatile ("qadd %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
+  return(result);
+}
+
+__STATIC_FORCEINLINE  int32_t __QSUB( int32_t op1,  int32_t op2)
+{
+  int32_t result;
+
+  __ASM volatile ("qsub %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
+  return(result);
+}
+
+
+__STATIC_FORCEINLINE uint32_t __SMUAD  (uint32_t op1, uint32_t op2)
+{
+  uint32_t result;
+
+  __ASM volatile ("smuad %0, %1, %2" : "=r" (result) : "r" (op1), "r" (op2) );
+  return(result);
+}
+
+
+
+#define __PKHBT(ARG1,ARG2,ARG3)          ( ((((uint32_t)(ARG1))          ) & 0x0000FFFFUL) |  \
+                                           ((((uint32_t)(ARG2)) << (ARG3)) & 0xFFFF0000UL)  )
+
+#define __PKHTB(ARG1,ARG2,ARG3)          ( ((((uint32_t)(ARG1))          ) & 0xFFFF0000UL) |  \
+                                           ((((uint32_t)(ARG2)) >> (ARG3)) & 0x0000FFFFUL)  )
+
+__STATIC_FORCEINLINE int32_t __SMMLA (int32_t op1, int32_t op2, int32_t op3)
+{
+ int32_t result;
+
+ __ASM ("smmla %0, %1, %2, %3" : "=r" (result): "r"  (op1), "r" (op2), "r" (op3) );
+ return(result);
+}
+
+__STATIC_FORCEINLINE uint32_t __SMLAD (uint32_t op1, uint32_t op2, uint32_t op3)
+{
+  uint32_t result;
+
+  __ASM volatile ("smlad %0, %1, %2, %3" : "=r" (result) : "r" (op1), "r" (op2), "r" (op3) );
+  return(result);
+}
+
+/*@} end of group CMSIS_SIMD_intrinsics */
+
+
+
+/** \defgroup CMSIS_Core_intrinsics CMSIS Core Intrinsics
+  Access to dedicated SIMD instructions
+  @{
+*/
+
 /** \brief  Get CPSR Register
     \return               CPSR Register value
  */
@@ -736,7 +787,7 @@ __STATIC_FORCEINLINE uint32_t __get_CPSR(void)
  */
 __STATIC_FORCEINLINE void __set_CPSR(uint32_t cpsr)
 {
-__ASM volatile ("MSR cpsr, %0" : : "r" (cpsr) : "cc", "memory");
+  __ASM volatile ("MSR cpsr, %0" : : "r" (cpsr) : "cc", "memory");
 }
 
 /** \brief  Get Mode
@@ -744,7 +795,7 @@ __ASM volatile ("MSR cpsr, %0" : : "r" (cpsr) : "cc", "memory");
  */
 __STATIC_FORCEINLINE uint32_t __get_mode(void)
 {
-    return (__get_CPSR() & 0x1FU);
+  return (__get_CPSR() & 0x1FU);
 }
 
 /** \brief  Set Mode
@@ -810,7 +861,7 @@ __STATIC_FORCEINLINE uint32_t __get_FPEXC(void)
 {
 #if (__FPU_PRESENT == 1)
   uint32_t result;
-  __ASM volatile("VMRS %0, fpexc" : "=r" (result) );
+  __ASM volatile("VMRS %0, fpexc" : "=r" (result) : : "memory");
   return(result);
 #else
   return(0);
@@ -833,8 +884,8 @@ __STATIC_FORCEINLINE void __set_FPEXC(uint32_t fpexc)
 
 #define __get_CP(cp, op1, Rt, CRn, CRm, op2) __ASM volatile("MRC p" # cp ", " # op1 ", %0, c" # CRn ", c" # CRm ", " # op2 : "=r" (Rt) : : "memory" )
 #define __set_CP(cp, op1, Rt, CRn, CRm, op2) __ASM volatile("MCR p" # cp ", " # op1 ", %0, c" # CRn ", c" # CRm ", " # op2 : : "r" (Rt) : "memory" )
-#define __get_CP64(cp, op1, Rt, CRm) __ASM volatile("MRRC p" # cp ", " # op1 ", %Q0, %R0, c" # CRm  : "=r" (Rt) : : "memory" )
-#define __set_CP64(cp, op1, Rt, CRm) __ASM volatile("MCRR p" # cp ", " # op1 ", %Q0, %R0, c" # CRm  : : "r" (Rt) : "memory" )
+#define __get_CP64(cp, op1, Rt, CRm)         __ASM volatile("MRRC p" # cp ", " # op1 ", %Q0, %R0, c" # CRm  : "=r" (Rt) : : "memory" )
+#define __set_CP64(cp, op1, Rt, CRm)         __ASM volatile("MCRR p" # cp ", " # op1 ", %Q0, %R0, c" # CRm  : : "r" (Rt) : "memory" )
 
 #include "cmsis_cp15.h"
 
@@ -907,6 +958,8 @@ __STATIC_INLINE void __FPU_Enable(void)
     : : : "cc", "r1", "r2"
   );
 }
+
+/*@} end of group CMSIS_Core_intrinsics */
 
 #pragma GCC diagnostic pop
 

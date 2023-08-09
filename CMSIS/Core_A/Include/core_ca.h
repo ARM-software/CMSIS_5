@@ -1,11 +1,11 @@
 /**************************************************************************//**
  * @file     core_ca.h
  * @brief    CMSIS Cortex-A Core Peripheral Access Layer Header File
- * @version  V1.0.3
- * @date     28. January 2020
+ * @version  V1.0.8
+ * @date     23. March 2023
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2020 ARM Limited. All rights reserved.
+ * Copyright (c) 2009-2022 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -46,8 +46,8 @@
                                    __CA_CMSIS_VERSION_SUB          )       /*!< \brief CMSIS-Core(A) version number         */
 
 #if defined ( __CC_ARM )
-  #if defined __TARGET_FPU_VFP
-    #if (__FPU_PRESENT == 1)
+  #if defined (__TARGET_FPU_VFP)
+    #if defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)
       #define __FPU_USED       1U
     #else
       #warning "Compiler generates FPU instructions for a device without an FPU (check __FPU_PRESENT)"
@@ -58,7 +58,7 @@
   #endif
 
 #elif defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
-  #if defined __ARM_FP
+  #if defined (__ARM_FP)
     #if defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)
       #define __FPU_USED       1U
     #else
@@ -70,8 +70,8 @@
   #endif
 
 #elif defined ( __ICCARM__ )
-  #if defined __ARMVFP__
-    #if (__FPU_PRESENT == 1)
+  #if defined (__ARMVFP__)
+    #if defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)
       #define __FPU_USED       1U
     #else
       #warning "Compiler generates FPU instructions for a device without an FPU (check __FPU_PRESENT)"
@@ -83,7 +83,7 @@
 
 #elif defined ( __TMS470__ )
   #if defined __TI_VFP_SUPPORT__
-    #if (__FPU_PRESENT == 1)
+    #if defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)
       #define __FPU_USED       1U
     #else
       #warning "Compiler generates FPU instructions for a device without an FPU (check __FPU_PRESENT)"
@@ -95,7 +95,7 @@
 
 #elif defined ( __GNUC__ )
   #if defined (__VFP_FP__) && !defined(__SOFTFP__)
-    #if (__FPU_PRESENT == 1)
+    #if defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)
       #define __FPU_USED       1U
     #else
       #warning "Compiler generates FPU instructions for a device without an FPU (check __FPU_PRESENT)"
@@ -106,8 +106,8 @@
   #endif
 
 #elif defined ( __TASKING__ )
-  #if defined __FPU_VFP__
-    #if (__FPU_PRESENT == 1)
+  #if defined (__FPU_VFP__)
+    #if defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)
       #define __FPU_USED       1U
     #else
       #error "Compiler generates FPU instructions for a device without an FPU (check __FPU_PRESENT)"
@@ -739,7 +739,7 @@ typedef struct
 #endif
 
 #if (__GIC_PRESENT == 1U) || defined(DOXYGEN)
-    
+
 /** \brief  Structure type to access the Generic Interrupt Controller Distributor (GICD)
 */
 typedef struct
@@ -783,6 +783,175 @@ typedef struct
 
 #define GICDistributor      ((GICDistributor_Type      *)     GIC_DISTRIBUTOR_BASE ) /*!< \brief GIC Distributor register set access pointer */
 
+/* GICDistributor CTLR Register */
+#define GICDistributor_CTLR_EnableGrp0_Pos    0U                                                   /*!< GICDistributor CTLR: EnableGrp0 Position */
+#define GICDistributor_CTLR_EnableGrp0_Msk    (0x1U /*<< GICDistributor_CTLR_EnableGrp0_Pos*/)     /*!< GICDistributor CTLR: EnableGrp0 Mask */
+#define GICDistributor_CTLR_EnableGrp0(x)     (((uint32_t)(((uint32_t)(x)) /*<< GICDistributor_CTLR_EnableGrp0_Pos*/)) & GICDistributor_CTLR_EnableGrp0_Msk)
+
+#define GICDistributor_CTLR_EnableGrp1_Pos    1U                                                   /*!< GICDistributor CTLR: EnableGrp1 Position */
+#define GICDistributor_CTLR_EnableGrp1_Msk    (0x1U << GICDistributor_CTLR_EnableGrp1_Pos)         /*!< GICDistributor CTLR: EnableGrp1 Mask */
+#define GICDistributor_CTLR_EnableGrp1(x)     (((uint32_t)(((uint32_t)(x)) << GICDistributor_CTLR_EnableGrp1_Pos)) & GICDistributor_CTLR_EnableGrp1_Msk)
+
+#define GICDistributor_CTLR_ARE_Pos           4U                                                   /*!< GICDistributor CTLR: ARE Position */
+#define GICDistributor_CTLR_ARE_Msk           (0x1U << GICDistributor_CTLR_ARE_Pos)                /*!< GICDistributor CTLR: ARE Mask */
+#define GICDistributor_CTLR_ARE(x)            (((uint32_t)(((uint32_t)(x)) << GICDistributor_CTLR_ARE_Pos)) & GICDistributor_CTLR_ARE_Msk)
+
+#define GICDistributor_CTLR_DC_Pos            6U                                                   /*!< GICDistributor CTLR: DC Position */
+#define GICDistributor_CTLR_DC_Msk            (0x1U << GICDistributor_CTLR_DC_Pos)                 /*!< GICDistributor CTLR: DC Mask */
+#define GICDistributor_CTLR_DC(x)             (((uint32_t)(((uint32_t)(x)) << GICDistributor_CTLR_DC_Pos)) & GICDistributor_CTLR_DC_Msk)
+
+#define GICDistributor_CTLR_EINWF_Pos         7U                                                   /*!< GICDistributor CTLR: EINWF Position */
+#define GICDistributor_CTLR_EINWF_Msk         (0x1U << GICDistributor_CTLR_EINWF_Pos)              /*!< GICDistributor CTLR: EINWF Mask */
+#define GICDistributor_CTLR_EINWF(x)          (((uint32_t)(((uint32_t)(x)) << GICDistributor_CTLR_EINWF_Pos)) & GICDistributor_CTLR_EINWF_Msk)
+
+#define GICDistributor_CTLR_RWP_Pos           31U                                                  /*!< GICDistributor CTLR: RWP Position */
+#define GICDistributor_CTLR_RWP_Msk           (0x1U << GICDistributor_CTLR_RWP_Pos)                /*!< GICDistributor CTLR: RWP Mask */
+#define GICDistributor_CTLR_RWP(x)            (((uint32_t)(((uint32_t)(x)) << GICDistributor_CTLR_RWP_Pos)) & GICDistributor_CTLR_RWP_Msk)
+
+/* GICDistributor TYPER Register */
+#define GICDistributor_TYPER_ITLinesNumber_Pos 0U                                                    /*!< GICDistributor TYPER: ITLinesNumber Position */
+#define GICDistributor_TYPER_ITLinesNumber_Msk (0x1FU /*<< GICDistributor_TYPER_ITLinesNumber_Pos*/) /*!< GICDistributor TYPER: ITLinesNumber Mask */
+#define GICDistributor_TYPER_ITLinesNumber(x)  (((uint32_t)(((uint32_t)(x)) /*<< GICDistributor_TYPER_ITLinesNumber_Pos*/)) & GICDistributor_CTLR_ITLinesNumber_Msk)
+
+#define GICDistributor_TYPER_CPUNumber_Pos    5U                                                   /*!< GICDistributor TYPER: CPUNumber Position */
+#define GICDistributor_TYPER_CPUNumber_Msk    (0x7U << GICDistributor_TYPER_CPUNumber_Pos)         /*!< GICDistributor TYPER: CPUNumber Mask */
+#define GICDistributor_TYPER_CPUNumber(x)     (((uint32_t)(((uint32_t)(x)) << GICDistributor_TYPER_CPUNumber_Pos)) & GICDistributor_TYPER_CPUNumber_Msk)
+
+#define GICDistributor_TYPER_SecurityExtn_Pos 10U                                                  /*!< GICDistributor TYPER: SecurityExtn Position */
+#define GICDistributor_TYPER_SecurityExtn_Msk (0x1U << GICDistributor_TYPER_SecurityExtn_Pos)      /*!< GICDistributor TYPER: SecurityExtn Mask */
+#define GICDistributor_TYPER_SecurityExtn(x)  (((uint32_t)(((uint32_t)(x)) << GICDistributor_TYPER_SecurityExtn_Pos)) & GICDistributor_TYPER_SecurityExtn_Msk)
+
+#define GICDistributor_TYPER_LSPI_Pos         11U                                                  /*!< GICDistributor TYPER: LSPI Position */
+#define GICDistributor_TYPER_LSPI_Msk         (0x1FU << GICDistributor_TYPER_LSPI_Pos)             /*!< GICDistributor TYPER: LSPI Mask */
+#define GICDistributor_TYPER_LSPI(x)          (((uint32_t)(((uint32_t)(x)) << GICDistributor_TYPER_LSPI_Pos)) & GICDistributor_TYPER_LSPI_Msk)
+
+/* GICDistributor IIDR Register */
+#define GICDistributor_IIDR_Implementer_Pos   0U                                                   /*!< GICDistributor IIDR: Implementer Position */
+#define GICDistributor_IIDR_Implementer_Msk   (0xFFFU /*<< GICDistributor_IIDR_Implementer_Pos*/)  /*!< GICDistributor IIDR: Implementer Mask */
+#define GICDistributor_IIDR_Implementer(x)    (((uint32_t)(((uint32_t)(x)) /*<< GICDistributor_IIDR_Implementer_Pos*/)) & GICDistributor_IIDR_Implementer_Msk)
+
+#define GICDistributor_IIDR_Revision_Pos      12U                                                  /*!< GICDistributor IIDR: Revision Position */
+#define GICDistributor_IIDR_Revision_Msk      (0xFU << GICDistributor_IIDR_Revision_Pos)           /*!< GICDistributor IIDR: Revision Mask */
+#define GICDistributor_IIDR_Revision(x)       (((uint32_t)(((uint32_t)(x)) << GICDistributor_IIDR_Revision_Pos)) & GICDistributor_IIDR_Revision_Msk)
+
+#define GICDistributor_IIDR_Variant_Pos       16U                                                  /*!< GICDistributor IIDR: Variant Position */
+#define GICDistributor_IIDR_Variant_Msk       (0xFU << GICDistributor_IIDR_Variant_Pos)            /*!< GICDistributor IIDR: Variant Mask */
+#define GICDistributor_IIDR_Variant(x)        (((uint32_t)(((uint32_t)(x)) << GICDistributor_IIDR_Variant_Pos)) & GICDistributor_IIDR_Variant_Msk)
+
+#define GICDistributor_IIDR_ProductID_Pos     24U                                                  /*!< GICDistributor IIDR: ProductID Position */
+#define GICDistributor_IIDR_ProductID_Msk     (0xFFU << GICDistributor_IIDR_ProductID_Pos)         /*!< GICDistributor IIDR: ProductID Mask */
+#define GICDistributor_IIDR_ProductID(x)      (((uint32_t)(((uint32_t)(x)) << GICDistributor_IIDR_ProductID_Pos)) & GICDistributor_IIDR_ProductID_Msk)
+
+/* GICDistributor STATUSR Register */
+#define GICDistributor_STATUSR_RRD_Pos        0U                                                   /*!< GICDistributor STATUSR: RRD Position */
+#define GICDistributor_STATUSR_RRD_Msk        (0x1U /*<< GICDistributor_STATUSR_RRD_Pos*/)         /*!< GICDistributor STATUSR: RRD Mask */
+#define GICDistributor_STATUSR_RRD(x)         (((uint32_t)(((uint32_t)(x)) /*<< GICDistributor_STATUSR_RRD_Pos*/)) & GICDistributor_STATUSR_RRD_Msk)
+
+#define GICDistributor_STATUSR_WRD_Pos        1U                                                   /*!< GICDistributor STATUSR: WRD Position */
+#define GICDistributor_STATUSR_WRD_Msk        (0x1U << GICDistributor_STATUSR_WRD_Pos)             /*!< GICDistributor STATUSR: WRD Mask */
+#define GICDistributor_STATUSR_WRD(x)         (((uint32_t)(((uint32_t)(x)) << GICDistributor_STATUSR_WRD_Pos)) & GICDistributor_STATUSR_WRD_Msk)
+
+#define GICDistributor_STATUSR_RWOD_Pos       2U                                                   /*!< GICDistributor STATUSR: RWOD Position */
+#define GICDistributor_STATUSR_RWOD_Msk       (0x1U << GICDistributor_STATUSR_RWOD_Pos)            /*!< GICDistributor STATUSR: RWOD Mask */
+#define GICDistributor_STATUSR_RWOD(x)        (((uint32_t)(((uint32_t)(x)) << GICDistributor_STATUSR_RWOD_Pos)) & GICDistributor_STATUSR_RWOD_Msk)
+
+#define GICDistributor_STATUSR_WROD_Pos       3U                                                   /*!< GICDistributor STATUSR: WROD Position */
+#define GICDistributor_STATUSR_WROD_Msk       (0x1U << GICDistributor_STATUSR_WROD_Pos)            /*!< GICDistributor STATUSR: WROD Mask */
+#define GICDistributor_STATUSR_WROD(x)        (((uint32_t)(((uint32_t)(x)) << GICDistributor_STATUSR_WROD_Pos)) & GICDistributor_STATUSR_WROD_Msk)
+
+/* GICDistributor SETSPI_NSR Register */ 
+#define GICDistributor_SETSPI_NSR_INTID_Pos   0U                                                   /*!< GICDistributor SETSPI_NSR: INTID Position */
+#define GICDistributor_SETSPI_NSR_INTID_Msk   (0x3FFU /*<< GICDistributor_SETSPI_NSR_INTID_Pos*/)  /*!< GICDistributor SETSPI_NSR: INTID Mask */
+#define GICDistributor_SETSPI_NSR_INTID(x)    (((uint32_t)(((uint32_t)(x)) /*<< GICDistributor_SETSPI_NSR_INTID_Pos*/)) & GICDistributor_SETSPI_NSR_INTID_Msk)
+
+/* GICDistributor CLRSPI_NSR Register */ 
+#define GICDistributor_CLRSPI_NSR_INTID_Pos   0U                                                   /*!< GICDistributor CLRSPI_NSR: INTID Position */
+#define GICDistributor_CLRSPI_NSR_INTID_Msk   (0x3FFU /*<< GICDistributor_CLRSPI_NSR_INTID_Pos*/)  /*!< GICDistributor CLRSPI_NSR: INTID Mask */
+#define GICDistributor_CLRSPI_NSR_INTID(x)    (((uint32_t)(((uint32_t)(x)) /*<< GICDistributor_CLRSPI_NSR_INTID_Pos*/)) & GICDistributor_CLRSPI_NSR_INTID_Msk)
+
+/* GICDistributor SETSPI_SR Register */
+#define GICDistributor_SETSPI_SR_INTID_Pos    0U                                                  /*!< GICDistributor SETSPI_SR: INTID Position */
+#define GICDistributor_SETSPI_SR_INTID_Msk    (0x3FFU /*<< GICDistributor_SETSPI_SR_INTID_Pos*/)  /*!< GICDistributor SETSPI_SR: INTID Mask */
+#define GICDistributor_SETSPI_SR_INTID(x)     (((uint32_t)(((uint32_t)(x)) /*<< GICDistributor_SETSPI_SR_INTID_Pos*/)) & GICDistributor_SETSPI_SR_INTID_Msk)
+
+/* GICDistributor CLRSPI_SR Register */
+#define GICDistributor_CLRSPI_SR_INTID_Pos    0U                                                  /*!< GICDistributor CLRSPI_SR: INTID Position */
+#define GICDistributor_CLRSPI_SR_INTID_Msk    (0x3FFU /*<< GICDistributor_CLRSPI_SR_INTID_Pos*/)  /*!< GICDistributor CLRSPI_SR: INTID Mask */
+#define GICDistributor_CLRSPI_SR_INTID(x)     (((uint32_t)(((uint32_t)(x)) /*<< GICDistributor_CLRSPI_SR_INTID_Pos*/)) & GICDistributor_CLRSPI_SR_INTID_Msk)
+
+/* GICDistributor ITARGETSR Register */
+#define GICDistributor_ITARGETSR_CPU0_Pos     0U                                                   /*!< GICDistributor ITARGETSR: CPU0 Position */
+#define GICDistributor_ITARGETSR_CPU0_Msk     (0x1U /*<< GICDistributor_ITARGETSR_CPU0_Pos*/)      /*!< GICDistributor ITARGETSR: CPU0 Mask */
+#define GICDistributor_ITARGETSR_CPU0(x)      (((uint8_t)(((uint8_t)(x)) /*<< GICDistributor_ITARGETSR_CPU0_Pos*/)) & GICDistributor_ITARGETSR_CPU0_Msk)
+
+#define GICDistributor_ITARGETSR_CPU1_Pos     1U                                                   /*!< GICDistributor ITARGETSR: CPU1 Position */
+#define GICDistributor_ITARGETSR_CPU1_Msk     (0x1U << GICDistributor_ITARGETSR_CPU1_Pos)          /*!< GICDistributor ITARGETSR: CPU1 Mask */
+#define GICDistributor_ITARGETSR_CPU1(x)      (((uint8_t)(((uint8_t)(x)) << GICDistributor_ITARGETSR_CPU1_Pos)) & GICDistributor_ITARGETSR_CPU1_Msk)
+
+#define GICDistributor_ITARGETSR_CPU2_Pos     2U                                                   /*!< GICDistributor ITARGETSR: CPU2 Position */
+#define GICDistributor_ITARGETSR_CPU2_Msk     (0x1U << GICDistributor_ITARGETSR_CPU2_Pos)          /*!< GICDistributor ITARGETSR: CPU2 Mask */
+#define GICDistributor_ITARGETSR_CPU2(x)      (((uint8_t)(((uint8_t)(x)) << GICDistributor_ITARGETSR_CPU2_Pos)) & GICDistributor_ITARGETSR_CPU2_Msk)
+
+#define GICDistributor_ITARGETSR_CPU3_Pos     3U                                                   /*!< GICDistributor ITARGETSR: CPU3 Position */
+#define GICDistributor_ITARGETSR_CPU3_Msk     (0x1U << GICDistributor_ITARGETSR_CPU3_Pos)          /*!< GICDistributor ITARGETSR: CPU3 Mask */
+#define GICDistributor_ITARGETSR_CPU3(x)      (((uint8_t)(((uint8_t)(x)) << GICDistributor_ITARGETSR_CPU3_Pos)) & GICDistributor_ITARGETSR_CPU3_Msk)
+
+#define GICDistributor_ITARGETSR_CPU4_Pos     4U                                                   /*!< GICDistributor ITARGETSR: CPU4 Position */
+#define GICDistributor_ITARGETSR_CPU4_Msk     (0x1U << GICDistributor_ITARGETSR_CPU4_Pos)          /*!< GICDistributor ITARGETSR: CPU4 Mask */
+#define GICDistributor_ITARGETSR_CPU4(x)      (((uint8_t)(((uint8_t)(x)) << GICDistributor_ITARGETSR_CPU4_Pos)) & GICDistributor_ITARGETSR_CPU4_Msk)
+
+#define GICDistributor_ITARGETSR_CPU5_Pos     5U                                                   /*!< GICDistributor ITARGETSR: CPU5 Position */
+#define GICDistributor_ITARGETSR_CPU5_Msk     (0x1U << GICDistributor_ITARGETSR_CPU5_Pos)          /*!< GICDistributor ITARGETSR: CPU5 Mask */
+#define GICDistributor_ITARGETSR_CPU5(x)      (((uint8_t)(((uint8_t)(x)) << GICDistributor_ITARGETSR_CPU5_Pos)) & GICDistributor_ITARGETSR_CPU5_Msk)
+
+#define GICDistributor_ITARGETSR_CPU6_Pos     6U                                                   /*!< GICDistributor ITARGETSR: CPU6 Position */
+#define GICDistributor_ITARGETSR_CPU6_Msk     (0x1U << GICDistributor_ITARGETSR_CPU6_Pos)          /*!< GICDistributor ITARGETSR: CPU6 Mask */
+#define GICDistributor_ITARGETSR_CPU6(x)      (((uint8_t)(((uint8_t)(x)) << GICDistributor_ITARGETSR_CPU6_Pos)) & GICDistributor_ITARGETSR_CPU6_Msk)
+
+#define GICDistributor_ITARGETSR_CPU7_Pos     7U                                                   /*!< GICDistributor ITARGETSR: CPU7 Position */
+#define GICDistributor_ITARGETSR_CPU7_Msk     (0x1U << GICDistributor_ITARGETSR_CPU7_Pos)          /*!< GICDistributor ITARGETSR: CPU7 Mask */
+#define GICDistributor_ITARGETSR_CPU7(x)      (((uint8_t)(((uint8_t)(x)) << GICDistributor_ITARGETSR_CPU7_Pos)) & GICDistributor_ITARGETSR_CPU7_Msk)
+
+/* GICDistributor SGIR Register */ 
+#define GICDistributor_SGIR_INTID_Pos         0U                                                   /*!< GICDistributor SGIR: INTID Position */
+#define GICDistributor_SGIR_INTID_Msk         (0x7U /*<< GICDistributor_SGIR_INTID_Pos*/)          /*!< GICDistributor SGIR: INTID Mask */
+#define GICDistributor_SGIR_INTID(x)          (((uint32_t)(((uint32_t)(x)) /*<< GICDistributor_SGIR_INTID_Pos*/)) & GICDistributor_SGIR_INTID_Msk)
+
+#define GICDistributor_SGIR_NSATT_Pos         15U                                                  /*!< GICDistributor SGIR: NSATT Position */
+#define GICDistributor_SGIR_NSATT_Msk         (0x1U << GICDistributor_SGIR_NSATT_Pos)              /*!< GICDistributor SGIR: NSATT Mask */
+#define GICDistributor_SGIR_NSATT(x)          (((uint32_t)(((uint32_t)(x)) << GICDistributor_SGIR_NSATT_Pos)) & GICDistributor_SGIR_NSATT_Msk)
+
+#define GICDistributor_SGIR_CPUTargetList_Pos 16U                                                  /*!< GICDistributor SGIR: CPUTargetList  Position */
+#define GICDistributor_SGIR_CPUTargetList_Msk (0xFFU << GICDistributor_SGIR_CPUTargetList_Pos)     /*!< GICDistributor SGIR: CPUTargetList  Mask */
+#define GICDistributor_SGIR_CPUTargetList(x)  (((uint32_t)(((uint32_t)(x)) << GICDistributor_SGIR_CPUTargetList_Pos)) & GICDistributor_SGIR_CPUTargetList_Msk)
+
+#define GICDistributor_SGIR_TargetFilterList_Pos 24U                                                /*!< GICDistributor SGIR: TargetFilterList Position */
+#define GICDistributor_SGIR_TargetFilterList_Msk (0x3U << GICDistributor_SGIR_TargetFilterList_Pos) /*!< GICDistributor SGIR: TargetFilterList Mask */
+#define GICDistributor_SGIR_TargetFilterList(x)  (((uint32_t)(((uint32_t)(x)) << GICDistributor_SGIR_TargetFilterList_Pos)) & GICDistributor_SGIR_TargetFilterList_Msk)
+
+/* GICDistributor IROUTER Register */
+#define GICDistributor_IROUTER_Aff0_Pos       0UL                                                  /*!< GICDistributor IROUTER: Aff0 Position */
+#define GICDistributor_IROUTER_Aff0_Msk       (0xFFUL /*<< GICDistributor_IROUTER_Aff0_Pos*/)      /*!< GICDistributor IROUTER: Aff0 Mask */
+#define GICDistributor_IROUTER_Aff0(x)        (((uint64_t)(((uint64_t)(x)) /*<< GICDistributor_IROUTER_Aff0_Pos*/)) & GICDistributor_IROUTER_Aff0_Msk)
+
+#define GICDistributor_IROUTER_Aff1_Pos       8UL                                                  /*!< GICDistributor IROUTER: Aff1 Position */
+#define GICDistributor_IROUTER_Aff1_Msk       (0xFFUL << GICDistributor_IROUTER_Aff1_Pos)          /*!< GICDistributor IROUTER: Aff1 Mask */
+#define GICDistributor_IROUTER_Aff1(x)        (((uint64_t)(((uint64_t)(x)) << GICDistributor_IROUTER_Aff1_Pos)) & GICDistributor_IROUTER_Aff1_Msk)
+
+#define GICDistributor_IROUTER_Aff2_Pos       16UL                                                 /*!< GICDistributor IROUTER: Aff2 Position */
+#define GICDistributor_IROUTER_Aff2_Msk       (0xFFUL << GICDistributor_IROUTER_Aff2_Pos)          /*!< GICDistributor IROUTER: Aff2 Mask */
+#define GICDistributor_IROUTER_Aff2(x)        (((uint64_t)(((uint64_t)(x)) << GICDistributor_IROUTER_Aff2_Pos)) & GICDistributor_IROUTER_Aff2_Msk)
+
+#define GICDistributor_IROUTER_IRM_Pos        31UL                                                 /*!< GICDistributor IROUTER: IRM Position */
+#define GICDistributor_IROUTER_IRM_Msk        (0xFFUL << GICDistributor_IROUTER_IRM_Pos)           /*!< GICDistributor IROUTER: IRM Mask */
+#define GICDistributor_IROUTER_IRM(x)         (((uint64_t)(((uint64_t)(x)) << GICDistributor_IROUTER_IRM_Pos)) & GICDistributor_IROUTER_IRM_Msk)
+
+#define GICDistributor_IROUTER_Aff3_Pos       32UL                                                 /*!< GICDistributor IROUTER: Aff3 Position */
+#define GICDistributor_IROUTER_Aff3_Msk       (0xFFUL << GICDistributor_IROUTER_Aff3_Pos)          /*!< GICDistributor IROUTER: Aff3 Mask */
+#define GICDistributor_IROUTER_Aff3(x)        (((uint64_t)(((uint64_t)(x)) << GICDistributor_IROUTER_Aff3_Pos)) & GICDistributor_IROUTER_Aff3_Msk)
+
+
+
 /** \brief  Structure type to access the Generic Interrupt Controller Interface (GICC)
 */
 typedef struct
@@ -809,7 +978,105 @@ typedef struct
 }  GICInterface_Type;
 
 #define GICInterface        ((GICInterface_Type        *)     GIC_INTERFACE_BASE )   /*!< \brief GIC Interface register set access pointer */
-#endif
+
+/* GICInterface CTLR Register */
+#define GICInterface_CTLR_Enable_Pos        0U                                              /*!< PTIM CTLR: Enable Position */
+#define GICInterface_CTLR_Enable_Msk        (0x1U /*<< GICInterface_CTLR_Enable_Pos*/)      /*!< PTIM CTLR: Enable Mask */
+#define GICInterface_CTLR_Enable(x)         (((uint32_t)(((uint32_t)(x)) /*<< GICInterface_CTLR_Enable_Pos*/)) & GICInterface_CTLR_Enable_Msk)
+
+/* GICInterface PMR Register */
+#define GICInterface_PMR_Priority_Pos       0U                                              /*!< PTIM PMR: Priority Position */
+#define GICInterface_PMR_Priority_Msk       (0xFFU /*<< GICInterface_PMR_Priority_Pos*/)    /*!< PTIM PMR: Priority Mask */
+#define GICInterface_PMR_Priority(x)        (((uint32_t)(((uint32_t)(x)) /*<< GICInterface_PMR_Priority_Pos*/)) & GICInterface_PMR_Priority_Msk)
+
+/* GICInterface BPR Register */
+#define GICInterface_BPR_Binary_Point_Pos   0U                                              /*!< PTIM BPR: Binary_Point Position */
+#define GICInterface_BPR_Binary_Point_Msk   (0x7U /*<< GICInterface_BPR_Binary_Point_Pos*/) /*!< PTIM BPR: Binary_Point Mask */
+#define GICInterface_BPR_Binary_Point(x)    (((uint32_t)(((uint32_t)(x)) /*<< GICInterface_BPR_Binary_Point_Pos*/)) & GICInterface_BPR_Binary_Point_Msk)
+
+/* GICInterface IAR Register */
+#define GICInterface_IAR_INTID_Pos          0U                                              /*!< PTIM IAR: INTID Position */
+#define GICInterface_IAR_INTID_Msk          (0xFFFFFFU /*<< GICInterface_IAR_INTID_Pos*/)   /*!< PTIM IAR: INTID Mask */
+#define GICInterface_IAR_INTID(x)           (((uint32_t)(((uint32_t)(x)) /*<< GICInterface_IAR_INTID_Pos*/)) & GICInterface_IAR_INTID_Msk)
+
+/* GICInterface EOIR Register */
+#define GICInterface_EOIR_INTID_Pos         0U                                              /*!< PTIM EOIR: INTID Position */
+#define GICInterface_EOIR_INTID_Msk         (0xFFFFFFU /*<< GICInterface_EOIR_INTID_Pos*/)  /*!< PTIM EOIR: INTID Mask */
+#define GICInterface_EOIR_INTID(x)          (((uint32_t)(((uint32_t)(x)) /*<< GICInterface_EOIR_INTID_Pos*/)) & GICInterface_EOIR_INTID_Msk)
+
+/* GICInterface RPR Register */
+#define GICInterface_RPR_INTID_Pos          0U                                              /*!< PTIM RPR: INTID Position */
+#define GICInterface_RPR_INTID_Msk          (0xFFU /*<< GICInterface_RPR_INTID_Pos*/)       /*!< PTIM RPR: INTID Mask */
+#define GICInterface_RPR_INTID(x)           (((uint32_t)(((uint32_t)(x)) /*<< GICInterface_RPR_INTID_Pos*/)) & GICInterface_RPR_INTID_Msk)
+
+/* GICInterface HPPIR Register */
+#define GICInterface_HPPIR_INTID_Pos        0U                                               /*!< PTIM HPPIR: INTID Position */
+#define GICInterface_HPPIR_INTID_Msk        (0xFFFFFFU /*<< GICInterface_HPPIR_INTID_Pos*/)  /*!< PTIM HPPIR: INTID Mask */
+#define GICInterface_HPPIR_INTID(x)         (((uint32_t)(((uint32_t)(x)) /*<< GICInterface_HPPIR_INTID_Pos*/)) & GICInterface_HPPIR_INTID_Msk)
+
+/* GICInterface ABPR Register */
+#define GICInterface_ABPR_Binary_Point_Pos  0U                                               /*!< PTIM ABPR: Binary_Point Position */
+#define GICInterface_ABPR_Binary_Point_Msk  (0x7U /*<< GICInterface_ABPR_Binary_Point_Pos*/) /*!< PTIM ABPR: Binary_Point Mask */
+#define GICInterface_ABPR_Binary_Point(x)   (((uint32_t)(((uint32_t)(x)) /*<< GICInterface_ABPR_Binary_Point_Pos*/)) & GICInterface_ABPR_Binary_Point_Msk)
+
+/* GICInterface AIAR Register */
+#define GICInterface_AIAR_INTID_Pos         0U                                              /*!< PTIM AIAR: INTID Position */
+#define GICInterface_AIAR_INTID_Msk         (0xFFFFFFU /*<< GICInterface_AIAR_INTID_Pos*/)  /*!< PTIM AIAR: INTID Mask */
+#define GICInterface_AIAR_INTID(x)          (((uint32_t)(((uint32_t)(x)) /*<< GICInterface_AIAR_INTID_Pos*/)) & GICInterface_AIAR_INTID_Msk)
+
+/* GICInterface AEOIR Register */
+#define GICInterface_AEOIR_INTID_Pos        0U                                              /*!< PTIM AEOIR: INTID Position */
+#define GICInterface_AEOIR_INTID_Msk        (0xFFFFFFU /*<< GICInterface_AEOIR_INTID_Pos*/) /*!< PTIM AEOIR: INTID Mask */
+#define GICInterface_AEOIR_INTID(x)         (((uint32_t)(((uint32_t)(x)) /*<< GICInterface_AEOIR_INTID_Pos*/)) & GICInterface_AEOIR_INTID_Msk)
+
+/* GICInterface AHPPIR Register */
+#define GICInterface_AHPPIR_INTID_Pos       0U                                               /*!< PTIM AHPPIR: INTID Position */
+#define GICInterface_AHPPIR_INTID_Msk       (0xFFFFFFU /*<< GICInterface_AHPPIR_INTID_Pos*/) /*!< PTIM AHPPIR: INTID Mask */
+#define GICInterface_AHPPIR_INTID(x)        (((uint32_t)(((uint32_t)(x)) /*<< GICInterface_AHPPIR_INTID_Pos*/)) & GICInterface_AHPPIR_INTID_Msk)
+
+/* GICInterface STATUSR Register */
+#define GICInterface_STATUSR_RRD_Pos        0U                                              /*!< GICInterface STATUSR: RRD Position */
+#define GICInterface_STATUSR_RRD_Msk        (0x1U /*<< GICInterface_STATUSR_RRD_Pos*/)      /*!< GICInterface STATUSR: RRD Mask */
+#define GICInterface_STATUSR_RRD(x)         (((uint32_t)(((uint32_t)(x)) /*<< GICInterface_STATUSR_RRD_Pos*/)) & GICInterface_STATUSR_RRD_Msk)
+
+#define GICInterface_STATUSR_WRD_Pos        1U                                              /*!< GICInterface STATUSR: WRD Position */
+#define GICInterface_STATUSR_WRD_Msk        (0x1U << GICInterface_STATUSR_WRD_Pos)          /*!< GICInterface STATUSR: WRD Mask */
+#define GICInterface_STATUSR_WRD(x)         (((uint32_t)(((uint32_t)(x)) << GICInterface_STATUSR_WRD_Pos)) & GICInterface_STATUSR_WRD_Msk)
+
+#define GICInterface_STATUSR_RWOD_Pos       2U                                              /*!< GICInterface STATUSR: RWOD Position */
+#define GICInterface_STATUSR_RWOD_Msk       (0x1U << GICInterface_STATUSR_RWOD_Pos)         /*!< GICInterface STATUSR: RWOD Mask */
+#define GICInterface_STATUSR_RWOD(x)        (((uint32_t)(((uint32_t)(x)) << GICInterface_STATUSR_RWOD_Pos)) & GICInterface_STATUSR_RWOD_Msk)
+
+#define GICInterface_STATUSR_WROD_Pos       3U                                              /*!< GICInterface STATUSR: WROD Position */
+#define GICInterface_STATUSR_WROD_Msk       (0x1U << GICInterface_STATUSR_WROD_Pos)         /*!< GICInterface STATUSR: WROD Mask */
+#define GICInterface_STATUSR_WROD(x)        (((uint32_t)(((uint32_t)(x)) << GICInterface_STATUSR_WROD_Pos)) & GICInterface_STATUSR_WROD_Msk)
+
+#define GICInterface_STATUSR_ASV_Pos        4U                                              /*!< GICInterface STATUSR: ASV Position */
+#define GICInterface_STATUSR_ASV_Msk        (0x1U << GICInterface_STATUSR_ASV_Pos)          /*!< GICInterface STATUSR: ASV Mask */
+#define GICInterface_STATUSR_ASV(x)         (((uint32_t)(((uint32_t)(x)) << GICInterface_STATUSR_ASV_Pos)) & GICInterface_STATUSR_ASV_Msk)
+
+/* GICInterface IIDR Register */
+#define GICInterface_IIDR_Implementer_Pos   0U                                                 /*!< GICInterface IIDR: Implementer Position */
+#define GICInterface_IIDR_Implementer_Msk   (0xFFFU /*<< GICInterface_IIDR_Implementer_Pos*/)  /*!< GICInterface IIDR: Implementer Mask */
+#define GICInterface_IIDR_Implementer(x)    (((uint32_t)(((uint32_t)(x)) /*<< GICInterface_IIDR_Implementer_Pos*/)) & GICInterface_IIDR_Implementer_Msk)
+
+#define GICInterface_IIDR_Revision_Pos      12U                                             /*!< GICInterface IIDR: Revision Position */
+#define GICInterface_IIDR_Revision_Msk      (0xFU << GICInterface_IIDR_Revision_Pos)        /*!< GICInterface IIDR: Revision Mask */
+#define GICInterface_IIDR_Revision(x)       (((uint32_t)(((uint32_t)(x)) << GICInterface_IIDR_Revision_Pos)) & GICInterface_IIDR_Revision_Msk)
+
+#define GICInterface_IIDR_Arch_version_Pos  16U                                             /*!< GICInterface IIDR: Arch_version Position */
+#define GICInterface_IIDR_Arch_version_Msk  (0xFU << GICInterface_IIDR_Arch_version_Pos)    /*!< GICInterface IIDR: Arch_version Mask */
+#define GICInterface_IIDR_Arch_version(x)   (((uint32_t)(((uint32_t)(x)) << GICInterface_IIDR_Arch_version_Pos)) & GICInterface_IIDR_Arch_version_Msk)
+
+#define GICInterface_IIDR_ProductID_Pos     20U                                             /*!< GICInterface IIDR: ProductID Position */
+#define GICInterface_IIDR_ProductID_Msk     (0xFFFU << GICInterface_IIDR_ProductID_Pos)     /*!< GICInterface IIDR: ProductID Mask */
+#define GICInterface_IIDR_ProductID(x)      (((uint32_t)(((uint32_t)(x)) << GICInterface_IIDR_ProductID_Pos)) & GICInterface_IIDR_ProductID_Msk)
+
+/* GICInterface DIR Register */
+#define GICInterface_DIR_INTID_Pos          0U                                              /*!< PTIM DIR: INTID Position */
+#define GICInterface_DIR_INTID_Msk          (0xFFFFFFU /*<< GICInterface_DIR_INTID_Pos*/)   /*!< PTIM DIR: INTID Mask */
+#define GICInterface_DIR_INTID(x)           (((uint32_t)(((uint32_t)(x)) /*<< GICInterface_DIR_INTID_Pos*/)) & GICInterface_DIR_INTID_Msk)
+#endif /*  (__GIC_PRESENT == 1U) || defined(DOXYGEN) */
 
 #if (__TIM_PRESENT == 1U) || defined(DOXYGEN)
 #if ((__CORTEX_A == 5U) || (__CORTEX_A == 9U)) || defined(DOXYGEN)
@@ -830,8 +1097,57 @@ typedef struct
   __OM  uint32_t WDISABLE;        //!< \brief  Offset: 0x034 ( /W) Watchdog Disable Register
 } Timer_Type;
 #define PTIM ((Timer_Type *) TIMER_BASE )   /*!< \brief Timer register struct */
-#endif
-#endif
+
+/* PTIM Control Register */
+#define PTIM_CONTROL_Enable_Pos             0U                                         /*!< PTIM CONTROL: Enable Position */
+#define PTIM_CONTROL_Enable_Msk             (0x1U /*<< PTIM_CONTROL_Enable_Pos*/)      /*!< PTIM CONTROL: Enable Mask */
+#define PTIM_CONTROL_Enable(x)              (((uint32_t)(((uint32_t)(x)) /*<< PTIM_CONTROL_Enable_Pos*/)) & PTIM_CONTROL_Enable_Msk)
+
+#define PTIM_CONTROL_AutoReload_Pos         1U                                         /*!< PTIM CONTROL: Auto Reload Position */
+#define PTIM_CONTROL_AutoReload_Msk         (0x1U << PTIM_CONTROL_AutoReload_Pos)      /*!< PTIM CONTROL: Auto Reload Mask */
+#define PTIM_CONTROL_AutoReload(x)          (((uint32_t)(((uint32_t)(x)) << PTIM_CONTROL_AutoReload_Pos)) & PTIM_CONTROL_AutoReload_Msk)
+
+#define PTIM_CONTROL_IRQenable_Pos          2U                                         /*!< PTIM CONTROL: IRQ Enabel Position */
+#define PTIM_CONTROL_IRQenable_Msk          (0x1U << PTIM_CONTROL_IRQenable_Pos)       /*!< PTIM CONTROL: IRQ Enabel Mask */
+#define PTIM_CONTROL_IRQenable(x)           (((uint32_t)(((uint32_t)(x)) << PTIM_CONTROL_IRQenable_Pos)) & PTIM_CONTROL_IRQenable_Msk)
+
+#define PTIM_CONTROL_Prescaler_Pos          8U                                         /*!< PTIM CONTROL: Prescaler Position */
+#define PTIM_CONTROL_Prescaler_Msk          (0xFFU << PTIM_CONTROL_Prescaler_Pos)      /*!< PTIM CONTROL: Prescaler Mask */
+#define PTIM_CONTROL_Prescaler(x)           (((uint32_t)(((uint32_t)(x)) << PTIM_CONTROL_Prescaler_Pos)) & PTIM_CONTROL_Prescaler_Msk)
+
+/* WCONTROL Watchdog Control Register */
+#define PTIM_WCONTROL_Enable_Pos            0U                                         /*!< PTIM WCONTROL: Enable Position */
+#define PTIM_WCONTROL_Enable_Msk            (0x1U /*<< PTIM_WCONTROL_Enable_Pos*/)     /*!< PTIM WCONTROL: Enable Mask */
+#define PTIM_WCONTROL_Enable(x)             (((uint32_t)(((uint32_t)(x)) /*<< PTIM_WCONTROL_Enable_Pos*/)) & PTIM_WCONTROL_Enable_Msk)
+
+#define PTIM_WCONTROL_AutoReload_Pos        1U                                         /*!< PTIM WCONTROL: Auto Reload Position */
+#define PTIM_WCONTROL_AutoReload_Msk        (0x1U << PTIM_WCONTROL_AutoReload_Pos)     /*!< PTIM WCONTROL: Auto Reload Mask */
+#define PTIM_WCONTROL_AutoReload(x)         (((uint32_t)(((uint32_t)(x)) << PTIM_WCONTROL_AutoReload_Pos)) & PTIM_WCONTROL_AutoReload_Msk)
+
+#define PTIM_WCONTROL_IRQenable_Pos         2U                                         /*!< PTIM WCONTROL: IRQ Enable Position */
+#define PTIM_WCONTROL_IRQenable_Msk         (0x1U << PTIM_WCONTROL_IRQenable_Pos)      /*!< PTIM WCONTROL: IRQ Enable Mask */
+#define PTIM_WCONTROL_IRQenable(x)          (((uint32_t)(((uint32_t)(x)) << PTIM_WCONTROL_IRQenable_Pos)) & PTIM_WCONTROL_IRQenable_Msk)
+
+#define PTIM_WCONTROL_Mode_Pos              3U                                         /*!< PTIM WCONTROL: Watchdog Mode Position */
+#define PTIM_WCONTROL_Mode_Msk              (0x1U << PTIM_WCONTROL_Mode_Pos)           /*!< PTIM WCONTROL: Watchdog Mode Mask */
+#define PTIM_WCONTROL_Mode(x)               (((uint32_t)(((uint32_t)(x)) << PTIM_WCONTROL_Mode_Pos)) & PTIM_WCONTROL_Mode_Msk)
+
+#define PTIM_WCONTROL_Presacler_Pos         8U                                         /*!< PTIM WCONTROL: Prescaler Position */
+#define PTIM_WCONTROL_Presacler_Msk         (0xFFU << PTIM_WCONTROL_Presacler_Pos)     /*!< PTIM WCONTROL: Prescaler Mask */
+#define PTIM_WCONTROL_Presacler(x)          (((uint32_t)(((uint32_t)(x)) << PTIM_WCONTROL_Presacler_Pos)) & PTIM_WCONTROL_Presacler_Msk)
+
+/* WISR Watchdog Interrupt Status Register */
+#define PTIM_WISR_EventFlag_Pos             0U                                         /*!< PTIM WISR: Event Flag Position */
+#define PTIM_WISR_EventFlag_Msk             (0x1U /*<< PTIM_WISR_EventFlag_Pos*/)      /*!< PTIM WISR: Event Flag Mask */
+#define PTIM_WISR_EventFlag(x)              (((uint32_t)(((uint32_t)(x)) /*<< PTIM_WISR_EventFlag_Pos*/)) & PTIM_WISR_EventFlag_Msk)
+
+/* WRESET Watchdog Reset Status */
+#define PTIM_WRESET_ResetFlag_Pos           0U                                         /*!< PTIM WRESET: Reset Flag Position */
+#define PTIM_WRESET_ResetFlag_Msk           (0x1U /*<< PTIM_WRESET_ResetFlag_Pos*/)    /*!< PTIM WRESET: Reset Flag Mask */
+#define PTIM_WRESET_ResetFlag(x)            (((uint32_t)(((uint32_t)(x)) /*<< PTIM_WRESET_ResetFlag_Pos*/)) & PTIM_WRESET_ResetFlag_Msk)
+
+#endif /* ((__CORTEX_A == 5U) || (__CORTEX_A == 9U)) || defined(DOXYGEN) */
+#endif /* (__TIM_PRESENT == 1U) || defined(DOXYGEN) */
 
  /*******************************************************************************
   *                Hardware Abstraction Layer
@@ -879,6 +1195,15 @@ __STATIC_FORCEINLINE void L1C_InvalidateBTAC(void) {
   __set_BPIALL(0);
   __DSB();     //ensure completion of the invalidation
   __ISB();     //ensure instruction fetch path sees new state
+}
+
+/** \brief  Clean instruction cache line by address.
+* \param [in] va Pointer to instructions to clear the cache for.
+*/
+__STATIC_FORCEINLINE void L1C_InvalidateICacheMVA(void *va) {
+  __set_ICIMVAC((uint32_t)va);
+  __DSB();     //ensure completion of the invalidation
+  __ISB();     //ensure instruction fetch path sees new I cache state
 }
 
 /** \brief  Invalidate the whole instruction cache
@@ -1307,13 +1632,14 @@ __STATIC_INLINE void GIC_ClearPendingIRQ(IRQn_Type IRQn)
 */
 __STATIC_INLINE void GIC_SetConfiguration(IRQn_Type IRQn, uint32_t int_config)
 {
-  uint32_t icfgr = GICDistributor->ICFGR[IRQn / 16U];
-  uint32_t shift = (IRQn % 16U) << 1U;
+  uint32_t icfgr = GICDistributor->ICFGR[IRQn / 16U];  /* read current register content */
+  uint32_t shift = (IRQn % 16U) << 1U;                 /* calculate shift value */
 
-  icfgr &= (~(3U         << shift));
-  icfgr |= (  int_config << shift);
+  int_config &= 3U;                                    /* only 2 bits are valid */
+  icfgr &= (~(3U         << shift));                   /* clear bits to change */
+  icfgr |= (  int_config << shift);                    /* set new configuration */
 
-  GICDistributor->ICFGR[IRQn / 16U] = icfgr;
+  GICDistributor->ICFGR[IRQn / 16U] = icfgr;           /* write new register content */
 }
 
 /** \brief Get the interrupt configuration from the GIC's ICFGR register.
@@ -2406,7 +2732,7 @@ __STATIC_INLINE int MMU_GetSectionDescriptor(uint32_t *descriptor, mmu_region_at
   MMU_XNSection(descriptor,reg.xn_t);
   MMU_DomainSection(descriptor, reg.domain);
   MMU_PSection(descriptor, reg.e_t);
-  MMU_APSection(descriptor, reg.priv_t, reg.user_t, 1);
+  MMU_APSection(descriptor, reg.user_t, reg.priv_t, 1);
   MMU_SharedSection(descriptor,reg.sh_t);
   MMU_GlobalSection(descriptor,reg.g_t);
   MMU_SecureSection(descriptor,reg.sec_t);
@@ -2437,7 +2763,7 @@ __STATIC_INLINE int MMU_GetPageDescriptor(uint32_t *descriptor, uint32_t *descri
       MMU_XNPage(descriptor2, reg.xn_t, PAGE_4k);
       MMU_DomainPage(descriptor, reg.domain);
       MMU_PPage(descriptor, reg.e_t);
-      MMU_APPage(descriptor2, reg.priv_t, reg.user_t, 1);
+      MMU_APPage(descriptor2, reg.user_t, reg.priv_t, 1);
       MMU_SharedPage(descriptor2,reg.sh_t);
       MMU_GlobalPage(descriptor2,reg.g_t);
       MMU_SecurePage(descriptor,reg.sec_t);
@@ -2452,7 +2778,7 @@ __STATIC_INLINE int MMU_GetPageDescriptor(uint32_t *descriptor, uint32_t *descri
       MMU_XNPage(descriptor2, reg.xn_t, PAGE_64k);
       MMU_DomainPage(descriptor, reg.domain);
       MMU_PPage(descriptor, reg.e_t);
-      MMU_APPage(descriptor2, reg.priv_t, reg.user_t, 1);
+      MMU_APPage(descriptor2, reg.user_t, reg.priv_t, 1);
       MMU_SharedPage(descriptor2,reg.sh_t);
       MMU_GlobalPage(descriptor2,reg.g_t);
       MMU_SecurePage(descriptor,reg.sec_t);

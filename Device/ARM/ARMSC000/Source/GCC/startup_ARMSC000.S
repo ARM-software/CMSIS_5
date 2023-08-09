@@ -1,11 +1,11 @@
 /**************************************************************************//**
  * @file     startup_ARMSC000.S
  * @brief    CMSIS-Core(M) Device Startup File for SC000 Device
- * @version  V2.0.1
- * @date     23. July 2019
+ * @version  V2.2.0
+ * @date     26. May 2021
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2021 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -42,7 +42,7 @@ __Vectors:
                 .long    0                                  /*     Reserved */
                 .long    0                                  /*     Reserved */
                 .long    0                                  /*     Reserved */
-                .long    SVC_Handler                        /*  -5 SVCall Handler */
+                .long    SVC_Handler                        /*  -5 SVC Handler */
                 .long    0                                  /*     Reserved */
                 .long    0                                  /*     Reserved */
                 .long    PendSV_Handler                     /*  -2 PendSV Handler */
@@ -83,12 +83,13 @@ Reset_Handler:
 .L_loop0:
                 cmp      r4, r5
                 bge      .L_loop0_done
-                ldr      r1, [r4]
-                ldr      r2, [r4, #4]
-                ldr      r3, [r4, #8]
+                ldr      r1, [r4]                /* source address */
+                ldr      r2, [r4, #4]            /* destination address */
+                ldr      r3, [r4, #8]            /* word count */
+                lsls     r3, r3, #2              /* byte count */
 
 .L_loop0_0:
-                subs     r3, #4
+                subs     r3, #4                  /* decrement byte count */
                 blt      .L_loop0_0_done
                 ldr      r0, [r1, r3]
                 str      r0, [r2, r3]
@@ -106,12 +107,13 @@ Reset_Handler:
 .L_loop2:
                 cmp      r3, r4
                 bge      .L_loop2_done
-                ldr      r1, [r3]
-                ldr      r2, [r3, #4]
+                ldr      r1, [r3]                /* destination address */
+                ldr      r2, [r3, #4]            /* word count */
+                lsls     r2, r2, #2              /* byte count */
                 movs     r0, 0
 
 .L_loop2_0:
-                subs     r2, #4
+                subs     r2, #4                  /* decrement byte count */
                 blt      .L_loop2_0_done
                 str      r0, [r1, r2]
                 b        .L_loop2_0

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2019 Arm Limited. All rights reserved.
+ * Copyright (c) 2013-2023 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -27,7 +27,7 @@
 
 
 //  OS Runtime Object Memory Usage
-#if ((defined(OS_OBJ_MEM_USAGE) && (OS_OBJ_MEM_USAGE != 0)))
+#ifdef RTX_OBJ_MEM_USAGE
 osRtxObjectMemUsage_t osRtxEventFlagsMemUsage \
 __attribute__((section(".data.os.evflags.obj"))) =
 { 0U, 0U, 0U };
@@ -133,6 +133,94 @@ static uint32_t EventFlagsCheck (os_event_flags_t *ef, uint32_t flags, uint32_t 
   return event_flags;
 }
 
+/// Verify that Event Flags object pointer is valid.
+/// \param[in]  ef              event flags object.
+/// \return true - valid, false - invalid.
+static bool_t IsEventFlagsPtrValid (const os_event_flags_t *ef) {
+#ifdef RTX_OBJ_PTR_CHECK
+  //lint --e{923} --e{9078} "cast from pointer to unsigned int" [MISRA Note 7]
+  uint32_t cb_start  = (uint32_t)&__os_evflags_cb_start__;
+  uint32_t cb_length = (uint32_t)&__os_evflags_cb_length__;
+
+  // Check the section boundaries
+  if (((uint32_t)ef - cb_start) >= cb_length) {
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
+    return FALSE;
+  }
+  // Check the object alignment
+  if ((((uint32_t)ef - cb_start) % sizeof(os_event_flags_t)) != 0U) {
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
+    return FALSE;
+  }
+#else
+  // Check NULL pointer
+  if (ef == NULL) {
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
+    return FALSE;
+  }
+#endif
+  return TRUE;
+}
+
+
+//  ==== Library functions ====
+
+/// Destroy an Event Flags object.
+/// \param[in]  ef              event flags object.
+static void osRtxEventFlagsDestroy (os_event_flags_t *ef) {
+
+  // Mark object as invalid
+  ef->id = osRtxIdInvalid;
+
+  // Free object memory
+  if ((ef->flags & osRtxFlagSystemObject) != 0U) {
+#ifdef RTX_OBJ_PTR_CHECK
+    (void)osRtxMemoryPoolFree(osRtxInfo.mpi.event_flags, ef);
+#else
+    if (osRtxInfo.mpi.event_flags != NULL) {
+      (void)osRtxMemoryPoolFree(osRtxInfo.mpi.event_flags, ef);
+    } else {
+      (void)osRtxMemoryFree(osRtxInfo.mem.common, ef);
+    }
+#endif
+#ifdef RTX_OBJ_MEM_USAGE
+    osRtxEventFlagsMemUsage.cnt_free++;
+#endif
+  }
+
+  EvrRtxEventFlagsDestroyed(ef);
+}
+
+#ifdef RTX_SAFETY_CLASS
+/// Delete an Event Flags safety class.
+/// \param[in]  safety_class    safety class.
+/// \param[in]  mode            safety mode.
+void osRtxEventFlagsDeleteClass (uint32_t safety_class, uint32_t mode) {
+  os_event_flags_t *ef;
+  os_thread_t      *thread;
+  uint32_t          length;
+
+  //lint --e{923} --e{9078} "cast from pointer to unsigned int" [MISRA Note 7]
+  ef     = (os_event_flags_t *)(uint32_t)&__os_evflags_cb_start__;
+  length =                     (uint32_t)&__os_evflags_cb_length__;
+  while (length >= sizeof(os_event_flags_t)) {
+    if (   (ef->id == osRtxIdEventFlags) &&
+        ((((mode & osSafetyWithSameClass)  != 0U) &&
+          ((ef->attr >> osRtxAttrClass_Pos) == (uint8_t)safety_class)) ||
+         (((mode & osSafetyWithLowerClass) != 0U) &&
+          ((ef->attr >> osRtxAttrClass_Pos) <  (uint8_t)safety_class)))) {
+      while (ef->thread_list != NULL) {
+        thread = osRtxThreadListGet(osRtxObject(ef));
+        osRtxThreadWaitExit(thread, (uint32_t)osErrorResource, FALSE);
+      }
+      osRtxEventFlagsDestroy(ef);
+    }
+    length -= sizeof(os_event_flags_t);
+    ef++;
+  }
+}
+#endif
+
 
 //  ==== Post ISR processing ====
 
@@ -163,18 +251,35 @@ static void osRtxEventFlagsPostProcess (os_event_flags_t *ef) {
 /// Create and Initialize an Event Flags object.
 /// \note API identical to osEventFlagsNew
 static osEventFlagsId_t svcRtxEventFlagsNew (const osEventFlagsAttr_t *attr) {
-  os_event_flags_t *ef;
-  uint8_t           flags;
-  const char       *name;
+  os_event_flags_t  *ef;
+#ifdef RTX_SAFETY_CLASS
+  const os_thread_t *thread = osRtxThreadGetRunning();
+  uint32_t           attr_bits;
+#endif
+  uint8_t            flags;
+  const char        *name;
 
   // Process attributes
   if (attr != NULL) {
-    name = attr->name;
+    name      = attr->name;
+#ifdef RTX_SAFETY_CLASS
+    attr_bits = attr->attr_bits;
+#endif
     //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 6]
-    ef   = attr->cb_mem;
+    ef        = attr->cb_mem;
+#ifdef RTX_SAFETY_CLASS
+    if ((attr_bits & osSafetyClass_Valid) != 0U) {
+      if ((thread != NULL) &&
+          ((thread->attr >> osRtxAttrClass_Pos) <
+          (uint8_t)((attr_bits & osSafetyClass_Msk) >> osSafetyClass_Pos))) {
+        EvrRtxEventFlagsError(NULL, (int32_t)osErrorSafetyClass);
+        //lint -e{904} "Return statement before end of function" [MISRA Note 1]
+        return NULL;
+      }
+    }
+#endif
     if (ef != NULL) {
-      //lint -e(923) -e(9078) "cast from pointer to unsigned int" [MISRA Note 7]
-      if ((((uint32_t)ef & 3U) != 0U) || (attr->cb_size < sizeof(os_event_flags_t))) {
+      if (!IsEventFlagsPtrValid(ef) || (attr->cb_size != sizeof(os_event_flags_t))) {
         EvrRtxEventFlagsError(NULL, osRtxErrorInvalidControlBlock);
         //lint -e{904} "Return statement before end of function" [MISRA Note 1]
         return NULL;
@@ -187,8 +292,11 @@ static osEventFlagsId_t svcRtxEventFlagsNew (const osEventFlagsAttr_t *attr) {
       }
     }
   } else {
-    name = NULL;
-    ef   = NULL;
+    name      = NULL;
+#ifdef RTX_SAFETY_CLASS
+    attr_bits = 0U;
+#endif
+    ef        = NULL;
   }
 
   // Allocate object memory if not provided
@@ -196,11 +304,13 @@ static osEventFlagsId_t svcRtxEventFlagsNew (const osEventFlagsAttr_t *attr) {
     if (osRtxInfo.mpi.event_flags != NULL) {
       //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 5]
       ef = osRtxMemoryPoolAlloc(osRtxInfo.mpi.event_flags);
+#ifndef RTX_OBJ_PTR_CHECK
     } else {
       //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 5]
       ef = osRtxMemoryAlloc(osRtxInfo.mem.common, sizeof(os_event_flags_t), 1U);
+#endif
     }
-#if (defined(OS_OBJ_MEM_USAGE) && (OS_OBJ_MEM_USAGE != 0))
+#ifdef RTX_OBJ_MEM_USAGE
     if (ef != NULL) {
       uint32_t used;
       osRtxEventFlagsMemUsage.cnt_alloc++;
@@ -219,9 +329,21 @@ static osEventFlagsId_t svcRtxEventFlagsNew (const osEventFlagsAttr_t *attr) {
     // Initialize control block
     ef->id          = osRtxIdEventFlags;
     ef->flags       = flags;
+    ef->attr        = 0U;
     ef->name        = name;
     ef->thread_list = NULL;
     ef->event_flags = 0U;
+#ifdef RTX_SAFETY_CLASS
+    if ((attr_bits & osSafetyClass_Valid) != 0U) {
+      ef->attr     |= (uint8_t)((attr_bits & osSafetyClass_Msk) >>
+                                (osSafetyClass_Pos - osRtxAttrClass_Pos));
+    } else {
+      // Inherit safety class from the running thread
+      if (thread != NULL) {
+        ef->attr   |= (uint8_t)(thread->attr & osRtxAttrClass_Msk);
+      }
+    }
+#endif
 
     // Register post ISR processing function
     osRtxInfo.post_process.event_flags = osRtxEventFlagsPostProcess;
@@ -240,7 +362,7 @@ static const char *svcRtxEventFlagsGetName (osEventFlagsId_t ef_id) {
   os_event_flags_t *ef = osRtxEventFlagsId(ef_id);
 
   // Check parameters
-  if ((ef == NULL) || (ef->id != osRtxIdEventFlags)) {
+  if (!IsEventFlagsPtrValid(ef) || (ef->id != osRtxIdEventFlags)) {
     EvrRtxEventFlagsGetName(ef, NULL);
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return NULL;
@@ -261,12 +383,23 @@ static uint32_t svcRtxEventFlagsSet (osEventFlagsId_t ef_id, uint32_t flags) {
   uint32_t          event_flags0;
 
   // Check parameters
-  if ((ef == NULL) || (ef->id != osRtxIdEventFlags) ||
+  if (!IsEventFlagsPtrValid(ef) || (ef->id != osRtxIdEventFlags) ||
       ((flags & ~(((uint32_t)1U << osRtxEventFlagsLimit) - 1U)) != 0U)) {
     EvrRtxEventFlagsError(ef, (int32_t)osErrorParameter);
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return ((uint32_t)osErrorParameter);
   }
+
+#ifdef RTX_SAFETY_CLASS
+  // Check running thread safety class
+  thread = osRtxThreadGetRunning();
+  if ((thread != NULL) &&
+      ((thread->attr >> osRtxAttrClass_Pos) < (ef->attr >> osRtxAttrClass_Pos))) {
+    EvrRtxEventFlagsError(ef, (int32_t)osErrorSafetyClass);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
+    return ((uint32_t)osErrorSafetyClass);
+  }
+#endif
 
   // Set Event Flags
   event_flags = EventFlagsSet(ef, flags);
@@ -298,22 +431,36 @@ static uint32_t svcRtxEventFlagsSet (osEventFlagsId_t ef_id, uint32_t flags) {
 /// Clear the specified Event Flags.
 /// \note API identical to osEventFlagsClear
 static uint32_t svcRtxEventFlagsClear (osEventFlagsId_t ef_id, uint32_t flags) {
-  os_event_flags_t *ef = osRtxEventFlagsId(ef_id);
-  uint32_t          event_flags;
+  os_event_flags_t  *ef = osRtxEventFlagsId(ef_id);
+#ifdef RTX_SAFETY_CLASS
+  const os_thread_t *thread;
+#endif
+  uint32_t           event_flags;
 
   // Check parameters
-  if ((ef == NULL) || (ef->id != osRtxIdEventFlags) ||
+  if (!IsEventFlagsPtrValid(ef) || (ef->id != osRtxIdEventFlags) ||
       ((flags & ~(((uint32_t)1U << osRtxEventFlagsLimit) - 1U)) != 0U)) {
     EvrRtxEventFlagsError(ef, (int32_t)osErrorParameter);
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return ((uint32_t)osErrorParameter);
   }
 
+#ifdef RTX_SAFETY_CLASS
+  // Check running thread safety class
+  thread = osRtxThreadGetRunning();
+  if ((thread != NULL) &&
+      ((thread->attr >> osRtxAttrClass_Pos) < (ef->attr >> osRtxAttrClass_Pos))) {
+    EvrRtxEventFlagsError(ef, (int32_t)osErrorSafetyClass);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
+    return ((uint32_t)osErrorSafetyClass);
+  }
+#endif
+
   // Clear Event Flags
   event_flags = EventFlagsClear(ef, flags);
 
   EvrRtxEventFlagsClearDone(ef, event_flags);
-  
+
   return event_flags;
 }
 
@@ -323,7 +470,7 @@ static uint32_t svcRtxEventFlagsGet (osEventFlagsId_t ef_id) {
   os_event_flags_t *ef = osRtxEventFlagsId(ef_id);
 
   // Check parameters
-  if ((ef == NULL) || (ef->id != osRtxIdEventFlags)) {
+  if (!IsEventFlagsPtrValid(ef) || (ef->id != osRtxIdEventFlags)) {
     EvrRtxEventFlagsGet(ef, 0U);
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return 0U;
@@ -342,12 +489,23 @@ static uint32_t svcRtxEventFlagsWait (osEventFlagsId_t ef_id, uint32_t flags, ui
   uint32_t          event_flags;
 
   // Check parameters
-  if ((ef == NULL) || (ef->id != osRtxIdEventFlags) ||
+  if (!IsEventFlagsPtrValid(ef) || (ef->id != osRtxIdEventFlags) ||
       ((flags & ~(((uint32_t)1U << osRtxEventFlagsLimit) - 1U)) != 0U)) {
     EvrRtxEventFlagsError(ef, (int32_t)osErrorParameter);
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return ((uint32_t)osErrorParameter);
   }
+
+#ifdef RTX_SAFETY_CLASS
+  // Check running thread safety class
+  thread = osRtxThreadGetRunning();
+  if ((thread != NULL) &&
+      ((thread->attr >> osRtxAttrClass_Pos) < (ef->attr >> osRtxAttrClass_Pos))) {
+    EvrRtxEventFlagsError(ef, (int32_t)osErrorSafetyClass);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
+    return ((uint32_t)osErrorSafetyClass);
+  }
+#endif
 
   // Check Event Flags
   event_flags = EventFlagsCheck(ef, flags, options);
@@ -384,11 +542,22 @@ static osStatus_t svcRtxEventFlagsDelete (osEventFlagsId_t ef_id) {
   os_thread_t      *thread;
 
   // Check parameters
-  if ((ef == NULL) || (ef->id != osRtxIdEventFlags)) {
+  if (!IsEventFlagsPtrValid(ef) || (ef->id != osRtxIdEventFlags)) {
     EvrRtxEventFlagsError(ef, (int32_t)osErrorParameter);
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorParameter;
   }
+
+#ifdef RTX_SAFETY_CLASS
+  // Check running thread safety class
+  thread = osRtxThreadGetRunning();
+  if ((thread != NULL) &&
+      ((thread->attr >> osRtxAttrClass_Pos) < (ef->attr >> osRtxAttrClass_Pos))) {
+    EvrRtxEventFlagsError(ef, (int32_t)osErrorSafetyClass);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
+    return osErrorSafetyClass;
+  }
+#endif
 
   // Unblock waiting threads
   if (ef->thread_list != NULL) {
@@ -399,22 +568,7 @@ static osStatus_t svcRtxEventFlagsDelete (osEventFlagsId_t ef_id) {
     osRtxThreadDispatch(NULL);
   }
 
-  // Mark object as invalid
-  ef->id = osRtxIdInvalid;
-
-  // Free object memory
-  if ((ef->flags & osRtxFlagSystemObject) != 0U) {
-    if (osRtxInfo.mpi.event_flags != NULL) {
-      (void)osRtxMemoryPoolFree(osRtxInfo.mpi.event_flags, ef);
-    } else {
-      (void)osRtxMemoryFree(osRtxInfo.mem.common, ef);
-    }
-#if (defined(OS_OBJ_MEM_USAGE) && (OS_OBJ_MEM_USAGE != 0))
-    osRtxEventFlagsMemUsage.cnt_free++;
-#endif
-  }
-
-  EvrRtxEventFlagsDestroyed(ef);
+  osRtxEventFlagsDestroy(ef);
 
   return osOK;
 }
@@ -441,7 +595,7 @@ uint32_t isrRtxEventFlagsSet (osEventFlagsId_t ef_id, uint32_t flags) {
   uint32_t          event_flags;
 
   // Check parameters
-  if ((ef == NULL) || (ef->id != osRtxIdEventFlags) ||
+  if (!IsEventFlagsPtrValid(ef) || (ef->id != osRtxIdEventFlags) ||
       ((flags & ~(((uint32_t)1U << osRtxEventFlagsLimit) - 1U)) != 0U)) {
     EvrRtxEventFlagsError(ef, (int32_t)osErrorParameter);
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
@@ -467,7 +621,7 @@ uint32_t isrRtxEventFlagsWait (osEventFlagsId_t ef_id, uint32_t flags, uint32_t 
   uint32_t          event_flags;
 
   // Check parameters
-  if ((ef == NULL) || (ef->id != osRtxIdEventFlags) || (timeout != 0U) ||
+  if (!IsEventFlagsPtrValid(ef) || (ef->id != osRtxIdEventFlags) || (timeout != 0U) ||
       ((flags & ~(((uint32_t)1U << osRtxEventFlagsLimit) - 1U)) != 0U)) {
     EvrRtxEventFlagsError(ef, (int32_t)osErrorParameter);
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
@@ -494,7 +648,7 @@ osEventFlagsId_t osEventFlagsNew (const osEventFlagsAttr_t *attr) {
   osEventFlagsId_t ef_id;
 
   EvrRtxEventFlagsNew(attr);
-  if (IsIrqMode() || IsIrqMasked()) {
+  if (IsException() || IsIrqMasked()) {
     EvrRtxEventFlagsError(NULL, (int32_t)osErrorISR);
     ef_id = NULL;
   } else {
@@ -507,11 +661,10 @@ osEventFlagsId_t osEventFlagsNew (const osEventFlagsAttr_t *attr) {
 const char *osEventFlagsGetName (osEventFlagsId_t ef_id) {
   const char *name;
 
-  if (IsIrqMode() || IsIrqMasked()) {
-    EvrRtxEventFlagsGetName(ef_id, NULL);
-    name = NULL;
+  if (IsException() || IsIrqMasked()) {
+    name = svcRtxEventFlagsGetName(ef_id);
   } else {
-    name = __svcEventFlagsGetName(ef_id);
+    name =  __svcEventFlagsGetName(ef_id);
   }
   return name;
 }
@@ -521,7 +674,7 @@ uint32_t osEventFlagsSet (osEventFlagsId_t ef_id, uint32_t flags) {
   uint32_t event_flags;
 
   EvrRtxEventFlagsSet(ef_id, flags);
-  if (IsIrqMode() || IsIrqMasked()) {
+  if (IsException() || IsIrqMasked()) {
     event_flags = isrRtxEventFlagsSet(ef_id, flags);
   } else {
     event_flags =  __svcEventFlagsSet(ef_id, flags);
@@ -534,7 +687,7 @@ uint32_t osEventFlagsClear (osEventFlagsId_t ef_id, uint32_t flags) {
   uint32_t event_flags;
 
   EvrRtxEventFlagsClear(ef_id, flags);
-  if (IsIrqMode() || IsIrqMasked()) {
+  if (IsException() || IsIrqMasked()) {
     event_flags = svcRtxEventFlagsClear(ef_id, flags);
   } else {
     event_flags =  __svcEventFlagsClear(ef_id, flags);
@@ -546,7 +699,7 @@ uint32_t osEventFlagsClear (osEventFlagsId_t ef_id, uint32_t flags) {
 uint32_t osEventFlagsGet (osEventFlagsId_t ef_id) {
   uint32_t event_flags;
 
-  if (IsIrqMode() || IsIrqMasked()) {
+  if (IsException() || IsIrqMasked()) {
     event_flags = svcRtxEventFlagsGet(ef_id);
   } else {
     event_flags =  __svcEventFlagsGet(ef_id);
@@ -559,7 +712,7 @@ uint32_t osEventFlagsWait (osEventFlagsId_t ef_id, uint32_t flags, uint32_t opti
   uint32_t event_flags;
 
   EvrRtxEventFlagsWait(ef_id, flags, options, timeout);
-  if (IsIrqMode() || IsIrqMasked()) {
+  if (IsException() || IsIrqMasked()) {
     event_flags = isrRtxEventFlagsWait(ef_id, flags, options, timeout);
   } else {
     event_flags =  __svcEventFlagsWait(ef_id, flags, options, timeout);
@@ -572,7 +725,7 @@ osStatus_t osEventFlagsDelete (osEventFlagsId_t ef_id) {
   osStatus_t status;
 
   EvrRtxEventFlagsDelete(ef_id);
-  if (IsIrqMode() || IsIrqMasked()) {
+  if (IsException() || IsIrqMasked()) {
     EvrRtxEventFlagsError(ef_id, (int32_t)osErrorISR);
     status = osErrorISR;
   } else {

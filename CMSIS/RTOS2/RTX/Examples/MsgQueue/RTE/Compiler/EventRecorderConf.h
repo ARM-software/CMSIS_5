@@ -26,7 +26,7 @@
 #define EVENT_TIMESTAMP_SOURCE  2
 
 //   <o>Time Stamp Clock Frequency [Hz] <0-1000000000>
-//   <i>Defines default time stamp clock frequency (0 when not used)
+//   <i>Defines initial time stamp clock frequency (0 when not used)
 #define EVENT_TIMESTAMP_FREQ    0U
 
 // </h>

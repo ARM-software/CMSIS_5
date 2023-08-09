@@ -9,6 +9,24 @@
       <th>Description</th>
     </tr>
     <tr>
+      <td>V2.2.0</td>
+      <td>
+        Added support for Process Isolation (Functional Safety):
+         - Kernel Management: \ref osKernelProtect, \ref osKernelDestroyClass
+         - Thread Management: \ref osThreadGetClass, \ref osThreadGetZone,<br>
+           \ref osThreadSuspendClass, \ref osThreadResumeClass, \ref osThreadTerminateZone,<br>
+           \ref osThreadFeedWatchdog, \ref osThreadProtectPrivileged
+         - Thread attributes: \ref osThreadZone, \ref osThreadUnprivileged, \ref osThreadPrivileged
+         - Object attributes: \ref osSafetyClass
+         - Handler functions: \ref osWatchdogAlarm_Handler
+         - Zone Management: \ref osZoneSetup_Callback
+         - Exception Faults: \ref osFaultResume
+
+        Additional functions allowed to be called from Interrupt Service Routines:
+         - \ref osThreadGetName, \ref osEventFlagsGetName, \ref osTimerGetName, \ref osMutexGetName, \ref osSemaphoreGetName, \ref osMemoryPoolGetName, \ref osMessageQueueGetName
+      </td>
+    </tr>
+    <tr>
       <td>V2.1.3</td>
       <td>
         Additional functions allowed to be called from Interrupt Service Routines:
@@ -38,7 +56,7 @@
         Support for critical and uncritical sections (nesting safe):
          - updated: \ref osKernelLock, \ref osKernelUnlock
          - added: \ref osKernelRestoreLock
-         
+
         Updated \ref CMSIS_RTOS_ThreadFlagsMgmt "Thread Flags" and \ref CMSIS_RTOS_EventFlags "Event Flags":
          - changed flags parameter and return type from int32_t to uint32_t
      </td>
@@ -97,6 +115,47 @@
     <tr>
       <th>Version</th>
       <th>Description</th>
+    </tr>
+    <tr>
+      <td>V5.7.0</td>
+      <td>
+       - Based on CMSIS-RTOS API V2.2.0.
+       - Added support for Process Isolation: MPU Protected Zones, Safety Classes, Thread Watchdogs.
+       - Reduced component variants: Library (Library_NS replacement), Source (Source_NS replacement).
+      </td>
+    </tr>
+    <tr>
+      <td>V5.5.5</td>
+      <td>
+       - Added de-allocation of Arm C library thread data (libspace) when thread is terminated.
+       - Updated SysTick implementation for OS Tick (initial count value).
+       - Added Thread Entry wrapper (compatible with GDB stack unwind).
+      </td>
+    </tr>
+    <tr>
+      <td>V5.5.4</td>
+      <td>
+       - Fixed potential register R1 corruption when calling OS functions from threads multiple times with same arguments (when using high level compiler optimizations).
+       - Fixed timer interval when periodic timer is restarted.
+       - Added Floating-point initialization for Arm C Library.
+       - Minor code optimizations in osMessageQueuePut/Get.
+      </td>
+    </tr>
+    <tr>
+      <td>V5.5.3</td>
+      <td>
+       - CVE-2021-27431 vulnerability mitigation.
+       - Added OS Initialization for IAR.
+       - Fixed osDelay/osDelayUntil error handling.
+       - Fixed Round-Robin (timeout value is not reset when switching to higher priority threads).
+       - Fixed osThreadJoin (when terminating thread which is waiting to be joined).
+       - Fixed Message Queue Data allocation size when using object specific memory allocation.
+       - Fixed Mutex priority inversion (when mixing mutexes with and without priority inherit).
+       - Enhanced stack overrun checking.
+       - Updated osKernelResume handling (processing past sleep ticks).
+       - Updated configuration (Event Recorder).
+       - Reorganized and optimized IRQ modules.
+      </td>
     </tr>
     <tr>
       <td>V5.5.2</td>

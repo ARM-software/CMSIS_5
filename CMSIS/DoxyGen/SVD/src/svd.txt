@@ -72,6 +72,21 @@ version 1.0.
   <th>Description</th>
 </tr>
 <tr>
+  <td>V1.3.9</td>
+  <td> 
+       - Added CM85 as enumeration value for \ref elem_cpu_sc "cpuNameType".</td>
+</tr>
+<tr>
+  <td>V1.3.8</td>
+  <td> 
+       - Added SMC1 as enumeration value for \ref elem_cpu_sc "cpuNameType".</td>
+</tr>
+<tr>
+  <td>V1.3.7</td>
+  <td> 
+       - Added CM55 as enumeration value for \ref elem_cpu_sc "cpuNameType".</td>
+</tr>
+<tr>
   <td>V1.3.6</td>
   <td> 
        - Added ARMV81MML as enumeration value for \ref elem_cpu_sc "cpuNameType".</td>
@@ -182,7 +197,7 @@ CMSIS-SVD files can be used to generate:
   to use the latest versions of the CMSIS-SVD files.
   \n \n
   <b>Generated Debug Dialog:</b>
-  \image html "SystemViewer_Generated.png" "uVision Debug Window generated from ARM_Example.svd"
+  \image html "SystemViewer_Generated.PNG" "uVision Debug Window generated from ARM_Example.svd"
 \n 
 
 */

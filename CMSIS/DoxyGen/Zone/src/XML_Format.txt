@@ -175,7 +175,7 @@ The \ref xml_rzone_pg element is the root element of the .rzone file which descr
   <tr>
     <td>xmlns:xs</td>
     <td>Is set to: \token{"http://www.w3.org/2001/XMLSchema-instance"} to indicate compliance to the XML format.</td>
-    <td>xs:decimal</td>
+    <td>xs:string</td>
     <td>required</td>
   </tr>
   <tr>
@@ -636,7 +636,7 @@ Some memory region or MPC might restrict the availability to specific processors
     <memory name="Flash_S"    start="0x0c000000" physical="0x08001000" size="0x00080000" access="rx"  security="c" type="ROM" info="Flash Memory (secure)"                     />
 
     <memory name="SRAM1_C_NS" start="0x0A000000"                       size="0x00030000" access="rwx" security=""  type="RAM" info="SRAM1 Code (non secure)"   />
-    <memory name="SRAM1_C_S"  start="0x0E000000" physical="0x0A000000" size="0x00030000" access="rwx" security="c" type="RAM" info="SRAM1 Code (secure)"       />
+    <memory name="SRAM1_C_S"  start="0x0E000000" physical="0x0A000000" size="0x00030000" access="rwx" security="c" type="RAM" info="SRAM1 Code (secure)" linker_control="*sram1" />
     <memory name="SRAM1_S"    start="0x30000000" physical="0x0A000000" size="0x00030000" access="rw"  security="s" type="RAM" info="SRAM1 (secure)"            />
     <memory name="SRAM1_NS"   start="0x20000000" physical="0x0A000000" size="0x00030000" access="rw"  security=""  type="RAM" info="SRAM1 (non secure)"        />
 
@@ -785,6 +785,12 @@ The \ref xml_rmemory lists a logical memory region with physical mapping. Memory
     <td>xs:string</td>
     <td>optional</td>
   </tr>  
+  <tr>
+    <td>linker_control</td>
+    <td>Linker control settings for the memory region.</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>  
 </table>
 
 
@@ -844,7 +850,7 @@ The MPC region must not necessarily overlap a physical memory space which means 
   </tr>
   <tr>
     <td>info</td>
-    <td>Brief description of the memory region.</td>
+    <td>Brief description of the MPC region.</td>
     <td>xs:string</td>
     <td>optional</td>
   </tr>  
@@ -1367,7 +1373,7 @@ The \ref xml_azone_pg element is the root element of the .azone file which store
   <tr>
     <td>xmlns:xs</td>
     <td>Is set to: \token{"http://www.w3.org/2001/XMLSchema-instance"} to indicate compliance to the XML format.</td>
-    <td>xs:decimal</td>
+    <td>xs:string</td>
     <td>required</td>
   </tr>
   <tr>
@@ -1682,6 +1688,12 @@ The \ref xml_amemory defines a new memory sub-region that is related to a parent
     <td>xs:string</td>
     <td>optional</td>
   </tr>  
+  <tr>
+    <td>linker_control</td>
+    <td>Linker control settings for the memory region.</td>
+    <td>xs:string</td>
+    <td>optional</td>
+  </tr>  
 </table>
 
 \section xml_aperipheral /azone/partition/peripheral element
@@ -1908,6 +1920,12 @@ The \ref xml_zone defines the name of a zone.
     <td>privilege</td>
     <td>\ref privilege "Privilege level" for code execution in this zone.</td>
     <td>\ref privilege "PrivilegeType"</td>
+    <td>optional</td>
+  </tr>
+  <tr>
+    <td>class</td>
+    <td>Class information for execution zones.</td>
+    <td>xs:string</td>
     <td>optional</td>
   </tr>
   <tr>
