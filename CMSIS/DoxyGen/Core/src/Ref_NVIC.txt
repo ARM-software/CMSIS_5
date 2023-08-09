@@ -124,7 +124,7 @@ and SC300
       <td><img src="check.png" alt="available"></td>
       <td><img src="check.png" alt="available"></td>
 \endif
-      <td>SV Call Interrupt </td>
+      <td>SVC Interrupt </td>
     </tr>
     <tr>
       <td><b>DebugMonitor_IRQn</b></td>
@@ -203,7 +203,7 @@ __Vectors       DCD     __initial_sp              ; Top of Stack initialization
                 DCD     0                         ; Reserved
                 DCD     0                         ; Reserved
                 DCD     0                         ; Reserved
-                DCD     SVC_Handler               ; SVCall Handler
+                DCD     SVC_Handler               ; SVC Handler
                 DCD     DebugMon_Handler          ; Debug Monitor Handler
                 DCD     0                         ; Reserved
                 DCD     PendSV_Handler            ; PendSV Handler
@@ -392,7 +392,7 @@ typedef enum IRQn
 \if ARMv8M  
   SecureFault_IRQn         = -9,       ///<  Exception 7: Secure Fault Interrupt [only on Armv8-M]
 \endif  
-  SVCall_IRQn              = -5,       ///<  Exception 11: SV Call Interrupt
+  SVCall_IRQn              = -5,       ///<  Exception 11: SVC Interrupt
   DebugMonitor_IRQn        = -4,       ///<  Exception 12: Debug Monitor Interrupt [not on Cortex-M0 variants]
   PendSV_IRQn              = -2,       ///<  Exception 14: Pend SV Interrupt [not on Cortex-M0 variants]
   SysTick_IRQn             = -1,       ///<  Exception 15: System Tick Interrupt

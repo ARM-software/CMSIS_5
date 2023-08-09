@@ -71,8 +71,12 @@ LR_ROM __RO_BASE __RO_SIZE  {                       ; load region size_region
    .ANY (+XO)
   }
 
-  RW_RAM __RW_BASE __RW_SIZE  {                     ; RW data
-   .ANY (+RW +ZI)
+  RW_NOINIT __RW_BASE UNINIT __RW_SIZE {
+    *(.bss.noinit)
+  }
+
+  RW_RAM AlignExpr(+0, 8) (__RW_SIZE - AlignExpr(ImageLength(RW_NOINIT), 8)) {
+    *(+RW +ZI)
   }
 
 #if __RAM_EVR_SIZE > 0

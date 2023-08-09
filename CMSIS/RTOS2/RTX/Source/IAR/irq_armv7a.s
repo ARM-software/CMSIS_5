@@ -1,5 +1,5 @@
 ;/*
-; * Copyright (c) 2013-2021 Arm Limited. All rights reserved.
+; * Copyright (c) 2013-2023 Arm Limited. All rights reserved.
 ; *
 ; * SPDX-License-Identifier: Apache-2.0
 ; *
@@ -23,8 +23,11 @@
 ; * -----------------------------------------------------------------------------
 ; */
 
+
                 NAME     irq_armv7a.s
 
+
+                #include "rtx_def.h"
 
 MODE_FIQ        EQU      0x11
 MODE_IRQ        EQU      0x12
@@ -40,6 +43,7 @@ I_TICK_IRQN_OFS EQU      16                         ; osRtxInfo.tick_irqn offset
 I_T_RUN_OFS     EQU      20                         ; osRtxInfo.thread.run offset
 TCB_SP_FRAME    EQU      34                         ; osRtxThread_t.stack_frame offset
 TCB_SP_OFS      EQU      56                         ; osRtxThread_t.sp offset
+TCB_ZONE_OFS    EQU      68                         ; osRtxThread_t.zone offset
 
 
                 PRESERVE8
@@ -51,8 +55,10 @@ irqRtxLib       DCB      0                          ; Non weak library reference
 
 
                 SECTION .data:DATA:NOROOT(2)
+                EXPORT   SVC_Active
                 EXPORT   IRQ_PendSV
 IRQ_NestLevel   DCD      0                          ; IRQ nesting level counter
+SVC_Active      DCB      0                          ; SVC Handler Active
 IRQ_PendSV      DCB      0                          ; Pending SVC flag
 
 
@@ -229,7 +235,11 @@ SVC_Handler
                 CMP     R12, #0                     ; Compare SVC number
                 BNE     SVC_User                    ; Branch if User SVC
 
-                PUSH    {R0-R3}
+                PUSH    {R0-R3}                     ; Push arguments to stack
+
+                LDR     R0, =SVC_Active
+                MOV     R1, #1
+                STRB    R1, [R0]                    ; Set SVC Handler Active
 
                 LDR     R0, =IRQ_NestLevel
                 LDR     R1, [R0]
@@ -243,20 +253,13 @@ SVC_Handler
                 LDR     R0, [R0, #I_TICK_IRQN_OFS]  ; Load OS Tick irqn
                 BLX     IRQ_Disable                 ; Disable OS Tick interrupt
 SVC_FuncCall
-                POP     {R0-R3}
-
-                LDR     R12, [SP]                   ; Reload R12 from stack
+                LDM     SP, {R0-R3, R12}            ; Reload R0-R3 and R12 from stack
 
                 CPSIE   i                           ; Re-enable interrupts
                 BLX     R12                         ; Branch to SVC function
                 CPSID   i                           ; Disable interrupts
 
-                SUB     SP, SP, #4
-                STM     SP, {SP}^                   ; Store SP_usr onto stack
-                POP     {R12}                       ; Pop SP_usr into R12
-                SUB     R12, R12, #16               ; Adjust pointer to SP_usr
-                LDMDB   R12, {R2,R3}                ; Load return values from SVC function
-                PUSH    {R0-R3}                     ; Push return values to stack
+                STR     R0, [SP]                    ; Store function return value
 
                 LDR     R0, =osRtxInfo
                 LDR     R1, [R0, #I_K_STATE_OFS]    ; Load RTX5 kernel state
@@ -272,6 +275,10 @@ SVC_ContextCheck
                 LDR     R1, [R0]
                 SUB     R1, R1, #1                  ; Decrement IRQ nesting level
                 STR     R1, [R0]
+
+                LDR     R0, =SVC_Active
+                MOV     R1, #0
+                STRB    R1, [R0]                    ; Clear SVC Handler Active
 
                 CLREX                               ; Clear exclusive monitor
                 POP     {R0-R3, R12, LR}            ; Restore stacked APCS registers
@@ -295,6 +302,9 @@ osRtxContextSwitch
                 EXPORT  osRtxContextSwitch
                 IMPORT  osRtxPendSV_Handler
                 IMPORT  osRtxInfo
+            #ifdef RTX_EXECUTION_ZONE
+                IMPORT  osZoneSetup_Callback
+            #endif
                 IMPORT  IRQ_Disable
                 IMPORT  IRQ_Enable
 
@@ -318,8 +328,8 @@ osRtxContextSwitch
 
 osRtxContextCheck
                 STR     R1, [R12]                   ; Store run.next as run.curr
-                ; R0 = curr, R1 = next, R2 = &IRQ_PendSV, R3 = IRQ_PendSV, R12 = &osRtxInfo.thread.run
-                PUSH    {R1-R3, R12}
+                ; R0 = curr, R1 = next, R2 = &IRQ_PendSV, R12 = &osRtxInfo.thread.run
+                PUSH    {R0-R2, R12}
 
                 CMP     R0, #0                      ; Is osRtxInfo.thread.run.curr == 0
                 BEQ     osRtxPostProcess            ; Current deleted, skip context save
@@ -338,8 +348,8 @@ osRtxContextSave
                 STMIA   R1!, {R4-R8}                ; Store them to user stack
                 STM     R1, {LR}^                   ; Store LR_usr directly
                 ADD     R1, R1, #4                  ; Adjust user sp to PC
-                LDMIB   R0!, {R5-R6}                ; Load current PC, CPSR
-                STMIA   R1!, {R5-R6}                ; Restore user PC and CPSR
+                LDMIB   R0!, {R5-R6}                ; Load stacked PC, CPSR
+                STMIA   R1!, {R5-R6}                ; Store them to user stack
 
                 SUB     R1, R1, #64                 ; Adjust SP_usr to stacked R4
 
@@ -370,8 +380,9 @@ osRtxContextSave1
 
 osRtxPostProcess
                 ; RTX IRQ post processing check
-                POP     {R8-R11}                    ; Pop R8 = run.next, R9 = &IRQ_PendSV, R10 = IRQ_PendSV, R11 = &osRtxInfo.thread.run
-                CMP     R10, #1                     ; Compare PendSV value
+                POP     {R8-R11}                    ; Pop R8 = curr, R9 = next, R10 = &IRQ_PendSV, R11 = &osRtxInfo.thread.run
+                LDRB    R0, [R10]                   ; Load PendSV flag
+                CMP     R0, #1                      ; Compare PendSV value
                 BNE     osRtxContextRestore         ; Skip post processing if not pending
 
                 MOV     R4, SP                      ; Move SP_svc into R4
@@ -386,14 +397,14 @@ osRtxPostProcess
                 MOV     R6, #0                      ; Set PendSV clear value
                 B       osRtxPendCheck
 osRtxPendExec
-                STRB    R6, [R9]                    ; Clear PendSV flag
+                STRB    R6, [R10]                   ; Clear PendSV flag
                 CPSIE   i                           ; Re-enable interrupts
                 BLX     osRtxPendSV_Handler         ; Post process pending objects
                 CPSID   i                           ; Disable interrupts
 osRtxPendCheck
-                LDR     R8, [R11, #4]               ; Load osRtxInfo.thread.run.next
-                STR     R8, [R11]                   ; Store run.next as run.curr
-                LDRB    R0, [R9]                    ; Load PendSV flag
+                LDR     R9, [R11, #4]               ; Load osRtxInfo.thread.run.next
+                STR     R9, [R11]                   ; Store run.next as run.curr
+                LDRB    R0, [R10]                   ; Load PendSV flag
                 CMP     R0, #1                      ; Compare PendSV value
                 BEQ     osRtxPendExec               ; Branch to PendExec if PendSV is set
 
@@ -404,6 +415,18 @@ osRtxPendCheck
                 ADD     SP, SP, R4                  ; Restore stack adjustment
 
 osRtxContextRestore
+            #ifdef RTX_EXECUTION_ZONE
+                LDRB    R0, [R9, #TCB_ZONE_OFS]     ; Load osRtxInfo.thread.run.next: zone
+                CMP     R8, #0
+                BEQ     osRtxZoneSetup              ; Branch if running thread is deleted
+                LDRB    R1, [R8, #TCB_ZONE_OFS]     ; Load osRtxInfo.thread.run.curr: zone
+                CMP     R0, R1                      ; Check if next:zone == curr:zone
+                BEQ     osRtxContextRestoreFrame    ; Branch if zone has not changed
+osRtxZoneSetup
+                BL      osZoneSetup_Callback        ; Setup zone for next thread
+            #endif
+
+osRtxContextRestoreFrame
                 LDR     LR, [R8, #TCB_SP_OFS]       ; Load next osRtxThread_t.sp
                 LDRB    R2, [R8, #TCB_SP_FRAME]     ; Load next osRtxThread_t.stack_frame
 

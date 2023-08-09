@@ -1,5 +1,5 @@
 ;/*
-; * Copyright (c) 2013-2021 Arm Limited. All rights reserved.
+; * Copyright (c) 2013-2023 Arm Limited. All rights reserved.
 ; *
 ; * SPDX-License-Identifier: Apache-2.0
 ; *
@@ -31,9 +31,11 @@
 
 I_T_RUN_OFS     EQU      20                     ; osRtxInfo.thread.run offset
 TCB_SP_OFS      EQU      56                     ; TCB.SP offset
+TCB_ZONE_OFS    EQU      68                     ; TCB.zone offset
 
 osRtxErrorStackOverflow\
                 EQU      1                      ; Stack overflow
+osRtxErrorSVC   EQU      6                      ; Invalid SVC function called
 
 
                 PRESERVE8
@@ -56,6 +58,14 @@ SVC_Handler
                 IMPORT   osRtxThreadStackCheck
                 IMPORT   osRtxKernelErrorNotify
             #endif
+            #ifdef RTX_SVC_PTR_CHECK
+                IMPORT   |Image$$RTX_SVC_VENEERS$$Base|
+                IMPORT   |Image$$RTX_SVC_VENEERS$$Length|
+                IMPORT   osRtxKernelErrorNotify
+            #endif
+            #ifdef RTX_EXECUTION_ZONE
+                IMPORT   osZoneSetup_Callback
+            #endif
 
                 MOV      R0,LR
                 LSRS     R0,R0,#3               ; Determine return stack from EXC_RETURN bit 2
@@ -69,11 +79,35 @@ SVC_Number
                 CMP      R1,#0                  ; Check SVC number
                 BNE      SVC_User               ; Branch if not SVC 0
 
+            #ifdef RTX_SVC_PTR_CHECK
+
+                SUBS     R1,R7,#0x01            ; Clear T-bit of function address
+                LSLS     R2,R1,#29              ; Check if 8-byte aligned
+                BEQ      SVC_PtrBoundsCheck     ; Branch if address is aligned
+
+SVC_PtrInvalid
+                PUSH     {R0,LR}                ; Save SP and EXC_RETURN
+                MOVS     R0,#osRtxErrorSVC      ; Parameter: code
+                MOV      R1,R7                  ; Parameter: object_id
+                BL       osRtxKernelErrorNotify ; Call osRtxKernelErrorNotify
+                POP      {R2,R3}                ; Restore SP and EXC_RETURN
+                MOV      LR,R3                  ; Set EXC_RETURN
+                B        SVC_Context            ; Branch to context handling
+
+SVC_PtrBoundsCheck
+                LDR      R2,=|Image$$RTX_SVC_VENEERS$$Base|
+                LDR      R3,=|Image$$RTX_SVC_VENEERS$$Length|
+                SUBS     R2,R1,R2               ; Subtract SVC table base address
+                CMP      R2,R3                  ; Compare with SVC table boundaries
+                BHS      SVC_PtrInvalid         ; Branch if address is out of bounds
+
+              #endif
+
                 PUSH     {R0,LR}                ; Save SP and EXC_RETURN
                 LDMIA    R0,{R0-R3}             ; Load function parameters from stack
                 BLX      R7                     ; Call service function
                 POP      {R2,R3}                ; Restore SP and EXC_RETURN
-                STMIA    R2!,{R0-R1}            ; Store function return values
+                STR      R0,[R2]                ; Store function return value
                 MOV      LR,R3                  ; Set EXC_RETURN
 
 SVC_Context
@@ -106,6 +140,7 @@ SVC_ContextSave
                 LDR      R3,=osRtxInfo+I_T_RUN_OFS   ; Load address of osRtxInfo.thread.run
                 LDR      R2,[R3,#4]             ; Load osRtxInfo.thread.run: next
                 STR      R2,[R3]                ; osRtxInfo.thread.run: curr = next
+                MOVS     R1,#0                  ; Simulate deleted running thread
                 B        SVC_ContextRestore     ; Branch to context restore handling
 
 SVC_ContextSaveRegs
@@ -121,7 +156,22 @@ SVC_ContextSaveRegs
                 STMIA    R0!,{R4-R7}            ; Save R8..R11
 
 SVC_ContextRestore
-                LDR      R0,[R2,#TCB_SP_OFS]    ; Load SP
+                 MOVS     R4,R2                 ; Assign osRtxInfo.thread.run.next to R4
+            #ifdef RTX_EXECUTION_ZONE
+                 MOVS     R3,#TCB_ZONE_OFS      ; Get TCB.zone offset
+                 LDRB     R0,[R2,R3]            ; Load osRtxInfo.thread.run.next: zone
+                 CMP      R1,#0
+                 BEQ      SVC_ZoneSetup         ; Branch if running thread is deleted
+                 LDRB     R1,[R1,R3]            ; Load osRtxInfo.thread.run.curr: zone
+                 CMP      R0,R1                 ; Check if next:zone == curr:zone
+                 BEQ      SVC_ContextRestore_N  ; Branch if zone has not changed
+
+SVC_ZoneSetup
+                 BL     osZoneSetup_Callback    ;  Setup zone for next thread
+            #endif
+
+SVC_ContextRestore_N
+                LDR      R0,[R4,#TCB_SP_OFS]    ; Load SP
                 ADDS     R0,R0,#16              ; Adjust address
                 LDMIA    R0!,{R4-R7}            ; Restore R8..R11
                 MOV      R8,R4
@@ -157,9 +207,8 @@ SVC_User
                 BLX      R12                    ; Call service function
                 POP      {R2,R3}                ; Restore SP and EXC_RETURN
                 STR      R0,[R2]                ; Store function return value
-                MOV      LR,R3                  ; Set EXC_RETURN
 
-                BX       LR                     ; Return from handler
+                BX       R3                     ; Return from handler
 
 
 PendSV_Handler
@@ -182,6 +231,19 @@ SysTick_Handler
                 POP      {R0,R1}                ; Restore EXC_RETURN
                 MOV      LR,R1                  ; Set EXC_RETURN
                 B        SVC_Context            ; Branch to context handling
+
+
+            #ifdef RTX_SAFETY_FEATURES
+
+osFaultResume   PROC
+                EXPORT   osFaultResume
+
+                B        SVC_Context            ; Branch to context handling
+
+                ALIGN
+                ENDP
+
+            #endif
 
 
                 END

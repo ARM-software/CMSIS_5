@@ -10,14 +10,14 @@
       <TargetName>FVP Simulation Model</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6160000::V6.16::ARMCLANG</pCCUsed>
+      <pCCUsed>6190000::V6.19::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>ARMCM33_DSP_FP_TZ</Device>
           <Vendor>ARM</Vendor>
-          <PackID>ARM.CMSIS.5.8.0</PackID>
-          <PackURL>http://www.keil.com/pack/</PackURL>
+          <PackID>ARM.CMSIS.5.9.0</PackID>
+          <PackURL>https://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x00020000) IRAM2(0x20200000,0x00020000) IROM(0x00000000,0x00200000) IROM2(0x00200000,0x00200000) CPUTYPE("Cortex-M33") FPU3(SFPU) DSP TZ CLOCK(12000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
@@ -186,6 +186,7 @@
             <RvdsVP>2</RvdsVP>
             <RvdsMve>0</RvdsMve>
             <RvdsCdeCp>0</RvdsCdeCp>
+            <nBranchProt>0</nBranchProt>
             <hadIRAM2>1</hadIRAM2>
             <hadIROM2>1</hadIROM2>
             <StupSel>8</StupSel>
@@ -437,10 +438,10 @@
       </component>
     </components>
     <files>
-      <file attr="config" category="linkerScript" condition="TZ Secure ARMCC6" name="Device\ARM\ARMCM33\Source\ARM\ARMCM33_ac6_s.sct" version="1.1.0">
+      <file attr="config" category="linkerScript" condition="Startup ARMCC6 Secure" name="Device\ARM\ARMCM33\Source\ARM\ARMCM33_ac6_s.sct" version="1.1.0">
         <instance index="0">RTE\Device\ARMCM33_DSP_FP_TZ\ARMCM33_ac6_s.sct</instance>
         <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cvendor="ARM" Cversion="2.1.0" condition="ARMCM33 CMSIS" isDefaultVariant="1"/>
-        <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.8.0"/>
+        <package name="CMSIS" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="5.9.0"/>
         <targetInfos>
           <targetInfo name="FVP Simulation Model"/>
         </targetInfos>
@@ -448,7 +449,7 @@
       <file attr="config" category="header" condition="TZ Secure" name="Device\ARM\ARMCM33\Include\Template\partition_ARMCM33.h" version="1.1.1">
         <instance index="0">RTE\Device\ARMCM33_DSP_FP_TZ\partition_ARMCM33.h</instance>
         <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cvendor="ARM" Cversion="2.1.0" condition="ARMCM33 CMSIS" isDefaultVariant="1"/>
-        <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.8.0"/>
+        <package name="CMSIS" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="5.9.0"/>
         <targetInfos>
           <targetInfo name="FVP Simulation Model"/>
         </targetInfos>
@@ -456,7 +457,7 @@
       <file attr="config" category="sourceC" name="Device\ARM\ARMCM33\Source\startup_ARMCM33.c" version="2.1.0">
         <instance index="0">RTE\Device\ARMCM33_DSP_FP_TZ\startup_ARMCM33.c</instance>
         <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cvendor="ARM" Cversion="2.1.0" condition="ARMCM33 CMSIS" isDefaultVariant="1"/>
-        <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.8.0"/>
+        <package name="CMSIS" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="5.9.0"/>
         <targetInfos>
           <targetInfo name="FVP Simulation Model"/>
         </targetInfos>
@@ -464,7 +465,7 @@
       <file attr="config" category="sourceC" name="Device\ARM\ARMCM33\Source\system_ARMCM33.c" version="1.0.1">
         <instance index="0">RTE\Device\ARMCM33_DSP_FP_TZ\system_ARMCM33.c</instance>
         <component Cclass="Device" Cgroup="Startup" Cvariant="C Startup" Cvendor="ARM" Cversion="2.1.0" condition="ARMCM33 CMSIS" isDefaultVariant="1"/>
-        <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.8.0"/>
+        <package name="CMSIS" schemaVersion="1.7.7" url="https://www.keil.com/pack/" vendor="ARM" version="5.9.0"/>
         <targetInfos>
           <targetInfo name="FVP Simulation Model"/>
         </targetInfos>

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 Arm Limited. All rights reserved.
+ * Copyright (c) 2013-2023 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -32,6 +32,38 @@ osRtxObjectMemUsage_t osRtxMemoryPoolMemUsage \
 __attribute__((section(".data.os.mempool.obj"))) =
 { 0U, 0U, 0U };
 #endif
+
+
+//  ==== Helper functions ====
+
+/// Verify that Memory Pool object pointer is valid.
+/// \param[in]  mp              memory pool object.
+/// \return true - valid, false - invalid.
+static bool_t IsMemoryPoolPtrValid (const os_memory_pool_t *mp) {
+#ifdef RTX_OBJ_PTR_CHECK
+  //lint --e{923} --e{9078} "cast from pointer to unsigned int" [MISRA Note 7]
+  uint32_t cb_start  = (uint32_t)&__os_mempool_cb_start__;
+  uint32_t cb_length = (uint32_t)&__os_mempool_cb_length__;
+
+  // Check the section boundaries
+  if (((uint32_t)mp - cb_start) >= cb_length) {
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
+    return FALSE;
+  }
+  // Check the object alignment
+  if ((((uint32_t)mp - cb_start) % sizeof(os_memory_pool_t)) != 0U) {
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
+    return FALSE;
+  }
+#else
+  // Check NULL pointer
+  if (mp == NULL) {
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
+    return FALSE;
+  }
+#endif
+  return TRUE;
+}
 
 
 //  ==== Library functions ====
@@ -152,6 +184,67 @@ osStatus_t osRtxMemoryPoolFree (os_mp_info_t *mp_info, void *block) {
   return osOK;
 }
 
+/// Destroy a Memory Pool object.
+/// \param[in]  mp              memory pool object.
+static void osRtxMemoryPoolDestroy (os_memory_pool_t *mp) {
+
+  // Mark object as invalid
+  mp->id = osRtxIdInvalid;
+
+  // Free data memory
+  if ((mp->flags & osRtxFlagSystemMemory) != 0U) {
+    (void)osRtxMemoryFree(osRtxInfo.mem.mp_data, mp->mp_info.block_base);
+  }
+
+  // Free object memory
+  if ((mp->flags & osRtxFlagSystemObject) != 0U) {
+#ifdef RTX_OBJ_PTR_CHECK
+    (void)osRtxMemoryPoolFree(osRtxInfo.mpi.memory_pool, mp);
+#else
+    if (osRtxInfo.mpi.memory_pool != NULL) {
+      (void)osRtxMemoryPoolFree(osRtxInfo.mpi.memory_pool, mp);
+    } else {
+      (void)osRtxMemoryFree(osRtxInfo.mem.common, mp);
+    }
+#endif
+#ifdef RTX_OBJ_MEM_USAGE
+    osRtxMemoryPoolMemUsage.cnt_free++;
+#endif
+  }
+
+  EvrRtxMemoryPoolDestroyed(mp);
+}
+
+#ifdef RTX_SAFETY_CLASS
+/// Delete a Memory Pool safety class.
+/// \param[in]  safety_class    safety class.
+/// \param[in]  mode            safety mode.
+void osRtxMemoryPoolDeleteClass  (uint32_t safety_class, uint32_t mode) {
+  os_memory_pool_t *mp;
+  os_thread_t      *thread;
+  uint32_t          length;
+
+  //lint --e{923} --e{9078} "cast from pointer to unsigned int" [MISRA Note 7]
+  mp     = (os_memory_pool_t *)(uint32_t)&__os_mempool_cb_start__;
+  length =                     (uint32_t)&__os_mempool_cb_length__;
+  while (length >= sizeof(os_memory_pool_t)) {
+    if (   (mp->id == osRtxIdMemoryPool) &&
+        ((((mode & osSafetyWithSameClass)  != 0U) &&
+          ((mp->attr >> osRtxAttrClass_Pos) == (uint8_t)safety_class)) ||
+         (((mode & osSafetyWithLowerClass) != 0U) &&
+          ((mp->attr >> osRtxAttrClass_Pos) <  (uint8_t)safety_class)))) {
+      while (mp->thread_list != NULL) {
+        thread = osRtxThreadListGet(osRtxObject(mp));
+        osRtxThreadWaitExit(thread, (uint32_t)osErrorResource, FALSE);
+      }
+      osRtxMemoryPoolDestroy(mp);
+    }
+    length -= sizeof(os_memory_pool_t);
+    mp++;
+  }
+}
+#endif
+
 
 //  ==== Post ISR processing ====
 
@@ -181,14 +274,18 @@ static void osRtxMemoryPoolPostProcess (os_memory_pool_t *mp) {
 /// Create and Initialize a Memory Pool object.
 /// \note API identical to osMemoryPoolNew
 static osMemoryPoolId_t svcRtxMemoryPoolNew (uint32_t block_count, uint32_t block_size, const osMemoryPoolAttr_t *attr) {
-  os_memory_pool_t *mp;
-  void             *mp_mem;
-  uint32_t          mp_size;
-  uint32_t          b_count;
-  uint32_t          b_size;
-  uint32_t          size;
-  uint8_t           flags;
-  const char       *name;
+  os_memory_pool_t  *mp;
+#ifdef RTX_SAFETY_CLASS
+  const os_thread_t *thread = osRtxThreadGetRunning();
+  uint32_t           attr_bits;
+#endif
+  void              *mp_mem;
+  uint32_t           mp_size;
+  uint32_t           b_count;
+  uint32_t           b_size;
+  uint32_t           size;
+  uint8_t            flags;
+  const char        *name;
 
   // Check parameters
   if ((block_count == 0U) || (block_size == 0U) ||
@@ -204,15 +301,28 @@ static osMemoryPoolId_t svcRtxMemoryPoolNew (uint32_t block_count, uint32_t bloc
 
   // Process attributes
   if (attr != NULL) {
-    name    = attr->name;
+    name      = attr->name;
+#ifdef RTX_SAFETY_CLASS
+    attr_bits = attr->attr_bits;
+#endif
     //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 6]
-    mp      = attr->cb_mem;
+    mp        = attr->cb_mem;
     //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 6]
-    mp_mem  = attr->mp_mem;
-    mp_size = attr->mp_size;
+    mp_mem    = attr->mp_mem;
+    mp_size   = attr->mp_size;
+#ifdef RTX_SAFETY_CLASS
+    if ((attr_bits & osSafetyClass_Valid) != 0U) {
+      if ((thread != NULL) &&
+          ((thread->attr >> osRtxAttrClass_Pos) <
+          (uint8_t)((attr_bits & osSafetyClass_Msk) >> osSafetyClass_Pos))) {
+        EvrRtxMemoryPoolError(NULL, (int32_t)osErrorSafetyClass);
+        //lint -e{904} "Return statement before end of function" [MISRA Note 1]
+        return NULL;
+      }
+    }
+#endif
     if (mp != NULL) {
-      //lint -e(923) -e(9078) "cast from pointer to unsigned int" [MISRA Note 7]
-      if ((((uint32_t)mp & 3U) != 0U) || (attr->cb_size < sizeof(os_memory_pool_t))) {
+      if (!IsMemoryPoolPtrValid(mp) || (attr->cb_size != sizeof(os_memory_pool_t))) {
         EvrRtxMemoryPoolError(NULL, osRtxErrorInvalidControlBlock);
         //lint -e{904} "Return statement before end of function" [MISRA Note 1]
         return NULL;
@@ -239,9 +349,12 @@ static osMemoryPoolId_t svcRtxMemoryPoolNew (uint32_t block_count, uint32_t bloc
       }
     }
   } else {
-    name   = NULL;
-    mp     = NULL;
-    mp_mem = NULL;
+    name      = NULL;
+#ifdef RTX_SAFETY_CLASS
+    attr_bits = 0U;
+#endif
+    mp        = NULL;
+    mp_mem    = NULL;
   }
 
   // Allocate object memory if not provided
@@ -249,9 +362,11 @@ static osMemoryPoolId_t svcRtxMemoryPoolNew (uint32_t block_count, uint32_t bloc
     if (osRtxInfo.mpi.memory_pool != NULL) {
       //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 5]
       mp = osRtxMemoryPoolAlloc(osRtxInfo.mpi.memory_pool);
+#ifndef RTX_OBJ_PTR_CHECK
     } else {
       //lint -e{9079} "conversion from pointer to void to pointer to other type" [MISRA Note 5]
       mp = osRtxMemoryAlloc(osRtxInfo.mem.common, sizeof(os_memory_pool_t), 1U);
+#endif
     }
 #ifdef RTX_OBJ_MEM_USAGE
     if (mp != NULL) {
@@ -274,11 +389,15 @@ static osMemoryPoolId_t svcRtxMemoryPoolNew (uint32_t block_count, uint32_t bloc
     mp_mem = osRtxMemoryAlloc(osRtxInfo.mem.mp_data, size, 0U);
     if (mp_mem == NULL) {
       if ((flags & osRtxFlagSystemObject) != 0U) {
+#ifdef RTX_OBJ_PTR_CHECK
+        (void)osRtxMemoryPoolFree(osRtxInfo.mpi.memory_pool, mp);
+#else
         if (osRtxInfo.mpi.memory_pool != NULL) {
           (void)osRtxMemoryPoolFree(osRtxInfo.mpi.memory_pool, mp);
         } else {
           (void)osRtxMemoryFree(osRtxInfo.mem.common, mp);
         }
+#endif
 #ifdef RTX_OBJ_MEM_USAGE
         osRtxMemoryPoolMemUsage.cnt_free++;
 #endif
@@ -294,8 +413,20 @@ static osMemoryPoolId_t svcRtxMemoryPoolNew (uint32_t block_count, uint32_t bloc
     // Initialize control block
     mp->id          = osRtxIdMemoryPool;
     mp->flags       = flags;
+    mp->attr        = 0U;
     mp->name        = name;
     mp->thread_list = NULL;
+#ifdef RTX_SAFETY_CLASS
+    if ((attr_bits & osSafetyClass_Valid) != 0U) {
+      mp->attr     |= (uint8_t)((attr_bits & osSafetyClass_Msk) >>
+                                (osSafetyClass_Pos - osRtxAttrClass_Pos));
+    } else {
+      // Inherit safety class from the running thread
+      if (thread != NULL) {
+        mp->attr   |= (uint8_t)(thread->attr & osRtxAttrClass_Msk);
+      }
+    }
+#endif
     (void)osRtxMemoryPoolInit(&mp->mp_info, b_count, b_size, mp_mem);
 
     // Register post ISR processing function
@@ -315,7 +446,7 @@ static const char *svcRtxMemoryPoolGetName (osMemoryPoolId_t mp_id) {
   os_memory_pool_t *mp = osRtxMemoryPoolId(mp_id);
 
   // Check parameters
-  if ((mp == NULL) || (mp->id != osRtxIdMemoryPool)) {
+  if (!IsMemoryPoolPtrValid(mp) || (mp->id != osRtxIdMemoryPool)) {
     EvrRtxMemoryPoolGetName(mp, NULL);
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return NULL;
@@ -329,15 +460,29 @@ static const char *svcRtxMemoryPoolGetName (osMemoryPoolId_t mp_id) {
 /// Allocate a memory block from a Memory Pool.
 /// \note API identical to osMemoryPoolAlloc
 static void *svcRtxMemoryPoolAlloc (osMemoryPoolId_t mp_id, uint32_t timeout) {
-  os_memory_pool_t *mp = osRtxMemoryPoolId(mp_id);
-  void             *block;
+  os_memory_pool_t  *mp = osRtxMemoryPoolId(mp_id);
+#ifdef RTX_SAFETY_CLASS
+  const os_thread_t *thread;
+#endif
+  void              *block;
 
   // Check parameters
-  if ((mp == NULL) || (mp->id != osRtxIdMemoryPool)) {
+  if (!IsMemoryPoolPtrValid(mp) || (mp->id != osRtxIdMemoryPool)) {
     EvrRtxMemoryPoolError(mp, (int32_t)osErrorParameter);
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return NULL;
   }
+
+#ifdef RTX_SAFETY_CLASS
+  // Check running thread safety class
+  thread = osRtxThreadGetRunning();
+  if ((thread != NULL) &&
+      ((thread->attr >> osRtxAttrClass_Pos) < (mp->attr >> osRtxAttrClass_Pos))) {
+    EvrRtxMemoryPoolError(mp, (int32_t)osErrorSafetyClass);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
+    return NULL;
+  }
+#endif
 
   // Allocate memory
   block = osRtxMemoryPoolAlloc(&mp->mp_info);
@@ -370,11 +515,22 @@ static osStatus_t svcRtxMemoryPoolFree (osMemoryPoolId_t mp_id, void *block) {
   osStatus_t        status;
 
   // Check parameters
-  if ((mp == NULL) || (mp->id != osRtxIdMemoryPool)) {
+  if (!IsMemoryPoolPtrValid(mp) || (mp->id != osRtxIdMemoryPool)) {
     EvrRtxMemoryPoolError(mp, (int32_t)osErrorParameter);
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorParameter;
   }
+
+#ifdef RTX_SAFETY_CLASS
+  // Check running thread safety class
+  thread = osRtxThreadGetRunning();
+  if ((thread != NULL) &&
+      ((thread->attr >> osRtxAttrClass_Pos) < (mp->attr >> osRtxAttrClass_Pos))) {
+    EvrRtxMemoryPoolError(mp, (int32_t)osErrorSafetyClass);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
+    return osErrorSafetyClass;
+  }
+#endif
 
   // Free memory
   status = osRtxMemoryPoolFree(&mp->mp_info, block);
@@ -405,7 +561,7 @@ static uint32_t svcRtxMemoryPoolGetCapacity (osMemoryPoolId_t mp_id) {
   os_memory_pool_t *mp = osRtxMemoryPoolId(mp_id);
 
   // Check parameters
-  if ((mp == NULL) || (mp->id != osRtxIdMemoryPool)) {
+  if (!IsMemoryPoolPtrValid(mp) || (mp->id != osRtxIdMemoryPool)) {
     EvrRtxMemoryPoolGetCapacity(mp, 0U);
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return 0U;
@@ -422,7 +578,7 @@ static uint32_t svcRtxMemoryPoolGetBlockSize (osMemoryPoolId_t mp_id) {
   os_memory_pool_t *mp = osRtxMemoryPoolId(mp_id);
 
   // Check parameters
-  if ((mp == NULL) || (mp->id != osRtxIdMemoryPool)) {
+  if (!IsMemoryPoolPtrValid(mp) || (mp->id != osRtxIdMemoryPool)) {
     EvrRtxMemoryPoolGetBlockSize(mp, 0U);
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return 0U;
@@ -439,7 +595,7 @@ static uint32_t svcRtxMemoryPoolGetCount (osMemoryPoolId_t mp_id) {
   os_memory_pool_t *mp = osRtxMemoryPoolId(mp_id);
 
   // Check parameters
-  if ((mp == NULL) || (mp->id != osRtxIdMemoryPool)) {
+  if (!IsMemoryPoolPtrValid(mp) || (mp->id != osRtxIdMemoryPool)) {
     EvrRtxMemoryPoolGetCount(mp, 0U);
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return 0U;
@@ -456,7 +612,7 @@ static uint32_t svcRtxMemoryPoolGetSpace (osMemoryPoolId_t mp_id) {
   os_memory_pool_t *mp = osRtxMemoryPoolId(mp_id);
 
   // Check parameters
-  if ((mp == NULL) || (mp->id != osRtxIdMemoryPool)) {
+  if (!IsMemoryPoolPtrValid(mp) || (mp->id != osRtxIdMemoryPool)) {
     EvrRtxMemoryPoolGetSpace(mp, 0U);
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return 0U;
@@ -474,11 +630,22 @@ static osStatus_t svcRtxMemoryPoolDelete (osMemoryPoolId_t mp_id) {
   os_thread_t      *thread;
 
   // Check parameters
-  if ((mp == NULL) || (mp->id != osRtxIdMemoryPool)) {
+  if (!IsMemoryPoolPtrValid(mp) || (mp->id != osRtxIdMemoryPool)) {
     EvrRtxMemoryPoolError(mp, (int32_t)osErrorParameter);
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorParameter;
   }
+
+#ifdef RTX_SAFETY_CLASS
+  // Check running thread safety class
+  thread = osRtxThreadGetRunning();
+  if ((thread != NULL) &&
+      ((thread->attr >> osRtxAttrClass_Pos) < (mp->attr >> osRtxAttrClass_Pos))) {
+    EvrRtxMemoryPoolError(mp, (int32_t)osErrorSafetyClass);
+    //lint -e{904} "Return statement before end of function" [MISRA Note 1]
+    return osErrorSafetyClass;
+  }
+#endif
 
   // Unblock waiting threads
   if (mp->thread_list != NULL) {
@@ -489,27 +656,7 @@ static osStatus_t svcRtxMemoryPoolDelete (osMemoryPoolId_t mp_id) {
     osRtxThreadDispatch(NULL);
   }
 
-  // Mark object as invalid
-  mp->id = osRtxIdInvalid;
-
-  // Free data memory
-  if ((mp->flags & osRtxFlagSystemMemory) != 0U) {
-    (void)osRtxMemoryFree(osRtxInfo.mem.mp_data, mp->mp_info.block_base);
-  }
-
-  // Free object memory
-  if ((mp->flags & osRtxFlagSystemObject) != 0U) {
-    if (osRtxInfo.mpi.memory_pool != NULL) {
-      (void)osRtxMemoryPoolFree(osRtxInfo.mpi.memory_pool, mp);
-    } else {
-      (void)osRtxMemoryFree(osRtxInfo.mem.common, mp);
-    }
-#ifdef RTX_OBJ_MEM_USAGE
-    osRtxMemoryPoolMemUsage.cnt_free++;
-#endif
-  }
-
-  EvrRtxMemoryPoolDestroyed(mp);
+  osRtxMemoryPoolDestroy(mp);
 
   return osOK;
 }
@@ -538,7 +685,7 @@ void *isrRtxMemoryPoolAlloc (osMemoryPoolId_t mp_id, uint32_t timeout) {
   void             *block;
 
   // Check parameters
-  if ((mp == NULL) || (mp->id != osRtxIdMemoryPool) || (timeout != 0U)) {
+  if (!IsMemoryPoolPtrValid(mp) || (mp->id != osRtxIdMemoryPool) || (timeout != 0U)) {
     EvrRtxMemoryPoolError(mp, (int32_t)osErrorParameter);
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return NULL;
@@ -563,7 +710,7 @@ osStatus_t isrRtxMemoryPoolFree (osMemoryPoolId_t mp_id, void *block) {
   osStatus_t        status;
 
   // Check parameters
-  if ((mp == NULL) || (mp->id != osRtxIdMemoryPool)) {
+  if (!IsMemoryPoolPtrValid(mp) || (mp->id != osRtxIdMemoryPool)) {
     EvrRtxMemoryPoolError(mp, (int32_t)osErrorParameter);
     //lint -e{904} "Return statement before end of function" [MISRA Note 1]
     return osErrorParameter;
@@ -604,10 +751,9 @@ const char *osMemoryPoolGetName (osMemoryPoolId_t mp_id) {
   const char *name;
 
   if (IsException() || IsIrqMasked()) {
-    EvrRtxMemoryPoolGetName(mp_id, NULL);
-    name = NULL;
+    name = svcRtxMemoryPoolGetName(mp_id);
   } else {
-    name = __svcMemoryPoolGetName(mp_id);
+    name =  __svcMemoryPoolGetName(mp_id);
   }
   return name;
 }

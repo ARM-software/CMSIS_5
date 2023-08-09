@@ -2,7 +2,7 @@
  *      Name:         CV_CoreFunc.c
  *      Purpose:      CMSIS CORE validation tests implementation
  *-----------------------------------------------------------------------------
- *      Copyright (c) 2017 - 2021 Arm Limited. All rights reserved.
+ *      Copyright (c) 2017 - 2023 Arm Limited. All rights reserved.
  *----------------------------------------------------------------------------*/
 
 #include "CV_Framework.h"
@@ -68,7 +68,7 @@ void TC_CoreFunc_EnDisIRQ (void)
 
   // Set the interrupt pending state
   NVIC_SetPendingIRQ(Interrupt0_IRQn);
-  for(uint32_t i = 10U; i > 0U; --i) {}
+  for(uint32_t i = 10U; i > 0U; --i) {__NOP();}
 
   // Interrupt is not taken
   ASSERT_TRUE(irqTaken == 0U);
@@ -80,7 +80,7 @@ void TC_CoreFunc_EnDisIRQ (void)
   // Globally enable interrupt servicing
   __enable_irq();
 
-  for(uint32_t i = 10U; i > 0U; --i) {}
+  for(uint32_t i = 10U; i > 0U; --i) {__NOP();}
 
   // Interrupt was taken
   ASSERT_TRUE(irqTaken == 1U);
@@ -98,7 +98,7 @@ void TC_CoreFunc_EnDisIRQ (void)
 
   // Set interrupt pending
   NVIC_SetPendingIRQ(Interrupt0_IRQn);
-  for(uint32_t i = 10U; i > 0U; --i) {}
+  for(uint32_t i = 10U; i > 0U; --i) {__NOP();}
 
   // Interrupt is not taken again
   ASSERT_TRUE(irqTaken == 1U);
@@ -106,7 +106,7 @@ void TC_CoreFunc_EnDisIRQ (void)
 
   // Clear interrupt pending
   NVIC_ClearPendingIRQ(Interrupt0_IRQn);
-  for(uint32_t i = 10U; i > 0U; --i) {}
+  for(uint32_t i = 10U; i > 0U; --i) {__NOP();}
 
   // Interrupt it not pending anymore.
   ASSERT_TRUE(NVIC_GetPendingIRQ(Interrupt0_IRQn) == 0U);
@@ -195,8 +195,7 @@ void TC_CoreFunc_IRQVect(void) {
 #if defined(__VTOR_PRESENT) && __VTOR_PRESENT
   /* relocate vector table */
   extern const VECTOR_TABLE_Type __VECTOR_TABLE[48];
-  static VECTOR_TABLE_Type vectors[sizeof(__VECTOR_TABLE)/sizeof(__VECTOR_TABLE[0])] __ALIGNED(512);
-
+  static VECTOR_TABLE_Type vectors[sizeof(__VECTOR_TABLE)/sizeof(__VECTOR_TABLE[0])] __ALIGNED(1024) __NO_INIT;
   memcpy(vectors, __VECTOR_TABLE, sizeof(__VECTOR_TABLE));
 
   const uint32_t orig_vtor = SCB->VTOR;
@@ -294,7 +293,7 @@ void TC_CoreFunc_IPSR (void) {
   __enable_irq();
 
   NVIC_SetPendingIRQ(Interrupt0_IRQn);
-  for(uint32_t i = 10U; i > 0U; --i) {}
+  for(uint32_t i = 10U; i > 0U; --i) {__NOP();}
 
   __disable_irq();
   NVIC_DisableIRQ(Interrupt0_IRQn);
@@ -308,7 +307,7 @@ void TC_CoreFunc_IPSR (void) {
 #if defined(__CC_ARM)
 #define SUBS(Rd, Rm, Rn) __ASM volatile("SUBS " # Rd ", " # Rm ", " # Rn)
 #define ADDS(Rd, Rm, Rn) __ASM volatile("ADDS " # Rd ", " # Rm ", " # Rn)
-#elif defined( __GNUC__ )  && (!defined(__ARMCC_VERSION))  && (defined(__ARM_ARCH_6M__) || defined(__ARM_ARCH_8M_BASE__))
+#elif defined( __GNUC__ ) && (!defined(__ti__)) && (!defined(__ARMCC_VERSION))  && (defined(__ARM_ARCH_6M__) || defined(__ARM_ARCH_8M_BASE__))
 #define SUBS(Rd, Rm, Rn) __ASM volatile("SUB %0, %1, %2" : "=r"(Rd) : "r"(Rm), "r"(Rn) : "cc")
 #define ADDS(Rd, Rm, Rn) __ASM volatile("ADD %0, %1, %2" : "=r"(Rd) : "r"(Rm), "r"(Rn) : "cc")
 #elif defined(_lint)

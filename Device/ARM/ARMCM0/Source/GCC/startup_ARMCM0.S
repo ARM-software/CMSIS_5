@@ -1,11 +1,11 @@
 /**************************************************************************//**
  * @file     startup_ARMCM0.S
  * @brief    CMSIS-Core(M) Device Startup File for Cortex-M0 Device
- * @version  V2.1.0
- * @date     04. August 2020
+ * @version  V2.2.0
+ * @date     26. May 2021
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2020 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2021 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -83,10 +83,10 @@ Reset_Handler:
 .L_loop0:
                 cmp      r4, r5
                 bge      .L_loop0_done
-                ldr      r1, [r4]                /* source address */   
+                ldr      r1, [r4]                /* source address */
                 ldr      r2, [r4, #4]            /* destination address */
                 ldr      r3, [r4, #8]            /* word count */
-                lsl      r3, r3, #2              /* byte count */
+                lsls     r3, r3, #2              /* byte count */
 
 .L_loop0_0:
                 subs     r3, #4                  /* decrement byte count */
@@ -109,7 +109,7 @@ Reset_Handler:
                 bge      .L_loop2_done
                 ldr      r1, [r3]                /* destination address */
                 ldr      r2, [r3, #4]            /* word count */
-                lsl      r2, r2, #2              /* byte count */
+                lsls     r2, r2, #2              /* byte count */
                 movs     r0, 0
 
 .L_loop2_0:

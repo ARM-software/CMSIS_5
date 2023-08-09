@@ -95,22 +95,23 @@ void __set_CONTROL(uint32_t control);
     Each exception has an associated unique IRQn number. The following bits are used:
     
     - \b ISR_NUMBER (IPSR[8:0])
-        - =0 Thread mode
-        - =1 Reserved
-        - =2 NMI
-        - =3 HardFault
-        - =4 MemManage
-        - =5 BusFault
-        - =6 UsageFault
-        - =7-10  Reserved
-        - =11 SVCall
-        - =12 Reserved for Debug
-        - =13 Reserved
-        - =14 PendSV
-        - =15 SysTick
-        - =16 IRQ0
+        - = 0 Thread mode
+        - = 1 Reserved
+        - = 2 NMI
+        - = 3 HardFault
+        - = 4 MemManage
+        - = 5 BusFault
+        - = 6 UsageFault
+        - = 7 SecureFault
+        - = 8-10  Reserved
+        - = 11 SVC
+        - = 12 Reserved for Debug
+        - = 13 Reserved
+        - = 14 PendSV
+        - = 15 SysTick
+        - = 16 IRQ0
         - ...
-        - =n+15 IRQ(n-1)
+        - = n+15 IRQ(n-1)
 
     \returns    ISPR register value
 

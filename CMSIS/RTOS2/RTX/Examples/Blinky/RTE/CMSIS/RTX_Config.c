@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 Arm Limited. All rights reserved.
+ * Copyright (c) 2013-2023 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -17,7 +17,7 @@
  *
  * -----------------------------------------------------------------------------
  *
- * $Revision:   V5.1.1
+ * $Revision:   V5.2.0
  *
  * Project:     CMSIS-RTOS RTX
  * Title:       RTX Configuration
@@ -54,6 +54,9 @@ __WEAK uint32_t osRtxErrorNotify (uint32_t code, void *object_id) {
       break;
     case osRtxErrorClibMutex:
       // Standard C/C++ library mutex initialization failed
+      break;
+    case osRtxErrorSVC:
+      // Invalid SVC function called (function=object_id)
       break;
     default:
       // Reserved

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 Arm Limited. All rights reserved.
+ * Copyright (c) 2013-2023 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -59,11 +59,14 @@
 #define EvtRtxKernelSuspended               EventID(EventLevelOp,     EvtRtxKernelNo, 0x10U)
 #define EvtRtxKernelResume                  EventID(EventLevelAPI,    EvtRtxKernelNo, 0x11U)
 #define EvtRtxKernelResumed                 EventID(EventLevelOp,     EvtRtxKernelNo, 0x12U)
+#define EvtRtxKernelProtect                 EventID(EventLevelAPI,    EvtRtxKernelNo, 0x17U)
+#define EvtRtxKernelProtected               EventID(EventLevelOp,     EvtRtxKernelNo, 0x18U)
 #define EvtRtxKernelGetTickCount            EventID(EventLevelAPI,    EvtRtxKernelNo, 0x13U)
 #define EvtRtxKernelGetTickFreq             EventID(EventLevelAPI,    EvtRtxKernelNo, 0x14U)
 #define EvtRtxKernelGetSysTimerCount        EventID(EventLevelAPI,    EvtRtxKernelNo, 0x15U)
 #define EvtRtxKernelGetSysTimerFreq         EventID(EventLevelAPI,    EvtRtxKernelNo, 0x16U)
 #define EvtRtxKernelErrorNotify             EventID(EventLevelError,  EvtRtxKernelNo, 0x19U)
+#define EvtRtxKernelDestroyClass            EventID(EventLevelAPI,    EvtRtxKernelNo, 0x1AU)
 
 /// Event IDs for "RTX Thread"
 #define EvtRtxThreadError                   EventID(EventLevelError,  EvtRtxThreadNo, 0x00U)
@@ -71,6 +74,8 @@
 #define EvtRtxThreadCreated_Addr            EventID(EventLevelOp,     EvtRtxThreadNo, 0x03U)
 #define EvtRtxThreadCreated_Name            EventID(EventLevelOp,     EvtRtxThreadNo, 0x2CU)
 #define EvtRtxThreadGetName                 EventID(EventLevelAPI,    EvtRtxThreadNo, 0x04U)
+#define EvtRtxThreadGetClass                EventID(EventLevelAPI,    EvtRtxThreadNo, 0x30U)
+#define EvtRtxThreadGetZone                 EventID(EventLevelAPI,    EvtRtxThreadNo, 0x31U)
 #define EvtRtxThreadGetId                   EventID(EventLevelAPI,    EvtRtxThreadNo, 0x06U)
 #define EvtRtxThreadGetState                EventID(EventLevelAPI,    EvtRtxThreadNo, 0x07U)
 #define EvtRtxThreadGetStackSize            EventID(EventLevelAPI,    EvtRtxThreadNo, 0x08U)
@@ -95,8 +100,16 @@
 #define EvtRtxThreadExit                    EventID(EventLevelAPI,    EvtRtxThreadNo, 0x1AU)
 #define EvtRtxThreadTerminate               EventID(EventLevelAPI,    EvtRtxThreadNo, 0x1BU)
 #define EvtRtxThreadDestroyed               EventID(EventLevelOp,     EvtRtxThreadNo, 0x1CU)
+#define EvtRtxThreadFeedWatchdog            EventID(EventLevelAPI,    EvtRtxThreadNo, 0x2EU)
+#define EvtRtxThreadFeedWatchdogDone        EventID(EventLevelOp,     EvtRtxThreadNo, 0x2FU)
+#define EvtRtxThreadProtectPrivileged       EventID(EventLevelAPI,    EvtRtxThreadNo, 0x32U)
+#define EvtRtxThreadPrivilegedProtected     EventID(EventLevelOp,     EvtRtxThreadNo, 0x33U)
 #define EvtRtxThreadGetCount                EventID(EventLevelAPI,    EvtRtxThreadNo, 0x1DU)
 #define EvtRtxThreadEnumerate               EventID(EventLevelAPI,    EvtRtxThreadNo, 0x1EU)
+#define EvtRtxThreadSuspendClass            EventID(EventLevelAPI,    EvtRtxThreadNo, 0x34U)
+#define EvtRtxThreadResumeClass             EventID(EventLevelAPI,    EvtRtxThreadNo, 0x35U)
+#define EvtRtxThreadTerminateZone           EventID(EventLevelAPI,    EvtRtxThreadNo, 0x36U)
+#define EvtRtxThreadWatchdogExpired         EventID(EventLevelError,  EvtRtxThreadNo, 0x37U)
 
 /// Event IDs for "RTX Thread Flags"
 #define EvtRtxThreadFlagsError              EventID(EventLevelError,  EvtRtxThreadFlagsNo, 0x00U)
@@ -492,6 +505,24 @@ __WEAK void EvrRtxKernelResumed (void) {
 }
 #endif
 
+#if (!defined(EVR_RTX_DISABLE) && (OS_EVR_KERNEL != 0) && !defined(EVR_RTX_KERNEL_PROTECT_DISABLE))
+__WEAK void EvrRtxKernelProtect (uint32_t safety_class) {
+#if defined(RTE_Compiler_EventRecorder)
+  (void)EventRecord2(EvtRtxKernelProtect, safety_class, 0U);
+#else
+  (void)safety_class;
+#endif
+}
+#endif
+
+#if (!defined(EVR_RTX_DISABLE) && (OS_EVR_KERNEL != 0) && !defined(EVR_RTX_KERNEL_PROTECTED_DISABLE))
+__WEAK void EvrRtxKernelProtected (void) {
+#if defined(RTE_Compiler_EventRecorder)
+  (void)EventRecord2(EvtRtxKernelProtected, 0U, 0U);
+#endif
+}
+#endif
+
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_KERNEL != 0) && !defined(EVR_RTX_KERNEL_GET_TICK_COUNT_DISABLE))
 __WEAK void EvrRtxKernelGetTickCount (uint32_t count) {
 #if defined(RTE_Compiler_EventRecorder)
@@ -539,6 +570,17 @@ __WEAK void EvrRtxKernelErrorNotify (uint32_t code, void *object_id) {
 #else
   (void)code;
   (void)object_id;
+#endif
+}
+#endif
+
+#if (!defined(EVR_RTX_DISABLE) && (OS_EVR_KERNEL != 0) && !defined(EVR_RTX_KERNEL_DESTROY_CLASS_DISABLE))
+__WEAK void EvrRtxKernelDestroyClass (uint32_t safety_class, uint32_t mode) {
+#if defined(RTE_Compiler_EventRecorder)
+  (void)EventRecord2(EvtRtxKernelDestroyClass, safety_class, mode);
+#else
+  (void)safety_class;
+  (void)mode;
 #endif
 }
 #endif
@@ -592,6 +634,28 @@ __WEAK void EvrRtxThreadGetName (osThreadId_t thread_id, const char *name) {
 #else
   (void)thread_id;
   (void)name;
+#endif
+}
+#endif
+
+#if (!defined(EVR_RTX_DISABLE) && (OS_EVR_THREAD != 0) && !defined(EVR_RTX_THREAD_GET_CLASS_DISABLE))
+__WEAK void EvrRtxThreadGetClass (osThreadId_t thread_id, uint32_t safety_class) {
+#if defined(RTE_Compiler_EventRecorder)
+  (void)EventRecord2(EvtRtxThreadGetClass, (uint32_t)thread_id, safety_class);
+#else
+  (void)thread_id;
+  (void)safety_class;
+#endif
+}
+#endif
+
+#if (!defined(EVR_RTX_DISABLE) && (OS_EVR_THREAD != 0) && !defined(EVR_RTX_THREAD_GET_ZONE_DISABLE))
+__WEAK void EvrRtxThreadGetZone (osThreadId_t thread_id, uint32_t zone) {
+#if defined(RTE_Compiler_EventRecorder)
+  (void)EventRecord2(EvtRtxThreadGetZone, (uint32_t)thread_id, zone);
+#else
+  (void)thread_id;
+  (void)zone;
 #endif
 }
 #endif
@@ -842,6 +906,40 @@ __WEAK void EvrRtxThreadDestroyed (osThreadId_t thread_id) {
 }
 #endif
 
+#if (!defined(EVR_RTX_DISABLE) && (OS_EVR_THREAD != 0) && !defined(EVR_RTX_THREAD_FEED_WATCHDOG_DISABLE))
+__WEAK void EvrRtxThreadFeedWatchdog (uint32_t ticks) {
+#if defined(RTE_Compiler_EventRecorder)
+  (void)EventRecord2(EvtRtxThreadFeedWatchdog, ticks, 0U);
+#else
+  (void)ticks;
+#endif
+}
+#endif
+
+#if (!defined(EVR_RTX_DISABLE) && (OS_EVR_THREAD != 0) && !defined(EVR_RTX_THREAD_FEED_WATCHDOG_DONE_DISABLE))
+__WEAK void EvrRtxThreadFeedWatchdogDone (void) {
+#if defined(RTE_Compiler_EventRecorder)
+  (void)EventRecord2(EvtRtxThreadFeedWatchdogDone, 0U, 0U);
+#endif
+}
+#endif
+
+#if (!defined(EVR_RTX_DISABLE) && (OS_EVR_THREAD != 0) && !defined(EVR_RTX_THREAD_PROTECT_PRIVILEGED_DISABLE))
+__WEAK void EvrRtxThreadProtectPrivileged (void) {
+#if defined(RTE_Compiler_EventRecorder)
+  (void)EventRecord2(EvtRtxThreadProtectPrivileged, 0U, 0U);
+#endif
+}
+#endif
+
+#if (!defined(EVR_RTX_DISABLE) && (OS_EVR_THREAD != 0) && !defined(EVR_RTX_THREAD_PRIVILEGED_PROTECTED_DISABLE))
+__WEAK void EvrRtxThreadPrivilegedProtected (void) {
+#if defined(RTE_Compiler_EventRecorder)
+  (void)EventRecord2(EvtRtxThreadPrivilegedProtected, 0U, 0U);
+#endif
+}
+#endif
+
 #if (!defined(EVR_RTX_DISABLE) && (OS_EVR_THREAD != 0) && !defined(EVR_RTX_THREAD_GET_COUNT_DISABLE))
 __WEAK void EvrRtxThreadGetCount (uint32_t count) {
 #if defined(RTE_Compiler_EventRecorder)
@@ -860,6 +958,48 @@ __WEAK void EvrRtxThreadEnumerate (osThreadId_t *thread_array, uint32_t array_it
   (void)thread_array;
   (void)array_items;
   (void)count;
+#endif
+}
+#endif
+
+#if (!defined(EVR_RTX_DISABLE) && (OS_EVR_THREAD != 0) && !defined(EVR_RTX_THREAD_SUSPEND_CLASS_DISABLE))
+__WEAK void EvrRtxThreadSuspendClass (uint32_t safety_class, uint32_t mode) {
+#if defined(RTE_Compiler_EventRecorder)
+  (void)EventRecord2(EvtRtxThreadSuspendClass, safety_class, (uint32_t)mode);
+#else
+  (void)safety_class;
+  (void)mode;
+#endif
+}
+#endif
+
+#if (!defined(EVR_RTX_DISABLE) && (OS_EVR_THREAD != 0) && !defined(EVR_RTX_THREAD_RESUME_CLASS_DISABLE))
+__WEAK void EvrRtxThreadResumeClass (uint32_t safety_class, uint32_t mode) {
+#if defined(RTE_Compiler_EventRecorder)
+  (void)EventRecord2(EvtRtxThreadResumeClass, safety_class, (uint32_t)mode);
+#else
+  (void)safety_class;
+  (void)mode;
+#endif
+}
+#endif
+
+#if (!defined(EVR_RTX_DISABLE) && (OS_EVR_THREAD != 0) && !defined(EVR_RTX_THREAD_TERMINATE_ZONE_DISABLE))
+__WEAK void EvrRtxThreadTerminateZone (uint32_t zone) {
+#if defined(RTE_Compiler_EventRecorder)
+  (void)EventRecord2(EvtRtxThreadTerminateZone, zone, 0U);
+#else
+  (void)zone;
+#endif
+}
+#endif
+
+#if (!defined(EVR_RTX_DISABLE) && (OS_EVR_THREAD != 0) && !defined(EVR_RTX_THREAD_WATCHDOG_EXPIRED_DISABLE))
+__WEAK void EvrRtxThreadWatchdogExpired (osThreadId_t thread_id) {
+#if defined(RTE_Compiler_EventRecorder)
+  (void)EventRecord2(EvtRtxThreadWatchdogExpired, (uint32_t)thread_id, 0U);
+#else
+  (void)thread_id;
 #endif
 }
 #endif

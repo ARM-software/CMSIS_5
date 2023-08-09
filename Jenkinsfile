@@ -1,4 +1,5 @@
 @Library("cmsis")
+import com.arm.dsg.cmsis.jenkins.ArtifactoryHelper
 
 DOCKERINFO = [
     'staging': [
@@ -18,12 +19,14 @@ DOCKERINFO = [
         'label': 'latest'
     ]
 ]
+HADOLINT_VERSION = '2.6.0-alpine'
 
 dockerinfo = DOCKERINFO['production']
 
 isPrecommit = (JOB_BASE_NAME == 'pre_commit')
 isPostcommit = (JOB_BASE_NAME == 'post_commit')
 isNightly = (JOB_BASE_NAME == 'nightly')
+isRelease = (JOB_BASE_NAME == 'release')
 
 patternGlobal = [
     '^Jenkinsfile'
@@ -49,8 +52,9 @@ patternCoreValidation = [
 
 CONFIGURATIONS = [
     'pre_commit': [
-        'mdevices': ['CM0', 'CM3', 'CM4FP', 'CM7DP', 'CM23', 'CM33NS', 'CM35PS', 'CM55NS'],
-        'adevices': ['CA7', 'CA9neon'],
+        'mdevices': ['CM0', 'CM3', 'CM4FP', 'CM7DP', 'CM23', 'CM33NS', 'CM35PS',
+            'CM55NS', 'CM85S'],
+        'adevices': ['CA7', 'CA9'],
         'devices' : [],
         'configs' : [
             'AC5': ['low', 'tiny'],
@@ -61,9 +65,10 @@ CONFIGURATIONS = [
     ],
     'post_commit': [
         'devices' : ['CM0', 'CM0plus', 'CM3', 'CM4', 'CM4FP', 'CM7', 'CM7SP', 'CM7DP',
-             'CM23', 'CM23S', 'CM23NS', 'CM33', 'CM33S', 'CM33NS',
-             'CM35P', 'CM35PS', 'CM35PNS', 'CM55', 'CM55S', 'CM55NS',
-             'CA5', 'CA5neon', 'CA7', 'CA7neon', 'CA9', 'CA9neon'],
+            'CM23', 'CM23S', 'CM23NS', 'CM33', 'CM33S', 'CM33NS',
+            'CM35P', 'CM35PS', 'CM35PNS', 'CM55', 'CM55S', 'CM55NS',
+            'CM85S', 'CM85NS',
+            'CA5', 'CA7', 'CA9'],
         'configs' : [
             'AC5': ['low', 'tiny'],
             'AC6': ['low', 'tiny'],
@@ -71,18 +76,20 @@ CONFIGURATIONS = [
             'GCC': ['low', 'tiny']
         ]
     ],
-    'nightly':[
+    'nightly': [
         'devices' : ['CM0', 'CM0plus', 'CM3', 'CM4', 'CM4FP', 'CM7', 'CM7SP', 'CM7DP',
-                     'CM23', 'CM23S', 'CM23NS', 'CM33', 'CM33S', 'CM33NS',
-                     'CM35P', 'CM35PS', 'CM35PNS', 'CM55', 'CM55S', 'CM55NS',
-                     'CA5', 'CA5neon', 'CA7', 'CA7neon', 'CA9', 'CA9neon'],
+            'CM23', 'CM23S', 'CM23NS', 'CM33', 'CM33S', 'CM33NS',
+            'CM35P', 'CM35PS', 'CM35PNS', 'CM55', 'CM55S', 'CM55NS',
+            'CM85S', 'CM85NS',
+            'CA5', 'CA7', 'CA9'],
         'configs' : [
             'AC5': ['low', 'mid', 'high', 'size', 'tiny'],
             'AC6': ['low', 'mid', 'high', 'size', 'tiny'],
             'AC6LTM': ['low', 'mid', 'high', 'size', 'tiny'],
             'GCC': ['low', 'mid', 'high', 'size', 'tiny']
         ]
-    ]
+    ],
+    'release': []
 ]
 CONFIGURATION = CONFIGURATIONS[JOB_BASE_NAME]
 
@@ -100,10 +107,12 @@ def fileSetMatches(fileset, patternset) {
 }
 
 FORCE_BUILD = false
-DOCKER_BUILD = true
-CORE_VALIDATION = true
+DOCKER_BUILD = isPrecommit || isPostcommit || isNightly
+CORE_VALIDATION = isPrecommit || isPostcommit || isNightly
 COMMIT = null
 VERSION = null
+
+artifactory = new ArtifactoryHelper(this)
 
 pipeline {
     agent { label 'master' }
@@ -126,13 +135,11 @@ pipeline {
                 script {
                     COMMIT = checkoutScmWithRetry(3)
                     echo "COMMIT: ${COMMIT}"
-                    VERSION = (sh(returnStdout: true, script: 'git describe --always')).trim()
+                    VERSION = (sh(returnStdout: true, script: 'git describe --tags --always')).trim()
                     echo "VERSION: '${VERSION}'"
                 }
 
-                dir('docker') {
-                    stash name: 'dockerfile', includes: '**'
-                }
+                stash name: 'dockerfile', includes: 'docker/**'
             }
         }
 
@@ -201,7 +208,7 @@ echo """Stage schedule:
                             runAsGroup: 1000
                           containers:
                             - name: hadolint
-                              image: mcu--docker.eu-west-1.artifactory.aws.arm.com/hadolint/hadolint:v1.19.0-alpine
+                              image: mcu--docker.eu-west-1.artifactory.aws.arm.com/hadolint/hadolint:${HADOLINT_VERSION}
                               alwaysPullImage: true
                               imagePullPolicy: Always
                               command:
@@ -210,21 +217,19 @@ echo """Stage schedule:
                                 - infinity
                               resources:
                                 requests:
-                                  cpu: 2
-                                  memory: 2Gi
+                                  cpu: 900m
+                                  memory: 3Gi
                         """.stripIndent()
                 }
             }
             steps {
-                dir('docker') {
-                    unstash 'dockerfile'
+                unstash 'dockerfile'
 
-                    sh 'hadolint --format json dockerfile | tee hadolint.log'
+                sh 'hadolint --format json docker/dockerfile* | tee hadolint.log'
 
-                    recordIssues tools: [hadoLint(id: 'hadolint', pattern: 'hadolint.log')],
-                                 qualityGates: [[threshold: 1, type: 'DELTA', unstable: true]],
-                                 referenceJobName: 'nightly', ignoreQualityGate: true
-                }
+                recordIssues tools: [hadoLint(id: 'hadolint', pattern: 'hadolint.log')],
+                             qualityGates: [[threshold: 1, type: 'DELTA', unstable: true]],
+                             referenceJobName: 'nightly', ignoreQualityGate: true
             }
         }
 
@@ -260,9 +265,9 @@ echo """Stage schedule:
             steps {
                 sh('apk add bash curl git')
                 script {
+                    unstash 'dockerfile'
+
                     dir('docker') {
-                        unstash 'dockerfile'
-                    
                         dockerinfo = DOCKERINFO['staging']
                         withCredentials([sshUserPrivateKey(credentialsId: 'grasci_with_pk',
                                 keyFileVariable: 'grasciPk',
@@ -304,26 +309,28 @@ echo """Stage schedule:
                                 - infinity
                               resources:
                                 requests:
-                                  cpu: 2
-                                  memory: 2Gi
+                                  cpu: 900m
+                                  memory: 3Gi
                         """.stripIndent()
                 }
             }
             steps {
                 checkoutScmWithRetry(3)
+                sh('./CMSIS/Utilities/fetch_devtools.sh')
                 sh('./CMSIS/RTOS/RTX/LIB/fetch_libs.sh')
                 sh('./CMSIS/RTOS2/RTX/Library/fetch_libs.sh')
-                
+
                 tee('doxygen.log') {
                     sh('./CMSIS/DoxyGen/gen_doc.sh')
                 }
                 sh('./CMSIS/Utilities/gen_pack.sh')
-                
+
                 archiveArtifacts artifacts: 'output/ARM.CMSIS.*.pack', allowEmptyArchive: true
+                stash name: 'pack', includes: 'output/ARM.CMSIS.*.pack'
 
                 recordIssues tools: [doxygen(id: 'DOXYGEN', name: 'Doxygen', pattern: 'doxygen.log')],
                              qualityGates: [[threshold: 1, type: 'DELTA', unstable: true]],
-                             referenceJobName: 'nightly', ignoreQualityGate: true                
+                             referenceJobName: 'nightly', ignoreQualityGate: true
             }
         }
 
@@ -372,14 +379,14 @@ echo """Stage schedule:
                                             - infinity
                                           resources:
                                             requests:
-                                              cpu: 2
-                                              memory: 2Gi
+                                              cpu: 900m
+                                              memory: 3Gi
                                     """.stripIndent()
                             }
                         }
                         steps {
                             checkoutScmWithRetry(3)
-                            dir('CMSIS/CoreValidation/Tests') {
+                            dir('CMSIS/CoreValidation/Project') {
                                 script {
                                     CONFIGURATION['configs'].each { COMPILER, OPTS ->
                                         tee("CV_${COMPILER}_${DEVICE}.log") {
@@ -467,6 +474,32 @@ echo """Stage schedule:
                     docker.withRegistry("https://${DOCKERINFO['production']['registryUrl']}", DOCKERINFO['production']['registryCredentialsId']) {
                         def image = docker.image("$prodCommitTag")
                         image.push()
+                    }
+                }
+            }
+        }
+
+        stage('Release Promote') {
+            when {
+                expression { return isRelease }
+                beforeOptions true
+            }
+            steps {
+                unstash name: 'pack'
+                dir('output') {
+                    script {
+                        artifactory.upload pattern: 'ARM.CMSIS.*.pack',
+                                           target: "mcu.promoted/CMSIS_5/${VERSION}/",
+                                           props: "GIT_COMMIT=${COMMIT['GIT_COMMIT']}"
+                    }
+                    withCredentials([string(credentialsId: 'grasci_github', variable: 'ghtoken')]) {
+                        sh """
+                            curl -XPOST \
+                                -H "Authorization:token ${ghtoken}" \
+                                -H "Content-Type:application/octet-stream" \
+                                --data-binary @ARM.CMSIS.${VERSION}.pack \
+                                https://uploads.github.com/repos/ARM-software/CMSIS_5/releases/${VERSION}/assets?name=ARM.CMSIS.${VERSION}.pack
+                        """
                     }
                 }
             }

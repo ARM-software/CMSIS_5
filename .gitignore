@@ -4,8 +4,10 @@
 Local_Release/
 CMSIS/Documentation/
 CMSIS/RTOS2/RTX/Library/ARM/MDK/RTX_CM.uvguix.*
-CMSIS/CoreValidation/Tests/build
-CMSIS/CoreValidation/Tests/bootloader/build
+CMSIS/CoreValidation/Project/*.zip
+CMSIS/CoreValidation/Project/*.junit
+CMSIS/CoreValidation/Project/Validation.*/
+CMSIS/CoreValidation/Project/Bootloader.*/
 *.uvguix.*
 *.uvmpw.uvgui.*
 *.zip
@@ -15,3 +17,8 @@ CMSIS/RTOS/RTX/LIB/**/*.lib
 CMSIS/RTOS2/RTX/Library/**/*.a
 CMSIS/RTOS2/RTX/Library/**/*.lib
 output
+.DS_Store
+internal.cp310-win_amd64.pyd
+CMSIS/Utilities/Darwin64
+CMSIS/Utilities/Linux64
+CMSIS/Utilities/Win32

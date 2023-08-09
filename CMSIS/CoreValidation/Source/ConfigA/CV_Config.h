@@ -10,13 +10,17 @@
 #include "RTE_Components.h"
 #include CMSIS_device_header
 
+#define RTE_CV_COREINSTR  1
+#define RTE_CV_COREFUNC   1
+#define RTE_CV_L1CACHE    1
+
 //-------- <<< Use Configuration Wizard in Context Menu >>> --------------------
 
 // <h> Common Test Settings
 // <o> Print Output Format <0=> Plain Text <1=> XML
 // <i> Set the test results output format to plain text or XML
 #ifndef PRINT_XML_REPORT
-#define PRINT_XML_REPORT            0
+#define PRINT_XML_REPORT            1
 #endif
 // <o> Buffer size for assertions results
 // <i> Set the buffer size for assertions results buffer

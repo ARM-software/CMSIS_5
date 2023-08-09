@@ -27,8 +27,8 @@ CMSIS is open-source and collaboratively developed on
 |<a href="../../NN/html/index.html"><b>NN</b></a>|          All Cortex-M | Collection of efficient neural network kernels developed to maximize the performance and minimize the memory footprint on Cortex-M processor cores.|
 |<a href="../../RTOS/html/index.html"><b>RTOS v1</b></a>|   Cortex-M0/M0+/M3/M4/M7 | Common API for real-time operating systems along with a reference implementation based on RTX. It enables software components that can work across multiple RTOS systems.|
 |<a href="../../RTOS2/html/index.html"><b>RTOS v2</b></a>|  All Cortex-M, Cortex-A5/A7/A9 | Extends CMSIS-RTOS v1 with Armv8-M support, dynamic object creation, provisions for multi-core systems, binary compatible interface. |
-|<a href="../../Pack/html/index.html"><b>Pack</b></a>|      All Cortex-M, SecurCore, Cortex-A5/A7/A9 | Describes a delivery mechanism for software components, device parameters, and evaluation board support. It simplifies software re-use and product life-cycle management (PLM). |
-|<a href="../../Build/html/index.html"><b>Build</b></a>|      All Cortex-M, SecurCore, Cortex-A5/A7/A9 | A set of tools, software frameworks, and work flows that improve productivity, for example with Continuous Integration (CI). |
+|<a href="../../Pack/html/index.html"><b>Pack</b></a>|      All Cortex-M, SecurCore, Cortex-A5/A7/A9 | Describes a delivery mechanism for software components, device parameters, and evaluation board support. It simplifies software re-use and product life-cycle management (PLM). <br/>Is part of the <a href="https://www.open-cmsis-pack.org" target="_blank"><b>Open CMSIS Pack project</b></a>. |
+|<a href="../../Build/html/index.html"><b>Build</b></a>|      All Cortex-M, SecurCore, Cortex-A5/A7/A9 | A set of tools, software frameworks, and work flows that improve productivity, for example with Continuous Integration (CI).<br/>Is replaced with the <a href="https://github.com/Open-CMSIS-Pack/devtools/tree/main/tools" target="_blank"><b>CMSIS-Toolbox</b></a>. |
 |<a href="../../SVD/html/index.html"><b>SVD</b></a>|        All Cortex-M, SecurCore | Peripheral description of a device that can be used to create peripheral awareness in debuggers or CMSIS-Core header files.|
 |<a href="../../DAP/html/index.html"><b>DAP</b></a>|        All Cortex | Firmware for a debug unit that interfaces to the CoreSight Debug Access Port. |
 |<a href="../../Zone/html/index.html"><b>Zone</b></a>|      All Cortex-M | Defines methods to describe system resources and to partition these resources into multiple projects and execution areas. |
@@ -150,7 +150,7 @@ Directory                 |Content
 \b NN                     |<a href="../../NN/html/index.html"><b>CMSIS-NN</b></a> software library source code
 \b Pack                   |<a href="../../Pack/html/index.html"><b>CMSIS-Pack</b></a>
 \b RTOS                   |<a href="../../RTOS/html/index.html"><b>CMSIS-RTOS Version 1</b></a> along with RTX4 reference implementation
-\b RTOS2                  |<a href="../../RTOS/html/index.html"><b>CMSIS-RTOS Version 2</b></a> along with RTX5 reference implementation
+\b RTOS2                  |<a href="../../RTOS2/html/index.html"><b>CMSIS-RTOS Version 2</b></a> along with RTX5 reference implementation
 \b SVD                    |<a href="../../SVD/html/index.html"><b>CMSIS-SVD</b></a>
 \b Utilities              |PACK.xsd (<a href="../../Pack/html/packFormat.html#PackSchema"><b>CMSIS-Pack</b> schema file</a>), PackChk.exe (checking tool for software packs), \n CMSIS-SVD.xsd (<a href="../../SVD/html/schema_1_2_gr.html"><b>CMSIS-SVD</b> schema file</a>), SVDConv.exe (conversion tool for SVD files), \n CPRJ.xsd (<a href="../../Build/html/projectDescriptionSchema.html"><b>CMSIS-Build</b> schema file</a>)
 */
@@ -179,6 +179,74 @@ In addition, each CMSIS component has its own release history:
     <tr>
       <th>Version</th>
       <th>Description</th>
+    </tr>
+    <tr>
+      <td>5.9.0</td>
+      <td>
+       - CMSIS-Core(M): 5.6.0 (see revision history for details)
+         - Arm Cortex-M85 cpu support
+         - Arm China STAR-MC1 cpu support
+         - Updated system_ARMCM55.c
+       - CMSIS-Core(A): 1.2.1 (unchanged)
+       - CMSIS-Driver: 2.8.0 (unchanged)
+       - CMSIS-DSP: 1.10.0 (see revision history for details)
+       - CMSIS-NN: 3.1.0 (see revision history for details)
+         - Support for int16 convolution and fully connected for reference implementation
+         - Support for DSP extension optimization for int16 convolution and fully connected
+         - Support dilation for int8 convolution
+         - Support dilation for int8 depthwise convolution
+         - Support for int16 depthwise conv for reference implementation including dilation
+         - Support for int16 average and max pooling for reference implementation
+         - Support for elementwise add and mul int16 scalar version
+         - Support for softmax int16 scalar version
+         - Support for SVDF with 8 bit state tensor
+       - CMSIS-RTOS2: 2.1.3 (unchanged)
+          - RTX 5.5.4 (see revision history for details)
+       - CMSIS-Pack: deprecated (moved to Open-CMSIS-Pack)
+       - CMSIS-Build: deprecated (moved to CMSIS-Toolbox in Open-CMSIS-Pack)
+       - CMSIS-SVD: 1.3.9 (see revision history for details)
+       - CMSIS-DAP: 2.1.1 (see revision history for details)
+         - Allow default clock frequency to use fast clock mode
+       - CMSIS-Zone: 1.0.0 (unchanged)
+       - Devices
+         - Support for Cortex-M85
+       - Utilities
+          - SVDConv 3.3.42
+          - PackChk 1.3.95
+      </td>
+    </tr>    
+    <tr>
+      <td>5.8.0</td>
+      <td>
+        - CMSIS-Build 0.10.0 (beta)
+          - Enhancements (see revision history for details)
+        - CMSIS-Core (Cortex-M) 5.5.0
+          - Updated GCC LinkerDescription, GCC Assembler startup
+          - Added ARMv8-M Stack Sealing (to linker, startup) for toolchain ARM, GCC
+          - Changed C-Startup to default Startup.
+        - CMSIS-Core (Cortex-A) 1.2.1
+        - CMSIS-Driver 2.8.0 (unchanged)
+        - CMSIS-DSP 1.9.0
+          - Purged pre-built libs from Git
+        - CMSIS-NN 3.0.0
+          - Major interface change for functions compatible with TensorFlow Lite for Microcontroller
+          - Added optimization for SVDF kernel
+          - Improved MVE performance for fully Connected and max pool operator
+          - NULL bias support for fully connected operator in non-MVE case(Can affect performance)
+          - Expanded existing unit test suite along with support for FVP
+        - CMSIS-RTOS 2.1.3 (unchanged)
+          - RTX 5.5.3 (see revision history for details)
+        - CMSIS-Pack 1.7.2
+          - Support for Microchip XC32 compiler
+          - Support for Custom Datapath Extension
+        - CMSIS-SVD 1.3.3 (unchanged)
+        - CMSIS-DAP 2.0.0 (unchanged)
+        - CMSIS-Zone 1.0.0 (unchanged)
+        - Devices
+        - Utilities
+          - SVDConv 3.3.35
+          - PackChk 1.3.89
+      </td>
     </tr>
     <tr>
       <td>5.7.0</td>

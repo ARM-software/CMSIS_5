@@ -1,8 +1,9 @@
-/* ######################  CMSIS Support for Cortex-M4 SIMD Instructions  ####################### */
+/* ######################  CMSIS Support for Cortex-M4/7/33/35P/55 SIMD Instructions  ####################### */
 /**
 
-\defgroup  intrinsic_SIMD_gr  Intrinsic Functions for SIMD Instructions [only Cortex-M4 and Cortex-M7]
-\brief     Access to dedicated SIMD instructions.
+\defgroup  intrinsic_SIMD_gr  Intrinsic Functions for SIMD Instructions
+\brief     Access to dedicated SIMD instructions available on Armv7E-M (Cortex-M4/M7), Armv8-M Mainline
+           (Cortex-M33/M35P), and Armv8.1-M (Cortex-M55/M85).
 
 \details
 

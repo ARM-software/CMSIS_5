@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 Arm Limited. All rights reserved.
+ * Copyright (c) 2013-2023 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -23,8 +23,13 @@
  * -----------------------------------------------------------------------------
  */
 
-#include "cmsis_compiler.h"
 #include "rtx_os.h"
+
+#ifdef    CMSIS_device_header
+#include  CMSIS_device_header
+#else
+#include "cmsis_compiler.h"
+#endif
 
 #ifdef    RTE_Compiler_EventRecorder
 #include "EventRecorder.h"
@@ -121,10 +126,17 @@ __attribute__((section(".bss.os.thread.idle.stack")));
 
 // Idle Thread Attributes
 static const osThreadAttr_t os_idle_thread_attr = {
+  //lint -e{835} -e{845} "Zero argument to operator"
 #if defined(OS_IDLE_THREAD_NAME)
   OS_IDLE_THREAD_NAME,
 #else
   NULL,
+#endif
+#ifdef RTX_SAFETY_CLASS
+  osSafetyClass((uint32_t)OS_IDLE_THREAD_CLASS) |
+#endif
+#ifdef RTX_EXECUTION_ZONE
+  osThreadZone((uint32_t)OS_IDLE_THREAD_ZONE)   |
 #endif
   osThreadDetached,
   &os_idle_thread_cb,
@@ -178,10 +190,17 @@ __attribute__((section(".bss.os.thread.timer.stack")));
 
 // Timer Thread Attributes
 static const osThreadAttr_t os_timer_thread_attr = {
+  //lint -e{835} -e{845} "Zero argument to operator"
 #if defined(OS_TIMER_THREAD_NAME)
   OS_TIMER_THREAD_NAME,
 #else
   NULL,
+#endif
+#ifdef RTX_SAFETY_CLASS
+  osSafetyClass((uint32_t)OS_TIMER_THREAD_CLASS) |
+#endif
+#ifdef RTX_EXECUTION_ZONE
+  osThreadZone((uint32_t)OS_TIMER_THREAD_ZONE)   |
 #endif
   osThreadDetached,
   &os_timer_thread_cb,
@@ -208,7 +227,11 @@ __attribute__((section(".bss.os.msgqueue.mem")));
 
 // Timer Message Queue Attributes
 static const osMessageQueueAttr_t os_timer_mq_attr = {
+  //lint -e{835} -e{845} "Zero argument to operator"
   NULL,
+#ifdef RTX_SAFETY_CLASS
+  osSafetyClass((uint32_t)OS_TIMER_THREAD_CLASS) |
+#endif
   0U,
   &os_timer_mq_cb,
   (uint32_t)sizeof(os_timer_mq_cb),
@@ -363,7 +386,7 @@ __STATIC_INLINE void evr_initialize (void) {
 #endif
 #if ((OS_EVR_KERNEL_LEVEL & 0x80U) != 0U)
   (void)EventRecorderEnable(  OS_EVR_KERNEL_LEVEL & 0x0FU,    EvtRtxKernelNo,       EvtRtxKernelNo);
-  (void)EventRecorderDisable(~OS_EVR_KERNEL_LEVEL & 0x0FU,    EvtRtxKernelNo,       EvtRtxMemoryNo);
+  (void)EventRecorderDisable(~OS_EVR_KERNEL_LEVEL & 0x0FU,    EvtRtxKernelNo,       EvtRtxKernelNo);
 #endif
 #if ((OS_EVR_THREAD_LEVEL & 0x80U) != 0U)
   (void)EventRecorderEnable(  OS_EVR_THREAD_LEVEL & 0x0FU,    EvtRtxThreadNo,       EvtRtxThreadNo);
@@ -429,6 +452,24 @@ __attribute__((section(".rodata"))) =
 #endif
 #if (OS_STACK_WATERMARK != 0)
   | osRtxConfigStackWatermark
+#endif
+#ifdef RTX_SAFETY_FEATURES
+  | osRtxConfigSafetyFeatures
+ #ifdef RTX_SAFETY_CLASS
+  | osRtxConfigSafetyClass
+ #endif
+ #ifdef RTX_EXECUTION_ZONE
+  | osRtxConfigExecutionZone
+ #endif
+ #ifdef RTX_THREAD_WATCHDOG
+  | osRtxConfigThreadWatchdog
+ #endif
+ #ifdef RTX_OBJ_PTR_CHECK
+  | osRtxConfigObjPtrCheck
+ #endif
+ #ifdef RTX_SVC_PTR_CHECK
+  | osRtxConfigSVCPtrCheck
+ #endif
 #endif
   ,
   (uint32_t)OS_TICK_FREQ,
@@ -537,6 +578,31 @@ extern const uint8_t * const irqRtxLibRef;
 //lint -e{9067} "extern array declared without size"
 extern void * const osRtxUserSVC[];
 __WEAK void * const osRtxUserSVC[1] = { (void *)0 };
+
+#if (defined(RTX_SAFETY_CLASS) && defined(RTX_OBJ_PTR_CHECK) && \
+    !((OS_TIMER_THREAD_STACK_SIZE != 0) && (OS_TIMER_CB_QUEUE != 0)))
+extern void osRtxTimerDeleteClass(uint32_t safety_class, uint32_t mode);
+// Default Timer Delete Class Function.
+__WEAK void osRtxTimerDeleteClass(uint32_t safety_class, uint32_t mode) {
+  (void)safety_class;
+  (void)mode;
+}
+#endif
+
+#ifdef RTX_THREAD_WATCHDOG
+// Default Watchdog Alarm Handler.
+__WEAK uint32_t osWatchdogAlarm_Handler (osThreadId_t thread_id) {
+  (void)thread_id;
+  return 0U;
+}
+#endif
+
+#ifdef RTX_EXECUTION_ZONE
+// Default Zone Setup Function.
+__WEAK void osZoneSetup_Callback (uint32_t zone) {
+  (void)zone;
+}
+#endif
 
 
 // OS Sections
@@ -647,12 +713,37 @@ void $Sub$$__iar_data_init3 (void) {
 
 // RTOS Kernel Pre-Initialization Hook
 #if (defined(OS_EVR_INIT) && (OS_EVR_INIT != 0))
-void osRtxKernelPreInit (void);
-void osRtxKernelPreInit (void) {
+void osRtxKernelBeforeInit (void);
+void osRtxKernelBeforeInit (void) {
   if (osKernelGetState() == osKernelInactive) {
     evr_initialize();
   }
 }
+#endif
+
+
+// C/C++ Standard Library Floating-point Initialization
+// ====================================================
+
+#if ( !defined(RTX_NO_FP_INIT_CLIB) && \
+     ( defined(__CC_ARM) || \
+      (defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050))) && \
+      !defined(__MICROLIB))
+
+#if  (!defined(__ARM_ARCH_7A__) && \
+      (defined(__FPU_PRESENT) && (__FPU_PRESENT == 1U)) && \
+      (defined(__FPU_USED   ) && (__FPU_USED    == 1U)))
+
+extern void $Super$$_fp_init (void);
+
+void $Sub$$_fp_init (void);
+void $Sub$$_fp_init (void) {
+  $Super$$_fp_init();
+  FPU->FPDSCR = __get_FPSCR();
+}
+
+#endif
+
 #endif
 
 
@@ -715,6 +806,24 @@ void *__user_perthread_libspace (void) {
 
   //lint -e{9087} "cast between pointers to different object types"
   return (void *)&os_libspace[n][0];
+}
+
+// Free libspace for specified thread
+static void user_perthread_libspace_free (osThreadId_t id) {
+  uint32_t n;
+
+  for (n = 0U; n < (uint32_t)OS_THREAD_LIBSPACE_NUM; n++) {
+    if (os_libspace_id[n] == id) {
+      os_libspace_id[n] = NULL;
+      break;
+    }
+  }
+}
+
+/// RTOS Thread Before Free Hook
+void osRtxThreadBeforeFree (osThreadId_t id);
+void osRtxThreadBeforeFree (osThreadId_t id) {
+  user_perthread_libspace_free(id);
 }
 
 // Mutex identifier

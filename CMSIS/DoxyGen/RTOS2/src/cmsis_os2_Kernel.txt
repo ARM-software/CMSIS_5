@@ -208,6 +208,7 @@ it was locked, \token{0} if it was unlocked), or a negative number representing 
 Possible \ref osStatus_t return values:
 - \em osError if an unspecific error occurred.
 - \em osErrorISR if called from an \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routine".
+- \em osErrorSafetyClass if the calling thread safety class is lower than the kernel protect safety class.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
@@ -260,9 +261,8 @@ negative number representing an error code otherwise (refer to \ref osStatus_t).
 
 Possible \ref osStatus_t return values:
 - \em osError if an unspecific error occurred.
-- \em osErrorISR if called from an \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routine".
-
-\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+- \em osErrorISR if called from interrupt other than fault or \ref osWatchdogAlarm_Handler.
+- \em osErrorSafetyClass if the calling thread safety class is lower than the kernel protect safety class.
 
 <b>Code Example</b>
 \code
@@ -471,6 +471,91 @@ The function \b osKernelGetSysTimerFreq returns the frequency of the current RTO
 
 \note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn osStatus_t osKernelProtect (uint32_t safety_class);
+\details
+The function \b osKernelProtect configures kernel access protection. After its successful execution, only threads with
+safety class equal or higher than the \a safety_class specified in the argument can execute kernel control functions.
+- \ref osKernelLock
+- \ref osKernelUnlock
+- \ref osKernelRestoreLock
+- \ref osKernelSuspend
+- \ref osKernelResume
+- \ref osKernelProtect
+
+Possible \ref osStatus_t return values:
+- \em osOK in case of success.
+- \em osErrorParameter if \a safety_class is invalid.
+- \em osError if kernel is not in ready or running state.
+- \em osErrorISR if called from an \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routine".
+- \em osErrorSafetyClass if the calling thread safety class is lower than the kernel protect safety class.
+
+\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+
+<b>Code Example:</b>
+\code
+#include "cmsis_os2.h"
+ 
+void ProtectKernelControlFunctions (void) {
+  osStatus_t status;
+ 
+  status = osKernelProtect(4U); // Enable Kernel Control for threads with safety class 4 or higher
+  // verify status value here.
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn osStatus_t osKernelDestroyClass (uint32_t safety_class, uint32_t mode);
+\details
+The function \b osKernelDestroyClass destroys RTOS objects based on safety class assignment. \a safety_class provides the reference safety class value, while \a mode is considered as a bitmap that additionally specifies the safety classes to be destroyed.
+
+If \ref osSafetyWithSameClass is set in \a mode than the RTOS objects with safety class value equal to \a safety_class will be destroyed.
+<br>
+If \ref osSafetyWithLowerClass is set in \a mode than the RTOS objects with safety class value lower than \a safety_class will be destroyed.
+
+Possible \ref osStatus_t return values:
+- \em osOK in case of success.
+- \em osErrorParameter if \a safety_class is invalid.
+- \em osErrorResource if no other \ref ThreadStates "READY" thread exists.
+- \em osErrorISR if called from interrupt other than \ref osWatchdogAlarm_Handler.
+- \em osErrorSafetyClass if the calling thread safety class is lower than the kernel protect safety class.
+
+<b>Code Example:</b>
+\code
+#include "cmsis_os2.h"
+ 
+void DestroyNonCriticalClasses (void) {
+  osStatus_t status;
+ 
+  status = osKernelDestroyClass(4U, osSafetyWithSameClass | osSafetyWithLowerClass); // Destroy objects with safety class 4 or lower
+  // verify status value here.
+}
+\endcode
+*/
+
+/*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
+/**
+\fn void osFaultResume (void);
+\details
+Resume normal RTOS operation when exiting exception faults.
+
+<b>Code Example:</b>
+\code
+void HardFault_Handler (void) {
+  __ASM volatile (
+    "...                          \n\t" // Enter assembly and handle faults
+    "...                          \n\t"
+    "ldr  r0,=osFaultResume       \n\t" // Before exiting the handler load and
+    "bx   r0                      \n\t" // jump to osFaultResume
+  );
+}
+\endcode
+*/
+
 /// @}
 
 // these struct members must stay outside the group to avoid double entries in documentation

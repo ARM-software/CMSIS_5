@@ -2,11 +2,11 @@
  * @file     system_ARMCM55.h
  * @brief    CMSIS Device System Header File for
  *           ARMCM55 Device
- * @version  V1.0.0
- * @date     20. February 2020
+ * @version  V1.0.1
+ * @date     11. July 2022
  ******************************************************************************/
 /*
- * Copyright (c) 2020 Arm Limited. All rights reserved.
+ * Copyright (c) 2020-2022 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -29,6 +29,8 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#include <stdint.h>
 
 /**
   \brief Exception / Interrupt Handler Function Prototype

@@ -615,13 +615,15 @@ Examples:
 The following CMSIS-RTOS2 functions can be called from threads and Interrupt Service Routines (ISR):
   - \ref osKernelGetInfo, \ref osKernelGetState,
     \ref osKernelGetTickCount, \ref osKernelGetTickFreq, \ref osKernelGetSysTimerCount, \ref osKernelGetSysTimerFreq
-  - \ref osThreadGetId, \ref osThreadFlagsSet
-  - \ref osEventFlagsSet, \ref osEventFlagsClear, \ref osEventFlagsGet, \ref osEventFlagsWait
-  - \ref osSemaphoreAcquire, \ref osSemaphoreRelease, \ref osSemaphoreGetCount
-  - \ref osMemoryPoolAlloc, \ref osMemoryPoolFree, \ref osMemoryPoolGetCapacity, \ref osMemoryPoolGetBlockSize,
-    \ref osMemoryPoolGetCount, \ref osMemoryPoolGetSpace
-  - \ref osMessageQueuePut, \ref osMessageQueueGet, \ref osMessageQueueGetCapacity, \ref osMessageQueueGetMsgSize,
-    \ref osMessageQueueGetCount, \ref osMessageQueueGetSpace
+  - \ref osThreadGetName, \ref osThreadGetId, \ref osThreadFlagsSet
+  - \ref osTimerGetName
+  - \ref osEventFlagsGetName, \ref osEventFlagsSet, \ref osEventFlagsClear, \ref osEventFlagsGet, \ref osEventFlagsWait
+  - \ref osMutexGetName
+  - \ref osSemaphoreGetName, \ref osSemaphoreAcquire, \ref osSemaphoreRelease, \ref osSemaphoreGetCount
+  - \ref osMemoryPoolGetName, \ref osMemoryPoolAlloc, \ref osMemoryPoolFree,
+    \ref osMemoryPoolGetCapacity, \ref osMemoryPoolGetBlockSize, \ref osMemoryPoolGetCount, \ref osMemoryPoolGetSpace
+  - \ref osMessageQueueGetName, \ref osMessageQueuePut, \ref osMessageQueueGet, \ref osMessageQueueGetCapacity,
+    \ref osMessageQueueGetMsgSize, \ref osMessageQueueGetCount, \ref osMessageQueueGetSpace
 
 Functions that cannot be called from an ISR are verifying the interrupt status and return the status code \b osErrorISR, in
 case they are called from an ISR context. In some implementations, this condition might be caught using the HARD_FAULT
@@ -740,7 +742,7 @@ The default, Arm C libraries use mutex functions to
 
 The file "RTX_Config.h" defines the configuration parameters of CMSIS-RTOS RTX and must be part of every project that is
 using the CMSIS-RTOS RTX kernel. The configuration options are explained in detail in the following sections:
-- \ref systemConfig covers system-wide settings for the global memory pool, tick frequency, ISR event buffer and round-robin thread switching.
+- \ref systemConfig covers system-wide settings for the global memory pool, tick frequency, ISR event buffer and round-robin thread switching as well as process isolation-related features.
 - \ref threadConfig provides several parameters to configure the \ref CMSIS_RTOS_ThreadMgmt functions.
 - \ref timerConfig provides several parameters to configure the \ref CMSIS_RTOS_TimerMgmt functions.
 - \ref eventFlagsConfig provides several parameters to configure the \ref CMSIS_RTOS_EventFlags functions.
@@ -774,14 +776,20 @@ round-robin thread switching.
 <b>System Configuration Options</b>
 \image html config_wizard_system.png "RTX_Config.h: System Configuration"
 
-Name                                   | \#define                 | Description
----------------------------------------|--------------------------|----------------------------------------------------------------
-Global Dynamic Memory size [bytes]     | \c OS_DYNAMIC_MEM_SIZE   | Defines the combined global dynamic memory size for the \ref GlobalMemoryPool. Default value is \token{32768}. Value range is \token{[0-1073741824]} bytes, in multiples of \token{8} bytes.
-Kernel Tick Frequency (Hz)             | \c OS_TICK_FREQ          | Defines base time unit for delays and timeouts in Hz. Default: 1000Hz = 1ms period.
-Round-Robin Thread switching           | \c OS_ROBIN_ENABLE       | Enables Round-Robin Thread switching.
-Round-Robin Timeout                    | \c OS_ROBIN_TIMEOUT      | Defines how long a thread will execute before a thread switch. Default value is \token{5}. Value range is \token{[1-1000]}.
-ISR FIFO Queue                         | \c OS_ISR_FIFO_QUEUE     | RTOS Functions called from ISR store requests to this buffer. Default value is \token{16 entries}. Value range is \token{[4-256]} entries in multiples of \token{4}.
-Object Memory usage counters           | \c OS_OBJ_MEM_USAGE      | Enables object memory usage counters to evaluate the maximum memory pool requirements individually for each RTOS object type.
+Name                                        | \#define                 | Description
+--------------------------------------------|--------------------------|----------------------------------------------------------------
+\ref systemConfig_glob_mem                  | \c OS_DYNAMIC_MEM_SIZE   | Defines the combined global dynamic memory size for the \ref GlobalMemoryPool. Default value is \token{32768}. Value range is \token{[0-1073741824]} bytes, in multiples of \token{8} bytes.
+Kernel Tick Frequency (Hz)                  | \c OS_TICK_FREQ          | Defines base time unit for delays and timeouts in Hz. Default value is \token{1000} (1000 Hz = 1 ms period).
+\ref systemConfig_rr                        | \c OS_ROBIN_ENABLE       | Enables Round-Robin Thread switching. Default value is \token{1} (enabled).
+&nbsp;&nbsp;&nbsp;Round-Robin Timeout       | \c OS_ROBIN_TIMEOUT      | Defines how long a thread will execute before a thread switch. Default value is \token{5}. Value range is \token{[1-1000]}.
+\ref safetyConfig_safety                    | \c OS_SAFETY_FEATURES    | Enables safety-related features as configured in this group. Default value is \token{1} (enabled).
+&nbsp;&nbsp;&nbsp;Safety class              | \c OS_SAFETY_CLASS       | Enables \ref rtos_process_isolation_safety_class functionality. Default value is \token{1} (enabled).
+&nbsp;&nbsp;&nbsp;MPU Protected Zone        | \c OS_EXECUTION_ZONE     | Enables \ref rtos_process_isolation_mpu. Default value is \token{1} (enabled).
+&nbsp;&nbsp;&nbsp;Thread Watchdog           | \c OS_THREAD_WATCHDOG    | Enables \ref rtos_process_isolation_thread_wdt functionality. Default value is \token{1} (enabled).
+&nbsp;&nbsp;&nbsp;Object Pointer checking   | \c OS_OBJ_PTR_CHECK | Enables verification of object pointer alignment and memory region. Default value is \token{0} (disabled).
+&nbsp;&nbsp;&nbsp;SVC Function Pointer checking | \c OS_SVC_PTR_CHECK | Enables verification of SVC function pointer alignment and memory region. Default value is \token{0} (disabled).
+\ref systemConfig_isr_fifo                  | \c OS_ISR_FIFO_QUEUE     | RTOS Functions called from ISR store requests to this buffer. Default value is \token{16 entries}. Value range is \token{[4-256]} entries in multiples of \token{4}.
+\ref systemConfig_usage_counters            | \c OS_OBJ_MEM_USAGE      | Enables object memory usage counters to evaluate the maximum memory pool requirements individually for each RTOS object type. Default value is \token{0} (disabled).
 
 \subsection systemConfig_glob_mem Global Dynamic Memory size [bytes]
 Refer to \ref GlobalMemoryPool.
@@ -807,6 +815,52 @@ ready to run, the current running thread resumes it execution.
 Round-Robin multitasking is controlled with the <b>\#define OS_ROBIN_ENABLE</b>. The time slice period is configured (in RTX
 timer ticks) with the <b>\#define OS_ROBIN_TIMEOUT</b>.
 
+\subsection safetyConfig_safety Safety features (Source variant only)
+
+Safety features group in \ref systemConfig enables individual selection of safety-related functionalities.
+It requires that RTX is used in the source variant.
+
+It also includes:
+- Thread functions: \ref osThreadProtectPrivileged
+
+<b>MPU Protected Zone</b><br>
+Enables \ref rtos_process_isolation_mpu functionality in the system. This includes:
+- Thread attributes: \ref osThreadZone
+- Thread functions: \ref osThreadGetZone, \ref osThreadTerminateZone
+- Zone Management: \ref osZoneSetup_Callback
+
+When enabled, the MPU Protected Zone values also need to be specified for the threads created by the kernel:
+- For Idle thread in \ref threadConfig
+- For Timer thread in \ref timerConfig
+
+<b>Safety class</b><br>
+Enables \ref rtos_process_isolation_safety_class functionality in the system RTOS. This includes:
+- Object attributes: \ref osSafetyClass
+- Kernel functions: \ref osKernelProtect, \ref osKernelDestroyClass
+- Thread functions: \ref osThreadGetClass, \ref osThreadSuspendClass, \ref osThreadResumeClass
+
+When enabled, the safety class values need to be specified for threads created  by the kernel:
+- For Idle thread in \ref threadConfig
+- For Timer thread in \ref timerConfig
+
+<b>Thread Watchdog</b><br>
+Enables \ref rtos_process_isolation_thread_wdt functionality in the system RTOS. This includes:
+- Thread functions: \ref osThreadFeedWatchdog
+- Handler functions: \ref osWatchdogAlarm_Handler
+
+<b>Object Pointer checking</b><br>
+Enables verification of object pointer alignment and memory region.
+
+Before accessing RTX objects the RTX kernel verifies that obtained object pointer is valid (at least not \token{NULL}). When <i>Object Pointer checking</i> is enabled the kernel will additionally verify that
+the control block of the object is located in the memory section allocated for such object type, and that it is correctly aligned within that memory section.
+
+If static memory allocation is used, the user shall place the control blocks of the objects into the correct named memory sections as described in \ref StaticObjectMemory.
+For object-specific and dynamic memory allocations the kernel will place the objects correctly.
+
+<b>SVC Function Pointer checking</b><br>
+Enables verification of SVC function pointer alignment and memory region.
+
+Many kernel functions are executed in SVC context. Corresponding function pointers are placed by the kernel into a special named memory section. If <i>SVC Function Pointer checking</i> is enabled the kernel before calling an SVC function will additionally verify that its pointer is located in the expected memory section and is correctly aligned within that memory region.
 
 \subsection systemConfig_isr_fifo ISR FIFO Queue
 The RTX functions (\ref CMSIS_RTOS_ISR_Calls), when called from and interrupt handler, store the request type and optional
@@ -843,9 +897,11 @@ Total Stack size [bytes] for user Threads with user-provided Stack size    | \c 
 Default Thread Stack size [bytes]                        | \c OS_STACK_SIZE    | Defines stack size for threads with zero stack size specified. Default value is \token{3072}. Value range is \token{[96-1073741824]} Bytes, in multiples of \token{8}. 
 Idle Thread Stack size [bytes]                           | \c OS_IDLE_THREAD_STACK_SIZE              | Defines stack size for Idle thread. Default value is \token{512}. Value range is \token{[72-1073741824]} bytes, in multiples of \token{8}. 
 Idle Thread TrustZone Module ID                          | \c OS_IDLE_THREAD_TZ_MOD_ID    | Defines the \ref osThreadAttr_t::tz_module "TrustZone Module ID" the Idle Thread shall use. This needs to be set to a non-zero value if the Idle Thread need to call secure functions. Default value is \token{0}.
+Idle Thread Safety Class                                 | \c OS_IDLE_THREAD_CLASS        | Defines the the \ref rtos_process_isolation_safety_class "Safety Class" for the Idle thread. Applied only if Safety Class functionality is enabled in \ref systemConfig. Default value is \token{0}.
+Idle Thread Zone                                         | \c OS_IDLE_THREAD_ZONE         | Defines the \ref rtos_process_isolation_mpu "MPU Protected Zone" for the Idle thread. Applied only if MPU protected Zone functionality is enabled in \ref systemConfig. Default value is \token{0}.
 Stack overrun checking                                   | \c OS_STACK_CHECK   | Enable stack overrun checks at thread switch. 
 Stack usage watermark                                    | \c OS_STACK_WATERMARK    | Initialize thread stack with watermark pattern for analyzing stack usage. Enabling this option increases significantly the execution time of thread creation.
-Processor mode for Thread execution                      | \c OS_PRIVILEGE_MODE     | Controls the processor mode. Default value is \token{Privileged} mode. Value range is \token{[0=Unprivileged; 1=Privileged]} mode.
+Processor mode for Thread execution                      | \c OS_PRIVILEGE_MODE     | Controls the default processor mode when not specified through thread attributes \ref osThreadUnprivileged or \ref osThreadPrivileged. Default value is \token{Unprivileged} mode. Value range is \token{[0=Unprivileged; 1=Privileged]} mode.
 
 \subsection threadConfig_countstack Configuration of Thread Count and Stack Space
 
@@ -887,8 +943,10 @@ Stack usage watermark is controlled with the define \c OS_STACK_WATERMARK.
 Enabling this option significantly increases the execution time of \ref osThreadNew (depends on thread stack size).
  
 \subsection threadConfig_procmode Processor Mode for Thread Execution
-RTX5 allows to execute threads in unprivileged or privileged processor mode. The processor mode is controlled with the
+RTX5 allows to execute threads in unprivileged or privileged processor mode. The processor mode is configured for all threads with the
 define \c OS_PRIVILEGE_MODE.
+
+It is also possible to specify the privilege level for individual threads. For that use \ref osThreadUnprivileged and \ref osThreadPrivileged defines in the \e attr_bits of \ref osThreadAttr_t argument when creating a thread with \ref osThreadNew.
  
 In \b unprivileged processor mode, the application software:
 - has limited access to the MSR and MRS instructions, and cannot use the CPS instruction.
@@ -912,6 +970,8 @@ Number of Timer objects                | \c OS_TIMER_NUM          | Defines maxi
 Timer Thread Priority                  | \c OS_TIMER_THREAD_PRIO        | Defines priority for timer thread. Default value is \token{40}. Value range is \token{[8-48]}, in multiples of \token{8}. The numbers have the following priority correlation: \token{8=Low}; \token{16=Below Normal}; \token{24=Normal}; \token{32=Above Normal}; \token{40=High}; \token{48=Realtime} 
 Timer Thread Stack size [bytes]        | \c OS_TIMER_THREAD_STACK_SIZE  | Defines stack size for Timer thread. May be set to 0 when timers are not used. Default value is \token{512}. Value range is \token{[0-1073741824]}, in multiples of \token{8}.
 Timer Thread TrustZone Module ID       | \c OS_TIMER_THREAD_TZ_MOD_ID   | Defines the \ref osThreadAttr_t::tz_module "TrustZone Module ID" the Timer Thread shall use. This needs to be set to a non-zero value if any Timer Callbacks need to call secure functions. Default value is \token{0}.
+Timer Thread Safety Class              | \c OS_TIMER_THREAD_CLASS        | Defines the the \ref rtos_process_isolation_safety_class "Safety Class" for the Timer thread. Applied only if Safety class functionality is enabled in \ref systemConfig. Default value is \token{0}.
+Timer Thread Zone                      | \c OS_TIMER_THREAD_ZONE         | Defines the \ref rtos_process_isolation_mpu "MPU Protected Zone" for the Timer thread. Applied only if MPU protected Zone functionality is enabled in \ref systemConfig. Default value is \token{0}.
 Timer Callback Queue entries           | \c OS_TIMER_CB_QUEUE           | Number of concurrent active timer callback functions. May be set to 0 when timers are not used. Default value is \token{4}. Value range is \token{[0-256]}.
 
 \subsection timerConfig_obj Object-specific memory allocation
@@ -1125,12 +1185,15 @@ to the <b>RTX_Config.h</b> file:
 \c EVR_RTX_KERNEL_LOCKED_DISABLE, \c EVR_RTX_KERNEL_UNLOCK_DISABLE, \c EVR_RTX_KERNEL_UNLOCKED_DISABLE,
 \c EVR_RTX_KERNEL_RESTORE_LOCK_DISABLE, \c EVR_RTX_KERNEL_LOCK_RESTORED_DISABLE, \c EVR_RTX_KERNEL_SUSPEND_DISABLE,
 \c EVR_RTX_KERNEL_SUSPENDED_DISABLE, \c EVR_RTX_KERNEL_RESUME_DISABLE, \c EVR_RTX_KERNEL_RESUMED_DISABLE,
+\c EVR_RTX_KERNEL_PROTECT_DISABLE, \c EVR_RTX_KERNEL_PROTECTED_DISABLE,
 \c EVR_RTX_KERNEL_GET_TICK_COUNT_DISABLE, \c EVR_RTX_KERNEL_GET_TICK_FREQ_DISABLE,
-\c EVR_RTX_KERNEL_GET_SYS_TIMER_COUNT_DISABLE, \c EVR_RTX_KERNEL_GET_SYS_TIMER_FREQ_DISABLE
+\c EVR_RTX_KERNEL_GET_SYS_TIMER_COUNT_DISABLE, \c EVR_RTX_KERNEL_GET_SYS_TIMER_FREQ_DISABLE,
+\c EVR_RTX_KERNEL_DESTROY_CLASS_DISABLE, \c EVR_RTX_KERNEL_ERROR_NOTIFY_DISABLE
 
 \b Thread \b events \n
 \c EVR_RTX_THREAD_ERROR_DISABLE, \c EVR_RTX_THREAD_NEW_DISABLE, \c EVR_RTX_THREAD_CREATED_DISABLE,
 \c EVR_RTX_THREAD_GET_NAME_DISABLE, \c EVR_RTX_THREAD_GET_ID_DISABLE, \c EVR_RTX_THREAD_GET_STATE_DISABLE,
+\c EVR_RTX_THREAD_GET_CLASS_DISABLE, \c EVR_RTX_THREAD_GET_ZONE_DISABLE,
 \c EVR_RTX_THREAD_GET_STACK_SIZE_DISABLE, \c EVR_RTX_THREAD_GET_STACK_SPACE_DISABLE, \c EVR_RTX_THREAD_SET_PRIORITY_DISABLE,
 \c EVR_RTX_THREAD_PRIORITY_UPDATED_DISABLE, \c EVR_RTX_THREAD_GET_PRIORITY_DISABLE, \c EVR_RTX_THREAD_YIELD_DISABLE,
 \c EVR_RTX_THREAD_SUSPEND_DISABLE, \c EVR_RTX_THREAD_SUSPENDED_DISABLE, \c EVR_RTX_THREAD_RESUME_DISABLE,
@@ -1138,7 +1201,10 @@ to the <b>RTX_Config.h</b> file:
 \c EVR_RTX_THREAD_JOIN_DISABLE, \c EVR_RTX_THREAD_JOIN_PENDING_DISABLE, \c EVR_RTX_THREAD_JOINED_DISABLE,
 \c EVR_RTX_THREAD_BLOCKED_DISABLE, \c EVR_RTX_THREAD_UNBLOCKED_DISABLE, \c EVR_RTX_THREAD_PREEMPTED_DISABLE,
 \c EVR_RTX_THREAD_SWITCHED_DISABLE, \c EVR_RTX_THREAD_EXIT_DISABLE, \c EVR_RTX_THREAD_TERMINATE_DISABLE,
-\c EVR_RTX_THREAD_DESTROYED_DISABLE, \c EVR_RTX_THREAD_GET_COUNT_DISABLE, \c EVR_RTX_THREAD_ENUMERATE_DISABLE
+\c EVR_RTX_THREAD_DESTROYED_DISABLE, \c EVR_RTX_THREAD_GET_COUNT_DISABLE, \c EVR_RTX_THREAD_ENUMERATE_DISABLE,
+\c EVR_RTX_THREAD_FEED_WATCHDOG_DISABLE, \c EVR_RTX_THREAD_FEED_WATCHDOG_DONE_DISABLE, \c EVR_RTX_THREAD_WATCHDOG_EXPIRED_DISABLE,
+\c EVR_RTX_THREAD_PROTECT_PRIVILEGED_DISABLE, \c EVR_RTX_THREAD_PRIVILEGED_PROTECTED_DISABLE,
+\c EVR_RTX_THREAD_SUSPEND_CLASS_DISABLE, \c EVR_RTX_THREAD_RESUME_CLASS_DISABLE, \c EVR_RTX_THREAD_TERMINATE_ZONE_DISABLE
 
 \b Generic \b wait \b events \n
 \c EVR_RTX_DELAY_ERROR_DISABLE, \c EVR_RTX_DELAY_DISABLE, \c EVR_RTX_DELAY_UNTIL_DISABLE,
@@ -1264,9 +1330,9 @@ System Control Block (SBC) | To control and setup the processor exceptions inclu
 Interrupt Control          | The CMSIS-Core functions __disable_irq and __enable_irq to control the interrupt system via the CPSR core register.
 
 The RTX implements interfaces to the processor hardware in following files: 
- - <b>%irq_armv6m.s</b> defines exception handlers for Cortex-M0/M0+
+ - <b>%irq_armv6m.S</b> defines exception handlers for Cortex-M0/M0+
 \if ARMv8M
- - <b>%irq_armv8mbl.s</b> defines exception handlers for Cortex-M23
+ - <b>%irq_armv8mbl.S</b> defines exception handlers for Cortex-M23
 \endif 
  - <b>%rtx_core_cm.h</b> defines processor specific helper functions and the interfaces to Core Registers and Core Peripherals.
  - <b>%os_tick.h</b> is the \ref CMSIS_RTOS_TickAPI that defines the interface functions to the SysTick timer.
@@ -1292,9 +1358,9 @@ NVIC Interface             | CMSIS-Core function \b NVIC_GetPriorityGrouping is 
 LDREX, STREX instructions  | Exclusive access instructions \b LDREX and \b STREX are used to implement atomic execution without disabling interrupts.
 
 The interface files to the processor hardware are: 
- - <b>%irq_armv7m.s</b> defines exception handlers for Cortex-M3 and Cortex-M4/M7.
+ - <b>%irq_armv7m.S</b> defines exception handlers for Cortex-M3 and Cortex-M4/M7.
 \if ARMv8M 
- - <b>%irq_armv8mml.s</b> defines exception handlers for Cortex-M33/M35P
+ - <b>%irq_armv8mml.S</b> defines exception handlers for Cortex-M33/M35P
 \endif
  - <b>%rtx_core_cm.h</b> defines processor specific helper functions and the interfaces to Core Registers and Core Peripherals.
  - <b>%os_tick.h</b> is the \ref CMSIS_RTOS_TickAPI that defines the interface functions to the SysTick timer.
@@ -1314,7 +1380,7 @@ LDREX, STREX instruction   | Atomic execution avoids the requirement to disable 
 Interrupt Controller       | An interrupt controller interface is required to setup and control Timer Peripheral interrupt. The interface for Arm GIC (Generic Interrupt Controller) is implemented in %irq_ctrl_gic.c using the <a class="el" href="../../Core_A/html/group__irq__ctrl__gr.html">IRQ Controller API</a>.
 
 The interface files to the processor hardware are: 
- - <b>%irq_armv7a.s</b> defines SVC, IRQ, Data Abort, Prefetch Abort and Undefined Instruction exception handlers.
+ - <b>%irq_armv7a.S</b> defines SVC, IRQ, Data Abort, Prefetch Abort and Undefined Instruction exception handlers.
  - <b>%rtx_core_ca.h</b> defines processor specific helper functions and the interfaces to Core Registers and Core Peripherals.
  - <b>%os_tick.h</b> is the \ref CMSIS_RTOS_TickAPI that defines the interface functions to the timer peripheral.
  - <b>%irq_ctrl.h</b> is the <a class="el" href="../../Core_A/html/group__irq__ctrl__gr.html">IRQ Controller API</a> that defines the interface functions to the interrupt controller.
@@ -1377,7 +1443,7 @@ The following table lists the control block sizes:
 
 Category                      | Control Block Size Attribute      | Size       | \#define symbol
 :-----------------------------|:----------------------------------|:-----------|:--------------------
-\ref CMSIS_RTOS_ThreadMgmt    | \ref osThreadAttr_t::cb_mem       | 68 bytes   | \ref osRtxThreadCbSize
+\ref CMSIS_RTOS_ThreadMgmt    | \ref osThreadAttr_t::cb_mem       | 80 bytes   | \ref osRtxThreadCbSize
 \ref CMSIS_RTOS_TimerMgmt     | \ref osTimerAttr_t::cb_mem        | 32 bytes   | \ref osRtxTimerCbSize
 \ref CMSIS_RTOS_EventFlags    | \ref osEventFlagsAttr_t::cb_mem   | 16 bytes   | \ref osRtxEventFlagsCbSize
 \ref CMSIS_RTOS_MutexMgmt     | \ref osMutexAttr_t::cb_mem        | 28 bytes   | \ref osRtxMutexCbSize
@@ -1564,10 +1630,10 @@ Keil RTX5 is developed and tested using the common toolchains and development en
 RTX5 is initially developed and optimized using Arm Compiler and Arm/Keil MDK.
 The current release is tested with the following versions:
 <ul>
- <li>Arm Compiler 5.06 Update 6</li>
- <li>Arm Compiler 6.6.2 (Long Term Maintenance)</li>
- <li>Arm Compiler 6.9</li>
- <li>RTOS-aware debugging with uVision 5.24</li>
+ <li>Arm Compiler 5.06 Update 7</li>
+ <li>Arm Compiler 6.6.4 (Long Term Maintenance)</li>
+ <li>Arm Compiler 6.19</li>
+ <li>RTOS-aware debugging with uVision 5.38</li>
 </ul>
 
 
@@ -1585,7 +1651,7 @@ RTX5 has been ported to the IAR Embedded Workbench. The following releases are k
 RTX5 has also been ported to support GCC, maintenance mainly relays on community contribution.
 Active development is currently tested with:
 <ul>
- <li>GNU Tools for Arm Embedded 6.3.1 20170620</li>
+ <li>GNU Arm Embedded Toolchain 10-2020-q4-major (10.2.1 20201103)</li>
 </ul>
 
 \endif
@@ -1620,7 +1686,7 @@ The CMSIS-RTOS2 RTX v5 implementation is using the following <b>Namespace</b> pr
 \page misraCompliance5 MISRA C:2012 Compliance 
 The RTX5 C source files use <b><a class=el href="http://www.misra.org.uk/" target="_blank">MISRA C:2012</a></b> guidelines as underlying coding standard.
 
-For MISRA validation, <b><a class=el href="http://www.gimpel.com/" target="_blank">PC-lint</a></b> V9.00L is used with configuration for Arm Compiler V6.16.
+For MISRA validation, <b><a class=el href="http://www.gimpel.com/" target="_blank">PC-lint</a></b> V9.00L is used with configuration for Arm Compiler V6.19.
 The PC-Lint validation setup is part of the project file <b>.\\CMSIS\\RTOS2\\RTX\\Library\\ARM\\MDK\\RTX_CM.uvprojx</b> as shown below. 
 Refer to <b><a class=el href="https://www.keil.com/support/man/docs/uv4/uv4_ut_pclint_validation.htm" target="_blank">Setup for PC-Lint</a></b> for more information.
 
@@ -2126,7 +2192,10 @@ threads are kept alive until one explicitly calls \ref osThreadJoin.
    - \ref osKernelSuspend : \copybrief osKernelSuspend
    - \ref osKernelGetTickCount : \copybrief osKernelGetTickCount
    - \ref osKernelGetTickFreq : \copybrief osKernelGetTickFreq
-
+   - \ref osKernelDestroyClass : \copybrief osKernelDestroyClass
+   - \ref osKernelProtect : \copybrief osKernelProtect
+   - \ref osFaultResume : \copybrief osFaultResume
+<br><br>
  - \ref CMSIS_RTOS_ThreadMgmt
    - \ref osThreadDetach : \copybrief osThreadDetach
    - \ref osThreadEnumerate : \copybrief osThreadEnumerate
@@ -2145,13 +2214,22 @@ threads are kept alive until one explicitly calls \ref osThreadJoin.
    - \ref osThreadSuspend : \copybrief osThreadSuspend
    - \ref osThreadTerminate : \copybrief osThreadTerminate
    - \ref osThreadYield : \copybrief osThreadYield
-
+   - \ref osThreadGetClass : \copybrief osThreadGetClass
+   - \ref osThreadGetZone : \copybrief osThreadGetZone
+   - \ref osThreadFeedWatchdog : \copybrief osThreadFeedWatchdog
+   - \ref osThreadProtectPrivileged : \copybrief osThreadProtectPrivileged
+   - \ref osThreadResumeClass : \copybrief osThreadResumeClass
+   - \ref osThreadSuspendClass : \copybrief osThreadSuspendClass
+   - \ref osThreadTerminateZone : \copybrief osThreadTerminateZone
+   - \ref osWatchdogAlarm_Handler : \copybrief osWatchdogAlarm_Handler
+   - \ref osZoneSetup_Callback : \copybrief osZoneSetup_Callback
+<br><br>
  - \ref CMSIS_RTOS_ThreadFlagsMgmt
    - \ref osThreadFlagsSet : \copybrief osThreadFlagsSet
    - \ref osThreadFlagsClear : \copybrief osThreadFlagsClear
    - \ref osThreadFlagsGet : \copybrief osThreadFlagsGet
    - \ref osThreadFlagsWait : \copybrief osThreadFlagsWait
-
+<br><br>
  - \ref CMSIS_RTOS_EventFlags
    - \ref osEventFlagsGetName : \copybrief osEventFlagsGetName
    - \ref osEventFlagsNew : \copybrief osEventFlagsNew
@@ -2160,11 +2238,11 @@ threads are kept alive until one explicitly calls \ref osThreadJoin.
    - \ref osEventFlagsClear : \copybrief osEventFlagsClear
    - \ref osEventFlagsGet : \copybrief osEventFlagsGet
    - \ref osEventFlagsWait : \copybrief osEventFlagsWait
-
+<br><br>
  - \ref CMSIS_RTOS_Wait
    - \ref osDelay : \copybrief osDelay
    - \ref osDelayUntil : \copybrief osDelayUntil
-
+<br><br>
  - \ref CMSIS_RTOS_TimerMgmt
    - \ref osTimerDelete : \copybrief osTimerDelete
    - \ref osTimerGetName : \copybrief osTimerGetName
@@ -2172,7 +2250,7 @@ threads are kept alive until one explicitly calls \ref osThreadJoin.
    - \ref osTimerNew : \copybrief osTimerNew
    - \ref osTimerStart : \copybrief osTimerStart
    - \ref osTimerStop : \copybrief osTimerStop
-
+<br><br>
  - \ref CMSIS_RTOS_MutexMgmt
    - \ref osMutexAcquire : \copybrief osMutexAcquire
    - \ref osMutexDelete : \copybrief osMutexDelete
@@ -2180,7 +2258,7 @@ threads are kept alive until one explicitly calls \ref osThreadJoin.
    - \ref osMutexGetOwner : \copybrief osMutexGetOwner
    - \ref osMutexNew : \copybrief osMutexNew
    - \ref osMutexRelease : \copybrief osMutexRelease
-
+<br><br>
  - \ref CMSIS_RTOS_SemaphoreMgmt
    - \ref osSemaphoreAcquire : \copybrief osSemaphoreAcquire
    - \ref osSemaphoreDelete : \copybrief osSemaphoreDelete
@@ -2188,7 +2266,7 @@ threads are kept alive until one explicitly calls \ref osThreadJoin.
    - \ref osSemaphoreGetName : \copybrief osSemaphoreGetName
    - \ref osSemaphoreNew : \copybrief osSemaphoreNew
    - \ref osSemaphoreRelease : \copybrief osSemaphoreRelease
-
+<br><br>
  - \ref CMSIS_RTOS_PoolMgmt
    - \ref osMemoryPoolAlloc : \copybrief osMemoryPoolAlloc
    - \ref osMemoryPoolDelete : \copybrief osMemoryPoolDelete
@@ -2199,7 +2277,7 @@ threads are kept alive until one explicitly calls \ref osThreadJoin.
    - \ref osMemoryPoolGetName : \copybrief osMemoryPoolGetName
    - \ref osMemoryPoolGetSpace : \copybrief osMemoryPoolGetSpace
    - \ref osMemoryPoolNew : \copybrief osMemoryPoolNew
-
+<br><br>
  - \ref CMSIS_RTOS_Message
    - \ref osMessageQueueDelete : \copybrief osMessageQueueDelete
    - \ref osMessageQueueGet : \copybrief osMessageQueueGet
@@ -2221,13 +2299,15 @@ The following CMSIS-RTOS C API v2 functions can be called from threads and \ref 
 (ISR):
    - \ref osKernelGetInfo, \ref osKernelGetState,
      \ref osKernelGetTickCount, \ref osKernelGetTickFreq, \ref osKernelGetSysTimerCount, \ref osKernelGetSysTimerFreq
-   - \ref osThreadGetId, \ref osThreadFlagsSet
-   - \ref osEventFlagsSet, \ref osEventFlagsClear, \ref osEventFlagsGet, \ref osEventFlagsWait
-   - \ref osSemaphoreAcquire, \ref osSemaphoreRelease, \ref osSemaphoreGetCount
-   - \ref osMemoryPoolAlloc, \ref osMemoryPoolFree, \ref osMemoryPoolGetCapacity, \ref osMemoryPoolGetBlockSize,
-     \ref osMemoryPoolGetCount, \ref osMemoryPoolGetSpace
-   - \ref osMessageQueuePut, \ref osMessageQueueGet, \ref osMessageQueueGetCapacity, \ref osMessageQueueGetMsgSize,
-     \ref osMessageQueueGetCount, \ref osMessageQueueGetSpace
+   - \ref osThreadGetName, \ref osThreadGetId, \ref osThreadFlagsSet
+   - \ref osTimerGetName
+   - \ref osEventFlagsGetName, \ref osEventFlagsSet, \ref osEventFlagsClear, \ref osEventFlagsGet, \ref osEventFlagsWait
+   - \ref osMutexGetName
+   - \ref osSemaphoreGetName, \ref osSemaphoreAcquire, \ref osSemaphoreRelease, \ref osSemaphoreGetCount
+   - \ref osMemoryPoolGetName, \ref osMemoryPoolAlloc, \ref osMemoryPoolFree,
+     \ref osMemoryPoolGetCapacity, \ref osMemoryPoolGetBlockSize, \ref osMemoryPoolGetCount, \ref osMemoryPoolGetSpace
+   - \ref osMessageQueueGetName, \ref osMessageQueuePut, \ref osMessageQueueGet, \ref osMessageQueueGetCapacity,
+     \ref osMessageQueueGetMsgSize, \ref osMessageQueueGetCount, \ref osMessageQueueGetSpace
 */
 
 

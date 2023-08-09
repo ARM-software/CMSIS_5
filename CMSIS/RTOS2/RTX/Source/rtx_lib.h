@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2021 Arm Limited. All rights reserved.
+ * Copyright (c) 2013-2023 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -29,9 +29,7 @@
 #include <string.h>
 #include "rtx_def.h"                    // RTX Configuration definitions
 #include "rtx_core_c.h"                 // Cortex core definitions
-#if ((defined(__ARM_ARCH_8M_BASE__)   && (__ARM_ARCH_8M_BASE__   != 0)) || \
-     (defined(__ARM_ARCH_8M_MAIN__)   && (__ARM_ARCH_8M_MAIN__   != 0)) || \
-     (defined(__ARM_ARCH_8_1M_MAIN__) && (__ARM_ARCH_8_1M_MAIN__ != 0)))
+#ifdef RTX_TZ_CONTEXT
 #include "tz_context.h"                 // TrustZone Context API
 #endif
 #include "os_tick.h"                    // CMSIS OS Tick API
@@ -53,6 +51,75 @@
 #define os_message_t        osRtxMessage_t
 #define os_message_queue_t  osRtxMessageQueue_t
 #define os_object_t         osRtxObject_t
+
+
+//  ==== Library sections ====
+
+#if  defined(__CC_ARM) || \
+    (defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050))
+// Referenced through linker
+//lint -esym(528,  __os_thread_cb_start__,    __os_thread_cb_length__)
+//lint -esym(528,  __os_timer_cb_start__,     __os_timer_cb_length__)
+//lint -esym(528,  __os_evflags_cb_start__,   __os_evflags_cb_length__)
+//lint -esym(528,  __os_mutex_cb_start__,     __os_mutex_cb_length__)
+//lint -esym(528,  __os_semaphore_cb_start__, __os_semaphore_cb_length__)
+//lint -esym(528,  __os_mempool_cb_start__,   __os_mempool_cb_length__)
+//lint -esym(528,  __os_msgqueue_cb_start__,  __os_msgqueue_cb_length__)
+// Accessed through linker
+//lint -esym(551,  __os_thread_cb_start__,    __os_thread_cb_length__)
+//lint -esym(551,  __os_timer_cb_start__,     __os_timer_cb_length__)
+//lint -esym(551,  __os_evflags_cb_start__,   __os_evflags_cb_length__)
+//lint -esym(551,  __os_mutex_cb_start__,     __os_mutex_cb_length__)
+//lint -esym(551,  __os_semaphore_cb_start__, __os_semaphore_cb_length__)
+//lint -esym(551,  __os_mempool_cb_start__,   __os_mempool_cb_length__)
+//lint -esym(551,  __os_msgqueue_cb_start__,  __os_msgqueue_cb_length__)
+// Initialized through linker
+//lint -esym(728,  __os_thread_cb_start__,    __os_thread_cb_length__)
+//lint -esym(728,  __os_timer_cb_start__,     __os_timer_cb_length__)
+//lint -esym(728,  __os_evflags_cb_start__,   __os_evflags_cb_length__)
+//lint -esym(728,  __os_mutex_cb_start__,     __os_mutex_cb_length__)
+//lint -esym(728,  __os_semaphore_cb_start__, __os_semaphore_cb_length__)
+//lint -esym(728,  __os_mempool_cb_start__,   __os_mempool_cb_length__)
+//lint -esym(728,  __os_msgqueue_cb_start__,  __os_msgqueue_cb_length__)
+// Global scope
+//lint -esym(9003, __os_thread_cb_start__,    __os_thread_cb_length__)
+//lint -esym(9003, __os_timer_cb_start__,     __os_timer_cb_length__)
+//lint -esym(9003, __os_evflags_cb_start__,   __os_evflags_cb_length__)
+//lint -esym(9003, __os_mutex_cb_start__,     __os_mutex_cb_length__)
+//lint -esym(9003, __os_semaphore_cb_start__, __os_semaphore_cb_length__)
+//lint -esym(9003, __os_mempool_cb_start__,   __os_mempool_cb_length__)
+//lint -esym(9003, __os_msgqueue_cb_start__,  __os_msgqueue_cb_length__)
+static const uint32_t __os_thread_cb_start__     __attribute__((weakref(".bss.os.thread.cb$$Base")));
+static const uint32_t __os_thread_cb_length__    __attribute__((weakref(".bss.os.thread.cb$$Length")));
+static const uint32_t __os_timer_cb_start__      __attribute__((weakref(".bss.os.timer.cb$$Base")));
+static const uint32_t __os_timer_cb_length__     __attribute__((weakref(".bss.os.timer.cb$$Length")));
+static const uint32_t __os_evflags_cb_start__    __attribute__((weakref(".bss.os.evflags.cb$$Base")));
+static const uint32_t __os_evflags_cb_length__   __attribute__((weakref(".bss.os.evflags.cb$$Length")));
+static const uint32_t __os_mutex_cb_start__      __attribute__((weakref(".bss.os.mutex.cb$$Base")));
+static const uint32_t __os_mutex_cb_length__     __attribute__((weakref(".bss.os.mutex.cb$$Length")));
+static const uint32_t __os_semaphore_cb_start__  __attribute__((weakref(".bss.os.semaphore.cb$$Base")));
+static const uint32_t __os_semaphore_cb_length__ __attribute__((weakref(".bss.os.semaphore.cb$$Length")));
+static const uint32_t __os_mempool_cb_start__    __attribute__((weakref(".bss.os.mempool.cb$$Base")));
+static const uint32_t __os_mempool_cb_length__   __attribute__((weakref(".bss.os.mempool.cb$$Length")));
+static const uint32_t __os_msgqueue_cb_start__   __attribute__((weakref(".bss.os.msgqueue.cb$$Base")));
+static const uint32_t __os_msgqueue_cb_length__  __attribute__((weakref(".bss.os.msgqueue.cb$$Length")));
+#else
+extern const uint32_t __os_thread_cb_start__     __attribute__((weak));
+extern const uint32_t __os_thread_cb_length__    __attribute__((weak));
+extern const uint32_t __os_timer_cb_start__      __attribute__((weak));
+extern const uint32_t __os_timer_cb_length__     __attribute__((weak));
+extern const uint32_t __os_evflags_cb_start__    __attribute__((weak));
+extern const uint32_t __os_evflags_cb_length__   __attribute__((weak));
+extern const uint32_t __os_mutex_cb_start__      __attribute__((weak));
+extern const uint32_t __os_mutex_cb_length__     __attribute__((weak));
+extern const uint32_t __os_semaphore_cb_start__  __attribute__((weak));
+extern const uint32_t __os_semaphore_cb_length__ __attribute__((weak));
+extern const uint32_t __os_mempool_cb_start__    __attribute__((weak));
+extern const uint32_t __os_mempool_cb_length__   __attribute__((weak));
+extern const uint32_t __os_msgqueue_cb_start__   __attribute__((weak));
+extern const uint32_t __os_msgqueue_cb_length__  __attribute__((weak));
+#endif
+
 
 //  ==== Inline functions ====
 
@@ -175,32 +242,64 @@ __STATIC_INLINE void osRtxThreadSetRunning (os_thread_t *thread) {
 //  ==== Library functions ====
 
 // Kernel Library functions
-extern void         osRtxKernelPreInit (void);
+extern void         osRtxKernelBeforeInit  (void);
 
 // Thread Library functions
-extern void         osRtxThreadListPut    (os_object_t *object, os_thread_t *thread);
-extern os_thread_t *osRtxThreadListGet    (os_object_t *object);
-extern void         osRtxThreadListSort   (os_thread_t *thread);
-extern void         osRtxThreadListRemove (os_thread_t *thread);
-extern void         osRtxThreadReadyPut   (os_thread_t *thread);
-extern void         osRtxThreadDelayTick  (void);
-extern uint32_t    *osRtxThreadRegPtr     (const os_thread_t *thread);
-extern void         osRtxThreadSwitch     (os_thread_t *thread);
-extern void         osRtxThreadDispatch   (os_thread_t *thread);
-extern void         osRtxThreadWaitExit   (os_thread_t *thread, uint32_t ret_val, bool_t dispatch);
-extern bool_t       osRtxThreadWaitEnter  (uint8_t state, uint32_t timeout);
+extern void         osRtxThreadListPut     (os_object_t *object, os_thread_t *thread);
+extern os_thread_t *osRtxThreadListGet     (os_object_t *object);
+extern void         osRtxThreadListSort    (os_thread_t *thread);
+extern void         osRtxThreadListRemove  (os_thread_t *thread);
+extern void         osRtxThreadReadyPut    (os_thread_t *thread);
+//lint -esym(759,osRtxThreadDelayRemove)    "Prototype in header"
+//lint -esym(765,osRtxThreadDelayRemove)    "Global scope"
+extern void         osRtxThreadDelayRemove (os_thread_t *thread);
+extern void         osRtxThreadDelayTick   (void);
+extern uint32_t    *osRtxThreadRegPtr      (const os_thread_t *thread);
+extern void         osRtxThreadSwitch      (os_thread_t *thread);
+extern void         osRtxThreadDispatch    (os_thread_t *thread);
+extern void         osRtxThreadWaitExit    (os_thread_t *thread, uint32_t ret_val, bool_t dispatch);
+extern bool_t       osRtxThreadWaitEnter   (uint8_t state, uint32_t timeout);
 #ifdef RTX_STACK_CHECK
-extern bool_t       osRtxThreadStackCheck (const os_thread_t *thread);
+extern bool_t       osRtxThreadStackCheck  (const os_thread_t *thread);
 #endif
-extern bool_t       osRtxThreadStartup    (void);
+#ifdef RTX_THREAD_WATCHDOG
+//lint -esym(759,osRtxThreadWatchdogRemove) "Prototype in header"
+//lint -esym(765,osRtxThreadWatchdogRemove) "Global scope"
+extern void         osRtxThreadWatchdogRemove(const os_thread_t *thread);
+extern void         osRtxThreadWatchdogTick  (void);
+#endif
+//lint -esym(759,osRtxThreadJoinWakeup)     "Prototype in header"
+//lint -esym(765,osRtxThreadJoinWakeup)     "Global scope"
+extern void         osRtxThreadJoinWakeup  (const os_thread_t *thread);
+//lint -esym(759,osRtxThreadDestroy)        "Prototype in header"
+//lint -esym(765,osRtxThreadDestroy)        "Global scope"
+extern void         osRtxThreadDestroy     (os_thread_t *thread);
+extern void         osRtxThreadBeforeFree  (os_thread_t *thread);
+extern bool_t       osRtxThreadStartup     (void);
 
 // Timer Library functions
-extern int32_t osRtxTimerSetup  (void);
-extern void    osRtxTimerThread (void *argument);
+extern int32_t osRtxTimerSetup       (void);
+extern void    osRtxTimerThread      (void *argument);
+#ifdef RTX_SAFETY_CLASS
+extern void    osRtxTimerDeleteClass (uint32_t safety_class, uint32_t mode);
+#endif
 
 // Mutex Library functions
 extern void osRtxMutexOwnerRelease (os_mutex_t *mutex_list);
 extern void osRtxMutexOwnerRestore (const os_mutex_t *mutex, const os_thread_t *thread_wakeup);
+#ifdef RTX_SAFETY_CLASS
+extern void osRtxMutexDeleteClass  (uint32_t safety_class, uint32_t mode);
+#endif
+
+// Semaphore Library functions
+#ifdef RTX_SAFETY_CLASS
+extern void osRtxSemaphoreDeleteClass (uint32_t safety_class, uint32_t mode);
+#endif
+
+// Event Flags Library functions
+#ifdef RTX_SAFETY_CLASS
+extern void osRtxEventFlagsDeleteClass(uint32_t safety_class, uint32_t mode);
+#endif
 
 // Memory Heap Library functions
 extern uint32_t osRtxMemoryInit (void *mem, uint32_t size);
@@ -208,12 +307,18 @@ extern void    *osRtxMemoryAlloc(void *mem, uint32_t size, uint32_t type);
 extern uint32_t osRtxMemoryFree (void *mem, void *block);
 
 // Memory Pool Library functions
-extern uint32_t   osRtxMemoryPoolInit  (os_mp_info_t *mp_info, uint32_t block_count, uint32_t block_size, void *block_mem);
-extern void      *osRtxMemoryPoolAlloc (os_mp_info_t *mp_info);
-extern osStatus_t osRtxMemoryPoolFree  (os_mp_info_t *mp_info, void *block);
+extern uint32_t   osRtxMemoryPoolInit       (os_mp_info_t *mp_info, uint32_t block_count, uint32_t block_size, void *block_mem);
+extern void      *osRtxMemoryPoolAlloc      (os_mp_info_t *mp_info);
+extern osStatus_t osRtxMemoryPoolFree       (os_mp_info_t *mp_info, void *block);
+#ifdef RTX_SAFETY_CLASS
+extern void       osRtxMemoryPoolDeleteClass(uint32_t safety_class, uint32_t mode);
+#endif
 
 // Message Queue Library functions
 extern int32_t osRtxMessageQueueTimerSetup (void);
+#ifdef RTX_SAFETY_CLASS
+extern void    osRtxMessageQueueDeleteClass(uint32_t safety_class, uint32_t mode);
+#endif
 
 // System Library functions
 extern void osRtxTick_Handler   (void);

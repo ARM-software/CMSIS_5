@@ -168,6 +168,7 @@ Possible \ref flags_error_codes return values:
     - \em osFlagsErrorUnknown: unspecified error.
     - \em osFlagsErrorParameter: parameter \a ef_id does not identify a valid event flags object or \em flags has highest bit set. 
     - \em osFlagsErrorResource: the event flags object is in an invalid state.
+    - \em osFlagsErrorSafetyClass: the calling thread safety class is lower than the safety class of the specified event flags object.
 
 \note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
@@ -199,6 +200,7 @@ Possible \ref flags_error_codes return values:
     - \em osFlagsErrorUnknown: unspecified error.
     - \em osFlagsErrorParameter: parameter \a ef_id does not identify a valid event flags object or \em flags has highest bit set. 
     - \em osFlagsErrorResource: the event flags object is in an invalid state.
+    - \em osFlagsErrorSafetyClass: the calling thread safety class is lower than the safety class of the specified event flags object.
 
 \note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
@@ -245,6 +247,7 @@ Possible \ref flags_error_codes return values:
     - \em osFlagsErrorTimeout: awaited flags have not been set in the given time.
     - \em osFlagsErrorResource: awaited flags have not been set when no \a timeout was specified.
     - \em osFlagsErrorParameter: parameter \a ef_id does not identify a valid event flags object or \em flags has highest bit set. 
+    - \em osFlagsErrorSafetyClass: the calling thread safety class is lower than the safety class of the specified event flags object.
 
 \note May be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines" if the parameter \a timeout is set to
 \token{0}.
@@ -253,7 +256,7 @@ Possible \ref flags_error_codes return values:
 \code
 #include "cmsis_os2.h"                          // CMSIS RTOS header file
  
-osEventFlagsId_t evt_id;                        // event flasg id
+osEventFlagsId_t evt_id;                        // event flags id
  
 void Thread_EventReceiver (void *argument) {
   uint32_t flags;
@@ -280,6 +283,7 @@ Possible \ref osStatus_t return values:
  - \em osErrorISR: \b osEventFlagsDelete cannot be called from interrupt service routines.
  - \em osErrorParameter: parameter \a ef_id is \token{NULL} or invalid.
  - \em osErrorResource: the event flags object is in an invalid state.
+ - \em osFlagsErrorSafetyClass: the calling thread safety class is lower than the safety class of the specified event flags object.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
@@ -291,7 +295,7 @@ Possible \ref osStatus_t return values:
 The function \b osEventFlagsGetName returns the pointer to the name string of the event flags object identified by parameter
 \a ef_id or \token{NULL} in case of an error.
 
-\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+\note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
 <b>Code Example</b>
 \code
