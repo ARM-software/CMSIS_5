@@ -33,10 +33,10 @@ int main()
 */
 
 /** \brief Attribute for device memory (outer only) */
-#define ARM_MPU_ATTR_DEVICE                           ( 0U )
+#define ARM_MPU_ATTR_DEVICE        ( 0U )
 
 /** \brief Attribute for non-cacheable, normal memory */
-#define ARM_MPU_ATTR_NON_CACHEABLE                    ( 4U )
+#define ARM_MPU_ATTR_NON_CACHEABLE ( 4U )
 
 /** \brief Attribute for Normal memory, Outer and Inner cacheability.
 * \param NT Non-Transient: Set to 1 for Non-transient data. Set to 0 for Transient data.
@@ -172,7 +172,7 @@ typedef struct {
   \brief  Read MPU Type Register
   \return Number of MPU regions
 */
-__STATIC_INLINE uint32_t ARM_MPU_TYPE()
+__STATIC_INLINE uint32_t ARM_MPU_TYPE(void);
 
 /** Enable the MPU.
 * \param MPU_Control Default access permissions for unconfigured regions.
