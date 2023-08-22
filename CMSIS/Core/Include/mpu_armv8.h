@@ -2,7 +2,7 @@
  * @file     mpu_armv8.h
  * @brief    CMSIS MPU API for Armv8-M and Armv8.1-M MPU
  * @version  V5.9.1
- * @date     22. April 2023
+ * @date     22. August 2023
  ******************************************************************************/
 /*
  * Copyright (c) 2017-2022 Arm Limited. All rights reserved.
