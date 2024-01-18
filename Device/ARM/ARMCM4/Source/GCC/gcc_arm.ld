@@ -127,7 +127,7 @@ SECTIONS
   /*
    * SG veneers:
    * All SG veneers are placed in the special output section .gnu.sgstubs. Its start address
-   * must be set, either with the command line option ‘--section-start’ or in a linker script,
+   * must be set, either with the command line option â€˜--section-startâ€™ or in a linker script,
    * to indicate where to place these veneers in memory.
    */
 /*
@@ -170,6 +170,10 @@ SECTIONS
   {
     . = ALIGN(4);
     __zero_table_start__ = .;
+
+    LONG (__bss_start__)
+    LONG ((__bss_end__ - __bss_start__) / 4)
+
     /* Add each additional bss section here */
 /*
     LONG (__bss2_start__)
