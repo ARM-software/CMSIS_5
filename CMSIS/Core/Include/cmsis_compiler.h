@@ -53,6 +53,12 @@
   #include "cmsis_tiarmclang.h"
 
 /*
+ * Clang/LLVM Compiler
+ */
+#elif defined (__clang__)
+  #include "cmsis_clang.h"
+
+/*
  * GNU Compiler
  */
 #elif defined ( __GNUC__ )
