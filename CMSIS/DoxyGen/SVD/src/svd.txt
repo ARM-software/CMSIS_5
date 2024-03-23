@@ -526,7 +526,7 @@ Data Check Errors
   <tr><td>M323</td> <td>WARNING</td><td>\em 'LEVEL' \<\em 'ITEM'> \em 'NAME' contains text \em 'TEXT'</td><td></td></tr>             
   <tr><td>M324</td> <td>ERROR</td><td>Field \em 'NAME' \em 'BITRANGE' does not fit into Register \em 'NAME2':\em 'NUM' \em 'LINE'</td><td></td></tr>
   <tr><td>M325</td> <td>ERROR</td><td>CPU Revision is not set"</td><td></td></tr>                                                   
-  <tr><td>M326</td> <td>ERROR</td><td>Endianess is not set, using default (little)</td><td></td></tr>                         
+  <tr><td>M326</td> <td>ERROR</td><td>Endianness is not set, using default (little)</td><td></td></tr>                         
   <tr><td>M327</td> <td>ERROR</td><td>NVIC Prio Bits not set or wrong value, must be 2..8. Using default (4)</td><td></td></tr>
   <tr><td>M328</td> <td>WARNING</td><td>\em 'LEVEL' \em 'NAME' has no Registers, ignoring \em 'LEVEL'.</td><td></td></tr>                 
   <tr><td>M329</td> <td>ERROR</td><td>CPU Type is not set, using default (Cortex-M3)</td><td></td></tr>                         

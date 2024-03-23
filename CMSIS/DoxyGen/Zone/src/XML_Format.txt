@@ -445,7 +445,7 @@ The information in this element is identical with CMSIS-Pack, except that it pro
   </tr>
   <tr>
     <td>Dendian</td>
-    <td>Specifies the endianess of the processor.</td>
+    <td>Specifies the endianness of the processor.</td>
     <td>DendianEnum</td>
     <td>required</td>
   </tr>
