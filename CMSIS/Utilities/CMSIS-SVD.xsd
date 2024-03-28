@@ -128,7 +128,7 @@
       <xs:pattern value="r[0-9]*p[0-9]*"/>
     </xs:restriction>
   </xs:simpleType>
-  <!-- EndianType pre-defines the tokens for specifying the endianess of the device -->
+  <!-- EndianType pre-defines the tokens for specifying the endianness of the device -->
   <xs:simpleType name="endianType">
     <xs:restriction base="xs:token">
       <xs:enumeration value="little"/>
@@ -345,7 +345,7 @@
       <xs:element name="name" type="cpuNameType"/>
       <!-- V1.1: ARM defined revision of the cpu -->
       <xs:element name="revision" type="revisionType"/>
-      <!-- V1.1: Endian specifies the endianess of the processor/device -->
+      <!-- V1.1: Endian specifies the endianness of the processor/device -->
       <xs:element name="endian" type="endianType"/>
       <!-- V1.1: mpuPresent specifies whether or not a memory protection unit is physically present -->
       <xs:element name="mpuPresent" type="xs:boolean" minOccurs="0"/>
