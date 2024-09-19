@@ -1,8 +1,8 @@
 /******************************************************************************
  * @file     mpu_armv8.h
  * @brief    CMSIS MPU API for Armv8-M and Armv8.1-M MPU
- * @version  V5.9.0
- * @date     11. April 2023
+ * @version  V5.9.1
+ * @date     22. August 2023
  ******************************************************************************/
 /*
  * Copyright (c) 2017-2022 Arm Limited. All rights reserved.
@@ -32,10 +32,10 @@
 #define ARM_MPU_ARMV8_H
 
 /** \brief Attribute for device memory (outer only) */
-#define ARM_MPU_ATTR_DEVICE                           ( 0U )
+#define ARM_MPU_ATTR_DEVICE        ( 0U )
 
 /** \brief Attribute for non-cacheable, normal memory */
-#define ARM_MPU_ATTR_NON_CACHEABLE                    ( 4U )
+#define ARM_MPU_ATTR_NON_CACHEABLE ( 4U )
 
 /** \brief Attribute for Normal memory, Outer and Inner cacheability.
 * \param NT Non-Transient: Set to 1 for Non-transient data. Set to 0 for Transient data.
@@ -95,7 +95,7 @@
 #define ARM_MPU_ATTR(O, I) ((((O) & 0xFU) << 4U) | ((((O) & 0xFU) != 0U) ? ((I) & 0xFU) : (((I) & 0x3U) << 2U)))
 
 /* \brief Specifies MAIR_ATTR number */
-#define MAIR_ATTR(x)						((x > 7 || x < 0) ? 0 : x)
+#define MAIR_ATTR(x) ((x > 7 || x < 0) ? 0 : x)
 
 /**
  * Shareability
