@@ -414,10 +414,10 @@ __STATIC_FORCEINLINE uint8_t __CLZ(uint32_t value)
 
 /**
   \brief   Unsigned Saturate
-  \details Saturates an unsigned value.
-  \param [in]  value  Value to be saturated
+  \details Saturates a signed value into an unsigned value.
+  \param [in]  value  Value to be saturated (signed)
   \param [in]    sat  Bit position to saturate to (0..31)
-  \return             Saturated value
+  \return             Saturated value (unsigned)
  */
 #define __USAT             __builtin_arm_usat
 
@@ -550,10 +550,10 @@ __STATIC_FORCEINLINE int32_t __SSAT(int32_t val, uint32_t sat)
 
 /**
   \brief   Unsigned Saturate
-  \details Saturates an unsigned value.
-  \param [in]  value  Value to be saturated
+  \details Saturates a signed value into an unsigned value.
+  \param [in]  value  Value to be saturated (signed)
   \param [in]    sat  Bit position to saturate to (0..31)
-  \return             Saturated value
+  \return             Saturated value (unsigned)
  */
 __STATIC_FORCEINLINE uint32_t __USAT(int32_t val, uint32_t sat)
 {
