@@ -773,7 +773,26 @@ uint32_t osMemoryPoolGetSpace (osMemoryPoolId_t mp_id);
 /// \param[in]     mp_id         memory pool ID obtained by \ref osMemoryPoolNew.
 /// \return status code that indicates the execution status of the function.
 osStatus_t osMemoryPoolDelete (osMemoryPoolId_t mp_id);
+
+//  ==== Memory Pool Management Functions - Byte Allocation ==== 
+
+/// Create and Initialize a Memory Pool object for byte allocation.
+/// \param[in]     attr          memory pool attributes; NULL: default values.
+/// \return memory pool ID for reference by other functions or NULL in case of error.
+osMemoryPoolId_t osByteMemoryPoolNew(const osMemoryPoolAttr_t *attr);
  
+/// Allocate requested memory size from the Memory Pool.
+/// \param[in]     mp_id         memory pool ID obtained by \ref osByteMemoryPoolNew.
+/// \param[in]     size          memory size in bytes.
+/// \return address of the allocated memory block or NULL in case of no memory is available. 
+void * osByteMemoryPoolAlloc(osMemoryPoolId_t mp_id, const uint32_t size);
+
+/// Free an allocated memory block from the Memory Pool and keep it available.
+/// \param[in]     mp_id         memory pool ID obtained by \ref osMemoryPoolNew.
+/// \param[in]     block         address of the allocated memory block to be returned to the memory pool.
+/// \return status code that indicates the execution status of the function.
+osStatus_t osByteMemoryPoolFree(osMemoryPoolId_t mp_id, void *block );
+
  
 //  ==== Message Queue Management Functions ====
  
