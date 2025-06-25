@@ -938,7 +938,7 @@ __STATIC_FORCEINLINE uint32_t __STLEX(uint32_t value, volatile uint32_t *ptr)
 #endif /* ((defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1)) || \
            (defined (__ARM_ARCH_8M_BASE__ ) && (__ARM_ARCH_8M_BASE__ == 1))    ) */
 
-/*@}*/ /* end of group CMSIS_Core_InstructionInterface */
+/** @} */ /* end of group CMSIS_Core_InstructionInterface */
 
 
 /* ###########################  Core Function Access  ########################### */
@@ -1635,7 +1635,7 @@ __STATIC_FORCEINLINE void __set_FPSCR(uint32_t fpscr)
 }
 
 
-/*@} end of CMSIS_Core_RegAccFunctions */
+/** @} /* */ end of CMSIS_Core_RegAccFunctions */
 
 
 /* ###################  Compiler specific Intrinsics  ########################### */
@@ -2209,7 +2209,7 @@ __STATIC_FORCEINLINE int32_t __SMMLA (int32_t op1, int32_t op2, int32_t op3)
 }
 
 #endif /* (__ARM_FEATURE_DSP == 1) */
-/*@} end of group CMSIS_SIMD_intrinsics */
+/** @} */ /* end of group CMSIS_SIMD_intrinsics */
 
 
 #pragma GCC diagnostic pop
