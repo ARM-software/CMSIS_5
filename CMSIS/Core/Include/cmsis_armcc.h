@@ -480,9 +480,9 @@ __attribute__((section(".rrx_text"))) __STATIC_INLINE __ASM uint32_t __RRX(uint3
 /**
   \brief   Signed Saturate
   \details Saturates a signed value.
-  \param [in]  value  Value to be saturated
-  \param [in]    sat  Bit position to saturate to (1..32)
-  \return             Saturated value
+  \param [in]  val  Value to be saturated
+  \param [in]  sat  Bit position to saturate to (1..32)
+  \return           Saturated value
  */
 __attribute__((always_inline)) __STATIC_INLINE int32_t __SSAT(int32_t val, uint32_t sat)
 {
@@ -505,9 +505,9 @@ __attribute__((always_inline)) __STATIC_INLINE int32_t __SSAT(int32_t val, uint3
 /**
   \brief   Unsigned Saturate
   \details Saturates an unsigned value.
-  \param [in]  value  Value to be saturated
-  \param [in]    sat  Bit position to saturate to (0..31)
-  \return             Saturated value
+  \param [in]  val  Value to be saturated
+  \param [in]  sat  Bit position to saturate to (0..31)
+  \return           Saturated value
  */
 __attribute__((always_inline)) __STATIC_INLINE uint32_t __USAT(int32_t val, uint32_t sat)
 {
