@@ -529,7 +529,7 @@ __attribute__((always_inline)) __STATIC_INLINE uint32_t __USAT(int32_t val, uint
 #endif /* ((defined (__ARM_ARCH_7M__ ) && (__ARM_ARCH_7M__  == 1)) || \
            (defined (__ARM_ARCH_7EM__) && (__ARM_ARCH_7EM__ == 1))     ) */
 
-/*@}*/ /* end of group CMSIS_Core_InstructionInterface */
+/** @}*/ /* end of group CMSIS_Core_InstructionInterface */
 
 
 /* ###########################  Core Function Access  ########################### */
@@ -803,7 +803,7 @@ __STATIC_INLINE void __set_FPSCR(uint32_t fpscr)
 }
 
 
-/*@} end of CMSIS_Core_RegAccFunctions */
+/** @} */ /* end of CMSIS_Core_RegAccFunctions */
 
 
 /* ###################  Compiler specific Intrinsics  ########################### */
@@ -888,7 +888,7 @@ __STATIC_INLINE void __set_FPSCR(uint32_t fpscr)
 #define __SXTAB16_RORn(ARG1, ARG2, ARG3) __SXTAB16(ARG1, __ROR(ARG2, ARG3))
 
 #endif /* ((defined (__ARM_ARCH_7EM__) && (__ARM_ARCH_7EM__ == 1))     ) */
-/*@} end of group CMSIS_SIMD_intrinsics */
+/** @} */ /* end of group CMSIS_SIMD_intrinsics */
 
 
 #endif /* __CMSIS_ARMCC_H */
