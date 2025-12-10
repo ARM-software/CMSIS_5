@@ -1,14 +1,11 @@
 /******************************************************************************
  * @file     startup_ARMCA5.c
  * @brief    CMSIS Device System Source File for Arm Cortex-A5 Device Series
- * @version  V1.00
- * @date     10. January 2018
- *
- * @note
- *
+ * @version  V1.0.1
+ * @date     10. January 2021
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2021 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -41,8 +38,9 @@
 /*----------------------------------------------------------------------------
   Internal References
  *----------------------------------------------------------------------------*/
-void Vectors       (void) __attribute__ ((naked, section("RESET")));
-void Reset_Handler (void) __attribute__ ((naked));
+void Vectors        (void) __attribute__ ((naked, section("RESET")));
+void Reset_Handler  (void) __attribute__ ((naked));
+void Default_Handler(void);
 
 /*----------------------------------------------------------------------------
   Exception / Interrupt Handler

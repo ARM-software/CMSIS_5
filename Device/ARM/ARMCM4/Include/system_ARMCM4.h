@@ -2,11 +2,11 @@
  * @file     system_ARMCM4.h
  * @brief    CMSIS Device System Header File for
  *           ARMCM4 Device
- * @version  V5.3.2
- * @date     15. November 2019
+ * @version  V5.3.3
+ * @date     11. July 2022
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2022 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -29,6 +29,8 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#include <stdint.h>
 
 /**
   \brief Exception / Interrupt Handler Function Prototype

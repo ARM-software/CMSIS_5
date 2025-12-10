@@ -2,7 +2,7 @@
  *      Name:         cmsis_cv.h
  *      Purpose:      cmsis_cv header
  *----------------------------------------------------------------------------
- *      Copyright (c) 2017 - 2018 Arm Limited. All rights reserved.
+ *      Copyright (c) 2017 - 2021 Arm Limited. All rights reserved.
  *----------------------------------------------------------------------------*/
 #ifndef __CMSIS_CV_H
 #define __CMSIS_CV_H
@@ -83,6 +83,7 @@ extern void TC_CoreSimd_MulAcc32 (void);
   extern void TC_CoreFunc_FPSCR (void);
 #elif defined(__CORTEX_A)
   extern void TC_CoreAFunc_IRQ (void);
+  extern void TC_CoreAFunc_FaultIRQ (void);
   extern void TC_CoreAFunc_FPSCR (void);
   extern void TC_CoreAFunc_CPSR (void);
   extern void TC_CoreAFunc_Mode (void);

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-  Copyright (c) 2013-2019 ARM Limited. All rights reserved.
+  Copyright (c) 2013-2022 ARM Limited. All rights reserved.
 
   SPDX-License-Identifier: Apache-2.0
 
@@ -17,9 +17,18 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 
-  $Date:         05. September 2019
-  $Revision:     1.3.6
+  $Date:         21. April 2022
+  $Revision:     1.3.9
 
+  Version 1.3.9:
+  - add CM85 as enumerated value for cpuNameType.
+
+  Version 1.3.8:
+  - add SMC1 as enumerated value for cpuNameType.
+
+  Version 1.3.7:
+  - add CM55 as enumerated value for cpuNameType.
+  
   Version 1.3.6:
   - add ARMV81MML as enumeration value for cpuNameType.
   
@@ -87,14 +96,16 @@
       <xs:enumeration value="CM0PLUS"/>
       <xs:enumeration value="CM0+"/>
       <xs:enumeration value="CM1"/>
-      <xs:enumeration value="SC000"/>
-      <xs:enumeration value="CM23"/>
       <xs:enumeration value="CM3"/>
-      <xs:enumeration value="CM33"/>
-      <xs:enumeration value="CM35P"/>
-      <xs:enumeration value="SC300"/>
       <xs:enumeration value="CM4"/>
       <xs:enumeration value="CM7"/>
+      <xs:enumeration value="CM23"/>
+      <xs:enumeration value="CM33"/>
+      <xs:enumeration value="CM35P"/>
+      <xs:enumeration value="CM55"/>
+      <xs:enumeration value="CM85"/>
+      <xs:enumeration value="SC000"/>
+      <xs:enumeration value="SC300"/>
       <xs:enumeration value="ARMV8MML"/>
       <xs:enumeration value="ARMV8MBL"/>
       <xs:enumeration value="ARMV81MML"/>
@@ -107,6 +118,7 @@
       <xs:enumeration value="CA53"/>
       <xs:enumeration value="CA57"/>
       <xs:enumeration value="CA72"/>
+      <xs:enumeration value="SMC1"/>
       <xs:enumeration value="other"/>
     </xs:restriction>
   </xs:simpleType>
@@ -116,7 +128,7 @@
       <xs:pattern value="r[0-9]*p[0-9]*"/>
     </xs:restriction>
   </xs:simpleType>
-  <!-- EndianType pre-defines the tokens for specifying the endianess of the device -->
+  <!-- EndianType pre-defines the tokens for specifying the endianness of the device -->
   <xs:simpleType name="endianType">
     <xs:restriction base="xs:token">
       <xs:enumeration value="little"/>
@@ -333,7 +345,7 @@
       <xs:element name="name" type="cpuNameType"/>
       <!-- V1.1: ARM defined revision of the cpu -->
       <xs:element name="revision" type="revisionType"/>
-      <!-- V1.1: Endian specifies the endianess of the processor/device -->
+      <!-- V1.1: Endian specifies the endianness of the processor/device -->
       <xs:element name="endian" type="endianType"/>
       <!-- V1.1: mpuPresent specifies whether or not a memory protection unit is physically present -->
       <xs:element name="mpuPresent" type="xs:boolean" minOccurs="0"/>

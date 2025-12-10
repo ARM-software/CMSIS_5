@@ -1,11 +1,11 @@
 /******************************************************************************
  * @file     startup_ARMv8MML.S
  * @brief    CMSIS-Core Device Startup File for Cortex-ARMv8MML Device
- * @version  V1.1.0
- * @date     16. December 2020
+ * @version  V2.0.0
+ * @date     26. May 2021
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2020 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2021 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -48,7 +48,7 @@ __Vectors:
                 .long    0                                  /*     Reserved */
                 .long    0                                  /*     Reserved */
                 .long    0                                  /*     Reserved */
-                .long    SVC_Handler                        /*  -5 SVCall Handler */
+                .long    SVC_Handler                        /*  -5 SVC Handler */
                 .long    DebugMon_Handler                   /*  -4 Debug Monitor Handler */
                 .long    0                                  /*     Reserved */
                 .long    PendSV_Handler                     /*  -2 PendSV Handler */

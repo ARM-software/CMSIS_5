@@ -154,7 +154,7 @@ To allocate the context memory for threads, an RTOS kernel that runs in <i>non-s
 part of the <i>secure state</i> application. An minimum implementation is provided as part of RTOS2 and should handle the secure stack for the thread execution. However it is also possible to implement the context memory 
 management system with additional features such as access control to <i>secure state</i> memory regions using an MPU.
 
-The API functions of <b>TZ_context</b> are described in the chapter <a href="Modules.html">\b Reference </a> under \ref trustzone_functions - \ref context_trustzone_functions.
+The API functions of <b>TZ_context</b> are described in the chapter <a href="modules.html">\b Reference </a> under \ref trustzone_functions - \ref context_trustzone_functions.
 
 Refer to \ref Example_TrustZone for RTOS examples that provide a template implementation for <b>TZ_context.c</b>.
   

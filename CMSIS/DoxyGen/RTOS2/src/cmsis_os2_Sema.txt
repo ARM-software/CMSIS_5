@@ -187,7 +187,7 @@ void Thread_Semaphore (void *argument) {
 The function \b osSemaphoreGetName returns the pointer to the name string of the semaphore identified by parameter \a
 semaphore_id or \token{NULL} in case of an error.
 
-\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+\note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -210,6 +210,7 @@ Possible \ref osStatus_t return values:
  - \em osErrorTimeout: the token could not be obtained in the given time.
  - \em osErrorResource: the token could not be obtained when no \a timeout was specified.
  - \em osErrorParameter: the parameter \a semaphore_id is \token{NULL} or invalid.
+ - \em osErrorSafetyClass: the calling thread safety class is lower than the safety class of the specified semaphore.
 
 \note May be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines" if the parameter \a timeout is set to
 \token{0}.
@@ -231,6 +232,7 @@ Possible \ref osStatus_t return values:
  - \em osOK: the token has been released and the count incremented.
  - \em osErrorResource: the token could not be released (maximum token count has been reached).
  - \em osErrorParameter: the parameter \a semaphore_id is \token{NULL} or invalid.
+ - \em osErrorSafetyClass: the calling thread safety class is lower than the safety class of the specified semaphore.
 
 \note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
@@ -262,6 +264,7 @@ Possible \ref osStatus_t return values:
  - \em osErrorParameter: the parameter \a semaphore_id is \token{NULL} or invalid.
  - \em osErrorResource: the semaphore is in an invalid state.
  - \em osErrorISR: \b osSemaphoreDelete cannot be called from interrupt service routines.
+ - \em osErrorSafetyClass: the calling thread safety class is lower than the safety class of the specified semaphore.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */

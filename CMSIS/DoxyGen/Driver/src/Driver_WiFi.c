@@ -624,11 +624,11 @@ for (i = 0; i < num; i++) {
 \endcode
 */
 
-int32_t ARM_WIFI_Activate (uint32_t interface, ARM_WIFI_CONFIG_t *config) {
+int32_t ARM_WIFI_Activate (uint32_t interface, const ARM_WIFI_CONFIG_t *config) {
   return ARM_DRIVER_OK;
 }
 /**
-\fn int32_t ARM_WIFI_Activate (uint32_t interface, ARM_WIFI_CONFIG_t *config)
+\fn int32_t ARM_WIFI_Activate (uint32_t interface, const ARM_WIFI_CONFIG_t *config)
 \details
 The function \b ARM_WIFI_Activate activates the specified interface.
 
@@ -790,9 +790,10 @@ wifi->Deactivate (0U);
 \ingroup wifi_interface_gr
 \brief Transfer Ethernet frames by WiFi module.
 \details The \ref wifi_bypass_gr functions are an optional interface and enable the transmission of
-Ethernet frames with WiFi modules. The use of this interface requires that the IP stack is running
-on the microcontroller. The internal IP stack of the WiFi module is therefore not used, and this
-usually means that the \ref wifi_socket_gr functions can not be used.
+Ethernet frames with WiFi modules. The use of this interface requires that the TCP/IP stack is running
+on the microcontroller (usually a third-party or open-source networking component). The internal TCP/IP
+stack of the WiFi module is therefore not used, and this usually means that the \ref wifi_socket_gr
+functions can not be used.
 @{
 */
 
@@ -1071,7 +1072,8 @@ Protocol                     | Description
 :----------------------------|:-------------------------------------------------
 \ref ARM_SOCKET_IPPROTO_TCP  | Must be used with ARM_SOCKET_SOCK_STREAM socket type
 \ref ARM_SOCKET_IPPROTO_UDP  | Must be used with ARM_SOCKET_SOCK_DGRAM socket type
- 
+\token{0}                    | The system selects a matching protocol for the socket type
+
 \b Example:
  - see \ref ARM_WIFI_SocketListen, \ref ARM_WIFI_SocketConnect
 */
@@ -1142,7 +1144,7 @@ void Echo_Server_Thread (void *arg) {
       }
       if (res > 0) {
         wifi->SocketSend (sock, dbuf, res);         // Echo the data
-      }    
+      }
     }
     wifi->SocketClose (sock);
   }

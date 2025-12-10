@@ -2,11 +2,11 @@
  * @file     system_<Device>.h
  * @brief    CMSIS-Core(M) Device Peripheral Access Layer Header File for
  *           Device <Device>
- * @version  V1.0.0
- * @date     20. January 2021
+ * @version  V1.0.1
+ * @date     11. July 2022
  *****************************************************************************/
 /*
- * Copyright (c) 2009-2021 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2022 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -29,6 +29,8 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#include <stdint.h>
 
 /**
   \brief Exception / Interrupt Handler Function Prototype

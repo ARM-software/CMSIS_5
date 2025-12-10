@@ -1,11 +1,11 @@
 /**************************************************************************//**
  * @file     cmsis_armclang.h
- * @brief    CMSIS compiler specific macros, functions, instructions
- * @version  V1.2.0
- * @date     05. August 2019
+ * @brief    CMSIS compiler armclang (Arm Compiler 6) header file
+ * @version  V1.2.2
+ * @date     13. November 2022
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2019 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2021 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -26,10 +26,6 @@
 #define __CMSIS_ARMCLANG_H
 
 #pragma clang system_header   /* treat file as system include file */
-
-#ifndef __ARM_COMPAT_H
-#include <arm_compat.h>    /* Compatibility header for Arm Compiler 5 intrinsics */
-#endif
 
 /* CMSIS compiler specific defines */
 #ifndef   __ASM
@@ -109,38 +105,55 @@
 /* ##########################  Core Instruction Access  ######################### */
 /**
   \brief   No Operation
+  \details No Operation does nothing. This instruction can be used for code alignment purposes.
  */
 #define __NOP                             __builtin_arm_nop
 
 /**
   \brief   Wait For Interrupt
+  \details Wait For Interrupt is a hint instruction that suspends execution until one of a number of events occurs.
  */
 #define __WFI                             __builtin_arm_wfi
 
+
 /**
   \brief   Wait For Event
+  \details Wait For Event is a hint instruction that permits the processor to enter
+           a low-power state until one of a number of events occurs.
  */
 #define __WFE                             __builtin_arm_wfe
 
+
 /**
   \brief   Send Event
+  \details Send Event is a hint instruction. It causes an event to be signaled to the CPU.
  */
 #define __SEV                             __builtin_arm_sev
 
+
 /**
   \brief   Instruction Synchronization Barrier
+  \details Instruction Synchronization Barrier flushes the pipeline in the processor,
+           so that all instructions following the ISB are fetched from cache or memory,
+           after the instruction has been completed.
  */
 #define __ISB()                           __builtin_arm_isb(0xF)
 
 /**
   \brief   Data Synchronization Barrier
+  \details Acts as a special kind of Data Memory Barrier.
+           It completes when all explicit memory accesses before this instruction complete.
  */
 #define __DSB()                           __builtin_arm_dsb(0xF)
 
+
 /**
   \brief   Data Memory Barrier
+  \details Ensures the apparent order of the explicit memory operations before
+           and after the instruction, without ensuring their completion.
  */
 #define __DMB()                           __builtin_arm_dmb(0xF)
+
 
 /**
   \brief   Reverse byte order (32 bit)
@@ -149,6 +162,7 @@
   \return               Reversed value
  */
 #define __REV(value)   __builtin_bswap32(value)
+
 
 /**
   \brief   Reverse byte order (16 bit)
@@ -188,13 +202,17 @@ __STATIC_FORCEINLINE uint32_t __ROR(uint32_t op1, uint32_t op2)
 
 /**
   \brief   Breakpoint
+  \details Causes the processor to enter Debug state.
+           Debug tools can use this to investigate system state when the instruction at a particular address is reached.
   \param [in]    value  is ignored by the processor.
                  If required, a debugger can use it to store additional information about the breakpoint.
  */
 #define __BKPT(value)   __ASM volatile ("bkpt "#value)
 
+
 /**
   \brief   Reverse bit order of value
+  \details Reverses the bit order of the given value.
   \param [in]    value  Value to reverse
   \return               Reversed value
  */
@@ -202,6 +220,7 @@ __STATIC_FORCEINLINE uint32_t __ROR(uint32_t op1, uint32_t op2)
 
 /**
   \brief   Count leading zeros
+  \details Counts the number of leading zeros of a data value.
   \param [in]  value  Value to count the leading zeros
   \return             number of leading zeros in value
  */
@@ -240,6 +259,7 @@ __STATIC_FORCEINLINE uint8_t __CLZ(uint32_t value)
  */
 #define __LDREXH        (uint16_t)__builtin_arm_ldrex
 
+
 /**
   \brief   LDR Exclusive (32 bit)
   \details Executes a exclusive LDR instruction for 32 bit values.
@@ -247,6 +267,7 @@ __STATIC_FORCEINLINE uint8_t __CLZ(uint32_t value)
   \return        value of type uint32_t at (*ptr)
  */
 #define __LDREXW        (uint32_t)__builtin_arm_ldrex
+
 
 /**
   \brief   STR Exclusive (8 bit)
@@ -258,6 +279,7 @@ __STATIC_FORCEINLINE uint8_t __CLZ(uint32_t value)
  */
 #define __STREXB        (uint32_t)__builtin_arm_strex
 
+
 /**
   \brief   STR Exclusive (16 bit)
   \details Executes a exclusive STR instruction for 16 bit values.
@@ -268,6 +290,7 @@ __STATIC_FORCEINLINE uint8_t __CLZ(uint32_t value)
  */
 #define __STREXH        (uint32_t)__builtin_arm_strex
 
+
 /**
   \brief   STR Exclusive (32 bit)
   \details Executes a exclusive STR instruction for 32 bit values.
@@ -277,6 +300,7 @@ __STATIC_FORCEINLINE uint8_t __CLZ(uint32_t value)
   \return          1  Function failed
  */
 #define __STREXW        (uint32_t)__builtin_arm_strex
+
 
 /**
   \brief   Remove the exclusive lock
@@ -292,6 +316,7 @@ __STATIC_FORCEINLINE uint8_t __CLZ(uint32_t value)
   \return             Saturated value
  */
 #define __SSAT             __builtin_arm_ssat
+
 
 /**
   \brief   Unsigned Saturate
@@ -373,6 +398,47 @@ __STATIC_FORCEINLINE int32_t __SMMLA (int32_t op1, int32_t op2, int32_t op3)
 /* ###########################  Core Function Access  ########################### */
 
 /**
+  \brief   Enable IRQ Interrupts
+  \details Enables IRQ interrupts by clearing the I-bit in the CPSR.
+           Can only be executed in Privileged modes.
+ */
+__STATIC_FORCEINLINE void __enable_irq(void)
+{
+  __ASM volatile ("cpsie i" : : : "memory");
+}
+
+/**
+  \brief   Disable IRQ Interrupts
+  \details Disables IRQ interrupts by setting the I-bit in the CPSR.
+  Can only be executed in Privileged modes.
+ */
+__STATIC_FORCEINLINE void __disable_irq(void)
+{
+  __ASM volatile ("cpsid i" : : : "memory");
+}
+
+/**
+  \brief   Enable FIQ
+  \details Enables FIQ interrupts by clearing special-purpose register FAULTMASK.
+           Can only be executed in Privileged modes.
+ */
+__STATIC_FORCEINLINE void __enable_fault_irq(void)
+{
+  __ASM volatile ("cpsie f" : : : "memory");
+}
+
+
+/**
+  \brief   Disable FIQ
+  \details Disables FIQ interrupts by setting special-purpose register FAULTMASK.
+           Can only be executed in Privileged modes.
+ */
+__STATIC_FORCEINLINE void __disable_fault_irq(void)
+{
+  __ASM volatile ("cpsid f" : : : "memory");
+}
+
+/**
   \brief   Get FPSCR
   \details Returns the current value of the Floating Point Status/Control register.
   \return               Floating Point Status/Control register value
@@ -401,7 +467,7 @@ __STATIC_FORCEINLINE uint32_t __get_CPSR(void)
  */
 __STATIC_FORCEINLINE void __set_CPSR(uint32_t cpsr)
 {
-__ASM volatile ("MSR cpsr, %0" : : "r" (cpsr) : "cc", "memory");
+  __ASM volatile ("MSR cpsr, %0" : : "r" (cpsr) : "cc", "memory");
 }
 
 /** \brief  Get Mode
@@ -409,7 +475,7 @@ __ASM volatile ("MSR cpsr, %0" : : "r" (cpsr) : "cc", "memory");
  */
 __STATIC_FORCEINLINE uint32_t __get_mode(void)
 {
-	return (__get_CPSR() & 0x1FU);
+  return (__get_CPSR() & 0x1FU);
 }
 
 /** \brief  Set Mode
@@ -423,7 +489,7 @@ __STATIC_FORCEINLINE void __set_mode(uint32_t mode)
 /** \brief  Get Stack Pointer
     \return Stack Pointer value
  */
-__STATIC_FORCEINLINE uint32_t __get_SP()
+__STATIC_FORCEINLINE uint32_t __get_SP(void)
 {
   uint32_t result;
   __ASM volatile("MOV  %0, sp" : "=r" (result) : : "memory");
@@ -441,7 +507,7 @@ __STATIC_FORCEINLINE void __set_SP(uint32_t stack)
 /** \brief  Get USR/SYS Stack Pointer
     \return USR/SYS Stack Pointer value
  */
-__STATIC_FORCEINLINE uint32_t __get_SP_usr()
+__STATIC_FORCEINLINE uint32_t __get_SP_usr(void)
 {
   uint32_t cpsr;
   uint32_t result;
@@ -546,7 +612,7 @@ __STATIC_INLINE void __FPU_Enable(void)
     "        VMOV    D14,R2,R2         \n"
     "        VMOV    D15,R2,R2         \n"
 
-#if __ARM_NEON == 1
+#if (defined(__ARM_NEON) && (__ARM_NEON == 1))
     //Initialise D32 registers to 0
     "        VMOV    D16,R2,R2         \n"
     "        VMOV    D17,R2,R2         \n"

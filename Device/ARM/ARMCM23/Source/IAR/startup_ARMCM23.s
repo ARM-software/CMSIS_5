@@ -2,11 +2,11 @@
 ; * @file     startup_ARMCM23.s
 ; * @brief    CMSIS Core Device Startup File for
 ; *           ARMCM23 Device
-; * @version  V1.0.0
-; * @date     09. July 2018
+; * @version  V1.1.0
+; * @date     08. April 2021
 ; ******************************************************************************/
 ;/*
-; * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
+; * Copyright (c) 2009-2021 Arm Limited. All rights reserved.
 ; *
 ; * SPDX-License-Identifier: Apache-2.0
 ; *
@@ -54,10 +54,17 @@
                 PUBLIC   __Vectors_End
                 PUBLIC   __Vectors_Size
 
+                #define __INITIAL_SP     sfe(CSTACK)
+                #define __STACK_LIMIT    sfb(CSTACK)
+                #if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
+                SECTION STACKSEAL:DATA:NOROOT(3)
+                #define __STACK_SEAL     sfb(STACKSEAL)
+                #endif
+
                 DATA
 
 __vector_table
-                DCD      sfe(CSTACK)                         ;     Top of Stack
+                DCD      __INITIAL_SP                        ;     Top of Stack
                 DCD      Reset_Handler                       ;     Reset Handler
                 DCD      NMI_Handler                         ; -14 NMI Handler
                 DCD      HardFault_Handler                   ; -13 Hard Fault Handler
@@ -101,6 +108,20 @@ __Vectors_Size  EQU      __Vectors_End - __Vectors
                 PUBWEAK  Reset_Handler
                 SECTION  .text:CODE:REORDER:NOROOT(2)
 Reset_Handler
+                ldr      r0, =__INITIAL_SP
+                msr      psp, r0
+
+                #if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
+                ldr      r0, =__STACK_LIMIT
+                msr      msplim, r0
+                msr      psplim, r0
+
+                ldr      r0, =__STACK_SEAL
+                ldr      r1, =0xFEF5EDA5U
+                str      r1,[r0,#0]
+                str      r1,[r0,#4]
+                #endif
+
                 LDR      R0, =SystemInit
                 BLX      R0
                 LDR      R0, =__iar_program_start

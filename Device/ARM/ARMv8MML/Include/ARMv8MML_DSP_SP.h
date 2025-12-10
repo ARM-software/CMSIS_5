@@ -42,9 +42,9 @@ typedef enum IRQn
   BusFault_IRQn                 = -11,     /*  5 Bus Fault Interrupt */
   UsageFault_IRQn               = -10,     /*  6 Usage Fault Interrupt */
   SecureFault_IRQn              =  -9,     /*  7 Secure Fault Interrupt */
-  SVCall_IRQn                   =  -5,     /* 11 SV Call Interrupt */
+  SVCall_IRQn                   =  -5,     /* 11 SVC Interrupt */
   DebugMonitor_IRQn             =  -4,     /* 12 Debug Monitor Interrupt */
-  PendSV_IRQn                   =  -2,     /* 14 Pend SV Interrupt */
+  PendSV_IRQn                   =  -2,     /* 14 PendSV Interrupt */
   SysTick_IRQn                  =  -1,     /* 15 System Tick Interrupt */
 
 /* -------------------  Processor Interrupt Numbers  ------------------------------ */

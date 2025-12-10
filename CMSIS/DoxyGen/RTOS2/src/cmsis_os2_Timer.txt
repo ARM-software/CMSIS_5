@@ -157,7 +157,7 @@ void TimerCreate_example (void)  {
 The function \b osTimerGetName returns the pointer to the name string of the timer identified by parameter \a timer_id or
 \token{NULL} in case of an error.
 
-\note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+\note This function may be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 */
 
 /*=======0=========1=========2=========3=========4=========5=========6=========7=========8=========9=========0=========1====*/
@@ -172,6 +172,7 @@ Possible \ref osStatus_t return values:
  - \em osErrorISR: \b osTimerStart cannot be called from interrupt service routines.
  - \em osErrorParameter: parameter \a timer_id is either \token{NULL} or invalid or \a ticks is incorrect.
  - \em osErrorResource: the timer is in an invalid state.
+ - \em osErrorSafetyClass: the calling thread safety class is lower than the safety class of the specified timer.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
@@ -217,6 +218,7 @@ Possible \ref osStatus_t return values:
  - \em osErrorISR: \b osTimerStop cannot be called from interrupt service routines.
  - \em osErrorParameter: parameter \a timer_id is either \token{NULL} or invalid.
  - \em osErrorResource: the timer is not running (you can only stop a running timer).
+ - \em osErrorSafetyClass: the calling thread safety class is lower than the safety class of the specified timer.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
@@ -269,6 +271,7 @@ Possible \ref osStatus_t return values:
  - \em osErrorISR: \b osTimerDelete cannot be called from interrupt service routines.
  - \em osErrorParameter: parameter \a timer_id is either \token{NULL} or invalid.
  - \em osErrorResource: the timer is in an invalid state.
+ - \em osErrorSafetyClass: the calling thread safety class is lower than the safety class of the specified timer.
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 

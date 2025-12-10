@@ -26,7 +26,9 @@ will have the highest priority in \ref ThreadStates "READY" state it will be sch
 
 Possible \ref osStatus_t return values:
  - \em osOK: the time delay is executed.
+ - \em osErrorParameter: the time cannot be handled (zero value).
  - \em osErrorISR: \ref osDelay cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+ - \em osError: \ref osDelay cannot be executed (kernel not running or no \ref ThreadStates "READY" thread exists).
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 
@@ -61,8 +63,9 @@ have the highest priority in \ref ThreadStates "READY" state it will be schedule
 
 Possible \ref osStatus_t return values:
  - \em osOK: the time delay is executed.
- - \em osParameter: the time cannot be handled (out of bounds).
+ - \em osErrorParameter: the time cannot be handled (out of bounds).
  - \em osErrorISR: \ref osDelayUntil cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
+ - \em osError: \ref osDelayUntil cannot be executed (kernel not running or no \ref ThreadStates "READY" thread exists).
 
 \note This function \b cannot be called from \ref CMSIS_RTOS_ISR_Calls "Interrupt Service Routines".
 

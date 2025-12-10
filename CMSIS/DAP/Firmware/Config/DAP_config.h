@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013-2017 ARM Limited. All rights reserved.
+ * Copyright (c) 2013-2021 ARM Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -17,8 +17,8 @@
  *
  * ----------------------------------------------------------------------
  *
- * $Date:        1. December 2017
- * $Revision:    V2.0.0
+ * $Date:        16. June 2021
+ * $Revision:    V2.1.0
  *
  * Project:      CMSIS-DAP Configuration
  * Title:        DAP_config.h CMSIS-DAP Configuration File (Template)
@@ -30,9 +30,9 @@
 
 
 //**************************************************************************************************
-/** 
+/**
 \defgroup DAP_Config_Debug_gr CMSIS-DAP Debug Unit Information
-\ingroup DAP_ConfigIO_gr 
+\ingroup DAP_ConfigIO_gr
 @{
 Provides definitions about the hardware and configuration of the Debug Unit.
 
@@ -59,7 +59,7 @@ This information includes:
 /// This value is used to calculate the SWD/JTAG clock speed that is generated with I/O
 /// Port write operations in the Debug Unit by a Cortex-M MCU. Most Cortex-M processors
 /// require 2 processor cycles for a I/O Port Write operation.  If the Debug Unit uses
-/// a Cortex-M0+ processor with high-speed peripheral I/O only 1 processor cycle might be 
+/// a Cortex-M0+ processor with high-speed peripheral I/O only 1 processor cycle might be
 /// required.
 #define IO_PORT_WRITE_CYCLES    2U              ///< I/O Cycles: 2=default, 1=Cortex-M0+ fast I/0.
 
@@ -100,6 +100,9 @@ This information includes:
 /// This information is returned by the command \ref DAP_Info as part of <b>Capabilities</b>.
 #define SWO_UART                1               ///< SWO UART:  1 = available, 0 = not available.
 
+/// USART Driver instance number for the UART SWO.
+#define SWO_UART_DRIVER         0               ///< USART Driver instance number (Driver_USART#).
+
 /// Maximum SWO UART Baudrate.
 #define SWO_UART_MAX_BAUDRATE   10000000U       ///< SWO UART Maximum Baudrate in Hz.
 
@@ -116,29 +119,54 @@ This information includes:
 /// Clock frequency of the Test Domain Timer. Timer value is returned with \ref TIMESTAMP_GET.
 #define TIMESTAMP_CLOCK         100000000U      ///< Timestamp clock in Hz (0 = timestamps not supported).
 
+/// Indicate that UART Communication Port is available.
+/// This information is returned by the command \ref DAP_Info as part of <b>Capabilities</b>.
+#define DAP_UART                1               ///< DAP UART:  1 = available, 0 = not available.
+
+/// USART Driver instance number for the UART Communication Port.
+#define DAP_UART_DRIVER         1               ///< USART Driver instance number (Driver_USART#).
+
+/// UART Receive Buffer Size.
+#define DAP_UART_RX_BUFFER_SIZE 1024U           ///< Uart Receive Buffer Size in bytes (must be 2^n).
+
+/// UART Transmit Buffer Size.
+#define DAP_UART_TX_BUFFER_SIZE 1024U           ///< Uart Transmit Buffer Size in bytes (must be 2^n).
+
+/// Indicate that UART Communication via USB COM Port is available.
+/// This information is returned by the command \ref DAP_Info as part of <b>Capabilities</b>.
+#define DAP_UART_USB_COM_PORT   1               ///< USB COM Port:  1 = available, 0 = not available.
+
 /// Debug Unit is connected to fixed Target Device.
 /// The Debug Unit may be part of an evaluation board and always connected to a fixed
-/// known device.  In this case a Device Vendor and Device Name string is stored which
-/// may be used by the debugger or IDE to configure device parameters.
-#define TARGET_DEVICE_FIXED     0               ///< Target Device: 1 = known, 0 = unknown;
+/// known device. In this case a Device Vendor, Device Name, Board Vendor and Board Name strings
+/// are stored and may be used by the debugger or IDE to configure device parameters.
+#define TARGET_FIXED            0               ///< Target: 1 = known, 0 = unknown;
 
-#if TARGET_DEVICE_FIXED
-#define TARGET_DEVICE_VENDOR    "ARM"           ///< String indicating the Silicon Vendor
-#define TARGET_DEVICE_NAME      "Cortex-M4"     ///< String indicating the Target Device
+#define TARGET_DEVICE_VENDOR    "Arm"           ///< String indicating the Silicon Vendor
+#define TARGET_DEVICE_NAME      "Cortex-M"      ///< String indicating the Target Device
+#define TARGET_BOARD_VENDOR     "Arm"           ///< String indicating the Board Vendor
+#define TARGET_BOARD_NAME       "Arm board"     ///< String indicating the Board Name
+
+#if TARGET_FIXED != 0
+#include <string.h>
+static const char TargetDeviceVendor [] = TARGET_DEVICE_VENDOR;
+static const char TargetDeviceName   [] = TARGET_DEVICE_NAME;
+static const char TargetBoardVendor  [] = TARGET_BOARD_VENDOR;
+static const char TargetBoardName    [] = TARGET_BOARD_NAME;
 #endif
 
-/** Get Vendor ID string.
-\param str Pointer to buffer to store the string.
-\return String length.
+/** Get Vendor Name string.
+\param str Pointer to buffer to store the string (max 60 characters).
+\return String length (including terminating NULL character) or 0 (no string).
 */
 __STATIC_INLINE uint8_t DAP_GetVendorString (char *str) {
   (void)str;
   return (0U);
 }
 
-/** Get Product ID string.
-\param str Pointer to buffer to store the string.
-\return String length.
+/** Get Product Name string.
+\param str Pointer to buffer to store the string (max 60 characters).
+\return String length (including terminating NULL character) or 0 (no string).
 */
 __STATIC_INLINE uint8_t DAP_GetProductString (char *str) {
   (void)str;
@@ -146,10 +174,87 @@ __STATIC_INLINE uint8_t DAP_GetProductString (char *str) {
 }
 
 /** Get Serial Number string.
-\param str Pointer to buffer to store the string.
-\return String length.
+\param str Pointer to buffer to store the string (max 60 characters).
+\return String length (including terminating NULL character) or 0 (no string).
 */
 __STATIC_INLINE uint8_t DAP_GetSerNumString (char *str) {
+  (void)str;
+  return (0U);
+}
+
+/** Get Target Device Vendor string.
+\param str Pointer to buffer to store the string (max 60 characters).
+\return String length (including terminating NULL character) or 0 (no string).
+*/
+__STATIC_INLINE uint8_t DAP_GetTargetDeviceVendorString (char *str) {
+#if TARGET_FIXED != 0
+  uint8_t len;
+
+  strcpy(str, TargetDeviceVendor);
+  len = (uint8_t)(strlen(TargetDeviceVendor) + 1U);
+  return (len);
+#else
+  (void)str;
+  return (0U);
+#endif
+}
+
+/** Get Target Device Name string.
+\param str Pointer to buffer to store the string (max 60 characters).
+\return String length (including terminating NULL character) or 0 (no string).
+*/
+__STATIC_INLINE uint8_t DAP_GetTargetDeviceNameString (char *str) {
+#if TARGET_FIXED != 0
+  uint8_t len;
+
+  strcpy(str, TargetDeviceName);
+  len = (uint8_t)(strlen(TargetDeviceName) + 1U);
+  return (len);
+#else
+  (void)str;
+  return (0U);
+#endif
+}
+
+/** Get Target Board Vendor string.
+\param str Pointer to buffer to store the string (max 60 characters).
+\return String length (including terminating NULL character) or 0 (no string).
+*/
+__STATIC_INLINE uint8_t DAP_GetTargetBoardVendorString (char *str) {
+#if TARGET_FIXED != 0
+  uint8_t len;
+
+  strcpy(str, TargetBoardVendor);
+  len = (uint8_t)(strlen(TargetBoardVendor) + 1U);
+  return (len);
+#else
+  (void)str;
+  return (0U);
+#endif
+}
+
+/** Get Target Board Name string.
+\param str Pointer to buffer to store the string (max 60 characters).
+\return String length (including terminating NULL character) or 0 (no string).
+*/
+__STATIC_INLINE uint8_t DAP_GetTargetBoardNameString (char *str) {
+#if TARGET_FIXED != 0
+  uint8_t len;
+
+  strcpy(str, TargetBoardName);
+  len = (uint8_t)(strlen(TargetBoardName) + 1U);
+  return (len);
+#else
+  (void)str;
+  return (0U);
+#endif
+}
+
+/** Get Product Firmware Version string.
+\param str Pointer to buffer to store the string (max 60 characters).
+\return String length (including terminating NULL character) or 0 (no string).
+*/
+__STATIC_INLINE uint8_t DAP_GetProductFirmwareVersionString (char *str) {
   (void)str;
   return (0U);
 }
@@ -158,13 +263,13 @@ __STATIC_INLINE uint8_t DAP_GetSerNumString (char *str) {
 
 
 //**************************************************************************************************
-/** 
+/**
 \defgroup DAP_Config_PortIO_gr CMSIS-DAP Hardware I/O Pin Access
-\ingroup DAP_ConfigIO_gr 
+\ingroup DAP_ConfigIO_gr
 @{
 
 Standard I/O Pins of the CMSIS-DAP Hardware Debug Port support standard JTAG mode
-and Serial Wire Debug (SWD) mode. In SWD mode only 2 pins are required to implement the debug 
+and Serial Wire Debug (SWD) mode. In SWD mode only 2 pins are required to implement the debug
 interface of a device. The following I/O Pins are provided:
 
 JTAG I/O Pin                 | SWD I/O Pin          | CMSIS-DAP Hardware pin mode
@@ -172,19 +277,19 @@ JTAG I/O Pin                 | SWD I/O Pin          | CMSIS-DAP Hardware pin mod
 TCK: Test Clock              | SWCLK: Clock         | Output Push/Pull
 TMS: Test Mode Select        | SWDIO: Data I/O      | Output Push/Pull; Input (for receiving data)
 TDI: Test Data Input         |                      | Output Push/Pull
-TDO: Test Data Output        |                      | Input             
+TDO: Test Data Output        |                      | Input
 nTRST: Test Reset (optional) |                      | Output Open Drain with pull-up resistor
 nRESET: Device Reset         | nRESET: Device Reset | Output Open Drain with pull-up resistor
 
 
 DAP Hardware I/O Pin Access Functions
 -------------------------------------
-The various I/O Pins are accessed by functions that implement the Read, Write, Set, or Clear to 
-these I/O Pins. 
+The various I/O Pins are accessed by functions that implement the Read, Write, Set, or Clear to
+these I/O Pins.
 
 For the SWDIO I/O Pin there are additional functions that are called in SWD I/O mode only.
-This functions are provided to achieve faster I/O that is possible with some advanced GPIO 
-peripherals that can independently write/read a single I/O pin without affecting any other pins 
+This functions are provided to achieve faster I/O that is possible with some advanced GPIO
+peripherals that can independently write/read a single I/O pin without affecting any other pins
 of the same I/O port. The following SWDIO I/O Pin functions are provided:
  - \ref PIN_SWDIO_OUT_ENABLE to enable the output mode from the DAP hardware.
  - \ref PIN_SWDIO_OUT_DISABLE to enable the input mode to the DAP hardware.
@@ -199,16 +304,16 @@ of the same I/O port. The following SWDIO I/O Pin functions are provided:
 Configures the DAP Hardware I/O pins for JTAG mode:
  - TCK, TMS, TDI, nTRST, nRESET to output mode and set to high level.
  - TDO to input mode.
-*/ 
+*/
 __STATIC_INLINE void PORT_JTAG_SETUP (void) {
   ;
 }
- 
+
 /** Setup SWD I/O pins: SWCLK, SWDIO, and nRESET.
 Configures the DAP Hardware I/O pins for Serial Wire Debug (SWD) mode:
  - SWCLK, SWDIO, nRESET to output mode and set to default high level.
  - TDI, nTRST to HighZ mode (pins are unused in SWD mode).
-*/ 
+*/
 __STATIC_INLINE void PORT_SWD_SETUP (void) {
   ;
 }
@@ -288,7 +393,7 @@ Configure the SWDIO DAP hardware I/O pin to output mode. This function is
 called prior \ref PIN_SWDIO_OUT function calls.
 */
 __STATIC_FORCEINLINE void     PIN_SWDIO_OUT_ENABLE  (void) {
-  ; 
+  ;
 }
 
 /** SWDIO I/O pin: Switch to Input mode (used in SWD mode only).
@@ -342,7 +447,7 @@ __STATIC_FORCEINLINE uint32_t PIN_nTRST_IN   (void) {
            - 1: release JTAG TRST Test Reset.
 */
 __STATIC_FORCEINLINE void     PIN_nTRST_OUT  (uint32_t bit) {
-  ; 
+  ;
 }
 
 // nRESET Pin I/O------------------------------------------
@@ -367,7 +472,7 @@ __STATIC_FORCEINLINE void     PIN_nRESET_OUT (uint32_t bit) {
 
 
 //**************************************************************************************************
-/** 
+/**
 \defgroup DAP_Config_LEDs_gr CMSIS-DAP Hardware Status LEDs
 \ingroup DAP_ConfigIO_gr
 @{
@@ -397,13 +502,13 @@ __STATIC_INLINE void LED_RUNNING_OUT (uint32_t bit) {}
 
 
 //**************************************************************************************************
-/** 
+/**
 \defgroup DAP_Config_Timestamp_gr CMSIS-DAP Timestamp
 \ingroup DAP_ConfigIO_gr
 @{
 Access function for Test Domain Timer.
 
-The value of the Test Domain Timer in the Debug Unit is returned by the function \ref TIMESTAMP_GET. By 
+The value of the Test Domain Timer in the Debug Unit is returned by the function \ref TIMESTAMP_GET. By
 default, the DWT timer is used.  The frequency of this timer is configured with \ref TIMESTAMP_CLOCK.
 
 */
@@ -419,7 +524,7 @@ __STATIC_INLINE uint32_t TIMESTAMP_GET (void) {
 
 
 //**************************************************************************************************
-/** 
+/**
 \defgroup DAP_Config_Initialization_gr CMSIS-DAP Initialization
 \ingroup DAP_ConfigIO_gr
 @{
@@ -428,7 +533,7 @@ CMSIS-DAP Hardware I/O and LED Pins are initialized with the function \ref DAP_S
 */
 
 /** Setup of the Debug Unit I/O pins and LEDs (called when Debug Unit is initialized).
-This function performs the initialization of the CMSIS-DAP Hardware I/O Pins and the 
+This function performs the initialization of the CMSIS-DAP Hardware I/O Pins and the
 Status LEDs. In detail the operation of Hardware I/O and LED pins are enabled and set:
  - I/O clock system enabled.
  - all I/O pins: input buffer enabled, output pins are set to HighZ mode.
@@ -441,7 +546,7 @@ __STATIC_INLINE void DAP_SETUP (void) {
 
 /** Reset Target Device with custom specific I/O pin or command sequence.
 This function allows the optional implementation of a device specific reset sequence.
-It is called when the command \ref DAP_ResetTarget and is for example required 
+It is called when the command \ref DAP_ResetTarget and is for example required
 when a device needs a time-critical unlock sequence that enables the debug port.
 \return 0 = no device specific reset sequence is implemented.\n
         1 = a device specific reset sequence is implemented.

@@ -41,9 +41,9 @@ typedef enum IRQn
 
 
 
-  SVCall_IRQn                   =  -5,     /* 11 SV Call Interrupt */
+  SVCall_IRQn                   =  -5,     /* 11 SVC Interrupt */
 
-  PendSV_IRQn                   =  -2,     /* 14 Pend SV Interrupt */
+  PendSV_IRQn                   =  -2,     /* 14 PendSV Interrupt */
   SysTick_IRQn                  =  -1,     /* 15 System Tick Interrupt */
 
 /* -------------------  Processor Interrupt Numbers  ------------------------------ */

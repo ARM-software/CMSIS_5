@@ -2,8 +2,8 @@
  * @file     ARMCM4_FP.h
  * @brief    CMSIS Core Peripheral Access Layer Header File for
  *           ARMCM4 Device (configured for CM4 with FPU)
- * @version  V5.3.1
- * @date     09. July 2018
+ * @version  V5.3.2
+ * @date     01. May 2023
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
@@ -56,8 +56,9 @@ typedef enum IRQn
   Interrupt6_IRQn               =   6,
   Interrupt7_IRQn               =   7,
   Interrupt8_IRQn               =   8,
-  Interrupt9_IRQn               =   9
-  /* Interrupts 10 .. 224 are left out */
+  Interrupt9_IRQn               =   9,
+  /* Interrupts 10 .. 223 are left out */
+  Interrupt224_IRQn             =   224
 } IRQn_Type;
 
 

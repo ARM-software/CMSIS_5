@@ -24,18 +24,18 @@
  * Title:        DAP_vendor.c CMSIS-DAP Vendor Commands
  *
  *---------------------------------------------------------------------------*/
- 
+
 #include "DAP_config.h"
 #include "DAP.h"
 
 //**************************************************************************************************
-/** 
+/**
 \defgroup DAP_Vendor_Adapt_gr Adapt Vendor Commands
-\ingroup DAP_Vendor_gr 
+\ingroup DAP_Vendor_gr
 @{
 
-The file DAP_vendor.c provides template source code for extension of a Debug Unit with 
-Vendor Commands. Copy this file to the project folder of the Debug Unit and add the 
+The file DAP_vendor.c provides template source code for extension of a Debug Unit with
+Vendor Commands. Copy this file to the project folder of the Debug Unit and add the
 file to the MDK-ARM project under the file group Configuration.
 */
 

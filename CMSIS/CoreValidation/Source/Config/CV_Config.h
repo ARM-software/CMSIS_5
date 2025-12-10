@@ -10,6 +10,14 @@
 #include "RTE_Components.h"
 #include CMSIS_device_header
 
+#define RTE_CV_COREINSTR 1
+#define RTE_CV_COREFUNC  1
+#define RTE_CV_CORESIMD  1
+#define RTE_CV_MPUFUNC   (__MPU_PRESENT)
+#if defined __ICACHE_PRESENT || defined __DCACHE_PRESENT
+#define RTE_CV_L1CACHE   (__ICACHE_PRESENT || __DCACHE_PRESENT)
+#endif
+
 //-------- <<< Use Configuration Wizard in Context Menu >>> --------------------
 
 // <h> Common Test Settings
@@ -68,6 +76,10 @@
 #define TC_COREINSTR_LOADSTOREACQUIRE_EN           1
 // <q0> TC_CoreInstr_LoadStoreAcquireExclusive
 #define TC_COREINSTR_LOADSTOREACQUIREEXCLUSIVE_EN  1
+// <q0> TC_CoreInstr_UnalignedUint16
+#define TC_COREINSTR_UNALIGNEDUINT16_EN            1
+// <q0> TC_CoreInstr_UnalignedUint32
+#define TC_COREINSTR_UNALIGNEDUINT32_EN            1
 
 // <q0> TC_CoreSimd_SatAddSub
 #define TC_CORESIMD_SATADDSUB_EN                   1

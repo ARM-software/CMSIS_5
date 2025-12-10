@@ -14,8 +14,8 @@ The following sections provide details about the CMSIS-Core (Cortex-A):
  - \ref using_pg describes the project setup and shows a simple program example.
  - \ref templates_pg describes the files of the CMSIS-Core (Cortex-A) in detail and explains how to adapt template files provided by Arm to silicon vendor devices.
  - \ref coreMISRA_Exceptions_pg describes the violations to the MISRA standard.
- - <a href="Modules.html">\b Reference </a> describe the features and functions of the \ref device_h_pg in detail.
- - <a href="Annotated.html">\b Data \b Structures </a> describe the data structures of the \ref device_h_pg in detail.
+ - <a href="modules.html">\b Reference </a> describe the features and functions of the \ref device_h_pg in detail.
+ - <a href="annotated.html">\b Data \b Structures </a> describe the data structures of the \ref device_h_pg in detail.
     
 <hr>
 
@@ -48,10 +48,10 @@ The following Technical Reference Manuals describe the various Arm Cortex-A proc
 \section tested_tools_sec Tested and Verified Toolchains
 
 The \ref templates_pg supplied by Arm have been tested and verified with the following toolchains:
- - Arm: Arm Compiler 5.06 update 6
- - Arm: Arm Compiler 6.14
- - Arm: Arm Compiler 6.6.2
- - GNU: GNU Tools for Arm Embedded 9.2.1 2019q4
+ - Arm: Arm Compiler 5.06 update 7
+ - Arm: Arm Compiler 6.16
+ - Arm: Arm Compiler 6.6.4
+ - GNU: GNU Arm Embedded Toolchain 10-2020-q4-major (10.2.1 20201103)
  - IAR: IAR ANSI C/C++ Compiler for Arm 8.20.1.14183
  
 <hr>
@@ -65,6 +65,14 @@ The \ref templates_pg supplied by Arm have been tested and verified with the fol
     <tr>
       <th>Version</th>
       <th>Description</th>
+    </tr>
+    <tr>
+      <td>V1.2.1</td>
+      <td>
+        <ul>
+          <li>Bugfixes for Cortex-A32</li>
+        </ul>
+      </td>
     </tr>
     <tr>
       <td>V1.2.0</td>

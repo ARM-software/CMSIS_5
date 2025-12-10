@@ -6,7 +6,7 @@
  
 #define FLAGS_MSK1 0x00000001U
  
-osEventFlagsId_t evt_id;                        // event flasg id
+osEventFlagsId_t evt_id;                        // event flags id
  
 osThreadId_t tid_Thread_EventSender;            // thread id 1
 osThreadId_t tid_Thread_EventReceiver;          // thread id 2

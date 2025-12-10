@@ -1,8 +1,8 @@
 /******************************************************************************
  * @file     startup_ARMCM33.c
- * @brief    CMSIS Core Device Startup File for Cortex-M33 Device
- * @version  V2.0.3
- * @date     31. March 2020
+ * @brief    CMSIS-Core Device Startup File for Cortex-M33 Device
+ * @version  V2.1.0
+ * @date     16. December 2020
  ******************************************************************************/
 /*
  * Copyright (c) 2009-2020 Arm Limited. All rights reserved.
@@ -39,6 +39,9 @@
  *----------------------------------------------------------------------------*/
 extern uint32_t __INITIAL_SP;
 extern uint32_t __STACK_LIMIT;
+#if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
+extern uint32_t __STACK_SEAL;
+#endif
 
 extern __NO_RETURN void __PROGRAM_START(void);
 
@@ -126,7 +129,14 @@ extern const VECTOR_TABLE_Type __VECTOR_TABLE[496];
  *----------------------------------------------------------------------------*/
 __NO_RETURN void Reset_Handler(void)
 {
+  __set_PSP((uint32_t)(&__INITIAL_SP));
+
   __set_MSPLIM((uint32_t)(&__STACK_LIMIT));
+  __set_PSPLIM((uint32_t)(&__STACK_LIMIT));
+
+#if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
+  __TZ_set_STACKSEAL_S((uint32_t *)(&__STACK_SEAL));
+#endif
 
   SystemInit();                             /* CMSIS System Initialization */
   __PROGRAM_START();                        /* Enter PreMain (C library entry point) */

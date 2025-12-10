@@ -87,7 +87,7 @@ This information can be used for example, to create a linker script that defines
     <td>\subpage fm_interrupt ".interrupt"</td>
     <td>A sequence of all interrupt sources available.</td>
     <td>sequence</td>
-  </tr>`
+  </tr>
   <tr>
     <td>\subpage fm_mpc_setup ".mpc_setup"</td>
     <td>Contains the device specific configuration registers for the setup of the Memory Protection Controller (MPC).</td>
@@ -121,6 +121,11 @@ the related linker setup.
     <td>.Pname</td>
     <td>Name of the processor core.</td>
     <td>RestrictedString</td>
+  </tr>
+  <tr>
+    <td>.class</td>
+    <td>Class information for execution zones.</td>
+    <td>string</td>
   </tr>
   <tr>
     <td>.security</td>
@@ -160,6 +165,11 @@ the related linker setup.
   <tr>
     <td>\subpage fm_peripheral ".peripheral"</td>
     <td>A sequence of all peripherals that are accessible in the zone (or system partition).</td>
+    <td>sequence</td>
+  </tr>
+  <tr>
+    <td>\subpage fm_interrupt ".interrupt"</td>
+    <td>A sequence of all interrupt sources that belong to peripherals that are accessible in the zone (or system partition).</td>
     <td>sequence</td>
   </tr>
   <tr>
@@ -348,6 +358,11 @@ The \ref fm_memory provides a sequence of memory information.
   </tr>
   <tr>
     <td>.memory[<i>n</i>].info</td>
+    <td>Brief description of the memory region.</td>
+    <td>xs:string</td>
+  </tr>
+  <tr>
+    <td>.memory[<i>n</i>].linker_control</td>
     <td>Brief description of the memory region.</td>
     <td>xs:string</td>
   </tr>

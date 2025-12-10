@@ -42,6 +42,22 @@
                 <project>RTX_CM</project>
                 <configuration>V8MMN</configuration>
             </member>
+            <member>
+                <project>RTX_CM</project>
+                <configuration>V81MM</configuration>
+            </member>
+            <member>
+                <project>RTX_CM</project>
+                <configuration>V81MMF</configuration>
+            </member>
+            <member>
+                <project>RTX_CM</project>
+                <configuration>V81MMFN</configuration>
+            </member>
+            <member>
+                <project>RTX_CM</project>
+                <configuration>V81MMN</configuration>
+            </member>
         </batchDefinition>
     </batchBuild>
 </workspace>

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2020 Arm Limited. All rights reserved.
+ * Copyright (c) 2016-2023 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -18,7 +18,7 @@
  * -----------------------------------------------------------------------------
  *
  * Project:     CMSIS-RTOS RTX
- * Title:       ARMv8M Baseline Exception handlers
+ * Title:       ARMv8-M Baseline Exception handlers
  *
  * -----------------------------------------------------------------------------
  */
@@ -26,22 +26,17 @@
 
         .syntax  unified
 
-        #ifdef   _RTE_
-        #include "RTE_Components.h"
-        #ifdef   RTE_CMSIS_RTOS2_RTX5_ARMV8M_NS
-        #define  DOMAIN_NS    1
-        #endif
-        #endif
-
-        #ifndef  DOMAIN_NS
-        #define  DOMAIN_NS    0
-        #endif
+        #include "rtx_def.h"
 
         .equ     I_T_RUN_OFS, 20        // osRtxInfo.thread.run offset
         .equ     TCB_SM_OFS,  48        // TCB.stack_mem offset
         .equ     TCB_SP_OFS,  56        // TCB.SP offset
         .equ     TCB_SF_OFS,  34        // TCB.stack_frame offset
         .equ     TCB_TZM_OFS, 64        // TCB.tz_memory offset
+        .equ     TCB_ZONE_OFS,68        // TCB.zone offset
+
+        .equ     osRtxErrorStackOverflow, 1 // Stack overflow
+        .equ     osRtxErrorSVC,           6 // Invalid SVC function called
 
         .section ".rodata"
         .global  irqRtxLib              // Non weak library reference
@@ -52,6 +47,7 @@ irqRtxLib:
         .thumb
         .section ".text"
         .align   2
+        .eabi_attribute Tag_ABI_align_preserved, 1
 
 
         .thumb_func
@@ -61,129 +57,200 @@ irqRtxLib:
         .cantunwind
 SVC_Handler:
 
-        MOV      R0,LR
-        LSRS     R0,R0,#3               // Determine return stack from EXC_RETURN bit 2
-        BCC      SVC_MSP                // Branch if return stack is MSP
-        MRS      R0,PSP                 // Get PSP
+        mov      r0,lr
+        lsrs     r0,r0,#3               // Determine return stack from EXC_RETURN bit 2
+        bcc      SVC_MSP                // Branch if return stack is MSP
+        mrs      r0,psp                 // Get PSP
 
 SVC_Number:
-        LDR      R1,[R0,#24]            // Load saved PC from stack
-        SUBS     R1,R1,#2               // Point to SVC instruction
-        LDRB     R1,[R1]                // Load SVC number
-        CMP      R1,#0
-        BNE      SVC_User               // Branch if not SVC 0
+        ldr      r1,[r0,#24]            // Load saved PC from stack
+        subs     r1,r1,#2               // Point to SVC instruction
+        ldrb     r1,[r1]                // Load SVC number
+        cmp      r1,#0                  // Check SVC number
+        bne      SVC_User               // Branch if not SVC 0
 
-        PUSH     {R0,LR}                // Save SP and EXC_RETURN
-        LDM      R0,{R0-R3}             // Load function parameters from stack
-        BLX      R7                     // Call service function
-        POP      {R2,R3}                // Restore SP and EXC_RETURN
-        STMIA    R2!,{R0-R1}            // Store function return values
-        MOV      LR,R3                  // Set EXC_RETURN
+    #ifdef RTX_SVC_PTR_CHECK
+
+        subs     r1,r7,#0x01            // Clear T-bit of function address
+        lsls     r2,r1,#29              // Check if 8-byte aligned
+        beq      SVC_PtrBoundsCheck     // Branch if address is aligned
+
+SVC_PtrInvalid:
+        push     {r0,lr}                // Save SP and EXC_RETURN
+        movs     r0,#osRtxErrorSVC      // Parameter: code
+        mov      r1,r7                  // Parameter: object_id
+        bl       osRtxKernelErrorNotify // Call osRtxKernelErrorNotify
+        pop      {r2,r3}                // Restore SP and EXC_RETURN
+        mov      lr,r3                  // Set EXC_RETURN
+        b        SVC_Context            // Branch to context handling
+
+SVC_PtrBoundsCheck:
+        ldr      r2,=Image$$RTX_SVC_VENEERS$$Base
+        ldr      r3,=Image$$RTX_SVC_VENEERS$$Length
+        subs     r2,r1,r2               // Subtract SVC table base address
+        cmp      r2,r3                  // Compare with SVC table boundaries
+        bhs      SVC_PtrInvalid         // Branch if address is out of bounds
+
+    #endif // RTX_SVC_PTR_CHECK
+
+        push     {r0,lr}                // Save SP and EXC_RETURN
+        ldmia    r0,{r0-r3}             // Load function parameters from stack
+        blx      r7                     // Call service function
+        pop      {r2,r3}                // Restore SP and EXC_RETURN
+        str      r0,[r2]                // Store function return value
+        mov      lr,r3                  // Set EXC_RETURN
 
 SVC_Context:
-        LDR      R3,=osRtxInfo+I_T_RUN_OFS // Load address of osRtxInfo.run
-        LDMIA    R3!,{R1,R2}            // Load osRtxInfo.thread.run: curr & next
-        CMP      R1,R2                  // Check if thread switch is required
-        BEQ      SVC_Exit               // Branch when threads are the same
+        ldr      r3,=osRtxInfo+I_T_RUN_OFS // Load address of osRtxInfo.thread.run
+        ldmia    r3!,{r1,r2}            // Load osRtxInfo.thread.run: curr & next
+        cmp      r1,r2                  // Check if thread switch is required
+        beq      SVC_Exit               // Branch when threads are the same
 
-        CBZ      R1,SVC_ContextSwitch   // Branch if running thread is deleted
+        subs     r3,r3,#8               // Adjust address
+        str      r2,[r3]                // osRtxInfo.thread.run: curr = next
+        cbz      r1,SVC_ContextRestore  // Branch if running thread is deleted
 
 SVC_ContextSave:
-        #if      (DOMAIN_NS == 1)
-        LDR      R0,[R1,#TCB_TZM_OFS]   // Load TrustZone memory identifier
-        CBZ      R0,SVC_ContextSave1    // Branch if there is no secure context
-        PUSH     {R1,R2,R3,R7}          // Save registers
-        MOV      R7,LR                  // Get EXC_RETURN
-        BL       TZ_StoreContext_S      // Store secure context
-        MOV      LR,R7                  // Set EXC_RETURN
-        POP      {R1,R2,R3,R7}          // Restore registers
-        #endif
+    #ifdef RTX_TZ_CONTEXT
+        mov      r3,lr                  // Get EXC_RETURN
+        ldr      r0,[r1,#TCB_TZM_OFS]   // Load TrustZone memory identifier
+        cbz      r0,SVC_ContextSave_NS  // Branch if there is no secure context
+        push     {r0-r3}                // Save registers
+        bl       TZ_StoreContext_S      // Store secure context
+        pop      {r0-r3}                // Restore registers
+        mov      lr,r3                  // Set EXC_RETURN
+    #endif
 
-SVC_ContextSave1:
-        MRS      R0,PSP                 // Get PSP
-        SUBS     R0,R0,#32              // Calculate SP
-        STR      R0,[R1,#TCB_SP_OFS]    // Store SP
-        STMIA    R0!,{R4-R7}            // Save R4..R7
-        MOV      R4,R8
-        MOV      R5,R9
-        MOV      R6,R10
-        MOV      R7,R11
-        STMIA    R0!,{R4-R7}            // Save R8..R11
+SVC_ContextSave_NS:
+        mrs      r0,psp                 // Get PSP
+    #if (DOMAIN_NS != 0)
+        mov      r3,lr                  // Get EXC_RETURN
+        lsls     r3,r3,#25              // Check domain of interrupted thread
+        bmi      SVC_ContextSaveSP      // Branch if secure
+    #endif
 
-SVC_ContextSave2:
-        MOV      R0,LR                  // Get EXC_RETURN
-        ADDS     R1,R1,#TCB_SF_OFS      // Adjust address
-        STRB     R0,[R1]                // Store stack frame information
+    #ifdef RTX_STACK_CHECK
+        subs     r0,r0,#32              // Calculate SP: space for R4..R11
 
-SVC_ContextSwitch:
-        SUBS     R3,R3,#8               // Adjust address
-        STR      R2,[R3]                // osRtxInfo.thread.run: curr = next
+SVC_ContextSaveSP:
+        str      r0,[r1,#TCB_SP_OFS]    // Store SP
+        mov      r3,lr                  // Get EXC_RETURN
+        movs     r0,#TCB_SF_OFS         // Get TCB.stack_frame offset
+        strb     r3,[r1,r0]             // Store stack frame information
+
+        push     {r1,r2}                // Save osRtxInfo.thread.run: curr & next
+        mov      r0,r1                  // Parameter: osRtxInfo.thread.run.curr
+        bl       osRtxThreadStackCheck  // Check if thread stack is overrun
+        pop      {r1,r2}                // Restore osRtxInfo.thread.run: curr & next
+        cbnz     r0,SVC_ContextSaveRegs // Branch when stack check is ok
+
+        movs     r0,#osRtxErrorStackOverflow // Parameter: r0=code, r1=object_id
+        bl       osRtxKernelErrorNotify      // Call osRtxKernelErrorNotify
+        ldr      r3,=osRtxInfo+I_T_RUN_OFS   // Load address of osRtxInfo.thread.run
+        ldr      r2,[r3,#4]             // Load osRtxInfo.thread.run: next
+        str      r2,[r3]                // osRtxInfo.thread.run: curr = next
+        movs     r1,#0                  // Simulate deleted running thread
+        b        SVC_ContextRestore     // Branch to context restore handling
+
+SVC_ContextSaveRegs:
+      #if (DOMAIN_NS != 0)
+        movs     r0,#TCB_SF_OFS         // Get TCB.stack_frame offset
+        ldrsb    r3,[r1,r0]             // Load stack frame information
+        lsls     r3,r3,#25              // Check domain of interrupted thread
+        bmi      SVC_ContextRestore     // Branch if secure
+      #endif
+        ldr      r0,[r1,#TCB_SP_OFS]    // Load SP
+        stmia    r0!,{r4-r7}            // Save R4..R7
+        mov      r4,r8
+        mov      r5,r9
+        mov      r6,r10
+        mov      r7,r11
+        stmia    r0!,{r4-r7}            // Save R8..R11
+    #else
+        subs     r0,r0,#32              // Calculate SP: space for R4..R11
+        stmia    r0!,{r4-r7}            // Save R4..R7
+        mov      r4,r8
+        mov      r5,r9
+        mov      r6,r10
+        mov      r7,r11
+        stmia    r0!,{r4-r7}            // Save R8..R11
+        subs     r0,r0,#32              // Adjust address
+SVC_ContextSaveSP:
+        str      r0,[r1,#TCB_SP_OFS]    // Store SP
+        mov      r3,lr                  // Get EXC_RETURN
+        movs     r0,#TCB_SF_OFS         // Get TCB.stack_frame offset
+        strb     r3,[r1,r0]             // Store stack frame information
+    #endif // RTX_STACK_CHECK
 
 SVC_ContextRestore:
-        #if      (DOMAIN_NS == 1)
-        LDR      R0,[R2,#TCB_TZM_OFS]   // Load TrustZone memory identifier
-        CBZ      R0,SVC_ContextRestore1 // Branch if there is no secure context
-        PUSH     {R2,R3}                // Save registers
-        BL       TZ_LoadContext_S       // Load secure context
-        POP      {R2,R3}                // Restore registers
-        #endif
+        movs     r4,r2                  // Assign osRtxInfo.thread.run.next to R4
+    #ifdef RTX_EXECUTION_ZONE
+        movs     r3,#TCB_ZONE_OFS       // Get TCB.zone offset
+        ldrb     r0,[r2,r3]             // Load osRtxInfo.thread.run.next: zone
+        cbz      r1,SVC_ZoneSetup       // Branch if running thread is deleted
+        ldrb     r1,[r1,r3]             // Load osRtxInfo.thread.run.curr: zone
+        cmp      r0,r1                  // Check if next:zone == curr:zone
+        beq      SVC_ContextRestore_S   // Branch if zone has not changed
 
-SVC_ContextRestore1:
-        MOV      R1,R2
-        ADDS     R1,R1,#TCB_SF_OFS      // Adjust address
-        LDRB     R0,[R1]                // Load stack frame information
-        MOVS     R1,#0xFF
-        MVNS     R1,R1                  // R1=0xFFFFFF00
-        ORRS     R0,R1
-        MOV      LR,R0                  // Set EXC_RETURN
+SVC_ZoneSetup:
+        bl       osZoneSetup_Callback   // Setup zone for next thread
+    #endif // RTX_EXECUTION_ZONE
 
-        #if      (DOMAIN_NS == 1)
-        LSLS     R0,R0,#25              // Check domain of interrupted thread
-        BPL      SVC_ContextRestore2    // Branch if non-secure
-        LDR      R0,[R2,#TCB_SP_OFS]    // Load SP
-        MSR      PSP,R0                 // Set PSP
-        BX       LR                     // Exit from handler
-        #else
-        LDR      R0,[R2,#TCB_SM_OFS]    // Load stack memory base
-        MSR      PSPLIM,R0              // Set PSPLIM
-        #endif
+SVC_ContextRestore_S:
+    #ifdef RTX_TZ_CONTEXT
+        ldr      r0,[r4,#TCB_TZM_OFS]   // Load TrustZone memory identifier
+        cbz      r0,SVC_ContextRestore_NS // Branch if there is no secure context
+        bl       TZ_LoadContext_S       // Load secure context
+    #endif
 
-SVC_ContextRestore2:
-        LDR      R0,[R2,#TCB_SP_OFS]    // Load SP
-        ADDS     R0,R0,#16              // Adjust address
-        LDMIA    R0!,{R4-R7}            // Restore R8..R11
-        MOV      R8,R4
-        MOV      R9,R5
-        MOV      R10,R6
-        MOV      R11,R7
-        MSR      PSP,R0                 // Set PSP
-        SUBS     R0,R0,#32              // Adjust address
-        LDMIA    R0!,{R4-R7}            // Restore R4..R7
+SVC_ContextRestore_NS:
+        ldr      r0,[r4,#TCB_SM_OFS]    // Load stack memory base
+        msr      psplim,r0              // Set PSPLIM
+        movs     r0,#TCB_SF_OFS         // Get TCB.stack_frame offset
+        ldrsb    r3,[r4,r0]             // Load stack frame information
+        mov      lr,r3                  // Set EXC_RETURN
+        ldr      r0,[r4,#TCB_SP_OFS]    // Load SP
+    #if (DOMAIN_NS != 0)
+        lsls     r3,r3,#25              // Check domain of interrupted thread
+        bmi      SVC_ContextRestoreSP   // Branch if secure
+    #endif
+
+        adds     r0,r0,#16              // Adjust address
+        ldmia    r0!,{r4-r7}            // Restore R8..R11
+        mov      r8,r4
+        mov      r9,r5
+        mov      r10,r6
+        mov      r11,r7
+        subs     r0,r0,#32              // Adjust address
+        ldmia    r0!,{r4-r7}            // Restore R4..R7
+        adds     r0,r0,#16              // Adjust address
+
+SVC_ContextRestoreSP:
+        msr      psp,r0                 // Set PSP
 
 SVC_Exit:
-        BX       LR                     // Exit from handler
+        bx       lr                     // Exit from handler
 
 SVC_MSP:
-        MRS      R0,MSP                 // Get MSP
-        B        SVC_Number
+        mrs      r0,msp                 // Get MSP
+        b        SVC_Number
 
 SVC_User:
-        LDR      R2,=osRtxUserSVC       // Load address of SVC table
-        LDR      R3,[R2]                // Load SVC maximum number
-        CMP      R1,R3                  // Check SVC number range
-        BHI      SVC_Exit               // Branch if out of range
+        ldr      r2,=osRtxUserSVC       // Load address of SVC table
+        ldr      r3,[r2]                // Load SVC maximum number
+        cmp      r1,r3                  // Check SVC number range
+        bhi      SVC_Exit               // Branch if out of range
 
-        PUSH     {R0,LR}                // Save SP and EXC_RETURN
-        LSLS     R1,R1,#2
-        LDR      R3,[R2,R1]             // Load address of SVC function
-        MOV      R12,R3
-        LDMIA    R0,{R0-R3}             // Load function parameters from stack
-        BLX      R12                    // Call service function
-        POP      {R2,R3}                // Restore SP and EXC_RETURN
-        STR      R0,[R2]                // Store function return value
-        MOV      LR,R3                  // Set EXC_RETURN
+        push     {r0,lr}                // Save SP and EXC_RETURN
+        lsls     r1,r1,#2
+        ldr      r3,[r2,r1]             // Load address of SVC function
+        mov      r12,r3
+        ldmia    r0,{r0-r3}             // Load function parameters from stack
+        blx      r12                    // Call service function
+        pop      {r2,r3}                // Restore SP and EXC_RETURN
+        str      r0,[r2]                // Store function return value
 
-        BX       LR                     // Return from handler
+        bx       r3                     // Return from handler
 
         .fnend
         .size    SVC_Handler, .-SVC_Handler
@@ -196,11 +263,11 @@ SVC_User:
         .cantunwind
 PendSV_Handler:
 
-        PUSH     {R0,LR}                // Save EXC_RETURN
-        BL       osRtxPendSV_Handler    // Call osRtxPendSV_Handler
-        POP      {R0,R1}                // Restore EXC_RETURN
-        MOV      LR,R1                  // Set EXC_RETURN
-        B        Sys_Context
+        push     {r0,lr}                // Save EXC_RETURN
+        bl       osRtxPendSV_Handler    // Call osRtxPendSV_Handler
+        pop      {r0,r1}                // Restore EXC_RETURN
+        mov      lr,r1                  // Set EXC_RETURN
+        b        SVC_Context            // Branch to context handling
 
         .fnend
         .size    PendSV_Handler, .-PendSV_Handler
@@ -213,113 +280,31 @@ PendSV_Handler:
         .cantunwind
 SysTick_Handler:
 
-        PUSH     {R0,LR}                // Save EXC_RETURN
-        BL       osRtxTick_Handler      // Call osRtxTick_Handler
-        POP      {R0,R1}                // Restore EXC_RETURN
-        MOV      LR,R1                  // Set EXC_RETURN
-        B        Sys_Context
+        push     {r0,lr}                // Save EXC_RETURN
+        bl       osRtxTick_Handler      // Call osRtxTick_Handler
+        pop      {r0,r1}                // Restore EXC_RETURN
+        mov      lr,r1                  // Set EXC_RETURN
+        b        SVC_Context            // Branch to context handling
 
         .fnend
-        .size   SysTick_Handler, .-SysTick_Handler
+        .size    SysTick_Handler, .-SysTick_Handler
 
+
+    #ifdef RTX_SAFETY_FEATURES
 
         .thumb_func
-        .type    Sys_Context, %function
-        .global  Sys_Context
+        .type    osFaultResume, %function
+        .global  osFaultResume
         .fnstart
         .cantunwind
-Sys_Context:
+osFaultResume:
 
-        LDR      R3,=osRtxInfo+I_T_RUN_OFS // Load address of osRtxInfo.run
-        LDM      R3!,{R1,R2}            // Load osRtxInfo.thread.run: curr & next
-        CMP      R1,R2                  // Check if thread switch is required
-        BEQ      Sys_ContextExit        // Branch when threads are the same
-
-Sys_ContextSave:
-        #if      (DOMAIN_NS == 1)
-        LDR      R0,[R1,#TCB_TZM_OFS]   // Load TrustZone memory identifier
-        CBZ      R0,Sys_ContextSave1    // Branch if there is no secure context
-        PUSH     {R1,R2,R3,R7}          // Save registers
-        MOV      R7,LR                  // Get EXC_RETURN
-        BL       TZ_StoreContext_S      // Store secure context
-        MOV      LR,R7                  // Set EXC_RETURN
-        POP      {R1,R2,R3,R7}          // Restore registers
-
-Sys_ContextSave1:
-        MOV      R0,LR                  // Get EXC_RETURN
-        LSLS     R0,R0,#25              // Check domain of interrupted thread
-        BPL      Sys_ContextSave2       // Branch if non-secure
-        MRS      R0,PSP                 // Get PSP
-        STR      R0,[R1,#TCB_SP_OFS]    // Store SP
-        B        Sys_ContextSave3
-        #endif
-
-Sys_ContextSave2:
-        MRS      R0,PSP                 // Get PSP
-        SUBS     R0,R0,#32              // Adjust address
-        STR      R0,[R1,#TCB_SP_OFS]    // Store SP
-        STMIA    R0!,{R4-R7}            // Save R4..R7
-        MOV      R4,R8
-        MOV      R5,R9
-        MOV      R6,R10
-        MOV      R7,R11
-        STMIA    R0!,{R4-R7}            // Save R8..R11
-
-Sys_ContextSave3:
-        MOV      R0,LR                  // Get EXC_RETURN
-        ADDS     R1,R1,#TCB_SF_OFS      // Adjust address
-        STRB     R0,[R1]                // Store stack frame information
-
-Sys_ContextSwitch:
-        SUBS     R3,R3,#8               // Adjust address
-        STR      R2,[R3]                // osRtxInfo.run: curr = next
-
-Sys_ContextRestore:
-        #if      (DOMAIN_NS == 1)
-        LDR      R0,[R2,#TCB_TZM_OFS]   // Load TrustZone memory identifier
-        CBZ      R0,Sys_ContextRestore1 // Branch if there is no secure context
-        PUSH     {R2,R3}                // Save registers
-        BL       TZ_LoadContext_S       // Load secure context
-        POP      {R2,R3}                // Restore registers
-        #endif
-
-Sys_ContextRestore1:
-        MOV      R1,R2
-        ADDS     R1,R1,#TCB_SF_OFS      // Adjust offset
-        LDRB     R0,[R1]                // Load stack frame information
-        MOVS     R1,#0xFF
-        MVNS     R1,R1                  // R1=0xFFFFFF00
-        ORRS     R0,R1
-        MOV      LR,R0                  // Set EXC_RETURN
-
-        #if      (DOMAIN_NS == 1)
-        LSLS     R0,R0,#25              // Check domain of interrupted thread
-        BPL      Sys_ContextRestore2    // Branch if non-secure
-        LDR      R0,[R2,#TCB_SP_OFS]    // Load SP
-        MSR      PSP,R0                 // Set PSP
-        BX       LR                     // Exit from handler
-        #else
-        LDR      R0,[R2,#TCB_SM_OFS]    // Load stack memory base
-        MSR      PSPLIM,R0              // Set PSPLIM
-        #endif
-
-Sys_ContextRestore2:
-        LDR      R0,[R2,#TCB_SP_OFS]    // Load SP
-        ADDS     R0,R0,#16              // Adjust address
-        LDMIA    R0!,{R4-R7}            // Restore R8..R11
-        MOV      R8,R4
-        MOV      R9,R5
-        MOV      R10,R6
-        MOV      R11,R7
-        MSR      PSP,R0                 // Set PSP
-        SUBS     R0,R0,#32              // Adjust address
-        LDMIA    R0!,{R4-R7}            // Restore R4..R7
-
-Sys_ContextExit:
-        BX       LR                     // Exit from handler
+        b        SVC_Context            // Branch to context handling
 
         .fnend
-        .size    Sys_Context, .-Sys_Context
+        .size   osFaultResume, .-osFaultResume
+
+    #endif // RTX_SAFETY_FEATURES
 
 
         .end
