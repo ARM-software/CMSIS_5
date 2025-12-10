@@ -29,6 +29,14 @@
 
 #pragma clang system_header   /* treat file as system include file */
 
+#ifndef __ARM_COMPAT_H
+#include <arm_compat.h>    /* Compatibility header for Arm Compiler 5 intrinsics */
+#endif
+
+#ifdef __cplusplus
+ extern "C" {
+#endif
+   
 /* CMSIS compiler specific defines */
 #ifndef   __ASM
   #define __ASM                                  __asm
@@ -1506,5 +1514,8 @@ __STATIC_FORCEINLINE int32_t __SMMLA (int32_t op1, int32_t op2, int32_t op3)
 #endif /* (__ARM_FEATURE_DSP == 1) */
 /** @} end of group CMSIS_SIMD_intrinsics */
 
+#ifdef __cplusplus
+ }
+#endif
 
 #endif /* __CMSIS_ARMCLANG_H */

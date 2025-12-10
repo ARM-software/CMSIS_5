@@ -1,11 +1,11 @@
 /******************************************************************************
  * @file     pmu_armv8.h
  * @brief    CMSIS PMU API for Armv8.1-M PMU
- * @version  V1.0.1
- * @date     15. April 2020
+ * @version  V1.0.2
+ * @date     11. March 2021
  ******************************************************************************/
 /*
- * Copyright (c) 2020 Arm Limited. All rights reserved.
+ * Copyright (c) 2020-2021 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -30,6 +30,10 @@
 
 #ifndef ARM_PMU_ARMV8_H
 #define ARM_PMU_ARMV8_H
+
+#ifdef __cplusplus
+ extern "C" {
+#endif
 
 /**
  * \brief PMU Events
@@ -333,5 +337,9 @@ __STATIC_INLINE void ARM_PMU_CNTR_Increment(uint32_t mask)
 {
   PMU->SWINC = mask;
 }
+
+#ifdef __cplusplus
+ }
+#endif
 
 #endif
